@@ -1,0 +1,140 @@
+# Click2Future
+
+### Action-conditioned video diffusion for physical futures
+
+**Click an object. Drag a force arrow. Sample four possible futures.**
+
+Click2Future is an NTU Generative AI course project investigating whether a compact video diffusion model can produce diverse, physically plausible futures while obeying an explicit action. A procedural tabletop simulator supplies exact object trajectories and collision labels for training and evaluation.
+
+**Status:** planning and implementation scaffold. Models, simulator, and demo are not implemented yet.  
+**Submission deadline:** 14 November 2026; confirm the submission time and deliverables on the course site.  
+**Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
+
+## Start here
+
+| If you want to… | Read… |
+|---|---|
+| Understand the project and scope | [Requirements](docs/REQUIREMENTS.md) |
+| Assign work to the team | [Task board](docs/TASKS.md) and [open issues](https://github.com/athul1810/click2future/issues) |
+| See deadlines and dependencies | [Roadmap](docs/ROADMAP.md) |
+| Implement compatible components | [Architecture and data contract](docs/ARCHITECTURE.md) |
+| Design experiments and metrics | [Evaluation plan](docs/EVALUATION.md) |
+| Plan GPU usage | [Compute and feasibility](docs/COMPUTE.md) |
+| Contribute a change | [Contribution guide](CONTRIBUTING.md) |
+
+## Research question
+
+> Can a compact video diffusion model generate diverse futures while obeying an explicitly specified physical action?
+
+The proposed contribution is an **object-centric action-conditioning module**, paired with an auxiliary head that predicts trajectories and collision events from denoiser features. This is a hypothesis to evaluate, not a claim of established novelty or improved performance.
+
+When mass and friction are hidden, the same visible scene and action can have multiple valid outcomes. We will compare generated samples against multiple simulator rollouts sharing the same initial image and action, rather than treat arbitrary visual variation as meaningful uncertainty.
+
+## The intended demo
+
+1. Load a simulator scene or upload a supported synthetic tabletop image.
+2. Click an object and drag an arrow to specify force direction and magnitude.
+3. Generate four futures using different sampling seeds.
+4. Compare them side by side with a simulator rollout and trajectory overlays.
+5. Adjust the force or simulator friction and repeat.
+
+For the core hidden-physics model, friction is **not an input**. Changing the friction slider changes the simulator comparison; it must not be presented as controlling model samples. A friction-conditioned model is a stretch goal. Simulator ground truth requires scene metadata; image-only uploads cannot provide exact ground truth.
+
+## Scope
+
+| Core deliverable | Stretch goal |
+|---|---|
+| 64×64 top-down scenes, initially 16 frames | 128×128 after the compute gate passes |
+| 2–4 rigid objects, randomized appearance and hidden physics | More shapes and harder collisions |
+| Compact latent video diffusion and conditional VAE baseline | Additional architecture exploration |
+| Five planned experimental variants | Additional supervision ablations |
+| Four sampled futures and a simulator comparison | Friction-conditioned sampling |
+| Reproducible metrics, checkpoints, report, recorded demo | FVD if feasible and statistically useful |
+
+No real robot, photorealistic 512px video, or general-purpose physics. The upload workflow targets the synthetic domain; real photographs are outside the course scope.
+
+## System overview
+
+```mermaid
+flowchart LR
+    S[Procedural simulator] --> D[Clips, masks, trajectories, collisions]
+    D --> A[Frame autoencoder]
+    I[First frame + clicked mask + action] --> C[Object-centric conditioning]
+    A --> V[Compact latent video denoiser]
+    C --> V
+    V --> H[Trajectory and collision heads]
+    V --> O[Decode four sampled futures]
+    O --> E[Metrics and interactive comparison]
+    S --> E
+```
+
+## Planned experiments
+
+| ID | Variant | Purpose |
+|---|---|---|
+| E0 | Conditional VAE with first frame, selected mask, and numeric action | Low-cost generative baseline |
+| E1 | First-frame-only video diffusion | Measure what happens without action information |
+| E2 | Diffusion with first frame, selected mask, and numeric action | Isolate spatial action encoding from target identification |
+| E3 | E2 + spatial action conditioning | Test the proposed conditioning module |
+| E4 | E3 + trajectory/collision supervision | Test the effect of auxiliary physics supervision |
+
+Compare ADE/FDE, collision accuracy and F1, SSIM/LPIPS, motion-aware temporal consistency, and trajectory diversity. Evaluate held-out shapes, textures, and force magnitudes separately. [Evaluation details](docs/EVALUATION.md) define fairness controls and the limits of each metric.
+
+## Four workstreams
+
+These are work packages, not assignments. One person may own multiple packages; each issue should have one lead and a reviewer.
+
+| Workstream | Main responsibility | Owner |
+|---|---|---|
+| A — Simulator and data | Physics, rendering, labels, splits, ground-truth replay | Unassigned |
+| B — Generative models | Autoencoder, CVAE, diffusion baselines, action module | Unassigned |
+| C — Evaluation and experiments | Metrics, supervision integration, ablations, analysis | Unassigned |
+| D — Integration and delivery | Demo, reproducibility, compute coordination, report assembly | Unassigned |
+
+Everyone contributes their methods, results, and limitations to the report. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
+
+## Milestones
+
+| Target date (Singapore time) | Exit condition |
+|---|---|
+| 11 Oct | Requirements, data contract, and compute feasibility agreed |
+| 18 Oct | Deterministic simulator, versioned data, metrics smoke test |
+| 25 Oct | CVAE and compact diffusion baselines train and sample at 64px |
+| 1 Nov | Spatial conditioning and auxiliary heads integrated; ablation settings frozen |
+| 8 Nov | Core evaluation complete; demo and report draft ready |
+| 14 Nov | Reproducible submission, final report, slides, and backup demo ready |
+
+These are proposed internal dates. The 14 November deadline comes from the supplied instructor correspondence; the exact course requirements still need checking.
+
+## Repository layout
+
+```text
+.github/             Issue and pull-request templates
+docs/                Scope, task board, roadmap, interfaces, evaluation, compute
+src/click2future/     Planned Python implementation modules
+configs/             Planned simulator/model/experiment configurations
+experiments/         Run manifest template and experiment records
+results/             Small result tables and report figures
+app/                 Planned interactive demo
+tests/               Planned simulator, contract, and model smoke tests
+```
+
+There is no training command or dependency lockfile yet. The environment and runnable commands will be added in T03 after the GPU/software constraints are confirmed. Do not interpret the directory scaffold as working model code.
+
+## First team meeting
+
+- Assign T01–T04 and a reviewer for each; confirm the course requirements and GPU application.
+- Agree on the action semantics and dataset contract before generating the main dataset.
+- Claim the remaining issues by workstream and check their dependencies.
+- Use the 64px pilot to decide the dataset and training budget; keep 128px optional.
+
+## Context and references
+
+In the supplied 5 October 2026 email, Prof. Xingang Pan supported the Click2Future direction, noted that TC2 GPU Cluster resources are available for MSc coursework through the course application process, and recommended a modest model and experimental scope. An allocation has **not** been confirmed.
+
+- [BAIR robot-pushing dataset](https://www.tensorflow.org/datasets/catalog/bair_robot_pushing_small): a related action/video dataset; the TFDS catalog lists 43,264 training sequences at 64×64. It is background context, not our planned training dataset.
+- [BudgetGate repository](https://github.com/shrijeet-maiti-burner/ai6101-budgetgate): inspiration for the documentation-first team workflow. Click2Future is a separate project and repository.
+
+## Results
+
+No experiments have been run. Add measured results with run IDs, configs, seeds, and checkpoint references to [results/](results/).

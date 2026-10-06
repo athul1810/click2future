@@ -1,0 +1,377 @@
+[
+  {
+    "id": "T01",
+    "title": "Confirm course requirements and freeze scope",
+    "workstream": "planning",
+    "milestone": "M1",
+    "dependencies": [],
+    "outcome": "Record the official course constraints and agree on a modest, testable project.",
+    "acceptance": [
+      "Complete the course-site checklist in docs/REQUIREMENTS.md, including the exact deadline cutoff.",
+      "Confirm the research question, core deliverables, and optional features.",
+      "Record decisions and unresolved questions in docs/DECISIONS.md."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T02",
+    "title": "Confirm TC2 access and record the compute budget",
+    "workstream": "infrastructure",
+    "milestone": "M1",
+    "dependencies": [],
+    "outcome": "Establish the hardware and scheduling limits before promising training runs.",
+    "acceptance": [
+      "Check the coursework GPU application and record allocation status.",
+      "Record GPU/VRAM, job duration, storage, and software constraints in docs/COMPUTE.md.",
+      "Define a profiling plan and fallback if allocation remains pending."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T03",
+    "title": "Create a reproducible development environment",
+    "workstream": "infrastructure",
+    "milestone": "M1",
+    "dependencies": [
+      "T02"
+    ],
+    "outcome": "Make setup reproducible on the development machine and allocated training hardware.",
+    "acceptance": [
+      "Add a dependency manifest and tested setup instructions with exact versions.",
+      "Add a small environment/device check and document CPU versus GPU workflows.",
+      "Select artifact locations and a configuration format; keep credentials out of Git.",
+      "Document working commands as modules are implemented; mark unavailable commands clearly."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T04",
+    "title": "Freeze simulator, action, and dataset interfaces",
+    "workstream": "data",
+    "milestone": "M1",
+    "dependencies": [
+      "T01"
+    ],
+    "outcome": "Let simulator, model, and evaluation work proceed against one agreed contract.",
+    "acceptance": [
+      "Finalize units, axis conventions, force duration, friction law, frame timing, and collision event semantics.",
+      "Finalize tensor shapes, object identity/padding, metadata, and conditioning inputs in docs/ARCHITECTURE.md.",
+      "Define scene_group_id and condition_id, including identical-first-frame uncertainty groups.",
+      "Provide a small fixture or schema example that downstream components can consume."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T05",
+    "title": "Implement the seeded 64px tabletop simulator",
+    "workstream": "data",
+    "milestone": "M2",
+    "dependencies": [
+      "T03",
+      "T04"
+    ],
+    "outcome": "Generate repeatable tabletop clips with usable physical labels.",
+    "acceptance": [
+      "Render 2\u20134 objects with randomized supported shapes/textures, mass, and friction.",
+      "Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.",
+      "Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.",
+      "Provide sample clips and a documented generation/replay command."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T06",
+    "title": "Build versioned datasets and leakage-safe splits",
+    "workstream": "data",
+    "milestone": "M2",
+    "dependencies": [
+      "T05"
+    ],
+    "outcome": "Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.",
+    "acceptance": [
+      "Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.",
+      "Split by scene_group_id; keep all actions and physics variants of a visible scene together.",
+      "Create ID, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests.",
+      "Check identical initial inputs within condition_id and independence of hidden physics from appearance.",
+      "Publish dataset/schema versions, split hashes, and download or generation instructions."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T07",
+    "title": "Implement and validate the evaluation pipeline",
+    "workstream": "evaluation",
+    "milestone": "M2",
+    "dependencies": [
+      "T04",
+      "T05"
+    ],
+    "outcome": "Measure generated video behavior consistently across models.",
+    "acceptance": [
+      "Implement ADE/FDE, collision accuracy/precision/recall/F1, and image/temporal/diversity metrics.",
+      "Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.",
+      "Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.",
+      "Separate video-derived metrics from auxiliary-head metrics and export machine-readable records."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T08",
+    "title": "Train and validate the shared frame autoencoder",
+    "workstream": "model",
+    "milestone": "M3",
+    "dependencies": [
+      "T03",
+      "T06"
+    ],
+    "outcome": "Obtain a compact latent representation that preserves object geometry.",
+    "acceptance": [
+      "Implement or select a permitted autoencoder and record architecture/weight provenance.",
+      "Inspect reconstruction quality on ID and held-out appearance cases.",
+      "Record memory, throughput, latent shapes, and a checkpoint with checksum.",
+      "Freeze and share the selected autoencoder across diffusion comparisons."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T09",
+    "title": "Train the conditional VAE baseline E0",
+    "workstream": "model",
+    "milestone": "M3",
+    "dependencies": [
+      "T03",
+      "T06"
+    ],
+    "outcome": "Establish a lower-cost generative baseline with the agreed action inputs.",
+    "acceptance": [
+      "Condition on the first frame, selected-object mask, and numeric force.",
+      "Pass a tiny-batch overfit check and produce four seeded samples per condition.",
+      "Log validation results, model size, training cost, and checkpoint selection.",
+      "Add a run manifest and qualitative successes/failures."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T10",
+    "title": "Implement first-frame and numeric-action diffusion E1/E2",
+    "workstream": "model",
+    "milestone": "M3",
+    "dependencies": [
+      "T08"
+    ],
+    "outcome": "Create the common diffusion backbone and the main numeric-action baseline.",
+    "acceptance": [
+      "Implement latent video training and sampling with a shared backbone/configuration.",
+      "Support first-frame-only E1 and selected-mask-plus-numeric-force E2.",
+      "Pass forward/backward, tiny-batch overfit, and checkpoint resume checks.",
+      "Measure 64px peak VRAM, seconds/step, and four-sample inference latency.",
+      "Record baseline samples and proposed run budgets."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T11",
+    "title": "Implement object-centric spatial conditioning E3",
+    "workstream": "model",
+    "milestone": "M4",
+    "dependencies": [
+      "T10",
+      "T04"
+    ],
+    "outcome": "Test whether localizing the action improves physical action adherence.",
+    "acceptance": [
+      "Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.",
+      "Keep target identification available in E2 so E2-to-E3 isolates the spatial module.",
+      "Check selected-object changes, zero action, and reversed action with fixed sampling seeds.",
+      "Record added parameter count, ablation switch, and working E3 training/sampling."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T12",
+    "title": "Add trajectory and collision supervision E4",
+    "workstream": "model",
+    "milestone": "M4",
+    "dependencies": [
+      "T11",
+      "T07"
+    ],
+    "outcome": "Test whether physical supervision improves decoded future behavior.",
+    "acceptance": [
+      "Predict trajectories and object-pair collision probabilities from denoiser features.",
+      "Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.",
+      "Keep oracle trajectories/collisions/physics out of inference conditioning.",
+      "Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.",
+      "Report head predictions separately from generated-video tracking metrics."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T13",
+    "title": "Freeze experiment settings and decide the 128px gate",
+    "workstream": "evaluation",
+    "milestone": "M4",
+    "dependencies": [
+      "T07",
+      "T09",
+      "T10",
+      "T11",
+      "T12"
+    ],
+    "outcome": "Commit to a comparable experiment suite that fits the remaining budget.",
+    "acceptance": [
+      "Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.",
+      "Use measured costs to allocate training/evaluation hours and retry reserve.",
+      "Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.",
+      "Record all selected settings and validation-only tuning decisions."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T14",
+    "title": "Run and analyze the core E0\u2013E4 comparisons",
+    "workstream": "evaluation",
+    "milestone": "M5",
+    "dependencies": [
+      "T13"
+    ],
+    "outcome": "Produce the main evidence for conditioning and supervision claims.",
+    "acceptance": [
+      "Run the five variants under the frozen protocol and record actual budgets/seed counts.",
+      "Compare E2-to-E3 and E3-to-E4 with quality, physical behavior, and cost metrics.",
+      "Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.",
+      "Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T15",
+    "title": "Evaluate held-out shapes, textures, and forces",
+    "workstream": "evaluation",
+    "milestone": "M5",
+    "dependencies": [
+      "T13"
+    ],
+    "outcome": "Measure which action-conditioned behaviors generalize beyond training.",
+    "acceptance": [
+      "Evaluate separate OOD suites while controlling the other factors.",
+      "Use frozen checkpoints and metrics without test-set tuning.",
+      "Compare against ID performance and include tracker failure rates.",
+      "Save representative successes/failures and state generalization limits."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T16",
+    "title": "Evaluate hidden-physics uncertainty and action controls",
+    "workstream": "evaluation",
+    "milestone": "M5",
+    "dependencies": [
+      "T13"
+    ],
+    "outcome": "Distinguish physically meaningful uncertainty from visual noise.",
+    "acceptance": [
+      "Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.",
+      "Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.",
+      "Evaluate zero force, reversed force, and selected-object changes.",
+      "Present quality/adherence alongside diversity and clearly label single-reference metrics."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T17",
+    "title": "Build the interactive four-future comparison demo",
+    "workstream": "demo",
+    "milestone": "M5",
+    "dependencies": [
+      "T04",
+      "T05",
+      "T10"
+    ],
+    "outcome": "Make the model and simulator comparison understandable and repeatable.",
+    "acceptance": [
+      "Support preset scenes and synthetic-domain image input with selected-object masks.",
+      "Map drag arrows to the agreed force convention and generate four seeded futures.",
+      "Show simulator ground truth only when scene metadata exists.",
+      "Label the friction slider as simulator-only for hidden-physics checkpoints.",
+      "Add trajectory overlays, loading/error states, and a documented launch path."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T18",
+    "title": "Prepare the report draft and evidence figures",
+    "workstream": "delivery",
+    "milestone": "M5",
+    "dependencies": [
+      "T01",
+      "T13"
+    ],
+    "outcome": "Assemble the research narrative while experiments finish.",
+    "acceptance": [
+      "Draft the question, related work with primary references, method, and experiment protocol.",
+      "Create table/figure slots tied to E0\u2013E4, OOD, uncertainty, compute, and limitations.",
+      "Insert measured findings from T14\u2013T16 as available; mark pending results explicitly.",
+      "Collect method and contribution notes from each workstream."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T19",
+    "title": "Verify reproducibility and freeze the submission artifacts",
+    "workstream": "delivery",
+    "milestone": "M6",
+    "dependencies": [
+      "T14",
+      "T15",
+      "T16",
+      "T17"
+    ],
+    "outcome": "Ensure another teammate can reproduce the core workflow and use the final checkpoints.",
+    "acceptance": [
+      "Run a clean-environment setup, simulator replay, checkpoint load, and sampling smoke test.",
+      "Verify configs, split hashes, artifact paths/checksums, and actual run commands.",
+      "Freeze final tables/figures and record limitations or omitted optional experiments.",
+      "Record a backup demo and check the interface on the presentation machine."
+    ],
+    "owner": null,
+    "status": "Not started"
+  },
+  {
+    "id": "T20",
+    "title": "Finalize report, slides, and submission package",
+    "workstream": "delivery",
+    "milestone": "M6",
+    "dependencies": [
+      "T18",
+      "T19"
+    ],
+    "outcome": "Deliver the project against the confirmed course requirements.",
+    "acceptance": [
+      "Finalize conclusions using measured results, include failures and contribution statements.",
+      "Complete references, formatting, figures, and presentation rehearsal.",
+      "Check required code/checkpoints/report/slides/video artifacts against the official rubric.",
+      "Submit by the confirmed 14 November cutoff and record the submission receipt."
+    ],
+    "owner": null,
+    "status": "Not started"
+  }
+]

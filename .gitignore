@@ -1,0 +1,47 @@
+# Python and environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# Secrets and local machine state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+.idea/
+.vscode/
+.ipynb_checkpoints/
+
+# Generated research artifacts
+data/
+datasets/
+checkpoints/
+outputs/
+runs/
+wandb/
+lightning_logs/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+*.npy
+*.h5
+*.hdf5
+*.mp4
+*.gif
+
+# Demo dependencies
+node_modules/
+
