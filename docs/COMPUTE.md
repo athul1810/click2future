@@ -1,21 +1,35 @@
 # Compute and feasibility
 
-**Allocation status: pending confirmation.** The instructor directed the team to the TC2 GPU Cluster coursework application on the course site. GPU type, VRAM, hours, queue policy, and storage are unknown.
+**Training resource: the course-provided TC2 GPU Cluster.** CCDS has made TC2 available to MSAI, MSDS, and MSCS students for course-related work. The team will use this resource for training.
+
+## Application and access
+
+Complete the application form attached to the course announcement and email it to [CCDS GPU Support](mailto:ccdsgpu-tc@ntu.edu.sg).
+
+- [ ] Obtain the application form attached to the course announcement and read its instructions.
+- [ ] Complete and send the form to `ccdsgpu-tc@ntu.edu.sg`.
+- [ ] Record the submission and access status in T02; keep personal application details and credentials outside the repository.
+- [ ] Follow the access instructions received from support and verify a small GPU job.
+
+The form contents and the team's application/access status have not been recorded here. Do not mark the application submitted or access enabled until the team confirms it.
+
+Local CPU work can cover simulation, data preparation, and development checks while TC2 access is arranged. Size training experiments to the TC2 capacity and quota assigned to the team.
 
 ## Record before scheduling training
 
 | Item | Confirmed value |
 |---|---|
-| GPU model / count / VRAM | Pending |
-| Allocation and expiry | Pending |
-| Maximum job duration / concurrent jobs | Pending |
-| CUDA, driver, Python, framework | Pending |
-| Dataset / checkpoint storage and quota | Pending |
-| Access procedure and scheduler | Pending; keep credentials outside Git |
+| Training resource | TC2 GPU Cluster, confirmed course resource |
+| GPU model / count / VRAM | To record from the TC2 assignment |
+| Usage quota and expiry | To record |
+| Maximum job duration / concurrent jobs | To record |
+| CUDA, driver, Python, framework | To record |
+| Dataset / checkpoint storage and quota | To record |
+| Access procedure and scheduler | To document; keep credentials outside Git |
 
 ## Profiling sequence
 
-1. Confirm the environment and run a device/memory smoke check.
+1. Run a device/memory smoke check on TC2 and record the environment.
 2. Generate a small simulator dataset on CPU; measure samples/second and bytes/clip.
 3. Train the frame autoencoder on a small subset and inspect reconstruction of object boundaries.
 4. Overfit a tiny fixed video batch to check the model and loss plumbing.

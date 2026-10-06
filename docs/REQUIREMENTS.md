@@ -11,10 +11,11 @@
 - Scope starts at 64px; 128px is conditional on feasibility.
 - Deadline: 14 November 2026, based on the supplied correspondence.
 - All task owners are initially unassigned.
+- Model training will use the course-provided TC2 GPU Cluster, as confirmed by the team.
 
 ## Instructor guidance
 
-The supplied 5 October email recommends Click2Future with modest model and experimental scope. It points to the TC2 GPU Cluster application details on the course site. This does not establish that the team has received GPUs or a particular quota.
+The instructor recommends Click2Future with modest model and experimental scope. The course announcement provides TC2 GPU access for MSc coursework through an application form sent to `ccdsgpu-tc@ntu.edu.sg`. T02 covers that process; record the assigned hardware and quota after receiving access details.
 
 ## Working design choices to confirm in T01/T04
 
@@ -36,7 +37,7 @@ These are proposed engineering defaults, not course requirements. Record the fin
 - [ ] Confirm report page limit, presentation format, and required deliverables.
 - [ ] Confirm rules for pretrained models, external datasets, and AI-assisted work.
 - [ ] Confirm team-member details and contribution reporting.
-- [ ] Record compute allocation, storage quota, job limits, and software environment.
+- [ ] Record TC2 application/access status, assigned GPU model, memory, quota, storage, job limits, and software environment.
 
 ## Completion criteria
 

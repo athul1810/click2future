@@ -16,14 +16,15 @@
   },
   {
     "id": "T02",
-    "title": "Confirm TC2 access and record the compute budget",
+    "title": "Complete TC2 application and record access details",
     "workstream": "infrastructure",
     "dependencies": [],
-    "outcome": "Establish the hardware and scheduling limits before promising training runs.",
+    "outcome": "Arrange access to the course-provided TC2 GPU Cluster and document its training limits.",
     "acceptance": [
-      "Check the coursework GPU application and record allocation status.",
-      "Record GPU/VRAM, job duration, storage, and software constraints in docs/COMPUTE.md.",
-      "Define a profiling plan and fallback if allocation remains pending."
+      "Obtain and complete the application form attached to the course announcement; send it to ccdsgpu-tc@ntu.edu.sg following the form instructions.",
+      "Record application and access status, then verify a small GPU job after support provides access instructions; keep personal details and credentials outside Git.",
+      "Record the assigned GPU model/VRAM, usage quota, job duration, storage, and software constraints in docs/COMPUTE.md.",
+      "Define a profiling plan and size the model and experiments for the assigned TC2 resources."
     ],
     "owner": null,
     "status": "Not started",
@@ -34,10 +35,10 @@
     "title": "Create a reproducible development environment",
     "workstream": "infrastructure",
     "dependencies": [],
-    "outcome": "Make the CPU development environment reproducible, then document the GPU setup as access becomes available.",
+    "outcome": "Make the CPU development environment reproducible and document training setup on TC2.",
     "acceptance": [
       "Add a dependency manifest and tested setup instructions with exact versions.",
-      "Add an environment/device check; verify CPU setup without waiting for T02 and record GPU checks as pending until hardware is available.",
+      "Add an environment/device check; verify CPU setup independently and validate TC2 setup after access details are recorded in T02.",
       "Select artifact locations and a configuration format; keep credentials out of Git.",
       "Document working commands as modules are implemented; mark unavailable commands clearly."
     ],

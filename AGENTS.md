@@ -6,4 +6,5 @@
 - Apply the same writing style to documentation, commit messages, issues, pull requests, and milestones.
 - Keep task owners unassigned unless the user specifies an assignment.
 - Keep only the 14 November 2026 submission deadline. Do not add intermediate milestones or task dates unless the user asks.
+- Use the course-provided TC2 GPU Cluster for model training. Fit the experiment plan to its capacity and usage limits.
 - This repository is Click2Future. BudgetGate is a reference only; do not modify it as part of this project.

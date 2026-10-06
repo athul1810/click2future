@@ -12,6 +12,8 @@ Click2Future is our NTU Generative AI course project. We plan to train a small v
 
 **Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
+**Compute:** use the course-provided TC2 GPU Cluster. Apply using the course form, then record the GPU model, memory, and usage limits before setting the training budget.
+
 ## Start here
 
 | If you want to… | Read… |
@@ -117,14 +119,14 @@ Setup and training commands will be added in T03 once the environment is tested.
 
 ## First team meeting
 
-- Assign T01-T03 and reviewers; start T04 after the scope decision. Confirm the course requirements and GPU application.
+- Assign T01-T03 and reviewers; start T04 after the scope decision. Check the course requirements and complete the TC2 application/access setup.
 - Agree on the action semantics and dataset contract before generating the main dataset.
 - Claim the remaining issues by workstream and check their dependencies.
 - Use the 64px pilot to decide the dataset and training budget; keep 128px optional.
 
 ## Context and references
 
-In the supplied 5 October 2026 email, Prof. Xingang Pan supported the Click2Future direction, noted that TC2 GPU Cluster resources are available for MSc coursework through the course application process, and recommended a modest model and experimental scope. An allocation has **not** been confirmed.
+Prof. Xingang Pan supported Click2Future and recommended a modest model and experimental scope. The course announcement makes the TC2 GPU Cluster available to MSc students for coursework. To request access, complete the attached course application form and send it to [CCDS GPU Support](mailto:ccdsgpu-tc@ntu.edu.sg). The team will use TC2 for training. See [the compute guide](docs/COMPUTE.md) for the application checklist.
 
 - [BAIR robot-pushing dataset](https://www.tensorflow.org/datasets/catalog/bair_robot_pushing_small): a related action/video dataset; the TFDS catalog lists 43,264 training sequences at 64×64. It is background context, not our planned training dataset.
 - [Research references](docs/REFERENCES.md): primary sources for the baselines, diffusion models, and evaluation metrics.

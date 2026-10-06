@@ -24,7 +24,7 @@ This diagram shows the main model-training path. The [task board](TASKS.md) list
 
 ## Checkpoints
 
-**Compute and setup.** Record actual GPU access and a first memory/throughput estimate. If allocation is pending, keep CPU simulator and contract work moving and identify a compute fallback without assuming access.
+**Compute and setup.** Complete the TC2 application and access setup, then measure memory use and throughput. Continue CPU simulator and data-contract work while arranging access. Adjust model and experiment size to the assigned TC2 capacity.
 
 **Check the 64px baseline.** Require a small-batch overfit check, interpretable reconstructions, valid samples, and measured training cost. Debug data/model issues before launching the ablation suite.
 

@@ -2,15 +2,15 @@
 
 All tasks start **unassigned**. Assign leads and reviewers in [GitHub Issues](https://github.com/athul1810/click2future/issues); that is the live source of ownership and progress. This file records the initial scope and dependencies.
 
-Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup does not depend on GPU allocation. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
+Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup can proceed while TC2 access is being arranged. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
 
-Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. GPU validation is recorded under T02/T03 when hardware becomes available.
+Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. T02/T03 cover the TC2 application, access setup, and GPU validation.
 
 
 | ID | Task | Workstream | Depends on | Initial owner |
 |---|---|---|---|---|
 | T01 | [Confirm course requirements and freeze scope](https://github.com/athul1810/click2future/issues/1) | planning | None | Unassigned |
-| T02 | [Confirm TC2 access and record the compute budget](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
+| T02 | [Complete TC2 application and record access details](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | None | Unassigned |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | T01 | Unassigned |
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | T03, T04 | Unassigned |
@@ -46,26 +46,27 @@ Record the official course constraints and agree on a modest, testable project.
 
 <a id="t02"></a>
 
-### T02: Confirm TC2 access and record the compute budget
+### T02: Complete TC2 application and record access details
 
-Establish the hardware and scheduling limits before promising training runs.
+Arrange access to the course-provided TC2 GPU Cluster and document its training limits.
 
 **Dependencies:** None · **Owner:** Unassigned
 
-- [ ] Check the coursework GPU application and record allocation status.
-- [ ] Record GPU/VRAM, job duration, storage, and software constraints in docs/COMPUTE.md.
-- [ ] Define a profiling plan and fallback if allocation remains pending.
+- [ ] Obtain and complete the application form attached to the course announcement; send it to ccdsgpu-tc@ntu.edu.sg following the form instructions.
+- [ ] Record application and access status, then verify a small GPU job after support provides access instructions; keep personal details and credentials outside Git.
+- [ ] Record the assigned GPU model/VRAM, usage quota, job duration, storage, and software constraints in docs/COMPUTE.md.
+- [ ] Define a profiling plan and size the model and experiments for the assigned TC2 resources.
 
 <a id="t03"></a>
 
 ### T03: Create a reproducible development environment
 
-Make the CPU development environment reproducible, then document the GPU setup as access becomes available.
+Make the CPU development environment reproducible and document training setup on TC2.
 
 **Dependencies:** None · **Owner:** Unassigned
 
 - [ ] Add a dependency manifest and tested setup instructions with exact versions.
-- [ ] Add an environment/device check; verify CPU setup without waiting for T02 and record GPU checks as pending until hardware is available.
+- [ ] Add an environment/device check; verify CPU setup independently and validate TC2 setup after access details are recorded in T02.
 - [ ] Select artifact locations and a configuration format; keep credentials out of Git.
 - [ ] Document working commands as modules are implemented; mark unavailable commands clearly.
 
