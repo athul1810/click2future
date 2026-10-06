@@ -8,7 +8,7 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 
 **Status:** project setup. The simulator, models, and demo still need to be built.
 
-**Working deadline:** 14 November 2026, retained by the team until confirmed. The supplied PDF lists 16 November; see [submission details](docs/SUBMISSION.md).
+**Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
 **Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
@@ -112,8 +112,6 @@ One submission per group through NTULearn, containing exactly:
 
 Replace `XX` with the confirmed group ID. No cloud-hosted substitutes or external links in the submitted material. Follow the [submission guide](docs/SUBMISSION.md); do not ZIP the working repository wholesale.
 
-Keep **14 November 2026** as the working deadline until the team confirms the PDF's 16 November date. Intermediate milestones and task dates have not been set.
-
 ## Repository layout
 
 ```text
@@ -136,13 +134,9 @@ Setup and training commands will be added in T03 once the environment is tested.
 - Claim the remaining issues by workstream and check their dependencies.
 - Use the 64px pilot to decide the dataset and training budget; keep 128px optional.
 
-## Context and references
+## References
 
-Prof. Xingang Pan supported Click2Future and recommended a modest model and experimental scope. The course announcement makes the TC2 GPU Cluster available to MSc students for coursework. To request access, complete the attached course application form and send it to [CCDS GPU Support](mailto:ccdsgpu-tc@ntu.edu.sg). The team will use TC2 for training. See [the compute guide](docs/COMPUTE.md) for the application checklist.
-
-- [BAIR robot-pushing dataset](https://www.tensorflow.org/datasets/catalog/bair_robot_pushing_small): a related action/video dataset; the TFDS catalog lists 43,264 training sequences at 64×64. It is background context, not our planned training dataset.
-- [Research references](docs/REFERENCES.md): primary sources for the baselines, diffusion models, and evaluation metrics.
-- [BudgetGate repository](https://github.com/shrijeet-maiti-burner/ai6101-budgetgate): inspiration for the documentation-first team workflow. Click2Future is a separate project and repository.
+See [Research references](docs/REFERENCES.md) for the baselines, diffusion models, and evaluation metrics.
 
 ## Results
 

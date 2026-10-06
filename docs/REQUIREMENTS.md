@@ -1,6 +1,6 @@
 # Course requirements and project scope
 
-Source: `course project technical review.pdf`, supplied by the team. Page numbers refer to that 11-page document. The accompanying submission instructions confirm the filenames and exclusions.
+Source: `course project technical review.pdf`. Page numbers refer to the 11-page course brief.
 
 ## Confirmed course requirements
 
@@ -8,7 +8,7 @@ Source: `course project technical review.pdf`, supplied by the team. Page number
 |---|---|---|
 | AI6132 Generative AI For Visual Synthesis, Project 1: Technical Review | Pages 1-2 | Review and compare action-conditioned video generation methods |
 | Up to four members; use full names as on student cards | Page 2 | Record the confirmed roster and group ID in T01 |
-| First person listed in the group is the coordinator | Page 2 | Record the existing coordinator; do not assign one automatically |
+| First person listed in the group is the coordinator | Page 2 | Record the coordinator from the course group form |
 | Identify a visual generation task | Page 6 | Generate tabletop futures from an initial image and an applied force |
 | At least one evaluation dataset; subsets and self-built datasets are allowed | Page 7 | Procedural tabletop dataset with independent scene splits |
 | Compare at least two methods; existing and proposed methods are allowed | Page 7 | CVAE and video diffusion, with E1-E4 ablations |
@@ -24,13 +24,13 @@ The PDF does not require a novel method, five variants, 128px generation, slides
 
 ## Deadline
 
-Keep **14 November 2026** as the working deadline, as requested by the team. Page 5 of the PDF lists **16 November 2026**. Confirm the discrepancy and exact cutoff on NTULearn before changing the single GitHub deadline. No intermediate dates are set.
+**Working deadline: 14 November 2026.** The course brief lists 16 November; confirm the exact cutoff on NTULearn. See [SUBMISSION.md](SUBMISSION.md).
 
 ## Rubric and teamwork
 
 Page 9 asks for a clear task/method explanation, good organization, thorough comparison and analysis, insightful discussion, useful visualizations, challenging methods or applications, and discussion or implementation of improvements. It gives no numerical weights.
 
-Everyone must contribute and communicate with the group. Page 10 includes a policy to report a member's refusal to contribute to the instructors at least six weeks before submission. Keep contribution records throughout the project and read that policy if a team issue arises. This repository does not send reports or contact anyone automatically.
+Everyone must contribute and communicate with the group. Page 10 includes a policy to report a member's refusal to contribute to the instructors at least six weeks before submission. Keep contribution records throughout the project and refer to that policy if a team issue arises.
 
 ## Click2Future scope
 
@@ -40,7 +40,6 @@ Everyone must contribute and communicate with the group. Page 10 includes a poli
 - Use hidden mass and friction to study uncertainty across four sampled futures.
 - Start at 64px; consider 128px only after profiling.
 - Use the course-provided TC2 GPU Cluster for training.
-- Keep task owners unassigned until the team allocates work.
 
 ## Working design choices
 
@@ -59,7 +58,7 @@ Finalize values and units in T04. These are engineering choices, not requirement
 
 - [ ] Group ID, full member names, and the coordinator listed in the group form.
 - [ ] Deadline discrepancy, exact cutoff/timezone, and live NTULearn submission link.
-- [ ] Any additional report template, page maximum, file-size limit, or updated instructions on NTULearn; none is specified in the supplied PDF.
+- [ ] Any additional report template, page maximum, file-size limit, or updated instructions on NTULearn; none is specified in the course brief.
 - [ ] Rules on pretrained weights and AI-assisted work, if given elsewhere; the PDF's ban concerns submitted datasets and model files.
 - [ ] TC2 application/access status, assigned hardware, quota, and software environment.
 

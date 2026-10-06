@@ -43,9 +43,9 @@ Apply the AI6132 technical-review requirements and record the remaining group an
 
 **Dependencies:** None · **Owner:** Unassigned
 
-- [ ] Record the group ID, full student-card names, and existing group coordinator; keep task owners unassigned until the team allocates work.
-- [ ] Confirm the live NTULearn cutoff and discrepancy between the working 14 November date and the PDF's 16 November date; retain 14 November until the team confirms a change.
-- [ ] Check for any additional course instructions beyond the supplied PDF; use docs/REQUIREMENTS.md for the confirmed minimum requirements.
+- [ ] Record the group ID, full student-card names, and coordinator from the course group form.
+- [ ] Confirm the NTULearn cutoff and resolve the difference between the working 14 November date and the course brief's 16 November date.
+- [ ] Check NTULearn for additional instructions and use docs/REQUIREMENTS.md for the confirmed minimum requirements.
 - [ ] Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan.
 
 <a id="t02"></a>

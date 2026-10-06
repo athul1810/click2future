@@ -1,10 +1,10 @@
 # Submission guide
 
-Source: `course project technical review.pdf`, pages 4-5 and 8, plus the submission instructions supplied by the team.
+Source: `course project technical review.pdf`, pages 4-5 and 8, and the course submission instructions.
 
 ## Files to submit
 
-Submit exactly these three files for the group. Replace `XX` with the assigned group ID; do not guess it.
+Submit these three files for the group. Replace `XX` with the assigned group ID.
 
 | Filename | Contents |
 |---|---|
@@ -14,7 +14,7 @@ Submit exactly these three files for the group. Replace `XX` with the assigned g
 
 One group makes one submission through **NTULearn > course site > Assignments > submission link for Project 1**. The PDF allows replacement submissions without a stated limit. Coordinate uploads through the group coordinator.
 
-**Working deadline: 14 November 2026.** The team asked to retain this date until confirmed, although page 5 of the PDF says 16 November 2026. Check the live cutoff before submitting. Only one deadline is tracked in GitHub.
+**Working deadline: 14 November 2026.** Page 5 of the course brief lists 16 November 2026. Confirm the discrepancy and exact cutoff on NTULearn before submitting.
 
 ## Report
 
@@ -30,7 +30,7 @@ Use [REPORT_OUTLINE.md](REPORT_OUTLINE.md) to draft the report. The PDF gives no
 
 State the group ID and every member's full name as shown on the student card. Describe what each person actually implemented, evaluated, analyzed, or wrote. Include code/module names, experiment IDs, or report sections as evidence without external links.
 
-Use [CONTRIBUTION_TEMPLATE.md](CONTRIBUTION_TEMPLATE.md). Do not invent equal shares or contribution percentages. Let each member review the final description before exporting the PDF.
+Use [CONTRIBUTION_TEMPLATE.md](CONTRIBUTION_TEMPLATE.md). Each member should review their contribution description before the PDF is exported.
 
 ## Source-code ZIP
 
@@ -60,4 +60,4 @@ Code comments are optional according to page 5. Existing useful comments do not 
 - [ ] Ensure assessed results are included in the report and require no external link.
 - [ ] Upload the three files as one group submission and record the NTULearn receipt privately.
 
-Slides and a separate demo video are not required uploads in the supplied instructions. Keep optional presentation material in the team's working files unless the course later requests it. No final submission package has been built yet.
+Slides and a separate demo video are not required uploads. Keep optional presentation material in the team's working files unless the course later requests it.

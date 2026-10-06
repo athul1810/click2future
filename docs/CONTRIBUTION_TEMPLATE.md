@@ -16,7 +16,7 @@ Use the coordinator already listed in the course group form. List every member u
 |---|---|---|---|---|
 | TO FILL | | | | Local file/module names, experiment IDs, report sections |
 
-Add one row per member, up to the course maximum of four. Add a short paragraph for shared work if needed. Describe individual responsibilities accurately; do not invent percentages or assume everyone did the same work.
+Add one row per member, up to the course maximum of four. Describe individual responsibilities and add a short paragraph for shared work if needed.
 
 Before exporting:
 

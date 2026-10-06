@@ -1,14 +1,10 @@
 # Decision log
 
-## D001: Project and repository scope: 7 October 2026
+## D001: Initial technical scope: 7 October 2026
 
-- Decision: use Click2Future as the working GenAI project and create a separate private repository.
-- Basis: the supplied project brief, instructor feedback, and team request.
-- Repository: `athul1810/click2future`; BudgetGate is a workflow reference only.
-- Initial state: planning documents and empty implementation folders; no trained models yet.
-- Ownership: all task owners unassigned.
-- Compute: use the course-provided TC2 GPU Cluster. Submit the course application form to CCDS GPU Support and record access status, hardware, and usage limits in T02.
-- Scope: start at 64px; gate 128px on measured feasibility.
+- Compare a conditional VAE and video diffusion for action-conditioned tabletop futures.
+- Test spatial action conditioning and auxiliary trajectory/collision supervision separately.
+- Start at 64px; consider 128px after profiling on TC2.
 
 ## Pending decisions
 
@@ -23,13 +19,7 @@
 
 ## D008: Course brief and submission format: 7 October 2026
 
-- Source: the supplied `course project technical review.pdf` and accompanying submission instructions.
-- Course: AI6132 Generative AI For Visual Synthesis, Project 1: Technical Review.
-- Minimum: two methods, one evaluation dataset, and a report of at least four pages with the required analysis.
-- Submit one group package consisting of `group_XX_report.pdf`, `group_XX_contribution.pdf`, and `group_XX_code.zip`.
-- Exclude datasets, model files, external links, and cloud-hosted substitutes from the submitted artifacts.
-- Keep 14 November as the working deadline at the user's request until the discrepancy with the PDF's 16 November date is confirmed.
-- Group ID and coordinator remain to be recorded. Slides and a separate demo video are not required by the supplied instructions.
+Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.md). Submit the report PDF, contribution PDF, and source-code ZIP as described in [SUBMISSION.md](SUBMISSION.md). The custom method and demo are project choices, not extra required uploads.
 
 ## New decision template
 

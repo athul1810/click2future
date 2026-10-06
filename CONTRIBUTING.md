@@ -1,11 +1,5 @@
 # Contributing
 
-## Writing and commits
-
-Use plain language and short, specific descriptions. Avoid em dashes, slogans, and filler. Keep research claims tied to actual results.
-
-Check the commit author before pushing. Use your configured Git identity without assistant or bot co-author trailers.
-
 ## Claim and scope work
 
 1. Open the [task board](docs/TASKS.md) and choose an unassigned issue whose dependencies are ready.
@@ -13,8 +7,6 @@ Check the commit author before pushing. Use your configured Git identity without
 3. Add a short implementation plan and identify any interface changes before coding.
 4. Create a branch such as `feat/t05-simulator` or `docs/t01-course-requirements`.
 5. Open a pull request linking the task (`Closes #...`) with the relevant evidence.
-
-Owners are intentionally blank in the initial scaffold. Repository access must be granted separately before private-repository collaborators can claim issues. No collaborators are automatically invited by this scaffold.
 
 When changing a task's scope or dependencies, update its GitHub issue, [task board](docs/TASKS.md), and [backlog](docs/task_backlog.json) together. Keep live ownership and progress in GitHub Issues.
 
@@ -39,4 +31,4 @@ Those artifact references are for team work. The course submission must contain 
 
 ## Current setup status
 
-The initial repository is planning-only. T03 will add tested environment instructions, dependency versions, and runnable commands once hardware/software constraints are known. Avoid adding commands to the README before they work.
+T03 covers environment setup, dependency versions, and tested run commands. The implementation is not available yet.

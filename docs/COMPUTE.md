@@ -11,7 +11,7 @@ Complete the application form attached to the course announcement and email it t
 - [ ] Record the submission and access status in T02; keep personal application details and credentials outside the repository.
 - [ ] Follow the access instructions received from support and verify a small GPU job.
 
-The form contents and the team's application/access status have not been recorded here. Do not mark the application submitted or access enabled until the team confirms it.
+Track application and access status in T02.
 
 Local CPU work can cover simulation, data preparation, and development checks while TC2 access is arranged. Size training experiments to the TC2 capacity and quota assigned to the team.
 

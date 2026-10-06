@@ -1,6 +1,6 @@
 # Roadmap
 
-**Working deadline: 14 November 2026.** The team chose to retain this date until confirmed; the supplied PDF lists 16 November. See [SUBMISSION.md](SUBMISSION.md) for the three required files and exact packaging rules.
+**Working deadline: 14 November 2026.** See [SUBMISSION.md](SUBMISSION.md) for the course-brief date discrepancy and packaging rules.
 
 Intermediate milestones and task dates have not been set. The team will agree on them later. The dependencies below describe the order of work, without assigning dates.
 
