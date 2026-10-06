@@ -21,6 +21,7 @@ Click2Future is our NTU Generative AI course project. We plan to train a small v
 | See the deadline and task dependencies | [Roadmap](docs/ROADMAP.md) |
 | Implement compatible components | [Architecture and data contract](docs/ARCHITECTURE.md) |
 | Design experiments and metrics | [Evaluation plan](docs/EVALUATION.md) |
+| Find papers for the method and report | [Research references](docs/REFERENCES.md) |
 | Plan GPU usage | [Compute and feasibility](docs/COMPUTE.md) |
 | Contribute a change | [Contribution guide](CONTRIBUTING.md) |
 
@@ -80,7 +81,7 @@ flowchart LR
 | E3 | E2 + spatial action conditioning | Test the proposed conditioning module |
 | E4 | E3 + trajectory/collision supervision | Test the effect of auxiliary physics supervision |
 
-Compare ADE/FDE, collision accuracy and F1, SSIM/LPIPS, motion-aware temporal consistency, and trajectory diversity. Evaluate held-out shapes, textures, and force magnitudes separately. [Evaluation details](docs/EVALUATION.md) define fairness controls and the limits of each metric.
+Compare ADE/FDE, action-direction error, collision accuracy and F1, SSIM/LPIPS, motion-aware temporal consistency, and trajectory diversity. Evaluate held-out shapes, textures, and force magnitudes separately. [Evaluation details](docs/EVALUATION.md) define fairness controls and the limits of each metric.
 
 ## Four workstreams
 
@@ -116,7 +117,7 @@ Setup and training commands will be added in T03 once the environment is tested.
 
 ## First team meeting
 
-- Assign T01-T04 and a reviewer for each; confirm the course requirements and GPU application.
+- Assign T01-T03 and reviewers; start T04 after the scope decision. Confirm the course requirements and GPU application.
 - Agree on the action semantics and dataset contract before generating the main dataset.
 - Claim the remaining issues by workstream and check their dependencies.
 - Use the 64px pilot to decide the dataset and training budget; keep 128px optional.
@@ -126,6 +127,7 @@ Setup and training commands will be added in T03 once the environment is tested.
 In the supplied 5 October 2026 email, Prof. Xingang Pan supported the Click2Future direction, noted that TC2 GPU Cluster resources are available for MSc coursework through the course application process, and recommended a modest model and experimental scope. An allocation has **not** been confirmed.
 
 - [BAIR robot-pushing dataset](https://www.tensorflow.org/datasets/catalog/bair_robot_pushing_small): a related action/video dataset; the TFDS catalog lists 43,264 training sequences at 64×64. It is background context, not our planned training dataset.
+- [Research references](docs/REFERENCES.md): primary sources for the baselines, diffusion models, and evaluation metrics.
 - [BudgetGate repository](https://github.com/shrijeet-maiti-burner/ai6101-budgetgate): inspiration for the documentation-first team workflow. Click2Future is a separate project and repository.
 
 ## Results

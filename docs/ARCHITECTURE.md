@@ -22,6 +22,8 @@ An archive plus JSON metadata is sufficient for the first implementation. Choose
 | `scene_group_id` | string | Visible scene identity, shared across actions and physics variants |
 | `condition_id` | string | Same initial rendering, selected object, and action |
 | `split` | enum | Train, validation, ID test, or named OOD test |
+| `scene_spec` | object | Initial geometry, poses, velocities, walls, textures, and renderer settings for replay |
+| `timestamps` | float64 `[T]` | Seconds from frame 0; strictly increasing, starting at zero |
 | `frames` | uint8 `[T,H,W,3]` | RGB clip including frame 0 |
 | `instance_masks` | bool `[T,N,H,W]` | Oracle per-object segmentation |
 | `object_valid` | bool `[N]` | Valid object slots if padded |
@@ -35,8 +37,13 @@ An archive plus JSON metadata is sufficient for the first implementation. Choose
 | `wall_contact_onset` | bool `[T-1,N,4]` | Separate wall-contact events |
 | `oracle_physics` | object | Mass, friction, restitution; training labels/replay only |
 | `seeds`, `sim_version`, `render_version` | metadata | Reproducibility and replay |
+| `config_hash`, `asset_hashes` | metadata | Resolved simulator config and any texture/shape asset checksums |
 
 When batching, convert images to float `[B,T,3,H,W]` using one documented normalization. Predict `T-1` future frames; retain the supplied frame 0 exactly in displayed output.
+
+For 16 frames at 8 fps, use timestamps 0, 1/8, ..., 15/8 seconds. Collision index `i` describes the interval `(timestamps[i], timestamps[i+1]]`. A contact that persists across frames is one onset, not a new event each frame. Start objects without overlap and record any permitted initial contact separately. Fix the wall order in the contract, for example left, right, top, bottom.
+
+Replay must load the scene specification, hidden physics, assets, action, and resolved simulator config. Verify a saved sample can be reconstructed in the pinned environment, with a documented tolerance if the physics engine does not reproduce results bit for bit.
 
 ## Leakage prevention and uncertainty groups
 
@@ -45,6 +52,8 @@ The hidden-physics model receives only frame 0, allowed frame-0 masks, and actio
 For uncertainty evaluation, generate multiple rollouts with **identical frame 0, selected mask, and action**, varying only hidden mass/friction. Keep all actions and physics variants of a visible scene in the same split using `scene_group_id`. Do not split clips independently. Verify equality of initial rendered inputs within each `condition_id`.
 
 Start with a small smoke dataset and size the main dataset after profiling. Persist the split manifest and its hash. Reserve disjoint shape families, texture families, and a force range for separate OOD tests; keep the other factors in distribution for each test.
+
+Keep rerenders, augmentations, and different resolutions of the same base scene in the same scene group and split.
 
 ## Model interfaces
 
@@ -57,7 +66,9 @@ sample(condition, seeds=[...], num_future_frames=T-1) -> videos
 evaluate(videos, references, metadata) -> metric_records
 ```
 
-The frame autoencoder should be trained or selected once, then frozen and shared across diffusion ablations. Record any pretrained weights and their provenance; randomize training only through documented seeds.
+The frame autoencoder should be trained or selected once, then frozen and shared across diffusion ablations. Fit its weights and any latent normalization statistics using training data only. Use validation data for checkpoint selection; evaluate test/OOD reconstruction only after selection is fixed. Record any pretrained weights and their provenance; randomize training only through documented seeds.
+
+For the conditional VAE, define a training posterior `q(z | future, condition)`, a prior `p(z | condition)` or fixed standard-normal prior, and a decoder `p(future | z, condition)`. Train with a reconstruction loss and a weighted KL term. At inference, sample from the prior without supplying the future clip. Record the prior choice and KL weight in the run config. See [the model references](REFERENCES.md#models).
 
 ## Proposed action module
 
@@ -71,6 +82,8 @@ Select a small conditioning mechanism (for example feature concatenation plus fe
 ## Auxiliary heads
 
 Predict object-centre trajectories and object-pair collision probabilities from denoiser features. Use deterministic frame-0 object-slot ordering (e.g. centroid order); do not order using future ground truth. If all-object masks are used for pooling, provide the same frame-0 object extraction to every variant and document that additional input.
+
+Any extra inference-time object extraction must use only the first-frame pixels. Oracle all-object masks may serve as training labels or evaluation references, but cannot be an extra input available only to E4. Keep the selected-object mask available to E0/E2/E3/E4 as specified in the comparison table. The E1 generator receives only the first frame.
 
 Proposed objective:
 

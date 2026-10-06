@@ -16,6 +16,8 @@ Check the commit author before pushing. Use your configured Git identity without
 
 Owners are intentionally blank in the initial scaffold. Repository access must be granted separately before private-repository collaborators can claim issues. No collaborators are automatically invited by this scaffold.
 
+When changing a task's scope or dependencies, update its GitHub issue, [task board](docs/TASKS.md), and [backlog](docs/task_backlog.json) together. Keep live ownership and progress in GitHub Issues.
+
 ## Definition of done
 
 - The issue's acceptance criteria are met and its dependencies are accounted for.

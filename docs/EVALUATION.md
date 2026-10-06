@@ -20,7 +20,7 @@ Report negative results and uncertainty. The project does not assume any hypothe
 
 E1 deliberately lacks action information; E2→E3 is the conditioning comparison. E3→E4 is the supervision comparison. If time permits, add E4-T (trajectory only) and E4-C (collision only); these are optional, not prerequisites for the main result.
 
-Keep diffusion backbone, autoencoder, data splits, resolution, clip length, optimizer policy, training budget, sampler, and number of samples fixed where applicable. Record parameter counts, training steps, GPU-hours, and inference latency. Account for added module parameters and avoid claiming an architecture-isolated effect if model capacity also changes materially.
+Keep diffusion backbone, autoencoder, data splits, resolution, clip length, optimizer policy, training budget, sampler, and number of samples fixed where applicable. Record parameter counts, training steps, GPU-hours, and inference latency. Account for added module parameters and avoid claiming an architecture-isolated effect if model capacity also changes materially. Use independent training runs from a common initialization policy for the main E1-E4 comparisons. If one model is warm-started from another, report all inherited training and treat that result as a separate experiment.
 
 ## Test suites
 
@@ -41,6 +41,7 @@ Split by visible scene identity before generating variants. Freeze test sets bef
 |---|---|---|
 | Trajectory ADE | Mean Euclidean position error over future frames and valid objects | Use normalized coordinates; report selected-object and all-object scores |
 | Trajectory FDE | Euclidean error at the final future frame | Separate from ADE |
+| Action adherence | Selected-object initial direction error, stationary-output rate, and zero-force drift | Use a predefined interval before contact on controlled test scenes |
 | Collision | Accuracy, precision, recall, F1; PR-AUC if probabilities exist | Include positive prevalence; accuracy alone can reward always predicting no collision |
 | SSIM / LPIPS | Frame-aligned scores over future frames | Another valid physical future can score poorly against one reference |
 | Temporal consistency | Motion-compensated image error plus trajectory acceleration/jitter checks | Raw frame differences penalize correct motion and reward static output |
@@ -49,6 +50,12 @@ Split by visible scene identity before generating variants. Freeze test sets bef
 
 For sample position `p[k,t,o]` and reference `q[t,o]`, ADE is the average of `||p-q||₂` over future t and valid o; FDE uses the last future t. Report mean-over-samples and best-of-K separately with K fixed (initially 4). Best-of-K is an optimistic coverage statistic, not the expected prediction error.
 
+Define `minADE@K` by taking the lowest whole-clip ADE across K complete samples. Do not pick a different sample for each frame or object. Define `minFDE@K` separately and also report the FDE of the sample selected by minimum ADE, so readers can distinguish the two selection rules.
+
+For action-direction error, fix a nonzero-force control set with a visible-motion threshold and a short interval before any simulator contact across its physics variants. Measure the angle between the force and the selected object's displacement. Report stationary outputs and tracking failures separately; exclude them from the angle calculation but include them in the control-set denominator. For zero-force scenes, report displacement from the initially stationary positions. Fix the interval and thresholds on validation data.
+
+Record the SSIM data range, window, and channel aggregation; record the LPIPS backbone, weights, input normalization, and any resizing. Score only predicted future frames, so copying the supplied first frame cannot improve the average. Use the [primary metric references](REFERENCES.md#metrics) when choosing implementations.
+
 ## Measure generated pixels, not only the auxiliary head
 
 Build a shared object detector/tracker for synthetic rendered frames and validate it on held-out simulator videos before using it on generations. Establish object identity from frame 0, handle tracking failures explicitly, and report the failure rate. Do not remove hard samples without disclosing them. Apply the same extraction and tracking rules to every model.
@@ -56,6 +63,10 @@ Build a shared object detector/tracker for synthetic rendered frames and validat
 Estimate contact events consistently from extracted masks/geometry, calibrate the rule against simulator labels, and report its limitations. Evaluate auxiliary collision/trajectory predictions separately for models that have those heads. A correct auxiliary head does not prove that the decoded video is physically correct.
 
 Mask invalid object slots; score each unordered collision pair once. Fix a time tolerance (proposed: ±1 video frame) and a one-to-one event matching rule on validation data. Report object-wall contacts separately from object-object collisions.
+
+Report interval-wise collision accuracy over valid unordered object-pair/time bins without temporal tolerance. Report event precision/recall/F1 using the stated one-to-one temporal matching rule. State the convention for no-positive cases; do not conflate event scores with interval accuracy. A video-derived contact estimate can miss a collision that occurs between frames, so quantify this error on simulator clips before interpreting model differences.
+
+For temporal metrics, mask occluded or unreliable pixels in motion compensation and report the valid fraction. Score trajectory jitter away from contact intervals separately from collision motion, rather than penalize a sudden collision-induced velocity change as visual instability. Include a static-video control to expose metrics that reward lack of motion.
 
 ## Controlled uncertainty experiment
 

@@ -14,12 +14,13 @@ flowchart LR
     T08 --> T10[Diffusion baselines]
     T10 --> T11[Spatial conditioning]
     T11 --> T12[Auxiliary heads]
-    T12 --> T14[Core ablations]
+    T12 --> T13[Experiment settings and budget]
+    T13 --> T14[Core ablations]
     T14 --> T19[Reproduction and release]
     T19 --> T20[Submission]
 ```
 
-Metrics, the CVAE, report outline, and demo shell can progress alongside the critical path using agreed fixtures. Integration still requires the real dataset and checkpoints.
+This diagram shows the main model-training path. The [task board](TASKS.md) lists all prerequisites, including metrics and baseline checks before T13. Metrics, the CVAE, report outline, and demo shell can progress alongside this path using agreed fixtures. Integration still requires the real dataset and checkpoints.
 
 ## Checkpoints
 

@@ -33,13 +33,11 @@
     "id": "T03",
     "title": "Create a reproducible development environment",
     "workstream": "infrastructure",
-    "dependencies": [
-      "T02"
-    ],
-    "outcome": "Make setup reproducible on the development machine and allocated training hardware.",
+    "dependencies": [],
+    "outcome": "Make the CPU development environment reproducible, then document the GPU setup as access becomes available.",
     "acceptance": [
       "Add a dependency manifest and tested setup instructions with exact versions.",
-      "Add a small environment/device check and document CPU versus GPU workflows.",
+      "Add an environment/device check; verify CPU setup without waiting for T02 and record GPU checks as pending until hardware is available.",
       "Select artifact locations and a configuration format; keep credentials out of Git.",
       "Document working commands as modules are implemented; mark unavailable commands clearly."
     ],
@@ -57,7 +55,7 @@
     "outcome": "Let simulator, model, and evaluation work proceed against one agreed contract.",
     "acceptance": [
       "Finalize units, axis conventions, force duration, friction law, frame timing, and collision event semantics.",
-      "Finalize tensor shapes, object identity/padding, metadata, and conditioning inputs in docs/ARCHITECTURE.md.",
+      "Finalize tensor shapes, timestamps, scene replay metadata, object identity/padding, and conditioning inputs in docs/ARCHITECTURE.md.",
       "Define scene_group_id and condition_id, including identical-first-frame uncertainty groups.",
       "Provide a small fixture or schema example that downstream components can consume."
     ],
@@ -78,7 +76,7 @@
       "Render 2-4 objects with randomized supported shapes/textures, mass, and friction.",
       "Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.",
       "Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.",
-      "Provide sample clips and a documented generation/replay command."
+      "Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance."
     ],
     "owner": null,
     "status": "Not started",
@@ -95,7 +93,7 @@
     "acceptance": [
       "Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.",
       "Split by scene_group_id; keep all actions and physics variants of a visible scene together.",
-      "Create ID, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests.",
+      "Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.",
       "Check identical initial inputs within condition_id and independence of hidden physics from appearance.",
       "Publish dataset/schema versions, split hashes, and download or generation instructions."
     ],
@@ -113,10 +111,11 @@
     ],
     "outcome": "Measure generated video behavior consistently across models.",
     "acceptance": [
-      "Implement ADE/FDE, collision accuracy/precision/recall/F1, and image/temporal/diversity metrics.",
+      "Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.",
       "Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.",
       "Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.",
-      "Separate video-derived metrics from auxiliary-head metrics and export machine-readable records."
+      "Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.",
+      "Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models."
     ],
     "owner": null,
     "status": "Not started",
@@ -133,7 +132,7 @@
     "outcome": "Obtain a compact latent representation that preserves object geometry.",
     "acceptance": [
       "Implement or select a permitted autoencoder and record architecture/weight provenance.",
-      "Inspect reconstruction quality on ID and held-out appearance cases.",
+      "Fit weights and normalization on training data only; select the checkpoint on validation data and inspect test/OOD reconstruction only after freezing it.",
       "Record memory, throughput, latent shapes, and a checkpoint with checksum.",
       "Freeze and share the selected autoencoder across diffusion comparisons."
     ],
@@ -152,6 +151,7 @@
     "outcome": "Establish a lower-cost generative baseline with the agreed action inputs.",
     "acceptance": [
       "Condition on the first frame, selected-object mask, and numeric force.",
+      "Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.",
       "Pass a tiny-batch overfit check and produce four seeded samples per condition.",
       "Log validation results, model size, training cost, and checkpoint selection.",
       "Add a run manifest and qualitative successes/failures."
@@ -191,7 +191,7 @@
     "acceptance": [
       "Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.",
       "Keep target identification available in E2 so E2-to-E3 isolates the spatial module.",
-      "Check selected-object changes, zero action, and reversed action with fixed sampling seeds.",
+      "Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.",
       "Record added parameter count, ablation switch, and working E3 training/sampling."
     ],
     "owner": null,
@@ -210,7 +210,7 @@
     "acceptance": [
       "Predict trajectories and object-pair collision probabilities from denoiser features.",
       "Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.",
-      "Keep oracle trajectories/collisions/physics out of inference conditioning.",
+      "Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.",
       "Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.",
       "Report head predictions separately from generated-video tracking metrics."
     ],
@@ -234,7 +234,8 @@
       "Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.",
       "Use measured costs to allocate training/evaluation hours and retry reserve.",
       "Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.",
-      "Record all selected settings and validation-only tuning decisions."
+      "Record all selected settings and validation-only tuning decisions.",
+      "Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs."
     ],
     "owner": null,
     "status": "Not started",
@@ -287,7 +288,7 @@
     "acceptance": [
       "Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.",
       "Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.",
-      "Evaluate zero force, reversed force, and selected-object changes.",
+      "Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.",
       "Present quality/adherence alongside diversity and clearly label single-reference metrics."
     ],
     "owner": null,
@@ -325,7 +326,7 @@
     ],
     "outcome": "Assemble the research narrative while experiments finish.",
     "acceptance": [
-      "Draft the question, related work with primary references, method, and experiment protocol.",
+      "Draft the question, method, and protocol; use docs/REFERENCES.md and compare closely related action-conditioned methods before making novelty claims.",
       "Create table/figure slots tied to E0-E4, OOD, uncertainty, compute, and limitations.",
       "Insert measured findings from T14-T16 as available; mark pending results explicitly.",
       "Collect method and contribution notes from each workstream."
@@ -349,7 +350,8 @@
       "Run a clean-environment setup, simulator replay, checkpoint load, and sampling smoke test.",
       "Verify configs, split hashes, artifact paths/checksums, and actual run commands.",
       "Freeze final tables/figures and record limitations or omitted optional experiments.",
-      "Record a backup demo and check the interface on the presentation machine."
+      "Record a backup demo and check the interface on the presentation machine.",
+      "Verify that the demo loads the final selected checkpoint and reproduces saved conditions, sampling seeds, and four-future output."
     ],
     "owner": null,
     "status": "Not started",

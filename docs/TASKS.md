@@ -2,13 +2,16 @@
 
 All tasks start **unassigned**. Assign leads and reviewers in [GitHub Issues](https://github.com/athul1810/click2future/issues); that is the live source of ownership and progress. This file records the initial scope and dependencies.
 
-Start with **T01, T02, and T04**. T03 can prepare the CPU environment while GPU details are pending. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
+Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup does not depend on GPU allocation. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
+
+Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. GPU validation is recorded under T02/T03 when hardware becomes available.
+
 
 | ID | Task | Workstream | Depends on | Initial owner |
 |---|---|---|---|---|
 | T01 | [Confirm course requirements and freeze scope](https://github.com/athul1810/click2future/issues/1) | planning | None | Unassigned |
 | T02 | [Confirm TC2 access and record the compute budget](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
-| T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | T02 | Unassigned |
+| T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | None | Unassigned |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | T01 | Unassigned |
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | T03, T04 | Unassigned |
 | T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | data | T05 | Unassigned |
@@ -57,12 +60,12 @@ Establish the hardware and scheduling limits before promising training runs.
 
 ### T03: Create a reproducible development environment
 
-Make setup reproducible on the development machine and allocated training hardware.
+Make the CPU development environment reproducible, then document the GPU setup as access becomes available.
 
-**Dependencies:** T02 · **Owner:** Unassigned
+**Dependencies:** None · **Owner:** Unassigned
 
 - [ ] Add a dependency manifest and tested setup instructions with exact versions.
-- [ ] Add a small environment/device check and document CPU versus GPU workflows.
+- [ ] Add an environment/device check; verify CPU setup without waiting for T02 and record GPU checks as pending until hardware is available.
 - [ ] Select artifact locations and a configuration format; keep credentials out of Git.
 - [ ] Document working commands as modules are implemented; mark unavailable commands clearly.
 
@@ -75,7 +78,7 @@ Let simulator, model, and evaluation work proceed against one agreed contract.
 **Dependencies:** T01 · **Owner:** Unassigned
 
 - [ ] Finalize units, axis conventions, force duration, friction law, frame timing, and collision event semantics.
-- [ ] Finalize tensor shapes, object identity/padding, metadata, and conditioning inputs in docs/ARCHITECTURE.md.
+- [ ] Finalize tensor shapes, timestamps, scene replay metadata, object identity/padding, and conditioning inputs in docs/ARCHITECTURE.md.
 - [ ] Define scene_group_id and condition_id, including identical-first-frame uncertainty groups.
 - [ ] Provide a small fixture or schema example that downstream components can consume.
 
@@ -90,7 +93,7 @@ Generate repeatable tabletop clips with usable physical labels.
 - [ ] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
 - [ ] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
 - [ ] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
-- [ ] Provide sample clips and a documented generation/replay command.
+- [ ] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
 
 <a id="t06"></a>
 
@@ -102,7 +105,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 - [ ] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [ ] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
-- [ ] Create ID, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests.
+- [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
 - [ ] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [ ] Publish dataset/schema versions, split hashes, and download or generation instructions.
 
@@ -114,10 +117,11 @@ Measure generated video behavior consistently across models.
 
 **Dependencies:** T04, T05 · **Owner:** Unassigned
 
-- [ ] Implement ADE/FDE, collision accuracy/precision/recall/F1, and image/temporal/diversity metrics.
+- [ ] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
 - [ ] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
 - [ ] Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.
 - [ ] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
+- [ ] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
 <a id="t08"></a>
 
@@ -128,7 +132,7 @@ Obtain a compact latent representation that preserves object geometry.
 **Dependencies:** T03, T06 · **Owner:** Unassigned
 
 - [ ] Implement or select a permitted autoencoder and record architecture/weight provenance.
-- [ ] Inspect reconstruction quality on ID and held-out appearance cases.
+- [ ] Fit weights and normalization on training data only; select the checkpoint on validation data and inspect test/OOD reconstruction only after freezing it.
 - [ ] Record memory, throughput, latent shapes, and a checkpoint with checksum.
 - [ ] Freeze and share the selected autoencoder across diffusion comparisons.
 
@@ -141,6 +145,7 @@ Establish a lower-cost generative baseline with the agreed action inputs.
 **Dependencies:** T03, T06 · **Owner:** Unassigned
 
 - [ ] Condition on the first frame, selected-object mask, and numeric force.
+- [ ] Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.
 - [ ] Pass a tiny-batch overfit check and produce four seeded samples per condition.
 - [ ] Log validation results, model size, training cost, and checkpoint selection.
 - [ ] Add a run manifest and qualitative successes/failures.
@@ -169,7 +174,7 @@ Test whether localizing the action improves physical action adherence.
 
 - [ ] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
 - [ ] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
-- [ ] Check selected-object changes, zero action, and reversed action with fixed sampling seeds.
+- [ ] Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.
 - [ ] Record added parameter count, ablation switch, and working E3 training/sampling.
 
 <a id="t12"></a>
@@ -182,7 +187,7 @@ Test whether physical supervision improves decoded future behavior.
 
 - [ ] Predict trajectories and object-pair collision probabilities from denoiser features.
 - [ ] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
-- [ ] Keep oracle trajectories/collisions/physics out of inference conditioning.
+- [ ] Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.
 - [ ] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
 - [ ] Report head predictions separately from generated-video tracking metrics.
 
@@ -198,6 +203,7 @@ Commit to a comparable experiment suite that fits the remaining budget.
 - [ ] Use measured costs to allocate training/evaluation hours and retry reserve.
 - [ ] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
 - [ ] Record all selected settings and validation-only tuning decisions.
+- [ ] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
 
 <a id="t14"></a>
 
@@ -235,7 +241,7 @@ Distinguish physically meaningful uncertainty from visual noise.
 
 - [ ] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
-- [ ] Evaluate zero force, reversed force, and selected-object changes.
+- [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
 <a id="t17"></a>
@@ -260,7 +266,7 @@ Assemble the research narrative while experiments finish.
 
 **Dependencies:** T01, T13 · **Owner:** Unassigned
 
-- [ ] Draft the question, related work with primary references, method, and experiment protocol.
+- [ ] Draft the question, method, and protocol; use docs/REFERENCES.md and compare closely related action-conditioned methods before making novelty claims.
 - [ ] Create table/figure slots tied to E0-E4, OOD, uncertainty, compute, and limitations.
 - [ ] Insert measured findings from T14-T16 as available; mark pending results explicitly.
 - [ ] Collect method and contribution notes from each workstream.
@@ -277,6 +283,7 @@ Ensure another teammate can reproduce the core workflow and use the final checkp
 - [ ] Verify configs, split hashes, artifact paths/checksums, and actual run commands.
 - [ ] Freeze final tables/figures and record limitations or omitted optional experiments.
 - [ ] Record a backup demo and check the interface on the presentation machine.
+- [ ] Verify that the demo loads the final selected checkpoint and reproduces saved conditions, sampling seeds, and four-future output.
 
 <a id="t20"></a>
 

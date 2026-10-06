@@ -1,4 +1,4 @@
-# Run: <run_id>
+# Run: RUN_ID
 
 | Field | Value |
 |---|---|
@@ -11,6 +11,7 @@
 | Config path and hash | |
 | Dataset version / split manifest hash | |
 | Data / training / sampling seeds | |
+| Initialization / inherited training | |
 | Resolution / clip length / fps | |
 | Trainable parameter count | |
 | Training steps / effective batch size | |
