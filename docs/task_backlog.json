@@ -3,7 +3,6 @@
     "id": "T01",
     "title": "Confirm course requirements and freeze scope",
     "workstream": "planning",
-    "milestone": "M1",
     "dependencies": [],
     "outcome": "Record the official course constraints and agree on a modest, testable project.",
     "acceptance": [
@@ -19,7 +18,6 @@
     "id": "T02",
     "title": "Confirm TC2 access and record the compute budget",
     "workstream": "infrastructure",
-    "milestone": "M1",
     "dependencies": [],
     "outcome": "Establish the hardware and scheduling limits before promising training runs.",
     "acceptance": [
@@ -35,7 +33,6 @@
     "id": "T03",
     "title": "Create a reproducible development environment",
     "workstream": "infrastructure",
-    "milestone": "M1",
     "dependencies": [
       "T02"
     ],
@@ -54,7 +51,6 @@
     "id": "T04",
     "title": "Freeze simulator, action, and dataset interfaces",
     "workstream": "data",
-    "milestone": "M1",
     "dependencies": [
       "T01"
     ],
@@ -73,7 +69,6 @@
     "id": "T05",
     "title": "Implement the seeded 64px tabletop simulator",
     "workstream": "data",
-    "milestone": "M2",
     "dependencies": [
       "T03",
       "T04"
@@ -93,7 +88,6 @@
     "id": "T06",
     "title": "Build versioned datasets and leakage-safe splits",
     "workstream": "data",
-    "milestone": "M2",
     "dependencies": [
       "T05"
     ],
@@ -113,7 +107,6 @@
     "id": "T07",
     "title": "Implement and validate the evaluation pipeline",
     "workstream": "evaluation",
-    "milestone": "M2",
     "dependencies": [
       "T04",
       "T05"
@@ -133,7 +126,6 @@
     "id": "T08",
     "title": "Train and validate the shared frame autoencoder",
     "workstream": "model",
-    "milestone": "M3",
     "dependencies": [
       "T03",
       "T06"
@@ -153,7 +145,6 @@
     "id": "T09",
     "title": "Train the conditional VAE baseline E0",
     "workstream": "model",
-    "milestone": "M3",
     "dependencies": [
       "T03",
       "T06"
@@ -173,7 +164,6 @@
     "id": "T10",
     "title": "Implement first-frame and numeric-action diffusion E1/E2",
     "workstream": "model",
-    "milestone": "M3",
     "dependencies": [
       "T08"
     ],
@@ -193,7 +183,6 @@
     "id": "T11",
     "title": "Implement object-centric spatial conditioning E3",
     "workstream": "model",
-    "milestone": "M4",
     "dependencies": [
       "T10",
       "T04"
@@ -213,7 +202,6 @@
     "id": "T12",
     "title": "Add trajectory and collision supervision E4",
     "workstream": "model",
-    "milestone": "M4",
     "dependencies": [
       "T11",
       "T07"
@@ -234,7 +222,6 @@
     "id": "T13",
     "title": "Freeze experiment settings and decide the 128px gate",
     "workstream": "evaluation",
-    "milestone": "M4",
     "dependencies": [
       "T07",
       "T09",
@@ -257,7 +244,6 @@
     "id": "T14",
     "title": "Run and analyze the core E0-E4 comparisons",
     "workstream": "evaluation",
-    "milestone": "M5",
     "dependencies": [
       "T13"
     ],
@@ -276,7 +262,6 @@
     "id": "T15",
     "title": "Evaluate held-out shapes, textures, and forces",
     "workstream": "evaluation",
-    "milestone": "M5",
     "dependencies": [
       "T13"
     ],
@@ -295,7 +280,6 @@
     "id": "T16",
     "title": "Evaluate hidden-physics uncertainty and action controls",
     "workstream": "evaluation",
-    "milestone": "M5",
     "dependencies": [
       "T13"
     ],
@@ -314,7 +298,6 @@
     "id": "T17",
     "title": "Build the interactive four-future comparison demo",
     "workstream": "demo",
-    "milestone": "M5",
     "dependencies": [
       "T04",
       "T05",
@@ -336,7 +319,6 @@
     "id": "T18",
     "title": "Prepare the report draft and evidence figures",
     "workstream": "delivery",
-    "milestone": "M5",
     "dependencies": [
       "T01",
       "T13"
@@ -356,7 +338,6 @@
     "id": "T19",
     "title": "Verify reproducibility and freeze the submission artifacts",
     "workstream": "delivery",
-    "milestone": "M6",
     "dependencies": [
       "T14",
       "T15",
@@ -378,7 +359,6 @@
     "id": "T20",
     "title": "Finalize report, slides, and submission package",
     "workstream": "delivery",
-    "milestone": "M6",
     "dependencies": [
       "T18",
       "T19"

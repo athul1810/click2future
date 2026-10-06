@@ -18,7 +18,7 @@ Click2Future is our NTU Generative AI course project. We plan to train a small v
 |---|---|
 | Understand the project and scope | [Requirements](docs/REQUIREMENTS.md) |
 | Assign work to the team | [Task board](docs/TASKS.md) and [open issues](https://github.com/athul1810/click2future/issues) |
-| See deadlines and dependencies | [Roadmap](docs/ROADMAP.md) |
+| See the deadline and task dependencies | [Roadmap](docs/ROADMAP.md) |
 | Implement compatible components | [Architecture and data contract](docs/ARCHITECTURE.md) |
 | Design experiments and metrics | [Evaluation plan](docs/EVALUATION.md) |
 | Plan GPU usage | [Compute and feasibility](docs/COMPUTE.md) |
@@ -95,18 +95,9 @@ Divide these areas across the team. Each issue should have one lead and a review
 
 Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
 
-## Milestones
+## Deadline
 
-| Target date (Singapore time) | Exit condition |
-|---|---|
-| 11 Oct | Requirements, data contract, and compute feasibility agreed |
-| 18 Oct | Deterministic simulator, versioned data, metrics smoke test |
-| 25 Oct | CVAE and compact diffusion baselines train and sample at 64px |
-| 1 Nov | Spatial conditioning and auxiliary heads integrated; ablation settings frozen |
-| 8 Nov | Core evaluation complete; demo and report draft ready |
-| 14 Nov | Reproducible submission, final report, slides, and backup demo ready |
-
-These are proposed internal dates. The 14 November deadline comes from the supplied instructor correspondence; the exact course requirements still need checking.
+**14 November 2026.** Confirm the exact submission time and required deliverables on the course site. Intermediate milestones and task dates will be agreed by the team later.
 
 ## Repository layout
 
