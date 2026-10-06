@@ -6,8 +6,8 @@ Start with **T01, T02, and T04**. T03 can prepare the CPU environment while GPU 
 
 | ID | Task | Workstream | Milestone | Depends on | Initial owner |
 |---|---|---|---|---|---|
-| T01 | [Confirm course requirements and freeze scope](https://github.com/athul1810/click2future/issues/1) | planning | M1 | — | Unassigned |
-| T02 | [Confirm TC2 access and record the compute budget](https://github.com/athul1810/click2future/issues/2) | infrastructure | M1 | — | Unassigned |
+| T01 | [Confirm course requirements and freeze scope](https://github.com/athul1810/click2future/issues/1) | planning | M1 | None | Unassigned |
+| T02 | [Confirm TC2 access and record the compute budget](https://github.com/athul1810/click2future/issues/2) | infrastructure | M1 | None | Unassigned |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | M1 | T02 | Unassigned |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | M1 | T01 | Unassigned |
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | M2 | T03, T04 | Unassigned |
@@ -19,7 +19,7 @@ Start with **T01, T02, and T04**. T03 can prepare the CPU environment while GPU 
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | model | M4 | T10, T04 | Unassigned |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | model | M4 | T11, T07 | Unassigned |
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | evaluation | M4 | T07, T09, T10, T11, T12 | Unassigned |
-| T14 | [Run and analyze the core E0–E4 comparisons](https://github.com/athul1810/click2future/issues/14) | evaluation | M5 | T13 | Unassigned |
+| T14 | [Run and analyze the core E0-E4 comparisons](https://github.com/athul1810/click2future/issues/14) | evaluation | M5 | T13 | Unassigned |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | evaluation | M5 | T13 | Unassigned |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | evaluation | M5 | T13 | Unassigned |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | demo | M5 | T04, T05, T10 | Unassigned |
@@ -31,7 +31,7 @@ Start with **T01, T02, and T04**. T03 can prepare the CPU environment while GPU 
 
 <a id="t01"></a>
 
-### T01 — Confirm course requirements and freeze scope
+### T01: Confirm course requirements and freeze scope
 
 Record the official course constraints and agree on a modest, testable project.
 
@@ -43,7 +43,7 @@ Record the official course constraints and agree on a modest, testable project.
 
 <a id="t02"></a>
 
-### T02 — Confirm TC2 access and record the compute budget
+### T02: Confirm TC2 access and record the compute budget
 
 Establish the hardware and scheduling limits before promising training runs.
 
@@ -55,7 +55,7 @@ Establish the hardware and scheduling limits before promising training runs.
 
 <a id="t03"></a>
 
-### T03 — Create a reproducible development environment
+### T03: Create a reproducible development environment
 
 Make setup reproducible on the development machine and allocated training hardware.
 
@@ -68,7 +68,7 @@ Make setup reproducible on the development machine and allocated training hardwa
 
 <a id="t04"></a>
 
-### T04 — Freeze simulator, action, and dataset interfaces
+### T04: Freeze simulator, action, and dataset interfaces
 
 Let simulator, model, and evaluation work proceed against one agreed contract.
 
@@ -81,20 +81,20 @@ Let simulator, model, and evaluation work proceed against one agreed contract.
 
 <a id="t05"></a>
 
-### T05 — Implement the seeded 64px tabletop simulator
+### T05: Implement the seeded 64px tabletop simulator
 
 Generate repeatable tabletop clips with usable physical labels.
 
 **Milestone:** M2 · **Dependencies:** T03, T04 · **Owner:** Unassigned
 
-- [ ] Render 2–4 objects with randomized supported shapes/textures, mass, and friction.
+- [ ] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
 - [ ] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
 - [ ] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
 - [ ] Provide sample clips and a documented generation/replay command.
 
 <a id="t06"></a>
 
-### T06 — Build versioned datasets and leakage-safe splits
+### T06: Build versioned datasets and leakage-safe splits
 
 Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.
 
@@ -108,7 +108,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 <a id="t07"></a>
 
-### T07 — Implement and validate the evaluation pipeline
+### T07: Implement and validate the evaluation pipeline
 
 Measure generated video behavior consistently across models.
 
@@ -121,7 +121,7 @@ Measure generated video behavior consistently across models.
 
 <a id="t08"></a>
 
-### T08 — Train and validate the shared frame autoencoder
+### T08: Train and validate the shared frame autoencoder
 
 Obtain a compact latent representation that preserves object geometry.
 
@@ -134,7 +134,7 @@ Obtain a compact latent representation that preserves object geometry.
 
 <a id="t09"></a>
 
-### T09 — Train the conditional VAE baseline E0
+### T09: Train the conditional VAE baseline E0
 
 Establish a lower-cost generative baseline with the agreed action inputs.
 
@@ -147,7 +147,7 @@ Establish a lower-cost generative baseline with the agreed action inputs.
 
 <a id="t10"></a>
 
-### T10 — Implement first-frame and numeric-action diffusion E1/E2
+### T10: Implement first-frame and numeric-action diffusion E1/E2
 
 Create the common diffusion backbone and the main numeric-action baseline.
 
@@ -161,7 +161,7 @@ Create the common diffusion backbone and the main numeric-action baseline.
 
 <a id="t11"></a>
 
-### T11 — Implement object-centric spatial conditioning E3
+### T11: Implement object-centric spatial conditioning E3
 
 Test whether localizing the action improves physical action adherence.
 
@@ -174,7 +174,7 @@ Test whether localizing the action improves physical action adherence.
 
 <a id="t12"></a>
 
-### T12 — Add trajectory and collision supervision E4
+### T12: Add trajectory and collision supervision E4
 
 Test whether physical supervision improves decoded future behavior.
 
@@ -188,7 +188,7 @@ Test whether physical supervision improves decoded future behavior.
 
 <a id="t13"></a>
 
-### T13 — Freeze experiment settings and decide the 128px gate
+### T13: Freeze experiment settings and decide the 128px gate
 
 Commit to a comparable experiment suite that fits the remaining budget.
 
@@ -201,7 +201,7 @@ Commit to a comparable experiment suite that fits the remaining budget.
 
 <a id="t14"></a>
 
-### T14 — Run and analyze the core E0–E4 comparisons
+### T14: Run and analyze the core E0-E4 comparisons
 
 Produce the main evidence for conditioning and supervision claims.
 
@@ -214,7 +214,7 @@ Produce the main evidence for conditioning and supervision claims.
 
 <a id="t15"></a>
 
-### T15 — Evaluate held-out shapes, textures, and forces
+### T15: Evaluate held-out shapes, textures, and forces
 
 Measure which action-conditioned behaviors generalize beyond training.
 
@@ -227,7 +227,7 @@ Measure which action-conditioned behaviors generalize beyond training.
 
 <a id="t16"></a>
 
-### T16 — Evaluate hidden-physics uncertainty and action controls
+### T16: Evaluate hidden-physics uncertainty and action controls
 
 Distinguish physically meaningful uncertainty from visual noise.
 
@@ -240,7 +240,7 @@ Distinguish physically meaningful uncertainty from visual noise.
 
 <a id="t17"></a>
 
-### T17 — Build the interactive four-future comparison demo
+### T17: Build the interactive four-future comparison demo
 
 Make the model and simulator comparison understandable and repeatable.
 
@@ -254,20 +254,20 @@ Make the model and simulator comparison understandable and repeatable.
 
 <a id="t18"></a>
 
-### T18 — Prepare the report draft and evidence figures
+### T18: Prepare the report draft and evidence figures
 
 Assemble the research narrative while experiments finish.
 
 **Milestone:** M5 · **Dependencies:** T01, T13 · **Owner:** Unassigned
 
 - [ ] Draft the question, related work with primary references, method, and experiment protocol.
-- [ ] Create table/figure slots tied to E0–E4, OOD, uncertainty, compute, and limitations.
-- [ ] Insert measured findings from T14–T16 as available; mark pending results explicitly.
+- [ ] Create table/figure slots tied to E0-E4, OOD, uncertainty, compute, and limitations.
+- [ ] Insert measured findings from T14-T16 as available; mark pending results explicitly.
 - [ ] Collect method and contribution notes from each workstream.
 
 <a id="t19"></a>
 
-### T19 — Verify reproducibility and freeze the submission artifacts
+### T19: Verify reproducibility and freeze the submission artifacts
 
 Ensure another teammate can reproduce the core workflow and use the final checkpoints.
 
@@ -280,7 +280,7 @@ Ensure another teammate can reproduce the core workflow and use the final checkp
 
 <a id="t20"></a>
 
-### T20 — Finalize report, slides, and submission package
+### T20: Finalize report, slides, and submission package
 
 Deliver the project against the confirmed course requirements.
 

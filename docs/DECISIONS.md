@@ -1,11 +1,11 @@
 # Decision log
 
-## D001 — Project and repository scope — 7 October 2026
+## D001: Project and repository scope: 7 October 2026
 
 - Decision: use Click2Future as the working GenAI project and create a separate private repository.
 - Basis: the supplied project brief, instructor feedback, and team request.
 - Repository: `athul1810/click2future`; BudgetGate is a workflow reference only.
-- Initial state: documentation and implementation scaffold; no trained models or claimed results.
+- Initial state: planning documents and empty implementation folders; no trained models yet.
 - Ownership: all task owners unassigned.
 - Compute: TC2 application details to be checked; allocation remains unknown.
 - Scope: start at 64px; gate 128px on measured feasibility.
@@ -15,10 +15,10 @@
 | ID | Decision | Evidence needed | Task |
 |---|---|---|---|
 | D002 | Exact course deliverables and cutoff | Course site / rubric | T01 |
-| D003 | GPU budget and software environment | Allocation and benchmark | T02–T03 |
-| D004 | Simulator engine, units, friction model, sample schema | Small deterministic prototype | T04–T05 |
+| D003 | GPU budget and software environment | Allocation and benchmark | T02-T03 |
+| D004 | Simulator engine, units, friction model, sample schema | Small deterministic prototype | T04-T05 |
 | D005 | Dataset size, split definitions, hidden-property distributions | Pilot coverage and storage profile | T06 |
-| D006 | Autoencoder/backbone dimensions and training budgets | 64px reconstruction / overfit / throughput checks | T08–T10 |
+| D006 | Autoencoder/backbone dimensions and training budgets | 64px reconstruction / overfit / throughput checks | T08-T10 |
 | D007 | Final ablation settings and 128px decision | Validation and compute evidence | T13 |
 
 ## New decision template

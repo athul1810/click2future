@@ -1,5 +1,11 @@
 # Contributing
 
+## Writing and commits
+
+Use plain language and short, specific descriptions. Avoid em dashes, slogans, and filler. Keep research claims tied to actual results.
+
+Check the commit author before pushing. Use your configured Git identity without assistant or bot co-author trailers.
+
 ## Claim and scope work
 
 1. Open the [task board](docs/TASKS.md) and choose an unassigned issue whose dependencies are ready.

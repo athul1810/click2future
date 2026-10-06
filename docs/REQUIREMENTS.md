@@ -20,7 +20,7 @@ The supplied 5 October email recommends Click2Future with modest model and exper
 
 | Choice | Proposed starting point | Why |
 |---|---|---|
-| World | Top-down bounded tabletop with 2–4 rigid objects | Reliable labels and manageable appearance |
+| World | Top-down bounded tabletop with 2-4 rigid objects | Reliable labels and manageable appearance |
 | Clip | 16 frames at 8 fps, frame 0 before action | Short sequence for initial profiling |
 | Action | Constant force applied at selected object's centre for a fixed duration | Unambiguous direction/magnitude; no click-position torque |
 | Hidden properties | Mass and friction vary independently of visible appearance | Creates controlled conditional uncertainty |

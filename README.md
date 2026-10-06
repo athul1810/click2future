@@ -2,12 +2,14 @@
 
 ### Action-conditioned video diffusion for physical futures
 
-**Click an object. Drag a force arrow. Sample four possible futures.**
+Select an object in a tabletop scene, draw a force arrow, and generate four possible outcomes.
 
-Click2Future is an NTU Generative AI course project investigating whether a compact video diffusion model can produce diverse, physically plausible futures while obeying an explicit action. A procedural tabletop simulator supplies exact object trajectories and collision labels for training and evaluation.
+Click2Future is our NTU Generative AI course project. We plan to train a small video diffusion model to predict what happens after a force is applied to an object. A tabletop simulator will generate the training clips, object trajectories, and collision labels.
 
-**Status:** planning and implementation scaffold. Models, simulator, and demo are not implemented yet.  
-**Submission deadline:** 14 November 2026; confirm the submission time and deliverables on the course site.  
+**Status:** project setup. The simulator, models, and demo still need to be built.
+
+**Submission deadline:** 14 November 2026; confirm the submission time and deliverables on the course site.
+
 **Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
 ## Start here
@@ -26,9 +28,9 @@ Click2Future is an NTU Generative AI course project investigating whether a comp
 
 > Can a compact video diffusion model generate diverse futures while obeying an explicitly specified physical action?
 
-The proposed contribution is an **object-centric action-conditioning module**, paired with an auxiliary head that predicts trajectories and collision events from denoiser features. This is a hypothesis to evaluate, not a claim of established novelty or improved performance.
+We will test an **object-centric action-conditioning module** and an auxiliary head that predicts trajectories and collisions from denoiser features. The experiments will check whether each component improves the generated videos.
 
-When mass and friction are hidden, the same visible scene and action can have multiple valid outcomes. We will compare generated samples against multiple simulator rollouts sharing the same initial image and action, rather than treat arbitrary visual variation as meaningful uncertainty.
+Hidden mass and friction can produce different outcomes from the same image and action. We will compare generated samples with several simulator rollouts to check whether the variation reflects those physical differences.
 
 ## The intended demo
 
@@ -45,7 +47,7 @@ For the core hidden-physics model, friction is **not an input**. Changing the fr
 | Core deliverable | Stretch goal |
 |---|---|
 | 64×64 top-down scenes, initially 16 frames | 128×128 after the compute gate passes |
-| 2–4 rigid objects, randomized appearance and hidden physics | More shapes and harder collisions |
+| 2-4 rigid objects, randomized appearance and hidden physics | More shapes and harder collisions |
 | Compact latent video diffusion and conditional VAE baseline | Additional architecture exploration |
 | Five planned experimental variants | Additional supervision ablations |
 | Four sampled futures and a simulator comparison | Friction-conditioned sampling |
@@ -82,16 +84,16 @@ Compare ADE/FDE, collision accuracy and F1, SSIM/LPIPS, motion-aware temporal co
 
 ## Four workstreams
 
-These are work packages, not assignments. One person may own multiple packages; each issue should have one lead and a reviewer.
+Divide these areas across the team. Each issue should have one lead and a reviewer.
 
 | Workstream | Main responsibility | Owner |
 |---|---|---|
-| A — Simulator and data | Physics, rendering, labels, splits, ground-truth replay | Unassigned |
-| B — Generative models | Autoencoder, CVAE, diffusion baselines, action module | Unassigned |
-| C — Evaluation and experiments | Metrics, supervision integration, ablations, analysis | Unassigned |
-| D — Integration and delivery | Demo, reproducibility, compute coordination, report assembly | Unassigned |
+| A: Simulator and data | Physics, rendering, labels, splits, ground-truth replay | Unassigned |
+| B: Generative models | Autoencoder, CVAE, diffusion baselines, action module | Unassigned |
+| C: Evaluation and experiments | Metrics, supervision integration, ablations, analysis | Unassigned |
+| D: Integration and delivery | Demo, reproducibility, compute coordination, report assembly | Unassigned |
 
-Everyone contributes their methods, results, and limitations to the report. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
+Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
 
 ## Milestones
 
@@ -119,11 +121,11 @@ app/                 Planned interactive demo
 tests/               Planned simulator, contract, and model smoke tests
 ```
 
-There is no training command or dependency lockfile yet. The environment and runnable commands will be added in T03 after the GPU/software constraints are confirmed. Do not interpret the directory scaffold as working model code.
+Setup and training commands will be added in T03 once the environment is tested. The implementation folders currently contain planning notes.
 
 ## First team meeting
 
-- Assign T01–T04 and a reviewer for each; confirm the course requirements and GPU application.
+- Assign T01-T04 and a reviewer for each; confirm the course requirements and GPU application.
 - Agree on the action semantics and dataset contract before generating the main dataset.
 - Claim the remaining issues by workstream and check their dependencies.
 - Use the 64px pilot to decide the dataset and training budget; keep 128px optional.

@@ -80,7 +80,7 @@
     ],
     "outcome": "Generate repeatable tabletop clips with usable physical labels.",
     "acceptance": [
-      "Render 2\u20134 objects with randomized supported shapes/textures, mass, and friction.",
+      "Render 2-4 objects with randomized supported shapes/textures, mass, and friction.",
       "Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.",
       "Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.",
       "Provide sample clips and a documented generation/replay command."
@@ -255,7 +255,7 @@
   },
   {
     "id": "T14",
-    "title": "Run and analyze the core E0\u2013E4 comparisons",
+    "title": "Run and analyze the core E0-E4 comparisons",
     "workstream": "evaluation",
     "milestone": "M5",
     "dependencies": [
@@ -344,8 +344,8 @@
     "outcome": "Assemble the research narrative while experiments finish.",
     "acceptance": [
       "Draft the question, related work with primary references, method, and experiment protocol.",
-      "Create table/figure slots tied to E0\u2013E4, OOD, uncertainty, compute, and limitations.",
-      "Insert measured findings from T14\u2013T16 as available; mark pending results explicitly.",
+      "Create table/figure slots tied to E0-E4, OOD, uncertainty, compute, and limitations.",
+      "Insert measured findings from T14-T16 as available; mark pending results explicitly.",
       "Collect method and contribution notes from each workstream."
     ],
     "owner": null,
