@@ -6,26 +6,26 @@ Start with **T01, T02, and T04**. T03 can prepare the CPU environment while GPU 
 
 | ID | Task | Workstream | Milestone | Depends on | Initial owner |
 |---|---|---|---|---|---|
-| T01 | [Confirm course requirements and freeze scope](#t01) | planning | M1 | — | Unassigned |
-| T02 | [Confirm TC2 access and record the compute budget](#t02) | infrastructure | M1 | — | Unassigned |
-| T03 | [Create a reproducible development environment](#t03) | infrastructure | M1 | T02 | Unassigned |
-| T04 | [Freeze simulator, action, and dataset interfaces](#t04) | data | M1 | T01 | Unassigned |
-| T05 | [Implement the seeded 64px tabletop simulator](#t05) | data | M2 | T03, T04 | Unassigned |
-| T06 | [Build versioned datasets and leakage-safe splits](#t06) | data | M2 | T05 | Unassigned |
-| T07 | [Implement and validate the evaluation pipeline](#t07) | evaluation | M2 | T04, T05 | Unassigned |
-| T08 | [Train and validate the shared frame autoencoder](#t08) | model | M3 | T03, T06 | Unassigned |
-| T09 | [Train the conditional VAE baseline E0](#t09) | model | M3 | T03, T06 | Unassigned |
-| T10 | [Implement first-frame and numeric-action diffusion E1/E2](#t10) | model | M3 | T08 | Unassigned |
-| T11 | [Implement object-centric spatial conditioning E3](#t11) | model | M4 | T10, T04 | Unassigned |
-| T12 | [Add trajectory and collision supervision E4](#t12) | model | M4 | T11, T07 | Unassigned |
-| T13 | [Freeze experiment settings and decide the 128px gate](#t13) | evaluation | M4 | T07, T09, T10, T11, T12 | Unassigned |
-| T14 | [Run and analyze the core E0–E4 comparisons](#t14) | evaluation | M5 | T13 | Unassigned |
-| T15 | [Evaluate held-out shapes, textures, and forces](#t15) | evaluation | M5 | T13 | Unassigned |
-| T16 | [Evaluate hidden-physics uncertainty and action controls](#t16) | evaluation | M5 | T13 | Unassigned |
-| T17 | [Build the interactive four-future comparison demo](#t17) | demo | M5 | T04, T05, T10 | Unassigned |
-| T18 | [Prepare the report draft and evidence figures](#t18) | delivery | M5 | T01, T13 | Unassigned |
-| T19 | [Verify reproducibility and freeze the submission artifacts](#t19) | delivery | M6 | T14, T15, T16, T17 | Unassigned |
-| T20 | [Finalize report, slides, and submission package](#t20) | delivery | M6 | T18, T19 | Unassigned |
+| T01 | [Confirm course requirements and freeze scope](https://github.com/athul1810/click2future/issues/1) | planning | M1 | — | Unassigned |
+| T02 | [Confirm TC2 access and record the compute budget](https://github.com/athul1810/click2future/issues/2) | infrastructure | M1 | — | Unassigned |
+| T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | M1 | T02 | Unassigned |
+| T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | M1 | T01 | Unassigned |
+| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | M2 | T03, T04 | Unassigned |
+| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | data | M2 | T05 | Unassigned |
+| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | evaluation | M2 | T04, T05 | Unassigned |
+| T08 | [Train and validate the shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | model | M3 | T03, T06 | Unassigned |
+| T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | model | M3 | T03, T06 | Unassigned |
+| T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | model | M3 | T08 | Unassigned |
+| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | model | M4 | T10, T04 | Unassigned |
+| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | model | M4 | T11, T07 | Unassigned |
+| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | evaluation | M4 | T07, T09, T10, T11, T12 | Unassigned |
+| T14 | [Run and analyze the core E0–E4 comparisons](https://github.com/athul1810/click2future/issues/14) | evaluation | M5 | T13 | Unassigned |
+| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | evaluation | M5 | T13 | Unassigned |
+| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | evaluation | M5 | T13 | Unassigned |
+| T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | demo | M5 | T04, T05, T10 | Unassigned |
+| T18 | [Prepare the report draft and evidence figures](https://github.com/athul1810/click2future/issues/18) | delivery | M5 | T01, T13 | Unassigned |
+| T19 | [Verify reproducibility and freeze the submission artifacts](https://github.com/athul1810/click2future/issues/19) | delivery | M6 | T14, T15, T16, T17 | Unassigned |
+| T20 | [Finalize report, slides, and submission package](https://github.com/athul1810/click2future/issues/20) | delivery | M6 | T18, T19 | Unassigned |
 
 ## Task details
 

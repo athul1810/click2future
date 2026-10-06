@@ -24,13 +24,13 @@ htmlcov/
 .ipynb_checkpoints/
 
 # Generated research artifacts
-data/
-datasets/
-checkpoints/
-outputs/
-runs/
-wandb/
-lightning_logs/
+/data/
+/datasets/
+/checkpoints/
+/outputs/
+/runs/
+/wandb/
+/lightning_logs/
 *.pt
 *.pth
 *.ckpt
@@ -44,4 +44,3 @@ lightning_logs/
 
 # Demo dependencies
 node_modules/
-

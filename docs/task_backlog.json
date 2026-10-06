@@ -12,7 +12,8 @@
       "Record decisions and unresolved questions in docs/DECISIONS.md."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/1"
   },
   {
     "id": "T02",
@@ -27,7 +28,8 @@
       "Define a profiling plan and fallback if allocation remains pending."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/2"
   },
   {
     "id": "T03",
@@ -45,7 +47,8 @@
       "Document working commands as modules are implemented; mark unavailable commands clearly."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/3"
   },
   {
     "id": "T04",
@@ -63,7 +66,8 @@
       "Provide a small fixture or schema example that downstream components can consume."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/4"
   },
   {
     "id": "T05",
@@ -82,7 +86,8 @@
       "Provide sample clips and a documented generation/replay command."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/5"
   },
   {
     "id": "T06",
@@ -101,7 +106,8 @@
       "Publish dataset/schema versions, split hashes, and download or generation instructions."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/6"
   },
   {
     "id": "T07",
@@ -120,7 +126,8 @@
       "Separate video-derived metrics from auxiliary-head metrics and export machine-readable records."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/7"
   },
   {
     "id": "T08",
@@ -139,7 +146,8 @@
       "Freeze and share the selected autoencoder across diffusion comparisons."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/8"
   },
   {
     "id": "T09",
@@ -158,7 +166,8 @@
       "Add a run manifest and qualitative successes/failures."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/9"
   },
   {
     "id": "T10",
@@ -177,7 +186,8 @@
       "Record baseline samples and proposed run budgets."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/10"
   },
   {
     "id": "T11",
@@ -196,7 +206,8 @@
       "Record added parameter count, ablation switch, and working E3 training/sampling."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/11"
   },
   {
     "id": "T12",
@@ -216,7 +227,8 @@
       "Report head predictions separately from generated-video tracking metrics."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/12"
   },
   {
     "id": "T13",
@@ -238,7 +250,8 @@
       "Record all selected settings and validation-only tuning decisions."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/13"
   },
   {
     "id": "T14",
@@ -256,7 +269,8 @@
       "Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/14"
   },
   {
     "id": "T15",
@@ -274,7 +288,8 @@
       "Save representative successes/failures and state generalization limits."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/15"
   },
   {
     "id": "T16",
@@ -292,7 +307,8 @@
       "Present quality/adherence alongside diversity and clearly label single-reference metrics."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/16"
   },
   {
     "id": "T17",
@@ -313,7 +329,8 @@
       "Add trajectory overlays, loading/error states, and a documented launch path."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/17"
   },
   {
     "id": "T18",
@@ -332,7 +349,8 @@
       "Collect method and contribution notes from each workstream."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/18"
   },
   {
     "id": "T19",
@@ -353,7 +371,8 @@
       "Record a backup demo and check the interface on the presentation machine."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/19"
   },
   {
     "id": "T20",
@@ -372,6 +391,7 @@
       "Submit by the confirmed 14 November cutoff and record the submission receipt."
     ],
     "owner": null,
-    "status": "Not started"
+    "status": "Not started",
+    "issue_url": "https://github.com/athul1810/click2future/issues/20"
   }
 ]
