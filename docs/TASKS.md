@@ -7,9 +7,12 @@ Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU set
 Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. T02/T03 cover the TC2 application, access setup, and GPU validation.
 
 
+The three required submission files and archive exclusions are in [SUBMISSION.md](SUBMISSION.md). Course requirements are separate from optional project features.
+
+
 | ID | Task | Workstream | Depends on | Initial owner |
 |---|---|---|---|---|
-| T01 | [Confirm course requirements and freeze scope](https://github.com/athul1810/click2future/issues/1) | planning | None | Unassigned |
+| T01 | [Record group details and finalize project scope](https://github.com/athul1810/click2future/issues/1) | planning | None | Unassigned |
 | T02 | [Complete TC2 application and record access details](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | None | Unassigned |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | T01 | Unassigned |
@@ -26,23 +29,24 @@ Dependencies below are prerequisites for completing a task. Outlines, interface 
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | evaluation | T13 | Unassigned |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | evaluation | T13 | Unassigned |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | demo | T04, T05, T10 | Unassigned |
-| T18 | [Prepare the report draft and evidence figures](https://github.com/athul1810/click2future/issues/18) | delivery | T01, T13 | Unassigned |
-| T19 | [Verify reproducibility and freeze the submission artifacts](https://github.com/athul1810/click2future/issues/19) | delivery | T14, T15, T16, T17 | Unassigned |
-| T20 | [Finalize report, slides, and submission package](https://github.com/athul1810/click2future/issues/20) | delivery | T18, T19 | Unassigned |
+| T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | delivery | T01, T13 | Unassigned |
+| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | delivery | T14, T15, T16, T17 | Unassigned |
+| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | delivery | T18, T19 | Unassigned |
 
 ## Task details
 
 <a id="t01"></a>
 
-### T01: Confirm course requirements and freeze scope
+### T01: Record group details and finalize project scope
 
-Record the official course constraints and agree on a modest, testable project.
+Apply the AI6132 technical-review requirements and record the remaining group and submission details.
 
 **Dependencies:** None · **Owner:** Unassigned
 
-- [ ] Complete the course-site checklist in docs/REQUIREMENTS.md, including the exact deadline cutoff.
-- [ ] Confirm the research question, core deliverables, and optional features.
-- [ ] Record decisions and unresolved questions in docs/DECISIONS.md.
+- [ ] Record the group ID, full student-card names, and existing group coordinator; keep task owners unassigned until the team allocates work.
+- [ ] Confirm the live NTULearn cutoff and discrepancy between the working 14 November date and the PDF's 16 November date; retain 14 November until the team confirms a change.
+- [ ] Check for any additional course instructions beyond the supplied PDF; use docs/REQUIREMENTS.md for the confirmed minimum requirements.
+- [ ] Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan.
 
 <a id="t02"></a>
 
@@ -108,7 +112,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 - [ ] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
 - [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
 - [ ] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
-- [ ] Publish dataset/schema versions, split hashes, and download or generation instructions.
+- [ ] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
 <a id="t07"></a>
 
@@ -205,6 +209,7 @@ Commit to a comparable experiment suite that fits the remaining budget.
 - [ ] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
 - [ ] Record all selected settings and validation-only tuning decisions.
 - [ ] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
+- [ ] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
 
 <a id="t14"></a>
 
@@ -218,6 +223,7 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Compare E2-to-E3 and E3-to-E4 with quality, physical behavior, and cost metrics.
 - [ ] Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
+- [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
 <a id="t15"></a>
 
@@ -261,42 +267,46 @@ Make the model and simulator comparison understandable and repeatable.
 
 <a id="t18"></a>
 
-### T18: Prepare the report draft and evidence figures
+### T18: Draft the technical report and contribution statement
 
-Assemble the research narrative while experiments finish.
+Prepare the two required PDFs using the course structure and the team's measured results.
 
 **Dependencies:** T01, T13 · **Owner:** Unassigned
 
-- [ ] Draft the question, method, and protocol; use docs/REFERENCES.md and compare closely related action-conditioned methods before making novelty claims.
-- [ ] Create table/figure slots tied to E0-E4, OOD, uncertainty, compute, and limitations.
-- [ ] Insert measured findings from T14-T16 as available; mark pending results explicitly.
-- [ ] Collect method and contribution notes from each workstream.
+- [ ] Draft at least four pages using introduction, methods, experiments and analysis, and conclusion; follow docs/REPORT_OUTLINE.md.
+- [ ] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
+- [ ] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
+- [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
+- [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
 <a id="t19"></a>
 
-### T19: Verify reproducibility and freeze the submission artifacts
+### T19: Verify reproducibility and prepare the source-code ZIP
 
-Ensure another teammate can reproduce the core workflow and use the final checkpoints.
+Prepare a source-only submission package and check that it can be used without the team's working files.
 
 **Dependencies:** T14, T15, T16, T17 · **Owner:** Unassigned
 
-- [ ] Run a clean-environment setup, simulator replay, checkpoint load, and sampling smoke test.
-- [ ] Verify configs, split hashes, artifact paths/checksums, and actual run commands.
-- [ ] Freeze final tables/figures and record limitations or omitted optional experiments.
-- [ ] Record a backup demo and check the interface on the presentation machine.
-- [ ] Verify that the demo loads the final selected checkpoint and reproduces saved conditions, sampling seeds, and four-future output.
+- [ ] Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
+- [ ] Build group_XX_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
+- [ ] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
+- [ ] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
+- [ ] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
+- [ ] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
 
 <a id="t20"></a>
 
-### T20: Finalize report, slides, and submission package
+### T20: Finalize the two PDFs and submit the three required files
 
-Deliver the project against the confirmed course requirements.
+Complete one group submission through NTULearn using the exact required filenames and content restrictions.
 
 **Dependencies:** T18, T19 · **Owner:** Unassigned
 
-- [ ] Finalize conclusions using measured results, include failures and contribution statements.
-- [ ] Complete references, formatting, figures, and presentation rehearsal.
-- [ ] Check required code/checkpoints/report/slides/video artifacts against the official rubric.
-- [ ] Submit by the confirmed 14 November cutoff and record the submission receipt.
+- [ ] Export group_XX_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
+- [ ] Export group_XX_contribution.pdf with every member's full name and reviewed contribution description.
+- [ ] Use the confirmed group ID in all three filenames and verify group_XX_code.zip contains source code only, with no datasets, model files, or external links.
+- [ ] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
+- [ ] Coordinate one group submission of the three files through NTULearn > Assignments > Project 1, using the retained 14 November working deadline until the discrepancy is resolved.
+- [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.
 
-The machine-readable initial backlog is [task_backlog.json](task_backlog.json). See [the roadmap](ROADMAP.md) for the submission deadline and task dependencies. Intermediate task dates have not been set.
+The machine-readable initial backlog is [task_backlog.json](task_backlog.json). See [the roadmap](ROADMAP.md) for the working deadline and task dependencies. Intermediate task dates have not been set.

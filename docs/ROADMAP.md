@@ -1,6 +1,6 @@
 # Roadmap
 
-**Submission deadline: 14 November 2026.** Confirm the exact cutoff on the course site.
+**Working deadline: 14 November 2026.** The team chose to retain this date until confirmed; the supplied PDF lists 16 November. See [SUBMISSION.md](SUBMISSION.md) for the three required files and exact packaging rules.
 
 Intermediate milestones and task dates have not been set. The team will agree on them later. The dependencies below describe the order of work, without assigning dates.
 
@@ -30,7 +30,7 @@ This diagram shows the main model-training path. The [task board](TASKS.md) list
 
 **Fix the experiment settings.** Fix datasets, metrics, sample counts, and run budgets. Scale to 128px only if the 64px evidence and remaining GPU budget justify it. Use 128px for a targeted follow-up, not an automatic second full sweep.
 
-**Prepare for submission.** Complete the analysis, reproduction checks, report, and presentation. Maintain a recorded demo if live sampling is slow or cluster access is unavailable.
+**Prepare for submission.** Complete the analysis, report, contribution statement, and source-code ZIP. Check both PDFs and inspect the extracted ZIP. Keep trained checkpoints and optional demo recordings in the team's working files, outside the submitted package.
 
 ## Team coordination
 

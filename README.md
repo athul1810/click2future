@@ -4,11 +4,11 @@
 
 Select an object in a tabletop scene, draw a force arrow, and generate four possible outcomes.
 
-Click2Future is our NTU Generative AI course project. We plan to train a small video diffusion model to predict what happens after a force is applied to an object. A tabletop simulator will generate the training clips, object trajectories, and collision labels.
+Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU. For Project 1: Technical Review, we will compare a conditional VAE and video diffusion for predicting tabletop motion after a force is applied. A procedural simulator will generate the clips, trajectories, and collision labels. We also plan to test object-centric conditioning and auxiliary physics supervision.
 
 **Status:** project setup. The simulator, models, and demo still need to be built.
 
-**Submission deadline:** 14 November 2026; confirm the submission time and deliverables on the course site.
+**Working deadline:** 14 November 2026, retained by the team until confirmed. The supplied PDF lists 16 November; see [submission details](docs/SUBMISSION.md).
 
 **Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
@@ -19,6 +19,8 @@ Click2Future is our NTU Generative AI course project. We plan to train a small v
 | If you want to… | Read… |
 |---|---|
 | Understand the project and scope | [Requirements](docs/REQUIREMENTS.md) |
+| Prepare the three required submission files | [Submission guide](docs/SUBMISSION.md) |
+| Draft the report and contribution statement | [Report outline](docs/REPORT_OUTLINE.md) and [contribution template](docs/CONTRIBUTION_TEMPLATE.md) |
 | Assign work to the team | [Task board](docs/TASKS.md) and [open issues](https://github.com/athul1810/click2future/issues) |
 | See the deadline and task dependencies | [Roadmap](docs/ROADMAP.md) |
 | Implement compatible components | [Architecture and data contract](docs/ARCHITECTURE.md) |
@@ -47,14 +49,16 @@ For the core hidden-physics model, friction is **not an input**. Changing the fr
 
 ## Scope
 
-| Core deliverable | Stretch goal |
+| Planned project work | Stretch goal |
 |---|---|
 | 64×64 top-down scenes, initially 16 frames | 128×128 after the compute gate passes |
 | 2-4 rigid objects, randomized appearance and hidden physics | More shapes and harder collisions |
 | Compact latent video diffusion and conditional VAE baseline | Additional architecture exploration |
 | Five planned experimental variants | Additional supervision ablations |
 | Four sampled futures and a simulator comparison | Friction-conditioned sampling |
-| Reproducible metrics, checkpoints, report, recorded demo | FVD if feasible and statistically useful |
+| Reproducible experiments, technical report, contribution PDF, source code | FVD if feasible and statistically useful |
+
+The course requires at least two methods, one evaluation dataset, and a report of at least four pages. Five variants and the interactive demo are our project plan, not additional course submission requirements. Checkpoints and any demo recordings stay in the team's working files.
 
 No real robot, photorealistic 512px video, or general-purpose physics. The upload workflow targets the synthetic domain; real photographs are outside the course scope.
 
@@ -98,9 +102,17 @@ Divide these areas across the team. Each issue should have one lead and a review
 
 Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
 
-## Deadline
+## Submission
 
-**14 November 2026.** Confirm the exact submission time and required deliverables on the course site. Intermediate milestones and task dates will be agreed by the team later.
+One submission per group through NTULearn, containing exactly:
+
+- `group_XX_report.pdf`: main report, at least four pages.
+- `group_XX_contribution.pdf`: each member's contribution.
+- `group_XX_code.zip`: source code, with no datasets, model files, or external links.
+
+Replace `XX` with the confirmed group ID. No cloud-hosted substitutes or external links in the submitted material. Follow the [submission guide](docs/SUBMISSION.md); do not ZIP the working repository wholesale.
+
+Keep **14 November 2026** as the working deadline until the team confirms the PDF's 16 November date. Intermediate milestones and task dates have not been set.
 
 ## Repository layout
 

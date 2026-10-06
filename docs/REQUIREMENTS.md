@@ -1,56 +1,74 @@
-# Requirements and open questions
+# Course requirements and project scope
 
-## Confirmed from the project brief
+Source: `course project technical review.pdf`, supplied by the team. Page numbers refer to that 11-page document. The accompanying submission instructions confirm the filenames and exclusions.
 
-- Project: Click2Future, for the NTU Generative AI course.
-- Goal: train an actual generative model for action-conditioned tabletop futures.
-- Inputs: initial image, selected-object mask, spatial action map, force direction/magnitude.
-- Proposed contribution: object-centric action conditioning and trajectory/collision supervision.
-- Five planned comparisons: conditional VAE, first-frame diffusion, numeric-action diffusion, spatial conditioning, full supervised model.
-- Interactive output: four sampled futures with simulator comparison where metadata is available.
-- Scope starts at 64px; 128px is conditional on feasibility.
-- Deadline: 14 November 2026, based on the supplied correspondence.
-- All task owners are initially unassigned.
-- Model training will use the course-provided TC2 GPU Cluster, as confirmed by the team.
+## Confirmed course requirements
 
-## Instructor guidance
-
-The instructor recommends Click2Future with modest model and experimental scope. The course announcement provides TC2 GPU access for MSc coursework through an application form sent to `ccdsgpu-tc@ntu.edu.sg`. T02 covers that process; record the assigned hardware and quota after receiving access details.
-
-## Working design choices to confirm in T01/T04
-
-| Choice | Proposed starting point | Why |
+| Requirement | Source | Click2Future plan |
 |---|---|---|
-| World | Top-down bounded tabletop with 2-4 rigid objects | Reliable labels and manageable appearance |
-| Clip | 16 frames at 8 fps, frame 0 before action | Short sequence for initial profiling |
-| Action | Constant force applied at selected object's centre for a fixed duration | Unambiguous direction/magnitude; no click-position torque |
-| Hidden properties | Mass and friction vary independently of visible appearance | Creates controlled conditional uncertainty |
-| Model | Small frame autoencoder + latent video denoiser | Profile feasibility before scaling |
-| Demo | Simulator presets plus synthetic uploads | Keeps evaluation within the training domain |
+| AI6132 Generative AI For Visual Synthesis, Project 1: Technical Review | Pages 1-2 | Review and compare action-conditioned video generation methods |
+| Up to four members; use full names as on student cards | Page 2 | Record the confirmed roster and group ID in T01 |
+| First person listed in the group is the coordinator | Page 2 | Record the existing coordinator; do not assign one automatically |
+| Identify a visual generation task | Page 6 | Generate tabletop futures from an initial image and an applied force |
+| At least one evaluation dataset; subsets and self-built datasets are allowed | Page 7 | Procedural tabletop dataset with independent scene splits |
+| Compare at least two methods; existing and proposed methods are allowed | Page 7 | CVAE and video diffusion, with E1-E4 ablations |
+| Analyze hyperparameters and key components | Page 8 | Small validation-only parameter study plus conditioning/supervision ablations |
+| Compare methods and discuss strengths, limitations, and future extensions | Page 8 | Quantitative tables, failure cases, and discussion |
+| Visualize and discuss results; do not copy results from other materials | Page 8 | Use our measured runs and generated examples |
+| Technical report of at least four pages | Page 8 | Introduction, methods, experiments and analysis, conclusion |
+| Submit report, contribution PDF, and source-code ZIP | Pages 4-5 | Follow the exact filenames in [SUBMISSION.md](SUBMISSION.md) |
+| No datasets, model files, external links, or cloud-hosted submissions | Pages 4-5 | Package source code only and put results directly in the report |
+| One submission per group; replacements are allowed without a stated limit | Page 5 | Coordinate one group submission through NTULearn |
 
-These are proposed engineering defaults, not course requirements. Record the final values and units in the data contract and configs.
+The PDF does not require a novel method, five variants, 128px generation, slides, or a separate demo video. Our custom conditioning module and demo are project choices.
 
-## Course-site checklist
+## Deadline
 
-- [ ] Confirm course code/title; do not inherit AI6101 from the reference repository.
-- [ ] Confirm deadline time/timezone and submission platform.
-- [ ] Confirm report page limit, presentation format, and required deliverables.
-- [ ] Confirm rules for pretrained models, external datasets, and AI-assisted work.
-- [ ] Confirm team-member details and contribution reporting.
-- [ ] Record TC2 application/access status, assigned GPU model, memory, quota, storage, job limits, and software environment.
+Keep **14 November 2026** as the working deadline, as requested by the team. Page 5 of the PDF lists **16 November 2026**. Confirm the discrepancy and exact cutoff on NTULearn before changing the single GitHub deadline. No intermediate dates are set.
+
+## Rubric and teamwork
+
+Page 9 asks for a clear task/method explanation, good organization, thorough comparison and analysis, insightful discussion, useful visualizations, challenging methods or applications, and discussion or implementation of improvements. It gives no numerical weights.
+
+Everyone must contribute and communicate with the group. Page 10 includes a policy to report a member's refusal to contribute to the instructors at least six weeks before submission. Keep contribution records throughout the project and read that policy if a team issue arises. This repository does not send reports or contact anyone automatically.
+
+## Click2Future scope
+
+- Train a compact generative model for action-conditioned tabletop futures.
+- Inputs: initial image, selected-object mask, spatial action map, force direction and magnitude.
+- Compare a conditional VAE with video diffusion, then test spatial conditioning and trajectory/collision supervision separately.
+- Use hidden mass and friction to study uncertainty across four sampled futures.
+- Start at 64px; consider 128px only after profiling.
+- Use the course-provided TC2 GPU Cluster for training.
+- Keep task owners unassigned until the team allocates work.
+
+## Working design choices
+
+| Choice | Proposed starting point | Reason |
+|---|---|---|
+| World | Top-down bounded tabletop with 2-4 rigid objects | Exact labels and manageable appearance |
+| Clip | 16 frames at 8 fps, frame 0 before action | Short sequence for profiling |
+| Action | Constant force at the selected object's centre for a fixed duration | Clear direction and magnitude; no click-position torque |
+| Hidden properties | Mass and friction independent of visible appearance | Controlled conditional uncertainty |
+| Model | Small frame autoencoder and latent video denoiser | Measure training cost before scaling |
+| Demo | Simulator presets and synthetic uploads | Keep the interface within the training domain |
+
+Finalize values and units in T04. These are engineering choices, not requirements from the PDF.
+
+## Remaining details to record
+
+- [ ] Group ID, full member names, and the coordinator listed in the group form.
+- [ ] Deadline discrepancy, exact cutoff/timezone, and live NTULearn submission link.
+- [ ] Any additional report template, page maximum, file-size limit, or updated instructions on NTULearn; none is specified in the supplied PDF.
+- [ ] Rules on pretrained weights and AI-assisted work, if given elsewhere; the PDF's ban concerns submitted datasets and model files.
+- [ ] TC2 application/access status, assigned hardware, quota, and software environment.
 
 ## Completion criteria
 
-- A seeded simulator exports reproducible clips, masks, trajectories, and collision labels.
-- At least one compact diffusion model actually trains and produces action-conditioned video.
-- The planned baseline ladder is evaluated under documented, comparable settings; any omissions are disclosed and justified.
-- Spatial conditioning and auxiliary supervision are tested as separate changes.
-- Identical visible inputs with hidden physical variation support a controlled uncertainty experiment.
-- Evaluation includes separate shape, texture, and force generalization splits.
-- The demo shows four samples and a correctly labelled simulator comparison.
-- The report links claims to measured results, includes failure cases, and states limitations.
-- A teammate can reproduce a smoke run and load the final checkpoints from the documented environment.
+- Compare at least two methods on at least one dataset using our own experiments.
+- Include hyperparameter analysis, component analysis, visualizations, limitations, and future work in a report of at least four pages.
+- For the planned Click2Future method, validate simulator labels, action conditioning, and uncertainty rather than claim improvements without evidence.
+- Keep code, configs, seeds, and internal run records reproducible; verify the final code ZIP separately from the team's checkpoint-based workflow.
+- Submit exactly the three named files, with no datasets, model files, external links, or cloud-hosted substitutes.
 
-## Scope changes
-
-Record changes in [DECISIONS.md](DECISIONS.md) with the reason, evidence, and effect on experiments. If compute is constrained, reduce resolution, clip length, model size, and dataset size before expanding features. Do not silently remove an ablation or relabel a simulator output as a generated sample.
+Record scope changes in [DECISIONS.md](DECISIONS.md). If compute is tight, reduce resolution, clip length, model size, and optional experiments while retaining the course requirements. Clearly report changes to the five-variant plan.

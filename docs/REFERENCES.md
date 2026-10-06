@@ -29,6 +29,7 @@ Trajectory errors, collision-event scoring, and action controls use the definiti
 
 ## Notes for the report
 
+- Keep these source links in the working repository. Use bibliographic entries without external URLs or clickable external links in the submitted PDFs.
 - Cite the method actually implemented and identify any borrowed code or pretrained weights.
 - Compare each related method's inputs, output representation, physical supervision, and uncertainty treatment with Click2Future.
 - Describe object-centric conditioning and auxiliary supervision as proposed contributions until the literature review and experiments support a stronger claim.

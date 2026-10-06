@@ -24,6 +24,8 @@ Keep diffusion backbone, autoencoder, data splits, resolution, clip length, opti
 
 ## Test suites
 
+The course minimum is two methods evaluated on at least one dataset. Our CVAE and diffusion comparison meets that structure; the planned E1-E4 variants provide component analysis. Use results from our runs, rather than copy values from reference papers.
+
 | Suite | Change from training | Control |
 |---|---|---|
 | ID | New visible scenes and hidden physics draws | Training distributions |
@@ -89,3 +91,9 @@ Increase sample counts for a smaller diagnostic subset if four samples are insuf
 - Record dropped/corrupted samples, tracking failures, and all metric denominators.
 - Show successful and failed examples, action controls, and OOD cases with run IDs.
 - Never populate result tables with illustrative values that could be mistaken for measurements.
+
+## Hyperparameter analysis for the report
+
+Reserve a small validation study in T13/T14, since the course requires analysis of hyperparameter settings as well as components. A low-cost starting point is to compare a few diffusion sampling-step counts using the same trained checkpoint, conditions, K, and sampling seeds. Record quality, action adherence, and inference latency. If budget allows, add an auxiliary-loss weight study with separately trained models.
+
+Choose tested values and the budget before running the study, select settings on validation data, and keep the final test protocol fixed. Include the study and its limitations in the report alongside E2-to-E3 and E3-to-E4 component comparisons.

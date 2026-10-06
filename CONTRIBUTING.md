@@ -35,6 +35,8 @@ Use the [run manifest template](experiments/RUN_TEMPLATE.md). Never compare unna
 
 Commit code, docs, configuration, split manifests, small tables, and selected report figures. Keep full datasets, model checkpoints, large videos, logs, and credentials outside Git. Store artifact paths and checksums in run manifests; document how teammates obtain them. The `.gitignore` contains initial exclusions.
 
+Those artifact references are for team work. The course submission must contain the two PDFs and source-code ZIP described in [SUBMISSION.md](docs/SUBMISSION.md), with no datasets, model files, or external links. Prepare a separate code package rather than ZIP the whole working repository.
+
 ## Current setup status
 
 The initial repository is planning-only. T03 will add tested environment instructions, dependency versions, and runnable commands once hardware/software constraints are known. Avoid adding commands to the README before they work.
