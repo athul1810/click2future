@@ -1,11 +1,14 @@
-# Planned verification
+# Verification
 
-Add checks alongside implementation for behavior that matters:
+The current tests cover the simulator/data scaffold:
 
-- Deterministic simulator replay, force direction, collision events, and zero-force behavior.
-- Tensor shapes, units, valid-object masks, split disjointness, and absence of hidden-physics leakage.
-- Metrics on known trajectories, contact events, identical videos, and deliberately corrupted videos.
-- Autoencoder reconstruction and model forward/backward/sample smoke runs.
-- Resume behavior and one complete demo-to-sampler path.
+- deterministic scene generation and hidden-physics variants;
+- force direction, zero-force behavior, and contact events;
+- deterministic RGB and instance-mask rendering;
+- rollout shapes, timestamps, action maps, and oracle labels;
+- JSON/NPZ round trips and schema validation.
+- saved-rollout replay and mismatch detection.
+- model-facing channel-first sample and padded batch loaders.
 
-No tests run against a model yet because the initial repository is a planning scaffold.
+Model, evaluation, split, replay, and end-to-end CLI tests will be added as
+those layers are implemented.
