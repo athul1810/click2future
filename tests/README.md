@@ -10,4 +10,8 @@ Add checks alongside implementation for behavior that matters:
 
 `test_environment.py` checks the CPU diagnostic/report and the failure status for an
 unavailable CUDA device. Run `python -m pytest -q` using the environment in
-[development setup](../docs/SETUP.md). Model and simulator tests are not available yet.
+[development setup](../docs/SETUP.md). `test_pilot_denoiser.py` checks forward/backward,
+auxiliary shapes/symmetry, E1 input isolation, equal-capacity E2/E3 and zero-force
+agreement, spatial coordinate recovery, invalid inputs, and exact CPU optimizer/RNG restart continuity.
+`test_profile_pilot.py` verifies the allocation guard. These are prototype checks;
+simulator physics, learned action response, sampling, and full trainer tests remain pending.
