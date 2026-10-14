@@ -67,7 +67,7 @@
       "Define scene_group_id and condition_id, including identical-first-frame uncertainty groups.",
       "Provide a small fixture or schema example that downstream components can consume."
     ],
-    "owner": null,
+    "owner": "PRAMOD SANJAY",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/4"
   },
@@ -86,7 +86,7 @@
       "Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.",
       "Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance."
     ],
-    "owner": null,
+    "owner": "PRAMOD SANJAY",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/5"
   },
@@ -105,7 +105,7 @@
       "Check identical initial inputs within condition_id and independence of hidden physics from appearance.",
       "Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link."
     ],
-    "owner": null,
+    "owner": "PRAMOD SANJAY",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/6"
   },
@@ -125,7 +125,7 @@
       "Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.",
       "Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models."
     ],
-    "owner": null,
+    "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/7"
   },
@@ -144,7 +144,7 @@
       "Record memory, throughput, latent shapes, and a checkpoint with checksum.",
       "Freeze and share the selected autoencoder across diffusion comparisons."
     ],
-    "owner": null,
+    "owner": "MAITI SHRIJEET",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/8"
   },
@@ -183,7 +183,7 @@
       "Measure 64px peak VRAM, seconds/step, and four-sample inference latency.",
       "Record baseline samples and proposed run budgets."
     ],
-    "owner": null,
+    "owner": "MAITI SHRIJEET",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/10"
   },
@@ -202,7 +202,7 @@
       "Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.",
       "Record added parameter count, ablation switch, and working E3 training/sampling."
     ],
-    "owner": null,
+    "owner": "MAITI SHRIJEET",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/11"
   },
@@ -222,7 +222,7 @@
       "Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.",
       "Report head predictions separately from generated-video tracking metrics."
     ],
-    "owner": null,
+    "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/12"
   },
@@ -246,7 +246,7 @@
       "Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.",
       "Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget."
     ],
-    "owner": null,
+    "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/13"
   },
@@ -265,7 +265,7 @@
       "Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.",
       "Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs."
     ],
-    "owner": null,
+    "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/14"
   },
@@ -283,7 +283,7 @@
       "Compare against ID performance and include tracker failure rates.",
       "Save representative successes/failures and state generalization limits."
     ],
-    "owner": null,
+    "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/15"
   },
@@ -301,7 +301,7 @@
       "Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.",
       "Present quality/adherence alongside diversity and clearly label single-reference metrics."
     ],
-    "owner": null,
+    "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/16"
   },

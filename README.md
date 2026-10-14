@@ -10,7 +10,7 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 
 **Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
-**Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
+**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; D: unassigned. See the [task board](docs/TASKS.md).
 
 **Compute:** TC2 access is approved for Athul. The account has a one-GPU limit and a six-hour job limit. Verify the GPU model and VRAM before setting the training budget. See [compute details](docs/COMPUTE.md).
 
@@ -102,16 +102,16 @@ Compare ADE/FDE, action-direction error, collision accuracy and F1, SSIM/LPIPS, 
 
 ## Four workstreams
 
-Divide these areas across the team. Each issue should have one lead and a reviewer.
+C is shared by Athul and Ananya. Agree on the implementation split within each shared task and choose reviewers separately.
 
 | Workstream | Main responsibility | Owner |
 |---|---|---|
-| A: Simulator and data | Physics, rendering, labels, splits, ground-truth replay | Unassigned |
-| B: Generative models | Autoencoder, CVAE, diffusion baselines, action module | Unassigned |
-| C: Evaluation and experiments | Metrics, supervision integration, ablations, analysis | Unassigned |
-| D: Integration and delivery | Demo, reproducibility, compute coordination, report assembly | Unassigned |
+| A: Simulator and data | Physics, rendering, labels, splits, ground-truth replay | PRAMOD SANJAY |
+| B: Diffusion | Autoencoder, diffusion training/sampling, numeric and spatial action conditioning | MAITI SHRIJEET |
+| C: Evaluation and physics | Tracking, trajectory/collision metrics, uncertainty, experiments, auxiliary supervision with B | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
+| D: CVAE, compute, and integration | CVAE baseline, reproducible jobs/run records, sampler-to-demo integration | Unassigned |
 
-Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
+D still needs an owner for the CVAE baseline and integration work. Report assembly and submission tasks also remain unassigned. Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
 
 ## Submission
 
@@ -140,7 +140,7 @@ Setup and training commands will be added in T03 once the environment is tested.
 
 ## First team meeting
 
-- Assign T01-T03 and reviewers; start T04 after the scope decision. Check the course requirements and verify TC2 login and a small GPU job.
+- Assign the remaining setup, CVAE, integration, and delivery tasks and choose reviewers; start T04 after the scope decision. Check the course requirements and verify TC2 login and a small GPU job.
 - Agree on the action semantics and dataset contract before generating the main dataset.
 - Claim the remaining issues by workstream and check their dependencies.
 - Use the 64px pilot to decide the dataset and training budget; keep 128px optional.

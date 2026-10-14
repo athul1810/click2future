@@ -1,6 +1,6 @@
 # Task board
 
-All tasks start **unassigned**. Assign leads and reviewers in [GitHub Issues](https://github.com/athul1810/click2future/issues); that is the live source of ownership and progress. This file records the initial scope and dependencies.
+A is owned by PRAMOD SANJAY, B by MAITI SHRIJEET, and C jointly by BOBAN ATHUL KRISHNA and KAPOOR ANANYA. D and the remaining setup/delivery tasks are unassigned. Reviewers are still to be chosen. Keep ownership and progress consistent with [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
 Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup can proceed alongside TC2 login and GPU validation. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
 
@@ -10,24 +10,24 @@ Dependencies below are prerequisites for completing a task. Outlines, interface 
 The three required submission files and archive exclusions are in [SUBMISSION.md](SUBMISSION.md). Course requirements are separate from optional project features.
 
 
-| ID | Task | Workstream | Depends on | Initial owner |
+| ID | Task | Workstream | Depends on | Owner |
 |---|---|---|---|---|
 | T01 | [Record group details and finalize project scope](https://github.com/athul1810/click2future/issues/1) | planning | None | Unassigned |
 | T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | None | Unassigned |
-| T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | T01 | Unassigned |
-| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | T03, T04 | Unassigned |
-| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | data | T05 | Unassigned |
-| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | evaluation | T04, T05 | Unassigned |
-| T08 | [Train and validate the shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | model | T03, T06 | Unassigned |
+| T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | T01 | PRAMOD SANJAY |
+| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | T03, T04 | PRAMOD SANJAY |
+| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | data | T05 | PRAMOD SANJAY |
+| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | evaluation | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
+| T08 | [Train and validate the shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | model | T03, T06 | MAITI SHRIJEET |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | model | T03, T06 | Unassigned |
-| T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | model | T08 | Unassigned |
-| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | model | T10, T04 | Unassigned |
-| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | model | T11, T07 | Unassigned |
-| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | evaluation | T07, T09, T10, T11, T12 | Unassigned |
-| T14 | [Run and analyze the core E0-E4 comparisons](https://github.com/athul1810/click2future/issues/14) | evaluation | T13 | Unassigned |
-| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | evaluation | T13 | Unassigned |
-| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | evaluation | T13 | Unassigned |
+| T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | model | T08 | MAITI SHRIJEET |
+| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | model | T10, T04 | MAITI SHRIJEET |
+| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | model | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
+| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | evaluation | T07, T09, T10, T11, T12 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
+| T14 | [Run and analyze the core E0-E4 comparisons](https://github.com/athul1810/click2future/issues/14) | evaluation | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
+| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | evaluation | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
+| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | evaluation | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | demo | T04, T05, T10 | Unassigned |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | delivery | T01, T13 | Unassigned |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | delivery | T14, T15, T16, T17 | Unassigned |
@@ -80,7 +80,7 @@ Make the CPU development environment reproducible and document training setup on
 
 Let simulator, model, and evaluation work proceed against one agreed contract.
 
-**Dependencies:** T01 · **Owner:** Unassigned
+**Dependencies:** T01 · **Owner:** PRAMOD SANJAY
 
 - [ ] Finalize units, axis conventions, force duration, friction law, frame timing, and collision event semantics.
 - [ ] Finalize tensor shapes, timestamps, scene replay metadata, object identity/padding, and conditioning inputs in docs/ARCHITECTURE.md.
@@ -93,7 +93,7 @@ Let simulator, model, and evaluation work proceed against one agreed contract.
 
 Generate repeatable tabletop clips with usable physical labels.
 
-**Dependencies:** T03, T04 · **Owner:** Unassigned
+**Dependencies:** T03, T04 · **Owner:** PRAMOD SANJAY
 
 - [ ] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
 - [ ] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
@@ -106,7 +106,7 @@ Generate repeatable tabletop clips with usable physical labels.
 
 Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.
 
-**Dependencies:** T05 · **Owner:** Unassigned
+**Dependencies:** T05 · **Owner:** PRAMOD SANJAY
 
 - [ ] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [ ] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
@@ -120,7 +120,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
-**Dependencies:** T04, T05 · **Owner:** Unassigned
+**Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
 - [ ] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
@@ -134,7 +134,7 @@ Measure generated video behavior consistently across models.
 
 Obtain a compact latent representation that preserves object geometry.
 
-**Dependencies:** T03, T06 · **Owner:** Unassigned
+**Dependencies:** T03, T06 · **Owner:** MAITI SHRIJEET
 
 - [ ] Implement or select a permitted autoencoder and record architecture/weight provenance.
 - [ ] Fit weights and normalization on training data only; select the checkpoint on validation data and inspect test/OOD reconstruction only after freezing it.
@@ -161,7 +161,7 @@ Establish a lower-cost generative baseline with the agreed action inputs.
 
 Create the common diffusion backbone and the main numeric-action baseline.
 
-**Dependencies:** T08 · **Owner:** Unassigned
+**Dependencies:** T08 · **Owner:** MAITI SHRIJEET
 
 - [ ] Implement latent video training and sampling with a shared backbone/configuration.
 - [ ] Support first-frame-only E1 and selected-mask-plus-numeric-force E2.
@@ -175,7 +175,7 @@ Create the common diffusion backbone and the main numeric-action baseline.
 
 Test whether localizing the action improves physical action adherence.
 
-**Dependencies:** T10, T04 · **Owner:** Unassigned
+**Dependencies:** T10, T04 · **Owner:** MAITI SHRIJEET
 
 - [ ] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
 - [ ] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
@@ -188,7 +188,7 @@ Test whether localizing the action improves physical action adherence.
 
 Test whether physical supervision improves decoded future behavior.
 
-**Dependencies:** T11, T07 · **Owner:** Unassigned
+**Dependencies:** T11, T07 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Predict trajectories and object-pair collision probabilities from denoiser features.
 - [ ] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
@@ -202,7 +202,7 @@ Test whether physical supervision improves decoded future behavior.
 
 Commit to a comparable experiment suite that fits the remaining budget.
 
-**Dependencies:** T07, T09, T10, T11, T12 · **Owner:** Unassigned
+**Dependencies:** T07, T09, T10, T11, T12 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.
 - [ ] Use measured costs to allocate training/evaluation hours and retry reserve.
@@ -217,7 +217,7 @@ Commit to a comparable experiment suite that fits the remaining budget.
 
 Produce the main evidence for conditioning and supervision claims.
 
-**Dependencies:** T13 · **Owner:** Unassigned
+**Dependencies:** T13 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Run the five variants under the frozen protocol and record actual budgets/seed counts.
 - [ ] Compare E2-to-E3 and E3-to-E4 with quality, physical behavior, and cost metrics.
@@ -231,7 +231,7 @@ Produce the main evidence for conditioning and supervision claims.
 
 Measure which action-conditioned behaviors generalize beyond training.
 
-**Dependencies:** T13 · **Owner:** Unassigned
+**Dependencies:** T13 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Evaluate separate OOD suites while controlling the other factors.
 - [ ] Use frozen checkpoints and metrics without test-set tuning.
@@ -244,7 +244,7 @@ Measure which action-conditioned behaviors generalize beyond training.
 
 Distinguish physically meaningful uncertainty from visual noise.
 
-**Dependencies:** T13 · **Owner:** Unassigned
+**Dependencies:** T13 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
