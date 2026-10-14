@@ -6,30 +6,36 @@
     "dependencies": [],
     "outcome": "Apply the AI6132 technical-review requirements and record the remaining group and submission details.",
     "acceptance": [
-      "Record the group ID, full student-card names, and coordinator from the course group form.",
+      "Record Group 7, the four full names, and PRAMOD SANJAY as coordinator from the supplied roster.",
       "Confirm the NTULearn cutoff and resolve the difference between the working 14 November date and the course brief's 16 November date.",
       "Check NTULearn for additional instructions and use docs/REQUIREMENTS.md for the confirmed minimum requirements.",
       "Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan."
     ],
     "owner": null,
-    "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/1"
+    "status": "In progress",
+    "issue_url": "https://github.com/athul1810/click2future/issues/1",
+    "completed_acceptance": [
+      0
+    ]
   },
   {
     "id": "T02",
-    "title": "Complete TC2 application and record access details",
+    "title": "Verify TC2 login and GPU training setup",
     "workstream": "infrastructure",
     "dependencies": [],
-    "outcome": "Arrange access to the course-provided TC2 GPU Cluster and document its training limits.",
+    "outcome": "Validate the approved TC2 account and fit training to its recorded limits.",
     "acceptance": [
-      "Obtain and complete the application form attached to the course announcement; send it to ccdsgpu-tc@ntu.edu.sg following the form instructions.",
-      "Record application and access status, then verify a small GPU job after support provides access instructions; keep personal details and credentials outside Git.",
-      "Record the assigned GPU model/VRAM, usage quota, job duration, storage, and software constraints in docs/COMPUTE.md.",
-      "Define a profiling plan and size the model and experiments for the assigned TC2 resources."
+      "Record TC2 access approval for Athul and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.",
+      "Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.",
+      "Record storage limits, any total usage quota, access expiry, and backup locations; keep credentials outside Git.",
+      "Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs."
     ],
     "owner": null,
-    "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/2"
+    "status": "In progress",
+    "issue_url": "https://github.com/athul1810/click2future/issues/2",
+    "completed_acceptance": [
+      0
+    ]
   },
   {
     "id": "T03",
@@ -353,7 +359,7 @@
     "outcome": "Prepare a source-only submission package and check that it can be used without the team's working files.",
     "acceptance": [
       "Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.",
-      "Build group_XX_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.",
+      "Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.",
       "Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.",
       "Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.",
       "Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.",
@@ -373,9 +379,9 @@
     ],
     "outcome": "Complete one group submission through NTULearn using the exact required filenames and content restrictions.",
     "acceptance": [
-      "Export group_XX_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.",
-      "Export group_XX_contribution.pdf with every member's full name and reviewed contribution description.",
-      "Use the confirmed group ID in all three filenames and verify group_XX_code.zip contains source code only, with no datasets, model files, or external links.",
+      "Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.",
+      "Export group_07_contribution.pdf with every member's full name and reviewed contribution description.",
+      "Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links.",
       "Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.",
       "Coordinate one group submission of the three files through NTULearn > Assignments > Project 1, using the retained 14 November working deadline until the discrepancy is resolved.",
       "Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files."

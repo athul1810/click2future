@@ -12,7 +12,18 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 
 **Task owners:** all unassigned; claim work through [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
-**Compute:** use the course-provided TC2 GPU Cluster. Apply using the course form, then record the GPU model, memory, and usage limits before setting the training budget.
+**Compute:** TC2 access is approved for Athul. The account has a one-GPU limit and a six-hour job limit. Verify the GPU model and VRAM before setting the training budget. See [compute details](docs/COMPUTE.md).
+
+## Group 7
+
+| Member | NTU username |
+|---|---|
+| PRAMOD SANJAY | sanjay009 |
+| KAPOOR ANANYA | kapo0001 |
+| MAITI SHRIJEET | shrijeet001 |
+| BOBAN ATHUL KRISHNA | athulkri001 |
+
+Coordinator: **PRAMOD SANJAY**, following the course rule that the first person listed in the group is the coordinator.
 
 ## Start here
 
@@ -106,11 +117,11 @@ Each person writes up the methods, results, and limitations of their work. See t
 
 One submission per group through NTULearn, containing exactly:
 
-- `group_XX_report.pdf`: main report, at least four pages.
-- `group_XX_contribution.pdf`: each member's contribution.
-- `group_XX_code.zip`: source code, with no datasets, model files, or external links.
+- `group_07_report.pdf`: main report, at least four pages.
+- `group_07_contribution.pdf`: each member's contribution.
+- `group_07_code.zip`: source code, with no datasets, model files, or external links.
 
-Replace `XX` with the confirmed group ID. No cloud-hosted substitutes or external links in the submitted material. Follow the [submission guide](docs/SUBMISSION.md); do not ZIP the working repository wholesale.
+Use `07` for Group 7 in all three filenames. No cloud-hosted substitutes or external links in the submitted material. Follow the [submission guide](docs/SUBMISSION.md); do not ZIP the working repository wholesale.
 
 ## Repository layout
 
@@ -129,7 +140,7 @@ Setup and training commands will be added in T03 once the environment is tested.
 
 ## First team meeting
 
-- Assign T01-T03 and reviewers; start T04 after the scope decision. Check the course requirements and complete the TC2 application/access setup.
+- Assign T01-T03 and reviewers; start T04 after the scope decision. Check the course requirements and verify TC2 login and a small GPU job.
 - Agree on the action semantics and dataset contract before generating the main dataset.
 - Claim the remaining issues by workstream and check their dependencies.
 - Use the 64px pilot to decide the dataset and training budget; keep 128px optional.

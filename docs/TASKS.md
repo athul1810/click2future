@@ -2,9 +2,9 @@
 
 All tasks start **unassigned**. Assign leads and reviewers in [GitHub Issues](https://github.com/athul1810/click2future/issues); that is the live source of ownership and progress. This file records the initial scope and dependencies.
 
-Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup can proceed while TC2 access is being arranged. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
+Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup can proceed alongside TC2 login and GPU validation. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
 
-Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. T02/T03 cover the TC2 application, access setup, and GPU validation.
+Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. T02/T03 cover TC2 login, environment setup, and GPU validation. Access is approved for Athul; account limits are recorded in [COMPUTE.md](COMPUTE.md).
 
 
 The three required submission files and archive exclusions are in [SUBMISSION.md](SUBMISSION.md). Course requirements are separate from optional project features.
@@ -13,7 +13,7 @@ The three required submission files and archive exclusions are in [SUBMISSION.md
 | ID | Task | Workstream | Depends on | Initial owner |
 |---|---|---|---|---|
 | T01 | [Record group details and finalize project scope](https://github.com/athul1810/click2future/issues/1) | planning | None | Unassigned |
-| T02 | [Complete TC2 application and record access details](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
+| T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | infrastructure | None | Unassigned |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | infrastructure | None | Unassigned |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | data | T01 | Unassigned |
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | data | T03, T04 | Unassigned |
@@ -43,23 +43,23 @@ Apply the AI6132 technical-review requirements and record the remaining group an
 
 **Dependencies:** None · **Owner:** Unassigned
 
-- [ ] Record the group ID, full student-card names, and coordinator from the course group form.
+- [x] Record Group 7, the four full names, and PRAMOD SANJAY as coordinator from the supplied roster.
 - [ ] Confirm the NTULearn cutoff and resolve the difference between the working 14 November date and the course brief's 16 November date.
 - [ ] Check NTULearn for additional instructions and use docs/REQUIREMENTS.md for the confirmed minimum requirements.
 - [ ] Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan.
 
 <a id="t02"></a>
 
-### T02: Complete TC2 application and record access details
+### T02: Verify TC2 login and GPU training setup
 
-Arrange access to the course-provided TC2 GPU Cluster and document its training limits.
+Validate the approved TC2 account and fit training to its recorded limits.
 
 **Dependencies:** None · **Owner:** Unassigned
 
-- [ ] Obtain and complete the application form attached to the course announcement; send it to ccdsgpu-tc@ntu.edu.sg following the form instructions.
-- [ ] Record application and access status, then verify a small GPU job after support provides access instructions; keep personal details and credentials outside Git.
-- [ ] Record the assigned GPU model/VRAM, usage quota, job duration, storage, and software constraints in docs/COMPUTE.md.
-- [ ] Define a profiling plan and size the model and experiments for the assigned TC2 resources.
+- [x] Record TC2 access approval for Athul and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.
+- [ ] Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.
+- [ ] Record storage limits, any total usage quota, access expiry, and backup locations; keep credentials outside Git.
+- [ ] Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs.
 
 <a id="t03"></a>
 
@@ -288,7 +288,7 @@ Prepare a source-only submission package and check that it can be used without t
 **Dependencies:** T14, T15, T16, T17 · **Owner:** Unassigned
 
 - [ ] Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
-- [ ] Build group_XX_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
+- [ ] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
 - [ ] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
 - [ ] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
 - [ ] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
@@ -302,9 +302,9 @@ Complete one group submission through NTULearn using the exact required filename
 
 **Dependencies:** T18, T19 · **Owner:** Unassigned
 
-- [ ] Export group_XX_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
-- [ ] Export group_XX_contribution.pdf with every member's full name and reviewed contribution description.
-- [ ] Use the confirmed group ID in all three filenames and verify group_XX_code.zip contains source code only, with no datasets, model files, or external links.
+- [ ] Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
+- [ ] Export group_07_contribution.pdf with every member's full name and reviewed contribution description.
+- [ ] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links.
 - [ ] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
 - [ ] Coordinate one group submission of the three files through NTULearn > Assignments > Project 1, using the retained 14 November working deadline until the discrepancy is resolved.
 - [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.

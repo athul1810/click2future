@@ -2,30 +2,37 @@
 
 **Training resource: the course-provided TC2 GPU Cluster.** CCDS has made TC2 available to MSAI, MSDS, and MSCS students for course-related work. The team will use this resource for training.
 
-## Application and access
+## Access and account limits
 
-Complete the application form attached to the course announcement and email it to [CCDS GPU Support](mailto:ccdsgpu-tc@ntu.edu.sg).
+TC2 access is approved for **BOBAN ATHUL KRISHNA** (`athulkri001`), according to the access email. Access for the other members has not been recorded.
 
-- [ ] Obtain the application form attached to the course announcement and read its instructions.
-- [ ] Complete and send the form to `ccdsgpu-tc@ntu.edu.sg`.
-- [ ] Record the submission and access status in T02; keep personal application details and credentials outside the repository.
-- [ ] Follow the access instructions received from support and verify a small GPU job.
-
-Track application and access status in T02.
-
-Local CPU work can cover simulation, data preparation, and development checks while TC2 access is arranged. Size training experiments to the TC2 capacity and quota assigned to the team.
-
-## Record before scheduling training
+The email lists these Slurm settings:
 
 | Item | Confirmed value |
 |---|---|
-| Training resource | TC2 GPU Cluster, confirmed course resource |
-| GPU model / count / VRAM | To record from the TC2 assignment |
-| Usage quota and expiry | To record |
-| Maximum job duration / concurrent jobs | To record |
-| CUDA, driver, Python, framework | To record |
-| Dataset / checkpoint storage and quota | To record |
-| Access procedure and scheduler | To document; keep credentials outside Git |
+| Partition | `MGPU-TC2` |
+| QoS | `normal` |
+| Per-user resource limits (`MaxTRESPU`) | 10 CPUs, 1 GPU, `30G` system memory |
+| Running-job limit per user (`MaxJobsPU`) | 2 |
+| Maximum job duration (`MaxWall`) | 6 hours (`06:00:00`) |
+| GPU model and VRAM | To check in an allocated GPU job |
+| Total GPU-hour quota and access expiry | Not stated in the email |
+| CUDA, driver, Python, framework | To record after the device check |
+| Dataset/checkpoint storage quota | To record |
+
+The resource limits apply across the user's running jobs. Two job slots do not provide two GPUs. The `30G` limit is system RAM, not GPU VRAM. Plan single-GPU training and save resumable checkpoints before the six-hour limit, including model, optimizer, scheduler, step, and random-number states.
+
+## Remaining access checks
+
+- [x] Record access approval and the account limits.
+- [ ] Attempt the first login using the supplied user guide; the email says this creates the home directory.
+- [ ] Run a small scheduled GPU job using the supplied sample script, then record GPU model, VRAM, and software versions.
+- [ ] Check storage limits, any total usage quota, and access expiry.
+- [ ] Choose backup locations for code, configs, run records, and checkpoints. TC2 provides no backup service; keep datasets and model files out of Git and the course submission.
+
+The email says accounts that never attempt login may be revoked after three months. Use TC2 for the approved coursework. Keep credentials outside the repository. The attached user guide and sample job script have not yet been added to the project setup notes; use their actual instructions for login and job submission.
+
+Track the login and GPU validation results in T02. CPU simulation, data preparation, and development checks can proceed independently.
 
 ## Profiling sequence
 

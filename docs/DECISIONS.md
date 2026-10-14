@@ -10,8 +10,8 @@
 
 | ID | Decision | Evidence needed | Task |
 |---|---|---|---|
-| D002 | Group details and exact submission cutoff | Confirmed roster and NTULearn; PDF lists 16 November, working date remains 14 November | T01 |
-| D003 | TC2 training budget and software environment | Application/access status, hardware details, quota, and benchmark | T02-T03 |
+| D002 | Exact submission cutoff | NTULearn; PDF lists 16 November, working date remains 14 November | T01 |
+| D003 | TC2 training budget and software environment | GPU model/VRAM, remaining quota details, software versions, and benchmark; account access and Slurm limits are recorded in COMPUTE.md | T02-T03 |
 | D004 | Simulator engine, units, friction model, sample schema | Small deterministic prototype | T04-T05 |
 | D005 | Dataset size, split definitions, hidden-property distributions | Pilot coverage and storage profile | T06 |
 | D006 | Autoencoder/backbone dimensions and training budgets | 64px reconstruction / overfit / throughput checks | T08-T10 |

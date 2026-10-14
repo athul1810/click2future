@@ -24,7 +24,7 @@ This diagram shows the main model-training path. The [task board](TASKS.md) list
 
 ## Checkpoints
 
-**Compute and setup.** Complete the TC2 application and access setup, then measure memory use and throughput. Continue CPU simulator and data-contract work while arranging access. Adjust model and experiment size to the assigned TC2 capacity.
+**Compute and setup.** Verify the approved TC2 account with a first login and a small GPU job, then measure memory use and throughput. Continue CPU simulator and data-contract work alongside these checks. Adjust model and experiment size to the assigned TC2 capacity.
 
 **Check the 64px baseline.** Require a small-batch overfit check, interpretable reconstructions, valid samples, and measured training cost. Debug data/model issues before launching the ablation suite.
 

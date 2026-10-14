@@ -4,15 +4,15 @@ Source: `course project technical review.pdf`, pages 4-5 and 8, and the course s
 
 ## Files to submit
 
-Submit these three files for the group. Replace `XX` with the assigned group ID.
+Submit these three files for **Group 7**, using `07` in the filenames.
 
 | Filename | Contents |
 |---|---|
-| `group_XX_report.pdf` | Main technical report, at least four pages |
-| `group_XX_contribution.pdf` | Each member's actual contribution |
-| `group_XX_code.zip` | Source-code package |
+| `group_07_report.pdf` | Main technical report, at least four pages |
+| `group_07_contribution.pdf` | Each member's actual contribution |
+| `group_07_code.zip` | Source-code package |
 
-One group makes one submission through **NTULearn > course site > Assignments > submission link for Project 1**. The PDF allows replacement submissions without a stated limit. Coordinate uploads through the group coordinator.
+One group makes one submission through **NTULearn > course site > Assignments > submission link for Project 1**. The PDF allows replacement submissions without a stated limit. Coordinate uploads through PRAMOD SANJAY, the first member in the supplied roster.
 
 **Working deadline: 14 November 2026.** Page 5 of the course brief lists 16 November 2026. Confirm the discrepancy and exact cutoff on NTULearn before submitting.
 
@@ -51,7 +51,7 @@ Code comments are optional according to page 5. Existing useful comments do not 
 
 ## Final check
 
-- [ ] Confirm group ID and coordinator; verify all three filenames use the same ID.
+- [ ] Verify all three filenames use `group_07_` and coordinate the upload with PRAMOD SANJAY.
 - [ ] Open both PDFs and inspect every page for readability, missing figures, and broken formatting.
 - [ ] Verify the main report has at least four pages and covers every required analysis.
 - [ ] Confirm every member appears in the contribution PDF with a reviewed description.

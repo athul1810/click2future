@@ -1,6 +1,6 @@
 # Main report outline
 
-Output filename: `group_XX_report.pdf`. Course: AI6132 Generative AI For Visual Synthesis. Project 1: Technical Review. Replace `XX` with the confirmed group ID.
+Output filename: `group_07_report.pdf`. Course: AI6132 Generative AI For Visual Synthesis. Project 1: Technical Review. Group ID: 7.
 
 This is a drafting outline, not a completed report. Use at least four pages of substantive content and include only results the team has measured. The four main sections below follow page 8 of the course PDF.
 

@@ -7,8 +7,8 @@ Source: `course project technical review.pdf`. Page numbers refer to the 11-page
 | Requirement | Source | Click2Future plan |
 |---|---|---|
 | AI6132 Generative AI For Visual Synthesis, Project 1: Technical Review | Pages 1-2 | Review and compare action-conditioned video generation methods |
-| Up to four members; use full names as on student cards | Page 2 | Record the confirmed roster and group ID in T01 |
-| First person listed in the group is the coordinator | Page 2 | Record the coordinator from the course group form |
+| Up to four members; use full names as on student cards | Page 2 | Group 7 roster recorded in [README.md](../README.md) |
+| First person listed in the group is the coordinator | Page 2 | PRAMOD SANJAY, first in the supplied roster |
 | Identify a visual generation task | Page 6 | Generate tabletop futures from an initial image and an applied force |
 | At least one evaluation dataset; subsets and self-built datasets are allowed | Page 7 | Procedural tabletop dataset with independent scene splits |
 | Compare at least two methods; existing and proposed methods are allowed | Page 7 | CVAE and video diffusion, with E1-E4 ablations |
@@ -56,11 +56,12 @@ Finalize values and units in T04. These are engineering choices, not requirement
 
 ## Remaining details to record
 
-- [ ] Group ID, full member names, and the coordinator listed in the group form.
+- [x] Group 7, full member names, and coordinator recorded from the supplied roster.
 - [ ] Deadline discrepancy, exact cutoff/timezone, and live NTULearn submission link.
 - [ ] Any additional report template, page maximum, file-size limit, or updated instructions on NTULearn; none is specified in the course brief.
 - [ ] Rules on pretrained weights and AI-assisted work, if given elsewhere; the PDF's ban concerns submitted datasets and model files.
-- [ ] TC2 application/access status, assigned hardware, quota, and software environment.
+- [x] TC2 access approval for Athul and account resource/job limits recorded in [COMPUTE.md](COMPUTE.md).
+- [ ] TC2 first login, GPU model/VRAM, remaining quota details, and software environment.
 
 ## Completion criteria
 
