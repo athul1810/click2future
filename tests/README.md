@@ -10,5 +10,5 @@ The current tests cover the simulator/data scaffold:
 - saved-rollout replay and mismatch detection.
 - model-facing channel-first sample and padded batch loaders.
 
-Model, evaluation, split, replay, and end-to-end CLI tests will be added as
-those layers are implemented.
+Model, evaluation, and end-to-end CLI tests will be added as those layers are
+implemented.

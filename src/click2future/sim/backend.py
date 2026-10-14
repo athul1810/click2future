@@ -34,13 +34,9 @@ def build_space(
         "space": space,
         "physics_hz": physics_hz,
         "time": 0.0,
-        "step_index": 0,
         "bodies": {},
-        "shapes": {},
         "shape_to_object": {},
         "shape_to_wall": {},
-        "active_object_contacts": set(),
-        "active_wall_contacts": set(),
         "step_object_contacts": set(),
         "step_wall_contacts": set(),
     }
@@ -53,14 +49,12 @@ def build_space(
         OBJECT_COLLISION_TYPE,
         OBJECT_COLLISION_TYPE,
         begin=_object_contact_begin,
-        separate=_object_contact_separate,
         data=state,
     )
     space.on_collision(
         OBJECT_COLLISION_TYPE,
         WALL_COLLISION_TYPE,
         begin=_wall_contact_begin,
-        separate=_wall_contact_separate,
         data=state,
     )
     return state
@@ -88,7 +82,6 @@ def step(state: dict[str, Any], dt: float | None = None) -> None:
     state["step_wall_contacts"].clear()
     state["space"].step(dt)
     state["time"] += dt
-    state["step_index"] += 1
 
 
 def snapshot(state: dict[str, Any]) -> dict[str, Any]:
@@ -102,15 +95,9 @@ def snapshot(state: dict[str, Any]) -> dict[str, Any]:
                 "object_id": object_id,
                 "position": [float(body.position.x), float(body.position.y)],
                 "angle": float(body.angle),
-                "velocity": [float(body.velocity.x), float(body.velocity.y)],
-                "angular_velocity": float(body.angular_velocity),
             }
         )
-    return {
-        "time": float(state["time"]),
-        "step_index": int(state["step_index"]),
-        "objects": objects,
-    }
+    return {"objects": objects}
 
 
 def consume_step_contacts(state: dict[str, Any]) -> dict[str, list[tuple[Any, ...]]]:
@@ -177,7 +164,6 @@ def _add_object(state: dict[str, Any], obj: dict[str, Any]) -> None:
     shape.collision_type = OBJECT_COLLISION_TYPE
 
     state["bodies"][object_id] = body
-    state["shapes"][object_id] = shape
     state["shape_to_object"][id(shape)] = object_id
     state["space"].add(body, shape)
 
@@ -191,25 +177,8 @@ def _object_contact_begin(arbiter: pymunk.Arbiter, _space: pymunk.Space, state: 
             )
         )
     )
-    state["active_object_contacts"].add(object_ids)
     state["step_object_contacts"].add(object_ids)
     return True
-
-
-def _object_contact_separate(
-    arbiter: pymunk.Arbiter,
-    _space: pymunk.Space,
-    state: dict[str, Any],
-) -> None:
-    object_ids = tuple(
-        sorted(
-            (
-                _object_id(arbiter.shapes[0], state),
-                _object_id(arbiter.shapes[1], state),
-            )
-        )
-    )
-    state["active_object_contacts"].discard(object_ids)
 
 
 def _wall_contact_begin(arbiter: pymunk.Arbiter, _space: pymunk.Space, state: dict[str, Any]) -> bool:
@@ -217,20 +186,8 @@ def _wall_contact_begin(arbiter: pymunk.Arbiter, _space: pymunk.Space, state: di
     wall_shape = arbiter.shapes[0] if id(arbiter.shapes[0]) in state["shape_to_wall"] else arbiter.shapes[1]
     object_id = _object_id(object_shape, state)
     wall_contact = (object_id, state["shape_to_wall"][id(wall_shape)])
-    state["active_wall_contacts"].add(wall_contact)
     state["step_wall_contacts"].add(wall_contact)
     return True
-
-
-def _wall_contact_separate(
-    arbiter: pymunk.Arbiter,
-    _space: pymunk.Space,
-    state: dict[str, Any],
-) -> None:
-    object_shape = arbiter.shapes[0] if id(arbiter.shapes[0]) in state["shape_to_object"] else arbiter.shapes[1]
-    wall_shape = arbiter.shapes[0] if id(arbiter.shapes[0]) in state["shape_to_wall"] else arbiter.shapes[1]
-    object_id = _object_id(object_shape, state)
-    state["active_wall_contacts"].discard((object_id, state["shape_to_wall"][id(wall_shape)]))
 
 
 def _object_id(shape: pymunk.Shape, state: dict[str, Any]) -> int:

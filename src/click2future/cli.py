@@ -49,13 +49,6 @@ def main(argv: list[str] | None = None) -> int:
     split.add_argument("--seed", type=int, default=0)
     split.set_defaults(handler=_make_splits)
 
-    replay = subparsers.add_parser("replay", help="replay and validate one saved rollout")
-    replay.add_argument("--input-dir", type=Path, required=True)
-    replay.add_argument("--sample-id", required=True)
-    replay.add_argument("--atol", type=float, default=1e-6)
-    replay.add_argument("--rtol", type=float, default=1e-6)
-    replay.set_defaults(handler=_replay)
-
     validate = subparsers.add_parser("validate-sample", help="validate one saved rollout")
     validate.add_argument("--input-dir", type=Path, required=True)
     validate.add_argument("--sample-id", required=True)
@@ -131,17 +124,6 @@ def _generate_dataset(args: argparse.Namespace) -> int:
         )
     )
     return 0
-
-
-def _replay(args: argparse.Namespace) -> int:
-    report = replay_saved_rollout(
-        str(args.input_dir),
-        args.sample_id,
-        atol=args.atol,
-        rtol=args.rtol,
-    )
-    print(json.dumps(report, indent=2))
-    return 0 if report["ok"] else 1
 
 
 def _validate_sample(args: argparse.Namespace) -> int:
