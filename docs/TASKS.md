@@ -120,6 +120,10 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
+**Progress:** trajectory and object-pair collision metrics, known-control tests, and
+source-labelled JSON export are implemented. See [metric usage](METRICS.md). Pixel tracking,
+simulator calibration, and the remaining metric families are still pending.
+
 **Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.

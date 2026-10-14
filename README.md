@@ -7,8 +7,8 @@ Select an object in a tabletop scene, draw a force arrow, and generate four poss
 Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU. For Project 1: Technical Review, we will compare a conditional VAE and video diffusion for predicting tabletop motion after a force is applied. A procedural simulator will generate the clips, trajectories, and collision labels. We also plan to test object-centric conditioning and auxiliary physics supervision.
 
 **Status:** the development environment and an untrained video-denoiser prototype are
-available. The simulator, dataset pipeline, CVAE, diffusion trainer/sampler, evaluation,
-and demo still need to be built or integrated.
+available, along with trajectory/collision metrics and JSON export. The simulator, dataset
+pipeline, CVAE, diffusion trainer/sampler, pixel tracker, and demo still need to be built or integrated.
 
 **Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
@@ -40,7 +40,7 @@ Coordinator: **PRAMOD SANJAY**, following the course rule that the first person 
 | Assign work to the team | [Task board](docs/TASKS.md) and [open issues](https://github.com/athul1810/click2future/issues) |
 | See the deadline and task dependencies | [Roadmap](docs/ROADMAP.md) |
 | Implement compatible components | [Architecture and data contract](docs/ARCHITECTURE.md) |
-| Design experiments and metrics | [Evaluation plan](docs/EVALUATION.md) |
+| Design experiments and run implemented metrics | [Evaluation plan](docs/EVALUATION.md) and [metric usage](docs/METRICS.md) |
 | Find papers for the method and report | [Research references](docs/REFERENCES.md) |
 | Plan GPU usage | [Compute and feasibility](docs/COMPUTE.md) |
 | Contribute a change | [Contribution guide](CONTRIBUTING.md) |
@@ -144,8 +144,8 @@ tests/               Environment and prototype checks; simulator/sampler checks 
 
 See [development setup](docs/SETUP.md) for the locked Python environment, CPU/CUDA checks,
 and editor instructions. The package includes diagnostics, an untrained denoiser prototype,
-and a synthetic architecture profiler. Simulator, dataset training, sampling, evaluation,
-and demo commands are not implemented yet. The [build plan](docs/BUILD_PLAN.md) distinguishes
+a synthetic architecture profiler, and extracted-track/contact metrics. Simulator, dataset
+training, sampling, video extraction, and demo commands are not implemented yet. The [build plan](docs/BUILD_PLAN.md) distinguishes
 the tested prototype from planned functionality and records the proposed pixel/latent choice.
 
 ## First team meeting

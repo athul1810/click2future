@@ -16,3 +16,7 @@ agreement, spatial coordinate recovery, invalid inputs, and exact CPU optimizer/
 `test_profile_pilot.py` verifies the allocation guard, YAML settings and CLI overrides,
 resolved report settings, precision validation, and failure on non-finite gradients. These are prototype checks;
 simulator physics, learned action response, sampling, and full trainer tests remain pending.
+
+`test_evaluation_metrics.py` validates analytical trajectory and collision controls.
+`test_evaluation_cli.py` checks source-labelled JSON reports, metadata alignment, corrupt
+inputs, and input-file preservation. These tests do not validate a pixel tracker.

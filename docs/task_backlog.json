@@ -126,8 +126,9 @@
       "Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/7"
+    "status": "In progress",
+    "issue_url": "https://github.com/athul1810/click2future/issues/7",
+    "evidence": "docs/METRICS.md; trajectory/collision metrics, known-control tests, and source-labelled JSON export. Pixel extraction/calibration and remaining metrics are pending."
   },
   {
     "id": "T08",

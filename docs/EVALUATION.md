@@ -1,5 +1,8 @@
 # Experiment and evaluation plan
 
+Implemented trajectory/collision metrics, failure policies, and JSON export are described
+in [METRICS.md](METRICS.md). Pixel extraction and simulator calibration are still pending.
+
 ## Hypotheses
 
 - H1: spatial action conditioning improves action adherence over numeric-action diffusion when both identify the selected object.

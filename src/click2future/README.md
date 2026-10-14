@@ -2,7 +2,9 @@
 
 The package provides `python -m click2future.env_check`, an untrained
 `models.pilot_denoiser.PilotDenoiser`, and `python -m click2future.profile_pilot` for
-synthetic architecture profiling. It has no simulator, dataset training, or sampling
+synthetic architecture profiling. `python -m click2future.evaluation` scores extracted
+trajectories and contact events; see [metric usage](../../docs/METRICS.md). It has no
+simulator, dataset training, or sampling
 implementation yet. See [the build plan](../../docs/BUILD_PLAN.md). Planned modules:
 
 | Module | Responsibility | Tasks |
