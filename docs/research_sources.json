@@ -1,0 +1,23 @@
+{
+  "checked_date": "2026-10-14",
+  "timezone": "Asia/Singapore",
+  "status": "primary_sources_reviewed_not_independently_reproduced",
+  "code_revisions": [
+    {"repository": "https://github.com/brown-palm/force-prompting", "commit": "ef3d0f847f787552b5ce004906c4944292e58996", "role": "direct_force_control_overlap_and_optional_inference"},
+    {"repository": "https://github.com/eloialonso/diamond", "commit": "5bcd1599755b4f2fae8e5e079e02f0728e174965", "role": "possible_external_adaptation"},
+    {"repository": "https://github.com/angelvillar96/PlaySlot", "commit": "03019872ea4a26ddd3873100b8798f822541547b", "role": "object_centric_related_work"},
+    {"repository": "https://github.com/nnsriram97/phyco", "commit": "b19f27d7bb04f580757c0856d35e5608beed7d59", "role": "physical_control_overlap_and_optional_inference"},
+    {"repository": "https://github.com/cwchenwang/physctrl", "commit": "eaebd534719ce209436a610ea583ee7aee38943b", "role": "generative_trajectory_related_work"},
+    {"repository": "https://github.com/buoyancy99/diffusion-forcing", "commit": "475e0bcab87545e48b24b39fb46a81fe59d80594", "role": "optional_long_horizon_reference"}
+  ],
+  "versioned_papers": [
+    {"name": "Force Prompting", "url": "https://arxiv.org/html/2505.19386v1", "note": "NeurIPS 2025; official project/repository also reviewed for released inference contract"},
+    {"name": "DIAMOND", "url": "https://arxiv.org/html/2405.12399v1", "note": "project page contains later CS:GO details distinct from paper v1"},
+    {"name": "PhysCtrl", "url": "https://arxiv.org/html/2509.20358v1"},
+    {"name": "PhyCo", "url": "https://arxiv.org/html/2604.28169v1"},
+    {"name": "What-If World", "url": "https://arxiv.org/html/2605.27589v1", "note": "preprint and benchmark-specific source-reported leaderboard"},
+    {"name": "WorldExam", "url": "https://arxiv.org/abs/2608.02603", "note": "preprint; abstract reviewed"},
+    {"name": "CoPhy", "url": "https://arxiv.org/abs/1909.12000", "note": "abstract reviewed; factual observations differ from single-frame condition"},
+    {"name": "ComPhy/PCR", "url": "https://arxiv.org/abs/2408.02687", "note": "abstract and official project reviewed; target/reference motion reveals hidden properties"}
+  ]
+}

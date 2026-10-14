@@ -31,4 +31,8 @@ Those artifact references are for team work. The course submission must contain 
 
 ## Current setup status
 
-T03 covers environment setup, dependency versions, and tested run commands. The implementation is not available yet.
+Follow [development setup](docs/SETUP.md) for the dependency lock, environment check,
+and development checks. T03's TC2 validation still needs login, hardware details,
+and an allocated GPU test from T02. An untrained denoiser prototype and synthetic profiler are available; dataset
+training, sampling, simulator, evaluation, and demo implementations are not available yet.
+See [the build plan](docs/BUILD_PLAN.md) for the prototype checks and remaining evidence gates.

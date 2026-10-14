@@ -1,6 +1,9 @@
 # Planned implementation
 
-This directory is a placeholder, not an importable training package yet. Proposed modules:
+The package provides `python -m click2future.env_check`, an untrained
+`models.pilot_denoiser.PilotDenoiser`, and `python -m click2future.profile_pilot` for
+synthetic architecture profiling. It has no simulator, dataset training, or sampling
+implementation yet. See [the build plan](../../docs/BUILD_PLAN.md). Planned modules:
 
 | Module | Responsibility | Tasks |
 |---|---|---|

@@ -29,6 +29,12 @@ Trajectory errors, collision-event scoring, and action controls use the definiti
 
 ## Notes for the report
 
+The [14 October primary-source review](SOTA_2026-10-14.md) adds PhyCo, PhysCtrl,
+PlaySlot, DIAMOND, Diffusion Forcing, recent causal/reactivity benchmarks, and the
+representative foundation-model frontier. Code revisions and paper versions are in
+[research_sources.json](research_sources.json). Availability is verified, but those
+external systems have not been independently installed/trained/evaluated by this project.
+
 - Keep these source links in the working repository. Use bibliographic entries without external URLs or clickable external links in the submitted PDFs.
 - Cite the method actually implemented and identify any borrowed code or pretrained weights.
 - Compare each related method's inputs, output representation, physical supervision, and uncertainty treatment with Click2Future.

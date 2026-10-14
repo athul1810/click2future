@@ -4,6 +4,11 @@
 
 Intermediate milestones and task dates have not been set. The team will agree on them later. The dependencies below describe the order of work, without assigning dates.
 
+Proposed date windows and revised pixel-pilot gates are in [BUILD_PLAN.md](BUILD_PLAN.md),
+with decisions to assign at [the 14 October meeting](MEETING_2026-10-14.md).
+They are not agreed ownership/dates. The existing task dependencies still describe the
+original latent plan and must be synchronized with issues/backlog if the proposal is adopted.
+
 ## Critical path
 
 ```mermaid
