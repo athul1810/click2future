@@ -21,6 +21,28 @@
 
 Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.md). Submit the report PDF, contribution PDF, and source-code ZIP as described in [SUBMISSION.md](SUBMISSION.md). The custom method and demo are project choices, not extra required uploads.
 
+## D009: Pixel pilot recommendation and research audit: 14 October 2026
+
+- Recommend a compact pixel-space space-time U-Net before adding a learned autoencoder.
+  This is an engineering proposal for the meeting, not a claim that pixels beat latents.
+- A forward/backward-tested prototype implements equal-capacity numeric/spatial
+  conditioning and optional trajectory/collision heads. It has no dataset trainer or sampler.
+- Preserve the proposed 16-total-frame, centre-force contract until the generator's
+  raw fixture/metadata is handed off. Units and force duration remain unresolved.
+- Force controls, spatial physics maps and object-centric futures already overlap
+  Force Prompting, PhyCo, PhysCtrl, and PlaySlot. Define improvement on a frozen matched tabletop protocol rather than
+  promise a universal SOTA win. See [research](SOTA_2026-10-14.md) and [build path](BUILD_PLAN.md).
+- If the meeting adopts the pixel path or reduces scope, synchronize affected issues,
+  task board and backlog dependencies before treating the proposal as the frozen plan.
+
+## D010: TC2 operational preparation: 14 October 2026
+
+- Local preflight and allocation-guarded inventory/bootstrap/probe scripts exist.
+- Use assigned QoS and actual driver/OS evidence; guide examples are not allocations.
+- Account/network approval and an actual allocated job are still required. Local
+  CUDA success and synthetic timings do not certify TC2 or establish the training budget.
+- Keep application details, private connection reports, and restricted PDFs outside Git.
+
 ## New decision template
 
 ```text

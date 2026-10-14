@@ -1,8 +1,9 @@
 # Development setup
 
 This setup covers local Python development, notebooks, and environment diagnostics.
-The simulator, datasets, models, training/sampling commands, and demo are not implemented
-yet. TC2 training validation remains pending T02 access and hardware details.
+The simulator, datasets, trained models, training/sampling commands, evaluation, and
+demo are not implemented yet. An untrained denoiser prototype and synthetic profiler
+exist. TC2 training validation remains pending T02 access and hardware details.
 
 ## Environment and dependencies
 
@@ -81,6 +82,22 @@ The two initial tests cover CPU report creation and the explicit unavailable-CUD
 failure. Add simulator/model/evaluation tests with those implementations.
 
 ## Artifacts and configuration
+
+### Profile the untrained architecture
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.profile_pilot --device cuda --output outputs\pilot-profile.json
+```
+
+This uses `configs/pilot.yaml` and synthetic tensors. Use `--auxiliary` for the optional
+heads and `--batch-size`, `--future-frames`, or `--base-channels` to test dimensions.
+Measure on an uncontended GPU; inspect the per-step spread and `timing_stable` rather
+than turn a short unstable run into a training-hours promise. CPU/GPU correctness and
+memory evidence are separate from learned video quality. See [BUILD_PLAN.md](BUILD_PLAN.md).
+
+The initial tests now also cover the denoiser's shape/gradient/information controls,
+CPU optimizer/RNG restart continuity, and refusal to profile without a requested Slurm allocation.
+Follow [the TC2 guide adaptation](../cluster/README.md) for cluster execution.
 
 `configs/development.yaml` defines repository-relative artifact locations:
 

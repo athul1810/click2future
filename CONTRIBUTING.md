@@ -33,4 +33,6 @@ Those artifact references are for team work. The course submission must contain 
 
 Follow [development setup](docs/SETUP.md) for the dependency lock, environment check,
 and development checks. T03's TC2 validation remains pending access and hardware details
-from T02. Simulator, model, and demo implementations are not available yet.
+from T02. An untrained denoiser prototype and synthetic profiler are available; dataset
+training, sampling, simulator, evaluation, and demo implementations are not available yet.
+See [the build plan](docs/BUILD_PLAN.md) for the prototype checks and remaining evidence gates.

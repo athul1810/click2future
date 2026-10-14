@@ -13,6 +13,11 @@ Complete the application form attached to the course announcement and email it t
 
 Track application and access status in T02.
 
+Follow the [TC2 access and diagnostic workflow](../cluster/README.md) and
+[application template](TC2_ACCESS.md). Inventory, isolated installation, and GPU probe
+jobs are prepared; actual account approval, network access, Linux compatibility and
+allocated GPU validation remain pending. No TC2 job has been submitted by this setup.
+
 Local CPU work can cover simulation, data preparation, and development checks while TC2 access is arranged. Size training experiments to the TC2 capacity and quota assigned to the team.
 
 ## Record before scheduling training
@@ -31,8 +36,9 @@ Local CPU work can cover simulation, data preparation, and development checks wh
 
 1. Run a device/memory smoke check on TC2 and record the environment.
 2. Generate a small simulator dataset on CPU; measure samples/second and bytes/clip.
-3. Train the frame autoencoder on a small subset and inspect reconstruction of object boundaries.
-4. Overfit a tiny fixed video batch to check the model and loss plumbing.
+3. For the proposed pixel pilot, profile the denoiser directly. If a latent path is
+   selected, first gate its autoencoder on object-boundary/contact preservation.
+4. Overfit a tiny fixed video batch, then independently check held-out action response.
 5. Profile a compact 64px, 16-frame model: peak VRAM, seconds/step, throughput, checkpoint size, and four-sample latency.
 6. Calculate the total ablation budget, including evaluation and failed-run reserve, before launching long jobs.
 
@@ -51,7 +57,7 @@ Queue time and CPU data generation affect wall time even when GPU-hours fit. Mea
 
 | Component | Steps / seeds | Measured time | Estimated GPU-hours | Decision |
 |---|---|---|---|---|
-| Autoencoder | TBD | Pending | Pending | Profile |
+| Autoencoder, if latent path chosen | TBD | Pending | Pending | Reconstruction gate |
 | E0 CVAE | TBD | Pending | Pending | Profile |
 | E1 first-frame diffusion | TBD | Pending | Pending | Profile |
 | E2 numeric-action diffusion | TBD | Pending | Pending | Profile |
@@ -66,7 +72,7 @@ Proceed only if the 64px baseline works, the core comparisons fit the remaining 
 ## Fallback order
 
 1. Keep the final resolution at 64px.
-2. Reduce clip length, latent size, channel width, and batch size as measured needs dictate.
+2. Reduce clip length, channel width, batch size, and latent size if applicable as measured needs dictate.
 3. Reduce dataset/run size coherently across comparisons; report the resulting limits.
 4. Use fewer seeds for exploratory runs and reserve repeats for the main claims.
 5. Drop optional FVD, additional supervision ablations, and friction-conditioned generation.

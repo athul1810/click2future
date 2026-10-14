@@ -13,12 +13,18 @@ Report negative results and uncertainty. The project does not assume any hypothe
 | ID | Model | Conditioning | Physics supervision |
 |---|---|---|---|
 | E0 | Conditional VAE | First frame, selected mask, numeric force | None |
-| E1 | Latent video diffusion | First frame only | None |
-| E2 | Latent video diffusion | First frame, selected mask, numeric force | None |
+| E1 | Video diffusion | First frame only | None |
+| E2 | Video diffusion | First frame, selected mask, numeric force | None |
 | E3 | E2 + object-centric spatial module | E2 inputs + spatial action map | None |
 | E4 | E3 + auxiliary heads | Same as E3 | Trajectories + collision events |
 
 E1 deliberately lacks action information; E2→E3 is the conditioning comparison. E3→E4 is the supervision comparison. If time permits, add E4-T (trajectory only) and E4-C (collision only); these are optional, not prerequisites for the main result.
+
+The [14 October proposal](BUILD_PLAN.md) starts with a pixel-space backbone; the
+latent option remains reconstruction-gated. The implemented prototype uses globally
+broadcast numeric-force channels for E2 and mask-localized force channels for E3,
+with identical backbone parameters and the same selected-mask/numeric-force information.
+Neither is yet a trained comparison. Finalize representation and protocol before main runs.
 
 Keep diffusion backbone, autoencoder, data splits, resolution, clip length, optimizer policy, training budget, sampler, and number of samples fixed where applicable. Record parameter counts, training steps, GPU-hours, and inference latency. Account for added module parameters and avoid claiming an architecture-isolated effect if model capacity also changes materially. Use independent training runs from a common initialization policy for the main E1-E4 comparisons. If one model is warm-started from another, report all inherited training and treat that result as a separate experiment.
 

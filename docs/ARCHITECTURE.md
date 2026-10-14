@@ -1,6 +1,9 @@
 # Architecture and data contract
 
-This is a proposed interface to finalize in T04 before independent implementation. Values below are starting points, not a working implementation.
+This is a proposed interface to finalize in T04 before independent implementation.
+An untrained pixel-space denoiser prototype exists; the data contract and end-to-end
+training/sampling path are not implemented. See [the 14 October build proposal](BUILD_PLAN.md)
+for the pixel pilot, equal-capacity action comparison, and optional latent path.
 
 ## Physics and action semantics
 
@@ -66,7 +69,12 @@ sample(condition, seeds=[...], num_future_frames=T-1) -> videos
 evaluate(videos, references, metadata) -> metric_records
 ```
 
-The frame autoencoder should be trained or selected once, then frozen and shared across diffusion ablations. Fit its weights and any latent normalization statistics using training data only. Use validation data for checkpoint selection; evaluate test/OOD reconstruction only after selection is fixed. Record any pretrained weights and their provenance; randomize training only through documented seeds.
+For the proposed pixel pilot, encoding and decoding are identity operations. If the
+latent path is selected, train/select the frame autoencoder once, then freeze and share
+it across diffusion ablations. Fit weights and latent normalization on training data
+only. Use validation for checkpoint selection and inspect test/OOD reconstruction after
+freezing it. Record pretrained-weight provenance and training seeds. Require object
+geometry and contact/trajectory preservation before accepting compression.
 
 For the conditional VAE, define a training posterior `q(z | future, condition)`, a prior `p(z | condition)` or fixed standard-normal prior, and a decoder `p(future | z, condition)`. Train with a reconstruction loss and a weighted KL term. At inference, sample from the prior without supplying the future clip. Record the prior choice and KL weight in the run config. See [the model references](REFERENCES.md#models).
 
