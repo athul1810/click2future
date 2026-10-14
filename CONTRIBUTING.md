@@ -31,4 +31,6 @@ Those artifact references are for team work. The course submission must contain 
 
 ## Current setup status
 
-T03 covers environment setup, dependency versions, and tested run commands. The implementation is not available yet.
+Follow [development setup](docs/SETUP.md) for the dependency lock, environment check,
+and development checks. T03's TC2 validation remains pending access and hardware details
+from T02. Simulator, model, and demo implementations are not available yet.

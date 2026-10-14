@@ -125,7 +125,9 @@ app/                 Planned interactive demo
 tests/               Planned simulator, contract, and model smoke tests
 ```
 
-Setup and training commands will be added in T03 once the environment is tested. The implementation folders currently contain planning notes.
+See [development setup](docs/SETUP.md) for the locked Python environment, CPU/CUDA checks,
+and editor instructions. The Python package currently provides environment diagnostics only;
+simulator, training, sampling, and demo commands are not implemented yet.
 
 ## First team meeting
 

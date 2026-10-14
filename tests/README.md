@@ -8,4 +8,6 @@ Add checks alongside implementation for behavior that matters:
 - Autoencoder reconstruction and model forward/backward/sample smoke runs.
 - Resume behavior and one complete demo-to-sampler path.
 
-No tests run against a model yet because the initial repository is a planning scaffold.
+`test_environment.py` checks the CPU diagnostic/report and the failure status for an
+unavailable CUDA device. Run `python -m pytest -q` using the environment in
+[development setup](../docs/SETUP.md). Model and simulator tests are not available yet.

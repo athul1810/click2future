@@ -1,6 +1,7 @@
 # Planned implementation
 
-This directory is a placeholder, not an importable training package yet. Proposed modules:
+The package currently provides `python -m click2future.env_check` for development
+environment diagnostics. It has no simulator or training implementation yet. Proposed modules:
 
 | Module | Responsibility | Tasks |
 |---|---|---|
