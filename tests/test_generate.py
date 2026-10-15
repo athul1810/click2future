@@ -3,8 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
+
 from click2future.data import generate_dataset, load_rollout
-from click2future.sim import visible_scene
 
 
 class DatasetGenerationTests(unittest.TestCase):
@@ -27,15 +28,19 @@ class DatasetGenerationTests(unittest.TestCase):
 
             for records in by_group.values():
                 self.assertEqual(len({record["split"] for record in records}), 1)
-                scenes = []
+                rollouts = []
                 hidden_physics = []
                 for record in records:
                     rollout = load_rollout(directory, record["sample_id"])
-                    scenes.append(visible_scene(rollout["scene_spec"]))
+                    rollouts.append(rollout)
                     hidden_physics.append(
                         [obj["hidden_physics"] for obj in rollout["scene_spec"]["objects"]]
                     )
-                self.assertEqual(scenes[0], scenes[1])
+                first, second = rollouts
+                np.testing.assert_array_equal(first["frames"][0], second["frames"][0])
+                np.testing.assert_array_equal(first["selected_mask"], second["selected_mask"])
+                np.testing.assert_array_equal(first["force_xy"], second["force_xy"])
+                np.testing.assert_array_equal(first["action_map"], second["action_map"])
                 self.assertNotEqual(hidden_physics[0], hidden_physics[1])
 
             saved_manifest = json.loads(

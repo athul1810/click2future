@@ -153,6 +153,8 @@ def _validate_inputs(object_count: int, world_size: tuple[float, float]) -> None
         raise ValueError(f"object_count must be between {MIN_OBJECTS} and {MAX_OBJECTS}")
     if len(world_size) != 2 or any(size <= 0 for size in world_size):
         raise ValueError("world_size must contain two positive values")
+    if tuple(float(size) for size in world_size) != (1.0, 1.0):
+        raise ValueError("world_size must be (1.0, 1.0) for scene-0.1")
 
 
 def _sample_position(

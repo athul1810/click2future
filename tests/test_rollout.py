@@ -62,6 +62,13 @@ class RolloutTests(unittest.TestCase):
         for field in ("frames", "instance_masks", "positions", "collision_onset", "wall_contact_onset"):
             np.testing.assert_array_equal(first[field], second[field])
 
+    def test_rollout_rejects_non_unit_world(self) -> None:
+        scene = make_scene(45)
+        scene["world_size"] = [2.0, 2.0]
+
+        with self.assertRaises(ValueError):
+            run_rollout(scene)
+
     def test_reversing_force_reverses_initial_displacement(self) -> None:
         forward_scene = _load_fixture()
         reverse_scene = copy.deepcopy(forward_scene)

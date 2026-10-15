@@ -20,7 +20,7 @@ def run_rollout(
 ) -> dict[str, Any]:
     """Generate one complete in-memory clip record from a scene description."""
 
-    _validate_inputs(frame_count, fps, physics_hz)
+    _validate_inputs(scene, frame_count, fps, physics_hz)
     steps_per_frame = physics_hz // fps
     object_count = len(scene["objects"])
     selected_object_id = int(scene["action"]["selected_object_id"])
@@ -115,7 +115,19 @@ def _record_events(
         wall_target[int(object_id), WALL_ORDER.index(wall_name)] = True
 
 
-def _validate_inputs(frame_count: int, fps: int, physics_hz: int) -> None:
+def _validate_inputs(
+    scene: dict[str, Any],
+    frame_count: int,
+    fps: int,
+    physics_hz: int,
+) -> None:
+    world_size = scene.get("world_size")
+    try:
+        is_unit_world = len(world_size) == 2 and all(float(size) == 1.0 for size in world_size)
+    except (TypeError, ValueError):
+        is_unit_world = False
+    if not is_unit_world:
+        raise ValueError("scene world_size must be [1.0, 1.0] for rollout-0.1")
     if frame_count <= 0:
         raise ValueError("frame_count must be positive")
     if fps <= 0 or physics_hz <= 0:

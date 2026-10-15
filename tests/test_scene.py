@@ -19,11 +19,16 @@ class SceneTests(unittest.TestCase):
         )
 
     def test_scene_is_json_serializable(self) -> None:
-        json.dumps(make_scene(3))
+        scene = make_scene(3)
+        self.assertEqual(json.loads(json.dumps(scene)), scene)
 
     def test_object_count_is_validated(self) -> None:
         with self.assertRaises(ValueError):
             make_scene(3, object_count=1)
+
+    def test_non_unit_world_is_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            make_scene(3, world_size=(2.0, 2.0))
 
     def test_objects_are_inside_world(self) -> None:
         scene = make_scene(5, object_count=4)

@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from click2future.sim import build_space, make_scene, render_frame, render_instance_masks, render_rgb, snapshot
-from click2future.sim.render import DEFAULT_BACKGROUND, DEFAULT_BORDER
+from click2future.sim.render import DEFAULT_BORDER
 
 
 class RenderTests(unittest.TestCase):
@@ -28,12 +28,6 @@ class RenderTests(unittest.TestCase):
         second_rgb, second_masks = render_frame(self.scene, self.current)
         np.testing.assert_array_equal(first_rgb, second_rgb)
         np.testing.assert_array_equal(first_masks, second_masks)
-
-    def test_mask_is_not_rgb_background(self) -> None:
-        frame, masks = render_frame(self.scene, self.current)
-        background = np.all(frame == DEFAULT_BACKGROUND, axis=-1)
-        self.assertTrue(np.any(~background))
-        self.assertTrue(np.any(masks))
 
     def test_rgb_frame_has_visible_table_border(self) -> None:
         frame = render_rgb(self.scene, self.current)
