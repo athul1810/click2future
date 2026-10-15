@@ -1,0 +1,59 @@
+{
+  "schema_version": "scene-0.1",
+  "scene_group_id": "fixture-tiny-scene",
+  "condition_id": "fixture-tiny-scene-action-right",
+  "world_size": [1.0, 1.0],
+  "objects": [
+    {
+      "object_id": 0,
+      "shape": "circle",
+      "geometry": {
+        "radius": 0.06
+      },
+      "position": [0.25, 0.5],
+      "angle": 0.0,
+      "initial_velocity": [0.0, 0.0],
+      "initial_angular_velocity": 0.0,
+      "appearance": {
+        "color": [70, 130, 200],
+        "texture": "solid"
+      },
+      "hidden_physics": {
+        "mass": 1.0,
+        "friction": 0.4,
+        "restitution": 0.2
+      }
+    },
+    {
+      "object_id": 1,
+      "shape": "rectangle",
+      "geometry": {
+        "width": 0.1,
+        "height": 0.12
+      },
+      "position": [0.75, 0.75],
+      "angle": 0.0,
+      "initial_velocity": [0.0, 0.0],
+      "initial_angular_velocity": 0.0,
+      "appearance": {
+        "color": [180, 90, 120],
+        "texture": "solid"
+      },
+      "hidden_physics": {
+        "mass": 1.5,
+        "friction": 0.6,
+        "restitution": 0.1
+      }
+    }
+  ],
+  "action": {
+    "selected_object_id": 0,
+    "force_xy": [0.3, 0.0],
+    "force_duration": 0.25
+  },
+  "seeds": {
+    "visible": 0,
+    "physics": 0,
+    "action": 0
+  }
+}

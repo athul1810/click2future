@@ -85,7 +85,7 @@ def step(state: dict[str, Any], dt: float | None = None) -> None:
 
 
 def snapshot(state: dict[str, Any]) -> dict[str, Any]:
-    """Return serializable object poses and velocities for the current step."""
+    """Return serializable object poses for the current step."""
 
     objects = []
     for object_id in sorted(state["bodies"]):

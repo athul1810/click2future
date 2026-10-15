@@ -69,7 +69,10 @@ def _generate_smoke(args: argparse.Namespace) -> int:
     sample_ids = []
     for offset in range(args.count):
         seed = args.seed + offset
-        scene = make_scene(seed, object_count=args.object_count)
+        world_size = tuple(config.get("world_size", [1.0, 1.0]))
+        scene = make_scene(seed, object_count=args.object_count, world_size=world_size)
+        if "force_duration" in config:
+            scene["action"]["force_duration"] = float(config["force_duration"])
         rollout = run_rollout(
             scene,
             frame_count=int(config.get("frame_count", 16)),
