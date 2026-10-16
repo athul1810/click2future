@@ -18,8 +18,8 @@ from torch.nn import functional as F
 @dataclass
 class DenoiserOutput:
     predicted_noise: Tensor
-    positions: Tensor | None = None
-    collision_logits: Tensor | None = None
+    positions: Tensor | None = None  # [B,T_future,M,2], frame-0 canonical object order
+    collision_logits: Tensor | None = None  # [B,T_future,M,M], onset intervals, same order
 
 
 def _time_embedding(timesteps: Tensor, dimension: int) -> Tensor:
@@ -80,6 +80,8 @@ class PilotDenoiser(nn.Module):
     `selected_mask`: `[B,1,H,W]`; `force_xy`: normalized `[B,2]`.
     `timesteps`: one diffusion timestep per clip, `[B]`.
     Auxiliary outputs are training predictions, not additional conditioning inputs.
+    When using training.auxiliary, head slots follow frame-0 mask-centre x/y order;
+    the label adapter handles simulator IDs without passing masks/labels into this model.
     """
 
     def __init__(

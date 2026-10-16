@@ -127,10 +127,13 @@ so the E2-to-E3 comparison isolates the spatial module.
 
 ## Auxiliary heads
 
-Predict object-centre trajectories and object-pair collision probabilities from
-denoiser features. Use the stable simulator object slots and `object_valid` for
-padding. Oracle future masks, trajectories, collisions, and hidden physics are
-training labels or evaluation references, never inference-time inputs.
+The prototype predicts object-centre trajectories and object-pair collision logits
+from denoiser features. The implemented label adapter sorts frame-0 mask centres by x,
+then y, giving heads a visual slot order. Simulator sampling-order IDs cannot be inferred
+from RGB. One fixed permutation covers the full clip and both collision axes; it is
+reversed for head evaluation. Padding is excluded with valid masks. Oracle future
+trajectories and collisions are training labels or evaluation references, never inputs.
+See [loss implementation and integration](AUXILIARY_LOSSES.md).
 
 ```text
 L = L_diffusion + lambda_traj * L_trajectory + lambda_collision * L_collision

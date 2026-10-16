@@ -44,3 +44,8 @@ commands in [METRICS.md](../docs/METRICS.md#image-quality) to run these tests.
 and reference-contact exclusions, missing tracks, fixed whole-trajectory coverage, duplicate
 and single samples, and the RGB-to-report command. Simulator controls are reproducible with
 `python -m click2future.evaluation.future_controls --output outputs/future-metric-controls.json`.
+
+`test_auxiliary_losses.py` checks fixed frame-0 matching, padding/missing labels, both
+collision axes, per-clip reductions, class balance, timestep gates, ablations, reduced
+precision, real denoiser gradients, and synthetic prediction fitting. Reproduce the
+checks using [the loss guide](../docs/AUXILIARY_LOSSES.md).
