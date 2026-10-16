@@ -27,7 +27,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | Not started |
-| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T14, T15, T16, T17 | Unassigned | Not started |
+| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T14, T15, T16, T17 | Unassigned | In progress |
 | T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T18, T19 | Unassigned | Not started |
 
 ## Task details
@@ -137,7 +137,7 @@ Measure generated video behavior consistently across models.
 - [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
 - [x] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
-Trajectory/collision, action, image, temporal, and ensemble metrics are implemented with source-labelled exports. Simulator controls distinguish physical trajectory spread from colour flicker, handle missing observations, and exclude reference contacts from acceleration checks. Contact recall remains 0.233; generated-video validation and group-level aggregation are pending. See [metric usage and measurements](METRICS.md).
+Trajectory/contact, action, image, temporal, and ensemble metrics have simulator controls. Comparison tables now combine declared cases with scene-group bootstrap intervals, missing counts, and source separation. Contact recall remains 0.233; validation on generated videos is pending. See [metric usage](METRICS.md) and [comparison tables](EVALUATION_REPORTS.md).
 
 <a id="t08"></a>
 
@@ -215,7 +215,7 @@ Test whether physical supervision improves decoded future behavior.
 - [ ] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
 - [ ] Report head predictions separately from generated-video tracking metrics.
 
-Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md). PR #26 merged; the new dataset trainer integrates these losses behind the auxiliary switch. Exact interrupted CPU continuation passes with auxiliary enabled; trained E4 sample quality remains unmeasured. PR #26 merged; the new dataset trainer integrates these losses behind the auxiliary switch. Exact interrupted CPU continuation passes with auxiliary enabled; trained E4 sample quality remains unmeasured.
+Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md). PR #26 merged; the new dataset trainer integrates these losses behind the auxiliary switch. Exact interrupted CPU continuation passes with auxiliary enabled; trained E4 sample quality remains unmeasured.
 
 <a id="t13"></a>
 
@@ -247,6 +247,8 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
+
+CSV/JSON comparison export is implemented and checked on 24 simulator-control reports from four independent scenes. It retains run/checkpoint IDs, K, missing counts, and scene-group intervals. Actual E0-E4 runs, cost measurements, hyperparameter study, and analysis still depend on T13.
 
 <a id="t15"></a>
 
@@ -310,14 +312,16 @@ Prepare the two required PDFs using the course structure and the team's measured
 
 Prepare a source-only submission package and check that it can be used without the team's working files.
 
-**Dependencies:** T14, T15, T16, T17. **Owner:** Unassigned. **Status:** Not started.
+**Dependencies:** T14, T15, T16, T17. **Owner:** Unassigned. **Status:** In progress.
 
 - [ ] Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
-- [ ] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
+- [x] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
 - [ ] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
-- [ ] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
-- [ ] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
+- [x] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
+- [x] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
 - [ ] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
+
+A deterministic source-only ZIP builder, explicit allowlist, input scanner, and hashed inventory are implemented. The archive installed in a fresh Python environment; all 219 tests and four subtests passed after extraction, including generated-data replay and batch loading. The current ZIP is a development snapshot. Dataset training/sampling, CVAE, checkpoint checks, demo integration, and final instructions remain.
 
 <a id="t20"></a>
 

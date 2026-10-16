@@ -79,6 +79,7 @@ def evaluate_videos(
         "run_id": run_id,
         "scene_group_id": reference["scene_spec"]["scene_group_id"],
         "condition_id": reference["scene_spec"]["condition_id"],
+        "timestamps_seconds": reference["timestamps"].tolist(),
         "initialization": "shared_reference_frame_zero_identity_masks; evaluation_only",
         "settings": {
             "tracker": asdict(tracker),

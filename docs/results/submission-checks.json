@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "artifact": "development source snapshot, not final submission",
+  "archive": "group_07_code.zip",
+  "archive_sha256": "ac09e6679a5a0be393220d92101d754f86f2494ff7516b342ac94881ed47cda6",
+  "file_count": 83,
+  "bytes": 138534,
+  "fresh_environment": {
+    "python": "3.12.15",
+    "torch": "2.11.0",
+    "platform": "macOS arm64",
+    "install": "pinned CPU, dev, image-metrics extras with constraints; no inherited project environment"
+  },
+  "validation": {
+    "working_tree_tests": 219,
+    "extracted_source_tests": 219,
+    "subtests": 4,
+    "generated_smoke_rollouts": 2,
+    "documented_grouped_dataset_rollouts": 8,
+    "replay": "passed",
+    "module_help_commands": 5,
+    "cached_lpips_weights": "outside archive, used only by full image-metric tests"
+  },
+  "source_sha256": {
+    "src/click2future/submission.py": "334776d961efcbd2219e69ed28ab3cc9a9f5afec7d349bd096972440a7bafdb3",
+    "submission/allowlist.json": "3732e0decc90d15baac013b63ed53442fe7c19536feb760bb15a6c723486864c",
+    "submission/smoke.py": "43d58e6f9b8a949189c87aa240ca730920f7c45f14e441ef5f99e7aa0bf1a425"
+  },
+  "remaining": [
+    "dataset trainer and sampler",
+    "CVAE baseline",
+    "trained checkpoint/sampling reproduction",
+    "demo integration",
+    "final training and run instructions"
+  ]
+}

@@ -49,6 +49,9 @@ include = [
     "/pyproject.toml",
     "/uv.lock",
     "/.python-version",
+    "/submission/*.md",
+    "/submission/*.py",
+    "/submission/*.json",
 ]
 
 [tool.uv]
