@@ -187,10 +187,10 @@
       "Freeze and share the selected autoencoder across diffusion comparisons."
     ],
     "owner": "MAITI SHRIJEET",
-    "status": "Not started",
+    "status": "Deferred",
     "issue_url": "https://github.com/athul1810/click2future/issues/8",
     "optional": true,
-    "progress": "Deferred from the core path by D011. Adopted pixel diffusion does not require T08. Revisit only after working 64px samples and a measured reconstruction/cost gate."
+    "progress": "Closed as not planned for the adopted pixel-diffusion scope in D011. No autoencoder has been implemented or trained. Reopen only after working 64px samples if measured memory or throughput justifies latents."
   },
   {
     "id": "T09",

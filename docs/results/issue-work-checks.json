@@ -48,11 +48,14 @@
     "final protocol selection and full-dataset training budget"
   ],
   "reviewed_pr_31": {
-    "head": "134db0387b357e1feb0f7a9623202497a7f5619f",
-    "outcome": "changes_requested",
-    "tests_with_main": 235,
+    "original_head": "134db0387b357e1feb0f7a9623202497a7f5619f",
+    "tested_head": "3419c0d0020ac61398b0c17398c22d87608d1b26",
+    "merge_revision": "ad3dbcaafe05e1741b1b9cf4a442b4f81be2a2a6",
+    "outcome": "fixed, approved and merged",
+    "tests_with_main": 243,
     "subtests": 4,
-    "exact_replays": 84,
-    "blocker": "training wall force 1.1 exceeds current diffusion adapter maximum 0.5"
-  }
+    "exact_replays_at_original_head": 84,
+    "fix": "Explicit checkpoint force_limit 1.1 for dataset-0.2, original default 0.5 retained. Force normalization remains /0.5. Actual loader, trainer, checkpoint CLI sampling and legacy resume covered."
+  },
+  "issue_8": "closed as not planned: D011 adopts pixel diffusion; no autoencoder implementation claimed"
 }

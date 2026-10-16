@@ -16,7 +16,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In progress |
 | T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In progress |
 | T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Not started |
+| T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | Unassigned | In progress |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In progress |
@@ -145,14 +145,14 @@ Evaluation implementation is ready for review in PR #30. The random-scene contac
 
 Obtain a compact latent representation that preserves object geometry.
 
-**Dependencies:** T03, T06. **Owner:** MAITI SHRIJEET. **Status:** Not started.
+**Dependencies:** T03, T06. **Owner:** MAITI SHRIJEET. **Status:** Deferred.
 
 - [ ] Implement or select a permitted autoencoder and record architecture/weight provenance.
 - [ ] Fit weights and normalization on training data only; select the checkpoint on validation data and inspect test/OOD reconstruction only after freezing it.
 - [ ] Record memory, throughput, latent shapes, and a checkpoint with checksum.
 - [ ] Freeze and share the selected autoencoder across diffusion comparisons.
 
-Deferred from the core path by D011. Adopted pixel diffusion does not require T08. Revisit only after working 64px samples and a measured reconstruction/cost gate.
+Closed as not planned for the adopted pixel-diffusion scope in D011. No autoencoder has been implemented or trained. Reopen only after working 64px samples if measured memory or throughput justifies latents.
 
 <a id="t09"></a>
 
