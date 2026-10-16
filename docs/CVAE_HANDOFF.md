@@ -24,11 +24,11 @@ Do not add oracle foreground conditioning to improve only this baseline.
 
 ## First handoff and acceptance
 
-- By 18 October: model/loss code, parameter count, tensor shapes and tests
+- Model/loss code, parameter count, tensor shapes and tests
   showing future inputs affect only the posterior, not prior sampling.
-- By 20 October: a four-clip overfit attempt, four prior samples with fixed
+- A four-clip overfit attempt, four prior samples with fixed
   seeds, complete checkpoint/resume, and measured training/sampling cost.
-- By 23 October: held-out action controls, validation checkpoint selection,
+- Held-out action controls, validation checkpoint selection,
   explicit posterior-versus-prior sample comparison and failure examples.
 - Export the same uint8 `videos[K,32,64,64,3]` API as diffusion, preserving
   frame 0. Record config/data/checkpoint hashes, seeds, steps, precision and

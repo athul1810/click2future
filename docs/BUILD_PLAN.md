@@ -1,7 +1,7 @@
 # Achievable architecture and evidence gates
 
-The [16 October execution plan](EXECUTION_PLAN_2026-10-16.md) adds dated targets for
-the confirmed 14 November PPT, pending ownership, physics/identity decisions, the demo,
+The [16 October execution plan](EXECUTION_PLAN_2026-10-16.md) describes
+pending ownership, physics/identity decisions, the demo,
 and assessment evidence. The [research addendum](SOTA_2026-10-16.md) extends the prior review.
 
 The pixel path is adopted as of 16 October. Simulation, grouped datasets,

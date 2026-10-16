@@ -83,7 +83,7 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   evaluation owners. Shrijeet owns diffusion, own-account TC2 runs and demo
   integration. See CVAE_HANDOFF.md for the baseline contract.
 - Complete presentation, report, contribution PDF and tested source ZIP by
-  14 November; artifact freeze 13 November. The possible 16 November upload
+  14 November. The possible 16 November upload
   cutoff does not extend that commitment.
 - PR #25 and #26 passed independent review and merged. Their tests are
   implementation/control evidence; the new trainer must still demonstrate

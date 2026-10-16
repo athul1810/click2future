@@ -27,7 +27,7 @@ The PDF does not require a novel method, five variants, 128px generation, slides
 **Internal completion deadline: 14 November 2026**, including the presentation,
 report, contribution PDF and validated source ZIP. The course brief lists 16 November
 for upload; the exact NTULearn cutoff remains unverified. It does not extend the
-internal deadline. Freeze artifacts on 13 November. See [SUBMISSION.md](SUBMISSION.md).
+internal deadline. See [SUBMISSION.md](SUBMISSION.md).
 
 ## Rubric and teamwork
 

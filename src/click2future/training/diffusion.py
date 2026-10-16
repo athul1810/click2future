@@ -1,4 +1,4 @@
-"""Cosine DDPM epsilon objective and deterministic DDIM sampling.
+"""Cosine DDPM epsilon/velocity objectives and deterministic DDIM sampling.
 
 References: DDPM (arXiv:2006.11239), DDIM (arXiv:2010.02502) and
 Improved DDPM (arXiv:2102.09672, cosine schedule). No classifier-free guidance.

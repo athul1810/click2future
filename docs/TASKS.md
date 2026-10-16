@@ -1,6 +1,6 @@
 # Task board
 
-Internal completion: **14 November 2026**; artifact freeze 13 November.
+Internal completion: **14 November 2026**.
 
 A: Sanjay. B and demo integration: Shrijeet. C: Athul and Ananya jointly.
 Ananya is proposed for CVAE; acceptance is pending. Pixel diffusion is adopted;
@@ -45,7 +45,7 @@ Apply the AI6132 technical-review requirements and record the remaining group an
 - [ ] Check NTULearn for additional instructions and use docs/REQUIREMENTS.md for the confirmed minimum requirements.
 - [x] Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan.
 
-Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submission artifacts must be complete by 14 November, with a 13 November freeze. Exact NTULearn upload cutoff remains unverified.
+Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submission artifacts must be complete by 14 November. Exact NTULearn upload cutoff remains unverified.
 
 <a id="t02"></a>
 
@@ -168,7 +168,7 @@ Establish a lower-cost generative baseline with the agreed action inputs.
 - [ ] Log validation results, model size, training cost, and checkpoint selection.
 - [ ] Add a run manifest and qualitative successes/failures.
 
-Shrijeet asked Ananya to lead CVAE; acceptance pending. Concrete architecture, prior/posterior boundary, milestones and sample API are in docs/CVAE_HANDOFF.md. Evaluation remains shared.
+Shrijeet asked Ananya to lead CVAE; acceptance pending. Concrete architecture, prior/posterior boundary, acceptance checks and sample API are in docs/CVAE_HANDOFF.md. Evaluation remains shared.
 
 <a id="t10"></a>
 

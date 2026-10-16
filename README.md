@@ -17,7 +17,7 @@ quality gate. CVAE, held-out learned-video controls and the demo remain open.
 See [pilot evidence](docs/results/diffusion_pilot_2026-10-16.json)
 and [evaluation results](docs/METRICS.md).
 
-**Internal completion deadline:** 14 November 2026; freeze all artifacts on 13 November. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
+**Working submission deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
 **Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya proposed, awaiting acceptance; demo integration: Shrijeet. See the [task board](docs/TASKS.md).
 

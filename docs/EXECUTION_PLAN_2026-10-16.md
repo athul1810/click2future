@@ -1,6 +1,6 @@
 # Click2Future execution plan - 16 October 2026
 
-## Objective and dates
+## Objective and deadline
 
 Deliver a convincing learned-video demo and a rigorous comparison of conditional VAE
 and video diffusion. The research target is improved action control and credible hidden-physics
@@ -9,8 +9,8 @@ guaranteed. The controllable commitments are correct experiments, strong baselin
 reproducible evidence, clear analysis, and a reliable presentation.
 
 **14 November 2026 is the PPT presentation date**, confirmed by Shrijeet on 16 October.
-All presentation and submission artifacts must be complete by 14 November; freeze
-them on 13 November. The brief's 16 November upload date and exact NTULearn cutoff
+All presentation and submission artifacts must be complete by 14 November.
+The brief's 16 November upload date and exact NTULearn cutoff
 still need confirmation and do not extend the internal finish date. Dates use Singapore time.
 
 Shrijeet adopted the pixel-first scope on 16 October. Sanjay leads A, Shrijeet leads
@@ -103,7 +103,7 @@ Target three independent training seeds for the main comparisons, starting by fu
 E0/E2/E3. E4, E1 and the external adaptation receive explicit budget decisions before
 main runs. A single external pilot is not a statistically established victory.
 
-Time-box the external-method feasibility investigation to one working day by 24 October.
+Limit the external-method feasibility investigation to one working day.
 Do not replace its unavailable implementation with an unlabelled home-made approximation.
 If we only complete the internal comparison, describe a controlled study, not a SOTA win.
 Even an external win on our task does not establish superiority on its original benchmark.
@@ -124,7 +124,7 @@ Athul/Ananya remain joint owners of C. Agree a non-overlapping internal division
 tracking/contact work and action/uncertainty/aggregation work; review each other's outputs.
 Every person writes their own method/results/limitations and records contribution evidence.
 
-**Confirm the CVAE lead by 17 October.** Its acceptance checks are in the handoff.
+Confirm the CVAE lead before scheduling its runs. Its acceptance checks are in the handoff.
 Do not mark the baseline staffed until Ananya replies; independent work proceeds.
 
 Shared interfaces to freeze together:
@@ -149,7 +149,7 @@ post-force speed stayed approximately 0.05 world units/second.
 Adopted scope for the first trained model: retain the frozen contact-friction model
 and demonstrate uncertainty from mass and contact outcomes. Do not present friction as
 free-sliding slowdown. If tabletop slowing is essential, A must implement and verify a
-separate floor-friction/drag model by 18 October, version the contract and regenerate
+separate floor-friction/drag model, version the contract and regenerate
 the affected data before main training. A frozen schema is not permission to misdescribe
 its physics. Avoid a late physics change after experiments begin.
 
@@ -299,31 +299,20 @@ step and resolved config. Save at safe update boundaries, verify reload across a
 boundary, and stop with time for a final checkpoint before the job limit. Back up run
 records and essential weights outside TC2; do not rely on its home directory as the only copy.
 
-## Milestones to the 14 November presentation
+## Execution order
 
-These are proposed delivery targets, not benchmarked runtimes or existing team commitments.
+1. Verify the training adapters, complete checkpoint/resume and measured TC2 costs.
+2. Pass tiny-overfit sampling and held-out action controls for CVAE and diffusion.
+3. Freeze data, configuration, metrics and compute budgets using validation evidence.
+4. Run the main comparisons and any funded ablations; retain failures and costs.
+5. Evaluate the fixed ID/OOD/action/uncertainty suites and aggregate results.
+6. Complete the report, contribution statement, source package and demo.
+7. Rehearse on the presentation device, including offline playback, and fix failures.
 
-| Date | Deliverable / exit evidence |
-|---|---|
-| 16-17 Oct | #25/#26 review and A40 setup complete; confirm CVAE lead and PPT slot; execute learning/resume/sampling pilot |
-| 18-20 Oct | Real adapters, CVAE and diffusion train/sample paths; tiny-overfit controls; full checkpoint/resume; actual GPU/IO/sampling measurements |
-| 21-23 Oct | Held-out action-responsive E0/E2/E3 pilots; usable prior sampling; validated tracker controls; first real-model UI integration |
-| 24 Oct | Freeze main data/config/metric protocol and budget; external-baseline go/no-go; documented hyperparameter study; decide advanced-demo scope |
-| 25-30 Oct | Main E0/E2/E3 repeats; E4 and external adaptation if funded; no test-based tuning; record all failures/costs |
-| 31 Oct | Checkpoint/experiment freeze for final evaluation; core UI feature freeze |
-| 1-4 Nov | Final ID/OOD/action/uncertainty measurements; aggregation and confidence intervals; traceable figures and failure examples |
-| 5-7 Nov | Report/deck first complete draft; polished demo, latency measurements, local fallback and Q&A appendix |
-| 8 Nov | Full timed rehearsal on the actual presentation laptop; every required figure and both method families present |
-| 9-11 Nov | Repair rehearsal failures; final report/contribution/source-package checks; no new model family |
-| 12 Nov | Second full rehearsal, including an offline fallback and arbitrary allowed force/target changes |
-| 13 Nov | Final presentation-device check, embedded assets, backups and submission readiness |
-| 14 Nov | PPT presentation; report, contribution PDF and validated source ZIP complete and ready to submit |
-
-Stop large runs if tiny overfit or held-out controls fail. Diagnose data/timing/normalization,
-noise schedule, optimization and foreground preservation before scaling width. Preserve
-the two-method comparison and reliable evidence when cutting optional scope. If D remains
-unassigned or no usable pilot exists by 23 October, the plan is off track: record a named
-recovery allocation and reduce optional scope immediately rather than conceal the gap.
+Stop large runs if tiny overfit or held-out controls fail. Diagnose data, timing,
+normalization, the noise schedule, optimization and foreground preservation before
+scaling width. Preserve the two-method comparison when reducing optional scope.
+If CVAE remains unassigned or the pilots fail, agree on a recovery plan before scaling.
 
 ## Demo acceptance and stretch gate
 

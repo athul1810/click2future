@@ -1,11 +1,10 @@
 # Roadmap
 
-**Internal completion deadline: 14 November 2026.** Freeze presentation and all
-three submission artifacts on 13 November. See [SUBMISSION.md](SUBMISSION.md).
+**Working submission deadline: 14 November 2026.** See [SUBMISSION.md](SUBMISSION.md).
 
-The PPT presentation is confirmed for **14 November**. Proposed dated milestones,
-rehearsals and acceptance evidence are in the [16 October execution plan](EXECUTION_PLAN_2026-10-16.md).
-The report/code cutoff still needs confirmation. Proposed task dates are not yet agreed team commitments.
+The execution order and acceptance checks are in the
+[16 October execution plan](EXECUTION_PLAN_2026-10-16.md).
+The course brief lists 16 November for upload; retain 14 November until the cutoff is confirmed.
 
 Architecture gates are in [BUILD_PLAN.md](BUILD_PLAN.md). The pixel-first path is
 adopted; the optional autoencoder does not block diffusion.

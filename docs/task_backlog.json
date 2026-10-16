@@ -18,7 +18,7 @@
       0,
       3
     ],
-    "progress": "Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submission artifacts must be complete by 14 November, with a 13 November freeze. Exact NTULearn upload cutoff remains unverified."
+    "progress": "Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submission artifacts must be complete by 14 November. Exact NTULearn upload cutoff remains unverified."
   },
   {
     "id": "T02",
@@ -209,7 +209,7 @@
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/9",
     "proposed_owner": "KAPOOR ANANYA (awaiting acceptance)",
-    "progress": "Shrijeet asked Ananya to lead CVAE; acceptance pending. Concrete architecture, prior/posterior boundary, milestones and sample API are in docs/CVAE_HANDOFF.md. Evaluation remains shared."
+    "progress": "Shrijeet asked Ananya to lead CVAE; acceptance pending. Concrete architecture, prior/posterior boundary, acceptance checks and sample API are in docs/CVAE_HANDOFF.md. Evaluation remains shared."
   },
   {
     "id": "T10",

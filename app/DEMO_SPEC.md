@@ -93,8 +93,7 @@ a shorter version. Do not promise a particular model wins before its results exi
 
 Enable only after the required comparison and core demo are complete, the feature has
 an owner, and its latency fits the presentation.
-Make the go/no-go decision by 24 October and finish the feature by the 31 October
-core-demo freeze. Keep it disabled if it does not pass; final test use must not tune it.
+Keep it disabled until its acceptance checks pass; final test use must not tune it.
 
 The user marks a target region for a named object. Generate a small fixed set of allowed
 push candidates. A cheap CVAE rollout stage proposes a shortlist; diffusion evaluates
@@ -132,7 +131,7 @@ implementation; it is an application feature rather than a claim to invent goal 
 - Prepare labelled local model replays and an embedded walkthrough as presentation
   fallback. Keep arbitrary unavailable controls disabled in replay-only mode.
 
-## Acceptance before the 8 November rehearsal
+## Demo acceptance
 
 | Check | Pass evidence |
 |---|---|
