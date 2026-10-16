@@ -1,16 +1,17 @@
 # Achievable architecture and evidence gates
 
-Proposal for the 14 October 2026 meeting. The architecture prototype is implemented;
-the simulator contract, dataset, diffusion scheduler/sampler, trainer, CVAE, and metrics
-are not. Adopt changes to task scope/dependencies only after team agreement, then update
-the issue, task board, and machine-readable backlog together as CONTRIBUTING requires.
+The pixel/latent architecture choice remains a proposal. Simulation, grouped datasets,
+trajectory/collision metrics, and a pixel tracker are now implemented. Contact extraction
+needs improvement. The diffusion scheduler/sampler, dataset trainer, and CVAE remain to
+be built. Synchronize agreed scope changes across the issues, task board, and backlog.
 
 ## Recommended first build
 
 Use a **compact pixel-space space-time U-Net**, joint short-clip diffusion, identical
 numeric/spatial action inputs, and optional auxiliary heads. Start with 64px, two objects,
-and the existing 16-total-frame proposal (15 predictions). Profile before reducing the
-horizon or increasing width. This avoids making a learned autoencoder a prerequisite
+and the frozen 32-frame simulator pilot. The synthetic profiler defaults to 16 frames;
+set 32 explicitly when measuring the frozen pilot. Profile before changing the horizon
+or increasing width. This avoids making a learned autoencoder a prerequisite
 before learning whether the actions can be followed.
 
 The original latent architecture remains an option only after a reconstruction gate
@@ -58,7 +59,7 @@ force_xy:      [B,2]
  -> optional collision_logits: [B,T_future,N_max,N_max]
 ```
 
-With 16 total frames, collision head index k corresponds to the interval from frame k
+For any configured clip length, collision head index k corresponds to the interval from frame k
 to frame k+1, including the initial-to-first-future interval. Mask invalid slots and score
 only the upper triangle of symmetric object-pair logits. Object identity/order comes
 from the agreed frame-0 contract, not future poses. Position heads predict spatial heatmaps

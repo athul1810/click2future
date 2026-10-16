@@ -1,0 +1,7 @@
+[simulator]
+world_size = [1.0, 1.0]
+resolution = 64
+frame_count = 16
+fps = 8
+physics_hz = 240
+force_duration = 0.25

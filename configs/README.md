@@ -1,15 +1,13 @@
-# Planned configurations
+# Configurations
 
-Development configurations use YAML; `development.yaml` records artifact-directory
-conventions only. It is a template, not yet consumed by a simulator or training command.
-`pilot.yaml` drives the synthetic profiler's dimensions, conditioning mode, auxiliary
-heads, object count, and precision. It also documents the proposed architecture. Its simulator/training values are proposals, not a working trainer config.
-T04 will finalize domain settings and T13 will freeze the main experiments. Planned groups:
+- `simulator/smoke.toml`: short simulator checks.
+- `simulator/pilot.toml`: frozen 32-frame, 64px simulator setting.
+- `development.yaml`: artifact-directory conventions.
+- `pilot.yaml`: synthetic denoiser profiler dimensions, conditioning, heads, object count,
+  and precision. This is a prototype configuration, not a dataset trainer.
+- `evaluation/pixel.yaml`: 64px pixel tracker and validation-selected contact gap.
+  Contact event accuracy is currently too low for model comparisons; see
+  [the measurements](../docs/METRICS.md).
 
-- Simulator: world units, timestep, force duration, object/appearance/physics distributions.
-- Dataset: scene groups, split seeds, held-out families/ranges, resolution and clip length.
-- Model: shared autoencoder, denoiser sizes, conditioning mode, auxiliary loss weights.
-- Training: optimizer, steps, batch size, precision, checkpoint policy, seeds.
-- Evaluation: split manifest, sampler, sample count, metric options.
-
-Track complete resolved configs with each run. Values in the planning documents are proposals until validated.
+The simulator reads TOML; the profiler and pixel evaluator read YAML. Save resolved
+settings with each run. T13 will freeze the model comparisons after validation.

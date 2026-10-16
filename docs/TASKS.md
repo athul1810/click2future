@@ -2,9 +2,11 @@
 
 A is owned by PRAMOD SANJAY, B by MAITI SHRIJEET, and C jointly by BOBAN ATHUL KRISHNA and KAPOOR ANANYA. D and the remaining setup/delivery tasks are unassigned. Reviewers are still to be chosen. Keep ownership and progress consistent with [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
-Start with **T01, T02, and T03**; T04 follows the scope decision in T01. CPU setup can proceed alongside TC2 login and GPU validation. Demo shell work and the report outline can start early against the agreed contract; their final acceptance requires integrated evidence.
-
-Dependencies below are prerequisites for completing a task. Outlines, interface reviews, and fixture-based work may start earlier. T02/T03 cover TC2 login, environment setup, and GPU validation. Access is approved for Athul; account limits are recorded in [COMPUTE.md](COMPUTE.md).
+The simulator contract is complete through PR #24. Simulator/data work and the local
+development environment are implemented in part. For C, continue T07 with contact-timing
+improvements and the remaining metrics; T12 needs B's dataset trainer and loss integration.
+The CVAE baseline in D still needs an owner. Dependencies below govern completion, while
+fixture-based work can proceed earlier.
 
 
 The three required submission files and archive exclusions are in [SUBMISSION.md](SUBMISSION.md). Course requirements are separate from optional project features.
@@ -67,12 +69,14 @@ Validate the approved TC2 account and fit training to its recorded limits.
 
 Make the CPU development environment reproducible and document training setup on TC2.
 
+**Progress:** The locked CPU environment, diagnostics, artifact conventions, and module commands are implemented. TC2 validation remains open. The combined branch includes the work from PRs #21 and #22.
+
 **Dependencies:** None · **Owner:** Unassigned
 
-- [ ] Add a dependency manifest and tested setup instructions with exact versions.
+- [x] Add a dependency manifest and tested setup instructions with exact versions.
 - [ ] Add an environment/device check; verify CPU setup independently and validate TC2 setup after access details are recorded in T02.
-- [ ] Select artifact locations and a configuration format; keep credentials out of Git.
-- [ ] Document working commands as modules are implemented; mark unavailable commands clearly.
+- [x] Select artifact locations and a configuration format; keep credentials out of Git.
+- [x] Document working commands as modules are implemented; mark unavailable commands clearly.
 
 <a id="t04"></a>
 
@@ -80,12 +84,14 @@ Make the CPU development environment reproducible and document training setup on
 
 Let simulator, model, and evaluation work proceed against one agreed contract.
 
+**Progress:** PR #24 merged the frozen simulator/action contract, versioned schema, condition/group identities, and tiny scene fixture. These unblock downstream implementation; the remaining course/scope decisions stay in T01.
+
 **Dependencies:** T01 · **Owner:** PRAMOD SANJAY
 
-- [ ] Finalize units, axis conventions, force duration, friction law, frame timing, and collision event semantics.
-- [ ] Finalize tensor shapes, timestamps, scene replay metadata, object identity/padding, and conditioning inputs in docs/ARCHITECTURE.md.
-- [ ] Define scene_group_id and condition_id, including identical-first-frame uncertainty groups.
-- [ ] Provide a small fixture or schema example that downstream components can consume.
+- [x] Finalize units, axis conventions, force duration, friction law, frame timing, and collision event semantics.
+- [x] Finalize tensor shapes, timestamps, scene replay metadata, object identity/padding, and conditioning inputs in docs/ARCHITECTURE.md.
+- [x] Define scene_group_id and condition_id, including identical-first-frame uncertainty groups.
+- [x] Provide a small fixture or schema example that downstream components can consume.
 
 <a id="t05"></a>
 
@@ -93,12 +99,14 @@ Let simulator, model, and evaluation work proceed against one agreed contract.
 
 Generate repeatable tabletop clips with usable physical labels.
 
+**Progress:** PR #24 merged seeded circles/rectangles, centre-force rollout labels, and verified replay/control cases. Appearance currently varies solid colours only; textured rendering remains outstanding.
+
 **Dependencies:** T03, T04 · **Owner:** PRAMOD SANJAY
 
 - [ ] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
-- [ ] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
-- [ ] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
-- [ ] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
+- [x] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
+- [x] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
+- [x] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
 
 <a id="t06"></a>
 
@@ -106,13 +114,15 @@ Generate repeatable tabletop clips with usable physical labels.
 
 Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.
 
+**Progress:** PR #24 merged versioned generation, scene-group ID splits, shared-condition physics variants, and hashed manifests. Separate shape/texture/force OOD suites and a measured generation/storage budget remain outstanding.
+
 **Dependencies:** T05 · **Owner:** PRAMOD SANJAY
 
 - [ ] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
-- [ ] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
+- [x] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
 - [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
-- [ ] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
-- [ ] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
+- [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
+- [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
 <a id="t07"></a>
 
@@ -120,16 +130,14 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
-**Progress:** trajectory and object-pair collision metrics, known-control tests, and
-source-labelled JSON export are implemented. See [metric usage](METRICS.md). Pixel tracking,
-simulator calibration, and the remaining metric families are still pending.
+**Progress:** Trajectory/collision scoring, failure accounting, source-labelled exports, and pixel tracking are implemented. On 60 held-out simulator clips, mean tracking error is 0.249 pixels with no missing observations; contact event F1 is only 0.105. Contact timing and the remaining metric families need work. See [metric usage and measurements](METRICS.md).
 
 **Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
 - [ ] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
-- [ ] Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.
-- [ ] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
+- [x] Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.
+- [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
 - [ ] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
 <a id="t08"></a>
@@ -165,6 +173,8 @@ Establish a lower-cost generative baseline with the agreed action inputs.
 
 Create the common diffusion backbone and the main numeric-action baseline.
 
+**Progress:** The untrained prototype supports first-frame and numeric conditioning with forward/backward checks. Dataset training, the diffusion schedule/sampler, overfitting, and trained samples remain outstanding.
+
 **Dependencies:** T08 · **Owner:** MAITI SHRIJEET
 
 - [ ] Implement latent video training and sampling with a shared backbone/configuration.
@@ -179,6 +189,8 @@ Create the common diffusion backbone and the main numeric-action baseline.
 
 Test whether localizing the action improves physical action adherence.
 
+**Progress:** Numeric/spatial conditioning switches exist in the prototype with equal parameter counts. Working E3 training/sampling and learned action-control checks remain outstanding.
+
 **Dependencies:** T10, T04 · **Owner:** MAITI SHRIJEET
 
 - [ ] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
@@ -191,6 +203,8 @@ Test whether localizing the action improves physical action adherence.
 ### T12: Add trajectory and collision supervision E4
 
 Test whether physical supervision improves decoded future behavior.
+
+**Progress:** Optional trajectory/collision heads exist in the untrained denoiser. Supervised loss design, object-slot matching, loss-gradient checks, and E4 training/sampling remain outstanding.
 
 **Dependencies:** T11, T07 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 

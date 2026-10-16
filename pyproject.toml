@@ -12,6 +12,7 @@ dependencies = [
     "numpy>=2,<3",
     "pillow>=11,<13",
     "pyyaml>=6,<7",
+    "pymunk==7.3.1",
 ]
 
 [project.optional-dependencies]
@@ -35,7 +36,9 @@ packages = ["src/click2future"]
 include = [
     "/src/click2future/**/*.py",
     "/tests/test_*.py",
-    "/configs/*.yaml",
+    "/configs/**/*.yaml",
+    "/configs/**/*.toml",
+    "/tests/fixtures/*.json",
     "/README.md",
     "/pyproject.toml",
     "/uv.lock",
@@ -64,6 +67,7 @@ explicit = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 addopts = "-ra"
 
 [tool.ruff]

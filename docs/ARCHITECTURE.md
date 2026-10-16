@@ -1,62 +1,95 @@
 # Architecture and data contract
 
-This is a proposed interface to finalize in T04 before independent implementation.
-An untrained pixel-space denoiser prototype exists; the data contract and end-to-end
-training/sampling path are not implemented. See [the 14 October build proposal](BUILD_PLAN.md)
-for the pixel pilot, equal-capacity action comparison, and optional latent path.
+The Workstream A simulator and dataset contract below is frozen as of 15
+October 2026 for `scene-0.1`, `rollout-0.1`, and `dataset-0.1`. Incompatible
+changes require a schema-version change and regenerated data. The later model,
+auxiliary-head, and demo sections remain guidance for their owning workstreams.
+An untrained pixel denoiser and extracted-trajectory/contact metrics are implemented;
+the final pixel/latent model choice remains a proposal in [BUILD_PLAN.md](BUILD_PLAN.md).
 
-## Physics and action semantics
+## Frozen physics and action semantics
 
-- Use a 2D top-down rigid-body world with fixed walls, initially stationary objects, and a deterministic seeded renderer.
-- Coordinates are normalized to [0, 1], with x increasing right and y increasing down. Store the world-to-image transform and physical units explicitly.
-- Frame 0 is rendered before the action. A force vector `(fx, fy)` acts at the selected object's centre for a fixed documented duration. The click selects the object; off-centre torque is outside the core scope.
-- The physics timestep is independent of video fps. Record substeps, force duration, friction law, restitution, and collision tolerances.
-- The UI arrow maps to the same force normalization as training. Define `magnitude = sqrt(fx² + fy²)`; derive direction from the vector. Handle zero force without dividing by zero.
-- Randomize hidden mass and friction independently of visible shape, size, colour, and texture. Store them as oracle metadata, never in hidden-physics model inputs.
-- Define object-object collision events from contact onset during each interval between recorded frames. Store object-wall contacts separately.
+- The world is a 1 × 1 top-down plane with fixed walls and zero gravity. `x`
+  increases right and `y` increases down, matching image coordinates. Because
+  the world is 1 × 1, stored centres are already normalized to `[0,1]`.
+- A scene contains 2-4 initially stationary circles or rectangles. Object IDs
+  are assigned in sampling order and remain stable throughout the rollout.
+- Pymunk 7.3.1 runs at 240 Hz with 10 solver iterations. The 32-frame pilot is
+  recorded at 8 FPS, giving 30 physics steps per frame interval. Frame 0 is
+  rendered before applying the action; timestamps run from 0 to 31/8 seconds.
+- The selected object receives a centre-applied force for 0.25 seconds. Force
+  angle is uniform over `[-pi,pi)` and magnitude is uniform over `[0.15,0.5)`
+  in simulator mass·world-unit/s². Off-centre force and torque are out of scope.
+- Hidden mass, friction, and restitution are sampled independently from visible
+  geometry and appearance. Mass is uniform over `[0.5,2.0)`, friction over
+  `[0.1,0.8)`, and restitution over `[0.0,0.4)`.
+- Pymunk's Coulomb friction and elasticity rules are used. Object shapes carry
+  the sampled coefficients; fixed wall segments keep Pymunk's frictionless,
+  zero-elasticity defaults.
+- Object-object and object-wall labels record contact onset. Begin events from
+  all physics steps in `(timestamps[i], timestamps[i+1]]` are aggregated into
+  label index `i`. Persistent contact is not repeated; separation followed by
+  a new contact produces another onset.
+- Wall order is fixed as `left`, `right`, `top`, `bottom`.
 
-## Sample schema
+## Frozen sample schema
 
-An archive plus JSON metadata is sufficient for the first implementation. Choose the storage library in T03; keep tensor semantics stable.
+Each sample uses one compressed `.npz` array archive and one JSON metadata
+file. Dataset membership and paths live in `dataset_manifest.json`; group-level
+split membership lives in `splits.json`.
 
-| Field | Proposed shape/type | Meaning |
+| Field | Shape/type | Storage and meaning |
 |---|---|---|
-| `sample_id` | string | Unique rollout ID |
-| `scene_group_id` | string | Visible scene identity, shared across actions and physics variants |
-| `condition_id` | string | Same initial rendering, selected object, and action |
-| `split` | enum | Train, validation, ID test, or named OOD test |
-| `scene_spec` | object | Initial geometry, poses, velocities, walls, textures, and renderer settings for replay |
-| `timestamps` | float64 `[T]` | Seconds from frame 0; strictly increasing, starting at zero |
-| `frames` | uint8 `[T,H,W,3]` | RGB clip including frame 0 |
-| `instance_masks` | bool `[T,N,H,W]` | Oracle per-object segmentation |
-| `object_valid` | bool `[N]` | Valid object slots if padded |
-| `selected_object_id` | int | Stable selected-object slot |
-| `selected_mask` | bool `[1,H,W]` | Selected object's frame-0 mask |
-| `force_xy` | float32 `[2]` | Force vector in documented world units |
-| `force_duration` | float | Fixed action duration in seconds |
-| `action_map` | float32 `[2,H,W]` | Selected mask multiplied by normalized fx and fy |
-| `positions` | float32 `[T,N,2]` | Oracle object-centre coordinates in [0,1] |
-| `collision_onset` | bool `[T-1,N,N]` | Symmetric object-object event matrix; diagonal false |
-| `wall_contact_onset` | bool `[T-1,N,4]` | Separate wall-contact events |
-| `oracle_physics` | object | Mass, friction, restitution; training labels/replay only |
-| `seeds`, `sim_version`, `render_version` | metadata | Reproducibility and replay |
-| `config_hash`, `asset_hashes` | metadata | Resolved simulator config and any texture/shape asset checksums |
+| `sample_id` | string | JSON metadata and dataset manifest; unique archive stem |
+| `scene_group_id` | string | Scene specification and manifest; shared visible scene |
+| `condition_id` | string | Scene specification and manifest; same frame 0 and action |
+| `split` | string | Dataset manifest; `train`, `validation`, or `test` |
+| `scene_spec` | object | JSON metadata; geometry, initial state, action, seeds, and hidden physics |
+| `frames` | uint8 `[T,H,W,3]` | NPZ; RGB clip including frame 0 |
+| `instance_masks` | bool `[T,N,H,W]` | NPZ; oracle masks in object-ID order |
+| `object_valid` | bool `[N]` | NPZ; all true before batching |
+| `selected_object_id` | int | JSON metadata; stable selected-object slot |
+| `selected_mask` | bool `[H,W]` | NPZ; selected object's frame-0 mask |
+| `force_xy` | float32 `[2]` | NPZ; force in simulator units |
+| `force_duration` | float | JSON metadata; action duration in seconds |
+| `action_map` | float32 `[2,H,W]` | NPZ; selected mask multiplied by `fx` and `fy` |
+| `timestamps` | float64 `[T]` | NPZ; strictly increasing seconds starting at zero |
+| `positions` | float32 `[T,N,2]` | NPZ; object centres in `[0,1]` |
+| `collision_onset` | bool `[T-1,N,N]` | NPZ; symmetric with a false diagonal |
+| `wall_contact_onset` | bool `[T-1,N,4]` | NPZ; contacts in fixed wall order |
+| hidden physics | object | `scene_spec.objects[].hidden_physics`; replay/oracle use only |
+| versions and seeds | object | Scene and rollout metadata; deterministic reconstruction |
 
-When batching, convert images to float `[B,T,3,H,W]` using one documented normalization. Predict `T-1` future frames; retain the supplied frame 0 exactly in displayed output.
+`dataset_manifest.json` stores the resolved simulator configuration and a hash
+covering the manifest contents. `splits.json` stores its own split hash. There
+are no external renderer assets in this version, so no asset hashes are needed.
 
-For 16 frames at 8 fps, use timestamps 0, 1/8, ..., 15/8 seconds. Collision index `i` describes the interval `(timestamps[i], timestamps[i+1]]`. A contact that persists across frames is one onset, not a new event each frame. Start objects without overlap and record any permitted initial contact separately. Fix the wall order in the contract, for example left, right, top, bottom.
+`load_sample` converts frames to float32 `[T,3,H,W]` in `[0,1]` and expands the
+selected mask to `[1,H,W]`. `load_batch` returns `[B,T,3,H,W]`, pads object
+fields to the largest `N` in the batch, and marks real slots with
+`object_valid [B,N]`.
 
-Replay must load the scene specification, hidden physics, assets, action, and resolved simulator config. Verify a saved sample can be reconstructed in the pinned environment, with a documented tolerance if the physics engine does not reproduce results bit for bit.
+Replay reconstructs the scene from JSON metadata and the recorded timing
+configuration. `validate-sample --replay` defaults to absolute and relative
+tolerances of `1e-6`; the pinned local environment currently reproduces every
+stored field exactly.
 
 ## Leakage prevention and uncertainty groups
 
-The hidden-physics model receives only frame 0, allowed frame-0 masks, and action. It never receives future masks, trajectories, collision labels, or oracle physics as conditioning.
+The hidden-physics model receives only frame 0, allowed frame-0 masks, and the
+action. It never receives future masks, trajectories, collision labels, or
+hidden physics as conditioning.
 
-For uncertainty evaluation, generate multiple rollouts with **identical frame 0, selected mask, and action**, varying only hidden mass/friction. Keep all actions and physics variants of a visible scene in the same split using `scene_group_id`. Do not split clips independently. Verify equality of initial rendered inputs within each `condition_id`.
+Each condition has four rollouts with identical frame 0, selected mask, and
+action, varying only hidden mass, friction, and restitution. All variants of a
+visible scene stay in one split through `scene_group_id`; clips are never split
+independently. Visible, physics, and action random streams use separate recorded
+seeds.
 
-Start with a small smoke dataset and size the main dataset after profiling. Persist the split manifest and its hash. Reserve disjoint shape families, texture families, and a force range for separate OOD tests; keep the other factors in distribution for each test.
-
-Keep rerenders, augmentations, and different resolutions of the same base scene in the same scene group and split.
+The ID split is 80% train, 10% validation, and 10% test by scene group using a
+recorded split seed. Shape-, texture-, and force-OOD suites require separate
+manifests and do not alter this frozen ID split. Rerenders or later resolution
+variants of one scene must retain its group and split.
 
 ## Model interfaces
 
@@ -76,31 +109,39 @@ only. Use validation for checkpoint selection and inspect test/OOD reconstructio
 freezing it. Record pretrained-weight provenance and training seeds. Require object
 geometry and contact/trajectory preservation before accepting compression.
 
-For the conditional VAE, define a training posterior `q(z | future, condition)`, a prior `p(z | condition)` or fixed standard-normal prior, and a decoder `p(future | z, condition)`. Train with a reconstruction loss and a weighted KL term. At inference, sample from the prior without supplying the future clip. Record the prior choice and KL weight in the run config. See [the model references](REFERENCES.md#models).
+For the conditional VAE, define a training posterior `q(z | future, condition)`,
+a prior `p(z | condition)` or fixed standard-normal prior, and a decoder
+`p(future | z, condition)`. At inference, sample from the prior without
+supplying the future clip. Record the prior choice and KL weight in the run
+configuration. See [the model references](REFERENCES.md#models).
 
 ## Proposed action module
 
 1. Encode frame 0 into a spatial feature map.
-2. Downsample the selected-object mask and use masked pooling to obtain a selected-object feature.
-3. Fuse that object feature with an embedding of the force vector.
-4. Encode the spatial action map and inject the resulting spatial features and object/action embedding into denoiser blocks.
+2. Downsample the selected-object mask and pool a selected-object feature.
+3. Fuse that feature with an embedding of the force vector.
+4. Encode the spatial action map and inject the result into denoiser blocks.
 
-Select a small conditioning mechanism (for example feature concatenation plus feature modulation) during the pilot. Freeze the mechanism before the main ablation run. E2 receives the same selected mask and numeric force, but not this spatial action path, so a gain is not explained merely by identifying the target object.
+E2 receives the selected mask and numeric force but not the spatial action path,
+so the E2-to-E3 comparison isolates the spatial module.
 
 ## Auxiliary heads
 
-Predict object-centre trajectories and object-pair collision probabilities from denoiser features. Use deterministic frame-0 object-slot ordering (e.g. centroid order); do not order using future ground truth. If all-object masks are used for pooling, provide the same frame-0 object extraction to every variant and document that additional input.
-
-Any extra inference-time object extraction must use only the first-frame pixels. Oracle all-object masks may serve as training labels or evaluation references, but cannot be an extra input available only to E4. Keep the selected-object mask available to E0/E2/E3/E4 as specified in the comparison table. The E1 generator receives only the first frame.
-
-Proposed objective:
+Predict object-centre trajectories and object-pair collision probabilities from
+denoiser features. Use the stable simulator object slots and `object_valid` for
+padding. Oracle future masks, trajectories, collisions, and hidden physics are
+training labels or evaluation references, never inference-time inputs.
 
 ```text
 L = L_diffusion + lambda_traj * L_trajectory + lambda_collision * L_collision
 ```
 
-Mask padding, exclude diagonal/duplicate collision pairs, and handle collision imbalance. Specify which diffusion timesteps supervise the heads and whether heads predict clean trajectories from noisy features. Tune weights only on validation data. The heads support learning; image-derived evaluation must still check whether the actual generated videos follow those trajectories.
+Exclude diagonal and duplicate collision pairs, handle class imbalance, and
+tune loss weights only on validation data. Image-derived evaluation must still
+check whether generated videos follow predicted trajectories.
 
 ## Demo boundary
 
-Preset scenes carry metadata and support exact simulator replay. Synthetic image uploads support generation after selecting or providing a mask; exact simulator comparison is disabled unless compatible scene metadata is also supplied. Friction controls the simulator in hidden-physics mode. A future observed-friction model would need its own training input, config, checkpoint, and clearly labelled mode.
+Preset scenes with compatible metadata support exact simulator replay. Uploaded
+images without scene metadata support generation but not simulator-ground-truth
+comparison.

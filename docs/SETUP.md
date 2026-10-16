@@ -1,16 +1,15 @@
 # Development setup
 
-This setup covers local Python development, notebooks, and environment diagnostics.
-The simulator, datasets, trained models, training/sampling commands, evaluation, and
-demo are not implemented yet. An untrained denoiser prototype and synthetic profiler
-exist. Athul's TC2 access is approved; T02 still needs login, hardware, and allocated-job checks.
+This setup covers simulation, grouped datasets, evaluation, the untrained denoiser
+prototype, and local environment diagnostics. Dataset training, sampling, and the demo
+remain to be built. TC2 validation is tracked separately in T02/T03.
 
 ## Environment and dependencies
 
 - Python **3.12.15**, pinned in `.python-version`; uv downloads it when needed.
 - uv **0.13.0**, required by `pyproject.toml`.
 - PyTorch **2.11.0** for both backends: `cpu` or CUDA 12.8 (`cu128`).
-- NumPy, Pillow, and PyYAML for numerical/image IO and YAML configurations.
+- Pymunk, NumPy, Pillow, and PyYAML for numerical/image IO and YAML configurations.
 - pytest, Ruff, and ipykernel in the default `dev` dependency group.
 
 `uv.lock` records exact direct/transitive versions, sources, and artifact hashes.

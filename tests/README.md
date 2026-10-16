@@ -1,12 +1,15 @@
-# Planned verification
+# Verification
 
-Add checks alongside implementation for behavior that matters:
+The current tests cover the simulator/data scaffold:
 
-- Deterministic simulator replay, force direction, collision events, and zero-force behavior.
-- Tensor shapes, units, valid-object masks, split disjointness, and absence of hidden-physics leakage.
-- Metrics on known trajectories, contact events, identical videos, and deliberately corrupted videos.
-- Autoencoder reconstruction and model forward/backward/sample smoke runs.
-- Resume behavior and one complete demo-to-sampler path.
+- deterministic scene generation and hidden-physics variants;
+- force direction/reversal, zero-force behavior, and known contact events;
+- deterministic RGB and instance-mask rendering;
+- rollout shapes, timestamps, action maps, and oracle labels;
+- JSON/NPZ round trips and schema validation.
+- saved-rollout replay and mismatch detection.
+- model-facing channel-first sample and padded batch loaders.
+- the fixed scene fixture and end-to-end generate/validate CLI flow.
 
 `test_environment.py` checks the CPU diagnostic/report and the failure status for an
 unavailable CUDA device. Run `python -m pytest -q` using the environment in
@@ -15,8 +18,14 @@ auxiliary shapes/symmetry, E1 input isolation, equal-capacity E2/E3 and zero-for
 agreement, spatial coordinate recovery, invalid inputs, and exact CPU optimizer/RNG restart continuity.
 `test_profile_pilot.py` verifies the allocation guard, YAML settings and CLI overrides,
 resolved report settings, precision validation, and failure on non-finite gradients. These are prototype checks;
-simulator physics, learned action response, sampling, and full trainer tests remain pending.
+learned action response, sampling, and full trainer tests remain pending.
 
 `test_evaluation_metrics.py` validates analytical trajectory and collision controls.
 `test_evaluation_cli.py` checks source-labelled JSON reports, metadata alignment, corrupt
-inputs, and input-file preservation. These tests do not validate a pixel tracker.
+inputs, and input-file preservation. `test_pixel_tracking.py` covers identity crossings, missing/duplicate objects, colour
+ambiguity, contact onsets, and separation of pixel extraction from future oracle labels.
+`test_extractor_calibration.py` checks validation selection and failure denominators.
+
+Run `python -m click2future.evaluation.calibrate` with the output arguments in
+[METRICS.md](../docs/METRICS.md) to reproduce the simulator extraction measurements.
+These measure the extractor, not a trained model.

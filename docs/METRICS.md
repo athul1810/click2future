@@ -1,8 +1,8 @@
 # Evaluation implementation
 
-T07 now has NumPy trajectory and object-object collision metrics, a JSON export command,
-and tests with known outcomes. These consume extracted positions and contact onsets.
-They do not yet track objects or infer contacts from generated pixels.
+T07 includes trajectory/collision scoring, RGB object tracking, and an experimental
+contact estimator. Tracking works on the measured solid-colour simulator clips. Contact
+event detection is currently too inaccurate to support model-comparison claims.
 
 ## Input contract
 
@@ -94,11 +94,71 @@ The controls cover exact, shifted, static, and missing trajectories; whole-sampl
 selection; padding; event timing and duplicate matches; empty event sets; corrupt inputs;
 and source-labelled JSON export. These are test fixtures, not project results.
 
-## Next integration work
+## Extract from RGB videos
 
-Obtain a raw simulator fixture with frame-0 identities, masks, positions, timestamps,
-and contact onsets from A. Validate a shared pixel tracker and contact estimator on held-out
-simulator clips, including overlaps and failures, before scoring generated videos.
+Save generated clips under `videos` in an NPZ as uint8 `[K,T,H,W,3]`, including the
+unchanged first frame. The reference is a simulator JSON/NPZ pair with matching dimensions.
+From the configured environment:
 
-Action controls, wall-contact scoring, image metrics, temporal consistency, ensemble
-diversity/coverage, and scene-group aggregation still need implementation. T07 remains open.
+```bash
+python -m click2future.evaluation.video \
+  --reference-dir outputs/pilot_32f --sample-id scene-00000032-variant-001 \
+  --videos outputs/generated.npz --config configs/evaluation/pixel.yaml \
+  --run-id E2-validation-seed0 --output outputs/video-metrics.json \
+  --extracted-output outputs/extracted.npz
+```
+
+The tracker uses RGB pixels and shared reference frame-0 identity masks. Those masks
+initialize evaluation identities only and are not supplied as additional model inputs.
+Future oracle masks, trajectories, collisions, and hidden physics are excluded from
+extraction. All compared models must use the same initialization.
+
+Objects are matched to their frame-0 colours and separated into connected components.
+Similar colours, disappearance, fragmentation, and large area changes produce missing
+observations. Partial occlusion can still bias accepted centres. This baseline supports
+solid colours; textures and generated-video artefacts need separate validation.
+
+The contact estimate measures gaps between visible pixel regions. A new contact requires
+both objects to be tracked at both interval endpoints. Persistent contact is not repeated,
+and missing frames cannot create an onset on reappearance. Rasterization and contacts
+between recorded frames can shift or hide events. Wall events are not extracted.
+
+## Simulator extraction measurements
+
+Reproduce the checked-in [measurement record](results/pixel-extractor-calibration.json):
+
+```bash
+python -m click2future.evaluation.calibrate \
+  --output outputs/pixel-extractor-calibration.json \
+  --config-output outputs/pixel-calibration.yaml
+```
+
+The run uses 30 validation scene groups and 30 held-out groups, each with two hidden-physics
+variants, at 64px and 32 frames. Validation visible seeds start at 20000; held-out seeds
+start at 30000. Reserve these groups from model datasets. Gap candidates are 0, 0.5, 1,
+and 1.5 pixels. Validation event F1 selected 0 pixels; event tolerance was fixed at one
+recorded interval before evaluation. Other tracker settings were fixed heuristics.
+
+| Held-out measurement | Result |
+|---|---:|
+| Clips | 60 |
+| Tracked future object observations | 5580 / 5580 |
+| Mean centre error over tracked observations | 0.249 pixels |
+| 95th percentile centre error | 0.500 pixels |
+| Complete object-pair timelines | 200 / 200 |
+| Reference collision onsets | 19 |
+| Matched / extra / missed contact events | 2 / 17 / 17 |
+| Contact event precision / recall / F1 | 0.105 / 0.105 / 0.105 |
+
+These are clean simulator extraction results, not model results. The 99.4% interval
+accuracy is dominated by negative bins and does not indicate useful contact detection.
+The contact estimator needs improvement before freezing collision comparisons. Future
+iterations must use new held-out groups rather than tune against this measured set.
+The two variants within each scene are correlated; this small run has no confidence intervals.
+
+## Remaining work
+
+Improve contact timing on validation scenes and verify it on a fresh held-out set.
+Then test extraction failures on actual model outputs. Action controls, wall-contact
+scoring, image metrics, temporal consistency, ensemble diversity/coverage, and scene-group
+aggregation still need implementation. T07 remains open.
