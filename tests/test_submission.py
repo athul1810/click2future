@@ -51,7 +51,7 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         check=True,
     )
     assert json.loads(child.stdout)["generated_rollouts"] == 2
-    assert str(folder) in child.stdout
+    assert json.loads(child.stdout)["source_root"] == str(folder)
     # The URL-free dependency recipe also permits rebuilding the extracted source.
     assert build_archive(folder, archive)["archive_sha256"] == first["archive_sha256"]
 
