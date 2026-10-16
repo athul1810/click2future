@@ -36,7 +36,8 @@ This view is a small presentation enhancement, not a substitute for good generat
 
 Keep the UI in one lightweight local application with a browser canvas and Python inference
 entry point. Choose the simplest implementation that supports actual click/drag and video
-playback; a separate frontend build system is not a prerequisite. Demo owner remains pending.
+playback; a separate frontend build system is not a prerequisite. Shrijeet owns demo
+integration. Ananya's proposed CVAE lead role is awaiting acceptance.
 
 ## Exact behaviour
 

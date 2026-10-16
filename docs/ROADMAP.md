@@ -1,13 +1,14 @@
 # Roadmap
 
-**Working deadline: 14 November 2026.** See [SUBMISSION.md](SUBMISSION.md) for the course-brief date discrepancy and packaging rules.
+**Internal completion deadline: 14 November 2026.** Freeze presentation and all
+three submission artifacts on 13 November. See [SUBMISSION.md](SUBMISSION.md).
 
 The PPT presentation is confirmed for **14 November**. Proposed dated milestones,
 rehearsals and acceptance evidence are in the [16 October execution plan](EXECUTION_PLAN_2026-10-16.md).
 The report/code cutoff still needs confirmation. Proposed task dates are not yet agreed team commitments.
 
-Architecture gates are in [BUILD_PLAN.md](BUILD_PLAN.md). The existing task dependencies still describe the
-original latent plan and must be synchronized with issues/backlog if the proposal is adopted.
+Architecture gates are in [BUILD_PLAN.md](BUILD_PLAN.md). The pixel-first path is
+adopted; the optional autoencoder does not block diffusion.
 
 ## Critical path
 
@@ -15,11 +16,12 @@ original latent plan and must be synchronized with issues/backlog if the proposa
 flowchart LR
     T04[Data contract] --> T05[Simulator]
     T05 --> T06[Dataset and splits]
-    T06 --> T08[Autoencoder]
-    T08 --> T10[Diffusion baselines]
+    T06 --> T10[Pixel diffusion baselines]
     T10 --> T11[Spatial conditioning]
     T11 --> T12[Auxiliary heads]
-    T12 --> T13[Experiment settings and budget]
+    T11 --> T13[Experiment settings and budget]
+    T06 --> T09[CVAE baseline]
+    T09 --> T13
     T13 --> T14[Core ablations]
     T14 --> T19[Reproduction and release]
     T19 --> T20[Submission]

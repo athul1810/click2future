@@ -10,12 +10,13 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 and an untrained denoiser prototype are available. Evaluation includes trajectory/collision
 metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks, and ensemble diversity/coverage. Contact extraction remains
 experimental, with low recall.
-Auxiliary loss components are ready for trainer integration. CVAE, diffusion training/sampling,
-and the demo remain to be built. See [evaluation results](docs/METRICS.md).
+A dataset trainer, complete checkpoint/resume and seeded DDIM sampler are implemented,
+including auxiliary-loss integration. CVAE and the demo remain to be built; learned-video
+quality and held-out action response are not yet established. See [evaluation results](docs/METRICS.md).
 
-**Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
+**Internal completion deadline:** 14 November 2026; freeze all artifacts on 13 November. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
-**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; D: unassigned. See the [task board](docs/TASKS.md).
+**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya proposed, awaiting acceptance; demo integration: Shrijeet. See the [task board](docs/TASKS.md).
 
 **Compute:** TC2 access is approved for Athul and Shrijeet. Shrijeet's A40 setup passed in job 42886, including CUDA checks, tests and a 31-frame synthetic profile. The accounts have a one-GPU limit and a six-hour job limit. Dataset-training cost and sampling latency remain to be measured. See [compute details](docs/COMPUTE.md).
 
@@ -73,12 +74,12 @@ For the core hidden-physics model, friction is **not an input**. Changing the fr
 |---|---|
 | 64×64 top-down scenes, 32-frame simulator pilot | 128×128 after the compute gate passes |
 | 2-4 rigid objects, randomized appearance and hidden physics | More shapes and harder collisions |
-| Compact video diffusion and conditional VAE baseline; pixel pilot proposed | Reconstruction-gated latent architecture |
-| Five planned experimental variants | Additional supervision ablations |
+| Compact video diffusion and conditional VAE baseline; pixel path adopted | Reconstruction-gated latent architecture |
+| E0/E2/E3 core; E1/E4 gated ablations | Additional supervision ablations |
 | Four sampled futures and a simulator comparison | Friction-conditioned sampling |
 | Reproducible experiments, technical report, contribution PDF, source code | FVD if feasible and statistically useful |
 
-The course requires at least two methods, one evaluation dataset, and a report of at least four pages. Five variants and the interactive demo are our project plan, not additional course submission requirements. Checkpoints and any demo recordings stay in the team's working files.
+The course requires at least two methods, one evaluation dataset, and a report of at least four pages. E1/E4 and advanced demo features are gated additions to the core comparison. Checkpoints and any demo recordings stay in the team's working files.
 
 No real robot, photorealistic 512px video, or general-purpose physics. The upload workflow targets the synthetic domain; real photographs are outside the course scope.
 
@@ -87,11 +88,11 @@ No real robot, photorealistic 512px video, or general-purpose physics. The uploa
 ```mermaid
 flowchart LR
     S[Procedural simulator] --> D[Clips, masks, trajectories, collisions]
-    D --> V[Compact pixel video denoiser - proposed pilot]
+    D --> V[Compact pixel video denoiser]
     I[First frame + clicked mask + action] --> C[Object-centric conditioning]
     C --> V
     V --> H[Trajectory and collision heads]
-    V --> O[Planned sampler - four generated futures]
+    V --> O[DDIM sampler - four generated futures]
     O --> E[Metrics and interactive comparison]
     S --> E
 ```
@@ -115,11 +116,12 @@ C is shared by Athul and Ananya. Agree on the implementation split within each s
 | Workstream | Main responsibility | Owner |
 |---|---|---|
 | A: Simulator and data | Physics, rendering, labels, splits, ground-truth replay | PRAMOD SANJAY |
-| B: Diffusion | Autoencoder, diffusion training/sampling, numeric and spatial action conditioning | MAITI SHRIJEET |
+| B: Diffusion | Pixel diffusion training/sampling, numeric and spatial action conditioning | MAITI SHRIJEET |
 | C: Evaluation and physics | Tracking, trajectory/collision metrics, uncertainty, experiments, auxiliary supervision with B | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
-| D: CVAE, compute, and integration | CVAE baseline, reproducible jobs/run records, sampler-to-demo integration | Unassigned |
+| D: CVAE | Prior/posterior baseline and fair sampling/cost comparison | Ananya proposed; acceptance pending |
+| Demo integration | Shared sampler, four-future UI, simulator comparison and offline fallback | MAITI SHRIJEET |
 
-D still needs an owner for the CVAE baseline and integration work. Report assembly and submission tasks also remain unassigned. Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
+Confirm Ananya's CVAE acceptance; see [the handoff](docs/CVAE_HANDOFF.md). Report assembly and submission tasks also remain unassigned. Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
 
 ## Submission
 
@@ -147,15 +149,15 @@ tests/               Simulator, data, prototype, and evaluation checks
 ```
 
 See [development setup](docs/SETUP.md) for the locked environment and
-[metric usage](docs/METRICS.md) for RGB evaluation. Dataset training, sampling, and the demo
-remain to be built. The [build plan](docs/BUILD_PLAN.md) records the pixel/latent proposal.
+[metric usage](docs/METRICS.md) for RGB evaluation. The [training guide](docs/TRAINING.md) covers the implemented trainer and sampler.
+The demo UI remains to be built. The [build plan](docs/BUILD_PLAN.md) records the adopted pixel path.
 
 ## Next team work
 
 - A: finish appearance/OOD dataset coverage and measure generation/storage costs.
-- B: connect the simulator loader to training and sampling, then overfit a tiny dataset.
+- B: complete the TC2 learning/resume pilot, inspect generated motion, then pass held-out action controls.
 - C: improve contact timing, add the remaining metrics, then integrate auxiliary losses with B.
-- Assign D's CVAE baseline and later demo integration.
+- Confirm the CVAE lead; Shrijeet owns demo integration.
 
 ## References
 
@@ -163,4 +165,4 @@ See [Research references](docs/REFERENCES.md) for the baselines, diffusion model
 
 ## Results
 
-No experiments have been run. Add measured results with run IDs, configs, seeds, and checkpoint references to [results/](results/).
+Environment and simulator/metric controls have passed. The first learned-video pilot is in progress; this does not establish generative quality or a method ranking. Record measured results with run IDs, configs, seeds and checkpoint hashes.

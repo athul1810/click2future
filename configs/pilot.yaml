@@ -1,14 +1,17 @@
-# Proposal for the 14 October meeting; no simulator contract is frozen by this file.
-status: architecture_prototype
+# Adopted 16 October. The four-clip training config is a diagnostic, not a final run.
+status: pixel_pilot_adopted
 data:
   resolution: 64
-  total_frames: 16
-  future_frames: 15
+  total_frames: 32
+  future_frames: 31
   video_fps: 8
   initial_objects: 2
   max_objects: 4
   action_semantics: constant_centre_force_fixed_duration
-  force_units_and_duration: pending_generator_handoff
+  force_units: simulator_mass_times_world_unit_per_second_squared
+  force_duration_seconds: 0.25
+  force_normalization_divisor: 0.5
+  friction: object_contact_only_no_surface_drag
 model:
   representation: pixels
   base_channels: 32
@@ -22,8 +25,8 @@ profile:
   measured_steps: 10
   precision: auto
 training:
-  status: not_implemented
-  diffusion_schedule: cosine_proposal
-  sampling: ddim_proposal
+  status: trainer_and_sampler_implemented_pilot_pending
+  diffusion_schedule: cosine_1000_steps_epsilon
+  sampling: ddim_eta_zero_clipped_x0
   sampling_steps_to_test: [16, 32, 64]
   dataset_size_and_training_steps: pending_pilot

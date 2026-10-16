@@ -69,6 +69,26 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   synthetic timings do not establish the TC2 training budget.
 - Keep application details, private connection reports, and restricted PDFs outside Git.
 
+## D011: Pixel path, staffing and finish date: 16 October 2026
+
+- Adopt 64px/32-total-frame pixel diffusion. Remove T08 from T10's critical
+  path; autoencoding/latents and 128px remain optional measured follow-ups.
+- Core: trained CVAE versus diffusion and matched E2/E3 conditioning. E4 is
+  a gated ablation; E1 is diagnostic. Use three seeds for main claims when
+  measured budget permits. A failed or unavailable external adaptation is
+  reported honestly; it does not turn an internal win into a SOTA claim.
+- Preserve contact-only friction and dataset-0.1. PR #28 defines the explicit
+  physics description and next-version action/contact coverage for Sanjay.
+- Ananya is proposed for CVAE, pending acceptance. Athul/Ananya remain joint
+  evaluation owners. Shrijeet owns diffusion, own-account TC2 runs and demo
+  integration. See CVAE_HANDOFF.md for the baseline contract.
+- Complete presentation, report, contribution PDF and tested source ZIP by
+  14 November; artifact freeze 13 November. The possible 16 November upload
+  cutoff does not extend that commitment.
+- PR #25 and #26 passed independent review and merged. Their tests are
+  implementation/control evidence; the new trainer must still demonstrate
+  coherent generated video and held-out action response before scale-up.
+
 ## New decision template
 
 ```text

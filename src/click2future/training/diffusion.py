@@ -1,7 +1,7 @@
 """Cosine DDPM epsilon objective and deterministic DDIM sampling.
 
-References: arxiv.org/abs/2006.11239, arxiv.org/abs/2010.02502 and
-arxiv.org/abs/2102.09672 (cosine schedule). No classifier-free guidance.
+References: DDPM (arXiv:2006.11239), DDIM (arXiv:2010.02502) and
+Improved DDPM (arXiv:2102.09672, cosine schedule). No classifier-free guidance.
 """
 
 import math

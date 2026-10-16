@@ -9,17 +9,16 @@ guaranteed. The controllable commitments are correct experiments, strong baselin
 reproducible evidence, clear analysis, and a reliable presentation.
 
 **14 November 2026 is the PPT presentation date**, confirmed by Shrijeet on 16 October.
-The live slot length and report/code submission cutoff still need confirmation. Keep
-14 November as the conservative working submission date until the 14/16 November
-discrepancy is resolved. All proposed dates below use Singapore time.
+All presentation and submission artifacts must be complete by 14 November; freeze
+them on 13 November. The brief's 16 November upload date and exact NTULearn cutoff
+still need confirmation and do not extend the internal finish date. Dates use Singapore time.
 
-This is an execution proposal. It preserves the current owners: Sanjay on A, Shrijeet
-on B, Athul and Ananya jointly on C. CVAE/demo ownership remains pending at Shrijeet's
-explicit instruction. It does not silently reassign issues, adopt new physics, or change
-the frozen dataset. After team agreement, synchronize affected GitHub issues,
-[TASKS.md](TASKS.md), [task_backlog.json](task_backlog.json), and [DECISIONS.md](DECISIONS.md).
+Shrijeet adopted the pixel-first scope on 16 October. Sanjay leads A, Shrijeet leads
+B and demo integration, and Athul/Ananya retain joint C ownership. Ananya has been
+asked to lead CVAE; acceptance is pending. Contact-only friction and the frozen
+dataset remain unchanged. The task board, backlog and issues track this decision.
 
-## Verified starting point
+## Starting snapshot, before GPU setup and integration on 16 October
 
 - Main is `323c573`; integrated PR #25 is `f8764b7` at this review. PR #24 merged the
   simulator/data pipeline. PR #25 combines that with development and evaluation work.
@@ -42,6 +41,22 @@ Small local review evidence is recorded in
 [planning_preflight_2026-10-16.json](results/planning_preflight_2026-10-16.json).
 Current definitions remain in [ARCHITECTURE.md](ARCHITECTURE.md) and
 [METRICS.md](METRICS.md).
+
+## Current execution update, 16 October
+
+- PRs #25 and #26 are merged after independent review: 192 tests and four
+  subtests passed, including real LPIPS checks; lint/format/build checks passed.
+- A40 setup job 42886 passed CUDA checks and the synthetic 31-frame profile.
+  The dataset trainer, cosine schedule, EMA, DDIM sampler, full checkpoint and
+  observable-only adapter now exist. Local tests pass exact interrupted
+  continuation with auxiliary losses both enabled and disabled.
+- A two-allocation TC2 learning/resume pilot is in progress. Noise-loss decline
+  is not accepted as evidence of coherent generated motion or action response.
+- [PR #28](https://github.com/athul1810/click2future/pull/28) requests Sanjay's
+  review of contact-friction semantics and the next version's control/contact
+  strata. No tabletop-drag change blocks current training.
+- Use the [training guide](TRAINING.md) and [CVAE handoff](CVAE_HANDOFF.md).
+  CVAE, held-out learned-video controls, final experiments and the UI remain open.
 
 ## What the presentation should demonstrate
 
@@ -94,17 +109,17 @@ Even an external win on our task does not establish superiority on its original 
 | A: data and physics | Sanjay | Physics decision, versioned control fixtures, multi-action scene groups, loaders/manifests | Shrijeet for model interface; C for labels |
 | B: diffusion | Shrijeet | Safe condition adapter, trainer/sampler, resume, E2/E3 pilots and inference API | C for controls; D for integration once assigned |
 | C: evaluation and physics | Athul + Ananya | Tracker reliability, action/uncertainty metrics, calibrated contacts, experiment protocol and tables | A for oracle controls; B for model outputs |
-| D: CVAE and demo/integration | **Owner pending** | CVAE baseline, interactive UI, inference integration and presentation reliability | B for model API; C for fair scoring |
-| TC2 run coordination | **Owner pending** | Allocated GPU inventory, environment, training/sampling/resume measurements | Athul has approval; account holder runs their jobs |
+| D: CVAE | **Ananya proposed; acceptance pending** | Prior/posterior baseline, tiny overfit, prior samples and cost | Shrijeet for model API; Athul for fair scoring |
+| Demo/integration | Shrijeet | Four-future UI, shared sampler, simulator comparison and offline fallback | Team rehearsal |
+| TC2 run coordination | Shrijeet for own account; Athul for own account | Run registry, checkpoint/retry budget, backups | Coordinate aggregate resource limits |
 | Presentation assembly / submission coordination | Sanjay coordinates as group coordinator; assembly owner pending | Slot/cutoff confirmation, combined deck, rehearsals, upload checklist | Every member owns their technical content |
 
 Athul/Ananya remain joint owners of C. Agree a non-overlapping internal division of
 tracking/contact work and action/uncertainty/aggregation work; review each other's outputs.
 Every person writes their own method/results/limitations and records contribution evidence.
 
-**Resolve D and TC2 coordination by 17 October.** Until then those deliverables are
-unallocated, not assumed covered. The plan is not fully staffed while the required
-CVAE and the main demo have no lead. Continue independent A/B/C work while this is resolved.
+**Confirm the CVAE lead by 17 October.** Its acceptance checks are in the handoff.
+Do not mark the baseline staffed until Ananya replies; independent work proceeds.
 
 Shared interfaces to freeze together:
 
@@ -125,7 +140,7 @@ The current backend assigns shape contact friction but has no tabletop drag term
 In a contact-free probe, changing friction 0.1 to 0.8 produced identical RGB/positions;
 post-force speed stayed approximately 0.05 world units/second.
 
-Preferred scope for the first trained model: retain the frozen contact-friction model
+Adopted scope for the first trained model: retain the frozen contact-friction model
 and demonstrate uncertainty from mass and contact outcomes. Do not present friction as
 free-sliding slowdown. If tabletop slowing is essential, A must implement and verify a
 separate floor-friction/drag model by 18 October, version the contract and regenerate
@@ -284,10 +299,10 @@ These are proposed delivery targets, not benchmarked runtimes or existing team c
 
 | Date | Deliverable / exit evidence |
 |---|---|
-| 16-17 Oct | Review integrated #25; resolve D/compute ownership; confirm PPT slot and submission cutoff; choose physics/identity policy; request allocated GPU inventory |
+| 16-17 Oct | #25/#26 review and A40 setup complete; confirm CVAE lead and PPT slot; execute learning/resume/sampling pilot |
 | 18-20 Oct | Real adapters, CVAE and diffusion train/sample paths; tiny-overfit controls; full checkpoint/resume; actual GPU/IO/sampling measurements |
 | 21-23 Oct | Held-out action-responsive E0/E2/E3 pilots; usable prior sampling; validated tracker controls; first real-model UI integration |
-| 24 Oct | Freeze main data/config/metric protocol and budget; external-baseline go/no-go; documented hyperparameter study; decide pixel/latent and advanced-demo scope |
+| 24 Oct | Freeze main data/config/metric protocol and budget; external-baseline go/no-go; documented hyperparameter study; decide advanced-demo scope |
 | 25-30 Oct | Main E0/E2/E3 repeats; E4 and external adaptation if funded; no test-based tuning; record all failures/costs |
 | 31 Oct | Checkpoint/experiment freeze for final evaluation; core UI feature freeze |
 | 1-4 Nov | Final ID/OOD/action/uncertainty measurements; aggregation and confidence intervals; traceable figures and failure examples |
@@ -296,7 +311,7 @@ These are proposed delivery targets, not benchmarked runtimes or existing team c
 | 9-11 Nov | Repair rehearsal failures; final report/contribution/source-package checks; no new model family |
 | 12 Nov | Second full rehearsal, including an offline fallback and arbitrary allowed force/target changes |
 | 13 Nov | Final presentation-device check, embedded assets, backups and submission readiness |
-| 14 Nov | PPT presentation; submit coursework files by the separately verified cutoff |
+| 14 Nov | PPT presentation; report, contribution PDF and validated source ZIP complete and ready to submit |
 
 Stop large runs if tiny overfit or held-out controls fail. Diagnose data/timing/normalization,
 noise schedule, optimization and foreground preservation before scaling width. Preserve
