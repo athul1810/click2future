@@ -42,6 +42,8 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert not names & {"AGENTS.md", ".env", "uv.lock", "data/saved.npz", ".git/config"}
         assert "src/click2future/models/pilot_denoiser.py" in names
         assert "src/click2future/training/auxiliary.py" in names
+        assert "src/click2future/training/train_diffusion.py" in names
+        assert "configs/training/pilot_diffusion.json" in names
         bundle.extractall(folder)
     child = subprocess.run(
         [sys.executable, "-I", str(folder / "submission/smoke.py")],

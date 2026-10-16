@@ -42,6 +42,12 @@ the controlled contact geometry stays simple and reliable.
 The action is visible to the model through `force_xy` and `action_map`. Hidden
 mass, friction, and restitution remain available only as oracle metadata.
 
+The default physical force magnitudes are 0, 0.15 for forward/reverse, 0.25 for
+object collisions, and 1.1 for wall contact. The dataset-0.2 training config
+declares `force_limit: 1.1`; the dataset-0.1 default remains 0.5. Both use the
+same force normalization divisor of 0.5. Training and checkpoint-driven sampling
+accept all six action families without dropping wall clips. See [training](TRAINING.md).
+
 ## Identity and splits
 
 - `scene_group_id` identifies all 21 clips with the same visible frame 0.
@@ -81,7 +87,7 @@ Generation fails if any scene group violates these conditions:
 
 ## Implementation steps
 
-1. Add a deterministic controlled-scene builder for the four actions.
+1. Add a deterministic controlled-scene builder for the six actions.
 2. Add the dataset-0.2 generator, manifest records, and grouped splits.
 3. Add dataset-wide validation and action/contact summaries.
 4. Add a simulator config, CLI commands, documentation, and focused tests.
@@ -91,6 +97,6 @@ Generation fails if any scene group violates these conditions:
 ## Non-goals
 
 Dataset 0.2 does not add surface drag, gravity, 3D motion, stacking,
-photorealism, or new model/training code. Friction remains a contact property:
+photorealism, or a new model architecture. Friction remains a contact property:
 it affects object-object collision response, not free sliding through empty
 space.

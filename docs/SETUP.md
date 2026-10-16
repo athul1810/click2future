@@ -2,7 +2,8 @@
 
 This setup covers simulation, grouped datasets, evaluation, the untrained denoiser
 prototype, and local environment diagnostics. Dataset training, sampling, and the demo
-remain to be built. TC2 validation is tracked separately in T02/T03.
+remain to be built. The TC2 A40 environment passed job 42886 on 16 October 2026;
+[allocation evidence](results/tc2_probe_2026-10-16.json) records its versions and checks.
 
 ## Environment and dependencies
 
@@ -17,7 +18,8 @@ The development group includes pip because editor package views run `python -m p
 If that command reports `No module named pip`, rerun the locked sync command for your
 selected extras, then refresh the editor's environment view.
 CPU and CUDA extras are mutually exclusive. The CUDA option supports Windows/Linux
-with a compatible NVIDIA GPU and driver; it does not certify the TC2 environment.
+with a compatible NVIDIA GPU and driver. The TC2 allocation described above has been
+validated; other nodes and later allocations require their own device checks.
 Backend configuration follows [uv's PyTorch integration guide](https://docs.astral.sh/uv/guides/integration/pytorch/).
 
 ## Windows / PowerShell
@@ -55,7 +57,8 @@ python3 -m uv sync --locked --extra cpu
 If the distribution forbids user pip installations, install the pinned uv release
 using an [official installation method](https://docs.astral.sh/uv/getting-started/installation/),
 then use `uv sync --locked --extra cpu`. The locked CPU setup and tests have been checked on macOS;
-the contributor also reported Windows checks. Linux and TC2 validation remain pending. Do not change the cluster's system Python,
+the contributor also reported Windows checks. Linux CUDA validation passed on the
+TC2 A40 in job 42886. Do not change the cluster's system Python,
 driver, or CUDA modules. Record its constraints in `COMPUTE.md` before selecting a
 compatible training environment and running an explicit CUDA check on TC2.
 

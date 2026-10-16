@@ -14,7 +14,10 @@ Submit these three files for **Group 7**, using `07` in the filenames.
 
 One group makes one submission through **NTULearn > course site > Assignments > submission link for Project 1**. The PDF allows replacement submissions without a stated limit. Coordinate uploads through PRAMOD SANJAY, the first member in the supplied roster.
 
-**Working deadline: 14 November 2026.** Page 5 of the course brief lists 16 November 2026. Confirm the discrepancy and exact cutoff on NTULearn before submitting.
+**Internal completion deadline: 14 November 2026.** All three deliverables and the
+presentation must be ready then. Page 5 of the
+brief lists 16 November for upload. Confirm the exact NTULearn cutoff; this does
+not change the internal completion date.
 
 ## Report
 

@@ -4,8 +4,9 @@ The Workstream A simulator and dataset contract below is frozen as of 15
 October 2026 for `scene-0.1`, `rollout-0.1`, and `dataset-0.1`. Incompatible
 changes require a schema-version change and regenerated data. The later model,
 auxiliary-head, and demo sections remain guidance for their owning workstreams.
-An untrained pixel denoiser and extracted-trajectory/contact metrics are implemented;
-the final pixel/latent model choice remains a proposal in [BUILD_PLAN.md](BUILD_PLAN.md).
+A pixel denoiser, dataset trainer, DDIM sampler and extracted-trajectory/contact metrics
+are implemented. The 16 October decision adopts the pixel path; see
+[BUILD_PLAN.md](BUILD_PLAN.md) and [training](TRAINING.md) for evidence gates.
 
 ## Frozen physics and action semantics
 
@@ -97,12 +98,12 @@ variants of one scene must retain its group and split.
 encode(frames) -> latents
 decode(latents) -> frames
 build_condition(first_frame, selected_mask, force_xy) -> condition
-denoise(noisy_future_latents, diffusion_step, condition) -> predicted_noise, optional_aux
+denoise(noisy_future_pixels, diffusion_step, condition) -> predicted_noise, optional_aux
 sample(condition, seeds=[...], num_future_frames=T-1) -> videos
 evaluate(videos, references, metadata) -> metric_records
 ```
 
-For the proposed pixel pilot, encoding and decoding are identity operations. If the
+For the adopted pixel path, encoding and decoding are identity operations. If the
 latent path is selected, train/select the frame autoencoder once, then freeze and share
 it across diffusion ablations. Fit weights and latent normalization on training data
 only. Use validation for checkpoint selection and inspect test/OOD reconstruction after
@@ -115,15 +116,16 @@ a prior `p(z | condition)` or fixed standard-normal prior, and a decoder
 supplying the future clip. Record the prior choice and KL weight in the run
 configuration. See [the model references](REFERENCES.md#models).
 
-## Proposed action module
+## Implemented conditioning comparison
 
-1. Encode frame 0 into a spatial feature map.
-2. Downsample the selected-object mask and pool a selected-object feature.
-3. Fuse that feature with an embedding of the force vector.
-4. Encode the spatial action map and inject the result into denoiser blocks.
+Both E2 and E3 concatenate noisy future RGB with repeated frame-0 RGB,
+the selected mask and two force channels. Timestep and numeric force embeddings
+modulate residual blocks. E2 broadcasts the force vector across the image; E3
+multiplies those channels by the selected mask. The same U-Net predicts epsilon.
 
-E2 receives the selected mask and numeric force but not the spatial action path,
-so the E2-to-E3 comparison isolates the spatial module.
+E2/E3 have identical information, parameter counts and topology. The experiment
+isolates force-field localization. Pooled object features are an optional later
+extension, not part of this implemented model.
 
 ## Auxiliary heads
 

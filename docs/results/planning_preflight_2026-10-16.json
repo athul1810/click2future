@@ -1,0 +1,107 @@
+{
+  "checked_date": "2026-10-16",
+  "timezone": "Asia/Singapore",
+  "tested_source_commit": "f8764b7d7ea9e9817f369eef74bf4319bf332bad",
+  "kind": "planning_preflight_not_trained_model_results",
+  "tests": {
+    "passed": 128,
+    "subtests_passed": 4,
+    "ruff_lint": "passed",
+    "ruff_format": "78 files formatted",
+    "installed_dependencies": "compatible"
+  },
+  "physics_probe": {
+    "source_commit": "f8764b7",
+    "probe": "Two stationary circles, centre force 0.2 for 0.25s, masses/restitution fixed; change only shape friction 0.1 to 0.8",
+    "object_contact_count": 0,
+    "wall_contact_count": 0,
+    "maximum_position_difference": 0.0,
+    "identical_rgb": true,
+    "post_force_x_speed_min": 0.04999995231628418,
+    "post_force_x_speed_max": 0.05000019073486328,
+    "interpretation": "No free-sliding drag observed: current shape friction acts through contacts, not tabletop deceleration; clarify this modelling choice before claiming friction-controlled sliding",
+    "scene_parameters": {
+      "scene_seed": 101600,
+      "physics_seed": 101601,
+      "action_seed": 101602,
+      "objects": [
+        {
+          "object_id": 0,
+          "shape": "circle",
+          "radius": 0.05,
+          "position": [
+            0.25,
+            0.25
+          ]
+        },
+        {
+          "object_id": 1,
+          "shape": "circle",
+          "radius": 0.05,
+          "position": [
+            0.75,
+            0.75
+          ]
+        }
+      ],
+      "mass_all_objects": 1.0,
+      "restitution_all_objects": 0.2,
+      "initial_velocity_and_rotation": "zero",
+      "selected_object_id": 0,
+      "force_xy": [
+        0.2,
+        0.0
+      ],
+      "force_duration": 0.25,
+      "friction_pair": [
+        0.1,
+        0.8
+      ],
+      "frame_count": 32,
+      "fps": 8,
+      "resolution": 64
+    }
+  },
+  "data_model_smoke": {
+    "source_commit": "f8764b7",
+    "sample_count": 40,
+    "scene_groups": 10,
+    "split_sample_counts": {
+      "train": 32,
+      "validation": 4,
+      "test": 4
+    },
+    "same_condition_variants": {
+      "identical_first_frame_mask_force": true,
+      "different_hidden_physics": true
+    },
+    "replay": "validate-sample --replay passed",
+    "loader_frames_shape": [
+      2,
+      32,
+      3,
+      64,
+      64
+    ],
+    "denoiser_input_output_shape": [
+      2,
+      3,
+      31,
+      64,
+      64
+    ],
+    "forward_status": "finite, CPU base_channels=8, no auxiliary heads; not training or sampling",
+    "adapter_used_for_smoke": "Normalize RGB [0,1] to [-1,1], select future frames, permute [B,T,3,H,W] to [B,3,T,H,W], divide force by 0.5; production adapter/normalization policy remains to be implemented",
+    "object_id_probe": "Swap object IDs, reorder the objects list to retain object_id == index, and match selected_object_id. RGB/mask/force remain identical while trajectory targets are permuted. Auxiliary supervision needs a visible canonical ordering or permutation-aware matching unless the input contract is extended"
+  },
+  "limitations": [
+    "No dataset training, sampling quality or TC2 execution established by these checks",
+    "200-clip contact measurements are collaborator-reported evidence, not independently rerun here",
+    "Physics/auxiliary identity probes identify design choices, not authorization to change the frozen contract"
+  ],
+  "source_sha256_normalized_lf": {
+    "src/click2future/sim/backend.py": "c5b121641a58ae9a25e85ec5c65bb5661a2c5bf196ff839a9c00967747207f3b",
+    "src/click2future/data/loader.py": "e43f007ece0dad69723f3b58a977086ad5db10b84c59063d084d4a845ca222cc",
+    "src/click2future/models/pilot_denoiser.py": "a197fb49cfac354dfa7ff3be2293ddf25c997e285f1521f706d4a1685679e981"
+  }
+}

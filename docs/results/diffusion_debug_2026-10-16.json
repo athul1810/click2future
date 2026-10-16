@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-16",
+  "hardware": "NVIDIA A40, TC2N01, driver 570.148.08",
+  "scope": "Train-scene diagnosis, one fixed sampling seed; not held-out quality or model selection",
+  "runs": [
+    {
+      "name": "epsilon_longer",
+      "job": 42917,
+      "source_revision": "e008527b851612d8edabd15ce2d9faaa2f9f0b20",
+      "source_archive_sha256": "11a5d7abbe89d814d0913960ef02b667bf6095c0380a90ad186f2f0fb155be7d",
+      "results_archive_sha256": "0d44eb5c51bcf8aec7e24db2f701ea84d354785718f387adc3b958d95a171854",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "configuration": {
+        "auxiliary": false,
+        "base_channels": 32,
+        "batch_size": 1,
+        "checkpoint_every": 100,
+        "collision_positive_weight": 1.0,
+        "conditioning": "spatial",
+        "diffusion_steps": 1000,
+        "ema_decay": 0.995,
+        "learning_rate": 0.0001,
+        "limit_train": 4,
+        "precision": "bfloat16",
+        "seed": 7,
+        "steps": 10000,
+        "weight_decay": 0.01
+      },
+      "training_signature": "127a9d0b839e714f2dce91f9a510dd93981c2bfa4c5f0a09f8f2a819102963ea",
+      "training_prediction_mse_after": 0.0037883261684328318,
+      "mean_step_seconds_including_load": 0.046566425551389075,
+      "peak_cuda_allocated_bytes": 751513600,
+      "sampling": {
+        "training_step": 10000,
+        "sample_id": "scene-00610132-variant-000",
+        "seed": 100,
+        "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",
+        "source_revision": "e008527b851612d8edabd15ce2d9faaa2f9f0b20",
+        "records": [
+          {
+            "weights": "ema",
+            "steps": 32,
+            "seconds": 0.821199526078999,
+            "tracked_future_observations": 0,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 128,
+            "seconds": 1.6623061057180166,
+            "tracked_future_observations": 0,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 32,
+            "seconds": 0.4179901201277971,
+            "tracked_future_observations": 0,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 128,
+            "seconds": 1.661598714068532,
+            "tracked_future_observations": 0,
+            "expected_future_observations": 62
+          }
+        ]
+      },
+      "gate": "failed",
+      "artifact_sha256": {
+        "summary-10000.json": "9b096eac1f53dccbf4f904ecab4d97a1017ac9218f353b502b5c04bcc3d7c759",
+        "final-sampler/diagnostic.json": "c3715004ab96897cb90e72b32e5ef0b8bc1bcc9aebad3a5f936751557aae78e5",
+        "checkpoint.pt": "c09200dc1a82d3d5bf64ee5bf829a6749eb66daaefe2a8ca6e7db10ca1654bbc",
+        "accounting.txt": "2b10d295c3d8465d657bdd08f8f563c082736ab3b5a712fef994669eac5c3f1b"
+      }
+    },
+    {
+      "name": "velocity_target",
+      "job": 42920,
+      "source_revision": "ed15bc26f73b182d3267b72433c4bb1cd7eb3e85",
+      "source_archive_sha256": "c11ffa63055610da11a7cbbe1d7c4819e8e2d356ffb8ad0c13e426837d372d24",
+      "results_archive_sha256": "f0d719f0c0b04d093bd656e51421b6f0058fd0edebfd4d3fd19bd541a5cb3c28",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "configuration": {
+        "auxiliary": false,
+        "base_channels": 32,
+        "batch_size": 1,
+        "checkpoint_every": 100,
+        "collision_positive_weight": 1.0,
+        "conditioning": "spatial",
+        "diffusion_steps": 1000,
+        "ema_decay": 0.995,
+        "learning_rate": 0.0001,
+        "limit_train": 4,
+        "precision": "bfloat16",
+        "prediction_type": "velocity",
+        "seed": 7,
+        "steps": 2000,
+        "weight_decay": 0.01
+      },
+      "training_signature": "127a9d0b839e714f2dce91f9a510dd93981c2bfa4c5f0a09f8f2a819102963ea",
+      "training_prediction_mse_after": 0.020164670422673225,
+      "mean_step_seconds_including_load": 0.04481188676895658,
+      "peak_cuda_allocated_bytes": 751513600,
+      "sampling": {
+        "training_step": 2000,
+        "prediction_type": "velocity",
+        "sample_id": "scene-00610132-variant-000",
+        "seed": 100,
+        "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",
+        "source_revision": "ed15bc26f73b182d3267b72433c4bb1cd7eb3e85",
+        "records": [
+          {
+            "weights": "ema",
+            "steps": 32,
+            "seconds": 0.8249939102679491,
+            "tracked_future_observations": 2,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 128,
+            "seconds": 1.6640291213989258,
+            "tracked_future_observations": 1,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 32,
+            "seconds": 0.4186677671968937,
+            "tracked_future_observations": 7,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 128,
+            "seconds": 1.6617653733119369,
+            "tracked_future_observations": 4,
+            "expected_future_observations": 62
+          }
+        ]
+      },
+      "gate": "failed",
+      "artifact_sha256": {
+        "summary-2000.json": "c6cd56b2bcfc2a795935e8a4c027878fb95d419c7445c25a8dc859d68fe02c35",
+        "sampler/diagnostic.json": "0fb99c2e8f632733144216ed54d9aad2db4d4c582279e1d34033ebabb9943450",
+        "checkpoint.pt": "8d6d9d66fc1d554d34d45a3e92209500cd16f33c68d95a3abea2300707ba3571",
+        "accounting.txt": "c007f210ee759eb288ae6f846aeaa581a0b251c82d664d74376c208ab4240eef"
+      }
+    }
+  ],
+  "findings": [
+    "The 2000-step epsilon model failed tracking with raw/EMA weights at 32,128,1000 sampler steps.",
+    "The independent 10000-step epsilon restart still failed tracking at 32/128 steps with both weight sets.",
+    "Velocity prediction reduced visible colour noise, but recovered only 1-7 of 62 future object observations across settings. No complete-video quality pass.",
+    "Velocity and epsilon MSE values have different targets and are not directly comparable.",
+    "All checkpoints and private result bundles were copied off TC2; no jobs remain running after these probes."
+  ],
+  "next_gate": [
+    "Use a single deterministic training clip to separate memorization failure from ambiguous hidden-physics targets.",
+    "Measure reconstructed x0 by noise level, object-region reconstruction and stationary-object persistence; keep tracker settings fixed.",
+    "Test float32 versus bfloat16 and velocity versus epsilon under matched budgets; increase capacity only after identifying the failure.",
+    "Pass coherent tiny-data prior sampling before dataset scaling; then run independent held-out force/target controls."
+  ],
+  "validation": {
+    "tests": 232,
+    "subtests": 4,
+    "skips": 0,
+    "ruff_lint": "passed",
+    "ruff_format": "passed",
+    "package_build": "passed",
+    "source_zip_content_and_extraction_checks": "passed"
+  }
+}

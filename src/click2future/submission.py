@@ -34,7 +34,7 @@ def _check(name, payload):
         name
         in {"README.md", "pyproject.toml", "constraints.txt", ".python-version", "MANIFEST.json"}
         or (name.startswith("src/click2future/") and path.suffix == ".py")
-        or (name.startswith("configs/") and path.suffix in {".yaml", ".toml"})
+        or (name.startswith("configs/") and path.suffix in {".yaml", ".toml", ".json"})
         or (
             path.parent == PurePosixPath("tests")
             and path.name.startswith("test_")

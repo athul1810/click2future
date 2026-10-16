@@ -1,13 +1,13 @@
 # Roadmap
 
-**Working deadline: 14 November 2026.** See [SUBMISSION.md](SUBMISSION.md) for the course-brief date discrepancy and packaging rules.
+**Working submission deadline: 14 November 2026.** See [SUBMISSION.md](SUBMISSION.md).
 
-Intermediate milestones and task dates have not been set. The team will agree on them later. The dependencies below describe the order of work, without assigning dates.
+The execution order and acceptance checks are in the
+[16 October execution plan](EXECUTION_PLAN_2026-10-16.md).
+The course brief lists 16 November for upload; retain 14 November until the cutoff is confirmed.
 
-Proposed date windows and revised pixel-pilot gates are in [BUILD_PLAN.md](BUILD_PLAN.md),
-with decisions to assign at [the 14 October meeting](MEETING_2026-10-14.md).
-They are not agreed ownership/dates. The existing task dependencies still describe the
-original latent plan and must be synchronized with issues/backlog if the proposal is adopted.
+Architecture gates are in [BUILD_PLAN.md](BUILD_PLAN.md). The pixel-first path is
+adopted; the optional autoencoder does not block diffusion.
 
 ## Critical path
 
@@ -15,11 +15,12 @@ original latent plan and must be synchronized with issues/backlog if the proposa
 flowchart LR
     T04[Data contract] --> T05[Simulator]
     T05 --> T06[Dataset and splits]
-    T06 --> T08[Autoencoder]
-    T08 --> T10[Diffusion baselines]
+    T06 --> T10[Pixel diffusion baselines]
     T10 --> T11[Spatial conditioning]
     T11 --> T12[Auxiliary heads]
-    T12 --> T13[Experiment settings and budget]
+    T11 --> T13[Experiment settings and budget]
+    T06 --> T09[CVAE baseline]
+    T09 --> T13
     T13 --> T14[Core ablations]
     T14 --> T19[Reproduction and release]
     T19 --> T20[Submission]

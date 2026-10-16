@@ -1,0 +1,113 @@
+# Pixel diffusion pilot
+
+Adopted scope: 64px, 32 total frames at 8 FPS, two objects first, then 2-4.
+The model generates 31 frames jointly. Frame 0 is retained exactly. The fixed
+force lasts 0.25 s; divide its physical vector by 0.5, with no silent clipping.
+Only frame-0 RGB, selected mask and force enter the inference boundary.
+
+## Commands
+
+Generate data with `configs/simulator/pilot.toml` and the existing generation
+CLI. `configs/training/pilot_diffusion.json` intentionally selects only four
+training clips for a diagnostic. Copy it and set `limit_train` to null for an
+actual dataset run. Freeze the run's configuration before starting it.
+
+For controlled dataset-0.2 use `configs/training/pilot_diffusion_0_2.json`.
+It selects one complete 21-clip training scene group, including the wall actions,
+as a diagnostic. It declares `force_limit: 1.1` in simulator units. The original
+config and older checkpoints retain the default limit of 0.5. Both versions
+divide force by 0.5, so a wall force of 1.1 has normalized magnitude 2.2. Nothing
+is clipped or omitted. Changing this limit requires a new run; exact resume
+rejects a changed configuration. Sampling and diagnostics read the limit from
+the checkpoint. A configured range does not establish model quality within it.
+
+```powershell
+python -m click2future.training.train_diffusion --dataset outputs/pilot-data --run-dir outputs/pilot-run --config configs/training/pilot_diffusion.json --device cuda --until 200
+python -m click2future.training.train_diffusion --dataset outputs/pilot-data --run-dir outputs/pilot-run --config configs/training/pilot_diffusion.json --device cuda --resume outputs/pilot-run/checkpoint.pt
+```
+
+On TC2 submit `cluster/train_pilot.sbatch` with `first`, then `resume` through
+an `afterok` job dependency. Set `C2F_PROJECT`, `C2F_PILOT_ROOT` and
+`C2F_SOURCE_REVISION`. All application execution stays inside Slurm.
+This two-job diagnostic generates separate local data, trains to step 200,
+compares the next update across allocations, then continues to step 2000 and
+exports paired forward/reverse/zero samples. It does not overwrite dataset-0.1.
+
+## Training and sampling contract
+
+- Cosine DDPM schedule, 1000 timesteps, uniform clip timestep. `prediction_type`
+  selects epsilon MSE (original default) or velocity MSE (diagnostic alternative).
+  Sampling reads that same setting from the checkpoint. The legacy model output
+  field `predicted_noise` holds the selected target's three output channels.
+  Loss values across the two targets are not directly comparable.
+- AdamW, learning rate 1e-4 with cosine decay to 1e-5 at the immutable horizon,
+  gradient norm clipped to 1, EMA decay 0.995. These are pilot defaults.
+- Float32 or CUDA bfloat16; neither uses a gradient scaler. No mixed float16.
+- E1/E2/E3 share the same backbone. E4 adds the separately reviewed low-noise
+  canonical trajectory/contact losses. Fixed collision positive weight must
+  come from training labels only, capped at 20; default is 1.
+- DDIM eta=0 uses a private generator per sample, endpoint timesteps included,
+  x0 clipped to [-1,1], epsilon recomputed after clipping. Test 16/32/64 steps
+  on validation before freezing sampling cost. No classifier-free guidance.
+- Checkpoints save model, EMA, optimizer, LR scheduler, step, Python/NumPy/
+  Torch/CUDA RNG, data permutation/cursor and permutation generator. Resume
+  rejects changed config, actual training-file hashes, recorded source, device type or Torch
+  version. CPU continuation is tested for exact equality. Cross-node exactness
+  additionally depends on deterministic kernels and hardware/software matching.
+- The manifest and split hashes are verified, scene-group membership checked,
+  and actual selected training files hashed. No test arrays are used to fit or
+  select a model. The fixed training-noise probe is a plumbing diagnostic.
+
+Prepare a condition NPZ with `first_frame: uint8[H,W,3]`,
+`selected_mask: bool[H,W]`, and `force_xy: float32[2]` in physical units:
+
+```powershell
+python -m click2future.training.sample_diffusion --checkpoint outputs/pilot-run/checkpoint.pt --condition outputs/condition.npz --output outputs/videos.npz --device cuda --seeds 100 101 102 103 --sampling-steps 32
+```
+
+The output key `videos` is uint8 `[K,T,H,W,3]`, directly accepted by the video
+evaluator. The GIF is for inspection. The JSON records checkpoint/input hashes,
+EMA selection, seed policy and latency. On TC2 add `--require-slurm`.
+
+## Gates before scaling
+
+The first TC2 pilot passed complete cross-job continuation but failed generated
+video quality. Its fixed noise MSE fell from 1.02554 to 0.01965; all 248 future
+object observations were untrackable. Increasing sampler steps to 128 or 1000,
+or switching EMA to raw weights, did not restore tracking. The longer epsilon
+restart also failed tracking. Velocity prediction reduced colour noise but
+recovered only 1-7/62 future observations. Both remain failed quality gates.
+See the [initial result](results/diffusion_pilot_2026-10-16.json) and
+[follow-up evidence](results/diffusion_debug_2026-10-16.json).
+
+Next isolate a single deterministic clip and inspect reconstructed x0 by noise
+level before increasing model size. Epsilon-to-x0 conversion
+divides by sqrt(alpha_bar), so errors are amplified near the cosine schedule's
+low-signal endpoint. Velocity prediction is a candidate controlled diagnostic,
+not an established explanation for this failure. See
+[Salimans and Ho](https://arxiv.org/abs/2202.00512) and
+[Lin et al.](https://arxiv.org/abs/2305.08891). Any selected target/schedule must
+be shared by E2/E3 and frozen using validation, with old runs labelled separately.
+
+`configs/training/velocity_probe.json` runs a separate 2,000-step target diagnostic
+on the same four training clips and seed, keeping the original cosine schedule.
+`cluster/target_probe.sbatch` can reuse the validated interpreter with an explicit,
+verified source path. This tests velocity prediction without changing the existing
+environment or relabelling old epsilon weights. It is not a reproduction of the
+complete zero-terminal-SNR recipe and does not use distillation.
+
+1. Numerical equations, seed isolation, oracle-field exclusion and complete
+   interrupted training pass their tests.
+2. The same next update matches across two allocated jobs. Keep a recoverable
+   checkpoint and copy important experiment artifacts off TC2.
+3. Tiny training scenes retain objects, produce coherent motion and reconstruct
+   their futures from sampled noise. Inspect videos and extracted tracks;
+   declining noise MSE alone does not pass this gate.
+4. Independently test held-out zero/reversed pushes and selected-object changes,
+   with common seeds and fixed contact-free windows. Report tracking failure.
+5. Set a dataset/run budget from measured end-to-end step and four-sample times.
+   Start matched E2/E3 runs; main claims need repeats and scene-group intervals.
+
+CVAE and E2/E3 are the core comparison. E4 is retained only if generated-pixel
+metrics improve; head accuracy alone cannot establish that. Latents, 128px,
+goal search and external-method adaptations receive time only after these gates.
