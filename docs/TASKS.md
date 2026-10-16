@@ -204,13 +204,13 @@ Test whether localizing the action improves physical action adherence.
 
 Test whether physical supervision improves decoded future behavior.
 
-**Progress:** Optional trajectory/collision heads exist in the untrained denoiser. Supervised loss design, object-slot matching, loss-gradient checks, and E4 training/sampling remain outstanding.
+**Progress:** Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md).
 
 **Dependencies:** T11, T07 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
-- [ ] Predict trajectories and object-pair collision probabilities from denoiser features.
-- [ ] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
-- [ ] Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.
+- [x] Predict trajectories and object-pair collision probabilities from denoiser features.
+- [x] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
+- [x] Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.
 - [ ] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
 - [ ] Report head predictions separately from generated-video tracking metrics.
 

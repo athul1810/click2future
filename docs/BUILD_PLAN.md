@@ -172,3 +172,10 @@ Keep source/config/locks and small evidence records in Git; keep datasets, model
 credentials, local connection reports, and restricted university PDFs outside Git. The
 working repository includes URLs and is not the source-only submission ZIP. Use the
 existing submission rules and verify the original brief's treatment of dependency metadata.
+
+## Implemented auxiliary losses
+
+[The auxiliary loss module](AUXILIARY_LOSSES.md) now supplies canonical frame-0 matching,
+valid-coordinate Smooth L1, unordered-pair BCE, fixed training-set class weighting, and
+low-timestep supervision. CPU head-gradient and synthetic prediction-fitting checks pass.
+The dataset trainer and sampler still need to integrate these components before E4 is trained.

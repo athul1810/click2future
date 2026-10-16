@@ -265,8 +265,13 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/12",
-    "completed_acceptance": [],
-    "progress": "Optional trajectory/collision heads exist in the untrained denoiser. Supervised loss design, object-slot matching, loss-gradient checks, and E4 training/sampling remain outstanding."
+    "completed_acceptance": [
+      0,
+      1,
+      2
+    ],
+    "progress": "Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md).",
+    "evidence": "docs/AUXILIARY_LOSSES.md; docs/results/auxiliary-loss-checks.json; tests/test_auxiliary_losses.py. No trained E4 generator or sampler yet."
   },
   {
     "id": "T13",
