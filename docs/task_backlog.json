@@ -160,7 +160,7 @@
       3,
       4
     ],
-    "progress": "Trajectory/collision, action, image, temporal, and ensemble metrics are implemented with source-labelled exports. Simulator controls distinguish physical trajectory spread from colour flicker, handle missing observations, and exclude reference contacts from acceleration checks. Contact recall remains 0.233; generated-video validation and group-level aggregation are pending. See [metric usage and measurements](METRICS.md)."
+    "progress": "Trajectory/contact, action, image, temporal, and ensemble metrics have simulator controls. Comparison tables now combine declared cases with scene-group bootstrap intervals, missing counts, and source separation. Contact recall remains 0.233; validation on generated videos is pending. See [metric usage](METRICS.md) and [comparison tables](EVALUATION_REPORTS.md)."
   },
   {
     "id": "T08",
@@ -311,7 +311,9 @@
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/14"
+    "issue_url": "https://github.com/athul1810/click2future/issues/14",
+    "progress": "CSV/JSON comparison export is implemented and checked on 24 simulator-control reports from four independent scenes. It retains run/checkpoint IDs, K, missing counts, and scene-group intervals. Actual E0-E4 runs, cost measurements, hyperparameter study, and analysis still depend on T13.",
+    "evidence": "docs/EVALUATION_REPORTS.md; docs/results/aggregation-controls.json. Simulator controls only; no trained-model comparison."
   },
   {
     "id": "T15",
@@ -410,8 +412,15 @@
       "Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source."
     ],
     "owner": null,
-    "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/19"
+    "status": "In progress",
+    "issue_url": "https://github.com/athul1810/click2future/issues/19",
+    "completed_acceptance": [
+      1,
+      3,
+      4
+    ],
+    "progress": "A deterministic source-only ZIP builder, explicit allowlist, input scanner, and hashed inventory are implemented. The archive installed in a fresh Python environment; all 219 tests and four subtests passed after extraction, including generated-data replay and batch loading. The current ZIP is a development snapshot. Dataset training/sampling, CVAE, checkpoint checks, demo integration, and final instructions remain.",
+    "evidence": "docs/SUBMISSION.md; docs/results/submission-checks.json; submission/allowlist.json; submission/README.md."
   },
   {
     "id": "T20",
