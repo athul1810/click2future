@@ -16,8 +16,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-cpu = ["torch==2.11.0"]
-cu128 = ["torch==2.11.0; sys_platform == 'win32' or sys_platform == 'linux'"]
+cpu = ["torch==2.11.0", "torchvision==0.26.0"]
+cu128 = [
+    "torch==2.11.0; sys_platform == 'win32' or sys_platform == 'linux'",
+    "torchvision==0.26.0; sys_platform == 'win32' or sys_platform == 'linux'",
+]
+image-metrics = ["scikit-image==0.26.0", "lpips==0.1.4", "torchvision==0.26.0"]
 
 [project.scripts]
 click2future-check = "click2future.env_check:main"
@@ -25,6 +29,7 @@ click2future-check = "click2future.env_check:main"
 [dependency-groups]
 dev = [
     "ipykernel>=6,<8",
+    "pip>=25,<27",
     "pytest>=8,<10",
     "ruff>=0.13,<1",
 ]
@@ -51,6 +56,10 @@ conflicts = [[{ extra = "cpu" }, { extra = "cu128" }]]
 
 [tool.uv.sources]
 torch = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu128", extra = "cu128" },
+]
+torchvision = [
     { index = "pytorch-cpu", extra = "cpu" },
     { index = "pytorch-cu128", extra = "cu128" },
 ]

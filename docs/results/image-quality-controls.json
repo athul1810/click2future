@@ -1,0 +1,272 @@
+{
+  "status": "passed",
+  "violations": [],
+  "purpose": "Image-metric controls on simulator RGB, not model evaluation",
+  "source": "simulator_control",
+  "scene_groups": 4,
+  "protocol": {
+    "seed_start": 60000,
+    "frames": 16,
+    "fps": 8,
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "object_count": "2 + seed % 3",
+    "frame_zero_scored": false,
+    "shift": "roll entire future frame four pixels right with wraparound",
+    "noise": "Gaussian std 12 in uint8 intensity units; clip then cast uint8",
+    "frozen": "repeat exact initial frame",
+    "resize": "none"
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pymunk": "7.3.1",
+    "pillow": "12.3.0"
+  },
+  "source_sha256": {
+    "images.py": "f31775eebcb495462403945cac883c3b2d546e49562377570ac1d0c17f4b6108",
+    "perceptual.py": "e7c021b2f16d06c9817c53d61a98f602b0fc4442ed3b5a5f54bed1b460fcdb6d",
+    "image_controls.py": "fdd469ba81cb3b98a42bc988bd7209d0d4738c42c92f87f78c0bf7560ba234b6"
+  },
+  "preprocessing": {
+    "ssim": {
+      "implementation": "skimage.metrics.structural_similarity",
+      "data_range": 255,
+      "channel_axis": -1,
+      "gaussian_weights": true,
+      "sigma": 1.5,
+      "win_size": 11,
+      "use_sample_covariance": false,
+      "K1": 0.01,
+      "K2": 0.03,
+      "channels": "RGB, arithmetic mean of channel SSIM",
+      "resize": "none",
+      "crop": "five-pixel SSIM window border excluded by skimage",
+      "package_version": "0.26.0"
+    },
+    "lpips": {
+      "implementation": "lpips.LPIPS",
+      "package_version": "0.1.4",
+      "torch_version": "2.11.0",
+      "torchvision_version": "0.26.0",
+      "backbone": "alex",
+      "backbone_weights": "AlexNet_Weights.IMAGENET1K_V1",
+      "calibration_version": "0.1",
+      "backbone_sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+      "calibration_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+      "input": "uint8 RGB -> float32 NCHW / 127.5 - 1; normalize=False",
+      "resize": "none",
+      "spatial": false,
+      "device": "cpu",
+      "mode": "eval; frozen parameters; inference_mode"
+    }
+  },
+  "records": [
+    {
+      "scene_group_id": "scene-00060000",
+      "seed": 60000,
+      "scores": {
+        "exact": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 1.0,
+            "lpips": 0.0
+          }
+        },
+        "shift_four_pixels": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.798636838272056,
+            "lpips": 0.17007721861203512
+          }
+        },
+        "noise_std12": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.37996612421878756,
+            "lpips": 0.27101773023605347
+          }
+        },
+        "frozen_first_frame": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.9730609884221916,
+            "lpips": 0.01077923805763324
+          }
+        }
+      }
+    },
+    {
+      "scene_group_id": "scene-00060001",
+      "seed": 60001,
+      "scores": {
+        "exact": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 1.0,
+            "lpips": 0.0
+          }
+        },
+        "shift_four_pixels": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.73073349136709,
+            "lpips": 0.11026109655698141
+          }
+        },
+        "noise_std12": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.42190812467532857,
+            "lpips": 0.13119211792945862
+          }
+        },
+        "frozen_first_frame": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.9170103759276291,
+            "lpips": 0.06572135724127293
+          }
+        }
+      }
+    },
+    {
+      "scene_group_id": "scene-00060002",
+      "seed": 60002,
+      "scores": {
+        "exact": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 1.0,
+            "lpips": 0.0
+          }
+        },
+        "shift_four_pixels": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.6851266509106855,
+            "lpips": 0.11998357623815536
+          }
+        },
+        "noise_std12": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.4532592473958808,
+            "lpips": 0.11740635434786478
+          }
+        },
+        "frozen_first_frame": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.9643700414660802,
+            "lpips": 0.004591993677119414
+          }
+        }
+      }
+    },
+    {
+      "scene_group_id": "scene-00060003",
+      "seed": 60003,
+      "scores": {
+        "exact": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 1.0,
+            "lpips": 0.0
+          }
+        },
+        "shift_four_pixels": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.7848164867899768,
+            "lpips": 0.1897825171550115
+          }
+        },
+        "noise_std12": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.3832260876722479,
+            "lpips": 0.38635276158650717
+          }
+        },
+        "frozen_first_frame": {
+          "total_samples": 1,
+          "complete_samples": 1,
+          "expected_future_frames": 15,
+          "scored_future_frames": 15,
+          "missing_future_frames": 0,
+          "mean_over_complete_samples": {
+            "ssim": 0.9525369980960081,
+            "lpips": 0.024299581185914576
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Checks metric response to distortions, not physical validity",
+    "Single-reference scores penalize some valid alternative futures",
+    "Full-frame scores may be dominated by the tabletop background"
+  ]
+}

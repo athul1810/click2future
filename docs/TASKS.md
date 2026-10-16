@@ -69,7 +69,7 @@ Validate the approved TC2 account and fit training to its recorded limits.
 
 Make the CPU development environment reproducible and document training setup on TC2.
 
-**Progress:** The locked CPU environment, diagnostics, artifact conventions, and module commands are implemented. TC2 validation remains open. The combined branch includes the work from PRs #21 and #22.
+**Progress:** The locked CPU environment, diagnostics, artifact conventions, and module commands are implemented. pip is retained in the development lock, and both editor package-list commands are verified. Cluster validation remains open. Included in PR #25.
 
 **Dependencies:** None · **Owner:** Unassigned
 
@@ -130,15 +130,15 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
-**Progress:** Trajectory/collision scoring, source-labelled exports, pixel tracking, and zero/reversed-force controls are implemented. On 200 fresh held-out clips, contact event F1 improved from 0.111 to 0.311 against the proximity baseline on the same clips; recall remains only 0.233. All 16 simulator action-control groups passed. Generated-video checks and the remaining metric families are pending. See [metric usage and measurements](METRICS.md).
+**Progress:** Trajectory/collision, action, image, temporal, and ensemble metrics are implemented with source-labelled exports. Simulator controls distinguish physical trajectory spread from colour flicker, handle missing observations, and exclude reference contacts from acceleration checks. Contact recall remains 0.233; generated-video validation and group-level aggregation are pending. See [metric usage and measurements](METRICS.md).
 
 **Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
-- [ ] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
+- [x] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
 - [ ] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
 - [x] Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.
 - [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
-- [ ] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
+- [x] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
 <a id="t08"></a>
 
