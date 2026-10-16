@@ -29,6 +29,7 @@ click2future-check = "click2future.env_check:main"
 [dependency-groups]
 dev = [
     "ipykernel>=6,<8",
+    "pip>=25,<27",
     "pytest>=8,<10",
     "ruff>=0.13,<1",
 ]

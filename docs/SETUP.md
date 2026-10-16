@@ -13,6 +13,9 @@ remain to be built. TC2 validation is tracked separately in T02/T03.
 - pytest, Ruff, and ipykernel in the default `dev` dependency group.
 
 `uv.lock` records exact direct/transitive versions, sources, and artifact hashes.
+The development group includes pip because editor package views run `python -m pip list`.
+If that command reports `No module named pip`, rerun the locked sync command for your
+selected extras, then refresh the editor's environment view.
 CPU and CUDA extras are mutually exclusive. The CUDA option supports Windows/Linux
 with a compatible NVIDIA GPU and driver; it does not certify the TC2 environment.
 Backend configuration follows [uv's PyTorch integration guide](https://docs.astral.sh/uv/guides/integration/pytorch/).
