@@ -84,7 +84,8 @@ fi
     }
     $encodedScript = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($remoteScript))
     $remoteCommand = "printf '%s' '$encodedScript' | base64 --decode | bash -l"
-    $reportLines = New-Object 'System.Collections.Generic.List[string]'
+    $logPath = Join-Path $localDirectory "$mode.log"
+    [IO.File]::WriteAllText($logPath, '', (New-Object Text.UTF8Encoding($false)))
     $bundleLines = New-Object 'System.Collections.Generic.List[string]'
     $readingBundle = $false
     $finishedBundle = $false
@@ -93,10 +94,12 @@ fi
         if ($line -eq 'C2F_DIAGNOSTICS_BEGIN') { $readingBundle = $true }
         elseif ($line -eq 'C2F_DIAGNOSTICS_END') { $readingBundle = $false; $finishedBundle = $true }
         elseif ($readingBundle) { $bundleLines.Add($line) }
-        else { Write-Host $line; $reportLines.Add($line) }
+        else {
+            Write-Host $line
+            [IO.File]::AppendAllText($logPath, ($line + [Environment]::NewLine), (New-Object Text.UTF8Encoding($false)))
+        }
     }
     $remoteExitCode = $LASTEXITCODE
-    $reportLines | Set-Content -LiteralPath (Join-Path $localDirectory "$mode.log") -Encoding UTF8
     if ($finishedBundle) {
         $bundlePath = Join-Path $localDirectory "diagnostics-$mode.tar.gz"
         [IO.File]::WriteAllBytes($bundlePath, [Convert]::FromBase64String(($bundleLines -join '')))

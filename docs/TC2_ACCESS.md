@@ -7,8 +7,9 @@ list partition `MGPU-TC2`, QoS `normal`, and the limits in [COMPUTE.md](COMPUTE.
 On 16 October, Shrijeet's Windows preflight confirmed an active GlobalProtect adapter,
 an NTU route covering the TC2 address, and successful TCP port 22 connectivity.
 The initial SSH attempt closed, and Shrijeet confirmed a successful plain interactive
-SSH login on 16 October. A full setup invocation for source commit `47ca5e0` has been
-prepared; allocated GPU execution remains unverified. Private connection reports stay under ignored
+SSH login on 16 October; the terminal confirmed home-directory creation. Setup job
+`42886`, using source commit `47ca5e0`, was reported RUNNING on compute node `TC2N01`.
+Environment installation and successful CUDA execution remain unverified. Private connection reports stay under ignored
 `outputs/tc2-setup/`; they are not part of the repository.
 
 Follow the [TC2 setup workflow](../cluster/README.md) for first login, committed-source

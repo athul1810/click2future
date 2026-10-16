@@ -32,7 +32,9 @@ The resource limits apply across the user's running jobs. Two job slots do not p
 - [ ] Choose backup locations for code, configs, run records, and checkpoints. TC2 provides no backup service; keep datasets and model files out of Git and the course submission.
 
 Shrijeet's initial SSH attempt closed, followed by a successful plain interactive login
-reported on 16 October. The allocated GPU test is still pending. The email says accounts that never attempt
+and confirmed home-directory creation on 16 October. Setup job `42886` was reported
+RUNNING on `TC2N01`; source revision `47ca5e0`. Its hardware and CUDA test results are
+still pending. The email says accounts that never attempt
 login may be revoked after three months. Use TC2 for the approved coursework. Keep
 credentials outside the repository. See the [TC2 workflow](../cluster/README.md) for
 the prepared upload, inventory, installation, and probe scripts. Linux installation
