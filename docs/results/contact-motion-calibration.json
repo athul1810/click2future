@@ -1,0 +1,494 @@
+{
+  "purpose": "Extractor calibration on clean simulator RGB; not model evaluation",
+  "extractor_version": "palette-components-1",
+  "contact_estimator": "opposing-motion-2",
+  "initialization": "Frame-0 identity masks only; future labels used only for scoring",
+  "protocol": {
+    "validation_seed_start": 20000,
+    "held_out_seed_start": 40000,
+    "groups_per_split": 100,
+    "variants_per_group": 2,
+    "physics_seed_rule": "1000000 + visible_seed * 10 + variant",
+    "object_count_rule": "2 + group_index % 3",
+    "frames": 32,
+    "fps": 8,
+    "physics_hz": 240,
+    "selection": "Maximum validation micro event F1; ties use smaller window then threshold",
+    "reserved_scene_groups": "Exclude these seeds from model datasets"
+  },
+  "settings": {
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "fps": 8,
+    "tracker": {
+      "color_tolerance": 24.0,
+      "color_margin": 4.0,
+      "min_area_ratio": 0.55,
+      "max_area_ratio": 1.8,
+      "dominant_fraction": 0.85,
+      "min_pixels": 4
+    },
+    "max_gap_pixels": 0.0,
+    "event_tolerance_intervals": 1,
+    "motion_window": 3,
+    "motion_threshold": 0.3
+  },
+  "validation_candidates": [
+    {
+      "motion_window": 3,
+      "motion_threshold": 0.1,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 16,
+            "false_positive": 25,
+            "false_negative": 14,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.3902439024390244,
+            "recall": 0.5333333333333333,
+            "f1": 0.4507042253521127
+          },
+          "interval": {
+            "true_positive": 5,
+            "false_positive": 36,
+            "false_negative": 25,
+            "true_negative": 20456,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.12195121951219512,
+            "recall": 0.16666666666666666,
+            "f1": 0.14084507042253522,
+            "accuracy": 0.9970275801578794
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 3,
+      "motion_threshold": 0.2,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 11,
+            "false_positive": 15,
+            "false_negative": 19,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.4230769230769231,
+            "recall": 0.36666666666666664,
+            "f1": 0.39285714285714285
+          },
+          "interval": {
+            "true_positive": 3,
+            "false_positive": 23,
+            "false_negative": 27,
+            "true_negative": 20469,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.11538461538461539,
+            "recall": 0.1,
+            "f1": 0.10714285714285714,
+            "accuracy": 0.9975635902933437
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 3,
+      "motion_threshold": 0.3,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 11,
+            "false_positive": 3,
+            "false_negative": 19,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.7857142857142857,
+            "recall": 0.36666666666666664,
+            "f1": 0.5
+          },
+          "interval": {
+            "true_positive": 3,
+            "false_positive": 11,
+            "false_negative": 27,
+            "true_negative": 20481,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.21428571428571427,
+            "recall": 0.1,
+            "f1": 0.13636363636363635,
+            "accuracy": 0.9981483286229412
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 3,
+      "motion_threshold": 0.4,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 6,
+            "false_positive": 0,
+            "false_negative": 24,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333333333333333
+          },
+          "interval": {
+            "true_positive": 1,
+            "false_positive": 5,
+            "false_negative": 29,
+            "true_negative": 20487,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.16666666666666666,
+            "recall": 0.03333333333333333,
+            "f1": 0.05555555555555555,
+            "accuracy": 0.9983432413994737
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 5,
+      "motion_threshold": 0.1,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 15,
+            "false_positive": 21,
+            "false_negative": 15,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.4166666666666667,
+            "recall": 0.5,
+            "f1": 0.45454545454545453
+          },
+          "interval": {
+            "true_positive": 4,
+            "false_positive": 32,
+            "false_negative": 26,
+            "true_negative": 20460,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.1111111111111111,
+            "recall": 0.13333333333333333,
+            "f1": 0.12121212121212122,
+            "accuracy": 0.9971737647402787
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 5,
+      "motion_threshold": 0.2,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 9,
+            "false_positive": 7,
+            "false_negative": 21,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.5625,
+            "recall": 0.3,
+            "f1": 0.391304347826087
+          },
+          "interval": {
+            "true_positive": 2,
+            "false_positive": 14,
+            "false_negative": 28,
+            "true_negative": 20478,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.125,
+            "recall": 0.06666666666666667,
+            "f1": 0.08695652173913043,
+            "accuracy": 0.9979534158464087
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 5,
+      "motion_threshold": 0.3,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 5,
+            "false_positive": 3,
+            "false_negative": 25,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.625,
+            "recall": 0.16666666666666666,
+            "f1": 0.2631578947368421
+          },
+          "interval": {
+            "true_positive": 1,
+            "false_positive": 7,
+            "false_negative": 29,
+            "true_negative": 20485,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.125,
+            "recall": 0.03333333333333333,
+            "f1": 0.05263157894736842,
+            "accuracy": 0.9982457850112075
+          }
+        }
+      }
+    },
+    {
+      "motion_window": 5,
+      "motion_threshold": 0.4,
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 200,
+        "complete_tracking_clips": 200,
+        "expected_future_observations": 18538,
+        "tracked_future_observations": 18538,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.22802702621192636,
+        "p95_centroid_error_over_tracked_pixels": 0.4402973770630842,
+        "tracking_reasons_future": {
+          "ok": 18538
+        },
+        "reference_events_all_pairs": 30,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 2,
+            "false_positive": 1,
+            "false_negative": 28,
+            "complete_pair_timelines": 662,
+            "expected_pair_timelines": 662,
+            "precision": 0.6666666666666666,
+            "recall": 0.06666666666666667,
+            "f1": 0.12121212121212122
+          },
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 3,
+            "false_negative": 30,
+            "true_negative": 20489,
+            "scored_bins": 20522,
+            "expected_bins": 20522,
+            "missing_bins": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "accuracy": 0.9983919695936069
+          }
+        }
+      }
+    }
+  ],
+  "held_out": {
+    "clips": 200,
+    "complete_tracking_clips": 200,
+    "expected_future_observations": 18538,
+    "tracked_future_observations": 18538,
+    "missing_track_rate": 0.0,
+    "mean_centroid_error_over_tracked_pixels": 0.23523619133195342,
+    "p95_centroid_error_over_tracked_pixels": 0.4586737478818832,
+    "tracking_reasons_future": {
+      "ok": 18538
+    },
+    "reference_events_all_pairs": 30,
+    "reference_events_excluded_incomplete_pairs": 0,
+    "collision": {
+      "event": {
+        "true_positive": 7,
+        "false_positive": 8,
+        "false_negative": 23,
+        "complete_pair_timelines": 662,
+        "expected_pair_timelines": 662,
+        "precision": 0.4666666666666667,
+        "recall": 0.23333333333333334,
+        "f1": 0.3111111111111111
+      },
+      "interval": {
+        "true_positive": 4,
+        "false_positive": 11,
+        "false_negative": 26,
+        "true_negative": 20481,
+        "scored_bins": 20522,
+        "expected_bins": 20522,
+        "missing_bins": 0,
+        "precision": 0.26666666666666666,
+        "recall": 0.13333333333333333,
+        "f1": 0.17777777777777778,
+        "accuracy": 0.9981970568170744
+      }
+    }
+  },
+  "proximity_baseline_same_held_out": {
+    "clips": 200,
+    "complete_tracking_clips": 200,
+    "expected_future_observations": 18538,
+    "tracked_future_observations": 18538,
+    "missing_track_rate": 0.0,
+    "mean_centroid_error_over_tracked_pixels": 0.23523619133195342,
+    "p95_centroid_error_over_tracked_pixels": 0.4586737478818832,
+    "tracking_reasons_future": {
+      "ok": 18538
+    },
+    "reference_events_all_pairs": 30,
+    "reference_events_excluded_incomplete_pairs": 0,
+    "collision": {
+      "event": {
+        "true_positive": 4,
+        "false_positive": 38,
+        "false_negative": 26,
+        "complete_pair_timelines": 662,
+        "expected_pair_timelines": 662,
+        "precision": 0.09523809523809523,
+        "recall": 0.13333333333333333,
+        "f1": 0.1111111111111111
+      },
+      "interval": {
+        "true_positive": 0,
+        "false_positive": 42,
+        "false_negative": 30,
+        "true_negative": 20450,
+        "scored_bins": 20522,
+        "expected_bins": 20522,
+        "missing_bins": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.996491570022415
+      }
+    }
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pymunk": "7.3.1",
+    "pillow": "12.3.0"
+  },
+  "source_sha256": {
+    "__init__.py": "57bf4de7759f6fb0832f4195b5e1ccbf009483901562c393a8058b22ab12c7d9",
+    "__main__.py": "d877db1f07f5cb08657b96179c725c50b118bfcc9821c102fa0951b8be366299",
+    "actions.py": "b3f1508b256eca3a282c8005bfa8c48099bf1d4a5042cd9261ec5284c164fce9",
+    "calibrate.py": "bc0b0c9bb7aa22a9047d20f3f1ad5a4dba19620277e2f111435596dd39d4658d",
+    "contacts.py": "6b15abf58be074335318fbdc3a764f75851f28915cbdacfc36834affb6b6e721",
+    "controls.py": "d72fadd5af2ac4fbc85ad344dac9741ff87c3d0183ee9c8ce19f8047708a6752",
+    "metrics.py": "b10f34194fd6e589a947b2539ab6c4e64724a5b1da82c53fea0707da4dfff990",
+    "tracking.py": "ca3640629ee5e55665eb3bc5b644d928ce4fcfdac07b9833aa11335947be5bd4",
+    "video.py": "5f350e78f1e4645837a0aedba1c2c0d6e79a2a3316a62e098f38102aafe9029e"
+  },
+  "limitations": [
+    "Solid-colour simulator only; generated-video failures remain unmeasured",
+    "Opposing motion is a contact proxy, not a reconstruction of physical forces",
+    "Subpixel impulses and closely spaced repeated contacts can be missed",
+    "Offline motion windows use future RGB context; timing can be shifted",
+    "Missing pair timelines are excluded from event F1 and counted separately",
+    "No uncertainty intervals; variants within a scene are correlated"
+  ]
+}

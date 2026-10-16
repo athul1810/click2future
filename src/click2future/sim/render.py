@@ -8,7 +8,6 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw
 
-
 DEFAULT_BACKGROUND = (210, 214, 220)
 DEFAULT_BORDER = (70, 75, 82)
 

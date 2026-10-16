@@ -7,7 +7,6 @@ import numpy as np
 
 from click2future.sim import make_scene, render_rgb, run_rollout
 
-
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "tiny_scene.json"
 
 
@@ -59,7 +58,13 @@ class RolloutTests(unittest.TestCase):
         scene = make_scene(44)
         first = run_rollout(scene)
         second = run_rollout(copy.deepcopy(scene))
-        for field in ("frames", "instance_masks", "positions", "collision_onset", "wall_contact_onset"):
+        for field in (
+            "frames",
+            "instance_masks",
+            "positions",
+            "collision_onset",
+            "wall_contact_onset",
+        ):
             np.testing.assert_array_equal(first[field], second[field])
 
     def test_rollout_rejects_non_unit_world(self) -> None:

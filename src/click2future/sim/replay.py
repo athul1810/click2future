@@ -9,7 +9,6 @@ import numpy as np
 from ..data.export import load_rollout
 from .rollout import run_rollout
 
-
 COMPARE_FIELDS = (
     "frames",
     "instance_masks",

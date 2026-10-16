@@ -30,7 +30,7 @@ The resource limits apply across the user's running jobs. Two job slots do not p
 - [ ] Check storage limits, any total usage quota, and access expiry.
 - [ ] Choose backup locations for code, configs, run records, and checkpoints. TC2 provides no backup service; keep datasets and model files out of Git and the course submission.
 
-The email says accounts that never attempt login may be revoked after three months. Use TC2 for the approved coursework. Keep credentials outside the repository. The attached user guide and sample job script have not yet been added to the project setup notes; use their actual instructions for login and job submission.
+The email says accounts that never attempt login may be revoked after three months. Use TC2 for the approved coursework. Keep credentials outside the repository. See the [TC2 workflow](../cluster/README.md) for the prepared inventory, installation, and probe scripts. Their Linux installation and allocated GPU execution still need verification against the supplied guide.
 
 Track the login and GPU validation results in T02. CPU simulation, data preparation, and development checks can proceed independently.
 
@@ -38,8 +38,9 @@ Track the login and GPU validation results in T02. CPU simulation, data preparat
 
 1. Run a device/memory smoke check on TC2 and record the environment.
 2. Generate a small simulator dataset on CPU; measure samples/second and bytes/clip.
-3. Train the frame autoencoder on a small subset and inspect reconstruction of object boundaries.
-4. Overfit a tiny fixed video batch to check the model and loss plumbing.
+3. For the proposed pixel pilot, profile the denoiser directly. If a latent path is
+   selected, first gate its autoencoder on object-boundary/contact preservation.
+4. Overfit a tiny fixed video batch, then independently check held-out action response.
 5. Profile a compact 64px, 16-frame model: peak VRAM, seconds/step, throughput, checkpoint size, and four-sample latency.
 6. Calculate the total ablation budget, including evaluation and failed-run reserve, before launching long jobs.
 
@@ -58,7 +59,7 @@ Queue time and CPU data generation affect wall time even when GPU-hours fit. Mea
 
 | Component | Steps / seeds | Measured time | Estimated GPU-hours | Decision |
 |---|---|---|---|---|
-| Autoencoder | TBD | Pending | Pending | Profile |
+| Autoencoder, if latent path chosen | TBD | Pending | Pending | Reconstruction gate |
 | E0 CVAE | TBD | Pending | Pending | Profile |
 | E1 first-frame diffusion | TBD | Pending | Pending | Profile |
 | E2 numeric-action diffusion | TBD | Pending | Pending | Profile |
@@ -73,7 +74,7 @@ Proceed only if the 64px baseline works, the core comparisons fit the remaining 
 ## Fallback order
 
 1. Keep the final resolution at 64px.
-2. Reduce clip length, latent size, channel width, and batch size as measured needs dictate.
+2. Reduce clip length, channel width, batch size, and latent size if applicable as measured needs dictate.
 3. Reduce dataset/run size coherently across comparisons; report the resulting limits.
 4. Use fewer seeds for exploratory runs and reserve repeats for the main claims.
 5. Drop optional FVD, additional supervision ablations, and friction-conditioned generation.

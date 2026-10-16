@@ -46,13 +46,13 @@ Everyone must contribute and communicate with the group. Page 10 includes a poli
 | Choice | Proposed starting point | Reason |
 |---|---|---|
 | World | Top-down bounded tabletop with 2-4 rigid objects | Exact labels and manageable appearance |
-| Clip | 16 frames at 8 fps, frame 0 before action | Short sequence for profiling |
+| Clip | 32-frame simulator pilot at 8 fps, frame 0 before action | Frozen Workstream A data contract |
 | Action | Constant force at the selected object's centre for a fixed duration | Clear direction and magnitude; no click-position torque |
 | Hidden properties | Mass and friction independent of visible appearance | Controlled conditional uncertainty |
 | Model | Small frame autoencoder and latent video denoiser | Measure training cost before scaling |
 | Demo | Simulator presets and synthetic uploads | Keep the interface within the training domain |
 
-Finalize values and units in T04. These are engineering choices, not requirements from the PDF.
+The simulator values and units are frozen in ARCHITECTURE.md. Model choices remain proposals. These are engineering choices, not requirements from the PDF.
 
 ## Remaining details to record
 

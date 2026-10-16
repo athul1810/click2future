@@ -9,7 +9,6 @@ from typing import Any
 
 import numpy as np
 
-
 DEFAULT_FRACTIONS = {"train": 0.8, "validation": 0.1, "test": 0.1}
 
 
@@ -100,7 +99,9 @@ def _split_counts(total: int, fractions: dict[str, float]) -> dict[str, int]:
     nonzero = [name for name, fraction in fractions.items() if fraction > 0]
     if total < len(nonzero):
         counts = {name: 0 for name in fractions}
-        for name in sorted(nonzero, key=lambda value: (-fractions[value], list(fractions).index(value)))[:total]:
+        for name in sorted(
+            nonzero, key=lambda value: (-fractions[value], list(fractions).index(value))
+        )[:total]:
             counts[name] = 1
         return counts
 

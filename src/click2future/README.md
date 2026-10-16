@@ -1,8 +1,9 @@
 # Click2Future implementation
 
-The package currently contains the first simulator/data slices. Install the
-dependencies from the repository root with `python -m pip install -r
-requirements.txt`, then run the tests with `python -m pytest -q`.
+The package includes simulation, grouped data generation/replay, an untrained denoiser
+prototype, environment/profiling commands, and evaluation. Follow
+[development setup](../../docs/SETUP.md) for the full environment. `requirements.txt`
+is a smaller simulator-only environment. Dataset training and sampling remain to be built.
 
 Current modules:
 
@@ -18,12 +19,13 @@ Current modules:
 | `data/splits.py` | Scene-group manifests and hashes | T06 |
 | `cli.py` | Smoke, grouped dataset, and split commands | T03, T06 |
 | `sim/replay.py` | Saved-rollout regeneration and comparison | T05, T06 |
-| `models/` | Autoencoder, CVAE, video denoiser, conditioning and heads | T08-T12 |
-| `training/` | Losses, optimization, checkpoints and sampling | T08-T13 |
+| `models/` | Untrained pilot denoiser, conditioning and heads; autoencoder/CVAE pending | T08-T12 |
+| `training/` (planned) | Dataset training, checkpoints and sampling | T08-T13 |
 | `evaluation/` | Tracking, metrics, controls and result export | T07, T14-T16 |
 
-Implement against [the data contract](../../docs/ARCHITECTURE.md). The model,
-training, and evaluation layers are still to be added.
+Implement against [the data contract](../../docs/ARCHITECTURE.md).
+`python -m click2future.evaluation.video` extracts and scores RGB tracks and contact
+estimates. See [usage and measured limitations](../../docs/METRICS.md).
 
 The grouped generator is available from the repository root with:
 

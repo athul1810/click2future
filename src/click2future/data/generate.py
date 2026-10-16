@@ -7,7 +7,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from ..sim import make_scene, run_rollout, visible_scene
+from ..sim.rollout import run_rollout
+from ..sim.scene import make_scene, visible_scene
 from .export import save_rollout
 from .splits import assign_split, build_split_manifest, save_split_manifest
 

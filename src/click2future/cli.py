@@ -82,7 +82,13 @@ def _generate_smoke(args: argparse.Namespace) -> int:
         )
         sample_id = f"sample_{seed:08d}"
         paths = save_rollout(rollout, args.output_dir, sample_id)
-        sample_ids.append({"sample_id": sample_id, "arrays": str(paths["arrays"]), "metadata": str(paths["metadata"])})
+        sample_ids.append(
+            {
+                "sample_id": sample_id,
+                "arrays": str(paths["arrays"]),
+                "metadata": str(paths["metadata"]),
+            }
+        )
     print(json.dumps(sample_ids, indent=2))
     return 0
 

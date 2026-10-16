@@ -6,7 +6,11 @@ Select an object in a tabletop scene, draw a force arrow, and generate four poss
 
 Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU. For Project 1: Technical Review, we will compare a conditional VAE and video diffusion for predicting tabletop motion after a force is applied. A procedural simulator will generate the clips, trajectories, and collision labels. We also plan to test object-centric conditioning and auxiliary physics supervision.
 
-**Status:** project setup. The simulator, models, and demo still need to be built.
+**Status:** seeded simulation, grouped data generation/replay, the development environment,
+and an untrained denoiser prototype are available. Evaluation includes trajectory/collision
+metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks, and ensemble diversity/coverage. Contact extraction remains
+experimental, with low recall.
+CVAE, diffusion training/sampling, and the demo remain to be built. See [evaluation results](docs/METRICS.md).
 
 **Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
@@ -29,13 +33,16 @@ Coordinator: **PRAMOD SANJAY**, following the course rule that the first person 
 
 | If you want to… | Read… |
 |---|---|
+| Prepare for the 14 October project meeting | [Meeting brief](docs/MEETING_2026-10-14.md) |
+| Assess relevant SOTA and choose an achievable build path | [Research review](docs/SOTA_2026-10-14.md) and [build plan](docs/BUILD_PLAN.md) |
+| Verify TC2 login and run the first diagnostic job | [TC2 workflow](cluster/README.md) and [access status](docs/TC2_ACCESS.md) |
 | Understand the project and scope | [Requirements](docs/REQUIREMENTS.md) |
 | Prepare the three required submission files | [Submission guide](docs/SUBMISSION.md) |
 | Draft the report and contribution statement | [Report outline](docs/REPORT_OUTLINE.md) and [contribution template](docs/CONTRIBUTION_TEMPLATE.md) |
 | Assign work to the team | [Task board](docs/TASKS.md) and [open issues](https://github.com/athul1810/click2future/issues) |
 | See the deadline and task dependencies | [Roadmap](docs/ROADMAP.md) |
 | Implement compatible components | [Architecture and data contract](docs/ARCHITECTURE.md) |
-| Design experiments and metrics | [Evaluation plan](docs/EVALUATION.md) |
+| Design experiments and run implemented metrics | [Evaluation plan](docs/EVALUATION.md) and [metric usage](docs/METRICS.md) |
 | Find papers for the method and report | [Research references](docs/REFERENCES.md) |
 | Plan GPU usage | [Compute and feasibility](docs/COMPUTE.md) |
 | Contribute a change | [Contribution guide](CONTRIBUTING.md) |
@@ -62,9 +69,9 @@ For the core hidden-physics model, friction is **not an input**. Changing the fr
 
 | Planned project work | Stretch goal |
 |---|---|
-| 64×64 top-down scenes, initially 16 frames | 128×128 after the compute gate passes |
+| 64×64 top-down scenes, 32-frame simulator pilot | 128×128 after the compute gate passes |
 | 2-4 rigid objects, randomized appearance and hidden physics | More shapes and harder collisions |
-| Compact latent video diffusion and conditional VAE baseline | Additional architecture exploration |
+| Compact video diffusion and conditional VAE baseline; pixel pilot proposed | Reconstruction-gated latent architecture |
 | Five planned experimental variants | Additional supervision ablations |
 | Four sampled futures and a simulator comparison | Friction-conditioned sampling |
 | Reproducible experiments, technical report, contribution PDF, source code | FVD if feasible and statistically useful |
@@ -78,12 +85,11 @@ No real robot, photorealistic 512px video, or general-purpose physics. The uploa
 ```mermaid
 flowchart LR
     S[Procedural simulator] --> D[Clips, masks, trajectories, collisions]
-    D --> A[Frame autoencoder]
+    D --> V[Compact pixel video denoiser - proposed pilot]
     I[First frame + clicked mask + action] --> C[Object-centric conditioning]
-    A --> V[Compact latent video denoiser]
     C --> V
     V --> H[Trajectory and collision heads]
-    V --> O[Decode four sampled futures]
+    V --> O[Planned sampler - four generated futures]
     O --> E[Metrics and interactive comparison]
     S --> E
 ```
@@ -128,22 +134,26 @@ Use `07` for Group 7 in all three filenames. No cloud-hosted substitutes or exte
 ```text
 .github/             Issue and pull-request templates
 docs/                Scope, task board, roadmap, interfaces, evaluation, compute
-src/click2future/     Planned Python implementation modules
-configs/             Planned simulator/model/experiment configurations
+src/click2future/     Simulation, data pipeline, denoiser prototype, evaluation
+configs/             Simulator, development, profiler, and pixel evaluation configs
+cluster/             Allocation-guarded TC2 inventory/bootstrap/probe jobs
+scripts/             Local TC2 network/access preflight
 experiments/         Run manifest template and experiment records
 results/             Small result tables and report figures
 app/                 Planned interactive demo
-tests/               Planned simulator, contract, and model smoke tests
+tests/               Simulator, data, prototype, and evaluation checks
 ```
 
-Setup and training commands will be added in T03 once the environment is tested. The implementation folders currently contain planning notes.
+See [development setup](docs/SETUP.md) for the locked environment and
+[metric usage](docs/METRICS.md) for RGB evaluation. Dataset training, sampling, and the demo
+remain to be built. The [build plan](docs/BUILD_PLAN.md) records the pixel/latent proposal.
 
-## First team meeting
+## Next team work
 
-- Assign the remaining setup, CVAE, integration, and delivery tasks and choose reviewers; start T04 after the scope decision. Check the course requirements and verify TC2 login and a small GPU job.
-- Agree on the action semantics and dataset contract before generating the main dataset.
-- Claim the remaining issues by workstream and check their dependencies.
-- Use the 64px pilot to decide the dataset and training budget; keep 128px optional.
+- A: finish appearance/OOD dataset coverage and measure generation/storage costs.
+- B: connect the simulator loader to training and sampling, then overfit a tiny dataset.
+- C: improve contact timing, add the remaining metrics, then integrate auxiliary losses with B.
+- Assign D's CVAE baseline and later demo integration.
 
 ## References
 

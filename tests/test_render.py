@@ -2,7 +2,14 @@ import unittest
 
 import numpy as np
 
-from click2future.sim import build_space, make_scene, render_frame, render_instance_masks, render_rgb, snapshot
+from click2future.sim import (
+    build_space,
+    make_scene,
+    render_frame,
+    render_instance_masks,
+    render_rgb,
+    snapshot,
+)
 from click2future.sim.render import DEFAULT_BORDER
 
 

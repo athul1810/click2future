@@ -6,7 +6,6 @@ from typing import Any
 
 import pymunk
 
-
 OBJECT_COLLISION_TYPE = 1
 WALL_COLLISION_TYPE = 2
 WALL_ORDER = ("left", "right", "top", "bottom")
@@ -168,7 +167,9 @@ def _add_object(state: dict[str, Any], obj: dict[str, Any]) -> None:
     state["space"].add(body, shape)
 
 
-def _object_contact_begin(arbiter: pymunk.Arbiter, _space: pymunk.Space, state: dict[str, Any]) -> bool:
+def _object_contact_begin(
+    arbiter: pymunk.Arbiter, _space: pymunk.Space, state: dict[str, Any]
+) -> bool:
     object_ids = tuple(
         sorted(
             (
@@ -181,9 +182,17 @@ def _object_contact_begin(arbiter: pymunk.Arbiter, _space: pymunk.Space, state: 
     return True
 
 
-def _wall_contact_begin(arbiter: pymunk.Arbiter, _space: pymunk.Space, state: dict[str, Any]) -> bool:
-    object_shape = arbiter.shapes[0] if id(arbiter.shapes[0]) in state["shape_to_object"] else arbiter.shapes[1]
-    wall_shape = arbiter.shapes[0] if id(arbiter.shapes[0]) in state["shape_to_wall"] else arbiter.shapes[1]
+def _wall_contact_begin(
+    arbiter: pymunk.Arbiter, _space: pymunk.Space, state: dict[str, Any]
+) -> bool:
+    object_shape = (
+        arbiter.shapes[0]
+        if id(arbiter.shapes[0]) in state["shape_to_object"]
+        else arbiter.shapes[1]
+    )
+    wall_shape = (
+        arbiter.shapes[0] if id(arbiter.shapes[0]) in state["shape_to_wall"] else arbiter.shapes[1]
+    )
     object_id = _object_id(object_shape, state)
     wall_contact = (object_id, state["shape_to_wall"][id(wall_shape)])
     state["step_wall_contacts"].add(wall_contact)

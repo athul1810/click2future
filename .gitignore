@@ -31,6 +31,8 @@ htmlcov/
 /runs/
 /wandb/
 /lightning_logs/
+tc2-*.out
+tc2-*.err
 *.pt
 *.pth
 *.ckpt

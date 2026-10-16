@@ -4,13 +4,15 @@ The Workstream A simulator and dataset contract below is frozen as of 15
 October 2026 for `scene-0.1`, `rollout-0.1`, and `dataset-0.1`. Incompatible
 changes require a schema-version change and regenerated data. The later model,
 auxiliary-head, and demo sections remain guidance for their owning workstreams.
+An untrained pixel denoiser and extracted-trajectory/contact metrics are implemented;
+the final pixel/latent model choice remains a proposal in [BUILD_PLAN.md](BUILD_PLAN.md).
 
 ## Frozen physics and action semantics
 
 - The world is a 1 × 1 top-down plane with fixed walls and zero gravity. `x`
   increases right and `y` increases down, matching image coordinates. Because
   the world is 1 × 1, stored centres are already normalized to `[0,1]`.
-- A scene contains 2–4 initially stationary circles or rectangles. Object IDs
+- A scene contains 2-4 initially stationary circles or rectangles. Object IDs
   are assigned in sampling order and remain stable throughout the rollout.
 - Pymunk 7.3.1 runs at 240 Hz with 10 solver iterations. The 32-frame pilot is
   recorded at 8 FPS, giving 30 physics steps per frame interval. Frame 0 is
@@ -100,10 +102,12 @@ sample(condition, seeds=[...], num_future_frames=T-1) -> videos
 evaluate(videos, references, metadata) -> metric_records
 ```
 
-The frame autoencoder should be trained or selected once, then frozen and
-shared across diffusion ablations. Fit its weights and latent normalization
-statistics using training data only. Use validation data for checkpoint
-selection; evaluate test/OOD reconstruction only after selection is fixed.
+For the proposed pixel pilot, encoding and decoding are identity operations. If the
+latent path is selected, train/select the frame autoencoder once, then freeze and share
+it across diffusion ablations. Fit weights and latent normalization on training data
+only. Use validation for checkpoint selection and inspect test/OOD reconstruction after
+freezing it. Record pretrained-weight provenance and training seeds. Require object
+geometry and contact/trajectory preservation before accepting compression.
 
 For the conditional VAE, define a training posterior `q(z | future, condition)`,
 a prior `p(z | condition)` or fixed standard-normal prior, and a decoder

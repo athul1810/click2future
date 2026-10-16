@@ -1,0 +1,263 @@
+{
+  "purpose": "Extractor calibration on clean simulator RGB; not model evaluation",
+  "extractor_version": "palette-components-1",
+  "initialization": "Frame-0 identity masks only; future labels used only for scoring",
+  "protocol": {
+    "validation_seed_start": 20000,
+    "held_out_seed_start": 30000,
+    "groups_per_split": 30,
+    "variants_per_group": 2,
+    "physics_seed_rule": "1000000 + visible_seed * 10 + variant",
+    "object_count_rule": "2 + group_index % 3",
+    "frames": 32,
+    "fps": 8,
+    "physics_hz": 240,
+    "selection": "Maximum validation micro event F1; ties use the smaller gap",
+    "reserved_scene_groups": "Exclude these seeds from model datasets"
+  },
+  "settings": {
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "tracker": {
+      "color_tolerance": 24.0,
+      "color_margin": 4.0,
+      "min_area_ratio": 0.55,
+      "max_area_ratio": 1.8,
+      "dominant_fraction": 0.85,
+      "min_pixels": 4
+    },
+    "max_gap_pixels": 0.0,
+    "event_tolerance_intervals": 1
+  },
+  "validation_candidates": [
+    {
+      "max_gap_pixels": 0.0,
+      "metrics": {
+        "clips": 60,
+        "complete_tracking_clips": 60,
+        "expected_future_observations": 5580,
+        "tracked_future_observations": 5580,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.2260300276685964,
+        "p95_centroid_error_over_tracked_pixels": 0.43904958452008286,
+        "tracking_reasons_future": {
+          "ok": 5580
+        },
+        "reference_events_all_pairs": 9,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 1,
+            "false_positive": 7,
+            "false_negative": 8,
+            "complete_pair_timelines": 200,
+            "expected_pair_timelines": 200,
+            "precision": 0.125,
+            "recall": 0.1111111111111111,
+            "f1": 0.11764705882352941
+          },
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 8,
+            "false_negative": 9,
+            "true_negative": 6183,
+            "scored_bins": 6200,
+            "expected_bins": 6200,
+            "missing_bins": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "accuracy": 0.9972580645161291
+          }
+        }
+      }
+    },
+    {
+      "max_gap_pixels": 0.5,
+      "metrics": {
+        "clips": 60,
+        "complete_tracking_clips": 60,
+        "expected_future_observations": 5580,
+        "tracked_future_observations": 5580,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.2260300276685964,
+        "p95_centroid_error_over_tracked_pixels": 0.43904958452008286,
+        "tracking_reasons_future": {
+          "ok": 5580
+        },
+        "reference_events_all_pairs": 9,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 1,
+            "false_positive": 7,
+            "false_negative": 8,
+            "complete_pair_timelines": 200,
+            "expected_pair_timelines": 200,
+            "precision": 0.125,
+            "recall": 0.1111111111111111,
+            "f1": 0.11764705882352941
+          },
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 8,
+            "false_negative": 9,
+            "true_negative": 6183,
+            "scored_bins": 6200,
+            "expected_bins": 6200,
+            "missing_bins": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "accuracy": 0.9972580645161291
+          }
+        }
+      }
+    },
+    {
+      "max_gap_pixels": 1.0,
+      "metrics": {
+        "clips": 60,
+        "complete_tracking_clips": 60,
+        "expected_future_observations": 5580,
+        "tracked_future_observations": 5580,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.2260300276685964,
+        "p95_centroid_error_over_tracked_pixels": 0.43904958452008286,
+        "tracking_reasons_future": {
+          "ok": 5580
+        },
+        "reference_events_all_pairs": 9,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 0,
+            "false_positive": 10,
+            "false_negative": 9,
+            "complete_pair_timelines": 200,
+            "expected_pair_timelines": 200,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 10,
+            "false_negative": 9,
+            "true_negative": 6181,
+            "scored_bins": 6200,
+            "expected_bins": 6200,
+            "missing_bins": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "accuracy": 0.9969354838709678
+          }
+        }
+      }
+    },
+    {
+      "max_gap_pixels": 1.5,
+      "metrics": {
+        "clips": 60,
+        "complete_tracking_clips": 60,
+        "expected_future_observations": 5580,
+        "tracked_future_observations": 5580,
+        "missing_track_rate": 0.0,
+        "mean_centroid_error_over_tracked_pixels": 0.2260300276685964,
+        "p95_centroid_error_over_tracked_pixels": 0.43904958452008286,
+        "tracking_reasons_future": {
+          "ok": 5580
+        },
+        "reference_events_all_pairs": 9,
+        "reference_events_excluded_incomplete_pairs": 0,
+        "collision": {
+          "event": {
+            "true_positive": 0,
+            "false_positive": 9,
+            "false_negative": 9,
+            "complete_pair_timelines": 200,
+            "expected_pair_timelines": 200,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 9,
+            "false_negative": 9,
+            "true_negative": 6182,
+            "scored_bins": 6200,
+            "expected_bins": 6200,
+            "missing_bins": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "accuracy": 0.9970967741935484
+          }
+        }
+      }
+    }
+  ],
+  "held_out": {
+    "clips": 60,
+    "complete_tracking_clips": 60,
+    "expected_future_observations": 5580,
+    "tracked_future_observations": 5580,
+    "missing_track_rate": 0.0,
+    "mean_centroid_error_over_tracked_pixels": 0.24920810788198028,
+    "p95_centroid_error_over_tracked_pixels": 0.5001526387506164,
+    "tracking_reasons_future": {
+      "ok": 5580
+    },
+    "reference_events_all_pairs": 19,
+    "reference_events_excluded_incomplete_pairs": 0,
+    "collision": {
+      "event": {
+        "true_positive": 2,
+        "false_positive": 17,
+        "false_negative": 17,
+        "complete_pair_timelines": 200,
+        "expected_pair_timelines": 200,
+        "precision": 0.10526315789473684,
+        "recall": 0.10526315789473684,
+        "f1": 0.10526315789473684
+      },
+      "interval": {
+        "true_positive": 0,
+        "false_positive": 19,
+        "false_negative": 19,
+        "true_negative": 6162,
+        "scored_bins": 6200,
+        "expected_bins": 6200,
+        "missing_bins": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.9938709677419355
+      }
+    }
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pymunk": "7.3.1",
+    "pillow": "12.3.0"
+  },
+  "source_sha256": {
+    "__init__.py": "57bf4de7759f6fb0832f4195b5e1ccbf009483901562c393a8058b22ab12c7d9",
+    "__main__.py": "d877db1f07f5cb08657b96179c725c50b118bfcc9821c102fa0951b8be366299",
+    "calibrate.py": "1a2f34d18bd7bdeaa670f49f2984581292f5e3ab57783f5051e0c2eb27a17b0e",
+    "contacts.py": "b9bc0f5fe751e5dd9f31d4f171767285b94f48df1e5076311a4d1864000b042d",
+    "metrics.py": "b10f34194fd6e589a947b2539ab6c4e64724a5b1da82c53fea0707da4dfff990",
+    "tracking.py": "ca3640629ee5e55665eb3bc5b644d928ce4fcfdac07b9833aa11335947be5bd4",
+    "video.py": "8eb442354fc7b9bba6705183c5531bfc7d12adc67ea6da7ba1aaee3eb0296fcc"
+  },
+  "limitations": [
+    "Solid-colour simulator only; generated-video failures remain unmeasured",
+    "Contact gaps are a pixel proxy; subframe contacts can be missed",
+    "Missing pair timelines are excluded from event F1 and counted separately",
+    "No uncertainty intervals; variants within a scene are correlated"
+  ]
+}

@@ -12,7 +12,6 @@ from typing import Any
 
 import numpy as np
 
-
 MIN_OBJECTS = 2
 MAX_OBJECTS = 4
 SHAPES = ("circle", "rectangle")

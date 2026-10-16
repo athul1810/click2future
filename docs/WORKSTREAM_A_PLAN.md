@@ -7,7 +7,7 @@ models and evaluation.
 ## Implemented scope
 
 - 2D top-down world with fixed boundaries and zero gravity
-- 2–4 circles or rectangles per scene
+- 2-4 circles or rectangles per scene
 - randomized position, geometry, color, mass, friction, and restitution
 - one centre-applied force on a selected object
 - deterministic Pymunk simulation and Pillow rendering

@@ -11,7 +11,7 @@
 - Use Pymunk 7.3.1 for a deterministic 1 × 1, zero-gravity, top-down world.
 - Run physics at 240 Hz with 10 solver iterations and render 32 frames at 8 FPS.
 - Apply one centre force for 0.25 seconds; keep torque and off-centre actions out of scope.
-- Support 2–4 circles or rectangles with solid randomized colors.
+- Support 2-4 circles or rectangles with solid randomized colors.
 - Store raw RGB as `uint8 [T,H,W,3]`, masks as `bool [T,N,H,W]`, and positions as normalized `float32 [T,N,2]`.
 - Store selected masks as `[H,W]` on disk; loaders add the channel and batch dimensions.
 - Use contact-onset labels, fixed wall order `left/right/top/bottom`, and replay tolerances of `1e-6` absolute and relative.
@@ -44,6 +44,30 @@ exact-replay checks. Collision onset occurs in 8.8% of clips and wall contact in
 ## D008: Course brief and submission format: 7 October 2026
 
 Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.md). Submit the report PDF, contribution PDF, and source-code ZIP as described in [SUBMISSION.md](SUBMISSION.md). The custom method and demo are project choices, not extra required uploads.
+
+## D009: Pixel pilot recommendation and research audit: 14 October 2026
+
+- Recommend a compact pixel-space space-time U-Net before adding a learned autoencoder.
+  This is an engineering proposal for the meeting, not a claim that pixels beat latents.
+- A forward/backward-tested prototype implements equal-capacity numeric/spatial
+  conditioning and optional trajectory/collision heads. It has no dataset trainer or sampler.
+- The original proposal used 16 total frames. The later frozen Workstream A contract
+  supersedes it with 32-frame pilot clips and explicit units/force duration in ARCHITECTURE.md.
+  The synthetic profiler remains configurable and defaults to 16 frames.
+- Force controls, spatial physics maps and object-centric futures already overlap
+  Force Prompting, PhyCo, PhysCtrl, and PlaySlot. Define improvement on a frozen matched tabletop protocol rather than
+  promise a universal SOTA win. See [research](SOTA_2026-10-14.md) and [build path](BUILD_PLAN.md).
+- If the meeting adopts the pixel path or reduces scope, synchronize affected issues,
+  task board and backlog dependencies before treating the proposal as the frozen plan.
+
+## D010: TC2 operational preparation: 14 October 2026
+
+- Local preflight and allocation-guarded inventory/bootstrap/probe scripts exist.
+- Use assigned QoS and actual driver/OS evidence; guide examples are not allocations.
+- Athul's account approval and limits are recorded in COMPUTE.md. First login, network
+  connectivity, and an allocated job still need verification. Local CUDA success and
+  synthetic timings do not establish the TC2 training budget.
+- Keep application details, private connection reports, and restricted PDFs outside Git.
 
 ## New decision template
 

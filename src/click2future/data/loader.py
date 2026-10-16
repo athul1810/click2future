@@ -78,12 +78,8 @@ def load_batch(
         instance_masks[batch_index, :, :object_count] = rollout["instance_masks"]
         object_valid[batch_index, :object_count] = rollout["object_valid"]
         positions[batch_index, :, :object_count] = rollout["positions"]
-        collision_onset[batch_index, :, :object_count, :object_count] = rollout[
-            "collision_onset"
-        ]
-        wall_contact_onset[batch_index, :, :object_count] = rollout[
-            "wall_contact_onset"
-        ]
+        collision_onset[batch_index, :, :object_count, :object_count] = rollout["collision_onset"]
+        wall_contact_onset[batch_index, :, :object_count] = rollout["wall_contact_onset"]
 
     return {
         "sample_ids": ids,

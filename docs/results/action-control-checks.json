@@ -1,0 +1,1601 @@
+{
+  "purpose": "Simulator action-control checks, not model results",
+  "scene_groups": 16,
+  "seed_start": 50000,
+  "settings": {
+    "tracker": {
+      "color_tolerance": 24.0,
+      "color_margin": 4.0,
+      "min_area_ratio": 0.55,
+      "max_area_ratio": 1.8,
+      "dominant_fraction": 0.85,
+      "min_pixels": 4
+    },
+    "end_frame": 4,
+    "end_time_seconds": 0.5,
+    "motion_threshold": 0.015625,
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "fps": 8
+  },
+  "source": "simulator_control",
+  "action_metric_version": "1",
+  "config_sha256": "048fac1762b80ede2f9f1e3ad3a1d394930fd59048b8d014d2e3ed5393480af3",
+  "source_sha256": {
+    "actions.py": "b3f1508b256eca3a282c8005bfa8c48099bf1d4a5042cd9261ec5284c164fce9",
+    "controls.py": "d72fadd5af2ac4fbc85ad344dac9741ff87c3d0183ee9c8ce19f8047708a6752",
+    "tracking.py": "ca3640629ee5e55665eb3bc5b644d928ce4fcfdac07b9833aa11335947be5bd4"
+  },
+  "records": [
+    {
+      "run_id": "control-50000",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.4000000059604645,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.046875,
+            "projection_along_force": 0.046875,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.4000000059604645,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.046875,
+            "projection_along_force": 0.046875,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50001",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 1.2074182697257333e-06,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 1.2074182697257333e-06,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50002",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          2.4492935397342132e-17,
+          0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.0390625,
+            "projection_along_force": 0.0390625,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -2.4492935397342132e-17,
+          -0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.0390625,
+            "projection_along_force": 0.0390625,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50003",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50004",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.4000000059604645,
+          4.8985870794684264e-17
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03125,
+            "projection_along_force": 0.03125,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.4000000059604645,
+          -4.8985870794684264e-17
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03125,
+            "projection_along_force": 0.03125,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50005",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 1.2074182697257333e-06,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 1.2074182697257333e-06,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50006",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -7.347881115511007e-17,
+          -0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.0390625,
+            "projection_along_force": 0.0390625,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          7.347881115511007e-17,
+          0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.0390625,
+            "projection_along_force": 0.0390625,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50007",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50008",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.4000000059604645,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.0390625,
+            "projection_along_force": 0.0390625,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.4000000059604645,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.0390625,
+            "projection_along_force": 0.0390625,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50009",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50010",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          2.4492935397342132e-17,
+          0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.046875,
+            "projection_along_force": 0.046875,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -2.4492935397342132e-17,
+          -0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.046875,
+            "projection_along_force": 0.046875,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50011",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 1.2074182697257333e-06,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 1.2074182697257333e-06,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50012",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.4000000059604645,
+          4.8985870794684264e-17
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03125,
+            "projection_along_force": 0.03125,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.4000000059604645,
+          -4.8985870794684264e-17
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03125,
+            "projection_along_force": 0.03125,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50013",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03314563036811941,
+            "projection_along_force": 0.03314563036811942,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50014",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -7.347881115511007e-17,
+          -0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03125,
+            "projection_along_force": 0.03125,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          7.347881115511007e-17,
+          0.4000000059604645
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.03125,
+            "projection_along_force": 0.03125,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.0,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 0.0,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 0.0,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "control-50015",
+      "forward": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.2828427255153656,
+          -0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "reverse": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          -0.2828427255153656,
+          0.2828427255153656
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "displacement": 0.04419417382415922,
+            "projection_along_force": 0.04419417382415922,
+            "direction_error_degrees": 0.0
+          }
+        ],
+        "kind": "nonzero_force",
+        "stationary_samples": 0,
+        "stationary_rate_over_complete": 0.0,
+        "moving_samples": 1,
+        "mean_direction_error_degrees": 0.0
+      },
+      "zero": {
+        "units": "normalized_image_coordinates",
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "force_xy": [
+          0.0,
+          -0.0
+        ],
+        "total_samples": 1,
+        "complete_samples": 1,
+        "missing_samples": 0,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "scored",
+            "max_drift": 0.0,
+            "exceeds_motion_threshold": false
+          }
+        ],
+        "kind": "zero_force",
+        "mean_max_drift": 0.0,
+        "drifting_samples": 0,
+        "drift_rate_over_complete": 0.0
+      },
+      "reversal": {
+        "total_pairs": 1,
+        "complete_pairs": 1,
+        "missing_pairs": 0,
+        "moving_pairs": 1,
+        "stationary_pairs": 0,
+        "mean_reversal_error_degrees": 1.2074182697257333e-06,
+        "correct_force_sign_rate_over_complete": 1.0,
+        "end_frame": 4,
+        "motion_threshold": 0.015625,
+        "per_sample": [
+          {
+            "sample_index": 0,
+            "status": "moving",
+            "reversal_error_degrees": 1.2074182697257333e-06,
+            "correct_force_signs": true
+          }
+        ]
+      }
+    }
+  ]
+}

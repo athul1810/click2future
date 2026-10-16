@@ -1,0 +1,8 @@
+# Environment/artifact conventions only; simulator and model settings belong to T04.
+schema_version: 0
+seed: 0
+artifacts:
+  data: data
+  checkpoints: checkpoints
+  outputs: outputs
+  runs: runs

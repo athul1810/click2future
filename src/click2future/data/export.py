@@ -10,7 +10,6 @@ import numpy as np
 
 from .validate import validate_rollout
 
-
 ARRAY_FIELDS = (
     "frames",
     "instance_masks",

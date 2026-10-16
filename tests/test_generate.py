@@ -43,9 +43,7 @@ class DatasetGenerationTests(unittest.TestCase):
                 np.testing.assert_array_equal(first["action_map"], second["action_map"])
                 self.assertNotEqual(hidden_physics[0], hidden_physics[1])
 
-            saved_manifest = json.loads(
-                Path(result["manifest_path"]).read_text(encoding="utf-8")
-            )
+            saved_manifest = json.loads(Path(result["manifest_path"]).read_text(encoding="utf-8"))
             self.assertEqual(saved_manifest["manifest_hash"], manifest["manifest_hash"])
 
 

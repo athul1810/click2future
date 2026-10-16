@@ -16,7 +16,7 @@ class BackendTests(unittest.TestCase):
         state = build_space(scene)
         actual = snapshot(state)
 
-        for expected, observed in zip(scene["objects"], actual["objects"]):
+        for expected, observed in zip(scene["objects"], actual["objects"], strict=True):
             self.assertEqual(expected["object_id"], observed["object_id"])
             self.assertAlmostEqual(expected["position"][0], observed["position"][0])
             self.assertAlmostEqual(expected["position"][1], observed["position"][1])
@@ -47,7 +47,7 @@ class BackendTests(unittest.TestCase):
             step(state)
 
         after = snapshot(state)
-        for expected, observed in zip(before["objects"], after["objects"]):
+        for expected, observed in zip(before["objects"], after["objects"], strict=True):
             self.assertAlmostEqual(expected["position"][0], observed["position"][0], places=6)
             self.assertAlmostEqual(expected["position"][1], observed["position"][1], places=6)
 
