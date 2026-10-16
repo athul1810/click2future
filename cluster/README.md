@@ -2,8 +2,9 @@
 
 Access is approved for Athul and Shrijeet with partition `MGPU-TC2` and QoS `normal`.
 See [the account limits](../docs/COMPUTE.md). Shrijeet's VPN route and TCP connectivity
-were verified on 16 October 2026. First successful SSH login, Linux package installation,
-and allocated GPU execution still need verification.
+were verified on 16 October 2026, and Shrijeet subsequently confirmed the first successful
+interactive SSH login. Linux package installation and allocated GPU execution still
+need verification.
 
 The scripts were adapted from `CCDSGPU-TC2-Masters-UserGuide.pdf`, especially pages 4,
 9-13, 16-18, 21, and 26-27. Keep the university guide, completed forms, and credentials

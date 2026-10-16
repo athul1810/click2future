@@ -26,13 +26,13 @@ The resource limits apply across the user's running jobs. Two job slots do not p
 
 - [x] Record access approval and the account limits.
 - [x] Verify Shrijeet's VPN route and head-node TCP connectivity (16 October 2026).
-- [ ] Attempt the first login using the supplied user guide; the email says this creates the home directory.
+- [x] Complete the first interactive login (reported by Shrijeet, 16 October 2026); the email says this creates the home directory.
 - [ ] Run a small scheduled GPU job using the supplied sample script, then record GPU model, VRAM, and software versions.
 - [ ] Check storage limits, any total usage quota, and access expiry.
 - [ ] Choose backup locations for code, configs, run records, and checkpoints. TC2 provides no backup service; keep datasets and model files out of Git and the course submission.
 
-Shrijeet's first SSH attempt did not authenticate; account activation through login and
-the allocated GPU test are still pending. The email says accounts that never attempt
+Shrijeet's initial SSH attempt closed, followed by a successful plain interactive login
+reported on 16 October. The allocated GPU test is still pending. The email says accounts that never attempt
 login may be revoked after three months. Use TC2 for the approved coursework. Keep
 credentials outside the repository. See the [TC2 workflow](../cluster/README.md) for
 the prepared upload, inventory, installation, and probe scripts. Linux installation
