@@ -106,14 +106,16 @@
       "Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance."
     ],
     "owner": "PRAMOD SANJAY",
-    "status": "In progress",
+    "status": "In review",
     "issue_url": "https://github.com/athul1810/click2future/issues/5",
     "completed_acceptance": [
+      0,
       1,
       2,
       3
     ],
-    "progress": "PR #24 merged seeded circles/rectangles, centre-force rollout labels, and verified replay/control cases. Appearance currently varies solid colours only; textured rendering remains outstanding."
+    "progress": "Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.",
+    "evidence": "docs/GENERALIZATION_DATA.md; docs/results/generalization-data-checks.json; docs/results/generalization-extractor-controls.json. Procedural data and simulator controls only."
   },
   {
     "id": "T06",
@@ -131,16 +133,17 @@
       "Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link."
     ],
     "owner": "PRAMOD SANJAY",
-    "status": "In progress",
+    "status": "In review",
     "issue_url": "https://github.com/athul1810/click2future/issues/6",
     "completed_acceptance": [
       0,
       1,
+      2,
       3,
       4
     ],
-    "progress": "Dataset-0.2 generation is merged in PR #31: six controlled actions and 21 clips per visible scene, with all actions and hidden-physics variants in one split. The recommended size is 200 groups and 4,200 clips; final training data is not frozen here. All 84 independently generated pilot clips replayed exactly. The earlier 80-clip dataset-0.1 CPU/storage benchmark remains in the evidence record. Separate shape, texture and force OOD suites remain outstanding.",
-    "evidence": "docs/DATASET_0_2_PLAN.md; docs/results/data-generation-profile.json; docs/results/issue-work-checks.json. Dataset-0.2 controls and replay verified; the cost/storage profile is dataset-0.1 only."
+    "progress": "Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review; trained generalization remains T15.",
+    "evidence": "docs/GENERALIZATION_DATA.md; docs/results/generalization-data-checks.json; docs/results/generalization-extractor-controls.json. Procedural data and simulator controls only."
   },
   {
     "id": "T07",

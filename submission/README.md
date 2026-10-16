@@ -49,6 +49,22 @@ config keeps its 0.5 limit. Both versions divide force by 0.5 without clipping.
 The controlled pilot selects 21 clips from one training group; set `limit_train`
 to null in a separate recorded configuration for a main run.
 
+A separate dataset-0.3 corpus supports shape, texture, force and uncertainty
+tests with seven disjoint scene-group splits. Train on that corpus before using
+its held-out suites for matched generalization claims:
+
+```sh
+python -m click2future.cli generate-generalization-dataset --output-dir data/generalization --seed 200000 --groups-per-split 1
+python -m click2future.cli validate-generalization-dataset --input-dir data/generalization --replay
+```
+
+This smoke generates 166 native clips. Use the Python generator's `group_counts`
+argument to set a recorded larger split allocation. Both trainers support it;
+the diffusion diagnostic is `configs/training/pilot_diffusion_0_3.json`. The
+`force_limit` is 1.5 for the held-out forces, while only ID samples enter training.
+Evaluate with explicit `--split id_test`, `shape_ood`, `texture_ood`, `force_ood`
+or `physics_test`. All datasets and weights remain outside the submitted ZIP.
+
 Evaluation modules provide `--help` for their input contracts:
 
 ```sh

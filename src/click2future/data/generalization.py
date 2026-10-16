@@ -10,7 +10,6 @@ import numpy as np
 
 from ..sim.controlled import ACTION_VARIANTS
 from ..sim.generalization import SPLITS, make_generalization_scene
-from ..sim.replay import replay_saved_rollout
 from ..sim.rollout import run_rollout
 from .export import load_rollout, save_rollout
 from .splits import load_split_manifest, save_split_manifest
@@ -39,9 +38,13 @@ def _sha(path):
 def _validate_spec(seed, group_counts):
     if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
         raise ValueError("seed must be a nonnegative integer")
-    if set(group_counts) != set(SPLITS) or any(
-        isinstance(count, bool) or not isinstance(count, int) or count < 1
-        for count in group_counts.values()
+    if (
+        not isinstance(group_counts, dict)
+        or set(group_counts) != set(SPLITS)
+        or any(
+            isinstance(count, bool) or not isinstance(count, int) or count < 1
+            for count in group_counts.values()
+        )
     ):
         raise ValueError("Provide a positive group count for each of the seven splits")
 
@@ -134,6 +137,9 @@ def generate_generalization_dataset(output_dir, *, seed=200000, group_counts=Non
 
 def validate_generalization_dataset(input_dir, *, replay=False):
     """Check hashes, every expected case, factor definitions and native replay."""
+    if replay:
+        from ..sim.replay import replay_saved_rollout
+
     root, errors, replayed = Path(input_dir), [], 0
     try:
         manifest = json.loads((root / "dataset_manifest.json").read_text())
@@ -189,7 +195,15 @@ def validate_generalization_dataset(input_dir, *, replay=False):
             rollout = load_rollout(root, name)
             if rollout["scene_spec"] != scene:
                 raise ValueError(f"{name}: scene differs from the single-factor specification")
-            if rollout["metadata"]["frame_count"] != 32 or rollout["frames"].shape != (
+            expected_metadata = {
+                "sim_version": "sim-0.2",
+                "render_version": "render-0.2",
+                "frame_count": 32,
+                "fps": 8,
+                "physics_hz": 240,
+                "resolution": 64,
+            }
+            if rollout["metadata"] != expected_metadata or rollout["frames"].shape != (
                 32,
                 64,
                 64,

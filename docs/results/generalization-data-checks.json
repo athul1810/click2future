@@ -40,10 +40,27 @@
   },
   "scope": "Procedural data and simulator correctness only; no generator training or learned OOD results",
   "source_sha256": {
-    "src/click2future/data/generalization.py": "938566fa04f2c7bf7c32fb72f8fb0f1e5b9ec37ae2d95da69bbf65210f5508eb",
+    "src/click2future/data/generalization.py": "f807f0aad795abbda7f57941610a1e54d8d75d31617515d32a50dc62f1917771",
     "src/click2future/sim/generalization.py": "f20c4ae7bc6e462f97bcc97b6f2dc9865e6cd71e0459a2ed20ef0cdbef249b6d",
     "src/click2future/sim/render.py": "cdd12285fe57d023222844583e57166182ad993ec25b75f710bb3bb10fa37be5",
     "src/click2future/sim/backend.py": "e1ffe30d7a839920c399d2e1b554b477f994b493893f542bfc11bfe43c177a3b",
-    "src/click2future/sim/geometry.py": "175aaf0f2e370527a25597f51680f2ad86ac9ef748c79b37684446a54b7c0656"
+    "src/click2future/sim/geometry.py": "175aaf0f2e370527a25597f51680f2ad86ac9ef748c79b37684446a54b7c0656",
+    "src/click2future/training/train_cvae.py": "99165632e1612e1bf7abe95987616a6f19f3e20eb8c64cedc3bb53a4d1288acc",
+    "tests/test_generalization.py": "896868969787a4ee5d0e86894d8be0bad276a26df2e9915adbca2a539828076f"
+  },
+  "checks": {
+    "working_tree_tests": 310,
+    "subtests": 4,
+    "skipped": 0,
+    "ruff": "passed",
+    "format": "passed",
+    "legacy_replay": "164/164 exact",
+    "new_replay": "332/332 exact",
+    "source_archive_inspection": "passed",
+    "source_and_wheel_builds": "passed",
+    "dependency_lock": "passed",
+    "fresh_source_archive_tests": 310,
+    "public_import_orders": "sim then data, data then sim: passed in isolated source installation",
+    "regression_fixed": "Replay import moved inside the optional replay path to avoid sim/data initialization cycle"
   }
 }

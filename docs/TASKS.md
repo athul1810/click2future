@@ -13,8 +13,8 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | None | MAITI SHRIJEET | In progress |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | None | Unassigned | Done |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | T01 | PRAMOD SANJAY | Done |
-| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In progress |
-| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In progress |
+| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In review |
+| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In review |
 | T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | Unassigned | In progress |
@@ -98,14 +98,14 @@ PR #24 merged the frozen simulator/action contract, versioned schema, condition/
 
 Generate repeatable tabletop clips with usable physical labels.
 
-**Dependencies:** T03, T04. **Owner:** PRAMOD SANJAY. **Status:** In progress.
+**Dependencies:** T03, T04. **Owner:** PRAMOD SANJAY. **Status:** In review.
 
-- [ ] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
+- [x] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
 - [x] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
 - [x] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
 - [x] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
 
-PR #24 merged seeded circles/rectangles, centre-force rollout labels, and verified replay/control cases. Appearance currently varies solid colours only; textured rendering remains outstanding.
+Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.
 
 <a id="t06"></a>
 
@@ -113,15 +113,15 @@ PR #24 merged seeded circles/rectangles, centre-force rollout labels, and verifi
 
 Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.
 
-**Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In progress.
+**Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In review.
 
 - [x] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [x] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
-- [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
+- [x] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-Dataset-0.2 generation is merged in PR #31: six controlled actions and 21 clips per visible scene, with all actions and hidden-physics variants in one split. The recommended size is 200 groups and 4,200 clips; final training data is not frozen here. All 84 independently generated pilot clips replayed exactly. The earlier 80-clip dataset-0.1 CPU/storage benchmark remains in the evidence record. Separate shape, texture and force OOD suites remain outstanding.
+Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review; trained generalization remains T15.
 
 <a id="t07"></a>
 

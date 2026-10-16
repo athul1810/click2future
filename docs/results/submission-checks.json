@@ -2,9 +2,9 @@
   "status": "passed",
   "artifact": "development source snapshot, not final submission",
   "archive": "group_07_code.zip",
-  "archive_sha256": "dd895ce82b680acad4cf2f80f2589bea406ff2a5ff30dcb66c9d886c7bacb6a7",
-  "file_count": 118,
-  "bytes": 212585,
+  "archive_sha256": "be7ab334957cb66878b78fecabdf7df1635c58edfdec98bea18d47197b2f34d8",
+  "file_count": 123,
+  "bytes": 223086,
   "fresh_environment": {
     "python": "3.12.15",
     "torch": "2.11.0",
@@ -12,8 +12,8 @@
     "install": "pinned CPU, dev, image-metrics extras with constraints; no inherited project environment"
   },
   "validation": {
-    "working_tree_tests": 291,
-    "extracted_source_tests": 291,
+    "working_tree_tests": 310,
+    "extracted_source_tests": 310,
     "subtests": 4,
     "skipped_tests": 0,
     "generated_smoke_rollouts": 2,
@@ -32,19 +32,21 @@
     "tc2_job_script_syntax": "both CVAE and diffusion scripts passed",
     "native_simulator_control_suite": "passed: all three metric families, SSIM and LPIPS",
     "collision_report_versions": "encounter scoring and legacy/mixed-version checks passed",
-    "dataset_0_2_integration": "passed: diffusion wall-force checkpoint contract, CVAE native wall prior export, six-action held-out plan"
+    "dataset_0_2_integration": "passed: diffusion wall-force checkpoint contract, CVAE native wall prior export, six-action held-out plan",
+    "dataset_0_3_integration": "passed: all split coverage, train/validation-only CVAE index, untrained force-OOD prior export, unchanged physical normalization, standalone import orders"
   },
   "source_sha256": {
     "src/click2future/submission.py": "c1b0a0455f7be3cceadcc6620a1fe31266907f6afefed951d7ef7ba482e0086c",
     "submission/allowlist.json": "6fa227cf49bfbc499a6f0fd701018eaecddf0c92602908becdf093bf94cb5228",
     "submission/smoke.py": "43d58e6f9b8a949189c87aa240ca730920f7c45f14e441ef5f99e7aa0bf1a425",
     "submission/train_cvae.sbatch": "226bc0846ee6db64f5fb695e5fc78b46b09a5845c6468e65057a4dbea44fd0db",
-    "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db"
+    "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db",
+    "submission/README.md": "7ce1afdbbb4f0651d8d1bcc736cbe6572e55185e23ba10089cb6202bb2c61d29"
   },
   "previous_snapshot": {
-    "archive_sha256": "b2ff79705f940a35d4bfa06489dd38c7fd33c3e1708d0e1019113732219c520c",
-    "file_count": 113,
-    "bytes": 202812
+    "archive_sha256": "dd895ce82b680acad4cf2f80f2589bea406ff2a5ff30dcb66c9d886c7bacb6a7",
+    "file_count": 118,
+    "bytes": 212585
   },
   "remaining": [
     "CVAE and E4 TC2 training and quality gates",

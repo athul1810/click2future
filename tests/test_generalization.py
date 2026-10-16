@@ -1,11 +1,16 @@
 """Legacy-preserving textures, physical triangles, and disjoint OOD datasets."""
 
 import copy
+import hashlib
 import json
 import math
+import shutil
+from pathlib import Path
 
 import numpy as np
 import pytest
+import torch
+import yaml
 
 from click2future.cli import main
 from click2future.data import (
@@ -152,6 +157,76 @@ def test_training_index_excludes_all_held_out_splits_and_ood_force_is_not_clippe
     assert condition.force_xy.norm().item() == pytest.approx(3.0)
 
 
+def test_cvae_opens_only_train_validation_and_exports_untrained_ood_prior(dataset, tmp_path):
+    from click2future.models.cvae import ConditionalVideoVAE
+    from click2future.training.sample_cvae import sample_checkpoint
+    from click2future.training.train_cvae import dataset_index, model_batch, save_checkpoint
+
+    root, manifest = dataset
+    train_only = tmp_path / "training"
+    train_only.mkdir()
+    for name in ("dataset_manifest.json", "splits.json"):
+        shutil.copy2(root / name, train_only / name)
+    for row in manifest["samples"]:
+        if row["split"] in {"train", "validation"}:
+            for key in ("arrays", "metadata"):
+                shutil.copy2(root / row[key], train_only / row[key])
+    selected, rows, provenance = dataset_index(train_only)
+    assert len(selected["train"]) == len(selected["validation"]) == 21
+    config = yaml.safe_load(
+        (Path(__file__).resolve().parents[1] / "configs/training/cvae.yaml").read_text()
+    )
+    config["model"].update(base_channels=8, latent_dim=4)
+    batch = model_batch(train_only, selected["train"][:1], rows, config, device="cpu")
+    assert batch.future.shape == (1, 3, 31, 64, 64)
+    model = ConditionalVideoVAE(**config["model"])
+    checkpoint = tmp_path / "untrained.pt"
+    save_checkpoint(
+        checkpoint,
+        model=model,
+        optimizer=torch.optim.AdamW(model.parameters()),
+        state={"step": 0},
+        config=config,
+        provenance=provenance,
+        train_generator=torch.Generator().manual_seed(0),
+        shuffle_generator=torch.Generator().manual_seed(1),
+    )
+    name = next(r["sample_id"] for r in manifest["samples"] if r["split"] == "force_ood")
+    output = tmp_path / "untrained-samples"
+    record = sample_checkpoint(
+        checkpoint=checkpoint,
+        data_dir=root,
+        sample_ids=[name],
+        seeds=[0, 1, 2, 3],
+        run_id="untrained-generalization-fixture",
+        output_dir=output,
+    )
+    assert record["training_steps"] == 0
+    with np.load(output / (name + ".npz"), allow_pickle=False) as archive:
+        videos = archive["videos"]
+    assert videos.shape == (4, 32, 64, 64, 3)
+    reference = load_rollout(root, name)
+    np.testing.assert_array_equal(videos[:, 0], np.repeat(reference["frames"][:1], 4, axis=0))
+
+
+def test_each_held_out_suite_has_a_complete_frozen_evaluation_plan(dataset):
+    from click2future.evaluation.suite import prepare_plan
+
+    root, manifest = dataset
+    config = Path(__file__).resolve().parents[1] / "configs/evaluation"
+    for split in SPLITS[2:]:
+        plan = prepare_plan(
+            root,
+            config / "pixel.yaml",
+            split=split,
+            metrics=("ssim",),
+            protocol=config / "comparison.yaml",
+        )
+        expected = {r["sample_id"] for r in manifest["samples"] if r["split"] == split}
+        assert {name for case in plan["cases"] for name in case["reference_ids"]} == expected
+        assert len(plan["cases"]) == (5 if split == "force_ood" else 6)
+
+
 def test_frozen_data_is_not_overwritten_and_corrupted_bytes_fail(dataset, tmp_path):
     root, manifest = dataset
     with pytest.raises(ValueError, match="never overwritten"):
@@ -163,6 +238,27 @@ def test_frozen_data_is_not_overwritten_and_corrupted_bytes_fail(dataset, tmp_pa
     (tmp_path / first["arrays"]).write_bytes(b"corrupted")
     result = validate_generalization_dataset(tmp_path)
     assert not result["ok"] and "hash changed" in result["errors"][0]
+
+
+def test_resigned_manifests_cannot_put_a_training_scene_in_an_ood_split(dataset, tmp_path):
+    root, manifest = dataset
+    splits = json.loads((root / "splits.json").read_text())
+    splits["splits"]["shape_ood"] = splits["splits"]["train"]
+    payload = {k: v for k, v in splits.items() if k != "manifest_hash"}
+    splits["manifest_hash"] = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    split_path = tmp_path / "splits.json"
+    split_path.write_text(json.dumps(splits))
+    changed = copy.deepcopy(manifest)
+    changed["split_manifest_sha256"] = hashlib.sha256(split_path.read_bytes()).hexdigest()
+    payload = {k: v for k, v in changed.items() if k != "manifest_hash"}
+    changed["manifest_hash"] = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    (tmp_path / "dataset_manifest.json").write_text(json.dumps(changed))
+    report = validate_generalization_dataset(tmp_path)
+    assert not report["ok"] and "multiple splits" in report["errors"][0]
 
 
 @pytest.mark.parametrize("bad", [0, -1, True])
