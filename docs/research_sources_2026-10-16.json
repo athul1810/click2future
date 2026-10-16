@@ -1,0 +1,53 @@
+{
+  "checked_date": "2026-10-16",
+  "timezone": "Asia/Singapore",
+  "status": "scoped_primary_source_refresh_not_reproduced",
+  "sources": [
+    {
+      "name": "Goal Force",
+      "venue": "CVPR 2026",
+      "paper": "https://arxiv.org/abs/2601.05848",
+      "project": "https://goal-force.github.io/",
+      "review_depth": "official project and paper abstract; repository metadata and HEAD",
+      "repository": "https://github.com/brown-palm/goal-force",
+      "commit": "2d0209dc27333bffdb3f06df657ae05b11407615",
+      "repository_license_metadata": "MIT",
+      "runtime_status": "not_installed_or_reproduced"
+    },
+    {
+      "name": "PHANTOM",
+      "venue": "CVPR 2026",
+      "paper": "https://arxiv.org/abs/2604.08503",
+      "project": "https://plan-lab.github.io/projects/phantom/",
+      "review_depth": "official project method/release description and paper abstract",
+      "release_status": "official_project_says_code_coming_soon"
+    },
+    {
+      "name": "PhyParam",
+      "venue": "July 2026 preprint",
+      "paper": "https://arxiv.org/abs/2607.18924",
+      "versioned_html": "https://arxiv.org/html/2607.18924v1",
+      "review_depth": "abstract and method overview",
+      "release_status": "release_promised_in_abstract_usable_stack_not_established"
+    },
+    {
+      "name": "DIAMOND",
+      "venue": "NeurIPS 2024",
+      "project": "https://diamond-wm.github.io/",
+      "repository": "https://github.com/eloialonso/diamond",
+      "commit": "5bcd1599755b4f2fae8e5e079e02f0728e174965",
+      "repository_license_metadata": "MIT",
+      "review_depth": "official project and repository metadata/HEAD reconfirmed; earlier paper review in 14 October manifest",
+      "runtime_status": "adaptation_not_installed"
+    },
+    {
+      "name": "Strictly Proper Scoring Rules, Prediction, and Estimation",
+      "authors": "Tilmann Gneiting and Adrian E. Raftery",
+      "venue": "Journal of the American Statistical Association, 2007",
+      "paper": "https://www.tandfonline.com/doi/abs/10.1198/016214506000001437",
+      "review_depth": "publisher abstract and author-hosted indexed energy-score result",
+      "role": "proper-distribution-scoring reference; no project metric implementation validated"
+    }
+  ],
+  "fetch_limitations": "CVF Goal Force and PHANTOM entries were indexed but direct opens returned HTTP 403; official project and arXiv sources were used"
+}

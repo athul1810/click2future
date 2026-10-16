@@ -24,4 +24,5 @@ nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv
 "$python_path" -m click2future.env_check --device cuda \
     --output "outputs/tc2-device-${SLURM_JOB_ID}.json"
 "$python_path" -m click2future.profile_pilot --device cuda --require-slurm \
+    --future-frames 31 \
     --output "outputs/tc2-pilot-${SLURM_JOB_ID}.json"

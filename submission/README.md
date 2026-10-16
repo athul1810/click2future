@@ -1,9 +1,9 @@
 # Click2Future source, Group 7
 
-This archive contains the current simulator, data generator, denoiser prototype,
-auxiliary losses, evaluation code, configs, and correctness checks. It contains no
-datasets or model weights. Dataset training, diffusion sampling, the CVAE baseline,
-and the demo are still unfinished in this snapshot. This is not the final submission.
+This archive contains the simulator, data generator, pixel diffusion trainer,
+seeded DDIM sampler, auxiliary losses, evaluation code, configs and correctness
+checks. It contains no datasets or model weights. CVAE, final experiments and the
+demo are unfinished in this development snapshot. This is not the final submission.
 
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 
@@ -48,7 +48,29 @@ python -m click2future.training.check_auxiliary --help
 Image metrics need the `image-metrics` extra. LPIPS also needs pretrained AlexNet
 weights in the user's Torch cache. Weights are excluded from this archive. The smoke
 check and the core simulator/trajectory tests do not require them. Training and
-sampling commands must be added and verified before preparing the final code ZIP.
+sampling modules provide their own input contracts:
+
+```sh
+python -m click2future.training.train_diffusion --help
+python -m click2future.training.sample_diffusion --help
+```
+
+For a CPU smoke run, generate a dataset with the simulator pilot config. Copy
+`configs/training/pilot_diffusion.json`, set precision to `float32`, steps to 4
+and base_channels to 8, and save it as `cpu-smoke.json`. This preserves the
+32-frame data contract while reducing the correctness-check cost:
+
+```sh
+python -m click2future.cli generate-dataset --output-dir data/pilot --group-count 8 --variants-per-group 2 --seed 7 --config configs/simulator/pilot.toml
+python -m click2future.training.train_diffusion --dataset data/pilot --run-dir runs/cpu-smoke --config cpu-smoke.json --device cpu
+```
+
+The training checkpoint is local and excluded from the submitted archive. For
+sampling, provide a condition NPZ with uint8 `first_frame[H,W,3]`, binary
+`selected_mask[H,W]` and physical float32 `force_xy[2]`. The sampler writes uint8
+`videos[K,T,H,W,3]`, preserves frame 0 and records hashes, seeds and timing.
+These commands establish execution, not good generated motion. Train and evaluate
+the actual methods before preparing the final submission.
 
 `MANIFEST.json` lists each included file and its SHA-256. The code ZIP is one of the
 three required submission files, alongside `group_07_report.pdf` and

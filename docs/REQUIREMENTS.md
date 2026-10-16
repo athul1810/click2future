@@ -24,7 +24,10 @@ The PDF does not require a novel method, five variants, 128px generation, slides
 
 ## Deadline
 
-**Working deadline: 14 November 2026.** The course brief lists 16 November; confirm the exact cutoff on NTULearn. See [SUBMISSION.md](SUBMISSION.md).
+**Internal completion deadline: 14 November 2026**, including the presentation,
+report, contribution PDF and validated source ZIP. The course brief lists 16 November
+for upload; the exact NTULearn cutoff remains unverified. It does not extend the
+internal deadline. See [SUBMISSION.md](SUBMISSION.md).
 
 ## Rubric and teamwork
 

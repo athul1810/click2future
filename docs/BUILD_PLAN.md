@@ -1,16 +1,21 @@
 # Achievable architecture and evidence gates
 
-The pixel/latent architecture choice remains a proposal. Simulation, grouped datasets,
-trajectory/collision metrics, and a pixel tracker are now implemented. Contact extraction
-needs improvement. The diffusion scheduler/sampler, dataset trainer, and CVAE remain to
-be built. Synchronize agreed scope changes across the issues, task board, and backlog.
+The [16 October execution plan](EXECUTION_PLAN_2026-10-16.md) describes
+pending ownership, physics/identity decisions, the demo,
+and assessment evidence. The [research addendum](SOTA_2026-10-16.md) extends the prior review.
+
+The pixel path is adopted as of 16 October. Simulation, grouped datasets,
+trajectory/collision metrics, a pixel tracker, diffusion training and DDIM sampling
+are implemented. Contact extraction needs improvement. CVAE and the interactive
+demo remain to be built. The [training guide](TRAINING.md) separates numerical
+checks from generated-video and held-out evidence.
 
 ## Recommended first build
 
 Use a **compact pixel-space space-time U-Net**, joint short-clip diffusion, identical
 numeric/spatial action inputs, and optional auxiliary heads. Start with 64px, two objects,
-and the frozen 32-frame simulator pilot. The synthetic profiler defaults to 16 frames;
-set 32 explicitly when measuring the frozen pilot. Profile before changing the horizon
+and the frozen 32-frame simulator pilot. The checked-in profiler config now uses
+31 future frames. Profile before changing the horizon
 or increasing width. This avoids making a learned autoencoder a prerequisite
 before learning whether the actions can be followed.
 
@@ -33,7 +38,7 @@ flowchart LR
     X[Noisy future clip plus diffusion timestep] --> U
     U --> E[Predicted noise]
     U --> H[Optional trajectory and collision heads]
-    E --> S[Planned diffusion sampler]
+    E --> S[DDIM sampler]
     S --> V[Future RGB frames]
     V --> T[Shared pixel tracker and contact estimator]
     H --> Q[Separate auxiliary scores]
@@ -42,7 +47,7 @@ flowchart LR
 
 There is no inference path from future ground truth or hidden physical parameters into
 conditioning. Frame 0 is retained exactly when presenting generated videos. The drawing
-includes planned modules so it describes the intended system, not current end-to-end readiness.
+does not establish trained-video quality; that requires generated-sample evaluation.
 
 ## Implemented prototype interface
 
@@ -105,10 +110,11 @@ sampling quality, dataset learning, or complete mixed-precision trainer resume.
 
 ## Implement in order
 
-1. **Generator handoff and contract.** Obtain source and one raw labelled fixture.
-   Retain the current centre-force/fixed-duration proposal until the generator's units,
-   force/impulse semantics, timestamps, replay and interval contacts are verified. The
-   YAML explicitly leaves units/duration pending. Do not infer them from the GIF.
+1. **Consume the frozen generator handoff.** Source, schema and fixtures are available
+   from Workstream A. Use its 32-frame configuration and the units, 0.25-second force,
+   pre-action frame 0 and interval labels in ARCHITECTURE.md. Align the older prototype
+   YAML explicitly. Resolve contact friction versus tabletop drag and auxiliary slot
+   ordering before scaling; any physics change requires versioning and regenerated data.
 2. **Data/control checks.** Deterministic replay; initially stationary zero-force scene;
    reversed force before contact; target swap; known collision and no-collision cases;
    identical first inputs for hidden-property variants; group-level split independence.

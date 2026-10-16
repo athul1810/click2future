@@ -43,6 +43,7 @@ include = [
     "/tests/test_*.py",
     "/configs/**/*.yaml",
     "/configs/**/*.toml",
+    "/configs/**/*.json",
     "/tests/fixtures/*.json",
     "/README.md",
     "/pyproject.toml",
