@@ -248,7 +248,7 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
-The batch evaluator produces trajectory, image and uncertainty reports plus scene-group comparison tables for every frozen case. Full-length oracle/static simulator controls run end to end with SSIM and LPIPS. Actual trained E0/E2/E3 runs, hyperparameter results and their comparisons remain pending.
+Checkpoint sampling is connected to fixed-case evaluation. The runner covers every case with the same four seeds, derives training seeds/method settings from checkpoints, verifies the corpus/normalization and binds checkpoint/video hashes. A native six-condition validation fixture produced 72 untrained E0/E2/E3 videos and ran all three metric families with SSIM and LPIPS. Actual trained runs, hyperparameter results and comparisons remain pending.
 
 <a id="t15"></a>
 
@@ -278,7 +278,7 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The batch evaluator groups all hidden-physics references per condition and reports K=4 spread, coverage, plausibility distances and failure counts alongside image/trajectory quality. Full-length simulator controls validate this workflow. Actual generated ensembles and paired action-control measurements remain open.
+The shared runner generates complete ensembles for the frozen case list; uncertainty scoring retains all hidden-physics references and failure counts alongside quality. Native untrained fixtures validate the full handoff without establishing learned uncertainty. Actual trained ensembles and paired zero/reversed/selected-object action-control measurements remain open.
 
 <a id="t17"></a>
 
@@ -325,7 +325,7 @@ Prepare a source-only submission package and check that it can be used without t
 - [x] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
 - [x] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
 
-The source-only ZIP includes diffusion/CVAE training and sampling, both TC2 job scripts, procedural data/splits, all evaluators and standalone instructions. Builder, inventory, URL/content inspection and source extraction checks pass. Actual trained-checkpoint reproduction and the final post-experiment package check remain open.
+The source-only ZIP includes both trainers, automatic checkpoint sampling, all evaluators, procedural datasets/splits, three TC2 job scripts and standalone instructions. Builder, inventory, URL/content inspection and extraction checks pass. Actual trained-checkpoint reproduction, live TC2 sampling and the final post-experiment package check remain open.
 
 <a id="t20"></a>
 

@@ -46,6 +46,8 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "configs/training/pilot_diffusion.json" in names
         assert "submission/train_diffusion.sbatch" in names
         assert "src/click2future/evaluation/suite.py" in names
+        assert "src/click2future/evaluation/sample_suite.py" in names
+        assert "submission/sample_evaluation.sbatch" in names
         bundle.extractall(folder)
     child = subprocess.run(
         [sys.executable, "-I", str(folder / "submission/smoke.py")],

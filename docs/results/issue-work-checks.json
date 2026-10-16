@@ -1,9 +1,9 @@
 {
   "status": "passed",
-  "parent_revision": "97d233fde70e6b4ecc528e4878c8a24fc5bf0c7b",
+  "parent_revision": "98eb9cdfb4abcddff9962f8f88a6e6991f8537f7",
   "tests": {
-    "working_tree": 310,
-    "fresh_source_archive": 310,
+    "working_tree": 322,
+    "fresh_source_archive": 322,
     "subtests": 4,
     "skipped": 0
   },
@@ -25,10 +25,11 @@
     "separate pair encounter scores with event timing retained and fresh controlled-scene validation",
     "dataset-0.2 CVAE index and native wall-force prior export; all six evaluation conditions and hidden-physics references retained",
     "object-attached textures and physical triangles with exact legacy replay",
-    "dataset-0.3 with seven disjoint splits, complete references and both-model input checks"
+    "dataset-0.3 with seven disjoint splits, complete references and both-model input checks",
+    "checkpoint-to-evaluation sampling with corpus/method checks, artifact hashes and explicit untrained-fixture labels"
   ],
   "source_sha256": {
-    "src/click2future/evaluation/suite.py": "075a459d86b2705e878e8a28472f9d9d0417495c89de5044ba9b70d75dbf4f80",
+    "src/click2future/evaluation/suite.py": "aacdcff4452d70c01b1793bf10c03c7e2d78d6ba97187624470cc71fb715bea5",
     "src/click2future/evaluation/video.py": "7934a97ab615c0f0740cd82686ec5e4ccd8d27daaaa117ea8cc832b693345657",
     "tests/test_evaluation_suite.py": "addc69d34ba3d7f3b859dec2da27083ead66d0e95b8a4d82b780b1633426c53d",
     "configs/evaluation/comparison.yaml": "4d0d86e12604c2dc3e28306976644ec3920504ed2971869e422446ac4c421e9b",
@@ -37,7 +38,10 @@
     "src/click2future/evaluation/aggregate.py": "97c51522b9390850dd72dc05a55060f7ae4f31676b9dd13dbeb2f13ad430c7c9",
     "src/click2future/evaluation/calibrate.py": "b94433071e32f5652b1b05d40852d0bd2d3755cdd3177c5799104e6553a8eed0",
     "src/click2future/training/train_cvae.py": "99165632e1612e1bf7abe95987616a6f19f3e20eb8c64cedc3bb53a4d1288acc",
-    "tests/test_cvae_workflow.py": "517c92f11ca703b7b7ab6a152148a475271059929d336d51494f6967303b0c2f"
+    "tests/test_cvae_workflow.py": "517c92f11ca703b7b7ab6a152148a475271059929d336d51494f6967303b0c2f",
+    "src/click2future/evaluation/sample_suite.py": "53794aa3a9d36beedaee3e69df5cd647cfee82cde198ab76c81dbe44bd9d8210",
+    "tests/test_sample_suite.py": "f6a03d5cd4a312a99ed7ab4d062206548bf98ead433954631f08993490017596",
+    "submission/sample_evaluation.sbatch": "28ba931208bdcc26e2743d59be327ad4fc94c916823a61a45bd64051c15d10e2"
   },
   "evidence": [
     "docs/results/data-generation-profile.json",
@@ -45,10 +49,11 @@
     "docs/results/submission-checks.json",
     "docs/results/controlled-extractor-checks.json",
     "docs/results/generalization-data-checks.json",
-    "docs/results/generalization-extractor-controls.json"
+    "docs/results/generalization-extractor-controls.json",
+    "docs/results/checkpoint-suite-checks.json"
   ],
   "remaining": [
-    "PR #30 and the generalization-data PR need teammate approval before main integration",
+    "Open implementation PRs need teammate approval before main integration",
     "trained E0/E2/E3 samples and repeats",
     "E4 overfit and head-versus-video results",
     "freeze the matched dataset/OOD corpus and trained checkpoints",

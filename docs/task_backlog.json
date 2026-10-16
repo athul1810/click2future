@@ -348,7 +348,7 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/14",
-    "progress": "The batch evaluator produces trajectory, image and uncertainty reports plus scene-group comparison tables for every frozen case. Full-length oracle/static simulator controls run end to end with SSIM and LPIPS. Actual trained E0/E2/E3 runs, hyperparameter results and their comparisons remain pending.",
+    "progress": "Checkpoint sampling is connected to fixed-case evaluation. The runner covers every case with the same four seeds, derives training seeds/method settings from checkpoints, verifies the corpus/normalization and binds checkpoint/video hashes. A native six-condition validation fixture produced 72 untrained E0/E2/E3 videos and ran all three metric families with SSIM and LPIPS. Actual trained runs, hyperparameter results and comparisons remain pending.",
     "evidence": "docs/EXPERIMENT_PROTOCOL.md; docs/results/evaluation-suite-controls.json. Simulator controls only, not learned-model results."
   },
   {
@@ -387,7 +387,7 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/16",
-    "progress": "The batch evaluator groups all hidden-physics references per condition and reports K=4 spread, coverage, plausibility distances and failure counts alongside image/trajectory quality. Full-length simulator controls validate this workflow. Actual generated ensembles and paired action-control measurements remain open."
+    "progress": "The shared runner generates complete ensembles for the frozen case list; uncertainty scoring retains all hidden-physics references and failure counts alongside quality. Native untrained fixtures validate the full handoff without establishing learned uncertainty. Actual trained ensembles and paired zero/reversed/selected-object action-control measurements remain open."
   },
   {
     "id": "T17",
@@ -460,7 +460,7 @@
       4,
       5
     ],
-    "progress": "The source-only ZIP includes diffusion/CVAE training and sampling, both TC2 job scripts, procedural data/splits, all evaluators and standalone instructions. Builder, inventory, URL/content inspection and source extraction checks pass. Actual trained-checkpoint reproduction and the final post-experiment package check remain open.",
+    "progress": "The source-only ZIP includes both trainers, automatic checkpoint sampling, all evaluators, procedural datasets/splits, three TC2 job scripts and standalone instructions. Builder, inventory, URL/content inspection and extraction checks pass. Actual trained-checkpoint reproduction, live TC2 sampling and the final post-experiment package check remain open.",
     "evidence": "docs/SUBMISSION.md; docs/results/submission-checks.json; submission/allowlist.json; submission/README.md."
   },
   {

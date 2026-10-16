@@ -1,0 +1,20 @@
+{
+  "sampling_steps": 32,
+  "runs": [
+    {
+      "method": "E0",
+      "run_id": "E0-seed0",
+      "checkpoint": "../../runs/E0-seed0/best.pt"
+    },
+    {
+      "method": "E2",
+      "run_id": "E2-seed0",
+      "checkpoint": "../../runs/E2-seed0/checkpoint.pt"
+    },
+    {
+      "method": "E3",
+      "run_id": "E3-seed0",
+      "checkpoint": "../../runs/E3-seed0/checkpoint.pt"
+    }
+  ]
+}

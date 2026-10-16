@@ -49,6 +49,7 @@ def _check(name, payload):
             "submission/dependency_versions.json",
             "submission/train_cvae.sbatch",
             "submission/train_diffusion.sbatch",
+            "submission/sample_evaluation.sbatch",
         }
     )
     if (

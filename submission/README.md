@@ -128,6 +128,27 @@ python -m click2future.evaluation.suite prepare --dataset data/main --split test
 python -m click2future.evaluation.suite run --plan outputs/test-plan.json --predictions outputs/predictions.json --output-dir outputs/test-results
 ```
 
+To generate those samples, edit the local checkpoint paths in
+`configs/evaluation/runs.example.json`, then run:
+
+```sh
+python -m click2future.evaluation.sample_suite --plan outputs/test-plan.json --runs configs/evaluation/runs.example.json --output-dir outputs/model-samples --device cpu
+python -m click2future.evaluation.suite run --plan outputs/test-plan.json --predictions outputs/model-samples/predictions.json --output-dir outputs/test-results
+```
+
+The runner derives method settings and training seeds from checkpoints, checks their
+dataset/split hashes, and uses the plan's four seeds for every case. It records full
+configs, training steps, timing and output hashes. Changed checkpoints or videos
+reject evaluation. Untrained checkpoints require an explicit correctness-fixture
+flag and remain labelled in summary JSON; they are not trained-model evidence.
+
+For scheduled CUDA sampling and evaluation on TC2, set `C2F_EVAL_PLAN`,
+`C2F_EVAL_RUNS`, `C2F_SAMPLE_DIR`, `C2F_RESULT_DIR` and `C2F_SOURCE_REVISION`, then
+submit `sbatch submission/sample_evaluation.sbatch` from the source folder. Use new
+sample/result folders. It requests one GPU, four CPUs, 24G system memory and six
+hours. Sampling and metrics do not train models. E4 exports RGB through this runner;
+auxiliary-head scoring stays separate.
+
 The prediction JSON declares `source`, `sampling_seeds` and a `runs` list. Each
 model run needs `method`, `run_id`, `training_seed`, a local `checkpoint` path and
 a `videos` mapping from every plan `sample_id` to its generated NPZ path. Use
