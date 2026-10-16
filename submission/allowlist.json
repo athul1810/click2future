@@ -1,0 +1,13 @@
+{
+  "include": [
+    "src/click2future/**/*.py",
+    "configs/**/*.yaml",
+    "configs/**/*.toml",
+    "tests/test_*.py",
+    "tests/fixtures/tiny_scene.json",
+    ".python-version",
+    "submission/allowlist.json",
+    "submission/README.md",
+    "submission/smoke.py"
+  ]
+}

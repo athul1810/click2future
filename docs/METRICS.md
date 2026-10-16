@@ -57,8 +57,8 @@ coordinates must be valid. Wall contacts are excluded from this object-pair inte
 
 These policies are versioned as metric version 1. Review them against simulator fixtures
 and freeze the tolerance and extraction rules on validation data before model comparisons.
-Per-sample records preserve counts for later aggregation; no dataset-level averaging or
-scene-group bootstrap is implemented yet.
+Per-sample records preserve counts for [scene-group aggregation and comparison
+tables](EVALUATION_REPORTS.md), including missing observations and bootstrap intervals.
 
 ## Run
 
@@ -376,7 +376,8 @@ must be interpreted together. They validate implementation behaviour, not model 
 
 ## Remaining work
 
-Contact recall, generated-video validation, and scene-group aggregation remain unresolved.
-T07 stays open until those limitations are addressed. T12 still needs the auxiliary
-supervision losses and integration with the dataset trainer. The uncertainty experiments
+Contact recall and validation on generated videos remain unresolved. Scene-group
+aggregation is implemented and checked on simulator controls. T07 stays open until
+the extraction limitations are addressed. T12 has [auxiliary losses](AUXILIARY_LOSSES.md)
+and gradient checks; integration with the dataset trainer remains. The uncertainty experiments
 in T16 need actual model samples; these metric controls do not complete that experiment.

@@ -1,0 +1,104 @@
+{
+  "status": "passed",
+  "purpose": "simulator metric checks, not trained-model results",
+  "scene_groups": 4,
+  "samples_per_case": 4,
+  "report_inputs": 24,
+  "source_sha256": {
+    "aggregate.py": "b1ba494e42dfe1a8472881e299ba49265e9756f9100f8459acd3b1d8936ea455",
+    "aggregate_controls.py": "6440eaa6c8941d75604fa022f46aa88ca13f50a5783ff9ce60d623981d3573f6"
+  },
+  "manifest_sha256": "c4aafbfce9096fc3f8859e55f29b5cc51909bb81d0708619532ddade5e354bf1",
+  "methods": [
+    {
+      "method": "frozen-video",
+      "metrics": {
+        "all_objects.mean_ade": {
+          "estimate": 0.027888281925811796,
+          "ci": [
+            0.014571191223240583,
+            0.04901576483088241
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.min_ade": {
+          "estimate": 0.027888281925811796,
+          "ci": [
+            0.014571191223240583,
+            0.04901576483088241
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "image.ssim": {
+          "estimate": 0.9664027636037438,
+          "ci": [
+            0.9555821024816356,
+            0.9772234247258522
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      }
+    },
+    {
+      "method": "simulator-variants",
+      "metrics": {
+        "all_objects.mean_ade": {
+          "estimate": 0.012921926618898794,
+          "ci": [
+            0.009306856163300929,
+            0.01706267742500601
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.min_ade": {
+          "estimate": 0.003483386269951774,
+          "ci": [
+            0.0026747501037057515,
+            0.0044539094781983575
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "image.ssim": {
+          "estimate": 0.9832951904796745,
+          "ci": [
+            0.9814690518837553,
+            0.9854833067727986
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": 0.015312821062228005,
+          "ci": [
+            0.01159422358104549,
+            0.019031418543410523
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      }
+    }
+  ]
+}

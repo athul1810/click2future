@@ -3,8 +3,9 @@
 A is owned by PRAMOD SANJAY, B by MAITI SHRIJEET, and C jointly by BOBAN ATHUL KRISHNA and KAPOOR ANANYA. D and the remaining setup/delivery tasks are unassigned. Reviewers are still to be chosen. Keep ownership and progress consistent with [GitHub Issues](https://github.com/athul1810/click2future/issues).
 
 The simulator contract is complete through PR #24. Simulator/data work and the local
-development environment are implemented in part. For C, continue T07 with contact-timing
-improvements and the remaining metrics; T12 needs B's dataset trainer and loss integration.
+development environment are implemented in part. C has metric controls, comparison-table
+export, and auxiliary losses ready. T07 still needs better contact extraction and checks
+on generated videos; T12 needs B's dataset trainer and sampling integration.
 The CVAE baseline in D still needs an owner. Dependencies below govern completion, while
 fixture-based work can proceed earlier.
 
@@ -130,7 +131,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
-**Progress:** Trajectory/collision, action, image, temporal, and ensemble metrics are implemented with source-labelled exports. Simulator controls distinguish physical trajectory spread from colour flicker, handle missing observations, and exclude reference contacts from acceleration checks. Contact recall remains 0.233; generated-video validation and group-level aggregation are pending. See [metric usage and measurements](METRICS.md).
+**Progress:** Trajectory/contact, action, image, temporal, and ensemble metrics have simulator controls. Comparison tables now combine declared cases with scene-group bootstrap intervals, missing counts, and source separation. Contact recall remains 0.233; validation on generated videos is pending. See [metric usage](METRICS.md) and [comparison tables](EVALUATION_REPORTS.md).
 
 **Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
@@ -235,6 +236,8 @@ Commit to a comparable experiment suite that fits the remaining budget.
 
 Produce the main evidence for conditioning and supervision claims.
 
+**Progress:** CSV/JSON comparison export is implemented and checked on 24 simulator-control reports from four independent scenes. It retains run/checkpoint IDs, K, missing counts, and scene-group intervals. Actual E0-E4 runs, cost measurements, hyperparameter study, and analysis still depend on T13.
+
 **Dependencies:** T13 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [ ] Run the five variants under the frozen protocol and record actual budgets/seed counts.
@@ -303,13 +306,15 @@ Prepare the two required PDFs using the course structure and the team's measured
 
 Prepare a source-only submission package and check that it can be used without the team's working files.
 
+**Progress:** A deterministic source-only ZIP builder, explicit allowlist, input scanner, and hashed inventory are implemented. The archive installed in a fresh Python environment; all 219 tests and four subtests passed after extraction, including generated-data replay and batch loading. The current ZIP is a development snapshot. Dataset training/sampling, CVAE, checkpoint checks, demo integration, and final instructions remain.
+
 **Dependencies:** T14, T15, T16, T17 · **Owner:** Unassigned
 
 - [ ] Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
-- [ ] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
+- [x] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
 - [ ] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
-- [ ] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
-- [ ] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
+- [x] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
+- [x] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
 - [ ] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
 
 <a id="t20"></a>

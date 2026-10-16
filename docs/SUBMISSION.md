@@ -49,6 +49,37 @@ Our dataset is procedural, so include the generator, fixed configs, and seed/spl
 
 Code comments are optional according to page 5. Existing useful comments do not need to be removed.
 
+### Build and check the code archive
+
+From the repository root:
+
+```sh
+python -m click2future.submission build --output dist/group_07_code.zip
+python -m click2future.submission inspect --archive dist/group_07_code.zip
+```
+
+`submission/allowlist.json` selects source, configs, tests, and one initial-scene
+configuration. It excludes saved rollouts, weights, Git history, environments, and
+working documents. The builder rejects external links, unexpected file types, and
+symlinked source. `MANIFEST.json` records each included file's SHA-256. Fixed ZIP
+metadata makes repeated builds identical when the source is unchanged.
+
+The working `uv.lock` and dependency index URLs cannot enter the submitted ZIP.
+The builder generates a URL-free `pyproject.toml` with exact direct versions and
+`constraints.txt` with unambiguous locked versions. CUDA packages with different
+platform alternatives are left to the site's compatible PyTorch distribution.
+The working development lock stays unchanged. The archive is not an offline package
+bundle; installation needs available packages or a cache.
+
+Extract into a fresh folder and follow its standalone `README.md`. Run
+`python submission/smoke.py` after installation to generate two temporary rollouts,
+check replay, load a batch, and verify all project imports come from the extracted
+source. No existing data or model files are needed. The correctness tests include
+archive corruption, excluded working files, external links, and clean-folder replay.
+
+The current archive is a development snapshot. Training/sampling source, CVAE,
+checkpoint checks, and final run instructions still need completion before submission.
+
 ## Final check
 
 - [ ] Verify all three filenames use `group_07_` and coordinate the upload with PRAMOD SANJAY.

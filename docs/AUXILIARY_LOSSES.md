@@ -45,12 +45,17 @@ from click2future.training import AuxiliaryLossConfig, auxiliary_loss, build_aux
 
 # batch contains Torch tensors converted from data.load_batch, on the model device.
 targets = build_auxiliary_targets(
-    batch["positions"], batch["collision_onset"], batch["object_valid"],
-    batch["instance_masks"][:, 0], max_objects=model.max_objects,
+    batch["positions"],
+    batch["collision_onset"],
+    batch["object_valid"],
+    batch["instance_masks"][:, 0],
+    max_objects=model.max_objects,
 )
 output = model(noisy_future, timesteps, first_frame, selected_mask, normalized_force)
 aux = auxiliary_loss(
-    output, targets, timesteps,
+    output,
+    targets,
+    timesteps,
     num_diffusion_steps=num_diffusion_steps,
     config=AuxiliaryLossConfig(),
 )
