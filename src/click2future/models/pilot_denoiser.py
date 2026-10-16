@@ -17,6 +17,7 @@ from torch.nn import functional as F
 
 @dataclass
 class DenoiserOutput:
+    # Legacy field name: trainer/sampler interpret these channels as epsilon or v.
     predicted_noise: Tensor
     positions: Tensor | None = None  # [B,T_future,M,2], frame-0 canonical object order
     collision_logits: Tensor | None = None  # [B,T_future,M,M], onset intervals, same order

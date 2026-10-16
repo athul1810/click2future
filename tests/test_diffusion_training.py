@@ -29,8 +29,9 @@ def dataset(tmp_path):
     return path
 
 
-def test_ddim_recovers_known_clean_signal_and_preserves_rng():
-    diffusion = Diffusion(20)
+@pytest.mark.parametrize("prediction_type", ["epsilon", "velocity"])
+def test_ddim_recovers_known_clean_signal_and_preserves_rng(prediction_type):
+    diffusion = Diffusion(20, prediction_type=prediction_type)
     condition = observable_condition(
         torch.zeros(1, 3, 8, 8), torch.ones(1, 1, 8, 8), torch.zeros(1, 2)
     )
@@ -38,7 +39,11 @@ def test_ddim_recovers_known_clean_signal_and_preserves_rng():
     class Oracle(nn.Module):
         def forward(self, noisy, timesteps, **_):
             alpha = diffusion.alpha_bar[timesteps][:, None, None, None, None]
-            return DenoiserOutput((noisy - alpha.sqrt() * 0.25) / (1 - alpha).sqrt())
+            noise = (noisy - alpha.sqrt() * 0.25) / (1 - alpha).sqrt()
+            prediction = noise
+            if prediction_type == "velocity":
+                prediction = alpha.sqrt() * noise - (1 - alpha).sqrt() * 0.25
+            return DenoiserOutput(prediction)
 
     oracle = Oracle().train()
     state = torch.get_rng_state().clone()
@@ -73,6 +78,23 @@ def test_noise_equation_matches_analytic_endpoints():
             actual[index], a.sqrt() * clean[index] + (1 - a).sqrt() * noise[index]
         )
     assert (diffusion.alpha_bar[1:] < diffusion.alpha_bar[:-1]).all()
+
+
+def test_velocity_round_trip_stays_well_conditioned_at_low_signal():
+    velocity = Diffusion(1000, prediction_type="velocity")
+    epsilon = Diffusion(1000)
+    clean = torch.full((3, 2, 2), 0.25)
+    noise = torch.randn(clean.shape, generator=torch.Generator().manual_seed(8))
+    times = torch.tensor([0, 500, 999])
+    noisy = velocity.add_noise(clean, times, noise)
+    target = velocity.training_target(clean, times, noise)
+    torch.testing.assert_close(
+        velocity.predict_clean(noisy, times, target), clean, atol=1e-6, rtol=0
+    )
+    velocity_error = (velocity.predict_clean(noisy, times, target + 0.001) - clean)[-1].abs().mean()
+    epsilon_error = (epsilon.predict_clean(noisy, times, noise + 0.001) - clean)[-1].abs().mean()
+    assert velocity_error <= 0.00101
+    assert epsilon_error > 1000 * velocity_error
 
 
 def test_observable_boundary_ignores_oracle_fields_and_rejects_action_drift(dataset):
@@ -129,8 +151,15 @@ def test_recorded_source_change_cannot_be_called_exact_resume(dataset, tmp_path,
 
 
 @pytest.mark.parametrize("auxiliary", [False, True])
-def test_full_training_resume_matches_uninterrupted(dataset, tmp_path, auxiliary):
-    config = TrainConfig(steps=6, base_channels=8, diffusion_steps=20, auxiliary=auxiliary)
+@pytest.mark.parametrize("prediction_type", ["epsilon", "velocity"])
+def test_full_training_resume_matches_uninterrupted(dataset, tmp_path, auxiliary, prediction_type):
+    config = TrainConfig(
+        steps=6,
+        base_channels=8,
+        diffusion_steps=20,
+        auxiliary=auxiliary,
+        prediction_type=prediction_type,
+    )
     uninterrupted = Trainer(dataset, config)
     records = []
     for index in range(6):

@@ -36,6 +36,7 @@ class TrainConfig:
     ema_decay: float = 0.995
     seed: int = 7
     diffusion_steps: int = 1000
+    prediction_type: str = "epsilon"
     base_channels: int = 32
     conditioning: str = "spatial"
     auxiliary: bool = False
@@ -51,6 +52,8 @@ class TrainConfig:
                 raise ValueError(f"{name} must be a positive integer")
         if self.diffusion_steps < 2:
             raise ValueError("diffusion_steps must be >= 2")
+        if self.prediction_type not in {"epsilon", "velocity"}:
+            raise ValueError("prediction_type must be epsilon or velocity")
         if self.precision not in {"float32", "bfloat16"}:
             raise ValueError("precision must be float32 or bfloat16")
         if self.limit_train is not None and (
@@ -175,7 +178,9 @@ class Trainer:
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer, T_max=config.steps, eta_min=config.learning_rate * 0.1
         )
-        self.diffusion = Diffusion(config.diffusion_steps, self.device)
+        self.diffusion = Diffusion(
+            config.diffusion_steps, self.device, prediction_type=config.prediction_type
+        )
         self.order_rng = torch.Generator().manual_seed(config.seed + 1)
         self.order = torch.randperm(len(self.sample_ids), generator=self.order_rng).tolist()
         self.cursor = 0
@@ -208,7 +213,8 @@ class Trainer:
             enabled=self.config.precision == "bfloat16",
         ):
             output = self.model(noisy, times, **condition.kwargs())
-            noise_loss = F.mse_loss(output.predicted_noise.float(), noise.float())
+            target = self.diffusion.training_target(clean, times, noise)
+            noise_loss = F.mse_loss(output.predicted_noise.float(), target.float())
             loss = noise_loss
             auxiliary_record = {}
             if self.config.auxiliary:
@@ -246,7 +252,11 @@ class Trainer:
             "step": self.step,
             "sample_ids": batch["sample_ids"],
             "loss": float(loss.detach()),
-            "noise_loss": float(noise_loss.detach()),
+            "prediction_loss": float(noise_loss.detach()),
+            "prediction_type": self.config.prediction_type,
+            "noise_loss": float(noise_loss.detach())
+            if self.config.prediction_type == "epsilon"
+            else None,
             "gradient_norm_before_clip": float(norm),
             "learning_rate_next_step": self.optimizer.param_groups[0]["lr"],
             "seconds_including_load": time.perf_counter() - started,
@@ -270,7 +280,8 @@ class Trainer:
             predicted = self.model(
                 self.diffusion.add_noise(clean, times, noise), times, **condition.kwargs()
             ).predicted_noise
-            return float(F.mse_loss(predicted.float(), noise.float()))
+            target = self.diffusion.training_target(clean, times, noise)
+            return float(F.mse_loss(predicted.float(), target.float()))
         finally:
             self.model.train(was_training)
             _restore_rng(state)
@@ -303,7 +314,9 @@ class Trainer:
 
     def resume(self, path: Path):
         state = torch.load(path, map_location="cpu", weights_only=True)
-        if state["checkpoint_version"] != 1 or state["config"] != asdict(self.config):
+        if state["checkpoint_version"] != 1 or asdict(TrainConfig(**state["config"])) != asdict(
+            self.config
+        ):
             raise ValueError("Checkpoint version or immutable training config differs")
         if state["provenance"] != self.provenance:
             raise ValueError("Training data changed since checkpoint creation")
@@ -373,8 +386,9 @@ def main(argv=None):
         "provenance": trainer.provenance,
         "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
         "source_revision": os.environ.get("C2F_SOURCE_REVISION", "unrecorded"),
-        "probe_training_noise_mse_before": before,
-        "probe_training_noise_mse_after": trainer.probe_loss(),
+        "probe_training_prediction_mse_before": before,
+        "probe_training_prediction_mse_after": trainer.probe_loss(),
+        "prediction_type": config.prediction_type,
         "mean_step_seconds_excluding_first_10": (
             float(np.mean([r["seconds_including_load"] for r in records[10:]]))
             if len(records) > 10
@@ -383,7 +397,7 @@ def main(argv=None):
         "peak_cuda_allocated_bytes": (
             torch.cuda.max_memory_allocated(trainer.device) if args.device == "cuda" else None
         ),
-        "scope": "Training-noise diagnostic; inspect samples and held-out action controls next",
+        "scope": "Training-prediction diagnostic; inspect samples and held-out controls next",
     }
     (args.run_dir / f"summary-{stop}.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8"

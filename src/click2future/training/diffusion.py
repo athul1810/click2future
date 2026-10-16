@@ -13,15 +13,32 @@ from .conditioning import Condition
 
 
 class Diffusion:
-    def __init__(self, steps: int = 1000, device: str | torch.device = "cpu"):
+    def __init__(
+        self, steps: int = 1000, device: str | torch.device = "cpu", *, prediction_type="epsilon"
+    ):
         if isinstance(steps, bool) or not isinstance(steps, int) or steps < 2:
             raise ValueError("Diffusion needs at least two timesteps")
         self.steps = steps
+        if prediction_type not in {"epsilon", "velocity"}:
+            raise ValueError("prediction_type must be epsilon or velocity")
+        self.prediction_type = prediction_type
         time = torch.linspace(0, 1, steps + 1, dtype=torch.float64)
         cumulative = torch.cos((time + 0.008) / 1.008 * math.pi / 2).square()
         cumulative = cumulative / cumulative[0]
         betas = (1 - cumulative[1:] / cumulative[:-1]).clamp(0, 0.999)
         self.alpha_bar = (1 - betas).cumprod(0).float().to(device)
+
+    def training_target(self, clean: Tensor, timesteps: Tensor, noise: Tensor) -> Tensor:
+        if self.prediction_type == "epsilon":
+            return noise
+        alpha = self.alpha_bar[timesteps].reshape(-1, *([1] * (clean.ndim - 1)))
+        return alpha.sqrt() * noise - (1 - alpha).sqrt() * clean
+
+    def predict_clean(self, noisy: Tensor, timesteps: Tensor, prediction: Tensor) -> Tensor:
+        alpha = self.alpha_bar[timesteps].reshape(-1, *([1] * (noisy.ndim - 1)))
+        if self.prediction_type == "velocity":
+            return alpha.sqrt() * noisy - (1 - alpha).sqrt() * prediction
+        return (noisy - (1 - alpha).sqrt() * prediction) / alpha.sqrt()
 
     def add_noise(self, clean: Tensor, timesteps: Tensor, noise: Tensor) -> Tensor:
         if clean.shape != noise.shape or clean.device != self.alpha_bar.device:
@@ -70,11 +87,11 @@ class Diffusion:
         try:
             for index, timestep in enumerate(indices):
                 times = torch.full((len(first),), timestep, device=first.device, dtype=torch.long)
-                epsilon = model(noisy, times, **condition.kwargs()).predicted_noise.float()
-                if epsilon.shape != noisy.shape or not torch.isfinite(epsilon).all():
-                    raise ValueError("Sampler received invalid predicted noise")
+                prediction = model(noisy, times, **condition.kwargs()).predicted_noise.float()
+                if prediction.shape != noisy.shape or not torch.isfinite(prediction).all():
+                    raise ValueError("Sampler received invalid denoising prediction")
                 alpha = self.alpha_bar[timestep]
-                clean = ((noisy - (1 - alpha).sqrt() * epsilon) / alpha.sqrt()).clamp(-1, 1)
+                clean = self.predict_clean(noisy, times, prediction).clamp(-1, 1)
                 # Recompute epsilon after clipping x0 to preserve DDIM consistency.
                 epsilon = (noisy - alpha.sqrt() * clean) / (1 - alpha).sqrt()
                 previous = self.alpha_bar[indices[index + 1]] if index + 1 < len(indices) else 1.0

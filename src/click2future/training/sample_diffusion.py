@@ -33,7 +33,11 @@ def load_generator(checkpoint: Path, device="cpu"):
     ).to(device)
     model.load_state_dict(state["ema"])
     model.eval()
-    return model, Diffusion(config.diffusion_steps, device), state
+    return (
+        model,
+        Diffusion(config.diffusion_steps, device, prediction_type=config.prediction_type),
+        state,
+    )
 
 
 def sample_videos(
@@ -118,6 +122,7 @@ def main(argv=None):
         "checkpoint_sha256": hashlib.sha256(args.checkpoint.read_bytes()).hexdigest(),
         "condition_sha256": hashlib.sha256(args.condition.read_bytes()).hexdigest(),
         "training_step": state["step"],
+        "prediction_type": diffusion.prediction_type,
         "weights": "ema",
         "seed_policy": "private generator per sample; paired seeds across changed actions",
         "seeds": args.seeds,
