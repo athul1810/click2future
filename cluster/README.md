@@ -30,6 +30,16 @@ See [access status](../docs/TC2_ACCESS.md) for the remaining members.
 
 ## Windows setup helper
 
+For upload and full setup in one invocation after first login, use:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\tc2_setup.ps1 -Username shrijeet001 -Qos normal -Stage All
+```
+
+This asks for credentials for SCP and SSH, then submits one setup job. Hardware and
+compatibility checks run first inside that job, before installing dependencies.
+The separate stages below remain useful for inspecting hardware before installation.
+
 After first login, exit SSH and run the following from the Windows repository.
 Use the assigned username and QoS; the defaults below match Shrijeet's approval.
 

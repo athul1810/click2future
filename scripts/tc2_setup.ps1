@@ -5,7 +5,7 @@ param(
     [string]$Username,
     [ValidatePattern('^[a-zA-Z0-9][a-zA-Z0-9.-]*$')]
     [string]$HostName = '10.96.189.12',
-    [ValidateSet('Inventory', 'Setup', 'Collect')]
+    [ValidateSet('Inventory', 'Setup', 'Collect', 'All')]
     [string]$Stage = 'Inventory',
     [ValidatePattern('^[a-zA-Z0-9_-]+$')]
     [string]$Qos = 'normal',
@@ -36,7 +36,7 @@ try {
     $mode = $Stage.ToLowerInvariant()
     $sshOptions = @('-o', 'StrictHostKeyChecking=ask', '-o', 'ConnectTimeout=15',
         '-o', 'NumberOfPasswordPrompts=2', '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3')
-    if ($Stage -eq 'Inventory') {
+    if ($Stage -in @('Inventory', 'All')) {
         & git archive --format=tar.gz "--output=$archivePath" $Revision
         if ($LASTEXITCODE -ne 0) { throw 'Source archive failed.' }
         $archiveHash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -66,7 +66,7 @@ else
     printf '%s\n' 'Reusing this source release; existing source will not be overwritten.'
 fi
 '@
-    if ($Stage -ne 'Inventory') { $staging = '' }
+    if ($Stage -notin @('Inventory', 'All')) { $staging = '' }
     $remoteScript = $remoteScript.Replace('__STAGING__', $staging).Replace('__REVISION__', $Revision).
         Replace('__ARCHIVE__', $archiveName).Replace('__HASH__', $archiveHash).
         Replace('__QOS__', $Qos).Replace('__MODE__', $mode).Replace(([string][char]13), '')
@@ -78,7 +78,7 @@ fi
         Write-Host "Dry run passed. Prepared commands are in $localDirectory; no connection or job submission occurred."
         return
     }
-    if ($Stage -eq 'Inventory') {
+    if ($Stage -in @('Inventory', 'All')) {
         & scp @sshOptions $archivePath "$($target):$archiveName"
         if ($LASTEXITCODE -ne 0) { throw 'Source transfer failed.' }
     }

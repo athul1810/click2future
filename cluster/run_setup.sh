@@ -16,9 +16,9 @@ mkdir -p outputs
 umask 077
 case "$mode" in
     inventory) job_script=cluster/inventory.sbatch ;;
-    setup) job_script=cluster/setup.sbatch ;;
+    setup|all) job_script=cluster/setup.sbatch ;;
     collect) job_script= ;;
-    *) printf '%s\n' 'Usage: run_setup.sh inventory|setup|collect' >&2; exit 2 ;;
+    *) printf '%s\n' 'Usage: run_setup.sh inventory|setup|all|collect' >&2; exit 2 ;;
 esac
 status=0
 if [[ -n "$job_script" ]]; then
