@@ -105,7 +105,7 @@ Generate repeatable tabletop clips with usable physical labels.
 - [x] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
 - [x] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
 
-Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.
+Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review in PR #32. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.
 
 <a id="t06"></a>
 
@@ -121,7 +121,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review; trained generalization remains T15.
+Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review in PR #32; trained generalization remains T15.
 
 <a id="t07"></a>
 
@@ -263,7 +263,7 @@ Measure which action-conditioned behaviors generalize beyond training.
 - [ ] Compare against ID performance and include tracker failure rates.
 - [ ] Save representative successes/failures and state generalization limits.
 
-The batch evaluator can apply identical frozen extraction/reporting to held-out splits and rejects missing cases or changed inputs. Separate shape/texture/force OOD data from T06 and trained frozen checkpoints remain required.
+The fixed-case evaluator and separate dataset-0.3 suites are implemented. PR #32 adds disjoint shape, texture and force OOD data, with repeated-physics references and full plan coverage. It builds on #30 and is awaiting review. Train/select models on that same corpus before making matched ID/OOD claims; final corpus/checkpoint settings and actual model measurements are still required. Frozen simulator extractor controls retain their failures, including 25% missing observations in the small texture check. No trained generalization result is claimed.
 
 <a id="t16"></a>
 
