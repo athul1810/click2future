@@ -1,5 +1,6 @@
 """Numerical sampling, inference boundary, and interrupted-training regression checks."""
 
+import random
 from dataclasses import replace
 
 import numpy as np
@@ -115,14 +116,38 @@ def test_checkpoint_to_video_inference_preserves_frame_zero(dataset, tmp_path):
     np.testing.assert_array_equal(videos, repeated)
 
 
+def test_recorded_source_change_cannot_be_called_exact_resume(dataset, tmp_path, monkeypatch):
+    monkeypatch.setenv("C2F_SOURCE_REVISION", "a" * 40)
+    config = TrainConfig(steps=2, base_channels=8)
+    trainer = Trainer(dataset, config)
+    checkpoint = tmp_path / "source.pt"
+    trainer.save(checkpoint)
+    monkeypatch.setenv("C2F_SOURCE_REVISION", "b" * 40)
+    changed = Trainer(dataset, config)
+    with pytest.raises(ValueError, match="Source revision changed"):
+        changed.resume(checkpoint)
+
+
 @pytest.mark.parametrize("auxiliary", [False, True])
 def test_full_training_resume_matches_uninterrupted(dataset, tmp_path, auxiliary):
     config = TrainConfig(steps=6, base_channels=8, diffusion_steps=20, auxiliary=auxiliary)
     uninterrupted = Trainer(dataset, config)
-    records = [uninterrupted.train_step() for _ in range(6)]
+    records = []
+    for index in range(6):
+        if index == 3:
+            random.random()
+            np.random.random(7)
+            torch.randn(9)
+        records.append(uninterrupted.train_step())
+    expected_python = random.random()
+    expected_numpy = np.random.random(7)
+    expected_torch = torch.randn(9)
     interrupted = Trainer(dataset, config)
     for _ in range(3):
         interrupted.train_step()
+    random.random()
+    np.random.random(7)
+    torch.randn(9)
     # Probe must leave the next training sample, timestep and noise unchanged.
     interrupted.probe_loss()
     checkpoint = tmp_path / "resume.pt"
@@ -130,6 +155,9 @@ def test_full_training_resume_matches_uninterrupted(dataset, tmp_path, auxiliary
     resumed = Trainer(dataset, config)
     resumed.resume(checkpoint)
     continuation = [resumed.train_step() for _ in range(3)]
+    assert random.random() == expected_python
+    np.testing.assert_array_equal(np.random.random(7), expected_numpy)
+    torch.testing.assert_close(torch.randn(9), expected_torch, rtol=0, atol=0)
     for expected, actual in zip(records[3:], continuation, strict=True):
         assert actual["sample_ids"] == expected["sample_ids"]
         assert actual["loss"] == expected["loss"]

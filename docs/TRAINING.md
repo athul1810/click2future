@@ -38,7 +38,7 @@ exports paired forward/reverse/zero samples. It does not overwrite dataset-0.1.
   on validation before freezing sampling cost. No classifier-free guidance.
 - Checkpoints save model, EMA, optimizer, LR scheduler, step, Python/NumPy/
   Torch/CUDA RNG, data permutation/cursor and permutation generator. Resume
-  rejects changed config, actual training-file hashes, device type or Torch
+  rejects changed config, actual training-file hashes, recorded source, device type or Torch
   version. CPU continuation is tested for exact equality. Cross-node exactness
   additionally depends on deterministic kernels and hardware/software matching.
 - The manifest and split hashes are verified, scene-group membership checked,
@@ -64,6 +64,15 @@ object observations were untrackable. Increasing sampler steps to 128 or 1000,
 or switching EMA to raw weights, did not restore tracking. The longer training
 diagnostic is an independent restart, not a resumed or successful experiment.
 See [the recorded result](results/diffusion_pilot_2026-10-16.json).
+
+If a longer run still fails, inspect reconstructed x0 by noise level and test
+prediction parameterization before increasing model size. Epsilon-to-x0 conversion
+divides by sqrt(alpha_bar), so errors are amplified near the cosine schedule's
+low-signal endpoint. Velocity prediction is a candidate controlled diagnostic,
+not an established explanation for this failure. See
+[Salimans and Ho](https://arxiv.org/abs/2202.00512) and
+[Lin et al.](https://arxiv.org/abs/2305.08891). Any selected target/schedule must
+be shared by E2/E3 and frozen using validation, with old runs labelled separately.
 
 1. Numerical equations, seed isolation, oracle-field exclusion and complete
    interrupted training pass their tests.

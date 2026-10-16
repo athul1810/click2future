@@ -307,6 +307,13 @@ class Trainer:
             raise ValueError("Checkpoint version or immutable training config differs")
         if state["provenance"] != self.provenance:
             raise ValueError("Training data changed since checkpoint creation")
+        current_source = os.environ.get("C2F_SOURCE_REVISION", "unrecorded")
+        if (
+            current_source != "unrecorded"
+            and state["source_revision"] != "unrecorded"
+            and current_source != state["source_revision"]
+        ):
+            raise ValueError("Source revision changed; exact resume requires the original source")
         if state["device_type"] != self.device.type or state["torch_version"] != str(
             torch.__version__
         ):

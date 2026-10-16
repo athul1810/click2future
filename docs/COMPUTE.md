@@ -29,7 +29,7 @@ The resource limits apply across the user's running jobs. Two job slots do not p
 - [x] Complete the first interactive login (reported by Shrijeet, 16 October 2026); the email says this creates the home directory.
 - [x] Run a small scheduled GPU job and record GPU model, VRAM and software versions: job 42886, completed with exit 0:0 on 16 October 2026.
 - [ ] Check storage limits, any total usage quota, and access expiry.
-- [ ] Choose backup locations for code, configs, run records, and checkpoints. TC2 provides no backup service; keep datasets and model files out of Git and the course submission.
+- [x] Keep code/configs in Git and full private checkpoint/result bundles under ignored local `outputs/tc2-ops`, copied from TC2 after each completed pilot. TC2 provides no backup service; datasets and model files stay out of Git and the course submission.
 
 Shrijeet's initial SSH attempt closed, followed by a successful plain interactive login
 and confirmed home-directory creation on 16 October. Setup job `42886` completed on
@@ -43,8 +43,8 @@ The 64px, 31-future-frame, batch-one denoiser profile used bfloat16 and averaged
 0.0380 seconds per synthetic forward/backward/optimizer step after three warm-ups
 (five measured steps). Peak allocated GPU memory was 665.39 MiB; peak reserved memory
 was 798 MiB. This is a short synthetic profile, not end-to-end training or sampling
-latency. A complete trainer/data-pipeline measurement and full-state resume across
-jobs remain required before budgeting long experiments.
+latency. The real-data measurement and full-state resume appear below. A chosen
+full dataset still needs its own throughput and quality gate before main runs.
 
 The email says accounts that never attempt
 login may be revoked after three months. Use TC2 for the approved coursework. Keep

@@ -18,8 +18,14 @@ Private connection reports stay under ignored
 Follow the [TC2 setup workflow](../cluster/README.md) for first login, committed-source
 upload, hardware inventory, isolated dependency installation, and the GPU probe.
 
-Storage quota, total usage allowance and access expiry remain unconfirmed. Full
-training-state resume across jobs belongs to the trainer work, before long runs.
+Real training jobs 42909/42910 also completed. Full model, EMA, optimizer,
+scheduler, RNG and data-order continuation matched the next update across
+allocations with zero tensor difference. Local backups include the full checkpoint
+and result bundle. The first model failed generated-video quality checks; that is
+a learning issue rather than an access failure. See
+[training evidence](results/diffusion_pilot_2026-10-16.json).
+
+Storage quota, total usage allowance and access expiry remain unconfirmed.
 
 Access for the remaining members is not recorded. Members who need their own account should
 follow the course application form and send it to `ccdsgpu-tc@ntu.edu.sg`. Keep completed

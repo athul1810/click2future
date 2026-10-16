@@ -7,7 +7,7 @@ Select an object in a tabletop scene, draw a force arrow, and generate four poss
 Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU. For Project 1: Technical Review, we will compare a conditional VAE and video diffusion for predicting tabletop motion after a force is applied. A procedural simulator will generate the clips, trajectories, and collision labels. We also plan to test object-centric conditioning and auxiliary physics supervision.
 
 **Status:** seeded simulation, grouped data generation/replay, the development environment,
-and an untrained denoiser prototype are available. Evaluation includes trajectory/collision
+and a trainable pixel denoiser are available. Evaluation includes trajectory/collision
 metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks, and ensemble diversity/coverage. Contact extraction remains
 experimental, with low recall.
 A dataset trainer, complete checkpoint/resume and seeded DDIM sampler are implemented,
