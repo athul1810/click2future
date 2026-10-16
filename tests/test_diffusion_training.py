@@ -11,6 +11,7 @@ from click2future.data import generate_dataset, load_batch
 from click2future.models.pilot_denoiser import DenoiserOutput
 from click2future.training.conditioning import observable_condition, training_inputs
 from click2future.training.diffusion import Diffusion
+from click2future.training.sample_diffusion import load_generator, sample_videos
 from click2future.training.train_diffusion import TrainConfig, Trainer
 
 
@@ -90,6 +91,28 @@ def test_observable_boundary_ignores_oracle_fields_and_rejects_action_drift(data
         training_inputs(batch, "cpu")
     with pytest.raises(ValueError, match="Force magnitude"):
         observable_condition(torch.zeros(1, 3, 8, 8), torch.ones(1, 1, 8, 8), torch.ones(1, 2))
+
+
+def test_checkpoint_to_video_inference_preserves_frame_zero(dataset, tmp_path):
+    trainer = Trainer(dataset, TrainConfig(steps=2, base_channels=8, diffusion_steps=10))
+    trainer.train_step()
+    checkpoint = tmp_path / "inference.pt"
+    trainer.save(checkpoint)
+    model, diffusion, state = load_generator(checkpoint)
+    assert state["step"] == 1
+    batch = load_batch(dataset, trainer.sample_ids[:1])
+    first = (batch["frames"][0, 0].transpose(1, 2, 0) * 255).round().astype(np.uint8)
+    kwargs = dict(seeds=(17, 18), future_frames=3, sampling_steps=4)
+    videos = sample_videos(
+        model, diffusion, first, batch["selected_mask"][0, 0], batch["force_xy"][0], **kwargs
+    )
+    repeated = sample_videos(
+        model, diffusion, first, batch["selected_mask"][0, 0], batch["force_xy"][0], **kwargs
+    )
+    assert videos.dtype == np.uint8
+    assert videos.shape == (2, 4, 16, 16, 3)
+    np.testing.assert_array_equal(videos[:, 0], np.broadcast_to(first, (2, *first.shape)))
+    np.testing.assert_array_equal(videos, repeated)
 
 
 @pytest.mark.parametrize("auxiliary", [False, True])

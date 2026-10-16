@@ -50,8 +50,12 @@ Current definitions remain in [ARCHITECTURE.md](ARCHITECTURE.md) and
   The dataset trainer, cosine schedule, EMA, DDIM sampler, full checkpoint and
   observable-only adapter now exist. Local tests pass exact interrupted
   continuation with auxiliary losses both enabled and disabled.
-- A two-allocation TC2 learning/resume pilot is in progress. Noise-loss decline
-  is not accepted as evidence of coherent generated motion or action response.
+- Jobs 42909/42910 completed with zero next-update tensor difference across
+  allocations. The 2,000-step pilot failed video quality: heavy colour noise and
+  0/248 tracked future object observations. Sampler steps alone did not fix it.
+  Job 42917 tests a longer restart. See [pilot evidence](results/diffusion_pilot_2026-10-16.json).
+- PR #27 merged comparison-table and source-package checks, including a Windows
+  test correction. The integrated suite passed 224 tests and four subtests.
 - [PR #28](https://github.com/athul1810/click2future/pull/28) requests Sanjay's
   review of contact-friction semantics and the next version's control/contact
   strata. No tabletop-drag change blocks current training.

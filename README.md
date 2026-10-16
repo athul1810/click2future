@@ -11,14 +11,20 @@ and an untrained denoiser prototype are available. Evaluation includes trajector
 metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks, and ensemble diversity/coverage. Contact extraction remains
 experimental, with low recall.
 A dataset trainer, complete checkpoint/resume and seeded DDIM sampler are implemented,
-including auxiliary-loss integration. CVAE and the demo remain to be built; learned-video
-quality and held-out action response are not yet established. See [evaluation results](docs/METRICS.md).
+including auxiliary-loss integration. The first 2,000-step learning pilot failed
+generated-video checks; a longer diagnostic is running. CVAE, held-out learned-video
+controls and the demo remain open. See [pilot evidence](docs/results/diffusion_pilot_2026-10-16.json)
+and [evaluation results](docs/METRICS.md).
 
 **Internal completion deadline:** 14 November 2026; freeze all artifacts on 13 November. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
 **Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya proposed, awaiting acceptance; demo integration: Shrijeet. See the [task board](docs/TASKS.md).
 
-**Compute:** TC2 access is approved for Athul and Shrijeet. Shrijeet's A40 setup passed in job 42886, including CUDA checks, tests and a 31-frame synthetic profile. The accounts have a one-GPU limit and a six-hour job limit. Dataset-training cost and sampling latency remain to be measured. See [compute details](docs/COMPUTE.md).
+**Compute:** TC2 access is approved for Athul and Shrijeet. A40 setup and real
+training jobs passed, including exact next-update continuation across allocations.
+The four-clip diagnostic measured 0.04883 s/step and 1.744 s for four 32-step
+samples. These timings do not establish video quality or full-dataset cost.
+Each account has a one-GPU, six-hour-job limit. See [compute details](docs/COMPUTE.md).
 
 ## Group 7
 
@@ -165,4 +171,6 @@ See [Research references](docs/REFERENCES.md) for the baselines, diffusion model
 
 ## Results
 
-Environment and simulator/metric controls have passed. The first learned-video pilot is in progress; this does not establish generative quality or a method ranking. Record measured results with run IDs, configs, seeds and checkpoint hashes.
+Environment and simulator/metric controls passed. The first learned-video pilot
+passed full-state resume but failed generated-video quality. No method ranking
+is established. Record run IDs, configs, seeds, failures and checkpoint hashes.

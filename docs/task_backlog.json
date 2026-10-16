@@ -37,9 +37,10 @@
     "issue_url": "https://github.com/athul1810/click2future/issues/2",
     "completed_acceptance": [
       0,
-      1
+      1,
+      3
     ],
-    "progress": "Shrijeet completed first login and setup job 42886 on TC2N01: A40, driver 570.148.08, Python 3.12.15, torch 2.11.0+cu128, CUDA checks, 147 tests and 4 subtests passed (1 optional module skipped). Evidence: docs/results/tc2_probe_2026-10-16.json. Storage/usage quota, expiry and full training-state resume across jobs remain open."
+    "progress": "A40 setup 42886 and real training jobs 42909/42910 completed. Full model/EMA/optimizer/scheduler/RNG/data-order resume matched the next update with zero tensor difference across allocations. Data-loading-inclusive step time 0.04883 s; four 32-step samples 1.744 s; peak allocated 752,562,176 bytes. No user storage quota or expiry was exposed by the read-only checks. Evidence: docs/results/diffusion_pilot_2026-10-16.json. Generated-video gate failed; this is infrastructure evidence, not model readiness."
   },
   {
     "id": "T03",
@@ -230,8 +231,13 @@
     "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/10",
-    "completed_acceptance": [],
-    "progress": "Cosine epsilon training, observable-only conditioning, EMA, seeded DDIM, train-file provenance and full-state checkpoint/resume implemented. Exact CPU interrupted continuation passes with and without auxiliary losses. Two-allocation A40 pilot in progress; learned video quality and held-out action control not established."
+    "completed_acceptance": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "progress": "Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up sampler/training-duration diagnostics are running in job 42917."
   },
   {
     "id": "T11",
@@ -323,7 +329,7 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/14",
-    "progress": "CSV/JSON comparison export is implemented and checked on 24 simulator-control reports from four independent scenes. It retains run/checkpoint IDs, K, missing counts, and scene-group intervals. Actual E0-E4 runs, cost measurements, hyperparameter study, and analysis still depend on T13.",
+    "progress": "Scene-group comparison tables and source separation merged via PR #27. Actual main comparisons remain pending. The 2000-step diffusion pilot failed the generated-video gate; do not include its noise-loss decline as a model-quality result.",
     "evidence": "docs/EVALUATION_REPORTS.md; docs/results/aggregation-controls.json. Simulator controls only; no trained-model comparison."
   },
   {

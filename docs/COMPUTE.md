@@ -55,6 +55,28 @@ Other nodes or later allocations may differ; check their device reports.
 
 Track the login and GPU validation results in T02. CPU simulation, data preparation, and development checks can proceed independently.
 
+## Real data pilot, 16 October
+
+Jobs 42909 and 42910 completed on TC2N01 with exit code 0:0. Step 201 matched
+the uninterrupted update across allocations with zero tensor difference in model,
+EMA, optimizer, scheduler, random state and data order. This verifies complete
+single-device continuation on that node, rather than merely reloading weights.
+
+Four training clips at 64px/31 future frames, width 32, batch one and bfloat16
+measured 0.04883 s/step including loading, excluding the first ten measured steps.
+Peak allocated memory was 752,562,176 bytes. Four sequential 32-step DDIM samples
+took 1.744 s after earlier GPU work; first-use latency is a separate measurement.
+The model failed the video-quality gate. Both EMA and raw weights failed tracking
+with 32/128/1000 sampler steps. Job 42917 tests a 10,000-step independent restart;
+at the measured warm rate its training portion projects to roughly 8.1 minutes,
+excluding environment startup, diagnostics and queue time.
+
+The full checkpoint/result bundle was copied to ignored local storage outside
+TC2. User storage quota and access expiry remain unconfirmed; `quota -s` exposed
+no user-specific limit. Shared-filesystem capacity is not a personal quota.
+See [pilot evidence](results/diffusion_pilot_2026-10-16.json). Do not extrapolate
+four-clip cache timings into a final suite budget before measuring the chosen data.
+
 ## Profiling sequence
 
 1. Run a device/memory smoke check on TC2 and record the environment.

@@ -58,9 +58,9 @@ Validate the approved TC2 account and fit training to its recorded limits.
 - [x] Record TC2 access approval for Athul and Shrijeet and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.
 - [x] Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.
 - [ ] Record storage limits, any total usage quota, access expiry, and backup locations; keep credentials outside Git.
-- [ ] Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs.
+- [x] Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs.
 
-Shrijeet completed first login and setup job 42886 on TC2N01: A40, driver 570.148.08, Python 3.12.15, torch 2.11.0+cu128, CUDA checks, 147 tests and 4 subtests passed (1 optional module skipped). Evidence: docs/results/tc2_probe_2026-10-16.json. Storage/usage quota, expiry and full training-state resume across jobs remain open.
+A40 setup 42886 and real training jobs 42909/42910 completed. Full model/EMA/optimizer/scheduler/RNG/data-order resume matched the next update with zero tensor difference across allocations. Data-loading-inclusive step time 0.04883 s; four 32-step samples 1.744 s; peak allocated 752,562,176 bytes. No user storage quota or expiry was exposed by the read-only checks. Evidence: docs/results/diffusion_pilot_2026-10-16.json. Generated-video gate failed; this is infrastructure evidence, not model readiness.
 
 <a id="t03"></a>
 
@@ -178,13 +178,13 @@ Create the common diffusion backbone and the main numeric-action baseline.
 
 **Dependencies:** T03, T04, T06. **Owner:** MAITI SHRIJEET. **Status:** In progress.
 
-- [ ] Implement pixel video training and DDIM sampling with a shared backbone/configuration.
-- [ ] Support first-frame-only E1 and selected-mask-plus-numeric-force E2.
+- [x] Implement pixel video training and DDIM sampling with a shared backbone/configuration.
+- [x] Support first-frame-only E1 and selected-mask-plus-numeric-force E2.
 - [ ] Pass forward/backward, tiny-batch overfit, and checkpoint resume checks.
-- [ ] Measure 64px peak VRAM, seconds/step, and four-sample inference latency.
-- [ ] Record baseline samples and proposed run budgets.
+- [x] Measure 64px peak VRAM, seconds/step, and four-sample inference latency.
+- [x] Record baseline samples and proposed run budgets.
 
-Cosine epsilon training, observable-only conditioning, EMA, seeded DDIM, train-file provenance and full-state checkpoint/resume implemented. Exact CPU interrupted continuation passes with and without auxiliary losses. Two-allocation A40 pilot in progress; learned video quality and held-out action control not established.
+Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up sampler/training-duration diagnostics are running in job 42917.
 
 <a id="t11"></a>
 
@@ -248,7 +248,7 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
-CSV/JSON comparison export is implemented and checked on 24 simulator-control reports from four independent scenes. It retains run/checkpoint IDs, K, missing counts, and scene-group intervals. Actual E0-E4 runs, cost measurements, hyperparameter study, and analysis still depend on T13.
+Scene-group comparison tables and source separation merged via PR #27. Actual main comparisons remain pending. The 2000-step diffusion pilot failed the generated-video gate; do not include its noise-loss decline as a model-quality result.
 
 <a id="t15"></a>
 

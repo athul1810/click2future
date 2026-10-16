@@ -58,6 +58,13 @@ EMA selection, seed policy and latency. On TC2 add `--require-slurm`.
 
 ## Gates before scaling
 
+The first TC2 pilot passed complete cross-job continuation but failed generated
+video quality. Its fixed noise MSE fell from 1.02554 to 0.01965; all 248 future
+object observations were untrackable. Increasing sampler steps to 128 or 1000,
+or switching EMA to raw weights, did not restore tracking. The longer training
+diagnostic is an independent restart, not a resumed or successful experiment.
+See [the recorded result](results/diffusion_pilot_2026-10-16.json).
+
 1. Numerical equations, seed isolation, oracle-field exclusion and complete
    interrupted training pass their tests.
 2. The same next update matches across two allocated jobs. Keep a recoverable
