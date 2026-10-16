@@ -33,6 +33,7 @@ Coordinator: **PRAMOD SANJAY**, following the course rule that the first person 
 
 | If you want to… | Read… |
 |---|---|
+| Execute the plan for the 14 November PPT presentation | [16 October execution plan](docs/EXECUTION_PLAN_2026-10-16.md) and [demo specification](app/DEMO_SPEC.md) |
 | Prepare for the 14 October project meeting | [Meeting brief](docs/MEETING_2026-10-14.md) |
 | Assess relevant SOTA and choose an achievable build path | [Research review](docs/SOTA_2026-10-14.md) and [build plan](docs/BUILD_PLAN.md) |
 | Verify TC2 login and run the first diagnostic job | [TC2 workflow](cluster/README.md) and [access status](docs/TC2_ACCESS.md) |

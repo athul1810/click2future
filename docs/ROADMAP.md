@@ -2,11 +2,11 @@
 
 **Working deadline: 14 November 2026.** See [SUBMISSION.md](SUBMISSION.md) for the course-brief date discrepancy and packaging rules.
 
-Intermediate milestones and task dates have not been set. The team will agree on them later. The dependencies below describe the order of work, without assigning dates.
+The PPT presentation is confirmed for **14 November**. Proposed dated milestones,
+rehearsals and acceptance evidence are in the [16 October execution plan](EXECUTION_PLAN_2026-10-16.md).
+The report/code cutoff still needs confirmation. Proposed task dates are not yet agreed team commitments.
 
-Proposed date windows and revised pixel-pilot gates are in [BUILD_PLAN.md](BUILD_PLAN.md),
-with decisions to assign at [the 14 October meeting](MEETING_2026-10-14.md).
-They are not agreed ownership/dates. The existing task dependencies still describe the
+Architecture gates are in [BUILD_PLAN.md](BUILD_PLAN.md). The existing task dependencies still describe the
 original latent plan and must be synchronized with issues/backlog if the proposal is adopted.
 
 ## Critical path

@@ -1,5 +1,9 @@
 # Achievable architecture and evidence gates
 
+The [16 October execution plan](EXECUTION_PLAN_2026-10-16.md) adds dated targets for
+the confirmed 14 November PPT, pending ownership, physics/identity decisions, the demo,
+and assessment evidence. The [research addendum](SOTA_2026-10-16.md) extends the prior review.
+
 The pixel/latent architecture choice remains a proposal. Simulation, grouped datasets,
 trajectory/collision metrics, and a pixel tracker are now implemented. Contact extraction
 needs improvement. The diffusion scheduler/sampler, dataset trainer, and CVAE remain to
@@ -105,10 +109,11 @@ sampling quality, dataset learning, or complete mixed-precision trainer resume.
 
 ## Implement in order
 
-1. **Generator handoff and contract.** Obtain source and one raw labelled fixture.
-   Retain the current centre-force/fixed-duration proposal until the generator's units,
-   force/impulse semantics, timestamps, replay and interval contacts are verified. The
-   YAML explicitly leaves units/duration pending. Do not infer them from the GIF.
+1. **Consume the frozen generator handoff.** Source, schema and fixtures are available
+   from Workstream A. Use its 32-frame configuration and the units, 0.25-second force,
+   pre-action frame 0 and interval labels in ARCHITECTURE.md. Align the older prototype
+   YAML explicitly. Resolve contact friction versus tabletop drag and auxiliary slot
+   ordering before scaling; any physics change requires versioning and regenerated data.
 2. **Data/control checks.** Deterministic replay; initially stationary zero-force scene;
    reversed force before contact; target swap; known collision and no-collision cases;
    identical first inputs for hidden-property variants; group-level split independence.
