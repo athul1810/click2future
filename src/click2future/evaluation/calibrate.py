@@ -47,7 +47,7 @@ def summarize(
     cases: list, gap: float, tolerance: int, *, geometries=None, **contact_options
 ) -> dict:
     reasons = Counter()
-    counts = {"event": Counter(), "interval": Counter()}
+    counts = {"event": Counter(), "interval": Counter(), "encounter": Counter()}
     errors = []
     expected = tracked_count = complete_clips = reference_events = 0
     if geometries is not None and len(geometries) != len(cases):
@@ -90,12 +90,9 @@ def summarize(
         count["precision"] = tp / (tp + fp) if tp + fp else None
         count["recall"] = tp / (tp + fn) if tp + fn else None
         count["f1"] = 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else None
-        if kind == "interval":
-            count["accuracy"] = (
-                (tp + count["true_negative"]) / count["scored_bins"]
-                if count["scored_bins"]
-                else None
-            )
+        if kind in {"interval", "encounter"}:
+            denominator = count["scored_bins"] if kind == "interval" else count["scored_pairs"]
+            count["accuracy"] = (tp + count["true_negative"]) / denominator if denominator else None
     return {
         "clips": len(cases),
         "complete_tracking_clips": complete_clips,

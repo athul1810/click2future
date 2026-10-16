@@ -2,9 +2,9 @@
   "status": "passed",
   "artifact": "development source snapshot, not final submission",
   "archive": "group_07_code.zip",
-  "archive_sha256": "21f3c720467cf92e126e92fc02cb6b48233fbb7a05ab5bb2c0924fa8279c445f",
+  "archive_sha256": "b2ff79705f940a35d4bfa06489dd38c7fd33c3e1708d0e1019113732219c520c",
   "file_count": 113,
-  "bytes": 201931,
+  "bytes": 202812,
   "fresh_environment": {
     "python": "3.12.15",
     "torch": "2.11.0",
@@ -12,8 +12,8 @@
     "install": "pinned CPU, dev, image-metrics extras with constraints; no inherited project environment"
   },
   "validation": {
-    "working_tree_tests": 272,
-    "extracted_source_tests": 272,
+    "working_tree_tests": 278,
+    "extracted_source_tests": 278,
     "subtests": 4,
     "skipped_tests": 0,
     "generated_smoke_rollouts": 2,
@@ -30,7 +30,8 @@
     "dependency_lock": "passed",
     "source_and_wheel_builds": "passed",
     "tc2_job_script_syntax": "both CVAE and diffusion scripts passed",
-    "native_simulator_control_suite": "passed: all three metric families, SSIM and LPIPS"
+    "native_simulator_control_suite": "passed: all three metric families, SSIM and LPIPS",
+    "collision_report_versions": "encounter scoring and legacy/mixed-version checks passed"
   },
   "source_sha256": {
     "src/click2future/submission.py": "c1b0a0455f7be3cceadcc6620a1fe31266907f6afefed951d7ef7ba482e0086c",
@@ -40,9 +41,9 @@
     "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db"
   },
   "previous_snapshot": {
-    "archive_sha256": "3239031715cce78da5cc614fcf0c1e6a6895b694696f1f14e6bd75677bb86de4",
-    "file_count": 109,
-    "feature_revision": "c7b0a6b96c91d9bdbae9ec463e9421957c863f1a"
+    "archive_sha256": "21f3c720467cf92e126e92fc02cb6b48233fbb7a05ab5bb2c0924fa8279c445f",
+    "file_count": 113,
+    "feature_revision": "4ae23a473d8358eb98e171b459d03f000db9834e"
   },
   "remaining": [
     "CVAE and E4 TC2 training and quality gates",

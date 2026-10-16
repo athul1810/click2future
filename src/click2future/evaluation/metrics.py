@@ -159,6 +159,8 @@ def collision_metrics(predicted, reference, object_valid, observed, *, tolerance
 
     Only valid unordered pairs count. Interval scores use known bins without a time
     tolerance. Event scores use complete pair timelines with one-to-one matching.
+    Encounter scores ask whether each pair had any onset over the complete clip;
+    they do not measure event count or timing.
     Missing observations are counted and never interpreted as negative predictions.
     Undefined ratios are None, including F1 when both event sets are empty.
     """
@@ -201,6 +203,13 @@ def collision_metrics(predicted, reference, object_valid, observed, *, tolerance
         fn = int((~estimate & truth & available).sum())
         tn = int((~estimate & ~truth & available).sum())
         complete_pairs = available.all(axis=0)
+        predicted_encounter = estimate[:, complete_pairs].any(axis=0)
+        reference_encounter = truth[:, complete_pairs].any(axis=0)
+        encounter_tp = int((predicted_encounter & reference_encounter).sum())
+        encounter_fp = int((predicted_encounter & ~reference_encounter).sum())
+        encounter_fn = int((~predicted_encounter & reference_encounter).sum())
+        encounter_tn = int((~predicted_encounter & ~reference_encounter).sum())
+        scored_pairs = int(complete_pairs.sum())
         matched = predicted_events = reference_events = 0
         for pair in np.flatnonzero(complete_pairs):
             p = np.flatnonzero(estimate[:, pair])
@@ -227,12 +236,23 @@ def collision_metrics(predicted, reference, object_valid, observed, *, tolerance
                     "complete_pair_timelines": int(complete_pairs.sum()),
                     "expected_pair_timelines": pair_count,
                 },
+                "encounter": {
+                    **_classification(encounter_tp, encounter_fp, encounter_fn),
+                    "true_negative": encounter_tn,
+                    "accuracy": _ratio(encounter_tp + encounter_tn, scored_pairs),
+                    "positive_prevalence": _ratio(encounter_tp + encounter_fn, scored_pairs),
+                    "scored_pairs": scored_pairs,
+                    "expected_pairs": pair_count,
+                    "missing_pairs": pair_count - scored_pairs,
+                },
             }
         )
     return {
+        "collision_metric_version": "2",
         "tolerance_intervals": int(tolerance),
         "pair_rule": "valid_upper_triangle; object_object_only",
         "undefined_ratio": "null",
-        "missing_policy": "known_interval_bins; complete_pair_timelines_for_event_scores",
+        "missing_policy": "known_interval_bins; complete_pair_timelines_for_event_and_encounter",
+        "encounter_definition": "any_contact_onset_per_pair_over_clip; no_timing_or_count_score",
         "per_sample": records,
     }

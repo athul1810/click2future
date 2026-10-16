@@ -2,15 +2,15 @@
   "status": "passed",
   "source": "simulator_control",
   "scope": "full-length native simulator controls; no learned-model result",
-  "plan_sha256": "d0c13c783829f61e53aea6be489d56323cc2508b5894c1012b87131dde0831dc",
+  "plan_sha256": "76eee654187a0e2082159fd2d9a6780d1068c9a84b39e76763b7a18d5654821e",
   "dataset_manifest_sha256": "3514e7ab4684efa99031c77b2be231c0873f2bf0cd75cda55acbaf6139fb4f1b",
   "evaluator_source_sha256": {
     "__init__.py": "57bf4de7759f6fb0832f4195b5e1ccbf009483901562c393a8058b22ab12c7d9",
     "__main__.py": "d877db1f07f5cb08657b96179c725c50b118bfcc9821c102fa0951b8be366299",
     "actions.py": "b3f1508b256eca3a282c8005bfa8c48099bf1d4a5042cd9261ec5284c164fce9",
-    "aggregate.py": "b1ba494e42dfe1a8472881e299ba49265e9756f9100f8459acd3b1d8936ea455",
+    "aggregate.py": "97c51522b9390850dd72dc05a55060f7ae4f31676b9dd13dbeb2f13ad430c7c9",
     "aggregate_controls.py": "8f2a8267ff9014001e1e376630747628d087d856e80c4a34e976871a969c4099",
-    "calibrate.py": "ce49f0d82d97384dbee4935f6438ae2b97049013d81ed6cc2822217ac872246f",
+    "calibrate.py": "b94433071e32f5652b1b05d40852d0bd2d3755cdd3177c5799104e6553a8eed0",
     "contacts.py": "80f74813cb626eec158d76a6c9c23a93b563d5577c7d2213dd3f26944f70b172",
     "controls.py": "d72fadd5af2ac4fbc85ad344dac9741ff87c3d0183ee9c8ce19f8047708a6752",
     "diversity.py": "8a392f8d03b33c429827c2b6bb3e450f56c905a9c43e2a2e1837066c82f8c0cd",
@@ -19,7 +19,7 @@
     "heads.py": "9a2f5e0c169cbee11136969ad4b2f0d69158f29c8e1bd6cee457b1d440bad92d",
     "image_controls.py": "fdd469ba81cb3b98a42bc988bd7209d0d4738c42c92f87f78c0bf7560ba234b6",
     "images.py": "f31775eebcb495462403945cac883c3b2d546e49562377570ac1d0c17f4b6108",
-    "metrics.py": "b10f34194fd6e589a947b2539ab6c4e64724a5b1da82c53fea0707da4dfff990",
+    "metrics.py": "4447962c8485057779e66c83c65a6e978652109caa2ed094b154d4e1365613e4",
     "perceptual.py": "e7c021b2f16d06c9817c53d61a98f602b0fc4442ed3b5a5f54bed1b460fcdb6d",
     "sequences.py": "d3a7a22808f1b1cfae18639096a7367111382a017243c67029056e087e790e56",
     "suite.py": "075a459d86b2705e878e8a28472f9d9d0417495c89de5044ba9b70d75dbf4f80",
@@ -27,7 +27,7 @@
     "tracking.py": "ca3640629ee5e55665eb3bc5b644d928ce4fcfdac07b9833aa11335947be5bd4",
     "video.py": "7934a97ab615c0f0740cd82686ec5e4ccd8d27daaaa117ea8cc832b693345657"
   },
-  "comparison_protocol_sha256": "b282484c9307688a3b4d46a25156180b02007475be4916c635abb532f7a7c15f",
+  "comparison_protocol_sha256": "4d0d86e12604c2dc3e28306976644ec3920504ed2971869e422446ac4c421e9b",
   "resolution": [
     64,
     64
@@ -163,7 +163,120 @@
         "collision.event.false_positive": 6,
         "collision.event.false_negative": 2,
         "collision.event.complete_pair_timelines": 8,
-        "collision.event.expected_pair_timelines": 8
+        "collision.event.expected_pair_timelines": 8,
+        "collision.encounter.true_positive": 4,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 4,
+        "collision.encounter.scored_pairs": 8,
+        "collision.encounter.expected_pairs": 8,
+        "collision.encounter.missing_pairs": 0
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.interval.recall": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.interval.f1": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.interval.accuracy": {
+          "estimate": 0.9516129032258065,
+          "ci": [
+            0.9032258064516129,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": 0.016129032258064516,
+          "ci": [
+            0.0,
+            0.03225806451612903
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.precision": {
+          "estimate": 0.25,
+          "ci": [
+            0.25,
+            0.25
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.event.recall": {
+          "estimate": 0.5,
+          "ci": [
+            0.5,
+            0.5
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.event.f1": {
+          "estimate": 0.3333333333333333,
+          "ci": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.precision": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.recall": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.f1": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.accuracy": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": 0.5,
+          "ci": [
+            0.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        }
       }
     },
     "static": {
@@ -285,14 +398,118 @@
         "collision.event.false_positive": 0,
         "collision.event.false_negative": 4,
         "collision.event.complete_pair_timelines": 8,
-        "collision.event.expected_pair_timelines": 8
+        "collision.event.expected_pair_timelines": 8,
+        "collision.encounter.true_positive": 0,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 4,
+        "collision.encounter.true_negative": 4,
+        "collision.encounter.scored_pairs": 8,
+        "collision.encounter.expected_pairs": 8,
+        "collision.encounter.missing_pairs": 0
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.recall": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.interval.f1": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.interval.accuracy": {
+          "estimate": 0.9838709677419355,
+          "ci": [
+            0.967741935483871,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": 0.016129032258064516,
+          "ci": [
+            0.0,
+            0.03225806451612903
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.recall": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.event.f1": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.recall": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.f1": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "defined_bootstrap_replicates": 1531
+        },
+        "collision.encounter.accuracy": {
+          "estimate": 0.5,
+          "ci": [
+            0.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": 0.5,
+          "ci": [
+            0.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        }
       }
     }
   },
   "output_sha256": {
-    "comparison.json": "af02a47855bc60f536f0a0aad145dfa5f65a42546dde36b50b5eb9bbc2f17998",
-    "summary.json": "a00f5fb85f64cee8f3f91f2b4d3d2794e7603fad37edba70fc23f896b3f902cc",
-    "summary.csv": "9eef41917897417e6adceaff612e0fc98052db0c6d9fe57d2a92239c3fd0dc7b"
+    "comparison.json": "c72d48e2e13b2c42f110eb4237ea4f6318374b28ae65e2edb4de12f76eb8a495",
+    "summary.json": "0be6551de385f148bf7fa0475082b614da6a961446c6625dbca19ab13530c8c6",
+    "summary.csv": "0082cfdb24606fd31b703b9776a47d968426182f77617e629a3882fe456ef386"
   },
   "limitations": [
     "Two validation scene groups only",

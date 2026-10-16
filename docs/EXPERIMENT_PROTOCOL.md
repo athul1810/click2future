@@ -75,6 +75,12 @@ use the same video bytes. Whole-clip best-of-K and missing counts remain explici
 uncertainty coverage uses all references. Failures produce `failure.json` without
 a successful summary. Reports from a failed run must not be used in final tables.
 
+Collision tables retain three separate views: any encounter per object pair over
+the clip, exact interval labels, and one-to-one timed events. Report prevalence and
+missing pairs alongside encounter accuracy. A high encounter score does not establish
+correct timing or repeated contacts. The frozen extractor has separate stress checks
+on controlled interaction scenes in `results/controlled-extractor-checks.json`.
+
 Simulator controls use `source: simulator_control` and names such as `oracle` or
 `static`, with no checkpoint fields. They cannot use E0-E4 method names. SSIM-only
 development checks require an explicit `--metrics ssim` plan; final comparisons

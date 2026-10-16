@@ -161,7 +161,7 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/7",
-    "evidence": "docs/METRICS.md; docs/results/contact-normal-calibration.json; docs/results/action-control-checks.json; docs/results/image-quality-controls.json; docs/results/future-metric-controls.json. Contact estimates remain approximate; trained-video and OOD checks continue in the experiments.",
+    "evidence": "docs/METRICS.md; docs/results/contact-normal-calibration.json; docs/results/controlled-extractor-checks.json; docs/results/issue-work-checks.json. Collision occurrence and timed-event scores stay separate.",
     "completed_acceptance": [
       0,
       1,
@@ -169,7 +169,7 @@
       3,
       4
     ],
-    "progress": "Implementation and simulator validation are ready for review. The active line-of-centres contact rule reaches event F1 0.605 and recall 0.591 versus 0.258 and 0.182 for the previous rule on the same 200 fresh clips. Tracking covers all 18,538 observations. Untrained CVAE output verifies missing-track handling. Contact estimates remain approximate; trained-generator/OOD validation continues with the experiments."
+    "progress": "Evaluation implementation is ready for review in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments."
   },
   {
     "id": "T08",

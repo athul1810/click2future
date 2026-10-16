@@ -137,7 +137,7 @@ Measure generated video behavior consistently across models.
 - [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
 - [x] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
-Implementation and simulator validation are ready for review. The active line-of-centres contact rule reaches event F1 0.605 and recall 0.591 versus 0.258 and 0.182 for the previous rule on the same 200 fresh clips. Tracking covers all 18,538 observations. Untrained CVAE output verifies missing-track handling. Contact estimates remain approximate; trained-generator/OOD validation continues with the experiments.
+Evaluation implementation is ready for review in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments.
 
 <a id="t08"></a>
 

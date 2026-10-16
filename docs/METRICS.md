@@ -4,6 +4,25 @@ T07 includes trajectory/collision scoring, RGB object tracking, and an experimen
 contact estimator. Tracking works on the measured solid-colour simulator clips. Contact
 event detection is currently too inaccurate to support model-comparison claims.
 
+## Controlled contact stress check
+
+Candidate dataset-0.2 from PR #31 exposes a distinction between collision occurrence
+and event timing. On its initial held-out check, timed-event F1 was 0.321 even though
+23 of 24 colliding clips had at least one detected encounter, with no false collision
+clips. This motivated the separate encounter diagnostic; it did not change the tracker
+or contact thresholds.
+
+A fresh dataset seed, 193000, then checked the diagnostic on 63 clips from three new
+held-out scene groups. All 3,906 future object observations were tracked. Encounter
+counts were TP=23, FP=0, FN=1, TN=39: F1=0.979 and accuracy=0.984 at positive prevalence
+24/63. Timed-event F1 remained 0.551. These are extractor checks on simulator clips,
+not generated-model results. Three scene groups and existing solid-colour shape
+families do not establish general reliability. Keep timed-event errors visible.
+
+The recorded data revision, original check and fresh check are in
+`results/controlled-extractor-checks.json`. The data PR still needs its model force-range
+integration fixed before training uses it.
+
 ## Input contract
 
 Use fixed object identities established from frame 0. Do not reorder objects or choose
@@ -51,6 +70,10 @@ coordinates must be valid. Wall contacts are excluded from this object-pair inte
   interval tolerance. Sorted events are matched earliest first. A prediction can match
   at most one reference. A pair with any missing interval is excluded from event scoring,
   with complete and expected pair-timeline counts reported.
+- Encounter scores classify whether each valid unordered pair has any contact onset
+  during the full clip. They require a complete observed pair timeline and report
+  confusion counts, accuracy, prevalence, precision, recall and F1. They measure
+  collision occurrence; they do not measure timing, repeated events or wall contacts.
 - Undefined ratios are JSON `null`. If neither reference nor prediction has an event,
   event precision, recall, and F1 are null. If predictions exist without reference events,
   precision and F1 are zero and recall is null. A single valid object has no pair bins.
@@ -60,6 +83,9 @@ which respects optional `frame_valid` masks: missing RGB removes the correspondi
 tracks and contact observations, even when placeholder pixels look valid. Do not mix
 old and new RGB reports in a comparison. Review against simulator fixtures
 and freeze the tolerance and extraction rules on validation data before model comparisons.
+Collision reports additionally use `collision_metric_version: 2` when encounter
+scores are present. Legacy collision tables remain readable, and mixed versions are
+rejected. Keep encounter and timed-event results together when interpreting contact behavior.
 Per-sample records preserve counts for [scene-group aggregation and comparison
 tables](EVALUATION_REPORTS.md), including missing observations and bootstrap intervals.
 

@@ -58,6 +58,7 @@ def _signature(report, family):
             report["collision"]["tolerance_intervals"],
             report["collision"]["pair_rule"],
             report["collision"]["missing_policy"],
+            report["collision"].get("collision_metric_version", "1"),
         ]
     if family == "images":
         image = report["image_quality"]
@@ -107,7 +108,7 @@ def _extract(report, family, k):
         records = report["collision"]["per_sample"]
         if len(records) != k:
             raise ValueError("Collision K differs from the declared sampling seeds")
-        for section, keys in {
+        sections = {
             "interval": (
                 "true_positive",
                 "false_positive",
@@ -124,7 +125,18 @@ def _extract(report, family, k):
                 "complete_pair_timelines",
                 "expected_pair_timelines",
             ),
-        }.items():
+        }
+        if report["collision"].get("collision_metric_version") == "2":
+            sections["encounter"] = (
+                "true_positive",
+                "false_positive",
+                "false_negative",
+                "true_negative",
+                "scored_pairs",
+                "expected_pairs",
+                "missing_pairs",
+            )
+        for section, keys in sections.items():
             for key in keys:
                 counts[f"collision.{section}.{key}"] = sum(
                     _integer(x[section][key], key) for x in records
@@ -197,7 +209,7 @@ def _collision_scores(counts):
     def ratio(a, b):
         return float(a / b) if b else None
 
-    for section in ("interval", "event"):
+    for section in ("interval", "event", "encounter"):
         prefix = f"collision.{section}."
         if prefix + "true_positive" not in counts:
             continue
@@ -211,7 +223,7 @@ def _collision_scores(counts):
                 prefix + "f1": ratio(2 * tp, 2 * tp + fp + fn),
             }
         )
-        if section == "interval":
+        if section in {"interval", "encounter"}:
             tn = counts[prefix + "true_negative"]
             values[prefix + "accuracy"] = ratio(tp + tn, tp + fp + fn + tn)
             values[prefix + "positive_prevalence"] = ratio(tp + fn, tp + fp + fn + tn)

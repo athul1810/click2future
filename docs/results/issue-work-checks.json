@@ -2,8 +2,8 @@
   "status": "passed",
   "parent_revision": "c7b0a6b96c91d9bdbae9ec463e9421957c863f1a",
   "tests": {
-    "working_tree": 272,
-    "fresh_source_archive": 272,
+    "working_tree": 278,
+    "fresh_source_archive": 278,
     "subtests": 4,
     "skipped": 0
   },
@@ -21,19 +21,24 @@
     "frozen batch evaluation with full case coverage and input/code hashes",
     "native 80-clip generation and storage benchmark",
     "64px scope and validation-study budget",
-    "standalone TC2 diffusion training in source ZIP"
+    "standalone TC2 diffusion training in source ZIP",
+    "separate pair encounter scores with event timing retained and fresh controlled-scene validation"
   ],
   "source_sha256": {
     "src/click2future/evaluation/suite.py": "075a459d86b2705e878e8a28472f9d9d0417495c89de5044ba9b70d75dbf4f80",
     "src/click2future/evaluation/video.py": "7934a97ab615c0f0740cd82686ec5e4ccd8d27daaaa117ea8cc832b693345657",
     "tests/test_evaluation_suite.py": "2f59eb50701f337f3804fd987fd98db05ad938c81761e70917dd907b6be31df6",
-    "configs/evaluation/comparison.yaml": "b282484c9307688a3b4d46a25156180b02007475be4916c635abb532f7a7c15f",
-    "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db"
+    "configs/evaluation/comparison.yaml": "4d0d86e12604c2dc3e28306976644ec3920504ed2971869e422446ac4c421e9b",
+    "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db",
+    "src/click2future/evaluation/metrics.py": "4447962c8485057779e66c83c65a6e978652109caa2ed094b154d4e1365613e4",
+    "src/click2future/evaluation/aggregate.py": "97c51522b9390850dd72dc05a55060f7ae4f31676b9dd13dbeb2f13ad430c7c9",
+    "src/click2future/evaluation/calibrate.py": "b94433071e32f5652b1b05d40852d0bd2d3755cdd3177c5799104e6553a8eed0"
   },
   "evidence": [
     "docs/results/data-generation-profile.json",
     "docs/results/evaluation-suite-controls.json",
-    "docs/results/submission-checks.json"
+    "docs/results/submission-checks.json",
+    "docs/results/controlled-extractor-checks.json"
   ],
   "remaining": [
     "PR #30 needs teammate approval before main integration",
@@ -41,5 +46,13 @@
     "E4 overfit and head-versus-video results",
     "OOD datasets and frozen trained checkpoints",
     "final protocol selection and full-dataset training budget"
-  ]
+  ],
+  "reviewed_pr_31": {
+    "head": "134db0387b357e1feb0f7a9623202497a7f5619f",
+    "outcome": "changes_requested",
+    "tests_with_main": 235,
+    "subtests": 4,
+    "exact_replays": 84,
+    "blocker": "training wall force 1.1 exceeds current diffusion adapter maximum 0.5"
+  }
 }

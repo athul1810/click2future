@@ -13,6 +13,11 @@ initialization: independent_runs_same_seed_policy_no_inherited_updates
 pixel_metrics_config: configs/evaluation/pixel.yaml
 action_metrics_config: configs/evaluation/actions.yaml
 image_metrics: [ssim, lpips]
+collision_scores:
+  encounter: any_onset_per_object_pair_over_clip
+  event: one_to_one_onset_matching_tolerance_one_interval
+  interval: exact_unordered_pair_time_bins
+  missing_policy: complete_pair_timeline_for_event_and_encounter
 bootstrap:
   unit: scene_group_id
   replicates: 2000
