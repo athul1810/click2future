@@ -75,6 +75,37 @@ sampling, provide a condition NPZ with uint8 `first_frame[H,W,3]`, binary
 These commands establish execution, not good generated motion. Train and evaluate
 the actual methods before preparing the final submission.
 
+For actual diffusion training on TC2, install the compatible CUDA environment,
+then submit from this source folder:
+
+```sh
+export C2F_DATA_DIR=data/main
+export C2F_RUN_DIR=runs/E2-seed0
+export C2F_TRAIN_CONFIG=configs/training/pilot_diffusion.json
+export C2F_SOURCE_REVISION=YOUR_SOURCE_ARCHIVE_SHA256
+sbatch submission/train_diffusion.sbatch
+```
+
+The pilot config deliberately selects four clips. Copy it, set `limit_train` to
+null and record validation-selected settings before a main run. Set `conditioning`
+to `numeric` for E2 and `spatial` for E3, keeping the other choices matched.
+Use independent runs for each training seed. Resume with the same source/config
+and `--resume runs/E2-seed0/checkpoint.pt`. The job requires one visible TC2 GPU.
+
+Evaluate complete pre-generated sample sets with the batch evaluator:
+
+```sh
+python -m click2future.evaluation.suite prepare --dataset data/main --split test --output outputs/test-plan.json
+python -m click2future.evaluation.suite run --plan outputs/test-plan.json --predictions outputs/predictions.json --output-dir outputs/test-results
+```
+
+The prediction JSON declares `source`, `sampling_seeds` and a `runs` list. Each
+model run needs `method`, `run_id`, `training_seed`, a local `checkpoint` path and
+a `videos` mapping from every plan `sample_id` to its generated NPZ path. Use
+E0/E2/E3 and the plan's seeds. Paths are relative to the prediction JSON.
+The evaluator writes per-case reports and summary JSON/CSV. It rejects changed
+reference/config hashes and incomplete coverage. It never trains or selects a model.
+
 
 The CVAE baseline has a scheduled TC2 workflow. Generate a dataset with at least
 ten scene groups, using `configs/simulator/pilot.toml` for 32-frame clips. With a

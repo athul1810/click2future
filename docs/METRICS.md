@@ -55,7 +55,10 @@ coordinates must be valid. Wall contacts are excluded from this object-pair inte
   event precision, recall, and F1 are null. If predictions exist without reference events,
   precision and F1 are zero and recall is null. A single valid object has no pair bins.
 
-These policies are versioned as metric version 1. Review them against simulator fixtures
+The extracted-array scoring policy is metric version 1. RGB reports use version 2,
+which respects optional `frame_valid` masks: missing RGB removes the corresponding
+tracks and contact observations, even when placeholder pixels look valid. Do not mix
+old and new RGB reports in a comparison. Review against simulator fixtures
 and freeze the tolerance and extraction rules on validation data before model comparisons.
 Per-sample records preserve counts for [scene-group aggregation and comparison
 tables](EVALUATION_REPORTS.md), including missing observations and bootstrap intervals.

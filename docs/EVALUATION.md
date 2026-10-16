@@ -7,6 +7,8 @@ Scene-group aggregation and CSV/JSON comparison tables are available in
 [EVALUATION_REPORTS.md](EVALUATION_REPORTS.md). The line-of-centres contact proxy has
 fresh held-out checks and known errors. Untrained CVAE output exercises tracker failure
 handling; validation on trained generators remains pending.
+The [experiment protocol](EXPERIMENT_PROTOCOL.md) provides a batch command for fixed
+cases, common sampling seeds, all three metric families and comparison tables.
 
 ## Hypotheses
 

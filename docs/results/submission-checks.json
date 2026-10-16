@@ -2,9 +2,9 @@
   "status": "passed",
   "artifact": "development source snapshot, not final submission",
   "archive": "group_07_code.zip",
-  "archive_sha256": "3239031715cce78da5cc614fcf0c1e6a6895b694696f1f14e6bd75677bb86de4",
-  "file_count": 109,
-  "bytes": 191466,
+  "archive_sha256": "21f3c720467cf92e126e92fc02cb6b48233fbb7a05ab5bb2c0924fa8279c445f",
+  "file_count": 113,
+  "bytes": 201931,
   "fresh_environment": {
     "python": "3.12.15",
     "torch": "2.11.0",
@@ -12,8 +12,8 @@
     "install": "pinned CPU, dev, image-metrics extras with constraints; no inherited project environment"
   },
   "validation": {
-    "working_tree_tests": 258,
-    "extracted_source_tests": 258,
+    "working_tree_tests": 272,
+    "extracted_source_tests": 272,
     "subtests": 4,
     "skipped_tests": 0,
     "generated_smoke_rollouts": 2,
@@ -29,18 +29,20 @@
     "ruff_format": "passed",
     "dependency_lock": "passed",
     "source_and_wheel_builds": "passed",
-    "tc2_job_script_syntax": "passed"
+    "tc2_job_script_syntax": "both CVAE and diffusion scripts passed",
+    "native_simulator_control_suite": "passed: all three metric families, SSIM and LPIPS"
   },
   "source_sha256": {
-    "src/click2future/submission.py": "5dd12ed1f49d27fd7de82c41620d0ed4cc5f7094480b4ea99c6548a7ca7edc2d",
-    "submission/allowlist.json": "17c4a6b555ab2d592f54964dc9b2743a4425cdde1330d16241bc0a86a4786bb7",
+    "src/click2future/submission.py": "c1b0a0455f7be3cceadcc6620a1fe31266907f6afefed951d7ef7ba482e0086c",
+    "submission/allowlist.json": "6fa227cf49bfbc499a6f0fd701018eaecddf0c92602908becdf093bf94cb5228",
     "submission/smoke.py": "43d58e6f9b8a949189c87aa240ca730920f7c45f14e441ef5f99e7aa0bf1a425",
-    "submission/train_cvae.sbatch": "226bc0846ee6db64f5fb695e5fc78b46b09a5845c6468e65057a4dbea44fd0db"
+    "submission/train_cvae.sbatch": "226bc0846ee6db64f5fb695e5fc78b46b09a5845c6468e65057a4dbea44fd0db",
+    "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db"
   },
   "previous_snapshot": {
-    "archive_sha256": "4d61c56d435a2f0e4124bf9c466c05be2b22ddb16758d13286c9d22d7e24ad00",
-    "file_count": 99,
-    "feature_revision": "2882819ba8ba2b1c9f3eb09816b3baae36bce799"
+    "archive_sha256": "3239031715cce78da5cc614fcf0c1e6a6895b694696f1f14e6bd75677bb86de4",
+    "file_count": 109,
+    "feature_revision": "c7b0a6b96c91d9bdbae9ec463e9421957c863f1a"
   },
   "remaining": [
     "CVAE and E4 TC2 training and quality gates",

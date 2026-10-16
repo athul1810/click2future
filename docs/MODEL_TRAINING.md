@@ -126,8 +126,9 @@ It checks identical native normalization and actual DDIM sampling with captured
 timestep-zero heads for both epsilon and velocity targets. Capture preserves sampled
 tensors and RNG state exactly and removes its hook after errors. These are untrained
 inference checks without optimizer updates.
-The combined suite passes 258 tests with no skips; the integration record is in
-`results/diffusion-integration-checks.json`.
+The initial integration snapshot passed 258 tests with no skips, recorded in
+`results/diffusion-integration-checks.json`. The later batch-evaluation and issue-work
+checks pass 272 tests; see `results/issue-work-checks.json`.
 
 The standalone `diffusion_objective` helper remains epsilon-only. The integrated
 diffusion trainer computes the selected epsilon/velocity target itself and applies

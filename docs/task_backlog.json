@@ -134,11 +134,13 @@
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/6",
     "completed_acceptance": [
+      0,
       1,
       3,
       4
     ],
-    "progress": "PR #24 merged versioned generation, scene-group ID splits, shared-condition physics variants, and hashed manifests. Separate shape/texture/force OOD suites and a measured generation/storage budget remain outstanding."
+    "progress": "Versioned grouped generation, split isolation and shared-condition physics variants are implemented. A native 80-clip, 64px/32-frame smoke dataset took 1.086 seconds and 794,081 bytes including metadata on the local CPU; saved-sample replay passed. A 300-scene/8-variant initial dataset is proposed for Sanjay, not generated or frozen. OOD datasets remain outstanding.",
+    "evidence": "docs/results/data-generation-profile.json; docs/ARCHITECTURE.md. Local generation/storage profile only; no GPU training-cost claim."
   },
   {
     "id": "T07",
@@ -262,8 +264,11 @@
     "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/11",
-    "completed_acceptance": [],
-    "progress": "Numeric/spatial modes share the same backbone and data boundary; trainer and sampler support both. Measured action-responsive E2/E3 comparisons remain pending."
+    "completed_acceptance": [
+      0,
+      1
+    ],
+    "progress": "Numeric/spatial conditioning and selected-object identity are implemented with identical backbone capacity. Forward/backward and zero-force wiring controls pass. The trainer/sampler supports both modes. Trained selected-object and reversed-force controls, coherent E3 videos and the matched E2/E3 comparison remain open."
   },
   {
     "id": "T12",
@@ -287,9 +292,10 @@
     "completed_acceptance": [
       0,
       1,
-      2
+      2,
+      4
     ],
-    "progress": "The shared batch adapter and joint epsilon/auxiliary objective are implemented. Real-loader gradients reach both auxiliary heads and shared features, including a positive collision fixture. The integrated diffusion trainer supports E4 with epsilon or velocity targets; captured DDIM heads are exported separately in scene ID order. E4 overfitting and measured head-versus-video comparisons remain pending.",
+    "progress": "Canonical trajectory/contact losses, real-loader gradients and separate auxiliary-head export are implemented. Actual final DDIM heads are captured for both prediction targets without changing sampled pixels or RNG state. E4 overfitting and trained head-versus-video comparisons remain open.",
     "evidence": "docs/AUXILIARY_LOSSES.md; docs/MODEL_TRAINING.md; docs/results/auxiliary-loss-checks.json; docs/results/diffusion-integration-checks.json. E4 training quality and head-versus-video comparisons remain unmeasured."
   },
   {
@@ -312,9 +318,14 @@
       "Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "Not started",
+    "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/13",
-    "progress": "Core suite is E0/E2/E3. E4 and E1 receive explicit budget gates and do not block freezing the core protocol."
+    "progress": "Recorded 64px scope, deferred 128px, common sampling/training seeds, independent initialization policy, extractor settings and bootstrap rules in configs/evaluation/comparison.yaml. Reserved a validation-only 16/32/64-step study on at most 16 conditions with a 0.5 GPU-hour cap. The batch evaluator hashes all cases, references, metric code and configs. Final data/OOD versions, successful model settings, checkpoints and main training budgets are not frozen.",
+    "completed_acceptance": [
+      2,
+      5
+    ],
+    "evidence": "docs/EXPERIMENT_PROTOCOL.md; configs/evaluation/comparison.yaml; docs/results/evaluation-suite-controls.json."
   },
   {
     "id": "T14",
@@ -334,8 +345,8 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/14",
-    "progress": "Scene-group comparison tables and source separation merged via PR #27. Actual main comparisons remain pending. The 2000-step diffusion pilot failed the generated-video gate; do not include its noise-loss decline as a model-quality result.",
-    "evidence": "docs/EVALUATION_REPORTS.md; docs/results/aggregation-controls.json. Simulator controls only; no trained-model comparison."
+    "progress": "The batch evaluator produces trajectory, image and uncertainty reports plus scene-group comparison tables for every frozen case. Full-length oracle/static simulator controls run end to end with SSIM and LPIPS. Actual trained E0/E2/E3 runs, hyperparameter results and their comparisons remain pending.",
+    "evidence": "docs/EXPERIMENT_PROTOCOL.md; docs/results/evaluation-suite-controls.json. Simulator controls only, not learned-model results."
   },
   {
     "id": "T15",
@@ -353,7 +364,8 @@
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/15"
+    "issue_url": "https://github.com/athul1810/click2future/issues/15",
+    "progress": "The batch evaluator can apply identical frozen extraction/reporting to held-out splits and rejects missing cases or changed inputs. Separate shape/texture/force OOD data from T06 and trained frozen checkpoints remain required."
   },
   {
     "id": "T16",
@@ -371,7 +383,8 @@
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/16"
+    "issue_url": "https://github.com/athul1810/click2future/issues/16",
+    "progress": "The batch evaluator groups all hidden-physics references per condition and reports K=4 spread, coverage, plausibility distances and failure counts alongside image/trajectory quality. Full-length simulator controls validate this workflow. Actual generated ensembles and paired action-control measurements remain open."
   },
   {
     "id": "T17",
@@ -427,7 +440,7 @@
     ],
     "outcome": "Prepare a source-only submission package and check that it can be used without the team's working files.",
     "acceptance": [
-      "Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.",
+      "Run internal simulator replay, trained-checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.",
       "Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.",
       "Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.",
       "Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.",
@@ -439,10 +452,12 @@
     "issue_url": "https://github.com/athul1810/click2future/issues/19",
     "completed_acceptance": [
       1,
+      2,
       3,
-      4
+      4,
+      5
     ],
-    "progress": "The source ZIP includes diffusion and CVAE training/sampling, E4 evaluation, and the CVAE TC2 job script. It excludes data, weights, links, and working files. Source extraction and replay checks are rerun after integration. CVAE GPU checkpoint checks, demo integration, and final experiment reproduction remain.",
+    "progress": "The source-only ZIP includes diffusion/CVAE training and sampling, both TC2 job scripts, procedural data/splits, all evaluators and standalone instructions. Builder, inventory, URL/content inspection and source extraction checks pass. Actual trained-checkpoint reproduction and the final post-experiment package check remain open.",
     "evidence": "docs/SUBMISSION.md; docs/results/submission-checks.json; submission/allowlist.json; submission/README.md."
   },
   {

@@ -21,7 +21,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In progress |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
@@ -115,13 +115,13 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 **Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In progress.
 
-- [ ] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
+- [x] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [x] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
 - [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-PR #24 merged versioned generation, scene-group ID splits, shared-condition physics variants, and hashed manifests. Separate shape/texture/force OOD suites and a measured generation/storage budget remain outstanding.
+Versioned grouped generation, split isolation and shared-condition physics variants are implemented. A native 80-clip, 64px/32-frame smoke dataset took 1.086 seconds and 794,081 bytes including metadata on the local CPU; saved-sample replay passed. A 300-scene/8-variant initial dataset is proposed for Sanjay, not generated or frozen. OOD datasets remain outstanding.
 
 <a id="t07"></a>
 
@@ -194,12 +194,12 @@ Test whether localizing the action improves physical action adherence.
 
 **Dependencies:** T10, T04. **Owner:** MAITI SHRIJEET. **Status:** In progress.
 
-- [ ] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
-- [ ] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
+- [x] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
+- [x] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
 - [ ] Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.
 - [ ] Record added parameter count, ablation switch, and working E3 training/sampling.
 
-Numeric/spatial modes share the same backbone and data boundary; trainer and sampler support both. Measured action-responsive E2/E3 comparisons remain pending.
+Numeric/spatial conditioning and selected-object identity are implemented with identical backbone capacity. Forward/backward and zero-force wiring controls pass. The trainer/sampler supports both modes. Trained selected-object and reversed-force controls, coherent E3 videos and the matched E2/E3 comparison remain open.
 
 <a id="t12"></a>
 
@@ -213,9 +213,9 @@ Test whether physical supervision improves decoded future behavior.
 - [x] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
 - [x] Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.
 - [ ] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
-- [ ] Report head predictions separately from generated-video tracking metrics.
+- [x] Report head predictions separately from generated-video tracking metrics.
 
-The shared batch adapter and joint epsilon/auxiliary objective are implemented. Real-loader gradients reach both auxiliary heads and shared features, including a positive collision fixture. The integrated diffusion trainer supports E4 with epsilon or velocity targets; captured DDIM heads are exported separately in scene ID order. E4 overfitting and measured head-versus-video comparisons remain pending.
+Canonical trajectory/contact losses, real-loader gradients and separate auxiliary-head export are implemented. Actual final DDIM heads are captured for both prediction targets without changing sampled pixels or RNG state. E4 overfitting and trained head-versus-video comparisons remain open.
 
 <a id="t13"></a>
 
@@ -223,16 +223,16 @@ The shared batch adapter and joint epsilon/auxiliary objective are implemented. 
 
 Commit to a comparable experiment suite that fits the remaining budget.
 
-**Dependencies:** T07, T09, T10, T11. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T07, T09, T10, T11. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
 - [ ] Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.
 - [ ] Use measured costs to allocate training/evaluation hours and retry reserve.
-- [ ] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
+- [x] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
 - [ ] Record all selected settings and validation-only tuning decisions.
 - [ ] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
-- [ ] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
+- [x] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
 
-Core suite is E0/E2/E3. E4 and E1 receive explicit budget gates and do not block freezing the core protocol.
+Recorded 64px scope, deferred 128px, common sampling/training seeds, independent initialization policy, extractor settings and bootstrap rules in configs/evaluation/comparison.yaml. Reserved a validation-only 16/32/64-step study on at most 16 conditions with a 0.5 GPU-hour cap. The batch evaluator hashes all cases, references, metric code and configs. Final data/OOD versions, successful model settings, checkpoints and main training budgets are not frozen.
 
 <a id="t14"></a>
 
@@ -248,7 +248,7 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
-Scene-group comparison tables and source separation merged via PR #27. Actual main comparisons remain pending. The 2000-step diffusion pilot failed the generated-video gate; do not include its noise-loss decline as a model-quality result.
+The batch evaluator produces trajectory, image and uncertainty reports plus scene-group comparison tables for every frozen case. Full-length oracle/static simulator controls run end to end with SSIM and LPIPS. Actual trained E0/E2/E3 runs, hyperparameter results and their comparisons remain pending.
 
 <a id="t15"></a>
 
@@ -263,6 +263,8 @@ Measure which action-conditioned behaviors generalize beyond training.
 - [ ] Compare against ID performance and include tracker failure rates.
 - [ ] Save representative successes/failures and state generalization limits.
 
+The batch evaluator can apply identical frozen extraction/reporting to held-out splits and rejects missing cases or changed inputs. Separate shape/texture/force OOD data from T06 and trained frozen checkpoints remain required.
+
 <a id="t16"></a>
 
 ### T16: Evaluate hidden-physics uncertainty and action controls
@@ -275,6 +277,8 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
 - [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
+
+The batch evaluator groups all hidden-physics references per condition and reports K=4 spread, coverage, plausibility distances and failure counts alongside image/trajectory quality. Full-length simulator controls validate this workflow. Actual generated ensembles and paired action-control measurements remain open.
 
 <a id="t17"></a>
 
@@ -314,14 +318,14 @@ Prepare a source-only submission package and check that it can be used without t
 
 **Dependencies:** T14, T15, T16, T17. **Owner:** Unassigned. **Status:** In progress.
 
-- [ ] Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
+- [ ] Run internal simulator replay, trained-checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
 - [x] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
-- [ ] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
+- [x] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
 - [x] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
 - [x] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
-- [ ] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
+- [x] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
 
-The source ZIP includes diffusion and CVAE training/sampling, E4 evaluation, and the CVAE TC2 job script. It excludes data, weights, links, and working files. Source extraction and replay checks are rerun after integration. CVAE GPU checkpoint checks, demo integration, and final experiment reproduction remain.
+The source-only ZIP includes diffusion/CVAE training and sampling, both TC2 job scripts, procedural data/splits, all evaluators and standalone instructions. Builder, inventory, URL/content inspection and source extraction checks pass. Actual trained-checkpoint reproduction and the final post-experiment package check remain open.
 
 <a id="t20"></a>
 
