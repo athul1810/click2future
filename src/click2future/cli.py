@@ -10,10 +10,12 @@ from typing import Any
 
 from .data import (
     build_split_manifest,
+    generate_controlled_dataset,
     generate_dataset,
     load_rollout,
     save_rollout,
     save_split_manifest,
+    validate_controlled_dataset,
 )
 from .sim import make_scene, replay_saved_rollout, run_rollout
 
@@ -43,6 +45,21 @@ def main(argv: list[str] | None = None) -> int:
     dataset.add_argument("--config", type=Path, default=Path("configs/simulator/smoke.toml"))
     dataset.set_defaults(handler=_generate_dataset)
 
+    controlled = subparsers.add_parser(
+        "generate-controlled-dataset",
+        help="generate dataset-0.2 controlled action comparisons",
+    )
+    controlled.add_argument("--output-dir", type=Path, required=True)
+    controlled.add_argument("--group-count", type=int, required=True)
+    controlled.add_argument("--seed", type=int, default=0)
+    controlled.add_argument("--split-seed", type=int, default=None)
+    controlled.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/simulator/dataset_0_2.toml"),
+    )
+    controlled.set_defaults(handler=_generate_controlled_dataset)
+
     split = subparsers.add_parser("make-splits", help="make a scene-group split manifest")
     split.add_argument("--input-dir", type=Path, required=True)
     split.add_argument("--output", type=Path, required=True)
@@ -56,6 +73,16 @@ def main(argv: list[str] | None = None) -> int:
     validate.add_argument("--atol", type=float, default=1e-6)
     validate.add_argument("--rtol", type=float, default=1e-6)
     validate.set_defaults(handler=_validate_sample)
+
+    validate_dataset = subparsers.add_parser(
+        "validate-controlled-dataset",
+        help="validate dataset-0.2 action and physics contracts",
+    )
+    validate_dataset.add_argument("--input-dir", type=Path, required=True)
+    validate_dataset.add_argument("--replay", action="store_true")
+    validate_dataset.add_argument("--atol", type=float, default=1e-6)
+    validate_dataset.add_argument("--rtol", type=float, default=1e-6)
+    validate_dataset.set_defaults(handler=_validate_controlled_dataset)
 
     args = parser.parse_args(argv)
     return int(args.handler(args))
@@ -159,6 +186,38 @@ def _validate_sample(args: argparse.Namespace) -> int:
         )
         report["replay"] = replay_report
         report["ok"] = bool(replay_report["ok"])
+    print(json.dumps(report, indent=2))
+    return 0 if report["ok"] else 1
+
+
+def _generate_controlled_dataset(args: argparse.Namespace) -> int:
+    result = generate_controlled_dataset(
+        args.output_dir,
+        group_count=args.group_count,
+        seed=args.seed,
+        split_seed=args.split_seed,
+        config=_load_simulator_config(args.config),
+    )
+    print(
+        json.dumps(
+            {
+                "manifest_path": str(result["manifest_path"]),
+                "split_path": str(result["split_path"]),
+                **result["validation"],
+            },
+            indent=2,
+        )
+    )
+    return 0
+
+
+def _validate_controlled_dataset(args: argparse.Namespace) -> int:
+    report = validate_controlled_dataset(
+        args.input_dir,
+        replay=args.replay,
+        atol=args.atol,
+        rtol=args.rtol,
+    )
     print(json.dumps(report, indent=2))
     return 0 if report["ok"] else 1
 

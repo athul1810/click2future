@@ -10,6 +10,7 @@ The current tests cover the simulator/data scaffold:
 - saved-rollout replay and mismatch detection.
 - model-facing channel-first sample and padded batch loaders.
 - the fixed scene fixture and end-to-end generate/validate CLI flow.
+- dataset-0.2 controlled actions, shared physics profiles, corruption rejection, and CLI replay.
 
 `test_environment.py` checks the CPU diagnostic/report and the failure status for an
 unavailable CUDA device. Run `python -m pytest -q` using the environment in

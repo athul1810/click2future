@@ -8,11 +8,12 @@ import pytest
 import torch
 from torch import nn
 
-from click2future.data import generate_dataset, load_batch
+from click2future.data import generate_controlled_dataset, generate_dataset, load_batch
 from click2future.models.pilot_denoiser import DenoiserOutput
 from click2future.training.conditioning import observable_condition, training_inputs
 from click2future.training.diffusion import Diffusion
 from click2future.training.sample_diffusion import load_generator, sample_videos
+from click2future.training.sample_diffusion import main as sample_main
 from click2future.training.train_diffusion import TrainConfig, Trainer
 
 
@@ -136,6 +137,101 @@ def test_checkpoint_to_video_inference_preserves_frame_zero(dataset, tmp_path):
     assert videos.shape == (2, 4, 16, 16, 3)
     np.testing.assert_array_equal(videos[:, 0], np.broadcast_to(first, (2, *first.shape)))
     np.testing.assert_array_equal(videos, repeated)
+
+
+@pytest.mark.parametrize("limit", [True, 0, -1, float("nan"), float("inf"), "1.1"])
+def test_invalid_force_limit_is_rejected(limit):
+    with pytest.raises(ValueError, match="force_limit"):
+        TrainConfig(force_limit=limit).validate()
+    with pytest.raises(ValueError, match="force_limit"):
+        observable_condition(
+            torch.zeros(1, 3, 8, 8),
+            torch.ones(1, 1, 8, 8),
+            torch.zeros(1, 2),
+            force_limit=limit,
+        )
+
+
+def test_controlled_actions_pass_training_and_checkpoint_sampling(tmp_path, monkeypatch):
+    dataset = tmp_path / "controlled"
+    result = generate_controlled_dataset(dataset, group_count=1, seed=30)
+    records = result["manifest"]["samples"]
+    ids = [row["sample_id"] for row in records]
+    batch = load_batch(dataset, ids)
+    future, condition = training_inputs(batch, "cpu", force_limit=1.1)
+    assert len(future) == 21
+    np.testing.assert_allclose(condition.force_xy, batch["force_xy"] / 0.5)
+    wall_id = next(row["sample_id"] for row in records if row["action_variant"] == "wall")
+    wall = load_batch(dataset, [wall_id])
+    with pytest.raises(ValueError, match="at most 0.5"):
+        training_inputs(wall, "cpu")
+    with pytest.raises(ValueError, match="at most 1.1"):
+        observable_condition(
+            torch.zeros(1, 3, 8, 8),
+            torch.ones(1, 1, 8, 8),
+            torch.tensor([[1.11, 0.0]]),
+            force_limit=1.1,
+        )
+
+    # Exercise the actual trainer on a wall clip, not only the adapter.
+    config = TrainConfig(steps=2, base_channels=8, diffusion_steps=10, force_limit=1.1)
+    trainer = Trainer(dataset, config)
+    monkeypatch.setattr(trainer, "_next_ids", lambda: [wall_id])
+    assert np.isfinite(trainer.train_step()["loss"])
+    assert np.isfinite(trainer.probe_loss())
+    checkpoint = tmp_path / "wall.pt"
+    trainer.save(checkpoint)
+    model, diffusion, state = load_generator(checkpoint)
+    assert state["config"]["force_limit"] == 1.1
+    first = (wall["frames"][0, 0].transpose(1, 2, 0) * 255).round().astype(np.uint8)
+    inputs = dict(
+        first_frame=first,
+        selected_mask=wall["selected_mask"][0, 0],
+        force_xy=wall["force_xy"][0],
+    )
+    # The CLI must recover the saved limit without a caller supplying it again.
+    condition_path = tmp_path / "condition.npz"
+    np.savez_compressed(condition_path, **inputs)
+    output = tmp_path / "videos.npz"
+    sample_main(
+        [
+            "--checkpoint",
+            str(checkpoint),
+            "--condition",
+            str(condition_path),
+            "--output",
+            str(output),
+            "--seeds",
+            "17",
+            "18",
+            "--sampling-steps",
+            "2",
+            "--future-frames",
+            "3",
+        ]
+    )
+    with np.load(output, allow_pickle=False) as archive:
+        videos = archive["videos"]
+    assert videos.shape == (2, 4, 64, 64, 3)
+    np.testing.assert_array_equal(videos[:, 0], np.broadcast_to(first, (2, *first.shape)))
+    with pytest.raises(ValueError, match="at most 0.5"):
+        sample_videos(model, diffusion, **inputs, seeds=(17,), future_frames=3, sampling_steps=2)
+    changed = Trainer(dataset, replace(config, force_limit=0.5))
+    with pytest.raises(ValueError, match="config differs"):
+        changed.resume(checkpoint)
+
+
+def test_legacy_checkpoint_defaults_to_original_force_limit(dataset, tmp_path):
+    config = TrainConfig(base_channels=8, diffusion_steps=10)
+    trainer = Trainer(dataset, config)
+    checkpoint = tmp_path / "legacy.pt"
+    trainer.save(checkpoint)
+    state = torch.load(checkpoint, weights_only=True)
+    del state["config"]["force_limit"]
+    torch.save(state, checkpoint)
+    trainer.resume(checkpoint)
+    _, _, loaded = load_generator(checkpoint)
+    assert TrainConfig(**loaded["config"]).force_limit == 0.5
 
 
 def test_recorded_source_change_cannot_be_called_exact_resume(dataset, tmp_path, monkeypatch):

@@ -22,7 +22,7 @@ from click2future.data.splits import load_split_manifest
 from click2future.models.pilot_denoiser import PilotDenoiser
 
 from .auxiliary import AuxiliaryLossConfig, auxiliary_loss
-from .conditioning import training_inputs
+from .conditioning import training_inputs, validate_force_limit
 from .diffusion import Diffusion
 from .targets import build_auxiliary_targets
 
@@ -44,8 +44,10 @@ class TrainConfig:
     limit_train: int | None = None
     checkpoint_every: int = 100
     collision_positive_weight: float = 1.0
+    force_limit: float = 0.5
 
     def validate(self):
+        validate_force_limit(self.force_limit)
         for name in ("steps", "batch_size", "checkpoint_every", "diffusion_steps"):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or value < 1:
@@ -202,7 +204,7 @@ class Trainer:
         started = time.perf_counter()
         self.model.train()
         batch = load_batch(self.dataset, self._next_ids())
-        clean, condition = training_inputs(batch, self.device)
+        clean, condition = training_inputs(batch, self.device, force_limit=self.config.force_limit)
         times = torch.randint(self.config.diffusion_steps, (len(clean),), device=self.device)
         noise = torch.randn_like(clean)
         noisy = self.diffusion.add_noise(clean, times, noise)
@@ -274,7 +276,9 @@ class Trainer:
             if self.device.type == "cuda":
                 torch.cuda.manual_seed_all(seed)
             batch = load_batch(self.dataset, self.sample_ids[: self.config.batch_size])
-            clean, condition = training_inputs(batch, self.device)
+            clean, condition = training_inputs(
+                batch, self.device, force_limit=self.config.force_limit
+            )
             times = torch.full((len(clean),), self.config.diffusion_steps // 2, device=self.device)
             noise = torch.randn_like(clean)
             predicted = self.model(

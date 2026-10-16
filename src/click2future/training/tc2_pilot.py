@@ -166,6 +166,7 @@ def main(argv=None):
             seeds=(100, 101, 102, 103),
             future_frames=31,
             sampling_steps=32,
+            force_limit=config.force_limit,
         )
         timings[kind] = time.perf_counter() - started
         np.savez_compressed(root / f"{kind}.npz", videos=videos)

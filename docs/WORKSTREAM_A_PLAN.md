@@ -108,6 +108,32 @@ python -m pytest -q
 
 Generated datasets remain under `outputs/` and are excluded from Git.
 
+## Dataset 0.2
+
+Dataset 0.1 above remains frozen and reproducible. Dataset 0.2 adds controlled
+zero, forward, reverse, two-way glancing-collision, and wall actions, with four
+shared hidden-physics profiles for every nonzero action. See the full
+[dataset-0.2 plan](DATASET_0_2_PLAN.md).
+
+Generate the recommended 200-group, 4,200-clip dataset:
+
+```powershell
+$env:PYTHONPATH = (Join-Path (Get-Location) 'src')
+python -m click2future.cli generate-controlled-dataset `
+  --output-dir outputs/dataset_0_2 `
+  --group-count 200 `
+  --seed 0 `
+  --config configs/simulator/dataset_0_2.toml
+```
+
+Validate every controlled outcome and replay every saved clip:
+
+```powershell
+python -m click2future.cli validate-controlled-dataset `
+  --input-dir outputs/dataset_0_2 `
+  --replay
+```
+
 ## Boundaries
 
 This dataset measures planar motion, action adherence, collisions, wall
