@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "scope": "integrated CPU correctness checks; no trained-video quality claim",
+  "main_revision": "0ad6f0893dd4a5278cc987e3defbce588569e31e",
+  "feature_parent": "2882819ba8ba2b1c9f3eb09816b3baae36bce799",
+  "tests": {
+    "passed": 258,
+    "subtests_passed": 4,
+    "skipped": 0,
+    "command": "python -m pytest -q"
+  },
+  "sampler_handoff": {
+    "passed": 3,
+    "prediction_targets": [
+      "epsilon",
+      "velocity"
+    ],
+    "checks": [
+      "native first-frame/mask/force normalization and future tensor parity",
+      "actual DDIM outputs unchanged by timestep-zero head capture",
+      "paired sampling preserves global RNG",
+      "capture hook removed and detached heads exported separately in scene ID order"
+    ]
+  },
+  "source_sha256": {
+    "src/click2future/training/batch.py": "6a611fe82d7d00acb52410f1f3ca889365428f56e450717e19a2a54b276e0610",
+    "src/click2future/training/conditioning.py": "17195fddbad27a4e87446c0e17210d1adf1d789b404d19dba70c15cda123affe",
+    "src/click2future/training/diffusion.py": "567dad191d139fb0014862ebc7c98f7ed3d5a161a2e6bbf5b2cbf54b9b1b8439",
+    "src/click2future/evaluation/heads.py": "9a2f5e0c169cbee11136969ad4b2f0d69158f29c8e1bd6cee457b1d440bad92d",
+    "tests/test_diffusion_handoff.py": "0408f1d8f4ab6c8370acbb32c7c7a48d5f4585e7043b8a1b6f1d06f0af99df5d"
+  },
+  "source_archive": {
+    "file_count": 109,
+    "sha256": "3239031715cce78da5cc614fcf0c1e6a6895b694696f1f14e6bd75677bb86de4",
+    "status": "development snapshot; trained experiments pending",
+    "fresh_environment_tests": 258,
+    "generated_smoke_rollouts": 2,
+    "replay": "passed"
+  },
+  "remaining": [
+    "CVAE TC2 overfit and live GPU resume",
+    "coherent diffusion sampling and held-out action controls",
+    "trained E4 head-versus-video measurements",
+    "demo and final experiments"
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-16",
+  "source_revision": "fbca39959f54221c34c6a0794180a0f132e729c1",
+  "source_archive_sha256": "a9105fe8e790c24a85f43a06a8f8bde881dd48428a81ff997eceac21287610b3",
+  "results_archive_sha256": "0eeac7bc7fe8e5173a49378a0339995633e578b7c587762a08e44b2e365b026f",
+  "hardware": {
+    "gpu": "NVIDIA A40",
+    "driver": "570.148.08",
+    "node": "TC2N01"
+  },
+  "jobs": [
+    {
+      "id": 42909,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 200
+    },
+    {
+      "id": 42910,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 142
+    }
+  ],
+  "configuration": {
+    "auxiliary": false,
+    "base_channels": 32,
+    "batch_size": 1,
+    "checkpoint_every": 100,
+    "collision_positive_weight": 1.0,
+    "conditioning": "spatial",
+    "diffusion_steps": 1000,
+    "ema_decay": 0.995,
+    "learning_rate": 0.0001,
+    "limit_train": 4,
+    "precision": "bfloat16",
+    "seed": 7,
+    "steps": 2000,
+    "weight_decay": 0.01
+  },
+  "training_data": {
+    "file_hashes": {
+      "dataset_manifest.json": "0603ebf489c7bbc1cec1ce7f8cbf2f354a4047e1cf11b21092208cbd0b847cfc",
+      "scene-00610132-variant-000.json": "3018b867395aee7cfee73f2264a6feb786a9e48a6d3427f2cbb1927d576ec220",
+      "scene-00610132-variant-000.npz": "36f086522e18c8e6427ae7f3aee363276bedab08eb615002739c54b0ab89cb6d",
+      "scene-00610132-variant-001.json": "7a1d2f273645617837c1a9b13b8ecb2f2753d1db23b41b46856867951889a44b",
+      "scene-00610132-variant-001.npz": "c9717867e4407fef2c88d38ea813e64e39bf32cba44206e0e691fe089f8f7533",
+      "scene-00610133-variant-000.json": "9686333245b497bed66f33daf8e2c2d547e71daa8e4d9131683790c0d6813ba3",
+      "scene-00610133-variant-000.npz": "951b6e5c479309ad91f4a1b69ca89083f95a22cc88b2d108376343e42907da5d",
+      "scene-00610133-variant-001.json": "b3b9555ec62ee5b3ca9772d0b2bf8918eb0c7ce0766f5aa093e8c4e36bb63454",
+      "scene-00610133-variant-001.npz": "58409d6b650326c5f538e73033f921cc591f6a0760a5c233b35384814df25784",
+      "splits.json": "b537e5cc5f54843794e39dde91206ff35ca787cc058da0fcb2fe9fe2f7aad1af"
+    },
+    "manifest_hash": "ebb73dcc5662fdc65b461ff1dfbb89b8524020a824e5754e90fecd5c7962cc8d",
+    "scope": "train-only pilot; no held-out quality claim",
+    "training_sample_ids": [
+      "scene-00610132-variant-000",
+      "scene-00610132-variant-001",
+      "scene-00610133-variant-000",
+      "scene-00610133-variant-001"
+    ],
+    "training_signature": "127a9d0b839e714f2dce91f9a510dd93981c2bfa4c5f0a09f8f2a819102963ea"
+  },
+  "training_probe_noise_mse": {
+    "initial": 1.0255446434020996,
+    "step_200": 0.08961625397205353,
+    "step_2000": 0.01965080015361309
+  },
+  "mean_training_step_seconds_including_data_load": 0.048834382480416216,
+  "peak_cuda_allocated_bytes": 752562176,
+  "cross_job_resume": {
+    "status": "passed",
+    "first_job": "42909",
+    "resume_job": "42910",
+    "compared_step": 201,
+    "largest_tensor_absolute_difference": 0.0,
+    "comparison_tolerance": {
+      "atol": 1e-07,
+      "rtol": 1e-06
+    },
+    "expected_loss": 0.17169249057769775,
+    "resumed_loss": 0.17169249057769775,
+    "components": [
+      "model",
+      "ema",
+      "optimizer",
+      "scheduler",
+      "all_rng",
+      "data_order"
+    ]
+  },
+  "sampling": {
+    "sample_id": "scene-00610132-variant-000",
+    "split": "train",
+    "seeds": [
+      100,
+      101,
+      102,
+      103
+    ],
+    "steps": 32,
+    "weights": "ema",
+    "four_sample_seconds": {
+      "forward": 1.7438217215240002,
+      "reverse": 1.7427842998877168,
+      "zero": 1.7429252211004496
+    },
+    "scope": "Training-scene plumbing diagnostic; action success not established"
+  },
+  "generated_video_gate": {
+    "status": "failed",
+    "split": "train",
+    "reason": "Heavy colour noise; no reliable future object tracks. Not a successful tiny overfit.",
+    "sample_id": "scene-00610132-variant-000",
+    "tracked_future_observations": 0,
+    "expected_future_observations": 248,
+    "complete_samples": 0,
+    "ade": null,
+    "fde": null,
+    "held_out_action_control": "not tested"
+  },
+  "artifact_sha256": {
+    "run/summary-200.json": "33a4ac2e0fff5972133fc3872a84617059ef6d1a30365a8810a96aa252cd4e46",
+    "run/summary-2000.json": "93e924c2708c5d5f1ee45f7f63a66a760e50ae607836c4bdae2ff48ae7f94b7c",
+    "resume-check.json": "98f44a6a0b307ed7cd17e899a15acb35c58c48e604708a64490ce3798a2ab0d6",
+    "sampling.json": "01eee2768d9583dc0f37ea9bff0a8e7bd6821db5a853ea35fcd1615e861e2a83",
+    "forward.npz": "68caf687ea220762769381aa105a8d20e756ab92fe44b6da5fab2866d2f3cca4",
+    "reverse.npz": "0b463099bd3fce30cb474283d88e71430aa814b5f3c759e836709ea3bcd33c00",
+    "zero.npz": "60736631cbdb8616a6f739954b79f19acc283ece1d45cc3465646c955461b8e6",
+    "run/checkpoint.pt": "1529247f3c43c12d47eff981bb2ca8a4e791b572c0e0ea3a93b98f7d90875421",
+    "video-metrics.json": "c1ea7a8ecdd6cc17c1336f72f4a265d1034c2b294c896625e06a3a690894c92d",
+    "accounting.txt": "5122adaaf9c142e7ba2caee384570f2cc07c1eb8b28102887c70ecd0d10920bf"
+  },
+  "backup": "Full result bundle and checkpoint copied to ignored local outputs/tc2-ops; no weights or datasets in Git.",
+  "scope": "Implementation and performance evidence only. No model-quality, uncertainty or SOTA claim."
+}

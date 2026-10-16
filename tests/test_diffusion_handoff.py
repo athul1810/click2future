@@ -1,4 +1,4 @@
-"""Compatibility with B's trainer branch; active once its modules are present."""
+"""Shared preprocessing and final-head capture with the integrated DDIM sampler."""
 
 import numpy as np
 import pytest
@@ -8,19 +8,11 @@ from click2future.data import load_batch, save_rollout
 from click2future.evaluation.heads import CaptureFinalHeads, evaluate_heads
 from click2future.models.pilot_denoiser import PilotDenoiser
 from click2future.sim import make_scene, run_rollout
+from click2future.training import conditioning, diffusion
 from click2future.training.batch import prepare_video_batch
 
 
-@pytest.fixture
-def handoff_modules():
-    return (
-        pytest.importorskip("click2future.training.conditioning"),
-        pytest.importorskip("click2future.training.diffusion"),
-    )
-
-
-def test_native_normalization_matches_b_boundary(handoff_modules, tmp_path):
-    conditioning, _ = handoff_modules
+def test_native_normalization_matches_b_boundary(tmp_path):
     ref = run_rollout(make_scene(160000), frame_count=4, resolution=64)
     save_rollout(ref, tmp_path, "fixture")
     raw = load_batch(tmp_path, ["fixture"])
@@ -31,8 +23,8 @@ def test_native_normalization_matches_b_boundary(handoff_modules, tmp_path):
         assert torch.equal(getattr(ours, field), getattr(condition, field))
 
 
-def test_real_ddim_capture_preserves_samples_and_exports_actual_final_heads(handoff_modules):
-    conditioning, diffusion = handoff_modules
+@pytest.mark.parametrize("prediction_type", ["epsilon", "velocity"])
+def test_real_ddim_capture_preserves_samples_and_exports_actual_final_heads(prediction_type):
     ref = run_rollout(make_scene(160001), frame_count=4, resolution=64)
     condition = conditioning.observable_condition(
         torch.from_numpy(ref["frames"][:1].transpose(0, 3, 1, 2)).float() / 255,
@@ -40,7 +32,7 @@ def test_real_ddim_capture_preserves_samples_and_exports_actual_final_heads(hand
         torch.from_numpy(ref["force_xy"][None]),
     )
     model = PilotDenoiser(base_channels=8, auxiliary=True).eval()
-    sampler = diffusion.Diffusion(10)
+    sampler = diffusion.Diffusion(10, prediction_type=prediction_type)
     state = torch.get_rng_state().clone()
     baseline = sampler.sample(model, condition, future_frames=3, sampling_steps=3, seed=7)
     with CaptureFinalHeads(model) as captured:

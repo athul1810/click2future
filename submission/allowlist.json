@@ -3,6 +3,7 @@
     "src/click2future/**/*.py",
     "configs/**/*.yaml",
     "configs/**/*.toml",
+    "configs/**/*.json",
     "tests/test_*.py",
     "tests/fixtures/tiny_scene.json",
     ".python-version",

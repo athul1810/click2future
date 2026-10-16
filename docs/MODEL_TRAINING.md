@@ -35,7 +35,7 @@ is 0.001, with linear warmup over the first 20% of configured steps; log varianc
 are bounded to [-10,5]. Validation uses full beta throughout so the selection criterion
 does not change during warmup. MSE is also logged and can be selected explicitly.
 These settings match the baseline handoff and still need validation.
-This pixel baseline does not settle the diffusion pixel/latent choice or close T08.
+Pixel diffusion is adopted for the core comparison; the optional autoencoder T08 remains open.
 
 `prepare_video_batch` converts loader RGB [0,1] to [-1,1], rearranges future frames
 to [B,3,F,H,W], and divides force by 0.5 simulator units without clipping OOD forces.
@@ -119,13 +119,19 @@ timesteps. It restores scene IDs from frame-0 masks and exports `auxiliary_head`
 reports. Features outside the declared supervision range are rejected.
 `save_head_evaluation` writes the existing extracted-track NPZ and hashed JSON format.
 Head and RGB scores must use the same checkpoint, conditions, seeds, and references
-and remain separate. Actual head-versus-video results still need B's trainer/sampler.
+and remain separate. Actual E4 head-versus-video results still need trained samples.
 
-The two compatibility tests in `tests/test_diffusion_handoff.py` passed against B's
-working revision `2e0a46e`. They check identical native normalization and actual DDIM
-sampling with captured timestep-zero heads. Capture preserves sampled tensors and RNG
-state exactly and removes its hook after errors. These tests activate in the main suite
-when B's modules land; until then they skip there. No optimizer updates occur.
+`tests/test_diffusion_handoff.py` now runs against the integrated diffusion modules.
+It checks identical native normalization and actual DDIM sampling with captured
+timestep-zero heads for both epsilon and velocity targets. Capture preserves sampled
+tensors and RNG state exactly and removes its hook after errors. These are untrained
+inference checks without optimizer updates.
+The combined suite passes 258 tests with no skips; the integration record is in
+`results/diffusion-integration-checks.json`.
+
+The standalone `diffusion_objective` helper remains epsilon-only. The integrated
+diffusion trainer computes the selected epsilon/velocity target itself and applies
+the same auxiliary loss. Do not pass a velocity target to the epsilon helper.
 
 Use `with CaptureFinalHeads(model) as captured:` around each separate sampler call,
 then pass `captured.output` to head evaluation. This uses actual generated-sample

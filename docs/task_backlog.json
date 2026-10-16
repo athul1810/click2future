@@ -7,7 +7,7 @@
     "outcome": "Apply the AI6132 technical-review requirements and record the remaining group and submission details.",
     "acceptance": [
       "Record Group 7, the four full names, and PRAMOD SANJAY as coordinator from the supplied roster.",
-      "Confirm the NTULearn cutoff and resolve the difference between the working 14 November date and the course brief's 16 November date.",
+      "Confirm the exact NTULearn upload cutoff; preserve the hard 14 November internal completion date regardless of a later upload date.",
       "Check NTULearn for additional instructions and use docs/REQUIREMENTS.md for the confirmed minimum requirements.",
       "Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan."
     ],
@@ -15,8 +15,10 @@
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/1",
     "completed_acceptance": [
-      0
-    ]
+      0,
+      3
+    ],
+    "progress": "Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submission artifacts must be complete by 14 November. Exact NTULearn upload cutoff remains unverified."
   },
   {
     "id": "T02",
@@ -25,17 +27,20 @@
     "dependencies": [],
     "outcome": "Validate the approved TC2 account and fit training to its recorded limits.",
     "acceptance": [
-      "Record TC2 access approval for Athul and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.",
+      "Record TC2 access approval for Athul and Shrijeet and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.",
       "Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.",
       "Record storage limits, any total usage quota, access expiry, and backup locations; keep credentials outside Git.",
       "Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs."
     ],
-    "owner": null,
+    "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/2",
     "completed_acceptance": [
-      0
-    ]
+      0,
+      1,
+      3
+    ],
+    "progress": "A40 setup 42886 and real training jobs 42909/42910 completed. Full model/EMA/optimizer/scheduler/RNG/data-order resume matched the next update with zero tensor difference across allocations. Data-loading-inclusive step time 0.04883 s; four 32-step samples 1.744 s; peak allocated 752,562,176 bytes. No user storage quota or expiry was exposed by the read-only checks. Evidence: docs/results/diffusion_pilot_2026-10-16.json. Generated-video gate failed; this is infrastructure evidence, not model readiness."
   },
   {
     "id": "T03",
@@ -50,14 +55,15 @@
       "Document working commands as modules are implemented; mark unavailable commands clearly."
     ],
     "owner": null,
-    "status": "In progress",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/3",
     "completed_acceptance": [
       0,
+      1,
       2,
       3
     ],
-    "progress": "The locked CPU environment, diagnostics, artifact conventions, and module commands are implemented. pip is retained in the development lock, and both editor package-list commands are verified. Cluster validation remains open. Included in PR #25."
+    "progress": "Locked development setup is verified locally and on the TC2 A40 in job 42886. CPU/CUDA diagnostics, dependency checks, tests, artifact conventions and module commands passed. Optional image metrics remain a separate extra. Evidence: docs/results/tc2_probe_2026-10-16.json."
   },
   {
     "id": "T04",
@@ -153,7 +159,7 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/7",
-    "evidence": "docs/METRICS.md; docs/results/contact-normal-calibration.json; docs/results/contact-gap-calibration.json; docs/results/model-component-checks.json; existing action/image/temporal/ensemble controls. All implementation acceptance checks are complete; awaiting review/merge.",
+    "evidence": "docs/METRICS.md; docs/results/contact-normal-calibration.json; docs/results/action-control-checks.json; docs/results/image-quality-controls.json; docs/results/future-metric-controls.json. Contact estimates remain approximate; trained-video and OOD checks continue in the experiments.",
     "completed_acceptance": [
       0,
       1,
@@ -165,7 +171,7 @@
   },
   {
     "id": "T08",
-    "title": "Train and validate the shared frame autoencoder",
+    "title": "Optional: train and validate a shared frame autoencoder",
     "workstream": "model",
     "dependencies": [
       "T03",
@@ -180,7 +186,9 @@
     ],
     "owner": "MAITI SHRIJEET",
     "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/8"
+    "issue_url": "https://github.com/athul1810/click2future/issues/8",
+    "optional": true,
+    "progress": "Deferred from the core path by D011. Adopted pixel diffusion does not require T08. Revisit only after working 64px samples and a measured reconstruction/cost gate."
   },
   {
     "id": "T09",
@@ -201,23 +209,25 @@
     "owner": null,
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/9",
+    "proposed_owner": "KAPOOR ANANYA (awaiting acceptance)",
+    "progress": "A 574,659-parameter conditional video VAE, learned prior/posterior, future-only L1 plus KL with warmup, TC2-only trainer, checkpoint/resume, and four-seed prior sampler are implemented. CPU tests cover gradients, no-future-input inference, dataset splits, checkpoint transport, and exported video format. TC2 tiny-batch overfitting, GPU resume, trained samples, and measured budgets remain pending.",
     "completed_acceptance": [
       0,
       1
-    ],
-    "progress": "A 574,659-parameter conditional video VAE, learned prior/posterior, future-only L1 plus KL with warmup, TC2-only trainer, checkpoint/resume, and four-seed prior sampler are implemented. CPU tests cover gradients, no-future-input inference, dataset splits, checkpoint transport, and exported video format. TC2 tiny-batch overfitting, GPU resume, trained samples, and measured budgets remain pending.",
-    "evidence": "docs/MODEL_TRAINING.md; docs/results/model-component-checks.json; tests/test_cvae.py; tests/test_cvae_workflow.py. No generator weights were trained in CPU checks."
+    ]
   },
   {
     "id": "T10",
     "title": "Implement first-frame and numeric-action diffusion E1/E2",
     "workstream": "model",
     "dependencies": [
-      "T08"
+      "T03",
+      "T04",
+      "T06"
     ],
     "outcome": "Create the common diffusion backbone and the main numeric-action baseline.",
     "acceptance": [
-      "Implement latent video training and sampling with a shared backbone/configuration.",
+      "Implement pixel video training and DDIM sampling with a shared backbone/configuration.",
       "Support first-frame-only E1 and selected-mask-plus-numeric-force E2.",
       "Pass forward/backward, tiny-batch overfit, and checkpoint resume checks.",
       "Measure 64px peak VRAM, seconds/step, and four-sample inference latency.",
@@ -226,8 +236,13 @@
     "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/10",
-    "completed_acceptance": [],
-    "progress": "The untrained prototype supports first-frame and numeric conditioning with forward/backward checks. Dataset training, the diffusion schedule/sampler, overfitting, and trained samples remain outstanding."
+    "completed_acceptance": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "progress": "Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up jobs 42917 (10000-step epsilon) and 42920 (2000-step velocity) completed. Longer epsilon still failed tracking; velocity reduced visible noise but recovered only 1-7/62 observations. Tiny-overfit remains open. Next isolate a deterministic single clip, noise-level reconstruction and precision. Evidence: docs/results/diffusion_debug_2026-10-16.json."
   },
   {
     "id": "T11",
@@ -248,7 +263,7 @@
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/11",
     "completed_acceptance": [],
-    "progress": "Numeric/spatial conditioning switches exist in the prototype with equal parameter counts. Working E3 training/sampling and learned action-control checks remain outstanding."
+    "progress": "Numeric/spatial modes share the same backbone and data boundary; trainer and sampler support both. Measured action-responsive E2/E3 comparisons remain pending."
   },
   {
     "id": "T12",
@@ -274,8 +289,8 @@
       1,
       2
     ],
-    "progress": "The shared batch adapter and joint epsilon/auxiliary objective are implemented without changing the denoiser. Real-loader gradients reach the noise output, both auxiliary heads, and shared features, including a positive collision fixture. Head export restores scene IDs, validates feature timesteps, and writes separate auxiliary_head metrics. Compatibility with B's working DDIM sampler is checked, including actual final-head capture. Review/integration of that branch, E4 overfitting, and measured head-versus-video results remain pending.",
-    "evidence": "docs/AUXILIARY_LOSSES.md; docs/MODEL_TRAINING.md; docs/results/auxiliary-loss-checks.json; docs/results/model-component-checks.json. Joint gradients and head export are checked; no E4 sampling results yet."
+    "progress": "The shared batch adapter and joint epsilon/auxiliary objective are implemented. Real-loader gradients reach both auxiliary heads and shared features, including a positive collision fixture. The integrated diffusion trainer supports E4 with epsilon or velocity targets; captured DDIM heads are exported separately in scene ID order. E4 overfitting and measured head-versus-video comparisons remain pending.",
+    "evidence": "docs/AUXILIARY_LOSSES.md; docs/MODEL_TRAINING.md; docs/results/auxiliary-loss-checks.json; docs/results/diffusion-integration-checks.json. E4 training quality and head-versus-video comparisons remain unmeasured."
   },
   {
     "id": "T13",
@@ -285,8 +300,7 @@
       "T07",
       "T09",
       "T10",
-      "T11",
-      "T12"
+      "T11"
     ],
     "outcome": "Commit to a comparable experiment suite that fits the remaining budget.",
     "acceptance": [
@@ -299,19 +313,20 @@
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/13"
+    "issue_url": "https://github.com/athul1810/click2future/issues/13",
+    "progress": "Core suite is E0/E2/E3. E4 and E1 receive explicit budget gates and do not block freezing the core protocol."
   },
   {
     "id": "T14",
-    "title": "Run and analyze the core E0-E4 comparisons",
+    "title": "Run and analyze E0/E2/E3, with gated E1/E4 ablations",
     "workstream": "evaluation",
     "dependencies": [
       "T13"
     ],
     "outcome": "Produce the main evidence for conditioning and supervision claims.",
     "acceptance": [
-      "Run the five variants under the frozen protocol and record actual budgets/seed counts.",
-      "Compare E2-to-E3 and E3-to-E4 with quality, physical behavior, and cost metrics.",
+      "Run E0/E2/E3 under the frozen protocol; add E1/E4 only after explicit budget gates and record actual budgets/seed counts.",
+      "Compare CVAE-to-diffusion and E2-to-E3; compare E3-to-E4 if funded, using generated-video quality, physical behavior and cost.",
       "Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.",
       "Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.",
       "Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs."
@@ -319,7 +334,7 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/14",
-    "progress": "CSV/JSON comparison export is implemented and checked on 24 simulator-control reports from four independent scenes. It retains run/checkpoint IDs, K, missing counts, and scene-group intervals. Actual E0-E4 runs, cost measurements, hyperparameter study, and analysis still depend on T13.",
+    "progress": "Scene-group comparison tables and source separation merged via PR #27. Actual main comparisons remain pending. The 2000-step diffusion pilot failed the generated-video gate; do not include its noise-loss decline as a model-quality result.",
     "evidence": "docs/EVALUATION_REPORTS.md; docs/results/aggregation-controls.json. Simulator controls only; no trained-model comparison."
   },
   {
@@ -375,9 +390,10 @@
       "Label the friction slider as simulator-only for hidden-physics checkpoints.",
       "Add trajectory overlays, loading/error states, and a documented launch path."
     ],
-    "owner": null,
+    "owner": "MAITI SHRIJEET",
     "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/17"
+    "issue_url": "https://github.com/athul1810/click2future/issues/17",
+    "progress": "Shared EMA inference API exports evaluator-ready uint8 videos with exact frame 0 and paired sampling seeds. UI and live/cached fallback remain to be implemented."
   },
   {
     "id": "T18",
@@ -426,7 +442,7 @@
       3,
       4
     ],
-    "progress": "The source ZIP now includes CVAE training/sampling, the shared E4 objective, and a TC2 job script. The archive still excludes data, weights, links, and working files. Source extraction and replay checks are rerun after changes. Diffusion trainer/sampler, live GPU checkpoint checks, demo integration, and final experiment reproduction remain.",
+    "progress": "The source ZIP includes diffusion and CVAE training/sampling, E4 evaluation, and the CVAE TC2 job script. It excludes data, weights, links, and working files. Source extraction and replay checks are rerun after integration. CVAE GPU checkpoint checks, demo integration, and final experiment reproduction remain.",
     "evidence": "docs/SUBMISSION.md; docs/results/submission-checks.json; submission/allowlist.json; submission/README.md."
   },
   {
@@ -443,7 +459,7 @@
       "Export group_07_contribution.pdf with every member's full name and reviewed contribution description.",
       "Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links.",
       "Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.",
-      "Coordinate one group submission of the three files through NTULearn > Assignments > Project 1, using the retained 14 November working deadline until the discrepancy is resolved.",
+      "Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.",
       "Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files."
     ],
     "owner": null,
