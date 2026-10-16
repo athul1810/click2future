@@ -39,3 +39,8 @@ counts, distorted/frozen controls, corrupt inputs, and offline weight checks. Wi
 weights it compares LPIPS with the official API, checks batching and CPU RNG preservation,
 and runs the real CLI. Install the `image-metrics` extra and cache LPIPS weights using the
 commands in [METRICS.md](../docs/METRICS.md#image-quality) to run these tests.
+
+`test_future_metrics.py` checks motion compensation, object/background flicker, acceleration
+and reference-contact exclusions, missing tracks, fixed whole-trajectory coverage, duplicate
+and single samples, and the RGB-to-report command. Simulator controls are reproducible with
+`python -m click2future.evaluation.future_controls --output outputs/future-metric-controls.json`.

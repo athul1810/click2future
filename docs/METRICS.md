@@ -286,9 +286,97 @@ checks, not trained-model results. A large static background can give frozen out
 image scores, and a valid alternative physical future may score poorly against one
 reference. Report image quality alongside action, trajectory, and diversity measures.
 
+## Temporal consistency and ensemble diversity
+
+`evaluation.futures` tracks each generated video once and computes temporal diagnostics,
+whole-trajectory diversity, finite-reference coverage, and contact-event frequencies.
+All reference variants must share the same visible scene, first frame, object identities,
+action, and timestamps. Only hidden physics and the future may differ. Reference future
+positions/contact labels are used for scoring, never for model conditioning or tracking.
+
+```bash
+python -m click2future.evaluation.futures \
+  --reference-dir outputs/pilot_32f \
+  --reference-ids scene-00000032-variant-000 scene-00000032-variant-001 \
+  --videos outputs/generated.npz --source generated_video --run-id E2-validation-seed0 \
+  --output outputs/future-metrics.json
+```
+
+Use NPZ `videos` as uint8 `[K,T,H,W,3]`, optionally with boolean `frame_valid [K,T]`.
+Missing RGB frames invalidate their object observations and temporal windows; they are
+not interpreted as stationary objects. The report records input hashes, reference IDs,
+timestamps, tracker/contact settings, metric versions, and extraction failure counts.
+Use the same ordered reference set and settings for every compared model. The pixel
+config checks native resolution and frame timing.
+
+The temporal report contains these per-sample diagnostics:
+
+- Object RGB error after compensating for centroid translation between consecutive
+  future frames. RGB is sampled bilinearly; all source taps must lie within the object.
+  Report normalized absolute error together with scored/expected object transitions,
+  candidate/scored pixel counts, and the valid pixel fraction. Rotation and occlusion
+  reduce coverage and are not reconstructed by this translation-only method.
+- Background RGB change on pixels outside all tracked objects at both endpoints.
+  An interval is unscored when any valid object is missing. Counts accompany its mean.
+- Trajectory acceleration norm in normalized image units per second squared. It uses
+  the actual timestamps and future-frame triples. Windows touching the union of declared
+  reference object/wall contacts, with a fixed one-interval margin, are excluded. Applied
+  force intervals are excluded for the selected object. The same exclusion windows are
+  used for all models, with excluded/missing/scored counts retained.
+
+Frame 0 is excluded from transitions and acceleration triples. Acceleration is a
+smoothness diagnostic, not a physical-validity score. Rasterization creates a nonzero
+floor. Generated collisions outside the reference windows can still raise it, and a
+frozen output can score zero on every temporal diagnostic.
+
+Trajectory diversity is the mean Euclidean distance over complete whole future clips,
+reported for all objects and the selected object. It includes endpoint spread, per-pair
+records, expected/scored pair counts, and reference-set spread. K=1 has no pairwise spread
+and returns null. Duplicate samples have zero spread. Colour flicker alone does not
+create trajectory diversity.
+
+Coverage averages the distance from each reference future to its nearest generated
+whole trajectory. The reverse direction averages each sample's distance to its nearest
+reference. Both require all K sample trajectories to be complete for that object set.
+The matching cannot select a different sample for each frame or object. These distances
+use a finite reference set: an unmatched generated future can still be physically valid.
+Reference positions are oracle values while generated positions have extraction error.
+
+The contact-frequency table reports, for each unordered object pair, the fraction of
+futures with any onset and the empirical Bernoulli variance. Every K timeline must be
+observed before its sampled rate is reported. Reference frequencies use simulator labels;
+sampled frequencies inherit the current contact estimator's low recall. Do not treat
+frequency agreement as a reliable physical result yet.
+
+Reproduce the [simulator control record](results/future-metric-controls.json):
+
+```bash
+python -m click2future.evaluation.future_controls \
+  --output outputs/future-metric-controls.json
+```
+
+The checks use four visible scenes, seeds 70000-70003, with eight hidden-physics futures
+per scene and four samples per control, at 64px/8 FPS for 32 frames. The physics control
+uses the first four reference videos as metric inputs; it is not an independent model
+sample. Other controls duplicate one future, repeat frame 0, or alternate +/-8 RGB values
+without changing motion. All preserve frame 0. The table averages per-scene scores:
+
+| Control | Trajectory spread | Reference-to-sample distance | Object RGB error |
+|---|---:|---:|---:|
+| Hidden-physics variants | 0.01442 | 0.00520 | 0.00000 |
+| Duplicate future | 0.00000 | 0.01172 | 0.00000 |
+| Frozen first frame | 0.00000 | 0.03921 | 0.00000 |
+| Colour flicker | 0.00000 | 0.01172 | 0.06275 |
+
+Distances use normalized coordinates; RGB errors are divided by 255. Background flicker
+error was also 0.06275. All controls passed. Frozen frames had zero acceleration; the
+moving physics controls averaged 0.09605 normalized units/second squared after exclusions.
+These cases show why temporal scores, action adherence, image quality, and diversity
+must be interpreted together. They validate implementation behaviour, not model quality.
+
 ## Remaining work
 
-Contact recall and checks on generated videos remain unresolved. Temporal consistency,
-ensemble diversity/coverage, wall-contact scoring, and scene-group aggregation still
-need implementation. T07 remains open. Action and image-quality tools are ready for
-trained samples, subject to the limitations above.
+Contact recall, generated-video validation, and scene-group aggregation remain unresolved.
+T07 stays open until those limitations are addressed. T12 still needs the auxiliary
+supervision losses and integration with the dataset trainer. The uncertainty experiments
+in T16 need actual model samples; these metric controls do not complete that experiment.

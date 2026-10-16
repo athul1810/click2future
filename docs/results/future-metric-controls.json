@@ -1,0 +1,3009 @@
+{
+  "status": "passed",
+  "violations": [],
+  "purpose": "Metric controls on simulator RGB, not model results",
+  "protocol": {
+    "seed_start": 70000,
+    "scene_groups": 4,
+    "reference_futures": 8,
+    "samples_per_control": 4,
+    "frames": 32,
+    "fps": 8,
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "physics_seed_rule": "visible_seed * 10 + variant",
+    "object_count": "2 + seed % 3",
+    "flicker": "alternate +8/-8 RGB intensity; preserve frame 0",
+    "temporal_exclusion": "union of all declared reference contact windows"
+  },
+  "source_sha256": {
+    "future_controls.py": "87719657c96fd305cb0016137a01d4ab44b8e0a0fa26b4b5f9dd6495c935e81e",
+    "futures.py": "b0ebeb919f59dbbd8e9e0dce6f170243c069c3505f52829e81fbd689f7c5c2de",
+    "temporal.py": "6f0fd1db0da810df70a9cd49c54990848e5fffe556743e92160d39899b143639",
+    "diversity.py": "8a65b4424a9e72151237cc582c527518b397e9c41febf8d934229780aa5440ef",
+    "sequences.py": "d3a7a22808f1b1cfae18639096a7367111382a017243c67029056e087e790e56",
+    "tracking.py": "ca3640629ee5e55665eb3bc5b644d928ce4fcfdac07b9833aa11335947be5bd4",
+    "contacts.py": "6b15abf58be074335318fbdc3a764f75851f28915cbdacfc36834affb6b6e721"
+  },
+  "records": [
+    {
+      "seed": 70000,
+      "scene_group_id": "scene-00070000",
+      "controls": {
+        "physics_variants": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.013637643266407594,
+            "mean_pairwise_endpoint_distance": 0.02224614880083393,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.003199261550120702,
+                "endpoint_distance": 0.004908353556907774
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.020590416237142976,
+                "endpoint_distance": 0.034845694185668706
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0057732971645359345,
+                "endpoint_distance": 0.007899098473133855
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.023469572036346482,
+                "endpoint_distance": 0.03959895587835721
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0028837504603733857,
+                "endpoint_distance": 0.0034810418977059636
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.025909562149926086,
+                "endpoint_distance": 0.042743748813230065
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.014003507583533309,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.00493874083421965,
+            "mean_sample_to_nearest_reference": 0.0029836644793872573,
+            "reference_to_nearest_sample": [
+              0.0028116023145288603,
+              0.003022942186640439,
+              0.003034085642311205,
+              0.0030660277740685252,
+              0.010311765947747235,
+              0.006883932489948338,
+              0.005402235110548916,
+              0.004977335207963676
+            ],
+            "sample_to_nearest_reference": [
+              0.0028116023145288603,
+              0.003022942186640439,
+              0.003034085642311205,
+              0.0030660277740685252
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 2.2704343045348154e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 1.1103064310577778e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5020,
+              "scored_target_pixels": 3464,
+              "warp_valid_pixel_fraction": 0.6900398406374502,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117706,
+              "mean_acceleration_norm_over_scored": 0.13039197334270186,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 2.9917111365448763e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 4986,
+              "scored_target_pixels": 3462,
+              "warp_valid_pixel_fraction": 0.694344163658243,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117687,
+              "mean_acceleration_norm_over_scored": 0.04358787870321115,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 2.181467443071852e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5018,
+              "scored_target_pixels": 3458,
+              "warp_valid_pixel_fraction": 0.689119170984456,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117716,
+              "mean_acceleration_norm_over_scored": 0.11527349135043331,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        },
+        "duplicate_future": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.014003507583533309,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.011676869369889768,
+            "mean_sample_to_nearest_reference": 0.0028116023145288603,
+            "reference_to_nearest_sample": [
+              0.0028116023145288603,
+              0.005136652740296416,
+              0.022922315301981376,
+              0.007675330364637538,
+              0.01572844061663278,
+              0.018005585474119578,
+              0.010784968687285134,
+              0.010350059459636456
+            ],
+            "sample_to_nearest_reference": [
+              0.0028116023145288603,
+              0.0028116023145288603,
+              0.0028116023145288603,
+              0.0028116023145288603
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 2.2704343045348154e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 2.2704343045348154e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 2.2704343045348154e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 2.2704343045348154e-18,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        },
+        "frozen_first_frame": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.014003507583533309,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.04192596638745779,
+            "mean_sample_to_nearest_reference": 0.029589683173569144,
+            "reference_to_nearest_sample": [
+              0.042762655097310094,
+              0.040017771434244585,
+              0.059734024176086926,
+              0.03764468268179125,
+              0.029589683173569144,
+              0.05593554709577897,
+              0.03464919975424302,
+              0.03507416768663834
+            ],
+            "sample_to_nearest_reference": [
+              0.029589683173569144,
+              0.029589683173569144,
+              0.029589683173569144,
+              0.029589683173569144
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 4980,
+              "scored_target_pixels": 3420,
+              "warp_valid_pixel_fraction": 0.6867469879518072,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117900,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 4980,
+              "scored_target_pixels": 3420,
+              "warp_valid_pixel_fraction": 0.6867469879518072,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117900,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 4980,
+              "scored_target_pixels": 3420,
+              "warp_valid_pixel_fraction": 0.6867469879518072,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117900,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 4980,
+              "scored_target_pixels": 3420,
+              "warp_valid_pixel_fraction": 0.6867469879518072,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117900,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        },
+        "colour_flicker": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.014003507583533309,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.011676869369889768,
+            "mean_sample_to_nearest_reference": 0.0028116023145288603,
+            "reference_to_nearest_sample": [
+              0.0028116023145288603,
+              0.005136652740296416,
+              0.022922315301981376,
+              0.007675330364637538,
+              0.01572844061663278,
+              0.018005585474119578,
+              0.010784968687285134,
+              0.010350059459636456
+            ],
+            "sample_to_nearest_reference": [
+              0.0028116023145288603,
+              0.0028116023145288603,
+              0.0028116023145288603,
+              0.0028116023145288603
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 5061,
+              "scored_target_pixels": 3508,
+              "warp_valid_pixel_fraction": 0.693143647500494,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 117665,
+              "mean_acceleration_norm_over_scored": 0.04391579037302396,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 70,
+              "excluded_reference_contact_or_force_windows": 17,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        }
+      }
+    },
+    {
+      "seed": 70001,
+      "scene_group_id": "scene-00070001",
+      "controls": {
+        "physics_variants": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.004694459562446023,
+            "mean_pairwise_endpoint_distance": 0.007813270085624267,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0028525947439839738,
+                "endpoint_distance": 0.004593864411058739
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0061742584290664145,
+                "endpoint_distance": 0.010354186060480483
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.001376867001921808,
+                "endpoint_distance": 0.00185483122848396
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.008614765204910274,
+                "endpoint_distance": 0.014944938436961515
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0019830497831966275,
+                "endpoint_distance": 0.003070873012611013
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.007165222211597041,
+                "endpoint_distance": 0.01206092736414989
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.003707599607847657,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.004167166429772918,
+            "mean_sample_to_nearest_reference": 0.003840995098972731,
+            "reference_to_nearest_sample": [
+              0.0039039230456652664,
+              0.0038516920602980364,
+              0.0037635136733399095,
+              0.0038620741610374035,
+              0.005525671989169065,
+              0.004512637761407408,
+              0.0038867005012155737,
+              0.004031118246050683
+            ],
+            "sample_to_nearest_reference": [
+              0.0038867005012155737,
+              0.0038516920602980364,
+              0.0037635136733399095,
+              0.0038620741610374035
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 1.0916233901505557e-18,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 4.724140343683335e-19,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8154,
+              "scored_target_pixels": 5567,
+              "warp_valid_pixel_fraction": 0.6827324012754477,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114649,
+              "mean_acceleration_norm_over_scored": 0.009274307079984374,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 7.740116947277779e-19,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8173,
+              "scored_target_pixels": 5602,
+              "warp_valid_pixel_fraction": 0.6854276275541417,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114588,
+              "mean_acceleration_norm_over_scored": 0.010319578676805448,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 2.3220350841833337e-19,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8157,
+              "scored_target_pixels": 5590,
+              "warp_valid_pixel_fraction": 0.6853009684933187,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114629,
+              "mean_acceleration_norm_over_scored": 0.013117944666487429,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 496
+          }
+        },
+        "duplicate_future": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.003707599607847657,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.00578068250732683,
+            "mean_sample_to_nearest_reference": 0.0038867005012155737,
+            "reference_to_nearest_sample": [
+              0.0039039230456652664,
+              0.0054225956824640945,
+              0.00921393759478809,
+              0.004122107579180494,
+              0.006886746969705695,
+              0.007959048623903264,
+              0.0038867005012155737,
+              0.004850400061692167
+            ],
+            "sample_to_nearest_reference": [
+              0.0038867005012155737,
+              0.0038867005012155737,
+              0.0038867005012155737,
+              0.0038867005012155737
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 1.0916233901505557e-18,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 1.0916233901505557e-18,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 1.0916233901505557e-18,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 1.0916233901505557e-18,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 496
+          }
+        },
+        "frozen_first_frame": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.003707599607847657,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.014038610792006398,
+            "mean_sample_to_nearest_reference": 0.011433275632054967,
+            "reference_to_nearest_sample": [
+              0.01344922299785097,
+              0.011433275632054967,
+              0.01718664940612081,
+              0.012813799698026136,
+              0.015635518296081997,
+              0.016327247782841996,
+              0.013396794814385186,
+              0.01206637770868912
+            ],
+            "sample_to_nearest_reference": [
+              0.011433275632054967,
+              0.011433275632054967,
+              0.011433275632054967,
+              0.011433275632054967
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8220,
+              "scored_target_pixels": 5550,
+              "warp_valid_pixel_fraction": 0.6751824817518248,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8220,
+              "scored_target_pixels": 5550,
+              "warp_valid_pixel_fraction": 0.6751824817518248,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8220,
+              "scored_target_pixels": 5550,
+              "warp_valid_pixel_fraction": 0.6751824817518248,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8220,
+              "scored_target_pixels": 5550,
+              "warp_valid_pixel_fraction": 0.6751824817518248,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 496
+          }
+        },
+        "colour_flicker": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.003707599607847657,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.00578068250732683,
+            "mean_sample_to_nearest_reference": 0.0038867005012155737,
+            "reference_to_nearest_sample": [
+              0.0039039230456652664,
+              0.0054225956824640945,
+              0.00921393759478809,
+              0.004122107579180494,
+              0.006886746969705695,
+              0.007959048623903264,
+              0.0038867005012155737,
+              0.004850400061692167
+            ],
+            "sample_to_nearest_reference": [
+              0.0038867005012155737,
+              0.0038867005012155737,
+              0.0038867005012155737,
+              0.0038867005012155737
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 120,
+              "expected_object_transitions": 120,
+              "candidate_target_pixels": 8128,
+              "scored_target_pixels": 5556,
+              "warp_valid_pixel_fraction": 0.6835629921259843,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 114660,
+              "mean_acceleration_norm_over_scored": 0.017129837187823235,
+              "expected_acceleration_windows": 116,
+              "scored_acceleration_windows": 91,
+              "excluded_reference_contact_or_force_windows": 25,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 496
+          }
+        }
+      }
+    },
+    {
+      "seed": 70002,
+      "scene_group_id": "scene-00070002",
+      "controls": {
+        "physics_variants": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.02965734895005015,
+            "mean_pairwise_endpoint_distance": 0.039065690409436325,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0068065840796416475,
+                "endpoint_distance": 0.012352647110032733
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.04137647000192576,
+                "endpoint_distance": 0.04225255400934363
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.015766318680739504,
+                "endpoint_distance": 0.03221176270013797
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0478922092162862,
+                "endpoint_distance": 0.0542673593337883
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.009205800308192971,
+                "endpoint_distance": 0.019918044974971814
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.056896711413514836,
+                "endpoint_distance": 0.0733917743283435
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.020309905238619547,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.005931589699106213,
+            "mean_sample_to_nearest_reference": 0.005080689906123505,
+            "reference_to_nearest_sample": [
+              0.005135332478702296,
+              0.005122443954462326,
+              0.005393821944273354,
+              0.0046711612470560415,
+              0.004868652646237338,
+              0.010290751199728837,
+              0.005047371076016134,
+              0.00692318304637338
+            ],
+            "sample_to_nearest_reference": [
+              0.005135332478702296,
+              0.005122443954462326,
+              0.005393821944273354,
+              0.0046711612470560415
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5948,
+              "scored_target_pixels": 4670,
+              "warp_valid_pixel_fraction": 0.785137861466039,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116700,
+              "mean_acceleration_norm_over_scored": 0.23431315223576726,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5941,
+              "scored_target_pixels": 4670,
+              "warp_valid_pixel_fraction": 0.7860629523649217,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116623,
+              "mean_acceleration_norm_over_scored": 0.14541710907899147,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 6000,
+              "scored_target_pixels": 4715,
+              "warp_valid_pixel_fraction": 0.7858333333333334,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116678,
+              "mean_acceleration_norm_over_scored": 0.1320754716981132,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 248
+          }
+        },
+        "duplicate_future": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.020309905238619547,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.018108841219108905,
+            "mean_sample_to_nearest_reference": 0.005135332478702296,
+            "reference_to_nearest_sample": [
+              0.005135332478702296,
+              0.010304216823670524,
+              0.044899647608215555,
+              0.0190992785897552,
+              0.018685149720385673,
+              0.010290751199728837,
+              0.02027949779093147,
+              0.016176855541481662
+            ],
+            "sample_to_nearest_reference": [
+              0.005135332478702296,
+              0.005135332478702296,
+              0.005135332478702296,
+              0.005135332478702296
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 248
+          }
+        },
+        "frozen_first_frame": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.020309905238619547,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.07711920503489669,
+            "mean_sample_to_nearest_reference": 0.06275083382476064,
+            "reference_to_nearest_sample": [
+              0.07944089481236152,
+              0.07289177106432242,
+              0.12067042128284299,
+              0.06393874628684874,
+              0.06435609828018966,
+              0.08601382487967507,
+              0.06275083382476064,
+              0.06689104984817254
+            ],
+            "sample_to_nearest_reference": [
+              0.06275083382476064,
+              0.06275083382476064,
+              0.06275083382476064,
+              0.06275083382476064
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 6030,
+              "scored_target_pixels": 4740,
+              "warp_valid_pixel_fraction": 0.7860696517412935,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116850,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 6030,
+              "scored_target_pixels": 4740,
+              "warp_valid_pixel_fraction": 0.7860696517412935,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116850,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 6030,
+              "scored_target_pixels": 4740,
+              "warp_valid_pixel_fraction": 0.7860696517412935,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116850,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 6030,
+              "scored_target_pixels": 4740,
+              "warp_valid_pixel_fraction": 0.7860696517412935,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116850,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 248
+          }
+        },
+        "colour_flicker": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.020309905238619547,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.018108841219108905,
+            "mean_sample_to_nearest_reference": 0.005135332478702296,
+            "reference_to_nearest_sample": [
+              0.005135332478702296,
+              0.010304216823670524,
+              0.044899647608215555,
+              0.0190992785897552,
+              0.018685149720385673,
+              0.010290751199728837,
+              0.02027949779093147,
+              0.016176855541481662
+            ],
+            "sample_to_nearest_reference": [
+              0.005135332478702296,
+              0.005135332478702296,
+              0.005135332478702296,
+              0.005135332478702296
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.06274509803921567,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.06274509803921567,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.06274509803921567,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.06274509803921567,
+              "scored_object_transitions": 60,
+              "expected_object_transitions": 60,
+              "candidate_target_pixels": 5951,
+              "scored_target_pixels": 4673,
+              "warp_valid_pixel_fraction": 0.7852461771130902,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 116684,
+              "mean_acceleration_norm_over_scored": 0.2849682143960088,
+              "expected_acceleration_windows": 58,
+              "scored_acceleration_windows": 53,
+              "excluded_reference_contact_or_force_windows": 5,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 248
+          }
+        }
+      }
+    },
+    {
+      "seed": 70003,
+      "scene_group_id": "scene-00070003",
+      "controls": {
+        "physics_variants": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.009684299835359615,
+            "mean_pairwise_endpoint_distance": 0.019536146030523074,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.012211239882069074,
+                "endpoint_distance": 0.023443378767595332
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.015317684040079677,
+                "endpoint_distance": 0.03125
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.00025539603790658685,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0032130520978034278,
+                "endpoint_distance": 0.007830118647947778
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.012019771527155316,
+                "endpoint_distance": 0.023443378767595332
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.015088655427143608,
+                "endpoint_distance": 0.03125
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.010144733175286857,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.005776268405653762,
+            "mean_sample_to_nearest_reference": 0.003399996582891377,
+            "reference_to_nearest_sample": [
+              0.003403876199034353,
+              0.0033497673263457343,
+              0.0034236765141802245,
+              0.0034167074264966017,
+              0.006022137366165076,
+              0.01298058738539591,
+              0.006885391745065664,
+              0.006728003282546529
+            ],
+            "sample_to_nearest_reference": [
+              0.003403876199034353,
+              0.0033497673263457343,
+              0.0034236765141802245,
+              0.0034226662920051956
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7297,
+              "scored_target_pixels": 5418,
+              "warp_valid_pixel_fraction": 0.7424969165410442,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115501,
+              "mean_acceleration_norm_over_scored": 0.09669265157230059,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7298,
+              "scored_target_pixels": 5414,
+              "warp_valid_pixel_fraction": 0.7418470813921623,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115492,
+              "mean_acceleration_norm_over_scored": 0.10544623262453276,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7301,
+              "scored_target_pixels": 5419,
+              "warp_valid_pixel_fraction": 0.7422270921791535,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115529,
+              "mean_acceleration_norm_over_scored": 0.07747725703443076,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        },
+        "duplicate_future": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.010144733175286857,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.011303196158353526,
+            "mean_sample_to_nearest_reference": 0.003403876199034353,
+            "reference_to_nearest_sample": [
+              0.003403876199034353,
+              0.014421551543716955,
+              0.017453145145163013,
+              0.0034167074264966017,
+              0.006195952179689867,
+              0.028174120677117644,
+              0.007066500299586765,
+              0.010293715796023012
+            ],
+            "sample_to_nearest_reference": [
+              0.003403876199034353,
+              0.003403876199034353,
+              0.003403876199034353,
+              0.003403876199034353
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        },
+        "frozen_first_frame": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.010144733175286857,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.023740645891300514,
+            "mean_sample_to_nearest_reference": 0.015747066819374336,
+            "reference_to_nearest_sample": [
+              0.015747066819374336,
+              0.026760870401481743,
+              0.029628261273032117,
+              0.015993744256530062,
+              0.019052762340574698,
+              0.04000677048100018,
+              0.019873423084959416,
+              0.02286226847345156
+            ],
+            "sample_to_nearest_reference": [
+              0.015747066819374336,
+              0.015747066819374336,
+              0.015747066819374336,
+              0.015747066819374336
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7440,
+              "scored_target_pixels": 5520,
+              "warp_valid_pixel_fraction": 0.7419354838709677,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115440,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7440,
+              "scored_target_pixels": 5520,
+              "warp_valid_pixel_fraction": 0.7419354838709677,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115440,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7440,
+              "scored_target_pixels": 5520,
+              "warp_valid_pixel_fraction": 0.7419354838709677,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115440,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.0,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7440,
+              "scored_target_pixels": 5520,
+              "warp_valid_pixel_fraction": 0.7419354838709677,
+              "background_mae_over_observed": 0.0,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115440,
+              "mean_acceleration_norm_over_scored": 0.0,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        },
+        "colour_flicker": {
+          "ensemble": {
+            "complete_samples": 4,
+            "total_samples": 4,
+            "expected_sample_pairs": 6,
+            "scored_sample_pairs": 6,
+            "mean_pairwise_trajectory_distance": 0.0,
+            "mean_pairwise_endpoint_distance": 0.0,
+            "per_sample_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              },
+              {
+                "first": 2,
+                "second": 3,
+                "mean_distance": 0.0,
+                "endpoint_distance": 0.0
+              }
+            ],
+            "reference_futures": 8,
+            "reference_pairs": 28,
+            "mean_reference_pairwise_trajectory_distance": 0.010144733175286857,
+            "coverage_requires_all_samples_complete": true,
+            "mean_reference_to_nearest_sample": 0.011303196158353526,
+            "mean_sample_to_nearest_reference": 0.003403876199034353,
+            "reference_to_nearest_sample": [
+              0.003403876199034353,
+              0.014421551543716955,
+              0.017453145145163013,
+              0.0034167074264966017,
+              0.006195952179689867,
+              0.028174120677117644,
+              0.007066500299586765,
+              0.010293715796023012
+            ],
+            "sample_to_nearest_reference": [
+              0.003403876199034353,
+              0.003403876199034353,
+              0.003403876199034353,
+              0.003403876199034353
+            ]
+          },
+          "temporal": [
+            {
+              "sample_index": 0,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 1,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 2,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            },
+            {
+              "sample_index": 3,
+              "object_translation_mae_over_observed": 0.06274509803921569,
+              "scored_object_transitions": 90,
+              "expected_object_transitions": 90,
+              "candidate_target_pixels": 7296,
+              "scored_target_pixels": 5415,
+              "warp_valid_pixel_fraction": 0.7421875,
+              "background_mae_over_observed": 0.06274509803921569,
+              "scored_background_transitions": 30,
+              "expected_background_transitions": 30,
+              "scored_background_pixels": 115535,
+              "mean_acceleration_norm_over_scored": 0.07747725703443077,
+              "expected_acceleration_windows": 87,
+              "scored_acceleration_windows": 79,
+              "excluded_reference_contact_or_force_windows": 8,
+              "missing_acceleration_windows": 0
+            }
+          ],
+          "collision_frequency": {
+            "event": "at least one object-pair contact onset during the future",
+            "source": "video_contact_estimates; current estimator has low recall",
+            "sample_count": 4,
+            "reference_count": 8,
+            "per_pair": [
+              {
+                "first": 0,
+                "second": 1,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 0,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              },
+              {
+                "first": 1,
+                "second": 2,
+                "complete_sample_timelines": 4,
+                "expected_sample_timelines": 4,
+                "sample_any_event_rate": 0.0,
+                "reference_any_event_rate": 0.0,
+                "sample_bernoulli_variance": 0.0
+              }
+            ]
+          },
+          "tracking_reasons_future": {
+            "ok": 372
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Static videos can be temporally consistent",
+    "Finite-reference coverage cannot prove physical plausibility",
+    "Reference positions are oracle; sampled tracks have rasterization error"
+  ]
+}
