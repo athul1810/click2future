@@ -8,10 +8,14 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 
 **Status:** seeded simulation, grouped data generation/replay, the development environment,
 and an untrained denoiser prototype are available. Evaluation includes trajectory/collision
-metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks, and ensemble diversity/coverage. Contact extraction remains
-experimental, with low recall.
-Auxiliary loss components are ready for trainer integration. CVAE, diffusion training/sampling,
-and the demo remain to be built. See [evaluation results](docs/METRICS.md).
+metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks, and
+ensemble diversity/coverage. Contact extraction remains an experimental proxy with measured errors.
+CVAE training/sampling code and a joint diffusion/auxiliary loss adapter are ready for
+TC2 checks. The CVAE has no trained results yet. Shrijeet's
+[working branch](https://github.com/athul1810/click2future/tree/feat/diffusion-pilot-execution)
+contains newer diffusion execution work; it is not included in this checkout yet.
+The demo remains to be built. See [evaluation results](docs/METRICS.md) and
+[model training](docs/MODEL_TRAINING.md).
 
 **Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 

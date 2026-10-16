@@ -4,6 +4,8 @@ T12 has target preparation, fixed object matching, masked losses, class-balance 
 and CPU gradient checks. The dataset diffusion trainer and sampler are still pending.
 The starting configuration is [auxiliary.yaml](../configs/training/auxiliary.yaml).
 Its weights and timestep cutoff are untuned proposals, to be checked on validation data.
+The [model workflow](MODEL_TRAINING.md#e4-handoff) covers the implemented joint epsilon
+objective, loader adapter, and head export. B still owns scheduler and sampler integration.
 
 ## Object identity and target shapes
 

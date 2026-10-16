@@ -1,1 +1,1 @@
-"""Prototype model components; dataset training and sampling are not implemented yet."""
+"""Untrained diffusion prototype and conditional VAE baseline architecture."""

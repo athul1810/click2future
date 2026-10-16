@@ -77,8 +77,9 @@ check replay, load a batch, and verify all project imports come from the extract
 source. No existing data or model files are needed. The correctness tests include
 archive corruption, excluded working files, external links, and clean-folder replay.
 
-The current archive is a development snapshot. Training/sampling source, CVAE,
-checkpoint checks, and final run instructions still need completion before submission.
+The current archive is a development snapshot. CVAE training/sampling and its TC2 job
+script are included. Diffusion training/sampling, executed GPU checkpoint checks,
+demo integration, and final run instructions still need completion before submission.
 
 ## Final check
 

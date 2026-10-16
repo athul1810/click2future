@@ -1,9 +1,9 @@
 # Click2Future source, Group 7
 
 This archive contains the current simulator, data generator, denoiser prototype,
-auxiliary losses, evaluation code, configs, and correctness checks. It contains no
-datasets or model weights. Dataset training, diffusion sampling, the CVAE baseline,
-and the demo are still unfinished in this snapshot. This is not the final submission.
+auxiliary losses, CVAE training/sampling, evaluation, configs, and correctness checks.
+It contains no datasets or model weights. Diffusion training/sampling and the demo
+are not included in this snapshot, and CVAE training has not been validated on TC2. This is not the final submission.
 
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 
@@ -47,8 +47,33 @@ python -m click2future.training.check_auxiliary --help
 
 Image metrics need the `image-metrics` extra. LPIPS also needs pretrained AlexNet
 weights in the user's Torch cache. Weights are excluded from this archive. The smoke
-check and the core simulator/trajectory tests do not require them. Training and
-sampling commands must be added and verified before preparing the final code ZIP.
+check and the core simulator/trajectory tests do not require them.
+
+The CVAE baseline has a scheduled TC2 workflow. Generate a dataset with at least
+ten scene groups, using `configs/simulator/pilot.toml` for 32-frame clips. With a
+compatible CUDA environment on TC2, set the dataset and output folders, then run:
+
+```sh
+export C2F_DATA_DIR=data/cvae-smoke
+export C2F_RUN_DIR=runs/cvae-overfit
+sbatch submission/train_cvae.sbatch --overfit-samples 2 --max-steps 500 --checkpoint-every 50
+```
+
+Training requires one visible GPU in the MGPU-TC2 partition. The process limit is
+5.5 hours within a six-hour job. It saves weights, optimizer/RNG state, and the shuffle
+cursor. Resume with the same options and `--resume runs/cvae-overfit/latest.pt`.
+`best.pt` uses fixed-seed validation reconstruction plus beta KL; prior-sample quality
+must be evaluated separately. Full GPU training/resume remains unverified.
+
+```sh
+python -m click2future.training.sample_cvae --help
+python -m click2future.training.check_components --output outputs/component-checks.json
+```
+
+The sampler writes four seeded uint8 videos with the original first frame and an
+artifact manifest. The component check runs CPU gradients and untrained samples,
+without optimizer updates. Final diffusion training/sampling commands and all trained
+results still need completion before preparing the final code ZIP.
 
 `MANIFEST.json` lists each included file and its SHA-256. The code ZIP is one of the
 three required submission files, alongside `group_07_report.pdf` and

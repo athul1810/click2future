@@ -34,5 +34,7 @@ Those artifact references are for team work. The course submission must contain 
 Follow [development setup](docs/SETUP.md) for the dependency lock, environment check,
 and development checks. T03's TC2 validation still needs login, hardware details,
 and an allocated GPU test from T02. Simulation, grouped data generation/replay, evaluation, an untrained denoiser prototype,
-and a synthetic profiler are available. Dataset training, sampling, and the demo remain to be built.
+and a synthetic profiler are available. CVAE training/sampling and the E4 objective
+adapter are ready for TC2 checks. B's diffusion execution branch awaits integration
+here; the demo remains to be built.
 See [the build plan](docs/BUILD_PLAN.md) for the prototype checks and remaining evidence gates.

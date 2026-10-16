@@ -153,14 +153,15 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/7",
-    "evidence": "docs/METRICS.md; docs/results/contact-motion-calibration.json; docs/results/action-control-checks.json; docs/results/image-quality-controls.json; docs/results/future-metric-controls.json. Contact recall and model-output validation remain unresolved.",
+    "evidence": "docs/METRICS.md; docs/results/contact-normal-calibration.json; docs/results/contact-gap-calibration.json; docs/results/model-component-checks.json; existing action/image/temporal/ensemble controls. All implementation acceptance checks are complete; awaiting review/merge.",
     "completed_acceptance": [
       0,
+      1,
       2,
       3,
       4
     ],
-    "progress": "Trajectory/contact, action, image, temporal, and ensemble metrics have simulator controls. Comparison tables now combine declared cases with scene-group bootstrap intervals, missing counts, and source separation. Contact recall remains 0.233; validation on generated videos is pending. See [metric usage](METRICS.md) and [comparison tables](EVALUATION_REPORTS.md)."
+    "progress": "Implementation and simulator validation are ready for review. The active line-of-centres contact rule reaches event F1 0.605 and recall 0.591 versus 0.258 and 0.182 for the previous rule on the same 200 fresh clips. Tracking covers all 18,538 observations. Untrained CVAE output verifies missing-track handling. Contact estimates remain approximate; trained-generator/OOD validation continues with the experiments."
   },
   {
     "id": "T08",
@@ -198,8 +199,14 @@
       "Add a run manifest and qualitative successes/failures."
     ],
     "owner": null,
-    "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/9"
+    "status": "In progress",
+    "issue_url": "https://github.com/athul1810/click2future/issues/9",
+    "completed_acceptance": [
+      0,
+      1
+    ],
+    "progress": "A 574,659-parameter conditional video VAE, learned prior/posterior, future-only L1 plus KL with warmup, TC2-only trainer, checkpoint/resume, and four-seed prior sampler are implemented. CPU tests cover gradients, no-future-input inference, dataset splits, checkpoint transport, and exported video format. TC2 tiny-batch overfitting, GPU resume, trained samples, and measured budgets remain pending.",
+    "evidence": "docs/MODEL_TRAINING.md; docs/results/model-component-checks.json; tests/test_cvae.py; tests/test_cvae_workflow.py. No generator weights were trained in CPU checks."
   },
   {
     "id": "T10",
@@ -267,8 +274,8 @@
       1,
       2
     ],
-    "progress": "Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md).",
-    "evidence": "docs/AUXILIARY_LOSSES.md; docs/results/auxiliary-loss-checks.json; tests/test_auxiliary_losses.py. No trained E4 generator or sampler yet."
+    "progress": "The shared batch adapter and joint epsilon/auxiliary objective are implemented without changing the denoiser. Real-loader gradients reach the noise output, both auxiliary heads, and shared features, including a positive collision fixture. Head export restores scene IDs, validates feature timesteps, and writes separate auxiliary_head metrics. Compatibility with B's working DDIM sampler is checked, including actual final-head capture. Review/integration of that branch, E4 overfitting, and measured head-versus-video results remain pending.",
+    "evidence": "docs/AUXILIARY_LOSSES.md; docs/MODEL_TRAINING.md; docs/results/auxiliary-loss-checks.json; docs/results/model-component-checks.json. Joint gradients and head export are checked; no E4 sampling results yet."
   },
   {
     "id": "T13",
@@ -419,7 +426,7 @@
       3,
       4
     ],
-    "progress": "A deterministic source-only ZIP builder, explicit allowlist, input scanner, and hashed inventory are implemented. The archive installed in a fresh Python environment; all 219 tests and four subtests passed after extraction, including generated-data replay and batch loading. The current ZIP is a development snapshot. Dataset training/sampling, CVAE, checkpoint checks, demo integration, and final instructions remain.",
+    "progress": "The source ZIP now includes CVAE training/sampling, the shared E4 objective, and a TC2 job script. The archive still excludes data, weights, links, and working files. Source extraction and replay checks are rerun after changes. Diffusion trainer/sampler, live GPU checkpoint checks, demo integration, and final experiment reproduction remain.",
     "evidence": "docs/SUBMISSION.md; docs/results/submission-checks.json; submission/allowlist.json; submission/README.md."
   },
   {

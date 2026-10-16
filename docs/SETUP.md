@@ -1,8 +1,9 @@
 # Development setup
 
 This setup covers simulation, grouped datasets, evaluation, the untrained denoiser
-prototype, and local environment diagnostics. Dataset training, sampling, and the demo
-remain to be built. TC2 validation is tracked separately in T02/T03.
+prototype, CVAE code, and local environment diagnostics. [Model training](MODEL_TRAINING.md)
+covers the CVAE pilot and E4 adapter. New diffusion execution work is on B's branch
+and awaits integration here; the demo remains to be built. TC2 validation is tracked separately in T02/T03.
 
 ## Environment and dependencies
 

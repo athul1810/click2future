@@ -12,7 +12,7 @@ from pathlib import Path, PurePosixPath
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 URL = re.compile(r"(?:[a-z][a-z0-9+.-]*:[/]{2}|www[.]|git[@])", re.IGNORECASE)
-ALLOWED_SUFFIXES = {".py", ".toml", ".yaml", ".json", ".md", ".txt"}
+ALLOWED_SUFFIXES = {".py", ".toml", ".yaml", ".json", ".md", ".txt", ".sbatch"}
 FORBIDDEN_PARTS = {
     ".git",
     ".venv",
@@ -47,6 +47,7 @@ def _check(name, payload):
             "submission/allowlist.json",
             "submission/smoke.py",
             "submission/dependency_versions.json",
+            "submission/train_cvae.sbatch",
         }
     )
     if (

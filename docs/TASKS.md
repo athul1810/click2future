@@ -4,9 +4,9 @@ A is owned by PRAMOD SANJAY, B by MAITI SHRIJEET, and C jointly by BOBAN ATHUL K
 
 The simulator contract is complete through PR #24. Simulator/data work and the local
 development environment are implemented in part. C has metric controls, comparison-table
-export, and auxiliary losses ready. T07 still needs better contact extraction and checks
-on generated videos; T12 needs B's dataset trainer and sampling integration.
-The CVAE baseline in D still needs an owner. Dependencies below govern completion, while
+export, and auxiliary losses ready. T07's implementation checks are complete and ready
+for review; T12 needs B's dataset trainer and sampling integration. CVAE training/sampling
+code is ready for TC2 checks, while D remains unassigned. Dependencies below govern completion, while
 fixture-based work can proceed earlier.
 
 
@@ -131,12 +131,12 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
-**Progress:** Trajectory/contact, action, image, temporal, and ensemble metrics have simulator controls. Comparison tables now combine declared cases with scene-group bootstrap intervals, missing counts, and source separation. Contact recall remains 0.233; validation on generated videos is pending. See [metric usage](METRICS.md) and [comparison tables](EVALUATION_REPORTS.md).
+**Progress:** Implementation and simulator validation are ready for review. The active line-of-centres contact rule reaches event F1 0.605 and recall 0.591 versus 0.258 and 0.182 for the previous rule on the same 200 fresh clips. Tracking covers all 18,538 observations. Untrained CVAE output verifies missing-track handling. Contact estimates remain approximate; trained-generator/OOD validation continues with the experiments.
 
 **Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
 - [x] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
-- [ ] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
+- [x] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
 - [x] Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.
 - [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
 - [x] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
@@ -160,10 +160,12 @@ Obtain a compact latent representation that preserves object geometry.
 
 Establish a lower-cost generative baseline with the agreed action inputs.
 
+**Progress:** A 574,659-parameter conditional video VAE, learned prior/posterior, future-only L1 plus KL with warmup, TC2-only trainer, checkpoint/resume, and four-seed prior sampler are implemented. CPU tests cover gradients, no-future-input inference, dataset splits, checkpoint transport, and exported video format. TC2 tiny-batch overfitting, GPU resume, trained samples, and measured budgets remain pending.
+
 **Dependencies:** T03, T06 · **Owner:** Unassigned
 
-- [ ] Condition on the first frame, selected-object mask, and numeric force.
-- [ ] Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.
+- [x] Condition on the first frame, selected-object mask, and numeric force.
+- [x] Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.
 - [ ] Pass a tiny-batch overfit check and produce four seeded samples per condition.
 - [ ] Log validation results, model size, training cost, and checkpoint selection.
 - [ ] Add a run manifest and qualitative successes/failures.
@@ -205,7 +207,7 @@ Test whether localizing the action improves physical action adherence.
 
 Test whether physical supervision improves decoded future behavior.
 
-**Progress:** Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md).
+**Progress:** The shared batch adapter and joint epsilon/auxiliary objective are implemented without changing the denoiser. Real-loader gradients reach the noise output, both auxiliary heads, and shared features, including a positive collision fixture. Head export restores scene IDs, validates feature timesteps, and writes separate auxiliary_head metrics. Compatibility with B's working DDIM sampler is checked, including actual final-head capture. Review/integration of that branch, E4 overfitting, and measured head-versus-video results remain pending.
 
 **Dependencies:** T11, T07 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 
@@ -306,7 +308,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 
 Prepare a source-only submission package and check that it can be used without the team's working files.
 
-**Progress:** A deterministic source-only ZIP builder, explicit allowlist, input scanner, and hashed inventory are implemented. The archive installed in a fresh Python environment; all 219 tests and four subtests passed after extraction, including generated-data replay and batch loading. The current ZIP is a development snapshot. Dataset training/sampling, CVAE, checkpoint checks, demo integration, and final instructions remain.
+**Progress:** The source ZIP now includes CVAE training/sampling, the shared E4 objective, and a TC2 job script. The archive still excludes data, weights, links, and working files. Source extraction and replay checks are rerun after changes. Diffusion trainer/sampler, live GPU checkpoint checks, demo integration, and final experiment reproduction remain.
 
 **Dependencies:** T14, T15, T16, T17 · **Owner:** Unassigned
 
