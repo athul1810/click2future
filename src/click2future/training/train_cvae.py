@@ -47,7 +47,10 @@ def dataset_index(root: Path):
     digest = hashlib.sha256(
         json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()
-    if manifest.get("schema_version") != "dataset-0.1" or manifest.get("manifest_hash") != digest:
+    if (
+        manifest.get("schema_version") not in {"dataset-0.1", "dataset-0.2"}
+        or manifest.get("manifest_hash") != digest
+    ):
         raise ValueError("Dataset manifest hash/schema does not match")
     split_name = manifest["split_manifest"]
     if Path(split_name).name != split_name:

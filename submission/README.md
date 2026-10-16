@@ -36,6 +36,19 @@ python -m click2future.cli validate-sample --input-dir data/smoke --sample-id sc
 The generator prints its manifest location. Read the generated dataset manifest for
 the exact sample IDs. Keep generated data and all model files outside the submission.
 
+For the controlled dataset-0.2, generate and validate its six action families:
+
+```sh
+python -m click2future.cli generate-controlled-dataset --output-dir data/controlled --group-count 10 --seed 0 --config configs/simulator/dataset_0_2.toml
+python -m click2future.cli validate-controlled-dataset --input-dir data/controlled --replay
+```
+
+Both model families accept this dataset. Diffusion needs
+`configs/training/pilot_diffusion_0_2.json` for its 1.1 wall-force limit. The older
+config keeps its 0.5 limit. Both versions divide force by 0.5 without clipping.
+The controlled pilot selects 21 clips from one training group; set `limit_train`
+to null in a separate recorded configuration for a main run.
+
 Evaluation modules provide `--help` for their input contracts:
 
 ```sh

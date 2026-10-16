@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from click2future.data import generate_dataset, load_rollout
+from click2future.data import generate_controlled_dataset, generate_dataset, load_rollout
 from click2future.evaluation.suite import main, prepare_plan, run_suite
 from click2future.evaluation.video import main as video_main
 
@@ -62,6 +62,20 @@ def test_plan_covers_all_held_out_conditions_and_all_reference_variants(prepared
     assert plan["sampling_seeds"] == [0, 1, 2, 3]
     with pytest.raises(ValueError, match="held-out"):
         prepare_plan(dataset, Path(plan["config"]), split="train")
+
+
+def test_controlled_plan_keeps_all_action_families_and_physics_references(tmp_path):
+    root = tmp_path / "controlled"
+    result = generate_controlled_dataset(root, group_count=10, seed=194010)
+    config_dir = Path(__file__).resolve().parents[1] / "configs/evaluation"
+    plan = prepare_plan(
+        root, config_dir / "pixel.yaml", metrics=("ssim",), protocol=config_dir / "comparison.yaml"
+    )
+    expected = {row["sample_id"] for row in result["manifest"]["samples"] if row["split"] == "test"}
+    assert {name for case in plan["cases"] for name in case["reference_ids"]} == expected
+    assert len(plan["cases"]) == 6
+    assert sorted(len(case["reference_ids"]) for case in plan["cases"]) == [1, 4, 4, 4, 4, 4]
+    assert len({case["scene_group_id"] for case in plan["cases"]}) == 1
 
 
 def test_two_run_pipeline_exports_all_metric_families_and_counts(prepared, tmp_path):

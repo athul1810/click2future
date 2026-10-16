@@ -121,7 +121,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-Versioned grouped generation, split isolation and shared-condition physics variants are implemented. A native 80-clip, 64px/32-frame smoke dataset took 1.086 seconds and 794,081 bytes including metadata on the local CPU; saved-sample replay passed. A 300-scene/8-variant initial dataset is proposed for Sanjay, not generated or frozen. OOD datasets remain outstanding.
+Dataset-0.2 generation is merged in PR #31: six controlled actions and 21 clips per visible scene, with all actions and hidden-physics variants in one split. The recommended size is 200 groups and 4,200 clips; final training data is not frozen here. All 84 independently generated pilot clips replayed exactly. The earlier 80-clip dataset-0.1 CPU/storage benchmark remains in the evidence record. Separate shape, texture and force OOD suites remain outstanding.
 
 <a id="t07"></a>
 
@@ -168,7 +168,7 @@ Establish a lower-cost generative baseline with the agreed action inputs.
 - [ ] Log validation results, model size, training cost, and checkpoint selection.
 - [ ] Add a run manifest and qualitative successes/failures.
 
-A 574,659-parameter conditional video VAE, learned prior/posterior, future-only L1 plus KL with warmup, TC2-only trainer, checkpoint/resume, and four-seed prior sampler are implemented. CPU tests cover gradients, no-future-input inference, dataset splits, checkpoint transport, and exported video format. TC2 tiny-batch overfitting, GPU resume, trained samples, and measured budgets remain pending.
+A 574,659-parameter conditional video VAE, learned prior/posterior, future-only L1 plus KL with warmup, TC2-only trainer, checkpoint/resume, and four-seed prior sampler are implemented. Both dataset-0.1 and dataset-0.2 work through the same checked split index. A native 1.1 wall-force condition passes loader normalization and four-video untrained prior export. CPU checks do not establish model quality. TC2 tiny-batch overfitting, GPU resume, trained samples, and measured budgets remain pending.
 
 <a id="t10"></a>
 

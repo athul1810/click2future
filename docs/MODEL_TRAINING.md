@@ -35,13 +35,20 @@ is 0.001, with linear warmup over the first 20% of configured steps; log varianc
 are bounded to [-10,5]. Validation uses full beta throughout so the selection criterion
 does not change during warmup. MSE is also logged and can be selected explicitly.
 These settings match the baseline handoff and still need validation.
-Pixel diffusion is adopted for the core comparison; the optional autoencoder T08 remains open.
+Pixel diffusion is adopted for the core comparison; optional autoencoder T08 is deferred.
 
 `prepare_video_batch` converts loader RGB [0,1] to [-1,1], rearranges future frames
 to [B,3,F,H,W], and divides force by 0.5 simulator units without clipping OOD forces.
 It rejects invalid RGB/force and empty/nonbinary masks. Future masks, positions,
 collisions, and hidden physics do not enter conditioning. Use the same frozen
 normalization for comparable model runs.
+
+The CVAE accepts both dataset-0.1 and controlled dataset-0.2 manifests, with the
+same split and file-hash checks. For matched comparisons, use the same dataset
+revision for E0/E2/E3. Dataset-0.2 includes wall forces of magnitude 1.1, which
+become 2.2 after normalization. A native wall condition passes the CVAE loader
+and four-sample prior export in an untrained integration check. This does not
+establish learned wall behavior. Test arrays remain outside the training index.
 
 ## TC2 pilot
 
@@ -128,7 +135,7 @@ tensors and RNG state exactly and removes its hook after errors. These are untra
 inference checks without optimizer updates.
 The initial integration snapshot passed 258 tests with no skips, recorded in
 `results/diffusion-integration-checks.json`. The later batch-evaluation and issue-work
-checks pass 278 tests; see `results/issue-work-checks.json`.
+checks pass 291 tests; see `results/issue-work-checks.json`.
 
 The standalone `diffusion_objective` helper remains epsilon-only. The integrated
 diffusion trainer computes the selected epsilon/velocity target itself and applies
@@ -136,5 +143,7 @@ the same auxiliary loss. Do not pass a velocity target to the epsilon helper.
 
 Use `with CaptureFinalHeads(model) as captured:` around each separate sampler call,
 then pass `captured.output` to head evaluation. This uses actual generated-sample
-features rather than a teacher-forced reference. B's current boundary rejects forces
-above 0.5 simulator units; agree on the common force-OOD range before comparisons.
+features rather than a teacher-forced reference. Diffusion records an explicit
+physical `force_limit` in its checkpoint: 0.5 by default and 1.1 in the dataset-0.2
+pilot config. Its normalization remains force / 0.5. Keep the core model inputs
+matched and predeclare the separate force-OOD range before comparisons.

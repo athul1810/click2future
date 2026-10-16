@@ -9,7 +9,7 @@ import pytest
 import torch
 import yaml
 
-from click2future.data import generate_dataset, load_rollout
+from click2future.data import generate_controlled_dataset, generate_dataset, load_rollout
 from click2future.models.cvae import ConditionalVideoVAE
 from click2future.training.sample_cvae import sample_checkpoint
 from click2future.training.train_cvae import (
@@ -81,8 +81,8 @@ def test_config_cannot_exceed_six_hour_job_or_mismatch_future():
         validate_config(config)
 
 
-def make_checkpoint(path):
-    config = configuration()
+def make_checkpoint(path, config=None):
+    config = configuration() if config is None else config
     model = ConditionalVideoVAE(**config["model"])
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0002)
     train_rng, shuffle_rng = torch.Generator().manual_seed(3), torch.Generator().manual_seed(5)
@@ -196,3 +196,41 @@ def test_valid_hash_cannot_override_scene_group_split(dataset):
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="scene-group split"):
         dataset_index(dataset)
+
+
+def test_controlled_dataset_native_wall_condition_reaches_cvae_sampling(tmp_path):
+    root = tmp_path / "controlled"
+    result = generate_controlled_dataset(root, group_count=10, seed=194000)
+    for row in result["manifest"]["samples"]:
+        if row["split"] == "test":
+            (root / (row["sample_id"] + ".npz")).unlink()
+    selected, rows, _ = dataset_index(root)
+    assert len(selected["train"]) == 8 * 21
+    assert len(selected["validation"]) == 21
+    config = configuration()
+    config["data"].update(total_frames=32, resolution=64)
+    config["model"]["future_frames"] = 31
+    validate_config(config)
+    wall_id = next(
+        name for name in selected["validation"] if rows[name]["action_variant"] == "wall"
+    )
+    batch = model_batch(root, [wall_id], rows, config, device="cpu")
+    assert batch.future.shape == (1, 3, 31, 64, 64)
+    assert batch.force_xy.norm().item() == pytest.approx(2.2)
+    checkpoint = tmp_path / "untrained.pt"
+    make_checkpoint(checkpoint, config)
+    output_dir = tmp_path / "sample"
+    record = sample_checkpoint(
+        checkpoint=checkpoint,
+        data_dir=root,
+        sample_ids=[wall_id],
+        seeds=[0, 1, 2, 3],
+        run_id="untrained-controlled-fixture",
+        output_dir=output_dir,
+    )
+    assert record["training_steps"] == 0
+    with np.load(output_dir / (wall_id + ".npz"), allow_pickle=False) as archive:
+        videos = archive["videos"]
+    assert videos.shape == (4, 32, 64, 64, 3)
+    ref = load_rollout(root, wall_id)
+    np.testing.assert_array_equal(videos[:, 0], np.broadcast_to(ref["frames"][0], (4, 64, 64, 3)))
