@@ -1,0 +1,167 @@
+{
+  "status": "passed",
+  "purpose": "CPU auxiliary-loss correctness; no trained E4 generator",
+  "seed": 31,
+  "torch": "2.11.0",
+  "config": {
+    "trajectory_weight": 1.0,
+    "collision_weight": 0.1,
+    "smooth_l1_beta": 0.05,
+    "max_timestep_fraction": 0.25,
+    "collision_positive_weight": 1.0
+  },
+  "max_objects": 4,
+  "num_diffusion_steps": 1000,
+  "fixture": {
+    "visible_seeds": [
+      80000,
+      80001
+    ],
+    "object_counts": [
+      2,
+      3
+    ],
+    "total_frames": 4,
+    "resolution": 64,
+    "first_scene": "two radius-.06 circles at (.3,.5)/(.45,.5), mass .5, force (.45,0)",
+    "canonical_to_scene": [
+      [
+        0,
+        1,
+        -1,
+        -1
+      ],
+      [
+        1,
+        2,
+        0,
+        -1
+      ]
+    ]
+  },
+  "real_denoiser_check": {
+    "backward_only": true,
+    "base_channels": 8,
+    "loss": {
+      "loss_version": "1",
+      "target_order": "frame0_mask_centroid_x_then_y_v1",
+      "config": {
+        "trajectory_weight": 1.0,
+        "collision_weight": 0.1,
+        "smooth_l1_beta": 0.05,
+        "max_timestep_fraction": 0.25,
+        "collision_positive_weight": 1.0
+      },
+      "total_clips": 2,
+      "eligible_timestep_clips": 2,
+      "trajectory_clips": 2,
+      "collision_clips": 2,
+      "position_coordinates": 30,
+      "collision_pairs": 12,
+      "positive_collision_pairs": 1,
+      "timestep_cutoff_inclusive": 249,
+      "num_diffusion_steps": 1000,
+      "reduction": "mean within each eligible clip, then mean clips per component",
+      "trajectory_loss": 0.13112489879131317,
+      "collision_loss": 0.6934518218040466,
+      "weighted_auxiliary_loss": 0.20047008991241455
+    },
+    "gradient_l1_norms": {
+      "position_head": 0.05532570800278336,
+      "collision_head": 0.33924801647663116,
+      "bottleneck": 3.0194497611373663
+    }
+  },
+  "fixture_collision_balance": {
+    "positive_count": 1,
+    "negative_count": 11,
+    "positive_weight": 11.0,
+    "max_positive_weight": 20.0,
+    "status": "estimated",
+    "rule": "clamp(training negative/positive valid interval counts, 1, max_positive_weight)"
+  },
+  "synthetic_prediction_fit": {
+    "status": "performed",
+    "optimizer_updates": 60,
+    "optimizer": "Adam",
+    "lr": 0.15,
+    "measured_losses": [
+      0.19973847270011902,
+      0.17028319835662842,
+      0.1434381604194641,
+      0.11848120391368866,
+      0.09491674602031708,
+      0.07461504638195038,
+      0.06108381599187851,
+      0.053953222930431366,
+      0.049886152148246765,
+      0.04608135297894478,
+      0.04143141955137253,
+      0.03654178977012634,
+      0.0317683219909668,
+      0.027201136574149132,
+      0.022946514189243317,
+      0.019249454140663147,
+      0.016276486217975616,
+      0.01414448395371437,
+      0.012820940464735031,
+      0.012170745059847832,
+      0.012009811587631702,
+      0.012081297114491463,
+      0.01207882072776556,
+      0.011743985116481781,
+      0.010979050770401955,
+      0.009882671758532524,
+      0.008681378327310085,
+      0.007588410284370184,
+      0.006723755970597267,
+      0.006105479784309864,
+      0.00569016532972455,
+      0.005416810512542725,
+      0.005230865906924009,
+      0.005088743753731251,
+      0.004952937364578247,
+      0.004790848586708307,
+      0.004584271460771561,
+      0.0043414137326180935,
+      0.004094589967280626,
+      0.003879114054143429,
+      0.0037089167162775993,
+      0.0035696602426469326,
+      0.0034324275329709053,
+      0.0032737795263528824,
+      0.0030861790291965008,
+      0.002876509679481387,
+      0.0026592547073960304,
+      0.002451213076710701,
+      0.0022693434730172157,
+      0.0021286807022988796,
+      0.002036303747445345,
+      0.001984679140150547,
+      0.001952250604517758,
+      0.001914377324283123,
+      0.0018564623314887285,
+      0.0017785761738196015,
+      0.001690318575128913,
+      0.0016036825254559517,
+      0.0015287622809410095,
+      0.0014714245917275548,
+      0.0014320842456072569
+    ],
+    "initial_loss": 0.19973847270011902,
+    "final_loss": 0.0014320842456072569,
+    "final_to_initial_ratio": 0.007169796715915329,
+    "generator_parameters_updated": false
+  },
+  "source_sha256": {
+    "check_auxiliary.py": "383263b830ac75498441c1333d87fd86bf3ecde8b71b7fc92b1cc4c6359f82e8",
+    "auxiliary.py": "7bee2689ffe9b25726ac22be35f4f0cde7e7124aab55781bcaedc79227f825a9",
+    "targets.py": "86724af31e454ac59ebfafcabaffdb1d9b42286a6aecf976da2d4e3321da6ae4"
+  },
+  "limitations": [
+    "No diffusion schedule, dataset training, sampling, or quality comparison",
+    "Fixture balance is not a production training-set estimate",
+    "Loss weights/timestep gate are untuned proposals"
+  ],
+  "config_sha256": "d15bc5b65e913a9c7571c60548c0d2c0f9f99cb0e2cfc1366460858b7743bf98"
+}

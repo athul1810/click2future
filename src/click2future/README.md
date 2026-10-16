@@ -20,7 +20,7 @@ Current modules:
 | `cli.py` | Smoke, grouped dataset, and split commands | T03, T06 |
 | `sim/replay.py` | Saved-rollout regeneration and comparison | T05, T06 |
 | `models/` | Untrained pilot denoiser, conditioning and heads; autoencoder/CVAE pending | T08-T12 |
-| `training/` (planned) | Dataset training, checkpoints and sampling | T08-T13 |
+| `training/` | Auxiliary targets/losses and correctness checks; dataset trainer/sampler pending | T08-T13 |
 | `evaluation/` | Tracking, metrics, controls and result export | T07, T14-T16 |
 
 Implement against [the data contract](../../docs/ARCHITECTURE.md).
@@ -55,3 +55,6 @@ python -m click2future.cli validate-sample `
 Downstream code can use `click2future.data.load_sample` for one normalized
 `[T,3,H,W]` sample or `click2future.data.load_batch` for padded
 `[B,T,3,H,W]` batches.
+
+Auxiliary training components are documented in
+[the loss guide](../../docs/AUXILIARY_LOSSES.md). They do not supply the diffusion trainer.

@@ -14,3 +14,6 @@ settings with each run. T13 will freeze the model comparisons after validation.
 
 `evaluation/actions.yaml` fixes the early contact-free window and motion threshold for
 paired action controls. Use the commands in [METRICS.md](../docs/METRICS.md).
+
+`training/auxiliary.yaml` configures the loss adapter and low-timestep gate. Its values
+are untuned proposals; see [the integration guide](../docs/AUXILIARY_LOSSES.md).

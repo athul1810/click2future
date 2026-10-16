@@ -1,0 +1,10 @@
+# Untuned starting values for loss integration. Freeze experiment settings on validation.
+status: auxiliary_loss_components_only
+max_objects: 4
+num_diffusion_steps: 1000
+loss:
+  trajectory_weight: 1.0
+  collision_weight: 0.1
+  smooth_l1_beta: 0.05
+  max_timestep_fraction: 0.25
+  collision_positive_weight: 1.0
