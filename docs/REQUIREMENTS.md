@@ -41,21 +41,21 @@ Everyone must contribute and communicate with the group. Page 10 includes a poli
 - Inputs: initial image, selected-object mask, spatial action map, force direction and magnitude.
 - Compare a conditional VAE with video diffusion, then test spatial conditioning and trajectory/collision supervision separately.
 - Use hidden mass and friction to study uncertainty across four sampled futures.
-- Start at 64px; consider 128px only after profiling.
+- Use 64px for the core comparison. The 128px extension is deferred.
 - Use the course-provided TC2 GPU Cluster for training.
 
 ## Working design choices
 
-| Choice | Proposed starting point | Reason |
+| Choice | Adopted scope | Reason |
 |---|---|---|
 | World | Top-down bounded tabletop with 2-4 rigid objects | Exact labels and manageable appearance |
 | Clip | 32-frame simulator pilot at 8 fps, frame 0 before action | Frozen Workstream A data contract |
 | Action | Constant force at the selected object's centre for a fixed duration | Clear direction and magnitude; no click-position torque |
 | Hidden properties | Mass and friction independent of visible appearance | Controlled conditional uncertainty |
-| Model | Small frame autoencoder and latent video denoiser | Measure training cost before scaling |
+| Model | Small pixel video denoiser and conditional VAE | Keep the core comparison within the measured TC2 budget; a frame autoencoder is deferred |
 | Demo | Simulator presets and synthetic uploads | Keep the interface within the training domain |
 
-The simulator values and units are frozen in ARCHITECTURE.md. Model choices remain proposals. These are engineering choices, not requirements from the PDF.
+The simulator values and units are frozen in ARCHITECTURE.md. The pixel model scope is recorded in decision D011. Successful model settings and final training budgets still need measured validation. These are engineering choices, not requirements from the PDF.
 
 ## Remaining details to record
 
@@ -64,7 +64,8 @@ The simulator values and units are frozen in ARCHITECTURE.md. Model choices rema
 - [ ] Any additional report template, page maximum, file-size limit, or updated instructions on NTULearn; none is specified in the course brief.
 - [ ] Rules on pretrained weights and AI-assisted work, if given elsewhere; the PDF's ban concerns submitted datasets and model files.
 - [x] TC2 access approval for Athul and account resource/job limits recorded in [COMPUTE.md](COMPUTE.md).
-- [ ] TC2 first login, GPU model/VRAM, remaining quota details, and software environment.
+- [x] TC2 first login, A40 hardware/software checks and checkpoint continuation verified in scheduled jobs; see [COMPUTE.md](COMPUTE.md).
+- [ ] Remaining TC2 storage/usage quota and access-expiry details, where available.
 
 ## Completion criteria
 

@@ -240,6 +240,7 @@ def generate_samples(plan_path, spec_path, output_dir, *, device="cpu", allow_un
             output_dir / "predictions.json",
             {
                 "source": "generated_video",
+                "evaluation_plan_sha256": plan["plan_sha256"],
                 "sampling_seeds": plan["sampling_seeds"],
                 "runs": [
                     {

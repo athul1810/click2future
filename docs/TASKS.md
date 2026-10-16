@@ -24,7 +24,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
-| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | Not started |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T14, T15, T16, T17 | Unassigned | In progress |
@@ -271,14 +271,16 @@ The fixed-case evaluator and separate dataset-0.3 suites are implemented. PR #32
 
 Distinguish physically meaningful uncertainty from visual noise.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
 - [ ] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
 - [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The shared runner generates complete ensembles for the frozen case list; uncertainty scoring retains all hidden-physics references and failure counts alongside quality. Native untrained fixtures validate the full handoff without establishing learned uncertainty. Actual trained ensembles and paired zero/reversed/selected-object action-control measurements remain open.
+The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Actual trained ensembles, uncertainty measurements and selected-object-only controls with matched force remain open.
+
+Correctness evidence: `results/paired-action-suite-checks.json` records 192 native simulator-control videos and 72 explicitly untrained E0/E2/E3 videos. All 335 tests and four subtests pass locally and from the source ZIP. These checks do not complete the trained-model experiment.
 
 <a id="t17"></a>
 

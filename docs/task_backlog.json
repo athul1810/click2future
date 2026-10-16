@@ -385,9 +385,9 @@
       "Present quality/adherence alongside diversity and clearly label single-reference metrics."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "Not started",
+    "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/16",
-    "progress": "The shared runner generates complete ensembles for the frozen case list; uncertainty scoring retains all hidden-physics references and failure counts alongside quality. Native untrained fixtures validate the full handoff without establishing learned uncertainty. Actual trained ensembles and paired zero/reversed/selected-object action-control measurements remain open."
+    "progress": "The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Actual trained ensembles, uncertainty measurements and selected-object-only controls with matched force remain open."
   },
   {
     "id": "T17",

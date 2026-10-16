@@ -18,6 +18,12 @@ from click2future.data.splits import load_split_manifest
 from .aggregate import aggregate, csv_table
 from .futures import evaluate_futures
 from .images import image_quality
+from .paired_actions import (
+    actions_csv,
+    evaluate_action_groups,
+    prepare_action_groups,
+    summarize_actions,
+)
 from .perceptual import LPIPSScorer
 from .tracking import TrackerConfig
 from .video import evaluate_videos
@@ -53,7 +59,9 @@ def _seeds(values):
     return values
 
 
-def prepare_plan(dataset, config, *, split="test", metrics=("ssim", "lpips"), protocol=None):
+def prepare_plan(
+    dataset, config, *, split="test", metrics=("ssim", "lpips"), protocol=None, actions_config=None
+):
     """Include every condition and hidden-physics reference in the chosen split.
 
     Preparing a test plan does not choose a checkpoint or tune any metric.
@@ -112,6 +120,8 @@ def prepare_plan(dataset, config, *, split="test", metrics=("ssim", "lpips"), pr
     }
     if protocol is not None:
         files["comparison_protocol"] = str(Path(protocol).resolve())
+    if actions_config is not None:
+        files["actions_config"] = str(Path(actions_config).resolve())
     for case in cases:
         for name in case["reference_ids"]:
             for suffix in (".json", ".npz"):
@@ -129,6 +139,8 @@ def prepare_plan(dataset, config, *, split="test", metrics=("ssim", "lpips"), pr
         "files": files,
         "input_sha256": {key: _sha(path) for key, path in files.items()},
     }
+    if actions_config is not None:
+        plan["action_groups"] = prepare_action_groups(plan, actions_config)
     plan["plan_sha256"] = _digest(plan)
     return plan
 
@@ -156,7 +168,13 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
     """
     plan_path, predictions_path, output_dir = map(Path, (plan_path, predictions_path, output_dir))
     plan = read_plan(plan_path)
+    predictions_hash = _sha(predictions_path)
     predictions = json.loads(predictions_path.read_text())
+    if (
+        "evaluation_plan_sha256" in predictions
+        and predictions["evaluation_plan_sha256"] != plan["plan_sha256"]
+    ):
+        raise ValueError("Predictions were sampled for a different evaluation plan")
     source = predictions["source"]
     if source not in {"generated_video", "simulator_control"}:
         raise ValueError("Declare generated_video or simulator_control source")
@@ -165,7 +183,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
     if not predictions["runs"]:
         raise ValueError("At least one run is required")
     expected = {case["sample_id"] for case in plan["cases"]}
-    prepared, seen = [], set()
+    prepared, seen, artifact_hashes = [], set(), {}
     for run in predictions["runs"]:
         name = run["run_id"]
         if not re.fullmatch(r"[A-Za-z0-9_-]+", name) or name in seen:
@@ -185,6 +203,9 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
                 training_seed=seed,
                 checkpoint_sha256=_sha(predictions_path.parent / run["checkpoint"]),
             )
+            artifact_hashes[(predictions_path.parent / run["checkpoint"]).resolve()] = record[
+                "checkpoint_sha256"
+            ]
             if (
                 "checkpoint_sha256" in run
                 and run["checkpoint_sha256"] != record["checkpoint_sha256"]
@@ -212,6 +233,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
                 raise ValueError(f"Missing prediction file: {path.name}")
             if "video_sha256" in run and _sha(path) != run["video_sha256"][sample_id]:
                 raise ValueError("Video changed after sampling")
+            artifact_hashes[path] = _sha(path)
         prepared.append((record, videos))
     config = yaml.safe_load(Path(plan["config"]).read_text())
     tracker = TrackerConfig(**config["tracker"])
@@ -233,6 +255,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
         "cases": plan["cases"],
         "runs": [],
     }
+    action_runs = []
     try:
         for record, paths in prepared:
             for index, case in enumerate(plan["cases"]):
@@ -312,6 +335,15 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
                     _write(output_dir / name, report)
                     entry[family] = name
                 record["reports"].append(entry)
+            if "action_groups" in plan:
+                action_runs.append(
+                    {
+                        **{key: value for key, value in record.items() if key != "reports"},
+                        "groups": evaluate_action_groups(
+                            plan, paths, source=source, run_id=record["run_id"]
+                        ),
+                    }
+                )
             manifest["runs"].append(record)
         _write(output_dir / "comparison.json", manifest)
         settings = plan["comparison_protocol"].get("bootstrap", {})
@@ -323,10 +355,68 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
             seed=settings.get("seed", 0),
         )
         report["evaluation_plan_sha256"] = plan["plan_sha256"]
-        report["predictions_manifest_sha256"] = _sha(predictions_path)
+        report["predictions_manifest_sha256"] = predictions_hash
         report["untrained_fixture_runs"] = [
             run["run_id"] for run in manifest["runs"] if run.get("untrained_fixture")
         ]
+        if action_runs:
+            actions = {
+                "status": "passed",
+                "source": source,
+                "action_metric_version": "2",
+                "evaluation_plan_sha256": plan["plan_sha256"],
+                "config_sha256": plan["input_sha256"]["actions_config"],
+                "settings": yaml.safe_load(Path(plan["files"]["actions_config"]).read_text()),
+                "sampling_seeds": plan["sampling_seeds"],
+                "untrained_fixture_runs": report["untrained_fixture_runs"],
+                "expected_scene_groups": len(plan["action_groups"]),
+                "eligible_scene_groups": sum(group["eligible"] for group in plan["action_groups"]),
+                "eligibility": (
+                    "All reference physics must be at rest and contact-free in the fixed window"
+                ),
+                "selected_object_control": "not measured; existing target swaps also change force",
+                "reference_calibration": {
+                    "source": "simulator reference labels and rendered RGB, not model output",
+                    "pairing": "All matched hidden-physics variants; zero-force starts at rest",
+                    "summary": summarize_actions(
+                        [
+                            {
+                                "method": method,
+                                "groups": [
+                                    {**group, "scores": group.get(field, {})}
+                                    for group in plan["action_groups"]
+                                ],
+                            }
+                            for method, field in (
+                                ("reference-labels", "reference_label_scores"),
+                                ("reference-rgb", "reference_rgb_scores"),
+                            )
+                        ],
+                        bootstrap=bootstrap
+                        if bootstrap is not None
+                        else settings.get("replicates", 2000),
+                        confidence=settings.get("confidence", 0.95),
+                        seed=settings.get("seed", 0),
+                    ),
+                },
+                "runs": action_runs,
+                "summary": summarize_actions(
+                    action_runs,
+                    bootstrap=bootstrap
+                    if bootstrap is not None
+                    else settings.get("replicates", 2000),
+                    confidence=settings.get("confidence", 0.95),
+                    seed=settings.get("seed", 0),
+                ),
+            }
+            _write(output_dir / "actions.json", actions)
+            (output_dir / "actions.csv").write_text(actions_csv(actions))
+            report["action_report"] = "actions.json"
+        read_plan(plan_path)
+        if _sha(predictions_path) != predictions_hash or any(
+            _sha(path) != expected_hash for path, expected_hash in artifact_hashes.items()
+        ):
+            raise ValueError("Predictions, checkpoint or video changed during evaluation")
         _write(output_dir / "summary.json", report)
         (output_dir / "summary.csv").write_text(csv_table(report))
         return report
@@ -346,6 +436,9 @@ def main(argv=None):
     )
     prepare.add_argument("--split", default="test")
     prepare.add_argument("--metrics", nargs="+", default=["ssim", "lpips"])
+    prepare.add_argument(
+        "--actions-config", type=Path, help="Freeze paired zero/reversed-force checks"
+    )
     prepare.add_argument("--output", type=Path, required=True)
     run = sub.add_parser("run")
     run.add_argument("--plan", type=Path, required=True)
@@ -360,6 +453,7 @@ def main(argv=None):
                 split=args.split,
                 metrics=args.metrics,
                 protocol=args.protocol,
+                actions_config=args.actions_config,
             )
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with args.output.open("x") as stream:
