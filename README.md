@@ -12,8 +12,9 @@ metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal che
 experimental, with low recall.
 A dataset trainer, complete checkpoint/resume and seeded DDIM sampler are implemented,
 including auxiliary-loss integration. The first 2,000-step learning pilot failed
-generated-video checks; a longer diagnostic is running. CVAE, held-out learned-video
-controls and the demo remain open. See [pilot evidence](docs/results/diffusion_pilot_2026-10-16.json)
+generated-video checks. The longer epsilon and velocity probes also failed the
+quality gate. CVAE, held-out learned-video controls and the demo remain open.
+See [pilot evidence](docs/results/diffusion_pilot_2026-10-16.json)
 and [evaluation results](docs/METRICS.md).
 
 **Internal completion deadline:** 14 November 2026; freeze all artifacts on 13 November. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.

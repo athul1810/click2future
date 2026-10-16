@@ -25,7 +25,7 @@ profile:
   measured_steps: 10
   precision: auto
 training:
-  status: trainer_and_sampler_implemented_pilot_pending
+  status: learning_probes_complete_quality_gate_failed
   diffusion_schedule: cosine_1000_steps_epsilon
   sampling: ddim_eta_zero_clipped_x0
   sampling_steps_to_test: [16, 32, 64]

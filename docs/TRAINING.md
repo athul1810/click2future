@@ -26,7 +26,11 @@ exports paired forward/reverse/zero samples. It does not overwrite dataset-0.1.
 
 ## Training and sampling contract
 
-- Cosine DDPM schedule, 1000 timesteps, uniform clip timestep, epsilon MSE.
+- Cosine DDPM schedule, 1000 timesteps, uniform clip timestep. `prediction_type`
+  selects epsilon MSE (original default) or velocity MSE (diagnostic alternative).
+  Sampling reads that same setting from the checkpoint. The legacy model output
+  field `predicted_noise` holds the selected target's three output channels.
+  Loss values across the two targets are not directly comparable.
 - AdamW, learning rate 1e-4 with cosine decay to 1e-5 at the immutable horizon,
   gradient norm clipped to 1, EMA decay 0.995. These are pilot defaults.
 - Float32 or CUDA bfloat16; neither uses a gradient scaler. No mixed float16.
@@ -61,18 +65,27 @@ EMA selection, seed policy and latency. On TC2 add `--require-slurm`.
 The first TC2 pilot passed complete cross-job continuation but failed generated
 video quality. Its fixed noise MSE fell from 1.02554 to 0.01965; all 248 future
 object observations were untrackable. Increasing sampler steps to 128 or 1000,
-or switching EMA to raw weights, did not restore tracking. The longer training
-diagnostic is an independent restart, not a resumed or successful experiment.
-See [the recorded result](results/diffusion_pilot_2026-10-16.json).
+or switching EMA to raw weights, did not restore tracking. The longer epsilon
+restart also failed tracking. Velocity prediction reduced colour noise but
+recovered only 1-7/62 future observations. Both remain failed quality gates.
+See the [initial result](results/diffusion_pilot_2026-10-16.json) and
+[follow-up evidence](results/diffusion_debug_2026-10-16.json).
 
-If a longer run still fails, inspect reconstructed x0 by noise level and test
-prediction parameterization before increasing model size. Epsilon-to-x0 conversion
+Next isolate a single deterministic clip and inspect reconstructed x0 by noise
+level before increasing model size. Epsilon-to-x0 conversion
 divides by sqrt(alpha_bar), so errors are amplified near the cosine schedule's
 low-signal endpoint. Velocity prediction is a candidate controlled diagnostic,
 not an established explanation for this failure. See
 [Salimans and Ho](https://arxiv.org/abs/2202.00512) and
 [Lin et al.](https://arxiv.org/abs/2305.08891). Any selected target/schedule must
 be shared by E2/E3 and frozen using validation, with old runs labelled separately.
+
+`configs/training/velocity_probe.json` runs a separate 2,000-step target diagnostic
+on the same four training clips and seed, keeping the original cosine schedule.
+`cluster/target_probe.sbatch` can reuse the validated interpreter with an explicit,
+verified source path. This tests velocity prediction without changing the existing
+environment or relabelling old epsilon weights. It is not a reproduction of the
+complete zero-terminal-SNR recipe and does not use distillation.
 
 1. Numerical equations, seed isolation, oracle-field exclusion and complete
    interrupted training pass their tests.

@@ -67,9 +67,12 @@ measured 0.04883 s/step including loading, excluding the first ten measured step
 Peak allocated memory was 752,562,176 bytes. Four sequential 32-step DDIM samples
 took 1.744 s after earlier GPU work; first-use latency is a separate measurement.
 The model failed the video-quality gate. Both EMA and raw weights failed tracking
-with 32/128/1000 sampler steps. Job 42917 tests a 10,000-step independent restart;
-at the measured warm rate its training portion projects to roughly 8.1 minutes,
-excluding environment startup, diagnostics and queue time.
+with 32/128/1000 sampler steps. Job 42917 completed a 10,000-step independent
+restart without passing video quality. It measured 0.04657 s/step; the allocation
+took 10 minutes 1 second including startup and sampler diagnostics. Job 42920
+tested velocity prediction for 2,000 steps in 1 minute 59 seconds; it reduced
+visible noise but recovered only 1-7/62 future object observations. See
+[follow-up evidence](results/diffusion_debug_2026-10-16.json).
 
 The full checkpoint/result bundle was copied to ignored local storage outside
 TC2. User storage quota and access expiry remain unconfirmed; `quota -s` exposed

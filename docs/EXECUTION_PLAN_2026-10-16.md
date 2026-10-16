@@ -53,12 +53,14 @@ Current definitions remain in [ARCHITECTURE.md](ARCHITECTURE.md) and
 - Jobs 42909/42910 completed with zero next-update tensor difference across
   allocations. The 2,000-step pilot failed video quality: heavy colour noise and
   0/248 tracked future object observations. Sampler steps alone did not fix it.
-  Job 42917 tests a longer restart. See [pilot evidence](results/diffusion_pilot_2026-10-16.json).
+  Jobs 42917/42920 also completed below the video-quality gate. See
+  [pilot evidence](results/diffusion_pilot_2026-10-16.json) and
+  [follow-up diagnosis](results/diffusion_debug_2026-10-16.json).
 - PR #27 merged comparison-table and source-package checks, including a Windows
-  test correction. The integrated suite passed 224 tests and four subtests.
-- [PR #28](https://github.com/athul1810/click2future/pull/28) requests Sanjay's
-  review of contact-friction semantics and the next version's control/contact
-  strata. No tabletop-drag change blocks current training.
+  test correction. The integrated suite passed 232 tests and four subtests.
+- [PR #28](https://github.com/athul1810/click2future/pull/28) defines Sanjay's
+  next-version action/contact data handoff. Athul reviewed the physics description
+  and merged the PR. The data handoff remains open; no drag change blocks training.
 - Use the [training guide](TRAINING.md) and [CVAE handoff](CVAE_HANDOFF.md).
   CVAE, held-out learned-video controls, final experiments and the UI remain open.
 

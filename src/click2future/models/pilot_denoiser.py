@@ -1,6 +1,6 @@
 """Compact pixel-space video denoiser for the proposed E1-E4 pilot.
 
-This is a forward/backward-tested architecture prototype, not a trained video generator.
+Training and sampling live in click2future.training; quality requires measured model outputs.
 All modes use identical backbone dimensions. Numeric action fields are broadcast over
 the image; spatial action fields are localized by the same selected-object mask.
 """
@@ -75,7 +75,7 @@ class _SpaceTimeBlock(nn.Module):
 
 
 class PilotDenoiser(nn.Module):
-    """Predict noise for `[B,3,T_future,H,W]` using frame-0 pixels/mask and action.
+    """Predict a denoising target for `[B,3,T_future,H,W]` from observable inputs.
 
     `first_frame`: `[B,3,H,W]`, normalized consistently with future frames.
     `selected_mask`: `[B,1,H,W]`; `force_xy`: normalized `[B,2]`.
