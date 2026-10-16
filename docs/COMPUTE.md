@@ -4,7 +4,7 @@
 
 ## Access and account limits
 
-TC2 access is approved for **BOBAN ATHUL KRISHNA** (`athulkri001`), according to the access email. Access for the other members has not been recorded.
+TC2 access is approved for **BOBAN ATHUL KRISHNA** (`athulkri001`) and **MAITI SHRIJEET** (`shrijeet001`), according to their access emails. Shrijeet supplied approval on 16 October 2026. Access for the remaining members has not been recorded.
 
 The email lists these Slurm settings:
 
@@ -25,12 +25,18 @@ The resource limits apply across the user's running jobs. Two job slots do not p
 ## Remaining access checks
 
 - [x] Record access approval and the account limits.
+- [x] Verify Shrijeet's VPN route and head-node TCP connectivity (16 October 2026).
 - [ ] Attempt the first login using the supplied user guide; the email says this creates the home directory.
 - [ ] Run a small scheduled GPU job using the supplied sample script, then record GPU model, VRAM, and software versions.
 - [ ] Check storage limits, any total usage quota, and access expiry.
 - [ ] Choose backup locations for code, configs, run records, and checkpoints. TC2 provides no backup service; keep datasets and model files out of Git and the course submission.
 
-The email says accounts that never attempt login may be revoked after three months. Use TC2 for the approved coursework. Keep credentials outside the repository. See the [TC2 workflow](../cluster/README.md) for the prepared inventory, installation, and probe scripts. Their Linux installation and allocated GPU execution still need verification against the supplied guide.
+Shrijeet's first SSH attempt did not authenticate; account activation through login and
+the allocated GPU test are still pending. The email says accounts that never attempt
+login may be revoked after three months. Use TC2 for the approved coursework. Keep
+credentials outside the repository. See the [TC2 workflow](../cluster/README.md) for
+the prepared upload, inventory, installation, and probe scripts. Linux installation
+and allocated GPU execution still need live verification.
 
 Track the login and GPU validation results in T02. CPU simulation, data preparation, and development checks can proceed independently.
 
