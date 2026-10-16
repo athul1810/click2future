@@ -37,7 +37,7 @@ try {
     $sshOptions = @('-o', 'StrictHostKeyChecking=ask', '-o', 'ConnectTimeout=15',
         '-o', 'NumberOfPasswordPrompts=2', '-o', 'ServerAliveInterval=30', '-o', 'ServerAliveCountMax=3')
     if ($Stage -in @('Inventory', 'All')) {
-        & git archive --format=tar.gz "--output=$archivePath" $Revision
+        & git -c core.autocrlf=false -c core.eol=lf archive --format=tar.gz "--output=$archivePath" $Revision
         if ($LASTEXITCODE -ne 0) { throw 'Source archive failed.' }
         $archiveHash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()
     } else { $archiveHash = '' }

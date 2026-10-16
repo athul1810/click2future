@@ -16,7 +16,7 @@ CVAE, diffusion training/sampling, and the demo remain to be built. See [evaluat
 
 **Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; D: unassigned. See the [task board](docs/TASKS.md).
 
-**Compute:** TC2 access is approved for Athul. The account has a one-GPU limit and a six-hour job limit. Verify the GPU model and VRAM before setting the training budget. See [compute details](docs/COMPUTE.md).
+**Compute:** TC2 access is approved for Athul and Shrijeet. Shrijeet's A40 setup passed in job 42886, including CUDA checks, tests and a 31-frame synthetic profile. The accounts have a one-GPU limit and a six-hour job limit. Dataset-training cost and sampling latency remain to be measured. See [compute details](docs/COMPUTE.md).
 
 ## Group 7
 

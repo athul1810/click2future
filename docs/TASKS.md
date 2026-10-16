@@ -58,8 +58,8 @@ Validate the approved TC2 account and fit training to its recorded limits.
 
 **Dependencies:** None · **Owner:** Unassigned
 
-- [x] Record TC2 access approval for Athul and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.
-- [ ] Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.
+- [x] Record TC2 access approval for Athul and Shrijeet and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.
+- [x] Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.
 - [ ] Record storage limits, any total usage quota, access expiry, and backup locations; keep credentials outside Git.
 - [ ] Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs.
 
@@ -69,12 +69,12 @@ Validate the approved TC2 account and fit training to its recorded limits.
 
 Make the CPU development environment reproducible and document training setup on TC2.
 
-**Progress:** The locked CPU environment, diagnostics, artifact conventions, and module commands are implemented. pip is retained in the development lock, and both editor package-list commands are verified. Cluster validation remains open. Included in PR #25.
+**Progress:** The locked environment is verified locally and on the TC2 A40 in job 42886. CPU/CUDA diagnostics, dependency checks, tests, artifact conventions and module commands passed. Optional image metrics remain a separate extra. See [the allocation evidence](results/tc2_probe_2026-10-16.json).
 
 **Dependencies:** None · **Owner:** Unassigned
 
 - [x] Add a dependency manifest and tested setup instructions with exact versions.
-- [ ] Add an environment/device check; verify CPU setup independently and validate TC2 setup after access details are recorded in T02.
+- [x] Add an environment/device check; verify CPU setup independently and validate TC2 setup after access details are recorded in T02.
 - [x] Select artifact locations and a configuration format; keep credentials out of Git.
 - [x] Document working commands as modules are implemented; mark unavailable commands clearly.
 

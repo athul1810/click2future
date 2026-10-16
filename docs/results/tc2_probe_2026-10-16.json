@@ -1,0 +1,127 @@
+{
+  "status": "passed",
+  "observed_date": "2026-10-16",
+  "source_revision": "47ca5e0d9e9246d929751c00d15e8bec2d1f7e68",
+  "job": {
+    "id": "42886",
+    "node": "TC2N01",
+    "partition": "MGPU-TC2",
+    "qos": "normal",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 808,
+    "requested_gpus": 1,
+    "requested_cpus": 4,
+    "requested_system_memory": "16G",
+    "wall_time_limit_seconds": 3600
+  },
+  "hardware": {
+    "gpu": "NVIDIA A40",
+    "driver": "570.148.08",
+    "nvidia_smi_memory_total_mib": 46068,
+    "torch_visible_memory_bytes": 47709159424
+  },
+  "software": {
+    "python": "3.12.15",
+    "uv": "0.13.0",
+    "versions": {
+      "click2future": "0.0.1",
+      "numpy": "2.5.4",
+      "pillow": "12.3.0",
+      "pyyaml": "6.0.3",
+      "torch": "2.11.0+cu128"
+    },
+    "cuda_runtime": "12.8",
+    "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34"
+  },
+  "checks": {
+    "png_roundtrip": "passed",
+    "npz_roundtrip": "passed",
+    "yaml_roundtrip": "passed",
+    "numpy_torch_bridge": "passed",
+    "cpu_forward_backward_checkpoint": "passed",
+    "cuda_forward_backward_checkpoint": "passed"
+  },
+  "dependencies": {
+    "checked_packages": 70,
+    "result": "All installed packages are compatible"
+  },
+  "tests": {
+    "passed": 147,
+    "subtests_passed": 4,
+    "skipped_modules": 1,
+    "junit_testcases_including_subtests_and_skip": 152,
+    "failures": 0,
+    "errors": 0,
+    "skip_reason": "Optional image-metrics extra (skimage/LPIPS) was not installed"
+  },
+  "profile": {
+    "status": "passed",
+    "kind": "synthetic_denoiser_forward_backward_profile",
+    "limitation": "Not dataset training, a sampler, or a model-quality result",
+    "python": "3.12.15",
+    "torch": "2.11.0+cu128",
+    "device": "cuda",
+    "gpu": "NVIDIA A40",
+    "precision": "torch.bfloat16",
+    "seed": 0,
+    "parameters": 964035,
+    "base_channels": 32,
+    "batch_size": 1,
+    "future_frames": 31,
+    "resolution": 64,
+    "auxiliary": false,
+    "conditioning": "spatial",
+    "max_objects": 4,
+    "warmup_steps": 3,
+    "measured_steps": 5,
+    "seconds_per_step_mean": 0.03800669405609369,
+    "seconds_per_step_median": 0.03798579145222902,
+    "seconds_per_step_min": 0.03795529343187809,
+    "seconds_per_step_max": 0.03812430053949356,
+    "step_durations_seconds": [
+      0.03800939116626978,
+      0.03798579145222902,
+      0.03795529343187809,
+      0.03795869369059801,
+      0.03812430053949356
+    ],
+    "timing_stable": true,
+    "timing_note": "Short synthetic profile; do not use unstable timings as a training budget",
+    "peak_allocated_bytes": 697711104,
+    "peak_reserved_bytes": 836763648,
+    "slurm_job_id": "42886",
+    "config_sha256": "a44fae35fe9c6a755481a8ec4e42294cbfdb215d729e30dc8bb9778cfdf324bf"
+  },
+  "limits": [
+    "Single allocation on TC2N01; other nodes or future allocations may differ.",
+    "Synthetic denoiser profile, not dataset training, sampling latency or video quality.",
+    "Checkpoint check reloads model weights; full training-state resume across jobs is unverified.",
+    "Storage quota, total usage quota and access expiry are not established by this report."
+  ],
+  "source_archive_sha256": "ee71b241ea0a151ad8ceb9240e13642aca62b01a878f8566149dfcce0e0ce44c",
+  "exported_file_sha256": {
+    "uv.lock": "b850c2e4905ef628382d3c9ebeefc764a8c7be555526d34da13a053a314e134f",
+    "pyproject.toml": "b1223346c92f1068b7a4c61f6207bff675dcc1f1170ca75b00ff74d670c2f78e",
+    ".python-version": "fdf19682f60c35e6bea6b9ac0572051cb9b43b9a954fa81b2403bac6477794db",
+    "configs/pilot.yaml": "a44fae35fe9c6a755481a8ec4e42294cbfdb215d729e30dc8bb9778cfdf324bf",
+    "cluster/setup.sbatch": "53ada1c77487706eac518d2134cdba020ee1ba2e00dba02bfe7aaa1233c5cb8a"
+  },
+  "source_blob_sha256": {
+    "uv.lock": "4fc210fc7429bce0434d708d6e083adaddd133b8a5e0beaba4a0cf9342bf6222",
+    "pyproject.toml": "f3a085461077f6daeb9a5d3397d6827195c6abc02b76c2794bbc16d0eb687d5b",
+    ".python-version": "845c494b4a7e1a741db19fd42eda239d3ee03b65f08276008943349a3055c9cc",
+    "configs/pilot.yaml": "d04e478796cacce1aed5a3c3aa90a89ae3daea32c96766542207e4cc65f3b4f2",
+    "cluster/setup.sbatch": "53ada1c77487706eac518d2134cdba020ee1ba2e00dba02bfe7aaa1233c5cb8a"
+  },
+  "export_note": "This verified Windows export used CRLF for the YAML configuration and LF for shell scripts. Exact exported hashes are recorded separately from Git blob hashes. Future uploads force LF.",
+  "evidence_sha256": {
+    "tc2-all-accounting.txt": "13993f290f5f8f45f5c52a8636fa460ed8af14b7f3f0c273cb61a24757886b62",
+    "tc2-all-submission.txt": "8269ae00c15ce122f266aa73f5a7240faf817d10bc585f7e931e8b45bdd5c557",
+    "tc2-device-42886.json": "6656c7b86763964e400ef1309581bc4f706f817c62901af1c29df5f53b05d992",
+    "tc2-hardware-42886.csv": "e84aabb161ac74adb11cb5422f2a0de04593401a48438565a795470dcc106aa5",
+    "tc2-pilot-42886.json": "0422fcb8243eb75f65fbfa451a27afbc39d1f04ef39a93636d93336745dd3fa1",
+    "tc2-ready-42886.json": "ad4dd297787991832d627ee9a21083e2bddc70f2a626f158d20135057b2e7efe",
+    "tc2-tests-42886.xml": "19755d437cf8a6c04bb694517b46d2c23f45c791e9f48155af48209b8b0ac00e"
+  }
+}

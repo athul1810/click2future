@@ -3,8 +3,10 @@
 Access is approved for Athul and Shrijeet with partition `MGPU-TC2` and QoS `normal`.
 See [the account limits](../docs/COMPUTE.md). Shrijeet's VPN route and TCP connectivity
 were verified on 16 October 2026, and Shrijeet subsequently confirmed the first successful
-interactive SSH login. Linux package installation and allocated GPU execution still
-need verification.
+interactive SSH login. Job `42886` then completed successfully on `TC2N01` with an
+NVIDIA A40, PyTorch 2.11.0+cu128 and CUDA runtime 12.8. The dependency check, tests,
+CUDA gradient/weight reload check and 31-frame synthetic profile passed.
+See [the verified allocation evidence](../docs/results/tc2_probe_2026-10-16.json).
 
 The scripts were adapted from `CCDSGPU-TC2-Masters-UserGuide.pdf`, especially pages 4,
 9-13, 16-18, 21, and 26-27. Keep the university guide, completed forms, and credentials
@@ -48,7 +50,8 @@ Use the assigned username and QoS; the defaults below match Shrijeet's approval.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\tc2_setup.ps1 -Username shrijeet001 -Qos normal -Stage Inventory
 ```
 
-The helper uploads a Git archive of the current committed source, checks its SHA-256
+The helper uploads a Git archive of the current committed source, forces LF line
+endings for consistent exports across operating systems, checks its SHA-256
 on TC2, and extracts it into your own `~/click2future/releases/<commit>/` directory.
 It never overwrites an existing source release. Git credentials, the Windows `.venv`,
 ignored datasets, and keys are excluded. Authentication uses native SSH/SCP prompts;
@@ -87,6 +90,19 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\tc2_setup.ps1 -U
 
 Back up important run outputs and checkpoints separately. TC2 provides no backup;
 the helper retrieves setup diagnostics only.
+
+## Existing validated release
+
+Shrijeet's environment is installed in
+`~/click2future/releases/47ca5e0d9e9246d929751c00d15e8bec2d1f7e68/.venv/`.
+Use that release's `.venv/bin/python` in compute jobs. Keep `--locked --extra cu128`
+on later uv sync/run commands so the CUDA dependencies remain selected. Optional
+SSIM/LPIPS dependencies are a separate extra; they were not installed by this run.
+The original Windows export's exact hashes are in the evidence report; future exports
+use LF consistently. New source commits get separate release directories.
+
+The completed setup job used an explicit 31-frame override. Current standalone
+probe scripts also select 31 predicted frames rather than the older prototype default.
 
 ## Local network check
 
