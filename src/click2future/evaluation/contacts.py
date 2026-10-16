@@ -14,6 +14,13 @@ class Contacts:
     observed: np.ndarray  # [T-1,N,N]
 
 
+@dataclass
+class ContactGeometry:
+    masks: np.ndarray
+    known: np.ndarray
+    gap_squared: np.ndarray
+
+
 def estimate_contacts(
     masks,
     tracked,
@@ -22,6 +29,7 @@ def estimate_contacts(
     max_gap_pixels: float,
     motion_threshold: float | None = None,
     motion_window: int = 3,
+    motion_rule: str = "opposing",
 ) -> Contacts:
     """Estimate object-object contact from the minimum gap between occupied pixel squares.
 
@@ -30,6 +38,17 @@ def estimate_contacts(
     observations across each motion window. Missing frames cannot create an onset
     on reappearance. This is a video proxy, not a substitute for simulator labels.
     """
+    return contacts_from_geometry(
+        prepare_contact_geometry(masks, tracked, object_valid),
+        max_gap_pixels=max_gap_pixels,
+        motion_threshold=motion_threshold,
+        motion_window=motion_window,
+        motion_rule=motion_rule,
+    )
+
+
+def prepare_contact_geometry(masks, tracked, object_valid) -> ContactGeometry:
+    """Cache pixel distances once when calibrating several thresholds on the same RGB."""
     masks, tracked, valid = map(np.asarray, (masks, tracked, object_valid))
     if masks.ndim != 4 or masks.dtype != np.bool_ or min(masks.shape) < 1:
         raise ValueError("masks must be nonempty boolean [T,N,H,W]")
@@ -38,21 +57,10 @@ def estimate_contacts(
         raise ValueError("tracked must be boolean [T,N]")
     if valid.shape != (objects,) or valid.dtype != np.bool_ or not valid.any():
         raise ValueError("object_valid must be boolean [N] with a valid object")
-    if not np.isfinite(max_gap_pixels) or max_gap_pixels < 0:
-        raise ValueError("max_gap_pixels must be finite and nonnegative")
-    if motion_threshold is not None:
-        if not np.isfinite(motion_threshold) or motion_threshold <= 0:
-            raise ValueError("motion_threshold must be finite and positive")
-        if (
-            isinstance(motion_window, bool)
-            or not isinstance(motion_window, int)
-            or motion_window < 2
-        ):
-            raise ValueError("motion_window must be an integer >= 2")
     known = tracked & valid[None]
     if np.any(known & ~masks.any(axis=(2, 3))):
         raise ValueError("Tracked objects must have nonempty masks")
-    state = np.zeros((frames, objects, objects), bool)
+    distances = np.full((frames, objects, objects), np.inf)
     for t in range(frames):
         pixels = {obj: np.argwhere(masks[t, obj]) for obj in np.flatnonzero(known[t])}
         for first in pixels:
@@ -65,20 +73,50 @@ def estimate_contacts(
                     delta = np.abs(pixels[first][start : start + 64, None] - pixels[second][None])
                     gap = np.maximum(delta - 1, 0)
                     minimum = min(minimum, float(np.min(np.sum(gap.astype(float) ** 2, axis=-1))))
-                    if minimum <= max_gap_pixels**2:
+                    if minimum == 0:
                         break
-                contact = minimum <= max_gap_pixels**2
-                state[t, first, second] = state[t, second, first] = contact
+                distances[t, first, second] = distances[t, second, first] = minimum
+    return ContactGeometry(masks, known, distances)
+
+
+def contacts_from_geometry(
+    geometry: ContactGeometry,
+    *,
+    max_gap_pixels,
+    motion_threshold=None,
+    motion_window=3,
+    motion_rule="opposing",
+) -> Contacts:
+    if not np.isfinite(max_gap_pixels) or max_gap_pixels < 0:
+        raise ValueError("max_gap_pixels must be finite and nonnegative")
+    if motion_rule not in {"opposing", "normal"}:
+        raise ValueError("motion_rule must be opposing or normal")
+    if motion_rule == "normal" and motion_threshold is None:
+        raise ValueError("Normal motion needs an explicit motion threshold")
+    if motion_threshold is not None:
+        if not np.isfinite(motion_threshold) or motion_threshold <= 0:
+            raise ValueError("motion_threshold must be finite and positive")
+        if (
+            isinstance(motion_window, bool)
+            or not isinstance(motion_window, int)
+            or motion_window < 2
+        ):
+            raise ValueError("motion_window must be an integer >= 2")
+    masks, known = geometry.masks, geometry.known
+    frames, objects = known.shape
+    state = geometry.gap_squared <= max_gap_pixels**2
     endpoints = known[:-1] & known[1:]
     observed = endpoints[:, :, None] & endpoints[:, None, :]
     observed[:, np.arange(objects), np.arange(objects)] = False
     onset = state[1:] & ~state[:-1] & observed
     if motion_threshold is not None:
-        onset, observed = _motion_onsets(masks, known, state, motion_threshold, motion_window)
+        onset, observed = _motion_onsets(
+            masks, known, state, motion_threshold, motion_window, motion_rule
+        )
     return Contacts(state, onset, observed)
 
 
-def _motion_onsets(masks, known, proximity, threshold, window):
+def _motion_onsets(masks, known, proximity, threshold, window, rule="opposing"):
     """Use opposing velocity changes near contact, without a physics-state input.
 
     Slopes are least-squares estimates in pixel/frame units. At the first interval
@@ -112,6 +150,16 @@ def _motion_onsets(masks, known, proximity, threshold, window):
     for first in range(objects):
         for second in range(first + 1, objects):
             score = np.sqrt(np.maximum(0, -np.sum(changes[:, first] * changes[:, second], axis=-1)))
+            if rule == "normal":
+                direction = centres[:, second] - centres[:, first]
+                direction = (direction[:-1] + direction[1:]) * 0.5
+                length = np.linalg.norm(direction, axis=-1, keepdims=True)
+                normal = np.divide(
+                    direction, length, out=np.zeros_like(direction), where=length > 0
+                )
+                first_change = np.sum(changes[:, first] * normal, axis=-1)
+                second_change = np.sum(changes[:, second] * normal, axis=-1)
+                score = np.sqrt(np.maximum(0, -first_change) * np.maximum(0, second_change))
             eligible = observed[:, first, second] & (
                 proximity[:-1, first, second] | proximity[1:, first, second]
             )

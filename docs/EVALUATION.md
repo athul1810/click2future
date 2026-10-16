@@ -4,8 +4,9 @@ Implemented trajectory/collision metrics, failure policies, and JSON export are 
 in [METRICS.md](METRICS.md). Pixel tracking, experimental contact extraction, and paired action controls have simulator checks.
 SSIM/LPIPS, temporal diagnostics, and ensemble diversity/coverage also have simulator controls.
 Scene-group aggregation and CSV/JSON comparison tables are available in
-[EVALUATION_REPORTS.md](EVALUATION_REPORTS.md). Contact recall remains low;
-validation on actual generated videos is still pending.
+[EVALUATION_REPORTS.md](EVALUATION_REPORTS.md). The line-of-centres contact proxy has
+fresh held-out checks and known errors. Untrained CVAE output exercises tracker failure
+handling; validation on trained generators remains pending.
 
 ## Hypotheses
 

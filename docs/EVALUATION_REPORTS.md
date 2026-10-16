@@ -76,9 +76,9 @@ alongside conditional scores, especially when models fail on different scenes.
 Collision scores pool TP/FP/FN/TN counts, then bootstrap those totals by scene.
 This produces micro precision/recall/F1, interval accuracy, and positive prevalence.
 Undefined ratios remain null; event-free cases never become perfect F1. The output
-records how many bootstrap replicates had a defined ratio. The current pixel contact
-estimator still has low recall, so these tables do not make collision comparisons
-reliable by themselves. Keep its simulator validation and missing-pair counts visible.
+records how many bootstrap replicates had a defined ratio. The contact estimator still
+has known extraction errors, so these tables do not make collision comparisons reliable
+by themselves. Keep its simulator validation and missing-pair counts visible.
 
 Mean ADE/FDE and whole-sample best-of-K remain separate columns. Table export does
 not complete T14: the actual E0-E4 runs, budget measurements, hyperparameter study,

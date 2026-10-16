@@ -142,7 +142,7 @@ def collision_frequency(predicted, observed, references, object_valid) -> dict:
         )
     return {
         "event": "at least one object-pair contact onset during the future",
-        "source": "video_contact_estimates; current estimator has low recall",
+        "source": "video_contact_estimates; interpret using the declared estimator validation",
         "sample_count": len(predicted),
         "reference_count": len(references),
         "per_pair": records,

@@ -16,7 +16,7 @@ import yaml
 from click2future.sim.rollout import run_rollout
 from click2future.sim.scene import make_scene
 
-from .contacts import estimate_contacts
+from .contacts import contacts_from_geometry, estimate_contacts, prepare_contact_geometry
 from .metrics import collision_metrics
 from .tracking import TRACKER_VERSION, TrackerConfig, track_video
 
@@ -43,12 +43,16 @@ def extract_cases(start: int, groups: int, variants: int, tracker: TrackerConfig
     return cases
 
 
-def summarize(cases: list, gap: float, tolerance: int, **contact_options) -> dict:
+def summarize(
+    cases: list, gap: float, tolerance: int, *, geometries=None, **contact_options
+) -> dict:
     reasons = Counter()
     counts = {"event": Counter(), "interval": Counter()}
     errors = []
     expected = tracked_count = complete_clips = reference_events = 0
-    for reference, tracks in cases:
+    if geometries is not None and len(geometries) != len(cases):
+        raise ValueError("Geometry cache must match the case count")
+    for index, (reference, tracks) in enumerate(cases):
         valid = reference["object_valid"]
         known = tracks.tracked[1:, valid]
         expected += known.size
@@ -61,8 +65,12 @@ def summarize(cases: list, gap: float, tolerance: int, **contact_options) -> dic
                 axis=-1,
             ).tolist()
         )
-        contact = estimate_contacts(
-            tracks.masks, tracks.tracked, valid, max_gap_pixels=gap, **contact_options
+        contact = (
+            estimate_contacts(
+                tracks.masks, tracks.tracked, valid, max_gap_pixels=gap, **contact_options
+            )
+            if geometries is None
+            else contacts_from_geometry(geometries[index], max_gap_pixels=gap, **contact_options)
         )
         score = collision_metrics(
             contact.onset[None],
@@ -143,6 +151,7 @@ def select_motion(candidates: list[dict]) -> dict:
             -row["metrics"]["collision"]["event"]["f1"],
             row["motion_window"],
             row["motion_threshold"],
+            row["max_gap_pixels"],
         ),
     )
 
@@ -152,11 +161,26 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--groups-per-split", type=int, default=100)
     parser.add_argument("--variants-per-group", type=int, default=2)
     parser.add_argument("--validation-start", type=int, default=20000)
-    parser.add_argument("--held-out-start", type=int, default=40000)
-    parser.add_argument("--method", choices=["motion", "proximity"], default="motion")
+    parser.add_argument("--held-out-start", type=int)
+    parser.add_argument(
+        "--method", choices=["motion", "motion_gap", "normal_motion", "proximity"], default="motion"
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--config-output", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.held_out_start is None:
+        args.held_out_start = {"motion_gap": 110000, "normal_motion": 120000}.get(
+            args.method, 40000
+        )
+    if args.method in {"motion_gap", "normal_motion"} and any(
+        abs(args.held_out_start - start) < max(100, args.groups_per_split)
+        for start in (
+            (20000, 30000, 40000, 110000)
+            if args.method == "normal_motion"
+            else (20000, 30000, 40000)
+        )
+    ):
+        parser.error("Use a fresh held-out seed range for the expanded gap calibration")
     if not 1 <= args.groups_per_split <= 10_000 or not 1 <= args.variants_per_group <= 10:
         parser.error("Use 1-10000 groups per split and 1-10 variants per group")
     if (
@@ -170,25 +194,51 @@ def main(argv: list[str] | None = None) -> int:
     validation = extract_cases(
         args.validation_start, args.groups_per_split, args.variants_per_group, tracker
     )
-    if args.method == "motion":
+    validation_geometry = [
+        prepare_contact_geometry(t.masks, t.tracked, r["object_valid"]) for r, t in validation
+    ]
+    if args.method in {"motion", "motion_gap", "normal_motion"}:
         candidates = []
-        for window in (3, 5):
-            for threshold in (0.1, 0.2, 0.3, 0.4):
-                options = {"motion_window": window, "motion_threshold": threshold}
-                candidates.append(
-                    {
-                        **options,
-                        "max_gap_pixels": 0.0,
-                        "metrics": summarize(validation, 0.0, 1, **options),
-                    }
-                )
+        gaps = (0.0, 1.0, 2.0, 3.0) if args.method == "motion_gap" else (0.0,)
+        if args.method == "normal_motion":
+            gaps = (0.0, 1.0)
+        windows = (3, 5, 7) if args.method == "normal_motion" else (3, 5)
+        thresholds = (
+            (0.04, 0.08, 0.12, 0.2, 0.3, 0.4)
+            if args.method == "normal_motion"
+            else (0.1, 0.2, 0.3, 0.4)
+        )
+        for window in windows:
+            for threshold in thresholds:
+                for candidate_gap in gaps:
+                    options = {"motion_window": window, "motion_threshold": threshold}
+                    if args.method == "normal_motion":
+                        options["motion_rule"] = "normal"
+                    candidates.append(
+                        {
+                            **options,
+                            "max_gap_pixels": candidate_gap,
+                            "metrics": summarize(
+                                validation,
+                                candidate_gap,
+                                1,
+                                geometries=validation_geometry,
+                                **options,
+                            ),
+                        }
+                    )
         selected = select_motion(candidates)
-        gap = 0.0
+        gap = selected["max_gap_pixels"]
         options = {key: selected[key] for key in ("motion_window", "motion_threshold")}
-        selection = "Maximum validation micro event F1; ties use smaller window then threshold"
+        if args.method == "normal_motion":
+            options["motion_rule"] = "normal"
+        selection = "Maximum validation micro event F1; ties: smaller window, threshold, gap"
     else:
         candidates = [
-            {"max_gap_pixels": gap, "metrics": summarize(validation, gap, 1)}
+            {
+                "max_gap_pixels": gap,
+                "metrics": summarize(validation, gap, 1, geometries=validation_geometry),
+            }
             for gap in (0.0, 0.5, 1.0, 1.5)
         ]
         gap, options = select_gap(candidates), {}
@@ -197,6 +247,9 @@ def main(argv: list[str] | None = None) -> int:
     held_out = extract_cases(
         args.held_out_start, args.groups_per_split, args.variants_per_group, tracker
     )
+    held_geometry = [
+        prepare_contact_geometry(t.masks, t.tracked, r["object_valid"]) for r, t in held_out
+    ]
     config = {
         "resolution_hw": [64, 64],
         "fps": 8,
@@ -208,7 +261,13 @@ def main(argv: list[str] | None = None) -> int:
     report = {
         "purpose": "Extractor calibration on clean simulator RGB; not model evaluation",
         "extractor_version": TRACKER_VERSION,
-        "contact_estimator": "opposing-motion-2" if options else "pixel-proximity-1",
+        "contact_estimator": (
+            "normal-motion-1"
+            if options.get("motion_rule") == "normal"
+            else "opposing-motion-2"
+            if options
+            else "pixel-proximity-1"
+        ),
         "initialization": "Frame-0 identity masks only; future labels used only for scoring",
         "protocol": {
             "validation_seed_start": args.validation_start,
@@ -225,8 +284,11 @@ def main(argv: list[str] | None = None) -> int:
         },
         "settings": config,
         "validation_candidates": candidates,
-        "held_out": summarize(held_out, gap, 1, **options),
-        "proximity_baseline_same_held_out": summarize(held_out, 0.0, 1),
+        "held_out": summarize(held_out, gap, 1, geometries=held_geometry, **options),
+        "previous_motion_same_held_out": summarize(
+            held_out, 0.0, 1, geometries=held_geometry, motion_threshold=0.3, motion_window=3
+        ),
+        "proximity_baseline_same_held_out": summarize(held_out, 0.0, 1, geometries=held_geometry),
         "versions": {
             name: importlib.metadata.version(name) for name in ("numpy", "pymunk", "pillow")
         },

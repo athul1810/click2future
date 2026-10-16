@@ -37,6 +37,8 @@ def check(output_dir: Path, config_path: Path):
         config={"resolution": 64, "frame_count": 16, "fps": 8, "physics_hz": 240},
     )["manifest"]
     settings = {key: config[key] for key in ("max_gap_pixels", "motion_threshold", "motion_window")}
+    if "motion_rule" in config:
+        settings["motion_rule"] = config["motion_rule"]
     tracker = TrackerConfig(**config["tracker"])
     manifest = {
         "schema_version": 1,

@@ -30,6 +30,7 @@ def evaluate_videos(
     run_id: str,
     motion_threshold: float | None = None,
     motion_window: int = 3,
+    motion_rule: str = "opposing",
 ) -> tuple[dict, dict]:
     """Use only the reference's frame-0 masks during extraction; score afterwards."""
     validate_rollout(reference)
@@ -52,6 +53,7 @@ def evaluate_videos(
             max_gap_pixels=max_gap_pixels,
             motion_threshold=motion_threshold,
             motion_window=motion_window,
+            motion_rule=motion_rule,
         )
         for t in tracks
     ]
@@ -73,7 +75,9 @@ def evaluate_videos(
         "source": "video_tracking",
         "metric_version": "1",
         "extractor_version": TRACKER_VERSION,
-        "contact_estimator": "opposing-motion-2"
+        "contact_estimator": "normal-motion-1"
+        if motion_rule == "normal"
+        else "opposing-motion-2"
         if motion_threshold is not None
         else "pixel-proximity-1",
         "run_id": run_id,
@@ -86,6 +90,7 @@ def evaluate_videos(
             "max_gap_pixels": max_gap_pixels,
             "motion_threshold": motion_threshold,
             "motion_window": motion_window,
+            "motion_rule": motion_rule,
             "event_tolerance_intervals": event_tolerance,
             "resolution_hw": list(videos.shape[2:4]),
         },
@@ -156,6 +161,7 @@ def main(argv: list[str] | None = None) -> int:
             run_id=args.run_id,
             motion_threshold=config.get("motion_threshold"),
             motion_window=config.get("motion_window", 3),
+            motion_rule=config.get("motion_rule", "opposing"),
         )
         report["sample_id"] = args.sample_id
         report["input_sha256"] = {}
