@@ -216,9 +216,79 @@ configuration, and retain sample counts. A `passed` status means calculation suc
 not that the model follows the action. The CLI checks seed count/order declarations;
 the sampler remains responsible for actually using those seeds.
 
+## Image quality
+
+`evaluation.images` computes frame-aligned SSIM and LPIPS against one reference future.
+Both exclude frame 0 and use stored RGB values at native resolution. Inputs are uint8
+`videos [K,T,H,W,3]`; floats and mismatched shapes are rejected. The NPZ may also contain
+boolean `frame_valid [K,T]` for missing RGB frames. Object-tracker failures do not remove
+frames from image evaluation. Each report retains per-frame scores, missing counts, and
+per-clip means. A clip with any missing future frame has a null mean; aggregate means
+include complete clips only and must be presented with their counts.
+
+Install the optional dependencies alongside the selected Torch backend:
+
+```bash
+uv sync --locked --extra cpu --extra image-metrics
+```
+
+SSIM uses scikit-image 0.26.0 with `data_range=255`, RGB channel averaging, an 11-pixel
+Gaussian window, sigma 1.5, population covariance, and K1/K2 of 0.01/0.03. The library
+excludes the five-pixel window border. There is no resizing or colour/gamma conversion.
+These settings follow the [scikit-image documentation](https://scikit-image.org/docs/stable/api/skimage.metrics.html#skimage.metrics.structural_similarity).
+
+LPIPS uses lpips 0.1.4, AlexNet with ImageNet weights, and learned calibration version 0.1.
+Inputs become float32 NCHW in [-1,1], following the [official implementation](https://github.com/richzhang/PerceptualSimilarity).
+The network runs frozen in evaluation/inference mode, without resizing. The evaluator
+requires height and width of at least 64 pixels. Package versions, weight SHA-256 hashes,
+preprocessing, and the selected device are saved in every LPIPS report. TorchVision 0.26.0
+matches our Torch 2.11.0 dependency, following the [official version pairing](https://pytorch.org/get-started/previous-versions/).
+
+The first LPIPS run needs the official AlexNet weights in the Torch cache. Allow that
+initial download explicitly; later runs work from the cache. Missing or corrupt weights
+fail the run rather than fall back to random features. Cache/model files stay outside Git
+and the final source-code ZIP.
+
+```bash
+python -m click2future.evaluation.images \
+  --reference-dir outputs/pilot_32f --sample-id scene-00000032-variant-001 \
+  --videos outputs/generated.npz --source generated_video --run-id E2-validation-seed0 \
+  --metrics ssim lpips --download-weights --output outputs/image-metrics.json
+```
+
+Omit `--download-weights` after caching. Use `--metrics ssim` for SSIM alone; it loads no
+LPIPS model. Input hashes and reference/run/scene/condition IDs allow these reports to be
+joined with the trajectory/contact reports. `--batch-size` controls LPIPS memory use.
+Each requested metric must succeed; failures produce a failed record and exit code 1.
+A metric omitted from the request is not reported as a zero score.
+
+Reproduce the checked-in [image-control measurements](results/image-quality-controls.json):
+
+```bash
+python -m click2future.evaluation.image_controls \
+  --output outputs/image-quality-controls.json
+```
+
+Add `--download-weights` only if needed. These checks use four seeded simulator scenes,
+16 frames at 64px, and exact copies, four-pixel shifts, Gaussian noise, and frozen-frame
+controls. All preserve frame 0. The shift rolls the whole future frame with wraparound;
+noise has standard deviation 12 before clipping to uint8. Seeds are 60000-60003.
+
+| Control | Mean SSIM | Mean LPIPS |
+|---|---:|---:|
+| Exact copy | 1.0000 | 0.0000 |
+| Four-pixel shift | 0.7498 | 0.1475 |
+| Gaussian noise | 0.4096 | 0.2265 |
+| Repeat frame 0 | 0.9517 | 0.0263 |
+
+The table averages each clip's future-frame mean across four scenes. These are metric
+checks, not trained-model results. A large static background can give frozen output good
+image scores, and a valid alternative physical future may score poorly against one
+reference. Report image quality alongside action, trajectory, and diversity measures.
+
 ## Remaining work
 
-Contact recall and checks on generated videos remain unresolved. Image metrics, temporal
-consistency, ensemble diversity/coverage, wall-contact scoring, and scene-group aggregation
-still need implementation. T07 remains open. The action-control tools are ready to use
-when trained samples become available for T16.
+Contact recall and checks on generated videos remain unresolved. Temporal consistency,
+ensemble diversity/coverage, wall-contact scoring, and scene-group aggregation still
+need implementation. T07 remains open. Action and image-quality tools are ready for
+trained samples, subject to the limitations above.

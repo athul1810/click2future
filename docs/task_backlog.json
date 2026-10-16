@@ -153,12 +153,12 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/7",
-    "evidence": "docs/METRICS.md; docs/results/contact-motion-calibration.json; docs/results/action-control-checks.json. Contact recall and remaining metrics are unresolved.",
+    "evidence": "docs/METRICS.md; docs/results/contact-motion-calibration.json; docs/results/action-control-checks.json; docs/results/image-quality-controls.json. Temporal/diversity metrics and generated-video checks remain unresolved.",
     "completed_acceptance": [
       2,
       3
     ],
-    "progress": "Trajectory/collision scoring, source-labelled exports, pixel tracking, and zero/reversed-force controls are implemented. On 200 fresh held-out clips, contact event F1 improved from 0.111 to 0.311 against the proximity baseline on the same clips; recall remains only 0.233. All 16 simulator action-control groups passed. Generated-video checks and the remaining metric families are pending. See [metric usage and measurements](METRICS.md)."
+    "progress": "Trajectory/collision scoring, pixel tracking, action controls, and SSIM/LPIPS image metrics are implemented. Contact event F1 is 0.311 on 200 fresh held-out clips, with recall only 0.233. All 16 simulator action-control groups passed. Image metrics passed exact/shift/noise/frozen controls using pretrained LPIPS weights. Temporal/diversity metrics and generated-video validation remain pending. See [metric usage and measurements](METRICS.md)."
   },
   {
     "id": "T08",

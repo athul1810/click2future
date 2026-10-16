@@ -56,6 +56,21 @@ the contributor also reported Windows checks. Linux and TC2 validation remain pe
 driver, or CUDA modules. Record its constraints in `COMPUTE.md` before selecting a
 compatible training environment and running an explicit CUDA check on TC2.
 
+## Optional image metrics
+
+SSIM and LPIPS require the `image-metrics` extra in addition to the selected backend:
+
+```bash
+uv sync --locked --extra cpu --extra image-metrics
+```
+
+For a validated CUDA environment, replace `cpu` with `cu128`. Repeat both extras on
+future sync/run commands to retain them. TorchVision is pinned alongside Torch for each
+backend. [Metric usage](METRICS.md#image-quality) explains the one-time LPIPS weight download,
+offline evaluation, and reproduction commands. The default test run skips image-metric
+tests if these optional packages are absent; real LPIPS tests also require cached weights.
+The full image-metric suite has been checked with the pretrained weights on CPU.
+
 ## Verification
 
 ```powershell

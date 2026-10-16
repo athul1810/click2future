@@ -2,7 +2,8 @@
 
 Implemented trajectory/collision metrics, failure policies, and JSON export are described
 in [METRICS.md](METRICS.md). Pixel tracking, experimental contact extraction, and paired action controls have simulator checks.
-Contact recall remains low; generated-video validation and the remaining metric families are pending.
+SSIM/LPIPS are also implemented and checked on simulator distortions. Contact recall remains low;
+generated-video validation, temporal consistency, and diversity metrics are pending.
 
 ## Hypotheses
 

@@ -33,3 +33,9 @@ These measure the extractor, not a trained model.
 `test_action_controls.py` checks direction/reversal, zero-force drift, stationary and
 missing outputs, paired reference validation, and both simulator/generated-video CLI paths.
 Contact tests cover opposing-motion peaks, near-pass rejection, and missing context.
+
+`test_image_quality.py` covers an analytical SSIM case, frame-0 exclusion, missing-frame
+counts, distorted/frozen controls, corrupt inputs, and offline weight checks. With cached
+weights it compares LPIPS with the official API, checks batching and CPU RNG preservation,
+and runs the real CLI. Install the `image-metrics` extra and cache LPIPS weights using the
+commands in [METRICS.md](../docs/METRICS.md#image-quality) to run these tests.
