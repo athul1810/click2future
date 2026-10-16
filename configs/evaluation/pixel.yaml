@@ -1,6 +1,7 @@
 resolution_hw:
 - 64
 - 64
+fps: 8
 tracker:
   color_tolerance: 24.0
   color_margin: 4.0
@@ -10,3 +11,5 @@ tracker:
   min_pixels: 4
 max_gap_pixels: 0.0
 event_tolerance_intervals: 1
+motion_window: 3
+motion_threshold: 0.3

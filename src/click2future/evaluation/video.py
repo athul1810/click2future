@@ -8,6 +8,7 @@ import json
 from collections import Counter
 from dataclasses import asdict
 from pathlib import Path
+from zipfile import BadZipFile
 
 import numpy as np
 import yaml
@@ -27,6 +28,8 @@ def evaluate_videos(
     max_gap_pixels: float,
     event_tolerance: int,
     run_id: str,
+    motion_threshold: float | None = None,
+    motion_window: int = 3,
 ) -> tuple[dict, dict]:
     """Use only the reference's frame-0 masks during extraction; score afterwards."""
     validate_rollout(reference)
@@ -43,7 +46,12 @@ def evaluate_videos(
     ]
     contacts = [
         estimate_contacts(
-            t.masks, t.tracked, reference["object_valid"], max_gap_pixels=max_gap_pixels
+            t.masks,
+            t.tracked,
+            reference["object_valid"],
+            max_gap_pixels=max_gap_pixels,
+            motion_threshold=motion_threshold,
+            motion_window=motion_window,
         )
         for t in tracks
     ]
@@ -65,6 +73,9 @@ def evaluate_videos(
         "source": "video_tracking",
         "metric_version": "1",
         "extractor_version": TRACKER_VERSION,
+        "contact_estimator": "opposing-motion-2"
+        if motion_threshold is not None
+        else "pixel-proximity-1",
         "run_id": run_id,
         "scene_group_id": reference["scene_spec"]["scene_group_id"],
         "condition_id": reference["scene_spec"]["condition_id"],
@@ -72,6 +83,8 @@ def evaluate_videos(
         "settings": {
             "tracker": asdict(tracker),
             "max_gap_pixels": max_gap_pixels,
+            "motion_threshold": motion_threshold,
+            "motion_window": motion_window,
             "event_tolerance_intervals": event_tolerance,
             "resolution_hw": list(videos.shape[2:4]),
         },
@@ -125,6 +138,12 @@ def main(argv: list[str] | None = None) -> int:
         reference = load_rollout(args.reference_dir, args.sample_id)
         if list(reference["frames"].shape[1:3]) != config["resolution_hw"]:
             raise ValueError("Resolution differs from the extractor calibration config")
+        if "fps" in config:
+            fps = float(config["fps"])
+            if not np.isfinite(fps) or fps <= 0:
+                raise ValueError("Configured fps must be finite and positive")
+            if not np.allclose(np.diff(reference["timestamps"]), 1 / fps, rtol=0, atol=1e-8):
+                raise ValueError("Frame timing differs from the extractor calibration config")
         with np.load(args.videos, allow_pickle=False) as archive:
             videos = archive["videos"]
         report, arrays = evaluate_videos(
@@ -134,6 +153,8 @@ def main(argv: list[str] | None = None) -> int:
             max_gap_pixels=config["max_gap_pixels"],
             event_tolerance=config["event_tolerance_intervals"],
             run_id=args.run_id,
+            motion_threshold=config.get("motion_threshold"),
+            motion_window=config.get("motion_window", 3),
         )
         report["sample_id"] = args.sample_id
         report["input_sha256"] = {}
@@ -146,7 +167,7 @@ def main(argv: list[str] | None = None) -> int:
             args.extracted_output.parent.mkdir(parents=True, exist_ok=True)
             with args.extracted_output.open("wb") as stream:
                 np.savez_compressed(stream, **arrays)
-    except (ValueError, TypeError, KeyError, OSError) as error:
+    except (ValueError, TypeError, KeyError, OSError, BadZipFile, yaml.YAMLError) as error:
         report = {"status": "failed", "error": f"{type(error).__name__}: {error}"}
     payload = json.dumps(report, indent=2, allow_nan=False)
     args.output.parent.mkdir(parents=True, exist_ok=True)

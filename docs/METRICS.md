@@ -118,47 +118,107 @@ Similar colours, disappearance, fragmentation, and large area changes produce mi
 observations. Partial occlusion can still bias accepted centres. This baseline supports
 solid colours; textures and generated-video artefacts need separate validation.
 
-The contact estimate measures gaps between visible pixel regions. A new contact requires
-both objects to be tracked at both interval endpoints. Persistent contact is not repeated,
-and missing frames cannot create an onset on reappearance. Rasterization and contacts
-between recorded frames can shift or hide events. Wall events are not extracted.
+The current contact estimator combines pixel proximity with opposing changes in object
+velocity. It fits short trajectory windows in pixel/frame units, then selects separated
+peaks. All observations in the motion window must be tracked. This is offline evaluation:
+it uses future RGB context, but no future oracle labels. The initial velocity is assumed
+zero under the simulator contract. The returned `state` is pixel proximity, not confirmed
+physical contact. Close repeated events, small impulses, and wall interactions remain hard.
 
 ## Simulator extraction measurements
 
-Reproduce the checked-in [measurement record](results/pixel-extractor-calibration.json):
+Reproduce the current [contact measurement record](results/contact-motion-calibration.json):
 
 ```bash
 python -m click2future.evaluation.calibrate \
-  --output outputs/pixel-extractor-calibration.json \
+  --output outputs/contact-motion-calibration.json \
   --config-output outputs/pixel-calibration.yaml
 ```
 
-The run uses 30 validation scene groups and 30 held-out groups, each with two hidden-physics
-variants, at 64px and 32 frames. Validation visible seeds start at 20000; held-out seeds
-start at 30000. Reserve these groups from model datasets. Gap candidates are 0, 0.5, 1,
-and 1.5 pixels. Validation event F1 selected 0 pixels; event tolerance was fixed at one
-recorded interval before evaluation. Other tracker settings were fixed heuristics.
+There are 100 validation scene groups beginning at visible seed 20000 and 100 fresh held-out
+groups beginning at 40000. Each has two hidden-physics variants, 32 frames, 64px and 8 FPS.
+Reserve these groups from model datasets. The earlier 30000-30029 held-out groups were not
+used for this iteration. Future changes require another fresh held-out set.
 
-| Held-out measurement | Result |
-|---|---:|
-| Clips | 60 |
-| Tracked future object observations | 5580 / 5580 |
-| Mean centre error over tracked observations | 0.249 pixels |
-| 95th percentile centre error | 0.500 pixels |
-| Complete object-pair timelines | 200 / 200 |
-| Reference collision onsets | 19 |
-| Matched / extra / missed contact events | 2 / 17 / 17 |
-| Contact event precision / recall / F1 | 0.105 / 0.105 / 0.105 |
+Validation tested motion windows of 3 or 5 frames and thresholds 0.1, 0.2, 0.3, or 0.4
+pixels/frame, holding the proximity gap at zero and event tolerance at one interval.
+Maximum validation event F1 selected window 3 and threshold 0.3 (validation F1 0.50).
+These settings were fixed before the new held-out evaluation. The table compares both
+estimators on exactly the same fresh clips.
 
-These are clean simulator extraction results, not model results. The 99.4% interval
-accuracy is dominated by negative bins and does not indicate useful contact detection.
-The contact estimator needs improvement before freezing collision comparisons. Future
-iterations must use new held-out groups rather than tune against this measured set.
-The two variants within each scene are correlated; this small run has no confidence intervals.
+| Held-out contact measurement | Pixel proximity | Proximity plus motion |
+|---|---:|---:|
+| Reference events | 30 | 30 |
+| Matched events | 4 | 7 |
+| Extra events | 38 | 8 |
+| Missed events | 26 | 23 |
+| Event precision | 0.095 | 0.467 |
+| Event recall | 0.133 | 0.233 |
+| Event F1 | 0.111 | 0.311 |
+
+All 18,538 future object observations were tracked across 200 clips, with mean centre
+error 0.235 pixels and 95th percentile 0.459 pixels. All 662 object-pair timelines were
+complete. No events were excluded for missing tracks. The detector improves but its low
+recall still prevents reliable model-comparison claims. Interval accuracy is dominated
+by negative bins. These are clean simulator results, not generated-video results, and
+variants within a scene are correlated. No confidence intervals are reported.
+
+The [original proximity record](results/pixel-extractor-calibration.json) is retained.
+Its 60-clip scores can be reproduced with `--method proximity --groups-per-split 30
+--held-out-start 30000`; do not compare its F1 directly with a different held-out set.
+
+## Action controls
+
+Action checks are implemented in `evaluation.actions` and `evaluation.controls`. The
+fixed configuration is [actions.yaml](../configs/evaluation/actions.yaml): the first
+0.5 seconds (frame 4 at 8 FPS), with one pixel at 64px as the motion threshold. The
+reference controls must start at rest and stay free of object/wall contacts throughout
+that window. They must share the same objects, hidden physics, initial image, selected
+object and timing, changing only the force. A failing reference control rejects the
+whole comparison; it is not silently removed after inspecting model outputs.
+
+- Nonzero force: direction error between force and selected-object displacement.
+  Stationary samples get no angle, with stationary and missing counts reported separately.
+- Zero force: maximum displacement from frame 0 over all valid objects and all frames
+  in the window. An object moving away and returning is still counted as drift.
+- Reversed force: pair samples by sampling seed. Report the angle from an opposite
+  response and whether both displacements have the correct force signs. Stationary
+  pairs remain in the complete-pair denominator; missing pairs are counted separately.
+
+Reproduce the [16-group simulator control check](results/action-control-checks.json):
+
+```bash
+python -m click2future.evaluation.controls --simulator-check \
+  --output outputs/action-control-checks.json
+```
+
+The fixed fixture family uses seeds 50000-50015, eight force directions, both selected
+object slots, and matched forward/reversed/zero-force clips. All 16 groups had complete
+tracks, correct forward/reversed directions and force signs, and zero measured zero-force
+drift. These controlled fixtures validate the code; they do not establish model quality.
+Tests also cover perpendicular/wrong-direction motion, frozen output, missing tracks,
+out-and-back drift, changed hidden physics, contact-contaminated windows, and invalid inputs.
+
+For model samples, prepare reference JSON/NPZ pairs and a generated-video NPZ containing
+`forward`, `reverse`, and `zero`, each uint8 `[K,T,H,W,3]`. Use the same ordered sampling
+seeds for all three actions and retain the exact first frame:
+
+```bash
+python -m click2future.evaluation.controls \
+  --reference-dir outputs/control-references \
+  --forward-id forward --reverse-id reverse --zero-id zero \
+  --videos outputs/control-samples.npz --sample-seeds 0 1 2 3 \
+  --run-id E2-controls --output outputs/action-metrics.json
+```
+
+Records distinguish `generated_video` from `simulator_control`, include input hashes and
+configuration, and retain sample counts. A `passed` status means calculation succeeded,
+not that the model follows the action. The CLI checks seed count/order declarations;
+the sampler remains responsible for actually using those seeds.
 
 ## Remaining work
 
-Improve contact timing on validation scenes and verify it on a fresh held-out set.
-Then test extraction failures on actual model outputs. Action controls, wall-contact
-scoring, image metrics, temporal consistency, ensemble diversity/coverage, and scene-group
-aggregation still need implementation. T07 remains open.
+Contact recall and checks on generated videos remain unresolved. Image metrics, temporal
+consistency, ensemble diversity/coverage, wall-contact scoring, and scene-group aggregation
+still need implementation. T07 remains open. The action-control tools are ready to use
+when trained samples become available for T16.

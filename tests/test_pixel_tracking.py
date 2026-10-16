@@ -113,7 +113,8 @@ def test_invalid_tracker_settings_fail(setting):
         TrackerConfig(**setting).validate()
 
 
-def test_simulator_video_extraction_does_not_use_future_oracle_masks_or_positions():
+@pytest.mark.parametrize("motion_threshold", [None, 0.3])
+def test_simulator_video_extraction_does_not_use_future_oracle_masks_or_positions(motion_threshold):
     reference = run_rollout(make_scene(31, object_count=3), frame_count=8)
     videos = reference["frames"][None]
     first, arrays = evaluate_videos(
@@ -123,6 +124,7 @@ def test_simulator_video_extraction_does_not_use_future_oracle_masks_or_position
         max_gap_pixels=0,
         event_tolerance=1,
         run_id="test",
+        motion_threshold=motion_threshold,
     )
     corrupted = copy.deepcopy(reference)
     corrupted["instance_masks"][1:] = False
@@ -135,6 +137,7 @@ def test_simulator_video_extraction_does_not_use_future_oracle_masks_or_position
         max_gap_pixels=0,
         event_tolerance=1,
         run_id="test",
+        motion_threshold=motion_threshold,
     )
     for key in [
         "predicted_positions",
@@ -203,3 +206,68 @@ def test_video_cli_exports_scores_and_extracted_arrays(tmp_path, capsys):
     assert len(report["input_sha256"]) == 4
     with np.load(extracted, allow_pickle=False) as arrays:
         assert arrays["predicted_positions"].shape == (1, 4, 2, 2)
+
+
+def test_motion_contact_uses_impulse_instead_of_first_pixel_proximity():
+    # Pixel regions remain near for several frames before momentum transfers.
+    _, masks = rectangles(
+        [
+            [(x, 2), (y, 2)]
+            for x, y in [(2, 10), (4, 10), (6, 10), (8, 10), (8, 12), (8, 14), (8, 16)]
+        ],
+        size=2,
+    )
+    result = estimate_contacts(
+        masks,
+        np.ones((7, 2), bool),
+        np.ones(2, bool),
+        max_gap_pixels=0,
+        motion_threshold=0.3,
+        motion_window=3,
+    )
+    events = np.flatnonzero(result.onset[:, 0, 1])
+    assert len(events) == 1
+    assert abs(events[0] - 3) <= 1
+    assert result.observed[:, 0, 1].all()
+
+
+def test_motion_contact_rejects_near_pass_without_impulse():
+    _, masks = rectangles([[(x, 2), (10, 4)] for x in range(2, 17, 2)], size=2)
+    result = estimate_contacts(
+        masks,
+        np.ones((8, 2), bool),
+        np.ones(2, bool),
+        max_gap_pixels=0,
+        motion_threshold=0.1,
+        motion_window=3,
+    )
+    assert result.state.any()  # Raster proximity alone would report a contact.
+    assert not result.onset.any()
+
+
+def test_missing_track_masks_entire_motion_context():
+    _, masks = rectangles([[(2, 2), (7, 2)]] * 10)
+    tracked = np.ones((10, 2), bool)
+    tracked[4, 0] = False
+    result = estimate_contacts(
+        masks, tracked, np.ones(2, bool), max_gap_pixels=0, motion_threshold=0.1, motion_window=3
+    )
+    assert not result.observed[1:7, 0, 1].any()
+    assert result.observed[0, 0, 1]
+    assert not result.onset.any()
+
+
+@pytest.mark.parametrize(
+    "options",
+    [
+        dict(motion_threshold=0),
+        dict(motion_threshold=float("nan")),
+        dict(motion_threshold=0.1, motion_window=1),
+    ],
+)
+def test_invalid_motion_contact_settings_fail(options):
+    _, masks = rectangles([[(2, 2), (7, 2)]] * 2)
+    with pytest.raises(ValueError):
+        estimate_contacts(
+            masks, np.ones((2, 2), bool), np.ones(2, bool), max_gap_pixels=0, **options
+        )

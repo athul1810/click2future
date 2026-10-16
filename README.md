@@ -8,7 +8,8 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 
 **Status:** seeded simulation, grouped data generation/replay, the development environment,
 and an untrained denoiser prototype are available. Evaluation includes trajectory/collision
-metrics and a pixel tracker. The contact estimator is experimental and currently inaccurate.
+metrics, a pixel tracker, and zero/reversed-force controls. Contact extraction remains
+experimental, with low recall.
 CVAE, diffusion training/sampling, and the demo remain to be built. See [evaluation results](docs/METRICS.md).
 
 **Working deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.

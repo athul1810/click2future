@@ -29,3 +29,7 @@ ambiguity, contact onsets, and separation of pixel extraction from future oracle
 Run `python -m click2future.evaluation.calibrate` with the output arguments in
 [METRICS.md](../docs/METRICS.md) to reproduce the simulator extraction measurements.
 These measure the extractor, not a trained model.
+
+`test_action_controls.py` checks direction/reversal, zero-force drift, stationary and
+missing outputs, paired reference validation, and both simulator/generated-video CLI paths.
+Contact tests cover opposing-motion peaks, near-pass rejection, and missing context.

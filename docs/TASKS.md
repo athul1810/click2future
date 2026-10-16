@@ -130,7 +130,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 Measure generated video behavior consistently across models.
 
-**Progress:** Trajectory/collision scoring, failure accounting, source-labelled exports, and pixel tracking are implemented. On 60 held-out simulator clips, mean tracking error is 0.249 pixels with no missing observations; contact event F1 is only 0.105. Contact timing and the remaining metric families need work. See [metric usage and measurements](METRICS.md).
+**Progress:** Trajectory/collision scoring, source-labelled exports, pixel tracking, and zero/reversed-force controls are implemented. On 200 fresh held-out clips, contact event F1 improved from 0.111 to 0.311 against the proximity baseline on the same clips; recall remains only 0.233. All 16 simulator action-control groups passed. Generated-video checks and the remaining metric families are pending. See [metric usage and measurements](METRICS.md).
 
 **Dependencies:** T04, T05 · **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA
 

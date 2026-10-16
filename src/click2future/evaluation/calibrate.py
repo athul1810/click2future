@@ -43,7 +43,7 @@ def extract_cases(start: int, groups: int, variants: int, tracker: TrackerConfig
     return cases
 
 
-def summarize(cases: list, gap: float, tolerance: int) -> dict:
+def summarize(cases: list, gap: float, tolerance: int, **contact_options) -> dict:
     reasons = Counter()
     counts = {"event": Counter(), "interval": Counter()}
     errors = []
@@ -61,7 +61,9 @@ def summarize(cases: list, gap: float, tolerance: int) -> dict:
                 axis=-1,
             ).tolist()
         )
-        contact = estimate_contacts(tracks.masks, tracks.tracked, valid, max_gap_pixels=gap)
+        contact = estimate_contacts(
+            tracks.masks, tracks.tracked, valid, max_gap_pixels=gap, **contact_options
+        )
         score = collision_metrics(
             contact.onset[None],
             reference["collision_onset"],
@@ -123,39 +125,94 @@ def select_gap(candidates: list[dict]) -> float:
     )["max_gap_pixels"]
 
 
+def select_motion(candidates: list[dict]) -> dict:
+    eligible = [
+        row
+        for row in candidates
+        if row["metrics"]["collision"]["event"]["true_positive"]
+        + row["metrics"]["collision"]["event"]["false_negative"]
+        > 0
+    ]
+    if not eligible:
+        raise ValueError(
+            "Validation has no observable reference events; calibration is insufficient"
+        )
+    return min(
+        eligible,
+        key=lambda row: (
+            -row["metrics"]["collision"]["event"]["f1"],
+            row["motion_window"],
+            row["motion_threshold"],
+        ),
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--groups-per-split", type=int, default=30)
+    parser.add_argument("--groups-per-split", type=int, default=100)
     parser.add_argument("--variants-per-group", type=int, default=2)
+    parser.add_argument("--validation-start", type=int, default=20000)
+    parser.add_argument("--held-out-start", type=int, default=40000)
+    parser.add_argument("--method", choices=["motion", "proximity"], default="motion")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--config-output", type=Path, required=True)
     args = parser.parse_args(argv)
     if not 1 <= args.groups_per_split <= 10_000 or not 1 <= args.variants_per_group <= 10:
         parser.error("Use 1-10000 groups per split and 1-10 variants per group")
+    if (
+        min(args.validation_start, args.held_out_start) < 0
+        or abs(args.validation_start - args.held_out_start) < args.groups_per_split
+    ):
+        parser.error("Validation and held-out seed ranges must be nonnegative and disjoint")
     if args.output.resolve() == args.config_output.resolve():
         parser.error("Report and config outputs must be distinct")
     tracker = TrackerConfig()
-    validation = extract_cases(20_000, args.groups_per_split, args.variants_per_group, tracker)
-    candidates = [
-        {"max_gap_pixels": gap, "metrics": summarize(validation, gap, 1)}
-        for gap in (0.0, 0.5, 1.0, 1.5)
-    ]
-    gap = select_gap(candidates)
-    # Construct and inspect the held-out cases only after selecting on validation.
-    held_out = extract_cases(30_000, args.groups_per_split, args.variants_per_group, tracker)
+    validation = extract_cases(
+        args.validation_start, args.groups_per_split, args.variants_per_group, tracker
+    )
+    if args.method == "motion":
+        candidates = []
+        for window in (3, 5):
+            for threshold in (0.1, 0.2, 0.3, 0.4):
+                options = {"motion_window": window, "motion_threshold": threshold}
+                candidates.append(
+                    {
+                        **options,
+                        "max_gap_pixels": 0.0,
+                        "metrics": summarize(validation, 0.0, 1, **options),
+                    }
+                )
+        selected = select_motion(candidates)
+        gap = 0.0
+        options = {key: selected[key] for key in ("motion_window", "motion_threshold")}
+        selection = "Maximum validation micro event F1; ties use smaller window then threshold"
+    else:
+        candidates = [
+            {"max_gap_pixels": gap, "metrics": summarize(validation, gap, 1)}
+            for gap in (0.0, 0.5, 1.0, 1.5)
+        ]
+        gap, options = select_gap(candidates), {}
+        selection = "Maximum validation micro event F1; ties use the smaller gap"
+    # The settings above are selected before constructing or inspecting the held-out cases.
+    held_out = extract_cases(
+        args.held_out_start, args.groups_per_split, args.variants_per_group, tracker
+    )
     config = {
         "resolution_hw": [64, 64],
+        "fps": 8,
         "tracker": asdict(tracker),
         "max_gap_pixels": gap,
         "event_tolerance_intervals": 1,
+        **options,
     }
     report = {
         "purpose": "Extractor calibration on clean simulator RGB; not model evaluation",
         "extractor_version": TRACKER_VERSION,
+        "contact_estimator": "opposing-motion-2" if options else "pixel-proximity-1",
         "initialization": "Frame-0 identity masks only; future labels used only for scoring",
         "protocol": {
-            "validation_seed_start": 20_000,
-            "held_out_seed_start": 30_000,
+            "validation_seed_start": args.validation_start,
+            "held_out_seed_start": args.held_out_start,
             "groups_per_split": args.groups_per_split,
             "variants_per_group": args.variants_per_group,
             "physics_seed_rule": "1000000 + visible_seed * 10 + variant",
@@ -163,12 +220,13 @@ def main(argv: list[str] | None = None) -> int:
             "frames": 32,
             "fps": 8,
             "physics_hz": 240,
-            "selection": "Maximum validation micro event F1; ties use the smaller gap",
+            "selection": selection,
             "reserved_scene_groups": "Exclude these seeds from model datasets",
         },
         "settings": config,
         "validation_candidates": candidates,
-        "held_out": summarize(held_out, gap, 1),
+        "held_out": summarize(held_out, gap, 1, **options),
+        "proximity_baseline_same_held_out": summarize(held_out, 0.0, 1),
         "versions": {
             name: importlib.metadata.version(name) for name in ("numpy", "pymunk", "pillow")
         },
@@ -178,7 +236,9 @@ def main(argv: list[str] | None = None) -> int:
         },
         "limitations": [
             "Solid-colour simulator only; generated-video failures remain unmeasured",
-            "Contact gaps are a pixel proxy; subframe contacts can be missed",
+            "Opposing motion is a contact proxy, not a reconstruction of physical forces",
+            "Subpixel impulses and closely spaced repeated contacts can be missed",
+            "Offline motion windows use future RGB context; timing can be shifted",
             "Missing pair timelines are excluded from event F1 and counted separately",
             "No uncertainty intervals; variants within a scene are correlated",
         ],
@@ -187,7 +247,16 @@ def main(argv: list[str] | None = None) -> int:
         path.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     args.config_output.write_text(yaml.safe_dump(config, sort_keys=False))
-    print(json.dumps({"selected_gap": gap, "held_out": report["held_out"]}, indent=2))
+    print(
+        json.dumps(
+            {
+                "settings": config,
+                "held_out": report["held_out"],
+                "baseline": report["proximity_baseline_same_held_out"]["collision"],
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

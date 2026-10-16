@@ -1,7 +1,8 @@
 # Experiment and evaluation plan
 
 Implemented trajectory/collision metrics, failure policies, and JSON export are described
-in [METRICS.md](METRICS.md). Pixel extraction and simulator calibration are still pending.
+in [METRICS.md](METRICS.md). Pixel tracking, experimental contact extraction, and paired action controls have simulator checks.
+Contact recall remains low; generated-video validation and the remaining metric families are pending.
 
 ## Hypotheses
 

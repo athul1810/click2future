@@ -52,3 +52,33 @@ def test_summary_reports_events_excluded_by_missing_tracks():
     assert result["reference_events_excluded_incomplete_pairs"] == 1
     assert result["collision"]["event"]["f1"] is None
     assert result["collision"]["event"]["complete_pair_timelines"] == 0
+
+
+def test_motion_selection_uses_validation_counts_and_deterministic_ties():
+    from click2future.evaluation.calibrate import select_motion
+
+    candidates = [
+        dict(candidate(0, 2, 1, 1), motion_window=5, motion_threshold=0.1),
+        dict(candidate(0, 2, 1, 1), motion_window=3, motion_threshold=0.3),
+        dict(candidate(0, 2, 4, 1), motion_window=3, motion_threshold=0.1),
+    ]
+    assert select_motion(candidates)["motion_threshold"] == 0.3
+
+
+def test_calibration_rejects_overlapping_scene_groups(tmp_path):
+    from click2future.evaluation.calibrate import main
+
+    with pytest.raises(SystemExit):
+        main(
+            [
+                "--validation-start",
+                "20000",
+                "--held-out-start",
+                "20002",
+                "--output",
+                str(tmp_path / "report.json"),
+                "--config-output",
+                str(tmp_path / "config.yaml"),
+            ]
+        )
+    assert not (tmp_path / "report.json").exists()
