@@ -6,6 +6,8 @@ from typing import Any
 
 import pymunk
 
+from .geometry import polygon_vertices
+
 OBJECT_COLLISION_TYPE = 1
 WALL_COLLISION_TYPE = 2
 WALL_ORDER = ("left", "right", "top", "bottom")
@@ -138,15 +140,8 @@ def _add_object(state: dict[str, Any], obj: dict[str, Any]) -> None:
         moment = pymunk.moment_for_circle(mass, 0.0, radius)
         body = pymunk.Body(mass, moment)
         shape = pymunk.Circle(body, radius)
-    elif shape_name == "rectangle":
-        width = float(geometry["width"])
-        height = float(geometry["height"])
-        vertices = [
-            (-width / 2.0, -height / 2.0),
-            (width / 2.0, -height / 2.0),
-            (width / 2.0, height / 2.0),
-            (-width / 2.0, height / 2.0),
-        ]
+    elif shape_name in {"rectangle", "triangle"}:
+        vertices = polygon_vertices(shape_name, geometry)
         moment = pymunk.moment_for_poly(mass, vertices)
         body = pymunk.Body(mass, moment)
         shape = pymunk.Poly(body, vertices)
