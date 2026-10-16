@@ -50,6 +50,7 @@ def sample_videos(
     seeds=(100, 101, 102, 103),
     future_frames=31,
     sampling_steps=32,
+    force_limit=0.5,
 ):
     """Single observable request -> uint8 [K,T,H,W,3], without simulator data."""
     first_frame = np.asarray(first_frame)
@@ -63,7 +64,7 @@ def sample_videos(
     if mask.shape != first_frame.shape[:2]:
         raise ValueError("selected_mask must be [H,W]")
     force = torch.as_tensor(np.array(force_xy, copy=True), device=device, dtype=torch.float32)
-    condition = observable_condition(frame, mask[None, None], force[None])
+    condition = observable_condition(frame, mask[None, None], force[None], force_limit=force_limit)
     videos = []
     for seed in seeds:
         generated = diffusion.sample(
@@ -113,6 +114,7 @@ def main(argv=None):
         seeds=args.seeds,
         future_frames=args.future_frames,
         sampling_steps=args.sampling_steps,
+        force_limit=TrainConfig(**state["config"]).force_limit,
     )
     seconds = time.perf_counter() - started
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -123,6 +125,8 @@ def main(argv=None):
         "condition_sha256": hashlib.sha256(args.condition.read_bytes()).hexdigest(),
         "training_step": state["step"],
         "prediction_type": diffusion.prediction_type,
+        "force_limit": TrainConfig(**state["config"]).force_limit,
+        "force_scale": 0.5,
         "weights": "ema",
         "seed_policy": "private generator per sample; paired seeds across changed actions",
         "seeds": args.seeds,

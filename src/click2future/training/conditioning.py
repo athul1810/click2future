@@ -1,5 +1,6 @@
 """Explicit observable-only model boundary; supervision stays outside it."""
 
+import math
 from dataclasses import dataclass
 
 import torch
@@ -20,13 +21,31 @@ class Condition:
         }
 
 
-def observable_condition(first_frame: Tensor, selected_mask: Tensor, force_xy: Tensor) -> Condition:
+def validate_force_limit(force_limit: float) -> None:
+    if (
+        isinstance(force_limit, bool)
+        or not isinstance(force_limit, (int, float))
+        or not math.isfinite(force_limit)
+        or force_limit <= 0
+    ):
+        raise ValueError("force_limit must be a finite positive number")
+
+
+def observable_condition(
+    first_frame: Tensor,
+    selected_mask: Tensor,
+    force_xy: Tensor,
+    *,
+    force_limit: float = 0.5,
+) -> Condition:
     """RGB in [0,1], binary mask, physical force -> RGB [-1,1], force / 0.5.
 
     Fixed 0.25 s duration belongs to this model contract. No scene specification,
     hidden coefficient, oracle future or instance labels enter this function.
-    Out-of-range actions are rejected rather than silently clipped.
+    The checkpoint's force_limit sets the accepted physical magnitude, not the
+    normalization scale. Out-of-range actions are rejected without clipping.
     """
+    validate_force_limit(force_limit)
     if first_frame.ndim != 4 or first_frame.shape[1] != 3:
         raise ValueError("first_frame must be [B,3,H,W]")
     batch, _, height, width = first_frame.shape
@@ -40,8 +59,10 @@ def observable_condition(first_frame: Tensor, selected_mask: Tensor, force_xy: T
         raise ValueError("RGB and force must be floating point")
     if not torch.isfinite(first_frame).all() or ((first_frame < 0) | (first_frame > 1)).any():
         raise ValueError("RGB must be finite in [0,1]")
-    if not torch.isfinite(force_xy).all() or (force_xy.norm(dim=-1) > 0.500001).any():
-        raise ValueError("Force magnitude must be finite and at most 0.5 simulator units")
+    if not torch.isfinite(force_xy).all() or (force_xy.norm(dim=-1) > force_limit + 1e-6).any():
+        raise ValueError(
+            f"Force magnitude must be finite and at most {force_limit:g} simulator units"
+        )
     if not ((selected_mask == 0) | (selected_mask == 1)).all():
         raise ValueError("Mask must be binary")
     if (selected_mask.flatten(1).sum(1) == 0).any():
@@ -49,7 +70,9 @@ def observable_condition(first_frame: Tensor, selected_mask: Tensor, force_xy: T
     return Condition(first_frame.float() * 2 - 1, selected_mask.float(), force_xy.float() / 0.5)
 
 
-def training_inputs(batch: dict, device: str | torch.device) -> tuple[Tensor, Condition]:
+def training_inputs(
+    batch: dict, device: str | torch.device, *, force_limit: float = 0.5
+) -> tuple[Tensor, Condition]:
     """Read only RGB, mask, action and fixed timing from a loader batch."""
     frames = torch.as_tensor(batch["frames"], device=device)
     if frames.ndim != 5 or frames.shape[2] != 3 or frames.shape[1] < 2:
@@ -71,5 +94,6 @@ def training_inputs(batch: dict, device: str | torch.device) -> tuple[Tensor, Co
         frames[:, 0],
         torch.as_tensor(batch["selected_mask"], device=device),
         torch.as_tensor(batch["force_xy"], device=device),
+        force_limit=force_limit,
     )
     return (frames[:, 1:] * 2 - 1).permute(0, 2, 1, 3, 4).contiguous(), condition

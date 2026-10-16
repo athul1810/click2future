@@ -12,6 +12,15 @@ CLI. `configs/training/pilot_diffusion.json` intentionally selects only four
 training clips for a diagnostic. Copy it and set `limit_train` to null for an
 actual dataset run. Freeze the run's configuration before starting it.
 
+For controlled dataset-0.2 use `configs/training/pilot_diffusion_0_2.json`.
+It selects one complete 21-clip training scene group, including the wall actions,
+as a diagnostic. It declares `force_limit: 1.1` in simulator units. The original
+config and older checkpoints retain the default limit of 0.5. Both versions
+divide force by 0.5, so a wall force of 1.1 has normalized magnitude 2.2. Nothing
+is clipped or omitted. Changing this limit requires a new run; exact resume
+rejects a changed configuration. Sampling and diagnostics read the limit from
+the checkpoint. A configured range does not establish model quality within it.
+
 ```powershell
 python -m click2future.training.train_diffusion --dataset outputs/pilot-data --run-dir outputs/pilot-run --config configs/training/pilot_diffusion.json --device cuda --until 200
 python -m click2future.training.train_diffusion --dataset outputs/pilot-data --run-dir outputs/pilot-run --config configs/training/pilot_diffusion.json --device cuda --resume outputs/pilot-run/checkpoint.pt

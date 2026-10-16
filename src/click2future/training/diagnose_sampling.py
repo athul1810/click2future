@@ -12,6 +12,7 @@ from click2future.data import load_rollout
 from click2future.evaluation.tracking import TrackerConfig, track_video
 
 from .sample_diffusion import load_generator, sample_videos, save_preview
+from .train_diffusion import TrainConfig
 
 
 def main(argv=None):
@@ -43,6 +44,7 @@ def main(argv=None):
                 seeds=(100,),
                 future_frames=len(reference["frames"]) - 1,
                 sampling_steps=steps,
+                force_limit=TrainConfig(**state["config"]).force_limit,
             )
             seconds = time.perf_counter() - started
             tracked = track_video(
