@@ -293,16 +293,17 @@
       "Report head predictions separately from generated-video tracking metrics."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In progress",
+    "status": "In review",
     "issue_url": "https://github.com/athul1810/click2future/issues/12",
     "completed_acceptance": [
       0,
       1,
       2,
+      3,
       4
     ],
-    "progress": "Canonical trajectory/contact losses, real-loader gradients and separate auxiliary-head export are implemented. Actual final DDIM heads are captured for both prediction targets without changing sampled pixels or RNG state. E4 overfitting and trained head-versus-video comparisons remain open.",
-    "evidence": "docs/AUXILIARY_LOSSES.md; docs/MODEL_TRAINING.md; docs/results/auxiliary-loss-checks.json; docs/results/diffusion-integration-checks.json. E4 training quality and head-versus-video comparisons remain unmeasured."
+    "progress": "E4 training, sampling and actual final-head capture are measured in PR #43. The 5,000-update multi-scene run has head ADE 0.1314 and event F1 0.1324, while RGB tracks 162/5,952 observations. The separate collision overfit check learns the contact (head event F1 1.0 on its single training clip) and tracks 247/248 RGB observations. Its one missing selected observation still fails the strict gate. Implementation is ready for review; generated-video quality remains in T14/T16. Evidence: results/multiscene-validation-checks.json.",
+    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
     "id": "T13",
@@ -326,12 +327,12 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/13",
-    "progress": "Recorded 64px scope, deferred 128px, common sampling/training seeds, independent initialization policy, extractor settings and bootstrap rules in configs/evaluation/comparison.yaml. Reserved a validation-only 16/32/64-step study on at most 16 conditions with a 0.5 GPU-hour cap. The batch evaluator hashes all cases, references, metric code and configs. Final data/OOD versions, successful model settings, checkpoints and main training budgets are not frozen.",
+    "progress": "The bounded pilot freezes dataset-0.3 seed 730000, 16 training/four validation scenes, all four model configs, checkpoint criteria, sampler seeds and candidate tracker version 2. It uses a combined 1.5 allocated GPU-hour cap. The 16/32/64-step study is complete. All models fail useful validation motion, so no final model/sampler or main test protocol is selected. No 128px or E1 run was added. See MULTISCENE_PILOT.md and results/multiscene-validation-checks.json.",
     "completed_acceptance": [
       2,
       5
     ],
-    "evidence": "docs/EXPERIMENT_PROTOCOL.md; configs/evaluation/comparison.yaml; docs/results/evaluation-suite-controls.json."
+    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
     "id": "T14",
@@ -349,10 +350,14 @@
       "Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "Not started",
+    "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/14",
-    "progress": "Checkpoint sampling is connected to fixed-case evaluation. The runner covers every case with the same four seeds, derives training seeds/method settings from checkpoints, verifies the corpus/normalization and binds checkpoint/video hashes. A native six-condition validation fixture produced 72 untrained E0/E2/E3 videos and ran all three metric families with SSIM and LPIPS. Actual trained runs, hyperparameter results and comparisons remain pending.",
-    "evidence": "docs/EXPERIMENT_PROTOCOL.md; docs/results/evaluation-suite-controls.json. Simulator controls only, not learned-model results."
+    "progress": "The four-method TC2 pilot and validation sampler study are measured in PR #43. Each method generates 96 validation videos and 32 selected-object-control videos. Tables retain SSIM/LPIPS, scene bootstrap intervals, null ADE/FDE/coverage, contact prevalence and tracking/action failures. All four original methods fail; static copying has better appearance scores. Flow follow-ups are exploratory and stay separate. Final useful-checkpoint comparisons and independent repeats remain open. Evidence: results/multiscene-validation-checks.json; report/main.tex.",
+    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43.",
+    "completed_acceptance": [
+      3,
+      4
+    ]
   },
   {
     "id": "T15",
@@ -371,7 +376,9 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "Not started",
     "issue_url": "https://github.com/athul1810/click2future/issues/15",
-    "progress": "The fixed-case evaluator and separate dataset-0.3 suites are implemented. PR #32 adds disjoint shape, texture and force OOD data, with repeated-physics references and full plan coverage. It builds on #30 and is awaiting review. Train/select models on that same corpus before making matched ID/OOD claims; final corpus/checkpoint settings and actual model measurements are still required. Frozen simulator extractor controls retain their failures, including 25% missing observations in the small texture check. No trained generalization result is claimed."
+    "progress": "Separate dataset-0.3 ID, shape, texture, force and physics suites are implemented and merged. The multi-scene pilot is trained on that corpus, but validation generation and action response fail. All 248 test clips remain reserved; there is no trained ID/OOD result. Improve validation before opening these suites. Extractor failures and candidate tracker version 2 remain explicit in MULTISCENE_PILOT.md.",
+    "completed_acceptance": [],
+    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
     "id": "T16",
@@ -390,7 +397,13 @@
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/16",
-    "progress": "The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Selected-object-only intervention plans now keep the force fixed and the training corpus unchanged. The shared sampler/evaluator reports target following, response contrasts, drift and missing tracks with reference-only eligibility. Actual trained ensembles and uncertainty/action measurements remain open."
+    "progress": "Actual K=4 ensembles now cover all 24 validation conditions and all 84 hidden-physics references. Zero/reversed-force and changed-selection controls are measured. The original E0/E2/E3/E4 runs have no complete selected tracks; the unsupervised flow CVAE has complete eligible pairs but all are stationary. The displacement-supervised flow follow-up passes only 1/16 reversal pairs and 0/16 selection pairs despite 96.86 percent tracking. Trajectory spread/coverage remain null when required tracks are missing. Quality and action failures are shown with diversity diagnostics; meaningful hidden-physics uncertainty is not established. Evidence: results/multiscene-validation-checks.json and MULTISCENE_PILOT.md.",
+    "completed_acceptance": [
+      0,
+      2,
+      3
+    ],
+    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
     "id": "T17",
@@ -440,9 +453,12 @@
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/18",
     "completed_acceptance": [
-      0
+      0,
+      1,
+      2
     ],
-    "progress": "A seven-page working draft now includes introduction, implemented methods, evaluation, simulator calibration, real E0/E3 diagnostic figures and a conclusion. Main matched comparisons, the validation/component studies and member-reviewed contributions remain open. The draft is not the final submission PDF."
+    "progress": "The eight-page working draft includes the implemented methods, four-method validation table, LPIPS intervals, E4 head-versus-RGB results, the actual 16/32/64-step study, flow-decoder failure analysis and a generated sample figure. Negative results and reserved tests remain explicit. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.",
+    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
     "id": "T19",

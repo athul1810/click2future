@@ -34,8 +34,8 @@ masks weight training errors only; they never enter generator conditioning.
 The pilot permits at most 1.5 allocated GPU-hours including evaluation. This is
 a cap, not observed cost or an account quota. Different CVAE/diffusion update and
 batch budgets, one training seed and four validation groups prevent a final
-method ranking or training-seed uncertainty claim. SSIM is the declared pilot
-image metric; the final comparison still needs LPIPS and its remaining studies.
+method ranking or training-seed uncertainty claim. SSIM is the declared initial pilot
+image metric; supplemental CPU LPIPS on the frozen videos is now measured.
 
 ## Reproduce
 
@@ -179,3 +179,54 @@ directory. It trains, samples four futures and checks actual final DDIM heads,
 RGB tracking and collision scores. This is a training-only mechanics check, not
 generalization or conditional uncertainty evidence. Both follow-ups stay inside
 the combined 1.5 allocated GPU-hour cap.
+
+## Measured result
+
+All six TC2 jobs completed normally. Total allocated time is 4,936 seconds
+(82 minutes 16 seconds), within the 1.5-hour cap. The record is
+[results/multiscene-validation-checks.json](results/multiscene-validation-checks.json).
+No ID/OOD/physics test split was evaluated by a model.
+
+| Validation model | Tracked observations / 5,952 | Complete all-object clips / 96 | Result |
+|---|---:|---:|---|
+| E0 RGB CVAE | 398 | 0 | Missing selected tracks |
+| E2 numeric diffusion | 378 | 0 | Missing selected tracks |
+| E3 spatial diffusion | 269 | 0 | Missing selected tracks |
+| E4 auxiliary diffusion | 162 | 0 | Missing selected tracks |
+| Flow CVAE | 5,654 | 80 | All eligible action/control pairs stationary |
+| Flow CVAE with displacement loss | 5,765 | 80 | Reversal and changed-selection checks fail |
+
+The original CVAE trained 20,000 updates and uses its validation-selected
+16,000-update checkpoint. The flow-only checkpoint is at 20,000 updates. The
+motion-supervised run also trains 20,000 updates, but combined posterior/RGB/KL
+and displacement validation loss selects update 9,000. Do not describe it as
+an unsupervised CVAE improvement or an independent test-set result.
+
+The supervised follow-up has 15/16 moving forward samples but only 1/16 moving
+reverse samples, 1/16 correct force-reversal pairs and 0/16 correct selected-object
+pairs. Its better tracking does not establish reliable force control. At native
+force, 11/16 continuous and 8/16 rendered simulator reference pairs are below the
+short-window motion threshold. The separate force-0.4 selection probe passes all
+16 continuous and rendered reference pairs, while both flow variants pass none.
+
+E4's validation heads have ADE 0.1314 and timed-event F1 0.1324 at threshold 0.5.
+Only 162/5,952 head/RGB object observations are jointly available; collision
+agreement is undefined because no pair interval is jointly observed. The fixed
+training-only collision check gives head event F1 1.0 and 247/248 tracked RGB
+observations, but one missing selected observation still fails the strict gate.
+It demonstrates training and sampling mechanics, not generalization.
+
+The 16/32/64-step study uses one fixed E3 checkpoint and 64 videos per setting.
+Export times are 16.25/29.37/57.59 seconds, including loading and writing samples.
+Tracking is 330/220/184 of 3,968 observations; no setting has a complete selected
+clip. No successful sampler was selected.
+
+Static frame-zero copying scores SSIM 0.9446 and LPIPS 0.0622, better than the
+four original models on these single-reference image metrics. This control has
+no action response. The ordinary models' missing trajectories leave ADE/FDE,
+trajectory spread and coverage null. Their failures remain in the record.
+
+The [report draft](../report/README.md) embeds these comparisons and a fixed
+validation sample strip. Useful validation generation, independent training
+repeats and final held-out comparisons remain open. Source installation, smoke
+replay and all 465 tests plus four subtests pass from the source-only ZIP.

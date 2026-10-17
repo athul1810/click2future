@@ -10,13 +10,12 @@ Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU
 pipeline are implemented. Evaluation covers trajectories, contacts, image quality,
 uncertainty and action controls. Contact timing remains an approximate proxy.
 
-CVAE and diffusion pilots now run on TC2, with complete saved-state continuation
-verified. Boundary-weighted CVAE training passes the one-clip overfit gate, while
-diffusion and held-out video quality remain unresolved. Main trained comparisons,
-held-out action/uncertainty results and the demo remain open. See the
-[task board](docs/TASKS.md), [loss diagnostics](docs/results/foreground-loss-checks.json),
-[experiment protocol](docs/EXPERIMENT_PROTOCOL.md) and
-[working report draft](report/README.md).
+A TC2 pilot trained E0/E2/E3/E4 on 336 clips and evaluated 24 validation conditions.
+All four fail tracked-video and action checks. The flow CVAE preserves appearance
+but fails the force and selection controls, including with displacement supervision. The 16/32/64-step sampler study
+also fails the tracking gate. These are measured failures, not a working physical
+video model. See the [pilot results](docs/MULTISCENE_PILOT.md),
+[task board](docs/TASKS.md) and [report draft](report/README.md).
 
 **Working submission deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
@@ -166,10 +165,13 @@ records the adopted pixel path.
 
 ## Next team work
 
-- A: review the controlled/OOD data changes and freeze the main training corpus.
-- B: improve generated-video quality, then pass held-out action controls.
-- C: evaluate useful checkpoints, finish report analysis, and run E4 checks if budget allows.
-- Ananya leads the next CVAE pilot after the passed one-clip check; held-out generation still fails. Shrijeet owns demo integration.
+- B: improve coherent, action-responsive validation generation before another main run.
+- C: review the measured comparison, E4 heads and action failures with B.
+- Ananya: continue CVAE prior and motion work from the saved follow-ups.
+- Shrijeet: finish demo overlays, image input and presentation checks.
+
+The ID/OOD test splits stay reserved while validation fails. Final report analysis,
+independent repeats and reviewed member contributions remain open.
 
 ## References
 
@@ -177,11 +179,13 @@ See [Research references](docs/REFERENCES.md) for the baselines, diffusion model
 
 ## Results
 
-Technical simulator, checkpoint and packaging checks pass. The original uniform-loss
-E0/E3 checkpoints complete the evaluator but fail the quality gate. A later
-boundary-weighted CVAE reaches 244/248 tracked training observations and passes the
-tiny-overfit gate; its validation condition still has no tracked future objects.
-Diffusion remains below the tracking gate. No held-out method ranking is established.
-The [loss diagnostics](docs/results/foreground-loss-checks.json) retain all settings,
-failures and sample strips. The [report draft](report/README.md) currently describes
-the earlier uniform-loss runs and still needs the newer analysis.
+The [multi-scene record](docs/results/multiscene-validation-checks.json) contains
+validation counts, checkpoint hashes, image scores, action controls, auxiliary heads
+and the sampler study. Candidate tracker version 2 is under review in PR #42;
+these results must remain separate from older version-1 measurements.
+
+Static copying beats the original four models on SSIM and LPIPS, showing why image
+scores need physical checks. No final method ranking or meaningful uncertainty is
+established. The [report draft](report/README.md) includes the measured comparison
+and limitations. Earlier [loss diagnostics](docs/results/foreground-loss-checks.json)
+are retained as historical training checks.

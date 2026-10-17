@@ -18,9 +18,22 @@ follow-up in PR #37 passes the declared selected-object training gate: 244/248
 tracked observations, selected ADE 0.00249 and posterior MAE 0.00392. All-object
 completeness remains 0/4, and validation tracking remains 0/248. See
 [the complete follow-up](results/foreground-loss-checks.json), including failures.
-Ananya should reproduce the saved prior samples, inspect the four missing
-nonselected observations, then run a bounded multi-clip pilot and validation
-action controls before scaling. Low reconstruction error alone is insufficient.
+Athul's multi-scene run is now complete: 336 training clips, four validation
+scenes and 24 conditions. The RGB prior tracks 398/5,952 observations with no
+complete clips. Its validation posterior/prior MAE is 0.02091/0.02113 in [-1,1]
+RGB units. Nonzero KL and RGB spread do not establish useful uncertainty.
+
+A separate flow decoder tracks 5,654/5,952 observations and 80/96 complete clips,
+but all eligible force and changed-selection pairs are stationary. It improves
+appearance without passing the action checks. A further training-only displacement
+loss uses future masks/positions as supervision, never as prior inputs. Keep that
+supervised variant separate from the ordinary CVAE baseline. It tracks
+5,765/5,952 observations, but passes only 1/16 force-reversal pairs and 0/16
+selected-object pairs. Its validation-selected checkpoint is update 9,000 of
+20,000 completed updates.
+See [the measured pilot](MULTISCENE_PILOT.md) and
+[the result record](results/multiscene-validation-checks.json) before another run.
+Ananya retains CVAE ownership; these runs and code changes were carried out by Athul.
 
 Use the same 64px/32-frame data, scene-group splits and observable condition
 adapter as diffusion. Start with a compact conditional video VAE: encode
