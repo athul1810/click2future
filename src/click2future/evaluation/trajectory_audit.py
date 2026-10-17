@@ -3,6 +3,8 @@
 import argparse
 import json
 import os
+import re
+from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -72,8 +74,19 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
     references = {name for case in plan["cases"] for name in case["reference_ids"]}
     if references != validation or not expected or len(expected) != len(plan["cases"]):
         raise ValueError("The audit must retain every frozen validation reference and condition")
+    groups = defaultdict(list)
+    for row in manifest["samples"]:
+        if row["split"] == "validation":
+            groups[(row["scene_group_id"], row["condition_id"])].append(row["sample_id"])
+    if len(plan["cases"]) != len(groups) or any(
+        case["reference_ids"] != sorted(groups[(case["scene_group_id"], case["condition_id"])])
+        or not case["reference_ids"]
+        or case["sample_id"] != case["reference_ids"][0]
+        for case in plan["cases"]
+    ):
+        raise ValueError("Validation cases must match the original grouped references")
     for name in references:
-        if Path(name).name != name or "\\" in name:
+        if not re.fullmatch(r"[A-Za-z0-9_-]+", name):
             raise ValueError("Unsafe reference name")
         for suffix in (".npz", ".json"):
             hashes[dataset / (name + suffix)] = plan["input_sha256"][name + suffix]
