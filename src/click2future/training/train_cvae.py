@@ -16,7 +16,7 @@ import torch
 import yaml
 
 from click2future.data import assign_split, load_batch, load_split_manifest
-from click2future.models.cvae import ConditionalVideoVAE
+from click2future.models.cvae_flow import build_cvae
 
 from .batch import prepare_video_batch
 from .cvae_loss import beta_at_step, cvae_loss
@@ -97,6 +97,8 @@ def dataset_index(root: Path):
 
 def validate_config(config):
     data, model, train = (config[key] for key in ("data", "model", "training"))
+    if "decoder_kind" in model and model["decoder_kind"] != "flow":
+        raise ValueError("Optional decoder_kind must be flow")
     validate_foreground_weight(train.get("foreground_weight", 1.0))
     validate_foreground_margin(train.get("foreground_margin", 0))
     for key in ("seed", "batch_size", "max_steps", "checkpoint_every", "validation_batches"):
@@ -260,6 +262,7 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
             Path(__file__).with_name("cvae_loss.py"),
             Path(__file__).with_name("pixel_loss.py"),
             Path(__file__).parents[1] / "models/cvae.py",
+            Path(__file__).parents[1] / "models/cvae_flow.py",
         )
     }
     if isinstance(overfit_samples, bool) or not 0 <= overfit_samples <= len(selected["train"]):
@@ -275,7 +278,7 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.allow_tf32 = False
     torch.backends.cuda.matmul.allow_tf32 = False
-    model = ConditionalVideoVAE(**config["model"]).to("cuda")
+    model = build_cvae(config["model"]).to("cuda")
     optimizer = torch.optim.AdamW(model.parameters(), lr=t["learning_rate"], weight_decay=0)
     train_rng = torch.Generator(device="cuda").manual_seed(t["seed"] + 1)
     shuffle_rng = torch.Generator().manual_seed(t["seed"] + 2)

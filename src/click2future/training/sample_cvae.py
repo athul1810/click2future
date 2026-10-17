@@ -10,7 +10,7 @@ import numpy as np
 import torch
 
 from click2future.data import load_rollout
-from click2future.models.cvae import ConditionalVideoVAE
+from click2future.models.cvae_flow import build_cvae
 
 from .train_cvae import require_tc2, sha256, validate_config
 
@@ -29,6 +29,11 @@ def sample_checkpoint(checkpoint, data_dir, sample_ids, output_dir, *, seeds, de
     model_source = Path(__file__).parents[1] / "models/cvae.py"
     if training_sources and training_sources["cvae.py"] != sha256(model_source):
         raise ValueError("Checkpoint model source differs from the current implementation")
+    flow_source = model_source.with_name("cvae_flow.py")
+    if config["model"].get("decoder_kind") == "flow" and (
+        training_sources.get("cvae_flow.py") != sha256(flow_source)
+    ):
+        raise ValueError("Checkpoint flow decoder source differs from the current implementation")
     if payload["model_config"] != config["model"]:
         raise ValueError("Checkpoint model and run configuration disagree")
     if (
@@ -39,7 +44,7 @@ def sample_checkpoint(checkpoint, data_dir, sample_ids, output_dir, *, seeds, de
         raise ValueError("Sample seeds must be distinct nonnegative integers")
     # Loading a checkpoint should not consume the caller's experiment RNG state.
     with torch.random.fork_rng(devices=[]):
-        model = ConditionalVideoVAE(**payload["model_config"])
+        model = build_cvae(payload["model_config"])
     model.load_state_dict(payload["model"], strict=True)
     model.to(device).eval()
     if output_dir.exists():
@@ -106,6 +111,11 @@ def sample_checkpoint(checkpoint, data_dir, sample_ids, output_dir, *, seeds, de
         "sampling_source_sha256": {
             "sample_cvae.py": sha256(Path(__file__)),
             "cvae.py": sha256(model_source),
+            **(
+                {"cvae_flow.py": sha256(flow_source)}
+                if config["model"].get("decoder_kind") == "flow"
+                else {}
+            ),
         },
         "training_steps": payload["state"]["step"],
         "training_seed": config["training"]["seed"],

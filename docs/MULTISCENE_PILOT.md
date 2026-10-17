@@ -109,3 +109,44 @@ After validation, set `C2F_STUDY_RESULTS` and submit
 `C2F_PILOT_RESULTS`. The study also stays within the combined 1.5-hour pilot cap.
 It reports quality, action response and sampling time at every setting, including
 failures. More sampling steps alone do not establish useful video quality.
+
+## CVAE flow-decoder follow-up
+
+The completed RGB CVAE still changes object colours and shapes on unseen forward
+scenes. A CPU inspection of four fixed validation conditions tracked only four
+of 992 future object observations. Those samples are an additional inspection,
+not the primary GPU comparison. The RGB run and its checkpoints are retained.
+
+The separate `cvae_flow_pilot.yaml` changes the CVAE decoder to predict two
+backward-displacement channels. It warps observed frame-0 pixels with bilinear
+border sampling. The output layer starts at zero, so initialization copies the
+image. The encoder, posterior/prior, latent dimension, data, seed, objective and
+20,000-update budget stay the same. The flow model has 574,226 parameters, versus
+574,659 for RGB. This is a decoder and initialization follow-up, not a pure
+latent-variable ablation or a claim of novelty.
+
+Flow is bounded to half the image width/height. It can translate or deform observed
+appearance but cannot invent textures or recover genuinely unseen content. It
+does not enforce rigid motion or collision laws. Static copying, distorted shapes
+and incorrect action response must still fail the same evaluation checks.
+
+Sampling uses the same learned conditional prior and observable inputs. Future
+RGB remains posterior/loss supervision only. The explicit bilinear implementation
+has deterministic gradients to flow without a GPU atomic backward to observed
+image pixels. Its values and flow gradients match the standard border sampler
+in CPU regression checks. Legacy RGB checkpoint construction is unchanged, and
+16 saved CPU prior samples replay pixel-exactly through the new factory.
+
+Train this variant in a separate output folder on the frozen pilot data:
+
+```sh
+sbatch --time=00:25:00 submission/train_cvae.sbatch --config configs/training/cvae_flow_pilot.yaml
+```
+
+Set `C2F_PROJECT`, `C2F_PYTHON`, `C2F_DATA_DIR`, `C2F_RUN_DIR` and
+`C2F_SOURCE_REVISION`. Keep the original pilot and run directories intact.
+In an allocation, `submission/flow_evaluation.py` accepts `--root`, `--checkpoint`,
+`--output` and `--device cuda`. It evaluates all validation actions, both selected
+objects and posterior/prior diagnostics using a fresh source-bound plan. This
+follow-up also stays within the combined pilot budget; it does not replace the
+original E0 results.

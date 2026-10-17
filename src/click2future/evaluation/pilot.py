@@ -13,7 +13,7 @@ import torch
 import yaml
 
 from click2future.data import load_batch, load_rollout
-from click2future.models.cvae import ConditionalVideoVAE
+from click2future.models.cvae_flow import build_cvae
 from click2future.training.batch import prepare_video_batch
 from click2future.training.cvae_loss import cvae_loss
 from click2future.training.multiscene_pilot import PROJECT, read_pilot
@@ -168,7 +168,7 @@ def cvae_diagnostics(dataset, checkpoint, output, *, device):
     """Compare posterior/prior errors and latent activity on every train/validation clip."""
     payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
     with torch.random.fork_rng(devices=[]):
-        model = ConditionalVideoVAE(**payload["model_config"])
+        model = build_cvae(payload["model_config"])
     model.load_state_dict(payload["model"])
     model.to(device).eval()
     manifest = json.loads((Path(dataset) / "dataset_manifest.json").read_text())

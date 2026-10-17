@@ -29,6 +29,13 @@ The reserved 16/32/64-step validation study uses the same E3 checkpoint and
 `C2F_PILOT_RESULTS`, retains excluded cases and uses the same four sampling seeds.
 Its 0.5-hour limit is part of the combined pilot budget.
 
+The optional flow-decoder CVAE uses `configs/training/cvae_flow_pilot.yaml` and a
+separate training folder. It warps observed frame-0 pixels rather than predicting
+new RGB. Its zero initialization copies a static image, so action response still
+needs verification. Select the config with `submission/train_cvae.sbatch`, then
+evaluate the trained checkpoint with `submission/flow_evaluation.py` inside an
+allocation. This follow-up keeps the original RGB baseline results separate.
+
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 
 ```sh
