@@ -4,6 +4,7 @@ import argparse
 import json
 import math
 import os
+import shutil
 import statistics
 import time
 from pathlib import Path
@@ -26,6 +27,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--seed", type=int, default=61017000)
+    parser.add_argument("--browser-executable", type=Path)
     args = parser.parse_args()
     if (
         urlsplit(args.url).hostname not in {"localhost", "127.0.0.1"}
@@ -35,15 +37,23 @@ def main():
         parser.error("Use a local server, 3-20 measurements and a valid seed range")
     if args.output.exists():
         parser.error("Keep previous timing records; use a fresh output path")
-    executable = (
+    candidates = (
+        Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"),
         Path(os.environ.get("PROGRAMFILES", "C:/Program Files"))
-        / "Google/Chrome/Application/chrome.exe"
+        / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)"))
+        / "Microsoft/Edge/Application/msedge.exe",
+        *(
+            Path(path)
+            for name in ("google-chrome", "chromium", "chromium-browser", "microsoft-edge")
+            if (path := shutil.which(name))
+        ),
     )
-    if not executable.is_file():
-        executable = (
-            Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)"))
-            / "Microsoft/Edge/Application/msedge.exe"
-        )
+    executable = args.browser_executable or next(
+        (path for path in candidates if path.is_file()), None
+    )
+    if executable is None or not executable.is_file():
+        parser.error("This benchmark needs installed Chrome or Edge")
     with sync_playwright() as runtime:
         browser = runtime.chromium.launch(executable_path=str(executable), headless=True)
         page = browser.new_page(viewport={"width": 1440, "height": 1080})
