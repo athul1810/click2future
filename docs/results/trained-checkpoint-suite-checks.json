@@ -73,5 +73,16 @@
     "atol": 1e-06,
     "rtol": 1e-06,
     "maximum_position_error": 0.0
+  },
+  "source_archive": {
+    "file_count": 134,
+    "bytes": 255070,
+    "sha256": "a081a13fc28ae56668977090d1c0dec4a93df92f80bf749974b56c8fd4ddf110",
+    "fresh_install_tests": 364,
+    "subtests": 4,
+    "skips": 0,
+    "seconds": 77.52,
+    "source_smoke": "Two generated rollouts, saved replay and loader imports passed",
+    "content_inspection": "No datasets, models, external links, environments, Git history or personal instructions"
   }
 }
