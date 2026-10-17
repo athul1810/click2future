@@ -1,0 +1,36 @@
+{
+  "scope": "oracle-motion renderer ceiling; not learned predictions or action success",
+  "provenance": {
+    "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "split_manifest_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51",
+    "train_validation_content_sha256": "91ae80287df5bfb593ae94bdb0c31756d11b17bfa2b0fa6bdfb40d2f6e4d0354"
+  },
+  "source_sha256": {
+    "object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+    "trajectory_data.py": "7f69dcd575ff5c7ae9113300b55f9681cf39e46eda49db6e17ef795ac945c5c2",
+    "calibrate_trajectory.py": "48fed2cfd3f207229638949ef67052fe646ad7bd295fac467499aff101baf052"
+  },
+  "summary": {
+    "train": {
+      "cases": 336,
+      "failures": 0,
+      "minimum_mask_iou": 1.0,
+      "tracked": 20832,
+      "expected": 20832,
+      "complete_cases": 336,
+      "mean_ade_complete": 0.004916172767697007
+    },
+    "validation": {
+      "cases": 84,
+      "failures": 0,
+      "minimum_mask_iou": 1.0,
+      "tracked": 5208,
+      "expected": 5208,
+      "complete_cases": 84,
+      "mean_ade_complete": 0.004733727326966729
+    }
+  },
+  "seconds": 19.996792300022207,
+  "full_report_sha256": "2f0f4649efd0a844ed7cfd3679b95e4281a655f9dad72e68fcc1f8a1c27c7695",
+  "full_report_member": "evidence/renderer-ceiling.json"
+}

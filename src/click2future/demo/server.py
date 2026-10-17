@@ -106,6 +106,12 @@ def main(argv=None):
     parser.add_argument("--checkpoint", action="append", help="DisplayName=local_checkpoint.pt")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--sampling-steps", type=int, default=32)
+    parser.add_argument(
+        "--trajectory-steps",
+        type=int,
+        default=16,
+        help="EDM Heun steps for supervised trajectory checkpoints",
+    )
     parser.add_argument("--force-limit", type=float, default=0.5)
     parser.add_argument("--cache", type=Path, default=Path("outputs/demo-cache"))
     parser.add_argument("--port", type=int, default=8765)
@@ -148,6 +154,7 @@ def main(argv=None):
             device=args.device,
             force_limit=args.force_limit,
             sampling_steps=args.sampling_steps,
+            trajectory_steps=args.trajectory_steps,
         )
         if name in bundled:
             row = bundled[name]

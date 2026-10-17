@@ -246,6 +246,8 @@ Commit to a comparable experiment suite that fits the remaining budget.
 
 The bounded pilot freezes dataset-0.3 seed 730000, 16 training/four validation scenes, all four model configs, checkpoint criteria, sampler seeds and candidate tracker version 2. It uses a combined 1.5 allocated GPU-hour cap. The 16/32/64-step study is complete. All models fail useful validation motion, so no final model/sampler or main test protocol is selected. No 128px or E1 run was added. See MULTISCENE_PILOT.md and results/multiscene-validation-checks.json.
 
+separate e5 follow-up: one seed, 6000 training updates with step 5000 selected by validation denoising loss. pose supervision changes the method; final protocol and independent repeats remain open. see docs/TRAJECTORY_PILOT.md.
+
 <a id="t14"></a>
 
 ### T14: Run and analyze E0/E2/E3, with gated E1/E4 ablations
@@ -292,6 +294,8 @@ Distinguish physically meaningful uncertainty from visual noise.
 
 Actual K=4 ensembles now cover all 24 validation conditions and all 84 hidden-physics references. Zero/reversed-force and changed-selection controls are measured. The original E0/E2/E3/E4 runs have no complete selected tracks; the unsupervised flow CVAE has complete eligible pairs but all are stationary. The displacement-supervised flow follow-up passes only 1/16 reversal pairs and 0/16 selection pairs despite 96.86 percent tracking. Trajectory spread/coverage remain null when required tracks are missing. Quality and action failures are shown with diversity diagnostics; meaningful hidden-physics uncertainty is not established. Evidence: results/multiscene-validation-checks.json and MULTISCENE_PILOT.md.
 
+e5 now measures 5895/5952 tracked observations, 14/16 reversal and 16/16 changed-selection pairs on four validation scenes. strict completeness/contact quality still fails; reference-force limitations and undefined coverage stay explicit. see results/trajectory-pilot-validation.json.
+
 <a id="t17"></a>
 
 ### T17: Build the interactive four-future comparison demo
@@ -307,6 +311,8 @@ Make the model and simulator comparison understandable and repeatable.
 - [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
 
 The local app supports verified pilot bundles and generated-pixel trajectory overlays, with missing observations retained. All six handoff checkpoints load; a two-model browser rehearsal passes 25 checks. Five fresh warm requests give a 4.69s median and 4.74s empirical p95 on the RTX 3060 laptop, including tracking/reference/display. Small-n latency and interface checks do not establish held-out quality. Stronger checkpoints and final offline presentation acceptance remain open. Candidate tracker v2 awaits independent calibration review. See [launch instructions](../app/README.md).
+
+the new e5 adapter shares the offline sampler and retains source, force-bound and private-seed checks. e5/e3 passes 25 browser checks; five fresh warm requests have 5.31s median and 5.36s empirical p95 on the laptop. final motion quality and presentation acceptance remain open. see docs/TRAJECTORY_PILOT.md.
 
 <a id="t18"></a>
 

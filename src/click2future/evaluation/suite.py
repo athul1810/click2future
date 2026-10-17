@@ -165,7 +165,8 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
     """Score pre-generated videos; never train, select, or silently drop a case.
 
     Model runs need a local checkpoint for its hash. Simulator controls have a
-    separate source label and cannot use E0-E4 method names.
+    separate source label and cannot use E0-E5 method names. E5 is the separately
+    supervised object-trajectory variant, not an E2/E3 conditioning ablation.
     """
     plan_path, predictions_path, output_dir = map(Path, (plan_path, predictions_path, output_dir))
     plan = read_plan(plan_path)
@@ -192,9 +193,9 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
         seen.add(name)
         if set(run["videos"]) != expected:
             raise ValueError("Every run must cover every frozen case exactly once")
-        model_method = run["method"] in {"E0", "E1", "E2", "E3", "E4"}
+        model_method = run["method"] in {"E0", "E1", "E2", "E3", "E4", "E5"}
         if model_method != (source == "generated_video"):
-            raise ValueError("Use E0-E4 only for model-generated video")
+            raise ValueError("Use E0-E5 only for model-generated video")
         record = {"method": run["method"], "run_id": name, "reports": []}
         if source == "generated_video":
             seed = run["training_seed"]
