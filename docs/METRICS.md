@@ -204,6 +204,13 @@ extractor versions. Earlier result files keep their recorded version. Gaussian n
 a simple control, so inspect generated samples as well. Commands, hashes and all noise
 levels are in [the calibration record](results/tracker-noise-calibration.json).
 
+The representation and sampler diagnostics also record the extractor version and
+tracker settings. Their earlier RGB/residual and foreground-loss records are labelled
+`palette-components-1`; those historical scores have not been recomputed or replaced.
+The noise record reports both the equal average of per-video centre-shift means and
+the mean pooled over accepted observations, with its denominator. Missing observations
+are excluded from each mean and remain in the tracking failure counts.
+
 ## Simulator extraction measurements
 
 The current [normal-motion record](results/contact-normal-calibration.json) uses validation

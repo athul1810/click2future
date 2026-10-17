@@ -6,7 +6,9 @@ from dataclasses import asdict
 import pytest
 
 from click2future.data import generate_dataset
+from click2future.evaluation.tracking import TRACKER_VERSION, TrackerConfig
 from click2future.training.compare_representation import main
+from click2future.training.diagnose_sampling import main as diagnose_main
 from click2future.training.train_diffusion import TrainConfig
 
 
@@ -27,6 +29,9 @@ def test_paired_diagnostic_keeps_controls_and_reports_copy_baseline(tmp_path):
     report = json.loads((output / "comparison.json").read_text())
     assert report["status"] == "measured_training_only_diagnostic"
     assert report["copy_frame0_baseline"]["all_objects"]["complete_samples"] == 4
+    for scores in [report["copy_frame0_baseline"], *(r["scores"] for r in report["runs"])]:
+        assert scores["extractor_version"] == TRACKER_VERSION
+        assert scores["tracker_settings"] == asdict(TrackerConfig())
     first, second = report["runs"]
     assert first["sample_id"] == second["sample_id"]
     assert first["training"]["provenance"] == second["training"]["provenance"]
@@ -38,5 +43,22 @@ def test_paired_diagnostic_keeps_controls_and_reports_copy_baseline(tmp_path):
     assert a.pop("representation") == "rgb"
     assert b.pop("representation") == "frame0_residual"
     assert a == b
+    diagnostic = tmp_path / "sampler-check"
+    diagnose_main(
+        [
+            "--checkpoint",
+            str(output / "rgb/checkpoint.pt"),
+            "--dataset",
+            str(dataset),
+            "--output-dir",
+            str(diagnostic),
+            "--sampling-steps",
+            "2",
+        ]
+    )
+    sampler_report = json.loads((diagnostic / "diagnostic.json").read_text())
+    assert sampler_report["extractor_version"] == TRACKER_VERSION
+    assert sampler_report["tracker_settings"] == asdict(TrackerConfig())
+    assert len(sampler_report["records"]) == 2
     with pytest.raises(SystemExit):
         main(["--dataset", str(dataset), "--output-dir", str(output)])

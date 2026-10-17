@@ -354,5 +354,14 @@
     "Diffusion tiny-overfit quality gate",
     "Frozen matched E0/E2/E3 experiments",
     "Actual held-out action/uncertainty/OOD results"
-  ]
+  ],
+  "extractor_version": "palette-components-1",
+  "tracker_settings": {
+    "color_tolerance": 24.0,
+    "color_margin": 4.0,
+    "min_area_ratio": 0.55,
+    "max_area_ratio": 1.8,
+    "dominant_fraction": 0.85,
+    "min_pixels": 4
+  }
 }

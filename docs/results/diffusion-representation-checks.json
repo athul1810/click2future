@@ -624,5 +624,14 @@
     "issue": "original residual samples used a wider effective RGB clip than the RGB arm",
     "corrected_results": "diffusion-resampling-2026-10-17.json",
     "original_scores": "retained unchanged; do not use the original residual arm as an otherwise matched comparison"
+  },
+  "extractor_version": "palette-components-1",
+  "tracker_settings": {
+    "color_tolerance": 24.0,
+    "color_margin": 4.0,
+    "min_area_ratio": 0.55,
+    "max_area_ratio": 1.8,
+    "dominant_fraction": 0.85,
+    "min_pixels": 4
   }
 }

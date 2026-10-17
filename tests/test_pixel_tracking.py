@@ -81,6 +81,24 @@ def test_fragment_at_least_min_pixels_is_still_rejected():
     assert result.reasons[1, 0] == "fragmented_or_duplicate"
 
 
+@pytest.mark.parametrize("min_pixels", [2, 4, 6])
+@pytest.mark.parametrize("at_cutoff", [False, True])
+def test_fragment_cutoff_uses_configured_minimum(min_pixels, at_cutoff):
+    frames, masks = rectangles([[(2, 2), (22, 22)]] * 2, size=3)
+    config = replace(TrackerConfig(), min_pixels=min_pixels)
+    clean = track_video(frames, masks[0], np.ones(2, bool), config)
+    fragment_size = min_pixels if at_cutoff else min_pixels - 1
+    frames[1, 12, 12 : 12 + fragment_size] = [220, 30, 30]
+    result = track_video(frames, masks[0], np.ones(2, bool), config)
+    if at_cutoff:
+        assert not result.tracked[1, 0]
+        assert result.reasons[1, 0] == "fragmented_or_duplicate"
+    else:
+        np.testing.assert_array_equal(result.tracked, clean.tracked)
+        np.testing.assert_array_equal(result.positions, clean.positions)
+        np.testing.assert_array_equal(result.masks, clean.masks)
+
+
 def test_padding_is_ignored():
     frames, masks = rectangles([[(2, 2), (22, 22)]])
     initial = np.concatenate([masks[0], np.zeros((1, 32, 32), bool)])

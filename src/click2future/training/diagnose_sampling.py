@@ -4,12 +4,13 @@ import argparse
 import json
 import os
 import time
+from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
 
 from click2future.data import load_rollout
-from click2future.evaluation.tracking import TrackerConfig, track_video
+from click2future.evaluation.tracking import TRACKER_VERSION, TrackerConfig, track_video
 
 from .sample_diffusion import load_generator, sample_videos, save_preview
 from .train_diffusion import TrainConfig
@@ -31,6 +32,7 @@ def main(argv=None):
     reference = load_rollout(args.dataset, sample_id)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     records = []
+    tracker = TrackerConfig()
     for weights in ("ema", "model"):
         model.load_state_dict(state[weights])
         for steps in args.sampling_steps:
@@ -51,7 +53,7 @@ def main(argv=None):
                 videos[0],
                 reference["instance_masks"][0],
                 reference["object_valid"],
-                TrackerConfig(),
+                tracker,
             )
             name = f"{weights}-{steps}"
             np.savez_compressed(args.output_dir / f"{name}.npz", videos=videos)
@@ -67,6 +69,8 @@ def main(argv=None):
                 }
             )
     record = {
+        "extractor_version": TRACKER_VERSION,
+        "tracker_settings": asdict(tracker),
         "training_step": state["step"],
         "prediction_type": diffusion.prediction_type,
         "representation": diffusion.representation,

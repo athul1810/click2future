@@ -14,7 +14,7 @@ import torch
 
 from click2future.data import load_rollout
 from click2future.evaluation.metrics import trajectory_metrics
-from click2future.evaluation.tracking import TrackerConfig, track_video
+from click2future.evaluation.tracking import TRACKER_VERSION, TrackerConfig, track_video
 
 from .sample_diffusion import load_generator, sample_videos, save_preview
 from .train_diffusion import TrainConfig
@@ -23,10 +23,9 @@ from .train_diffusion import main as train_main
 
 def score_samples(reference, videos):
     """Score RGB tracks, keeping missing trajectories undefined, plus a copy baseline."""
+    tracker = TrackerConfig()
     tracks = [
-        track_video(
-            clip, reference["instance_masks"][0], reference["object_valid"], TrackerConfig()
-        )
+        track_video(clip, reference["instance_masks"][0], reference["object_valid"], tracker)
         for clip in videos
     ]
     report = trajectory_metrics(
@@ -36,6 +35,8 @@ def score_samples(reference, videos):
         np.stack([t.tracked for t in tracks]),
         selected_object=reference["selected_object_id"],
     )
+    report["extractor_version"] = TRACKER_VERSION
+    report["tracker_settings"] = asdict(tracker)
     report["rgb_mae_future_0_1"] = float(
         np.abs(videos[:, 1:].astype(np.float32) - reference["frames"][None, 1:]).mean() / 255
     )
