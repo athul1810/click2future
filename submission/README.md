@@ -23,6 +23,12 @@ The pilot uses SSIM; this does not replace final LPIPS comparisons. The 1.5 GPU-
 cap includes evaluation. Keep checkpoints, generated data and result archives outside
 the submitted source package.
 
+The reserved 16/32/64-step validation study uses the same E3 checkpoint and
+16 fixed cases. After pilot evaluation, set `C2F_STUDY_RESULTS` and submit
+`submission/study_sampler.sbatch`. It reads the parent validation plan from
+`C2F_PILOT_RESULTS`, retains excluded cases and uses the same four sampling seeds.
+Its 0.5-hour limit is part of the combined pilot budget.
+
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 
 ```sh

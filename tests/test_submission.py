@@ -50,6 +50,8 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "submission/sample_evaluation.sbatch" in names
         assert "submission/train_pilot.sbatch" in names
         assert "submission/evaluate_pilot.sbatch" in names
+        assert "submission/sampler_study.py" in names
+        assert "submission/study_sampler.sbatch" in names
         assert "src/click2future/evaluation/pilot.py" in names
         assert "src/click2future/training/multiscene_pilot.py" in names
         bundle.extractall(folder)

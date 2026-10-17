@@ -94,3 +94,18 @@ on generated test outputs.
 
 The measured result record will distinguish completed computation from failed
 quality. A completed Slurm job alone does not finish the research tasks.
+
+## Reserved sampler study
+
+The earlier protocol reserved 16/32/64 DDIM steps on one fixed checkpoint and at
+most 16 validation conditions, capped at 0.5 allocated GPU-hours. The pilot uses
+E3 and the first four sorted validation scenes, with zero, forward, reverse and
+collision-0-to-1 actions in each. This subset is fixed before generated outputs
+are read; all omitted cases remain listed. It is separate from the full 24-case
+validation report. Checkpoint, sample seeds and metric settings stay unchanged.
+
+After validation, set `C2F_STUDY_RESULTS` and submit
+`submission/study_sampler.sbatch`. Its parent is the full validation plan in
+`C2F_PILOT_RESULTS`. The study also stays within the combined 1.5-hour pilot cap.
+It reports quality, action response and sampling time at every setting, including
+failures. More sampling steps alone do not establish useful video quality.
