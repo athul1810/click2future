@@ -1,0 +1,622 @@
+{
+  "status": "measured_training_only_diagnostic",
+  "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+  "slurm_job_id": "43235",
+  "deterministic_algorithms": true,
+  "controls": "Only representation changes; same architecture/data/loss/seed/LR horizon/steps/sampler",
+  "sampling_steps": 32,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "copy_frame0_baseline": {
+    "units": "normalized_image_coordinates",
+    "frame_zero_scored": false,
+    "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+    "all_objects": {
+      "per_sample": [
+        {
+          "sample_index": 0,
+          "ade": 0.027461350998772584,
+          "fde": 0.05228814055510873
+        },
+        {
+          "sample_index": 1,
+          "ade": 0.027461350998772584,
+          "fde": 0.05228814055510873
+        },
+        {
+          "sample_index": 2,
+          "ade": 0.027461350998772584,
+          "fde": 0.05228814055510873
+        },
+        {
+          "sample_index": 3,
+          "ade": 0.027461350998772584,
+          "fde": 0.05228814055510873
+        }
+      ],
+      "complete_samples": 4,
+      "total_samples": 4,
+      "mean_ade_over_complete_samples": 0.027461350998772584,
+      "mean_fde_over_complete_samples": 0.05228814055510873,
+      "best_of_k": {
+        "k": 4,
+        "min_ade": 0.027461350998772584,
+        "min_ade_sample_index": 0,
+        "fde_at_min_ade": 0.05228814055510873,
+        "min_fde": 0.05228814055510873,
+        "min_fde_sample_index": 0
+      },
+      "expected_future_observations": 248,
+      "tracked_future_observations": 248,
+      "missing_track_rate": 0.0,
+      "out_of_bounds_rate_over_tracked": 0.0
+    },
+    "selected_object": {
+      "per_sample": [
+        {
+          "sample_index": 0,
+          "ade": 0.04776364563394873,
+          "fde": 0.09741722474662101
+        },
+        {
+          "sample_index": 1,
+          "ade": 0.04776364563394873,
+          "fde": 0.09741722474662101
+        },
+        {
+          "sample_index": 2,
+          "ade": 0.04776364563394873,
+          "fde": 0.09741722474662101
+        },
+        {
+          "sample_index": 3,
+          "ade": 0.04776364563394873,
+          "fde": 0.09741722474662101
+        }
+      ],
+      "complete_samples": 4,
+      "total_samples": 4,
+      "mean_ade_over_complete_samples": 0.04776364563394873,
+      "mean_fde_over_complete_samples": 0.09741722474662101,
+      "best_of_k": {
+        "k": 4,
+        "min_ade": 0.04776364563394873,
+        "min_ade_sample_index": 0,
+        "fde_at_min_ade": 0.09741722474662101,
+        "min_fde": 0.09741722474662101,
+        "min_fde_sample_index": 0
+      },
+      "expected_future_observations": 124,
+      "tracked_future_observations": 124,
+      "missing_track_rate": 0.0,
+      "out_of_bounds_rate_over_tracked": 0.0
+    },
+    "rgb_mae_future_0_1": 0.0027543159667402506
+  },
+  "runs": [
+    {
+      "representation": "rgb",
+      "sample_id": "scene-00226000-variant-000",
+      "checkpoint_sha256": "d373879495ba4e7e30980c31d0bdc7e72f3e5ccdf934ad24c2993bdf815a0517",
+      "training": {
+        "config": {
+          "auxiliary": false,
+          "base_channels": 32,
+          "batch_size": 1,
+          "checkpoint_every": 100,
+          "collision_positive_weight": 1.0,
+          "conditioning": "spatial",
+          "diffusion_steps": 1000,
+          "ema_decay": 0.995,
+          "force_limit": 0.5,
+          "foreground_margin": 2,
+          "foreground_weight": 32.0,
+          "learning_rate": 0.0001,
+          "limit_train": 1,
+          "precision": "float32",
+          "prediction_type": "velocity",
+          "representation": "rgb",
+          "seed": 7,
+          "steps": 5000,
+          "weight_decay": 0.01
+        },
+        "mean_step_seconds_excluding_first_10": 0.05039626346949585,
+        "peak_cuda_allocated_bytes": 873590784,
+        "prediction_type": "velocity",
+        "probe_training_prediction_mse_after": 0.007987452670931816,
+        "probe_training_prediction_mse_before": 0.8313788771629333,
+        "provenance": {
+          "file_hashes": {
+            "dataset_manifest.json": "1b57ba14c573aec70bae15ac1671584240734dcdceb121166e11612707412916",
+            "scene-00226000-variant-000.json": "508ae1026cccad0d570f1e6b11f910a28fe7a9f881ba6f58991e8b736a5e8b9b",
+            "scene-00226000-variant-000.npz": "c1b6c600f9ee95bd43a4eb56100ad494a49f93126cb0e6fc5fd020208ee93c3e",
+            "splits.json": "93e504698b3044650b0aee25ca8eadbdeffc0b91bed1b706519d858c0d97965c"
+          },
+          "manifest_hash": "b7b1111a3f4ea6f5dfdea704732b6925f6c15a9330ccb7dfcc2cc0e6faf8d6d7",
+          "scope": "train-only pilot; no held-out quality claim",
+          "training_sample_ids": [
+            "scene-00226000-variant-000"
+          ],
+          "training_signature": "357a1d302e651c403394883542188cf4dc7996d4617d476c9f5594f767fa6e70"
+        },
+        "scope": "Training-prediction diagnostic; inspect samples and held-out controls next",
+        "slurm_job_id": "43235",
+        "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+        "step": 5000
+      },
+      "scores": {
+        "units": "normalized_image_coordinates",
+        "frame_zero_scored": false,
+        "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+        "all_objects": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 248,
+          "tracked_future_observations": 124,
+          "missing_track_rate": 0.5,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "selected_object": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": 0.0037597039875099532,
+              "fde": 0.007500370186347839
+            },
+            {
+              "sample_index": 1,
+              "ade": 0.004112847498925546,
+              "fde": 0.011036463998807464
+            },
+            {
+              "sample_index": 2,
+              "ade": 0.0033972511694668537,
+              "fde": 0.005716918669282214
+            },
+            {
+              "sample_index": 3,
+              "ade": 0.0030244674132044423,
+              "fde": 0.004383618128197692
+            }
+          ],
+          "complete_samples": 4,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": 0.0035735675172766986,
+          "mean_fde_over_complete_samples": 0.007159342745658802,
+          "best_of_k": {
+            "k": 4,
+            "min_ade": 0.0030244674132044423,
+            "min_ade_sample_index": 3,
+            "fde_at_min_ade": 0.004383618128197692,
+            "min_fde": 0.004383618128197692,
+            "min_fde_sample_index": 3
+          },
+          "expected_future_observations": 124,
+          "tracked_future_observations": 124,
+          "missing_track_rate": 0.0,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "rgb_mae_future_0_1": 0.02087984047830105
+      },
+      "declared_training_gate_passed": false
+    },
+    {
+      "representation": "frame0_residual",
+      "sample_id": "scene-00226000-variant-000",
+      "checkpoint_sha256": "931336e0133dceabde6fb9e3a0969dc2b4330f7b1171f7f305481fc8b379f50a",
+      "training": {
+        "config": {
+          "auxiliary": false,
+          "base_channels": 32,
+          "batch_size": 1,
+          "checkpoint_every": 100,
+          "collision_positive_weight": 1.0,
+          "conditioning": "spatial",
+          "diffusion_steps": 1000,
+          "ema_decay": 0.995,
+          "force_limit": 0.5,
+          "foreground_margin": 2,
+          "foreground_weight": 32.0,
+          "learning_rate": 0.0001,
+          "limit_train": 1,
+          "precision": "float32",
+          "prediction_type": "velocity",
+          "representation": "frame0_residual",
+          "seed": 7,
+          "steps": 5000,
+          "weight_decay": 0.01
+        },
+        "mean_step_seconds_excluding_first_10": 0.0505389761601487,
+        "peak_cuda_allocated_bytes": 874590208,
+        "prediction_type": "velocity",
+        "probe_training_prediction_mse_after": 0.005684164352715015,
+        "probe_training_prediction_mse_before": 0.5452288389205933,
+        "provenance": {
+          "file_hashes": {
+            "dataset_manifest.json": "1b57ba14c573aec70bae15ac1671584240734dcdceb121166e11612707412916",
+            "scene-00226000-variant-000.json": "508ae1026cccad0d570f1e6b11f910a28fe7a9f881ba6f58991e8b736a5e8b9b",
+            "scene-00226000-variant-000.npz": "c1b6c600f9ee95bd43a4eb56100ad494a49f93126cb0e6fc5fd020208ee93c3e",
+            "splits.json": "93e504698b3044650b0aee25ca8eadbdeffc0b91bed1b706519d858c0d97965c"
+          },
+          "manifest_hash": "b7b1111a3f4ea6f5dfdea704732b6925f6c15a9330ccb7dfcc2cc0e6faf8d6d7",
+          "scope": "train-only pilot; no held-out quality claim",
+          "training_sample_ids": [
+            "scene-00226000-variant-000"
+          ],
+          "training_signature": "357a1d302e651c403394883542188cf4dc7996d4617d476c9f5594f767fa6e70"
+        },
+        "scope": "Training-prediction diagnostic; inspect samples and held-out controls next",
+        "slurm_job_id": "43235",
+        "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+        "step": 5000
+      },
+      "scores": {
+        "units": "normalized_image_coordinates",
+        "frame_zero_scored": false,
+        "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+        "all_objects": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 248,
+          "tracked_future_observations": 70,
+          "missing_track_rate": 0.717741935483871,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "selected_object": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 124,
+          "tracked_future_observations": 70,
+          "missing_track_rate": 0.43548387096774194,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "rgb_mae_future_0_1": 0.033632636070251465
+      },
+      "declared_training_gate_passed": false
+    }
+  ],
+  "scope": "One training clip only. Copying static pixels is not learned motion or action adherence.",
+  "quality_gate": {
+    "scope": "Existing 64px training gate, not a held-out quality or action-response pass",
+    "tracked_future_fraction_min": 0.9,
+    "selected_ade_max": 0.03125,
+    "required_complete_selected_samples": 4
+  },
+  "allocation": {
+    "job_id": 43235,
+    "node": "TC2N02",
+    "gpu": "NVIDIA A40",
+    "driver": "570.148.08",
+    "gpu_memory_mib_reported_by_nvidia_smi": 46068,
+    "hardware_query": "nvidia-smi executed through srun inside the same allocation",
+    "cpus": 4,
+    "host_memory_gib": 16
+  },
+  "review_checks": {
+    "full_tests_passed": 406,
+    "subtests_passed": 4,
+    "skipped": 0,
+    "lint": "passed",
+    "format": "passed",
+    "local_rgb_rescoring_matches_allocated_job": true,
+    "source_archive_sha256": "5ad89a85bafff4c940a4fe9794721bbc142bf29fa3dca4c545e7efb074e2eb5f",
+    "source_zip_inspection": "passed; 142 files; no data, weights, credentials or external links"
+  },
+  "raw_comparison_sha256": "e0e464d5b19d62752f61afb1d530a84df5294dfab4c713bb4d485adb239ab072",
+  "figure": {
+    "file": "docs/results/diffusion-representation.png",
+    "sample_seed": 0,
+    "sha256": "69dea18dd38fa2a6025001bf60e0f5cd7cd6b711fa735719be7387c6561ce0c3"
+  },
+  "jobs": [
+    {
+      "job_id": 43235,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 567
+    },
+    {
+      "job_id": 43238,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 73
+    }
+  ],
+  "total_allocated_gpu_hours": 0.17777777777777778,
+  "sampler_followup": {
+    "scope": "Training clip only; seed 100 diagnostic, not the main four-seed comparison",
+    "records": {
+      "rgb": {
+        "training_step": 5000,
+        "prediction_type": "velocity",
+        "representation": "rgb",
+        "sample_id": "scene-00226000-variant-000",
+        "seed": 100,
+        "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",
+        "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+        "records": [
+          {
+            "weights": "ema",
+            "steps": 32,
+            "seconds": 0.8596614953130484,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 128,
+            "seconds": 1.6750186728313565,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 1000,
+            "seconds": 13.052250352688134,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 32,
+            "seconds": 0.4216869194060564,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 128,
+            "seconds": 1.673684366978705,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 1000,
+            "seconds": 13.039002906531096,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          }
+        ]
+      },
+      "frame0_residual": {
+        "training_step": 5000,
+        "prediction_type": "velocity",
+        "representation": "frame0_residual",
+        "sample_id": "scene-00226000-variant-000",
+        "seed": 100,
+        "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",
+        "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+        "records": [
+          {
+            "weights": "ema",
+            "steps": 32,
+            "seconds": 0.8332578418776393,
+            "tracked_future_observations": 14,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 128,
+            "seconds": 1.668820345774293,
+            "tracked_future_observations": 9,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 1000,
+            "seconds": 13.02446786686778,
+            "tracked_future_observations": 9,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 32,
+            "seconds": 0.42015280295163393,
+            "tracked_future_observations": 9,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 128,
+            "seconds": 1.6695195259526372,
+            "tracked_future_observations": 7,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 1000,
+            "seconds": 13.032038247212768,
+            "tracked_future_observations": 6,
+            "expected_future_observations": 62
+          }
+        ]
+      }
+    }
+  },
+  "tracker_diagnosis": {
+    "rgb_reasons": {
+      "fragmented_or_duplicate": 124,
+      "ok": 124
+    },
+    "residual_reasons": {
+      "fragmented_or_duplicate": 124,
+      "area_change": 54,
+      "ok": 70
+    },
+    "nonselected_candidate_pixels_outside_largest_component": {
+      "rgb": {
+        "total": 3448,
+        "in_outer_3px": 3448
+      },
+      "frame0_residual": {
+        "total": 2453,
+        "in_outer_3px": 2452
+      }
+    },
+    "interpretation": "The visible nonselected object is rejected by global palette fragmentation when noisy border pixels resemble its colour. A missing track is not proof of object disappearance. Keep the unchanged metric and report this limitation."
+  },
+  "background_noise_control": {
+    "scope": "Training-reference corruption control, not model output or metric retuning",
+    "sample_id": "scene-00226000-variant-000",
+    "noise_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "corruption": "Independent Gaussian noise on reference background pixels only, frame 0 unchanged",
+    "oracle_use": "Future masks construct the known corruption only; tracker receives RGB and frame-0 masks",
+    "records": [
+      {
+        "background_noise_std_uint8": 0,
+        "tracked": 248,
+        "expected": 248,
+        "tracking_reasons": {
+          "ok": 248
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 2,
+        "tracked": 248,
+        "expected": 248,
+        "tracking_reasons": {
+          "ok": 248
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 4,
+        "tracked": 248,
+        "expected": 248,
+        "tracking_reasons": {
+          "ok": 248
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 8,
+        "tracked": 178,
+        "expected": 248,
+        "tracking_reasons": {
+          "fragmented_or_duplicate": 70,
+          "ok": 178
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 12,
+        "tracked": 124,
+        "expected": 248,
+        "tracking_reasons": {
+          "fragmented_or_duplicate": 124,
+          "ok": 124
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 16,
+        "tracked": 124,
+        "expected": 248,
+        "tracking_reasons": {
+          "fragmented_or_duplicate": 124,
+          "ok": 124
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      }
+    ]
+  },
+  "backups": {
+    "representation-43235-backup.tar.gz": {
+      "sha256": "9284cb5c7b63fe98d3317b56d0fe7e803f4bd8088e1e2fd3b016e5e316f092d9",
+      "local_copy_verified": true,
+      "location": "ignored local outputs; datasets and weights not committed"
+    },
+    "representation-sampling-43238-backup.tar.gz": {
+      "sha256": "4498b8989ab55a61211c7e158954dc78ee6c2882b42eaa9556048652d25337ef",
+      "local_copy_verified": true,
+      "location": "ignored local outputs; datasets and weights not committed"
+    }
+  },
+  "decision": "Keep RGB default. Residual target is a failed training-only hypothesis. Do not scale or claim held-out success. Check reconstruction/border artifacts and independently calibrate extractor noise sensitivity before interpreting missing trajectories."
+}

@@ -14,7 +14,12 @@ from .conditioning import Condition
 
 class Diffusion:
     def __init__(
-        self, steps: int = 1000, device: str | torch.device = "cpu", *, prediction_type="epsilon"
+        self,
+        steps: int = 1000,
+        device: str | torch.device = "cpu",
+        *,
+        prediction_type="epsilon",
+        representation="rgb",
     ):
         if isinstance(steps, bool) or not isinstance(steps, int) or steps < 2:
             raise ValueError("Diffusion needs at least two timesteps")
@@ -22,11 +27,31 @@ class Diffusion:
         if prediction_type not in {"epsilon", "velocity"}:
             raise ValueError("prediction_type must be epsilon or velocity")
         self.prediction_type = prediction_type
+        if representation not in {"rgb", "frame0_residual"}:
+            raise ValueError("representation must be rgb or frame0_residual")
+        self.representation = representation
         time = torch.linspace(0, 1, steps + 1, dtype=torch.float64)
         cumulative = torch.cos((time + 0.008) / 1.008 * math.pi / 2).square()
         cumulative = cumulative / cumulative[0]
         betas = (1 - cumulative[1:] / cumulative[:-1]).clamp(0, 0.999)
         self.alpha_bar = (1 - betas).cumprod(0).float().to(device)
+
+    def encode_future(self, future: Tensor, condition: Condition) -> Tensor:
+        """Training RGB [-1,1] -> diffusion target, without changing the condition.
+
+        Half the difference from the observed first frame stays in [-1,1].
+        Static pixels have target zero. Future RGB is supervision only, never
+        an added inference input. RGB checkpoints retain the original identity.
+        """
+        if self.representation == "rgb":
+            return future
+        return (future - condition.first_frame.unsqueeze(2)) / 2
+
+    def decode_future(self, generated: Tensor, condition: Condition) -> Tensor:
+        """Diffusion-space tensor -> RGB [-1,1] before final sampler clipping."""
+        if self.representation == "rgb":
+            return generated
+        return condition.first_frame.unsqueeze(2) + 2 * generated
 
     def training_target(self, clean: Tensor, timesteps: Tensor, noise: Tensor) -> Tensor:
         if self.prediction_type == "epsilon":
@@ -91,12 +116,16 @@ class Diffusion:
                 if prediction.shape != noisy.shape or not torch.isfinite(prediction).all():
                     raise ValueError("Sampler received invalid denoising prediction")
                 alpha = self.alpha_bar[timestep]
-                clean = self.predict_clean(noisy, times, prediction).clamp(-1, 1)
+                clean = self.predict_clean(noisy, times, prediction)
+                # Clip x0 in RGB so both representations share the valid pixel range.
+                clean = self.encode_future(
+                    self.decode_future(clean, condition).clamp(-1, 1), condition
+                )
                 # Recompute epsilon after clipping x0 to preserve DDIM consistency.
                 epsilon = (noisy - alpha.sqrt() * clean) / (1 - alpha).sqrt()
                 previous = self.alpha_bar[indices[index + 1]] if index + 1 < len(indices) else 1.0
                 previous = torch.as_tensor(previous, device=first.device)
                 noisy = previous.sqrt() * clean + (1 - previous).sqrt() * epsilon
-            return noisy
+            return self.decode_future(noisy, condition).clamp(-1, 1)
         finally:
             model.train(was_training)

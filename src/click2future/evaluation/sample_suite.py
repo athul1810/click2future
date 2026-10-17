@@ -66,6 +66,7 @@ def _describe_run(run, spec_path, plan, sampling_steps, allow_untrained):
             "sampling_steps": sampling_steps,
             "weights": "ema",
             "prediction_type": trained.prediction_type,
+            "representation": trained.representation,
             "diffusion_steps": trained.diffusion_steps,
             "base_channels": trained.base_channels,
             "force_limit": trained.force_limit,
@@ -113,11 +114,22 @@ def _check_case_contracts(plan, runs):
         raise ValueError("Matched comparisons require the same foreground loss weight and margin")
     diffusion = [run for run in runs if run["method"] != "E0"]
     if (
-        len({(r["prediction_type"], r["diffusion_steps"], r["base_channels"]) for r in diffusion})
+        len(
+            {
+                (
+                    r["prediction_type"],
+                    r["representation"],
+                    r["diffusion_steps"],
+                    r["base_channels"],
+                )
+                for r in diffusion
+            }
+        )
         > 1
     ):
         raise ValueError(
-            "Diffusion comparison requires matched target, schedule and backbone width"
+            "Diffusion comparison requires matched target, representation, "
+            "schedule and backbone width"
         )
     for case in plan["cases"]:
         ref = load_rollout(plan["dataset"], case["sample_id"])
