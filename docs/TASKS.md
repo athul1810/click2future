@@ -9,26 +9,26 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 
 | ID | Task | Depends on | Owner | Status |
 |---|---|---|---|---|
-| T01 | [Record group details and finalize project scope](https://github.com/athul1810/click2future/issues/1) | None | Unassigned | In progress |
-| T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | None | MAITI SHRIJEET | In progress |
+| T01 | [Record group details and finalize project scope](https://github.com/athul1810/click2future/issues/1) | None | Unassigned | Done |
+| T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | None | MAITI SHRIJEET | Done |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | None | Unassigned | Done |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | T01 | PRAMOD SANJAY | Done |
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In progress |
 | T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In progress |
-| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Not started |
-| T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA (awaiting acceptance) | Not started |
+| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
+| T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
+| T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | Unassigned | In progress |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In progress |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | Not started |
-| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T14, T15, T16, T17 | Unassigned | In progress |
-| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T18, T19 | Unassigned | Not started |
+| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | In review |
+| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | Not started |
 
 ## Task details
 
@@ -38,14 +38,13 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 
 Apply the AI6132 technical-review requirements and record the remaining group and submission details.
 
-**Dependencies:** None. **Owner:** Unassigned. **Status:** In progress.
+**Dependencies:** None. **Owner:** Unassigned. **Status:** Done.
 
 - [x] Record Group 7, the four full names, and PRAMOD SANJAY as coordinator from the supplied roster.
-- [ ] Confirm the exact NTULearn upload cutoff; preserve the hard 14 November internal completion date regardless of a later upload date.
-- [ ] Check NTULearn for additional instructions and use docs/REQUIREMENTS.md for the confirmed minimum requirements.
+- [x] Record the course brief requirements, the 14 November 2026 working deadline and the unresolved 16 November upload-date discrepancy.
 - [x] Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan.
 
-Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submission artifacts must be complete by 14 November. Exact NTULearn upload cutoff remains unverified.
+Group 7, the full roster, coordinator, course requirements and adopted 64px E0/E2/E3 scope are recorded. Final NTULearn cutoff and updated-instruction checks are tracked in T20; they are not claimed as verified.
 
 <a id="t02"></a>
 
@@ -53,14 +52,16 @@ Pixel-first scope adopted by Shrijeet on 16 October. All presentation and submis
 
 Validate the approved TC2 account and fit training to its recorded limits.
 
-**Dependencies:** None. **Owner:** MAITI SHRIJEET. **Status:** In progress.
+**Dependencies:** None. **Owner:** MAITI SHRIJEET. **Status:** Done.
 
 - [x] Record TC2 access approval for Athul and Shrijeet and the Slurm limits in docs/COMPUTE.md: 1 GPU, 10 CPUs, 30G system memory per user, 2 running jobs, and a 6-hour job limit.
 - [x] Complete the first login and verify a small scheduled GPU job using the supplied guide and job script; record the GPU model, VRAM, and software versions.
-- [ ] Record storage limits, any total usage quota, access expiry, and backup locations; keep credentials outside Git.
+- [x] Check available storage/usage/expiry information, record unexposed limits explicitly and verify private checkpoint backups; keep credentials outside Git.
 - [x] Define a single-GPU profiling plan and verify checkpoint save/resume across jobs before launching long training runs.
 
 A40 setup 42886 and real training jobs 42909/42910 completed. Full model/EMA/optimizer/scheduler/RNG/data-order resume matched the next update with zero tensor difference across allocations. Data-loading-inclusive step time 0.04883 s; four 32-step samples 1.744 s; peak allocated 752,562,176 bytes. No user storage quota or expiry was exposed by the read-only checks. Evidence: docs/results/diffusion_pilot_2026-10-16.json. Generated-video gate failed; this is infrastructure evidence, not model readiness.
+
+Athul setup job 43158 verified the A40 and locked CUDA environment. Scheduled training, complete-state continuation and ignored local checkpoint backups are verified. mytcinfo confirms 1 GPU, 10 CPUs, 30G RAM and 6 hours per job; a third submission was refused while two jobs were queued/running. Storage quota, total GPU-hours and service expiry are not exposed by the checked metadata and remain explicitly unknown. Model-quality failures stay in T09/T10.
 
 <a id="t03"></a>
 
@@ -115,13 +116,13 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 
 **Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In progress.
 
-- [ ] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
+- [x] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [x] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
 - [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-PR #24 merged versioned generation, scene-group ID splits, shared-condition physics variants, and hashed manifests. Separate shape/texture/force OOD suites and a measured generation/storage budget remain outstanding.
+Dataset-0.2 generation is merged in PR #31: six controlled actions and 21 clips per visible scene, with all actions and hidden-physics variants in one split. The recommended size is 200 groups and 4,200 clips; final training data is not frozen here. All 84 independently generated pilot clips replayed exactly. The earlier 80-clip dataset-0.1 CPU/storage benchmark remains in the evidence record. Separate shape, texture and force OOD suites remain outstanding.
 
 <a id="t07"></a>
 
@@ -129,15 +130,15 @@ PR #24 merged versioned generation, scene-group ID splits, shared-condition phys
 
 Measure generated video behavior consistently across models.
 
-**Dependencies:** T04, T05. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
+**Dependencies:** T04, T05. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
 
 - [x] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
-- [ ] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
+- [x] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
 - [x] Test metrics on exact, shifted, static, and corrupted controls with expected outcomes.
 - [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
 - [x] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
-Trajectory/contact, action, image, temporal, and ensemble metrics have simulator controls. Comparison tables now combine declared cases with scene-group bootstrap intervals, missing counts, and source separation. Contact recall remains 0.233; validation on generated videos is pending. See [metric usage](METRICS.md) and [comparison tables](EVALUATION_REPORTS.md).
+Evaluation implementation is ready for review in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments.
 
 <a id="t08"></a>
 
@@ -145,14 +146,14 @@ Trajectory/contact, action, image, temporal, and ensemble metrics have simulator
 
 Obtain a compact latent representation that preserves object geometry.
 
-**Dependencies:** T03, T06. **Owner:** MAITI SHRIJEET. **Status:** Not started.
+**Dependencies:** T03, T06. **Owner:** MAITI SHRIJEET. **Status:** Deferred.
 
 - [ ] Implement or select a permitted autoencoder and record architecture/weight provenance.
 - [ ] Fit weights and normalization on training data only; select the checkpoint on validation data and inspect test/OOD reconstruction only after freezing it.
 - [ ] Record memory, throughput, latent shapes, and a checkpoint with checksum.
 - [ ] Freeze and share the selected autoencoder across diffusion comparisons.
 
-Deferred from the core path by D011. Adopted pixel diffusion does not require T08. Revisit only after working 64px samples and a measured reconstruction/cost gate.
+Closed as not planned for the adopted pixel-diffusion scope in D011. No autoencoder has been implemented or trained. Reopen only after working 64px samples if measured memory or throughput justifies latents.
 
 <a id="t09"></a>
 
@@ -160,15 +161,15 @@ Deferred from the core path by D011. Adopted pixel diffusion does not require T0
 
 Establish a lower-cost generative baseline with the agreed action inputs.
 
-**Dependencies:** T03, T06. **Owner:** KAPOOR ANANYA (awaiting acceptance). **Status:** Not started.
+**Dependencies:** T03, T06. **Owner:** Unassigned. **Status:** In progress.
 
-- [ ] Condition on the first frame, selected-object mask, and numeric force.
-- [ ] Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.
+- [x] Condition on the first frame, selected-object mask, and numeric force.
+- [x] Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.
 - [ ] Pass a tiny-batch overfit check and produce four seeded samples per condition.
-- [ ] Log validation results, model size, training cost, and checkpoint selection.
-- [ ] Add a run manifest and qualitative successes/failures.
+- [x] Log validation results, model size, training cost, and checkpoint selection.
+- [x] Add a run manifest and qualitative successes/failures.
 
-Shrijeet asked Ananya to lead CVAE; acceptance pending. Concrete architecture, prior/posterior boundary, acceptance checks and sample API are in docs/CVAE_HANDOFF.md. Evaluation remains shared.
+TC2 exposed a deterministic CUDA pooling-backward crash, fixed with equivalent slice means. Jobs 43165/43166 trained 1500 steps and reproduced all saved tensors exactly across allocations. The 5000-step retry in job 43171 still fails sampled-video quality: 168/248 training-scene observations tracked and 0/248 on the validation example. Prior-sample quality remains open despite low reconstruction loss. Configs, costs, checkpoints and failure examples are recorded in results/cvae-training-checks.json.
 
 <a id="t10"></a>
 
@@ -186,6 +187,8 @@ Create the common diffusion backbone and the main numeric-action baseline.
 
 Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up jobs 42917 (10000-step epsilon) and 42920 (2000-step velocity) completed. Longer epsilon still failed tracking; velocity reduced visible noise but recovered only 1-7/62 observations. Tiny-overfit remains open. Next isolate a deterministic single clip, noise-level reconstruction and precision. Evidence: docs/results/diffusion_debug_2026-10-16.json.
 
+A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json.
+
 <a id="t11"></a>
 
 ### T11: Implement object-centric spatial conditioning E3
@@ -194,12 +197,12 @@ Test whether localizing the action improves physical action adherence.
 
 **Dependencies:** T10, T04. **Owner:** MAITI SHRIJEET. **Status:** In progress.
 
-- [ ] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
-- [ ] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
+- [x] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
+- [x] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
 - [ ] Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.
 - [ ] Record added parameter count, ablation switch, and working E3 training/sampling.
 
-Numeric/spatial modes share the same backbone and data boundary; trainer and sampler support both. Measured action-responsive E2/E3 comparisons remain pending.
+Numeric/spatial conditioning and selected-object identity are implemented with identical backbone capacity. Forward/backward and zero-force wiring controls pass. The trainer/sampler supports both modes. Trained selected-object and reversed-force controls, coherent E3 videos and the matched E2/E3 comparison remain open.
 
 <a id="t12"></a>
 
@@ -213,9 +216,9 @@ Test whether physical supervision improves decoded future behavior.
 - [x] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
 - [x] Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.
 - [ ] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
-- [ ] Report head predictions separately from generated-video tracking metrics.
+- [x] Report head predictions separately from generated-video tracking metrics.
 
-Implemented frame-0 canonical object matching, padded trajectory/collision targets, Smooth L1 and unordered-pair BCE, training-set class-balance estimation, low-timestep gating, and head-to-scene mapping. Real-head gradient and synthetic prediction-fitting checks pass. Dataset E4 training/sampling and measured head-versus-video results remain pending. See [loss integration](AUXILIARY_LOSSES.md). PR #26 merged; the new dataset trainer integrates these losses behind the auxiliary switch. Exact interrupted CPU continuation passes with auxiliary enabled; trained E4 sample quality remains unmeasured.
+Canonical trajectory/contact losses, real-loader gradients and separate auxiliary-head export are implemented. Actual final DDIM heads are captured for both prediction targets without changing sampled pixels or RNG state. E4 overfitting and trained head-versus-video comparisons remain open.
 
 <a id="t13"></a>
 
@@ -223,16 +226,16 @@ Implemented frame-0 canonical object matching, padded trajectory/collision targe
 
 Commit to a comparable experiment suite that fits the remaining budget.
 
-**Dependencies:** T07, T09, T10, T11. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T07, T09, T10, T11. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
 - [ ] Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.
 - [ ] Use measured costs to allocate training/evaluation hours and retry reserve.
-- [ ] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
+- [x] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
 - [ ] Record all selected settings and validation-only tuning decisions.
 - [ ] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
-- [ ] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
+- [x] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
 
-Core suite is E0/E2/E3. E4 and E1 receive explicit budget gates and do not block freezing the core protocol.
+Recorded 64px scope, deferred 128px, common sampling/training seeds, independent initialization policy, extractor settings and bootstrap rules in configs/evaluation/comparison.yaml. Reserved a validation-only 16/32/64-step study on at most 16 conditions with a 0.5 GPU-hour cap. The batch evaluator hashes all cases, references, metric code and configs. Final data/OOD versions, successful model settings, checkpoints and main training budgets are not frozen.
 
 <a id="t14"></a>
 
@@ -248,7 +251,7 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
-Scene-group comparison tables and source separation merged via PR #27. Actual main comparisons remain pending. The 2000-step diffusion pilot failed the generated-video gate; do not include its noise-loss decline as a model-quality result.
+The batch evaluator produces trajectory, image and uncertainty reports plus scene-group comparison tables for every frozen case. Full-length oracle/static simulator controls run end to end with SSIM and LPIPS. Actual trained E0/E2/E3 runs, hyperparameter results and their comparisons remain pending.
 
 <a id="t15"></a>
 
@@ -263,6 +266,8 @@ Measure which action-conditioned behaviors generalize beyond training.
 - [ ] Compare against ID performance and include tracker failure rates.
 - [ ] Save representative successes/failures and state generalization limits.
 
+The batch evaluator can apply identical frozen extraction/reporting to held-out splits and rejects missing cases or changed inputs. Separate shape/texture/force OOD data from T06 and trained frozen checkpoints remain required.
+
 <a id="t16"></a>
 
 ### T16: Evaluate hidden-physics uncertainty and action controls
@@ -275,6 +280,8 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
 - [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
+
+The batch evaluator groups all hidden-physics references per condition and reports K=4 spread, coverage, plausibility distances and failure counts alongside image/trajectory quality. Full-length simulator controls validate this workflow. Actual generated ensembles and paired action-control measurements remain open.
 
 <a id="t17"></a>
 
@@ -312,16 +319,16 @@ Prepare the two required PDFs using the course structure and the team's measured
 
 Prepare a source-only submission package and check that it can be used without the team's working files.
 
-**Dependencies:** T14, T15, T16, T17. **Owner:** Unassigned. **Status:** In progress.
+**Dependencies:** T03, T04. **Owner:** Unassigned. **Status:** In review.
 
-- [ ] Run internal simulator replay, checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
+- [x] Run internal simulator replay, trained-checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
 - [x] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
-- [ ] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
+- [x] Include procedural data-generation and seed/split logic, model definitions, training, and evaluation source; exclude datasets, model files, external URLs, and cloud-artifact pointers.
 - [x] Extract the ZIP in a clean folder and test imports, documented commands, and locally generated smoke inputs without existing datasets or checkpoints.
 - [x] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
-- [ ] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
+- [x] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
 
-A deterministic source-only ZIP builder, explicit allowlist, input scanner, and hashed inventory are implemented. The archive installed in a fresh Python environment; all 219 tests and four subtests passed after extraction, including generated-data replay and batch loading. The current ZIP is a development snapshot. Dataset training/sampling, CVAE, checkpoint checks, demo integration, and final instructions remain.
+Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174 ran real 5000-step E0/E3 checkpoints through the frozen sampler and all three metric families over the complete one-condition validation split, producing eight videos. Model quality failed and stays in T09/T10/T14-T16. Source installation, replay, archive inspection and all 364 tests plus four subtests pass. Implementation awaits review; T20 retains final source regeneration and post-experiment artifact checks. Evidence: `results/trained-checkpoint-suite-checks.json`.
 
 <a id="t20"></a>
 
@@ -329,11 +336,14 @@ A deterministic source-only ZIP builder, explicit allowlist, input scanner, and 
 
 Complete one group submission through NTULearn using the exact required filenames and content restrictions.
 
-**Dependencies:** T18, T19. **Owner:** Unassigned. **Status:** Not started.
+**Dependencies:** T14, T15, T16, T17, T18, T19. **Owner:** Unassigned. **Status:** Not started.
+
+- [ ] Confirm the live NTULearn upload cutoff while preserving 14 November 2026 as the working deadline; do not assume the PDF resolves the discrepancy.
+- [ ] Check NTULearn for any updated submission instructions before exporting and uploading the final artifacts.
 
 - [ ] Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
 - [ ] Export group_07_contribution.pdf with every member's full name and reviewed contribution description.
-- [ ] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links.
+- [ ] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.
 - [ ] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
 - [ ] Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.
 - [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.

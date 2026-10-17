@@ -11,5 +11,6 @@ tracker:
   min_pixels: 4
 max_gap_pixels: 0.0
 event_tolerance_intervals: 1
-motion_window: 3
-motion_threshold: 0.3
+motion_window: 5
+motion_threshold: 0.08
+motion_rule: normal

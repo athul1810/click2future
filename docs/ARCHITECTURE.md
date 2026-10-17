@@ -4,9 +4,10 @@ The Workstream A simulator and dataset contract below is frozen as of 15
 October 2026 for `scene-0.1`, `rollout-0.1`, and `dataset-0.1`. Incompatible
 changes require a schema-version change and regenerated data. The later model,
 auxiliary-head, and demo sections remain guidance for their owning workstreams.
-A pixel denoiser, dataset trainer, DDIM sampler and extracted-trajectory/contact metrics
-are implemented. The 16 October decision adopts the pixel path; see
-[BUILD_PLAN.md](BUILD_PLAN.md) and [training](TRAINING.md) for evidence gates.
+A pixel denoiser, dataset trainer, DDIM sampler, CVAE baseline and
+extracted-trajectory/contact metrics are implemented. The 16 October decision
+adopts the pixel path; see [BUILD_PLAN.md](BUILD_PLAN.md), [diffusion](TRAINING.md)
+and [CVAE training](MODEL_TRAINING.md) for evidence gates.
 
 ## Frozen physics and action semantics
 

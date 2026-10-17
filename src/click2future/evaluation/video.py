@@ -30,6 +30,8 @@ def evaluate_videos(
     run_id: str,
     motion_threshold: float | None = None,
     motion_window: int = 3,
+    motion_rule: str = "opposing",
+    frame_valid=None,
 ) -> tuple[dict, dict]:
     """Use only the reference's frame-0 masks during extraction; score afterwards."""
     validate_rollout(reference)
@@ -40,10 +42,26 @@ def evaluate_videos(
         raise ValueError("Generated videos must match the reference frame count and resolution")
     if not np.all(videos[:, 0] == reference["frames"][0]):
         raise ValueError("Every sample must preserve the supplied first frame exactly")
+    if frame_valid is None:
+        frame_valid = np.ones(videos.shape[:2], dtype=bool)
+    else:
+        frame_valid = np.asarray(frame_valid)
+        if (
+            frame_valid.dtype != np.bool_
+            or frame_valid.shape != videos.shape[:2]
+            or not frame_valid[:, 0].all()
+        ):
+            raise ValueError("frame_valid must be boolean [K,T] with valid first frames")
     tracks = [
         track_video(clip, reference["instance_masks"][0], reference["object_valid"], tracker)
         for clip in videos
     ]
+    for index, track in enumerate(tracks):
+        missing = ~frame_valid[index]
+        track.tracked[missing] = False
+        track.positions[missing] = np.nan
+        track.masks[missing] = False
+        track.reasons[missing] = "missing_rgb"
     contacts = [
         estimate_contacts(
             t.masks,
@@ -52,6 +70,7 @@ def evaluate_videos(
             max_gap_pixels=max_gap_pixels,
             motion_threshold=motion_threshold,
             motion_window=motion_window,
+            motion_rule=motion_rule,
         )
         for t in tracks
     ]
@@ -71,9 +90,11 @@ def evaluate_videos(
     report = {
         "status": "passed",
         "source": "video_tracking",
-        "metric_version": "1",
+        "metric_version": "2",
         "extractor_version": TRACKER_VERSION,
-        "contact_estimator": "opposing-motion-2"
+        "contact_estimator": "normal-motion-1"
+        if motion_rule == "normal"
+        else "opposing-motion-2"
         if motion_threshold is not None
         else "pixel-proximity-1",
         "run_id": run_id,
@@ -86,8 +107,10 @@ def evaluate_videos(
             "max_gap_pixels": max_gap_pixels,
             "motion_threshold": motion_threshold,
             "motion_window": motion_window,
+            "motion_rule": motion_rule,
             "event_tolerance_intervals": event_tolerance,
             "resolution_hw": list(videos.shape[2:4]),
+            "frame_valid_policy": "missing RGB removes tracks and contact observations",
         },
         "tracking_reasons_future": dict(sorted(reasons.items())),
         "trajectory": trajectory_metrics(
@@ -147,6 +170,7 @@ def main(argv: list[str] | None = None) -> int:
                 raise ValueError("Frame timing differs from the extractor calibration config")
         with np.load(args.videos, allow_pickle=False) as archive:
             videos = archive["videos"]
+            frame_valid = archive["frame_valid"] if "frame_valid" in archive else None
         report, arrays = evaluate_videos(
             reference,
             videos,
@@ -154,8 +178,10 @@ def main(argv: list[str] | None = None) -> int:
             max_gap_pixels=config["max_gap_pixels"],
             event_tolerance=config["event_tolerance_intervals"],
             run_id=args.run_id,
+            frame_valid=frame_valid,
             motion_threshold=config.get("motion_threshold"),
             motion_window=config.get("motion_window", 3),
+            motion_rule=config.get("motion_rule", "opposing"),
         )
         report["sample_id"] = args.sample_id
         report["input_sha256"] = {}

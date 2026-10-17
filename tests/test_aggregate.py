@@ -86,11 +86,38 @@ def test_equal_scene_weight_and_collision_count_pooling(comparison):
     assert row["collision_micro"]["collision.event.f1"]["estimate"] == pytest.approx(2 / 3)
     assert row["counts"]["collision.event.true_positive"] == 3
     assert row["counts"]["collision.event.false_negative"] == 3
+    assert row["collision_micro"]["collision.encounter.f1"]["estimate"] == pytest.approx(2 / 3)
+    assert row["counts"]["collision.encounter.expected_pairs"] == 6
+    assert "collision.encounter.accuracy" in csv_table(report)
     assert row["counts"]["all_objects.total_samples"] == 6
     assert len(report["provenance"]) == 3
     assert "all_objects.mean_ade" in csv_table(report)
     assert "count.collision.interval.missing_bins" in csv_table(report)
     assert report == result(comparison)
+
+
+def test_legacy_collision_reports_still_aggregate_without_encounter_claims(comparison):
+    _, folder = comparison
+    for path in folder.glob("case-*.json"):
+        report = json.loads(path.read_text())
+        report["collision"].pop("collision_metric_version")
+        report["collision"].pop("encounter_definition")
+        for sample in report["collision"]["per_sample"]:
+            sample.pop("encounter")
+        path.write_text(json.dumps(report))
+    row = result(comparison)["methods"][0]
+    assert row["collision_micro"]["collision.event.f1"]["estimate"] == pytest.approx(2 / 3)
+    assert not any("encounter" in key for key in row["collision_micro"])
+
+
+def test_mixed_collision_versions_cannot_share_a_table(comparison):
+    _, folder = comparison
+    path = folder / "case-0.json"
+    report = json.loads(path.read_text())
+    report["collision"].pop("collision_metric_version")
+    path.write_text(json.dumps(report))
+    with pytest.raises(ValueError, match="Incompatible trajectory"):
+        result(comparison)
 
 
 def test_missing_case_invalidates_its_group_without_hiding_denominators(comparison):

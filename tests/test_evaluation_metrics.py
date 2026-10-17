@@ -132,6 +132,31 @@ def test_duplicate_predictions_cannot_match_one_reference_twice():
     assert result["f1"] == 0.5
 
 
+def test_encounter_is_separate_from_inaccurate_timing_and_duplicate_events():
+    result = evaluate_events(events([0, 1, 2]), events([4]), tolerance=0)
+    assert result["event"]["f1"] == 0
+    assert result["encounter"]["true_positive"] == 1
+    assert result["encounter"]["f1"] == 1
+    assert result["encounter"]["accuracy"] == 1
+    assert result["encounter"]["scored_pairs"] == 1
+
+
+@pytest.mark.parametrize(
+    "guessed,truth,key",
+    [
+        (True, False, "false_positive"),
+        (False, True, "false_negative"),
+        (False, False, "true_negative"),
+    ],
+)
+def test_encounter_counts_absence_and_false_predictions(guessed, truth, key):
+    result = evaluate_events(events([1] if guessed else []), events([2] if truth else []))
+    encounter = result["encounter"]
+    assert encounter[key] == 1 and encounter["expected_pairs"] == 1
+    if not guessed and not truth:
+        assert encounter["accuracy"] == 1 and encounter["f1"] is None
+
+
 def test_ordered_matching_finds_both_matches_in_overlapping_windows():
     result = evaluate_events(events([1, 2]), events([0, 1]), tolerance=1)["event"]
     assert result["true_positive"] == 2
@@ -145,6 +170,9 @@ def test_empty_event_convention_is_explicit():
     assert result["event"]["precision"] is None
     assert result["event"]["recall"] is None
     assert result["event"]["f1"] is None
+    assert result["encounter"]["scored_pairs"] == 1
+    assert result["encounter"]["missing_pairs"] == 0
+    assert result["encounter"]["f1"] is None
     hallucination = evaluate_events(events([1]), events([]))["event"]
     assert hallucination["precision"] == 0
     assert hallucination["recall"] is None
@@ -160,6 +188,9 @@ def test_missing_collision_bins_are_not_counted_as_negatives():
     assert result["event"]["complete_pair_timelines"] == 0
     assert result["event"]["expected_pair_timelines"] == 1
     assert result["event"]["f1"] is None
+    assert result["encounter"]["scored_pairs"] == 0
+    assert result["encounter"]["missing_pairs"] == 1
+    assert result["encounter"]["f1"] is None
 
 
 def test_padding_and_single_object_have_no_extra_collision_pairs():
@@ -171,6 +202,8 @@ def test_padding_and_single_object_have_no_extra_collision_pairs():
     one_object = evaluate_events(events([]), events([]), object_valid=np.array([True, False]))
     assert one_object["interval"]["expected_bins"] == 0
     assert one_object["interval"]["accuracy"] is None
+    assert one_object["encounter"]["expected_pairs"] == 0
+    assert one_object["encounter"]["accuracy"] is None
 
 
 @pytest.mark.parametrize("kind", ["asymmetric", "diagonal", "probabilities"])

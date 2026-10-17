@@ -9,6 +9,8 @@
     ".python-version",
     "submission/allowlist.json",
     "submission/README.md",
-    "submission/smoke.py"
+    "submission/smoke.py",
+    "submission/train_cvae.sbatch",
+    "submission/train_diffusion.sbatch"
   ]
 }

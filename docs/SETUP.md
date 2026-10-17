@@ -1,8 +1,9 @@
 # Development setup
 
-This setup covers simulation, grouped datasets, evaluation, the untrained denoiser
-prototype, and local environment diagnostics. Dataset training, sampling, and the demo
-remain to be built. The TC2 A40 environment passed job 42886 on 16 October 2026;
+This setup covers simulation, grouped datasets, evaluation, diffusion and CVAE code,
+and local environment diagnostics. See [diffusion training](TRAINING.md) and
+[CVAE and E4 training](MODEL_TRAINING.md) for model workflows. The demo remains to be built.
+The TC2 A40 environment passed job 42886 on 16 October 2026;
 [allocation evidence](results/tc2_probe_2026-10-16.json) records its versions and checks.
 
 ## Environment and dependencies

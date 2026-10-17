@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "purpose": "untrained CPU correctness only; no optimizer updates",
+  "seed": 150000,
+  "joint_loss": {
+    "loss": 1.338693618774414,
+    "noise_mse": 1.1784193515777588,
+    "prediction_target": "epsilon",
+    "frame_zero_scored": false,
+    "auxiliary": {
+      "loss_version": "1",
+      "target_order": "frame0_mask_centroid_x_then_y_v1",
+      "config": {
+        "trajectory_weight": 1.0,
+        "collision_weight": 0.1,
+        "smooth_l1_beta": 0.05,
+        "max_timestep_fraction": 0.25,
+        "collision_positive_weight": 1.0
+      },
+      "total_clips": 2,
+      "eligible_timestep_clips": 2,
+      "trajectory_clips": 2,
+      "collision_clips": 2,
+      "position_coordinates": 30,
+      "collision_pairs": 12,
+      "positive_collision_pairs": 1,
+      "timestep_cutoff_inclusive": 2,
+      "num_diffusion_steps": 10,
+      "reduction": "mean within each eligible clip, then mean clips per component",
+      "trajectory_loss": 0.09120438247919083,
+      "collision_loss": 0.6906985640525818,
+      "weighted_auxiliary_loss": 0.16027423739433289
+    }
+  },
+  "e4_gradient_l1": {
+    "noise_output": 8.677803039550781,
+    "trajectory_head": 0.06369372457265854,
+    "collision_head": 0.47453323006629944,
+    "shared_stem": 7.845020294189453
+  },
+  "head_export": {
+    "source": "auxiliary_head",
+    "position_shape": [
+      4,
+      4,
+      2,
+      2
+    ],
+    "fixture": "repeated teacher-forced outputs, not samples"
+  },
+  "cvae_loss": {
+    "loss": 0.655565619468689,
+    "future_mse": 0.48608675599098206,
+    "future_mae": 0.6555453538894653,
+    "reconstruction_kind": "l1",
+    "kl_mean_per_latent": 0.020257771015167236,
+    "beta": 0.001,
+    "frame_zero_scored": false
+  },
+  "cvae_gradient_l1": {
+    "prior": 0.004187084603472613,
+    "posterior": 1.5195439159870148,
+    "condition_encoder": 16.041703181545017,
+    "future_encoder": 0.8121497911170081,
+    "decoder_output": 23.40559059381485
+  },
+  "default_cvae": {
+    "parameters": 574659,
+    "sample_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "video_shape": [
+      4,
+      32,
+      64,
+      64,
+      3
+    ],
+    "tracked_future_observations": 0,
+    "expected_future_observations": 248,
+    "missing_track_rate": 1.0,
+    "quality": "untrained output; not a performance or uncertainty result"
+  },
+  "source_sha256": {
+    "click2future/training/check_components.py": "02353937d5a37c34fd45f7d65635d14a55d9ba4fbe21ee4aa0a51311c02bd626",
+    "click2future/training/batch.py": "6a611fe82d7d00acb52410f1f3ca889365428f56e450717e19a2a54b276e0610",
+    "click2future/training/diffusion_step.py": "1eff44d450bf25de2c7ebe5f1e129a4f041d9eb5e704e27d3b53f133e6709334",
+    "click2future/training/cvae_loss.py": "200fc99fc12b932a8978feb540356ab87eb53503781be7b64db0eac5c611f1d4",
+    "click2future/models/cvae.py": "caa0edb396f37782bfd9da768301309190740cdfaad13a75c16cb53979a2451f",
+    "click2future/evaluation/heads.py": "9a2f5e0c169cbee11136969ad4b2f0d69158f29c8e1bd6cee457b1d440bad92d"
+  }
+}

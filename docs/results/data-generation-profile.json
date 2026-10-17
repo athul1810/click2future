@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "scope": "CPU simulator generation and storage profile, not model training",
+  "hardware": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "processor": "arm64"
+  },
+  "group_count": 20,
+  "variants_per_group": 4,
+  "clips": 80,
+  "object_count": 2,
+  "config": {
+    "world_size": [
+      1.0,
+      1.0
+    ],
+    "resolution": 64,
+    "frame_count": 32,
+    "fps": 8,
+    "physics_hz": 240,
+    "force_duration": 0.25
+  },
+  "elapsed_seconds_including_export": 1.0861688340010005,
+  "clips_per_second": 73.65337459123441,
+  "total_bytes": 794081,
+  "bytes_per_clip_including_manifests": 9926.0125,
+  "array_bytes": 587461,
+  "metadata_bytes": 206620,
+  "split_clips": {
+    "train": 64,
+    "test": 8,
+    "validation": 8
+  },
+  "manifest_sha256": "3514e7ab4684efa99031c77b2be231c0873f2bf0cd75cda55acbaf6139fb4f1b",
+  "source_sha256": {
+    "src/click2future/data/generate.py": "229a9f96e75b093a46422af7e0a6049dc739493205115de657bbfa0c9a374d93",
+    "src/click2future/data/export.py": "ed8d3c7cbb2eaeef7e33a5d13dde55d7fbfe832b2bb4b886a2b82e02df6f4539",
+    "src/click2future/sim/rollout.py": "abfc7ca7a67b76b0cfb1c5764f007d66eb2a44b8a7311b35bef33a56c3273675",
+    "configs/simulator/pilot.toml": "f09bdbfc74ea5d01094ae9218e492a48f3ceecd7cafd2fe849341ca23b4e4c39"
+  },
+  "proposed_main_dataset": {
+    "status": "proposal for Sanjay; not generated or frozen",
+    "scene_groups": 300,
+    "variants_per_group": 8,
+    "clips": 2400,
+    "initial_object_count": 2,
+    "split_groups": {
+      "train": 240,
+      "validation": 30,
+      "test": 30
+    },
+    "estimated_bytes_linear_projection": 23822430.0,
+    "estimated_generation_seconds_linear_projection": 32.585065020030015,
+    "limitations": "Local CPU estimates only. More objects, new textures and OOD cases need separate profiles. Main training cost is unmeasured."
+  },
+  "reproduction_command": "python -m click2future.cli generate-dataset --output-dir outputs/data-profile --group-count 20 --variants-per-group 4 --seed 190000 --config configs/simulator/pilot.toml",
+  "dataset_location": "outputs/issue-audit/native-data; ignored and excluded from the source ZIP"
+}

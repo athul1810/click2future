@@ -62,7 +62,8 @@ Current definitions remain in [ARCHITECTURE.md](ARCHITECTURE.md) and
   next-version action/contact data handoff. Athul reviewed the physics description
   and merged the PR. The data handoff remains open; no drag change blocks training.
 - Use the [training guide](TRAINING.md) and [CVAE handoff](CVAE_HANDOFF.md).
-  CVAE, held-out learned-video controls, final experiments and the UI remain open.
+  CVAE code is integrated in PR #30; its TC2 checks, held-out learned-video controls,
+  final experiments and the UI remain open.
 
 ## What the presentation should demonstrate
 

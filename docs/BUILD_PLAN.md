@@ -6,9 +6,10 @@ and assessment evidence. The [research addendum](SOTA_2026-10-16.md) extends the
 
 The pixel path is adopted as of 16 October. Simulation, grouped datasets,
 trajectory/collision metrics, a pixel tracker, diffusion training and DDIM sampling
-are implemented. Contact extraction needs improvement. CVAE and the interactive
-demo remain to be built. The [training guide](TRAINING.md) separates numerical
-checks from generated-video and held-out evidence.
+are implemented. Contact extraction remains approximate. CVAE training and sampling
+code are ready for TC2 checks; trained comparisons and the interactive demo remain
+unfinished. The [diffusion guide](TRAINING.md) and [CVAE guide](MODEL_TRAINING.md)
+separate correctness checks from generated-video and held-out evidence.
 
 ## Recommended first build
 

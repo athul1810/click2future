@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "parent_revision": "afb89877638c2718df4f50ce71fbbccc489d017b",
+  "tests": {
+    "working_tree": 291,
+    "fresh_source_archive": 291,
+    "subtests": 4,
+    "skipped": 0
+  },
+  "checks": {
+    "lint": "passed",
+    "format": "passed",
+    "dependency_lock": "passed",
+    "source_and_wheel_build": "passed",
+    "source_archive_inspection": "passed",
+    "tc2_job_script_syntax": "passed"
+  },
+  "issue_3": "closed: merged environment setup and TC2 job 42886 meet all criteria",
+  "implemented": [
+    "missing RGB masks respected in trajectory/contact scoring",
+    "frozen batch evaluation with full case coverage and input/code hashes",
+    "native 80-clip generation and storage benchmark",
+    "64px scope and validation-study budget",
+    "standalone TC2 diffusion training in source ZIP",
+    "separate pair encounter scores with event timing retained and fresh controlled-scene validation",
+    "dataset-0.2 CVAE index and native wall-force prior export; all six evaluation conditions and hidden-physics references retained"
+  ],
+  "source_sha256": {
+    "src/click2future/evaluation/suite.py": "075a459d86b2705e878e8a28472f9d9d0417495c89de5044ba9b70d75dbf4f80",
+    "src/click2future/evaluation/video.py": "7934a97ab615c0f0740cd82686ec5e4ccd8d27daaaa117ea8cc832b693345657",
+    "tests/test_evaluation_suite.py": "addc69d34ba3d7f3b859dec2da27083ead66d0e95b8a4d82b780b1633426c53d",
+    "configs/evaluation/comparison.yaml": "4d0d86e12604c2dc3e28306976644ec3920504ed2971869e422446ac4c421e9b",
+    "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db",
+    "src/click2future/evaluation/metrics.py": "4447962c8485057779e66c83c65a6e978652109caa2ed094b154d4e1365613e4",
+    "src/click2future/evaluation/aggregate.py": "97c51522b9390850dd72dc05a55060f7ae4f31676b9dd13dbeb2f13ad430c7c9",
+    "src/click2future/evaluation/calibrate.py": "b94433071e32f5652b1b05d40852d0bd2d3755cdd3177c5799104e6553a8eed0",
+    "src/click2future/training/train_cvae.py": "7b1da1a3fc22c0e1c92fe38ca11a9d8920f818e6996a5a14baba7f2fb61a05fc",
+    "tests/test_cvae_workflow.py": "517c92f11ca703b7b7ab6a152148a475271059929d336d51494f6967303b0c2f"
+  },
+  "evidence": [
+    "docs/results/data-generation-profile.json",
+    "docs/results/evaluation-suite-controls.json",
+    "docs/results/submission-checks.json",
+    "docs/results/controlled-extractor-checks.json"
+  ],
+  "remaining": [
+    "PR #30 needs teammate approval before main integration",
+    "trained E0/E2/E3 samples and repeats",
+    "E4 overfit and head-versus-video results",
+    "OOD datasets and frozen trained checkpoints",
+    "final protocol selection and full-dataset training budget"
+  ],
+  "reviewed_pr_31": {
+    "original_head": "134db0387b357e1feb0f7a9623202497a7f5619f",
+    "tested_head": "3419c0d0020ac61398b0c17398c22d87608d1b26",
+    "merge_revision": "ad3dbcaafe05e1741b1b9cf4a442b4f81be2a2a6",
+    "outcome": "fixed, approved and merged",
+    "tests_with_main": 243,
+    "subtests": 4,
+    "exact_replays_at_original_head": 84,
+    "fix": "Explicit checkpoint force_limit 1.1 for dataset-0.2, original default 0.5 retained. Force normalization remains /0.5. Actual loader, trainer, checkpoint CLI sampling and legacy resume covered."
+  },
+  "issue_8": "closed as not planned: D011 adopts pixel diffusion; no autoencoder implementation claimed",
+  "dataset_0_2_compatibility": {
+    "schema_versions": [
+      "dataset-0.1",
+      "dataset-0.2"
+    ],
+    "cvae_fixture": {
+      "scene_groups": 10,
+      "clips": 210,
+      "training_clips": 168,
+      "validation_clips": 21,
+      "test_arrays_removed_before_index": 21,
+      "wall_force": 1.1,
+      "force_scale": 0.5,
+      "normalized_wall_magnitude": 2.2,
+      "prior_samples": 4,
+      "total_frames": 32,
+      "resolution_hw": [
+        64,
+        64
+      ],
+      "training_steps": 0
+    },
+    "evaluation_fixture": {
+      "scene_groups": 10,
+      "clips": 210,
+      "test_conditions": 6,
+      "references_per_condition": [
+        1,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "test_scene_groups": 1
+    },
+    "scope": "CPU correctness and untrained prior sampling; no TC2 model-quality claim"
+  }
+}

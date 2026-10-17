@@ -179,7 +179,11 @@ def main(argv: list[str] | None = None) -> int:
             frame_valid = archive["frame_valid"] if "frame_valid" in archive else None
         settings = {"max_gap_pixels": config["max_gap_pixels"]}
         settings.update(
-            {name: config[name] for name in ("motion_threshold", "motion_window") if name in config}
+            {
+                name: config[name]
+                for name in ("motion_threshold", "motion_window", "motion_rule")
+                if name in config
+            }
         )
         report = evaluate_futures(
             references,

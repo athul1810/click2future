@@ -1,0 +1,36 @@
+# Evaluation choices recorded before comparing trained checkpoints.
+status: evaluation_ready_training_choices_pending
+core_methods: [E0, E2, E3]
+optional_methods: [E1, E4]
+resolution_hw: [64, 64]
+total_frames: 32
+fps: 8
+force_duration: 0.25
+force_scale: 0.5
+sampling_seeds: [0, 1, 2, 3]
+training_seeds: [0, 1, 2]
+initialization: independent_runs_same_seed_policy_no_inherited_updates
+pixel_metrics_config: configs/evaluation/pixel.yaml
+action_metrics_config: configs/evaluation/actions.yaml
+image_metrics: [ssim, lpips]
+collision_scores:
+  encounter: any_onset_per_object_pair_over_clip
+  event: one_to_one_onset_matching_tolerance_one_interval
+  interval: exact_unordered_pair_time_bins
+  missing_policy: complete_pair_timeline_for_event_and_encounter
+bootstrap:
+  unit: scene_group_id
+  replicates: 2000
+  confidence: 0.95
+  seed: 0
+validation_study:
+  sampling_steps: [16, 32, 64]
+  max_conditions: 16
+  max_gpu_hours: 0.5
+  selection: quality_and_action_adherence_with_failure_counts_and_latency
+resolution_128: deferred_until_coherent_64px_samples_and_matched_core_runs
+pending:
+  - final_dataset_versions_and_ood_manifests
+  - diffusion_prediction_target_after_successful_tiny_overfit
+  - validation_selected_sampler_and_checkpoint_choices
+  - full_dataset_training_cost_and_main_run_budget

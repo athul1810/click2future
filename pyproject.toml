@@ -52,6 +52,7 @@ include = [
     "/submission/*.md",
     "/submission/*.py",
     "/submission/*.json",
+    "/submission/*.sbatch",
 ]
 
 [tool.uv]

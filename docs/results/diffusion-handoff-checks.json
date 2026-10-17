@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "scope": "untrained CPU inference compatibility; no optimizer updates",
+  "other_branch": "feat/diffusion-pilot-execution",
+  "other_revision": "2e0a46e6c027d6d790c5ea04fc4e1f1ebe4f5648",
+  "checks": [
+    "native first-frame/mask/force normalization and future tensor parity",
+    "real DDIM output bitwise unchanged by final-head capture",
+    "global RNG unchanged by paired sampling",
+    "capture hook removed",
+    "actual timestep-zero heads exported separately in scene ID order"
+  ],
+  "passed": 2,
+  "command": "python -m pytest -q tests/test_diffusion_handoff.py",
+  "source_sha256": {
+    "src/click2future/training/batch.py": "6a611fe82d7d00acb52410f1f3ca889365428f56e450717e19a2a54b276e0610",
+    "src/click2future/evaluation/heads.py": "9a2f5e0c169cbee11136969ad4b2f0d69158f29c8e1bd6cee457b1d440bad92d",
+    "tests/test_diffusion_handoff.py": "fe7fef2dd636a92c63dc4f903604113080b0e5280130ffa8bc8d83bed9954333"
+  }
+}

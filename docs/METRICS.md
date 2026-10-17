@@ -4,6 +4,25 @@ T07 includes trajectory/collision scoring, RGB object tracking, and an experimen
 contact estimator. Tracking works on the measured solid-colour simulator clips. Contact
 event detection is currently too inaccurate to support model-comparison claims.
 
+## Controlled contact stress check
+
+Candidate dataset-0.2 from PR #31 exposes a distinction between collision occurrence
+and event timing. On its initial held-out check, timed-event F1 was 0.321 even though
+23 of 24 colliding clips had at least one detected encounter, with no false collision
+clips. This motivated the separate encounter diagnostic; it did not change the tracker
+or contact thresholds.
+
+A fresh dataset seed, 193000, then checked the diagnostic on 63 clips from three new
+held-out scene groups. All 3,906 future object observations were tracked. Encounter
+counts were TP=23, FP=0, FN=1, TN=39: F1=0.979 and accuracy=0.984 at positive prevalence
+24/63. Timed-event F1 remained 0.551. These are extractor checks on simulator clips,
+not generated-model results. Three scene groups and existing solid-colour shape
+families do not establish general reliability. Keep timed-event errors visible.
+
+The recorded data revision, original check and fresh check are in
+`results/controlled-extractor-checks.json`. The data PR still needs its model force-range
+integration fixed before training uses it.
+
 ## Input contract
 
 Use fixed object identities established from frame 0. Do not reorder objects or choose
@@ -51,12 +70,22 @@ coordinates must be valid. Wall contacts are excluded from this object-pair inte
   interval tolerance. Sorted events are matched earliest first. A prediction can match
   at most one reference. A pair with any missing interval is excluded from event scoring,
   with complete and expected pair-timeline counts reported.
+- Encounter scores classify whether each valid unordered pair has any contact onset
+  during the full clip. They require a complete observed pair timeline and report
+  confusion counts, accuracy, prevalence, precision, recall and F1. They measure
+  collision occurrence; they do not measure timing, repeated events or wall contacts.
 - Undefined ratios are JSON `null`. If neither reference nor prediction has an event,
   event precision, recall, and F1 are null. If predictions exist without reference events,
   precision and F1 are zero and recall is null. A single valid object has no pair bins.
 
-These policies are versioned as metric version 1. Review them against simulator fixtures
+The extracted-array scoring policy is metric version 1. RGB reports use version 2,
+which respects optional `frame_valid` masks: missing RGB removes the corresponding
+tracks and contact observations, even when placeholder pixels look valid. Do not mix
+old and new RGB reports in a comparison. Review against simulator fixtures
 and freeze the tolerance and extraction rules on validation data before model comparisons.
+Collision reports additionally use `collision_metric_version: 2` when encounter
+scores are present. Legacy collision tables remain readable, and mixed versions are
+rejected. Keep encounter and timed-event results together when interpreting contact behavior.
 Per-sample records preserve counts for [scene-group aggregation and comparison
 tables](EVALUATION_REPORTS.md), including missing observations and bootstrap intervals.
 
@@ -118,16 +147,53 @@ Similar colours, disappearance, fragmentation, and large area changes produce mi
 observations. Partial occlusion can still bias accepted centres. This baseline supports
 solid colours; textures and generated-video artefacts need separate validation.
 
-The current contact estimator combines pixel proximity with opposing changes in object
-velocity. It fits short trajectory windows in pixel/frame units, then selects separated
-peaks. All observations in the motion window must be tracked. This is offline evaluation:
+The current contact estimator combines pixel proximity with opposing velocity changes
+projected along the line between object centres. It fits short trajectory windows in
+pixel/frame units, then selects separated peaks. `motion_rule: opposing` retains the
+earlier vector-dot-product rule. All observations in the motion window must be tracked.
+This is offline evaluation:
 it uses future RGB context, but no future oracle labels. The initial velocity is assumed
 zero under the simulator contract. The returned `state` is pixel proximity, not confirmed
 physical contact. Close repeated events, small impulses, and wall interactions remain hard.
 
 ## Simulator extraction measurements
 
-Reproduce the current [contact measurement record](results/contact-motion-calibration.json):
+The current [normal-motion record](results/contact-normal-calibration.json) uses validation
+scene groups 20000-20099 and fresh held-out groups 120000-120099, two physics variants
+each. Do not put these reserved groups in model datasets. Reproduce it with:
+
+```sh
+python -m click2future.evaluation.calibrate --method normal_motion --held-out-start 120000 --output outputs/contact-normal.json --config-output outputs/pixel-normal.yaml
+```
+
+The validation search used windows 3/5/7, thresholds 0.04/0.08/0.12/0.2/0.3/0.4, and
+gaps 0/1 pixel. Maximum validation F1 selected window 5, threshold 0.08, and gap zero
+(validation F1 0.717). Settings were frozen before generating the new held-out set.
+The active `configs/evaluation/pixel.yaml` uses this rule.
+
+| Same 200 fresh held-out clips | Previous motion rule | Line-of-centres rule |
+|---|---:|---:|
+| Reference events | 22 | 22 |
+| Matched events | 4 | 13 |
+| Extra events | 5 | 8 |
+| Missed events | 18 | 9 |
+| Event precision | 0.444 | 0.619 |
+| Event recall | 0.182 | 0.591 |
+| Event F1 | 0.258 | 0.605 |
+
+All 18,538 future object observations and 662 pair timelines were observed. Mean
+centroid error was 0.218 pixels. Only 22 true events were present; these are preliminary
+clean-simulator estimates, not model-quality results or calibrated event probabilities.
+The centre line approximates the contact normal and can be wrong for rectangles and
+glancing collisions. Rasterization, small impulses, wall interactions, and closely
+spaced events still cause errors. Read collision scores with these failure counts.
+
+The separate [gap search](results/contact-gap-calibration.json) did not beat the old
+setting on validation. It used held-out groups 110000-110099, which were not reused for
+the normal-rule comparison. The expanded modes reject previously inspected held-out
+ranges. Further rule changes require fresh held-out groups.
+
+The earlier [motion record](results/contact-motion-calibration.json) is retained:
 
 ```bash
 python -m click2future.evaluation.calibrate \
@@ -376,8 +442,9 @@ must be interpreted together. They validate implementation behaviour, not model 
 
 ## Remaining work
 
-Contact recall and validation on generated videos remain unresolved. Scene-group
-aggregation is implemented and checked on simulator controls. T07 stays open until
-the extraction limitations are addressed. T12 has [auxiliary losses](AUXILIARY_LOSSES.md)
-and gradient checks; integration with the dataset trainer remains. The uncertainty experiments
+The implementation and simulator validation are ready for review. Contact extraction
+remains approximate, and trained-generator/OOD checks belong with the model experiments.
+The untrained CVAE format check retains all 248 missing observations instead of hiding
+them. T12 has [a joint objective and head export](MODEL_TRAINING.md), with CPU gradient
+checks; the dataset diffusion trainer and sampler remain. The uncertainty experiments
 in T16 need actual model samples; these metric controls do not complete that experiment.
