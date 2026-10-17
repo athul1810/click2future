@@ -1,0 +1,457 @@
+{
+  "status": "passed",
+  "scope": "Simulator correctness and untrained inference fixtures only; no trained-model quality claim",
+  "dataset": {
+    "schema_version": "dataset-0.2",
+    "seed": 225000,
+    "total_scene_groups": 20,
+    "total_clips": 420,
+    "split": "validation",
+    "intervention_groups": 2,
+    "intervention_conditions": 4,
+    "reference_futures": 16
+  },
+  "resolution_hw": [
+    64,
+    64
+  ],
+  "total_frames": 32,
+  "fps": 8,
+  "end_frame": 4,
+  "motion_threshold": 0.015625,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "force_magnitude": 0.4,
+  "training_corpus_unchanged": true,
+  "exact_replays": 16,
+  "control_videos": 64,
+  "controls": [
+    {
+      "method": "ignored-click",
+      "target_following": {
+        "estimate": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "response_contrast": 0.0,
+      "nonselected_drift_rate": 1.0,
+      "missing_rate": 0.0,
+      "total_pairs": 8,
+      "stationary_pairs": 8,
+      "missing_pairs": 0
+    },
+    {
+      "method": "missing-rgb",
+      "target_following": {
+        "estimate": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "response_contrast": 1.0,
+      "nonselected_drift_rate": 0.0,
+      "missing_rate": 0.25,
+      "total_pairs": 8,
+      "stationary_pairs": 0,
+      "missing_pairs": 2
+    },
+    {
+      "method": "oracle",
+      "target_following": {
+        "estimate": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "response_contrast": 1.0,
+      "nonselected_drift_rate": 0.0,
+      "missing_rate": 0.0,
+      "total_pairs": 8,
+      "stationary_pairs": 0,
+      "missing_pairs": 0
+    },
+    {
+      "method": "static",
+      "target_following": {
+        "estimate": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "response_contrast": 0.0,
+      "nonselected_drift_rate": 0.0,
+      "missing_rate": 0.0,
+      "total_pairs": 8,
+      "stationary_pairs": 8,
+      "missing_pairs": 0
+    }
+  ],
+  "reference_calibration": [
+    {
+      "method": "reference-labels",
+      "target_following": {
+        "estimate": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "response_contrast": 1.0,
+      "nonselected_drift_rate": 0.0,
+      "missing_rate": 0.0,
+      "total_pairs": 8,
+      "stationary_pairs": 0,
+      "missing_pairs": 0
+    },
+    {
+      "method": "reference-rgb",
+      "target_following": {
+        "estimate": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "response_contrast": 1.0,
+      "nonselected_drift_rate": 0.0,
+      "missing_rate": 0.0,
+      "total_pairs": 8,
+      "stationary_pairs": 0,
+      "missing_pairs": 0
+    }
+  ],
+  "untrained_checkpoint_fixture": {
+    "methods": [
+      "E0",
+      "E2",
+      "E3",
+      "E1"
+    ],
+    "training_steps": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "ddim_steps": 4,
+    "video_count": 32,
+    "cpu_rng_preserved": true,
+    "E1_identical_under_both_clicks": true,
+    "summary": [
+      {
+        "method": "E0",
+        "target_following": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "response_contrast": null,
+        "nonselected_drift_rate": null,
+        "missing_rate": 1.0,
+        "total_pairs": 4,
+        "stationary_pairs": 0,
+        "missing_pairs": 4
+      },
+      {
+        "method": "E1",
+        "target_following": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "response_contrast": null,
+        "nonselected_drift_rate": null,
+        "missing_rate": 1.0,
+        "total_pairs": 4,
+        "stationary_pairs": 0,
+        "missing_pairs": 4
+      },
+      {
+        "method": "E2",
+        "target_following": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "response_contrast": null,
+        "nonselected_drift_rate": null,
+        "missing_rate": 1.0,
+        "total_pairs": 4,
+        "stationary_pairs": 0,
+        "missing_pairs": 4
+      },
+      {
+        "method": "E3",
+        "target_following": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "response_contrast": null,
+        "nonselected_drift_rate": null,
+        "missing_rate": 1.0,
+        "total_pairs": 4,
+        "stationary_pairs": 0,
+        "missing_pairs": 4
+      }
+    ]
+  },
+  "generalization_plan_preflight": [
+    {
+      "split": "validation",
+      "groups": 2,
+      "eligible": 2,
+      "cases": 4
+    },
+    {
+      "split": "id_test",
+      "groups": 2,
+      "eligible": 2,
+      "cases": 4
+    },
+    {
+      "split": "shape_ood",
+      "groups": 2,
+      "eligible": 2,
+      "cases": 4
+    },
+    {
+      "split": "texture_ood",
+      "groups": 2,
+      "eligible": 2,
+      "cases": 4
+    },
+    {
+      "split": "force_ood",
+      "groups": 2,
+      "eligible": 2,
+      "cases": 4
+    },
+    {
+      "split": "physics_test",
+      "groups": 2,
+      "eligible": 2,
+      "cases": 4
+    }
+  ],
+  "source_sha256": {
+    "src/click2future/evaluation/targets.py": "47302bd508f757d8b1d58b74cef46b95aa668374843d5d8bdc4d679d861f69d4",
+    "src/click2future/evaluation/suite.py": "08b1c7505077b8358b29ab4e04a21980ec8aa7f6cb08e2bbfb5776fc03cad049",
+    "src/click2future/evaluation/paired_actions.py": "cec89e7ec4c05182d52ba3c38393827d8ae0f1cb3c4c598b48bff53efe1d709e",
+    "tests/test_target_controls.py": "83544214302eda277d1f1f02bb4b9a42115f89ac411a1e30c80c136d034e7b2a"
+  },
+  "output_sha256": {
+    "controls/plan.json": "ff2232f8098e4fe9a94f2d45210f3a63828d88b8727fce58fc76feea4a99934b",
+    "metrics/targets.json": "526237a1ca7dbdcf3a89385a90937cac685a8de518a040b11d2ddf2059b229cd",
+    "metrics/targets.csv": "a022ede277b2a82f3855d63479f6810293d515261192debc88d91fe5b3405f18",
+    "untrained-samples/predictions.json": "a21692aee5abbb756aecbfe7248e72de696e97f1f910339359ce6c2baeee7f59",
+    "untrained-metrics/targets.json": "af3091afd372f51196bc4c5875daa86d2a6e9b0be251635d4d345dc251303464"
+  },
+  "seconds_including_generation_and_evaluation": 33.14007016598771,
+  "limitations": [
+    "Two simulator scene groups are a correctness check, not a reliable population estimate",
+    "The fixed one-pixel threshold can classify low-force reference responses as stationary; exact-label and rendered-RGB baselines are retained",
+    "All actual trained model evaluations remain open"
+  ],
+  "initial_source_force_check": {
+    "force_magnitude": 0.15,
+    "dataset": {
+      "schema_version": "dataset-0.2",
+      "seed": 225000,
+      "total_scene_groups": 20,
+      "total_clips": 420,
+      "split": "validation",
+      "intervention_groups": 2,
+      "intervention_conditions": 4,
+      "reference_futures": 16
+    },
+    "controls": [
+      {
+        "method": "ignored-click",
+        "target_following": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 2,
+          "defined_bootstrap_replicates": 200
+        },
+        "response_contrast": 0.0,
+        "nonselected_drift_rate": 0.875,
+        "missing_rate": 0.0,
+        "total_pairs": 8,
+        "stationary_pairs": 8,
+        "missing_pairs": 0
+      },
+      {
+        "method": "missing-rgb",
+        "target_following": {
+          "estimate": 0.8333333333333333,
+          "ci": [
+            0.6666666666666666,
+            1.0
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 2,
+          "defined_bootstrap_replicates": 200
+        },
+        "response_contrast": 0.8333333333333333,
+        "nonselected_drift_rate": 0.0,
+        "missing_rate": 0.25,
+        "total_pairs": 8,
+        "stationary_pairs": 1,
+        "missing_pairs": 2
+      },
+      {
+        "method": "oracle",
+        "target_following": {
+          "estimate": 0.75,
+          "ci": [
+            0.5,
+            1.0
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 2,
+          "defined_bootstrap_replicates": 200
+        },
+        "response_contrast": 0.75,
+        "nonselected_drift_rate": 0.0,
+        "missing_rate": 0.0,
+        "total_pairs": 8,
+        "stationary_pairs": 2,
+        "missing_pairs": 0
+      },
+      {
+        "method": "static",
+        "target_following": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 2,
+          "defined_bootstrap_replicates": 200
+        },
+        "response_contrast": 0.0,
+        "nonselected_drift_rate": 0.0,
+        "missing_rate": 0.0,
+        "total_pairs": 8,
+        "stationary_pairs": 8,
+        "missing_pairs": 0
+      }
+    ],
+    "reference_calibration": [
+      {
+        "method": "reference-labels",
+        "target_following": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 2,
+          "defined_bootstrap_replicates": 200
+        },
+        "response_contrast": 0.0,
+        "nonselected_drift_rate": 0.0,
+        "missing_rate": 0.0,
+        "total_pairs": 8,
+        "stationary_pairs": 8,
+        "missing_pairs": 0
+      },
+      {
+        "method": "reference-rgb",
+        "target_following": {
+          "estimate": 0.75,
+          "ci": [
+            0.5,
+            1.0
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 2,
+          "defined_bootstrap_replicates": 200
+        },
+        "response_contrast": 0.75,
+        "nonselected_drift_rate": 0.0,
+        "missing_rate": 0.0,
+        "total_pairs": 8,
+        "stationary_pairs": 2,
+        "missing_pairs": 0
+      }
+    ],
+    "source_sha256": {
+      "src/click2future/evaluation/targets.py": "1ddf2c88074e41e2ed2265364e5dcf44ab69e589ed100b26de90730d70fa470f",
+      "src/click2future/evaluation/suite.py": "08b1c7505077b8358b29ab4e04a21980ec8aa7f6cb08e2bbfb5776fc03cad049",
+      "src/click2future/evaluation/paired_actions.py": "cec89e7ec4c05182d52ba3c38393827d8ae0f1cb3c4c598b48bff53efe1d709e",
+      "tests/test_target_controls.py": "eb3f9c8321d83f635c0e54bdf4b040087ed4773d99b1f75ddc8dfbcc9d9960dd"
+    },
+    "reason_for_validation_only_recipe_change": "All eight exact-label target pairs stayed below the one-pixel criterion at 0.15. Add an explicit shared magnitude override, preserving that calibration and the threshold. Use 0.4 for the subsequent simulator check and freeze any chosen value before trained-model test evaluation"
+  },
+  "verification": {
+    "workspace_tests": 359,
+    "fresh_archive_tests": 359,
+    "subtests_per_run": 4,
+    "skipped_tests": 0,
+    "workspace_test_seconds": 72.16,
+    "fresh_archive_test_seconds": 79.42,
+    "source_smoke": {
+      "generated_rollouts": 2,
+      "exact_replay": true,
+      "batch_shape": [
+        2,
+        4,
+        3,
+        64,
+        64
+      ]
+    },
+    "lint_and_format": "passed",
+    "lock_and_build": "passed",
+    "tc2_job_script_syntax": "passed",
+    "source_archive": {
+      "file_count": 131,
+      "bytes": 252709,
+      "sha256": "a9514bb74cfe02b1af3260c35f8f4f23723944a885e7540419d66f68c62847ce",
+      "inspection": "passed; no datasets, models, external links, environments, personal preferences or Git history"
+    }
+  }
+}

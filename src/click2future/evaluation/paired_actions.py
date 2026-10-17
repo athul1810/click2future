@@ -244,13 +244,11 @@ def summarize_actions(records, *, bootstrap=2000, confidence=0.95, seed=0):
                         if key.endswith(("_samples", "_pairs")):
                             counts[f"{kind}.{key}"] += value
                         elif key.startswith(
-                            ("mean_", "drift_rate_", "stationary_rate_", "correct_force_")
+                            ("mean_", "drift_rate_", "stationary_rate_", "correct_")
                         ):
                             values[f"{kind}.{key}"][group_id].append(value)
-                    total = score["total_pairs"] if kind == "reversal" else score["total_samples"]
-                    missing = (
-                        score["missing_pairs"] if kind == "reversal" else score["missing_samples"]
-                    )
+                    unit = "pairs" if "total_pairs" in score else "samples"
+                    total, missing = score[f"total_{unit}"], score[f"missing_{unit}"]
                     values[f"{kind}.missing_rate"][group_id].append(missing / total)
         methods.append(
             {

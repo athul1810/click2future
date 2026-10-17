@@ -25,6 +25,7 @@ from .paired_actions import (
     summarize_actions,
 )
 from .perceptual import LPIPSScorer
+from .targets import evaluate_target_groups, target_report
 from .tracking import TrackerConfig
 from .video import evaluate_videos
 
@@ -255,7 +256,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
         "cases": plan["cases"],
         "runs": [],
     }
-    action_runs = []
+    action_runs, target_runs = [], []
     try:
         for record, paths in prepared:
             for index, case in enumerate(plan["cases"]):
@@ -344,6 +345,13 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
                         ),
                     }
                 )
+            if "target_groups" in plan:
+                target_runs.append(
+                    {
+                        **{key: value for key, value in record.items() if key != "reports"},
+                        "groups": evaluate_target_groups(plan, paths),
+                    }
+                )
             manifest["runs"].append(record)
         _write(output_dir / "comparison.json", manifest)
         settings = plan["comparison_protocol"].get("bootstrap", {})
@@ -412,6 +420,19 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
             _write(output_dir / "actions.json", actions)
             (output_dir / "actions.csv").write_text(actions_csv(actions))
             report["action_report"] = "actions.json"
+        if target_runs:
+            targets = target_report(
+                plan,
+                target_runs,
+                source=source,
+                untrained=report["untrained_fixture_runs"],
+                bootstrap=bootstrap if bootstrap is not None else settings.get("replicates", 2000),
+                confidence=settings.get("confidence", 0.95),
+                seed=settings.get("seed", 0),
+            )
+            _write(output_dir / "targets.json", targets)
+            (output_dir / "targets.csv").write_text(actions_csv(targets))
+            report["target_report"] = "targets.json"
         read_plan(plan_path)
         if _sha(predictions_path) != predictions_hash or any(
             _sha(path) != expected_hash for path, expected_hash in artifact_hashes.items()
