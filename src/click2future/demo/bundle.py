@@ -50,7 +50,7 @@ def load_bundle(folder, names):
     selected = []
     for name in names:
         row = models[name]
-        if inventory.get(row["file"]) != row["checkpoint_sha256"]:
+        if row["file"] not in inventory or inventory[row["file"]] != row["checkpoint_sha256"]:
             raise ValueError("Checkpoint digest disagrees with the bundle inventory")
         selected.append({**row, "path": root / row["file"]})
     return root / "presets", selected

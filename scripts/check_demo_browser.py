@@ -7,6 +7,7 @@ Uses installed Chrome/Edge in a fresh headless session; downloads no browser.
 import argparse
 import json
 import os
+import shutil
 import time
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -20,19 +21,28 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("outputs/demo-browser"))
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--require-live", action="store_true")
+    parser.add_argument("--browser-executable", type=Path)
     args = parser.parse_args()
     if urlsplit(args.url).hostname not in {"localhost", "127.0.0.1"}:
         parser.error("Use a local demo server")
     if not 0 <= args.seed <= 2147473644:
         parser.error("Seed must leave room for the cancellation probe")
     candidates = (
+        Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"),
         Path(os.environ.get("PROGRAMFILES", "C:/Program Files"))
         / "Google/Chrome/Application/chrome.exe",
         Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)"))
         / "Microsoft/Edge/Application/msedge.exe",
+        *(
+            Path(path)
+            for name in ("google-chrome", "chromium", "chromium-browser", "microsoft-edge")
+            if (path := shutil.which(name))
+        ),
     )
-    executable = next((path for path in candidates if path.is_file()), None)
-    if executable is None:
+    executable = args.browser_executable or next(
+        (path for path in candidates if path.is_file()), None
+    )
+    if executable is None or not executable.is_file():
         parser.error("This rehearsal needs installed Chrome or Edge")
     args.output.mkdir(parents=True, exist_ok=True)
     checks, errors, latency, sources = [], [], [], []

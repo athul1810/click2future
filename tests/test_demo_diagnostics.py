@@ -78,6 +78,15 @@ def test_bundle_verifies_every_member_before_loading_models(bundle):
         load_bundle(root, ["fixture"])
 
 
+@pytest.mark.parametrize("filename", ["checkpoints/unlisted.pt", "../outside.pt"])
+def test_bundle_rejects_unlisted_checkpoint_with_null_digest(bundle, filename):
+    root, manifest = bundle
+    manifest["models"][0].update(file=filename, checkpoint_sha256=None)
+    (root / "MANIFEST.json").write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="bundle inventory"):
+        load_bundle(root, ["fixture"])
+
+
 @pytest.mark.parametrize("corruption", ["path", "inventory", "duplicate", "test", "digest"])
 def test_bad_bundle_is_rejected_before_model_or_array_loading(bundle, corruption):
     root, manifest = bundle
