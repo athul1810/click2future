@@ -189,6 +189,15 @@ Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation pa
 
 A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json.
 
+Candidate tracker-v2 update: the saved #37 boundary-loss EMA/32-step RGB
+spatial diagnostic tracks 247/248 observations, with all four selected tracks
+complete and selected ADE 0.00348. This passes the original selected-object
+training gate under v2. Version 2 is still awaiting Ananya's calibration review;
+the shared acceptance box stays open until that review. Shrijeet's separate
+#39/#41 v2 rescore is reported in the PR #42 discussion; its structured v2
+reports/video hashes are still needed. Preserve all historical v1 scores.
+The multi-scene E2/E3 validation failures remain separate and unresolved.
+
 <a id="t11"></a>
 
 ### T11: Implement object-centric spatial conditioning E3

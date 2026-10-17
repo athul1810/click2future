@@ -230,3 +230,27 @@ The [report draft](../report/README.md) embeds these comparisons and a fixed
 validation sample strip. Useful validation generation, independent training
 repeats and final held-out comparisons remain open. Source installation, smoke
 replay and all 465 tests plus four subtests pass from the source-only ZIP.
+
+## Checkpoint handoff for the demo
+
+The [private checkpoint draft](https://github.com/athul1810/click2future/releases/tag/untagged-27f477c4d4e9ef5f5b68) contains
+`click2future-validation-pilot.zip` and `MANIFEST.json`. Repository collaborators
+with write access can use the draft. It contains six unchanged trained checkpoints
+and two validation presets, with no final-test examples. All six model adapters
+load, both presets pass rollout validation and the packaged demo paths are checked.
+The uploaded archive digest matches the locally verified bundle.
+
+Use source `9b92c07` on `feat/multiscene-physics-pilot` or a later compatible
+checkout, especially for the two flow variants. Download and extract from the
+repository root with the project environment active:
+
+```sh
+gh release download pilot-validation-2026-10-17 --repo athul1810/click2future --pattern click2future-validation-pilot.zip --dir outputs/pilot-download
+python -m zipfile -e outputs/pilot-download/click2future-validation-pilot.zip outputs/pilot-handoff
+python -m click2future.demo.server --dataset outputs/pilot-handoff/presets --checkpoint "E0 RGB=outputs/pilot-handoff/checkpoints/E0-rgb.pt" --checkpoint "E3 spatial=outputs/pilot-handoff/checkpoints/E3-spatial.pt" --device cpu
+```
+
+Choose up to four models at once. The flow variants are separate decoder/supervision
+follow-ups; they are not successful physical predictors. This bundle is an internal
+working artifact and must stay separate from `group_07_code.zip` and the course
+submission. The source-only ZIP is unchanged.
