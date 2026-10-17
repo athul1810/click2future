@@ -24,6 +24,12 @@ from click2future.models.pilot_denoiser import PilotDenoiser
 from .auxiliary import AuxiliaryLossConfig, auxiliary_loss
 from .conditioning import training_inputs, validate_force_limit
 from .diffusion import Diffusion
+from .pixel_loss import (
+    future_foreground,
+    pixel_mean,
+    validate_foreground_margin,
+    validate_foreground_weight,
+)
 from .targets import build_auxiliary_targets
 
 
@@ -45,9 +51,13 @@ class TrainConfig:
     checkpoint_every: int = 100
     collision_positive_weight: float = 1.0
     force_limit: float = 0.5
+    foreground_weight: float = 1.0
+    foreground_margin: int = 0
 
     def validate(self):
         validate_force_limit(self.force_limit)
+        validate_foreground_weight(self.foreground_weight)
+        validate_foreground_margin(self.foreground_margin)
         for name in ("steps", "batch_size", "checkpoint_every", "diffusion_steps"):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or value < 1:
@@ -216,7 +226,18 @@ class Trainer:
         ):
             output = self.model(noisy, times, **condition.kwargs())
             target = self.diffusion.training_target(clean, times, noise)
-            noise_loss = F.mse_loss(output.predicted_noise.float(), target.float())
+            squared_error = (output.predicted_noise.float() - target.float()).square()
+            noise_loss = (
+                F.mse_loss(output.predicted_noise.float(), target.float())
+                if self.config.foreground_weight == 1
+                else pixel_mean(
+                    squared_error,
+                    foreground=future_foreground(
+                        batch, device=self.device, margin=self.config.foreground_margin
+                    ),
+                    foreground_weight=self.config.foreground_weight,
+                ).mean()
+            )
             loss = noise_loss
             auxiliary_record = {}
             if self.config.auxiliary:
@@ -255,6 +276,9 @@ class Trainer:
             "sample_ids": batch["sample_ids"],
             "loss": float(loss.detach()),
             "prediction_loss": float(noise_loss.detach()),
+            "prediction_mse_unweighted": float(squared_error.detach().mean()),
+            "foreground_weight": self.config.foreground_weight,
+            "foreground_margin": self.config.foreground_margin,
             "prediction_type": self.config.prediction_type,
             "noise_loss": float(noise_loss.detach())
             if self.config.prediction_type == "epsilon"

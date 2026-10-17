@@ -121,7 +121,17 @@ def test_untrained_checkpoint_requires_explicit_fixture_opt_in(prepared, tmp_pat
 
 
 @pytest.mark.parametrize(
-    "mutation", ["method", "dataset", "force_limit", "target", "normalization", "duplicate"]
+    "mutation",
+    [
+        "method",
+        "dataset",
+        "force_limit",
+        "target",
+        "normalization",
+        "duplicate",
+        "loss_weight",
+        "loss_margin",
+    ],
 )
 def test_incompatible_runs_fail_before_creating_outputs(prepared, tmp_path, mutation):
     plan_path, spec_path, _, spec = prepared
@@ -141,6 +151,10 @@ def test_incompatible_runs_fail_before_creating_outputs(prepared, tmp_path, muta
             state["config"]["force_limit"] = 0.01
         elif mutation == "target":
             state["config"]["prediction_type"] = "velocity"
+        elif mutation == "loss_weight":
+            state["config"]["foreground_weight"] = 32.0
+        elif mutation == "loss_margin":
+            state["config"]["foreground_margin"] = 2
         else:
             state["config"]["data"]["force_scale"] = 1.0
         checkpoint = tmp_path / "changed.pt"

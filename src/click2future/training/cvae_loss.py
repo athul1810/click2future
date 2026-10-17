@@ -10,6 +10,8 @@ from torch import Tensor
 
 from click2future.models.cvae import CVAEOutput
 
+from .pixel_loss import pixel_mean
+
 
 def diagonal_gaussian_kl(q_mean, q_logvar, p_mean, p_logvar):
     if (
@@ -40,6 +42,7 @@ class CVAELoss:
     pixel_mse: Tensor
     pixel_mae: Tensor
     reconstruction_kind: str
+    foreground_weight: float
 
     def record(self):
         return {
@@ -47,6 +50,8 @@ class CVAELoss:
             "future_mse": float(self.pixel_mse.detach()),
             "future_mae": float(self.pixel_mae.detach()),
             "reconstruction_kind": self.reconstruction_kind,
+            "reconstruction_loss": float(self.reconstruction.detach()),
+            "foreground_weight": self.foreground_weight,
             "kl_mean_per_latent": float(self.kl.detach()),
             "beta": self.beta,
             "frame_zero_scored": False,
@@ -70,7 +75,15 @@ def beta_at_step(target: float, step: int, total_steps: int, warmup_fraction: fl
     return target * min(1.0, step / warmup_steps) if warmup_steps else target
 
 
-def cvae_loss(output: CVAEOutput, future: Tensor, *, beta=0.001, reconstruction="l1"):
+def cvae_loss(
+    output: CVAEOutput,
+    future: Tensor,
+    *,
+    beta=0.001,
+    reconstruction="l1",
+    foreground=None,
+    foreground_weight=1.0,
+):
     if isinstance(beta, bool) or not math.isfinite(beta) or beta < 0:
         raise ValueError("beta must be finite and nonnegative")
     if (
@@ -88,7 +101,11 @@ def cvae_loss(output: CVAEOutput, future: Tensor, *, beta=0.001, reconstruction=
     difference = output.reconstruction.float() - future.float()
     mse = difference.square().flatten(1).mean(1)
     mae = difference.abs().flatten(1).mean(1)
-    reconstruction_loss = mae if reconstruction == "l1" else mse
+    reconstruction_loss = pixel_mean(
+        difference.abs() if reconstruction == "l1" else difference.square(),
+        foreground=foreground,
+        foreground_weight=foreground_weight,
+    )
     kl = diagonal_gaussian_kl(
         output.posterior_mean, output.posterior_logvar, output.prior_mean, output.prior_logvar
     )
@@ -102,4 +119,5 @@ def cvae_loss(output: CVAEOutput, future: Tensor, *, beta=0.001, reconstruction=
         mse.mean(),
         mae.mean(),
         reconstruction,
+        foreground_weight,
     )

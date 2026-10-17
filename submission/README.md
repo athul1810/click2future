@@ -2,8 +2,9 @@
 
 This archive contains the simulator, data generator, diffusion and CVAE trainers,
 seeded samplers, auxiliary losses, evaluation, configs and correctness checks.
-It contains no datasets or model weights. The diffusion pilots failed video-quality
-checks; CVAE GPU training, final experiments and the demo remain unfinished.
+It contains no datasets or model weights. The current pilots do not establish
+held-out video quality. Training and checkpoint continuation are verified; final
+experiments and the demo remain unfinished.
 This is not the final submission.
 
 Use Python 3.12. Create a fresh environment and install the project from this folder:
@@ -213,11 +214,33 @@ sbatch submission/train_cvae.sbatch --config configs/training/cvae_one_clip_5000
 These are diagnostic settings, not accepted final baseline checkpoints. Strict
 CUDA determinism remains enabled; pooled summaries use equivalent slice means.
 
+The foreground and boundary diagnostic configs retain the same one-clip training
+setup. The boundary CVAE uses weight 32 with a two-pixel margin around future
+objects. It passes the declared training gate with 244/248 object observations and
+complete selected-object tracks for all four seeds. Four nonselected observations
+still fail, so no sample has every object tracked at every future frame. Its one
+validation condition has no tracked future objects. This is a tiny-overfit check,
+not successful generalization or the final trained baseline.
+
+To reproduce that training check on TC2:
+
+```sh
+export C2F_DATA_DIR=data/one-clip
+export C2F_RUN_DIR=runs/cvae-one-clip-boundary
+sbatch submission/train_cvae.sbatch --config configs/training/cvae_one_clip_boundary.yaml --overfit-samples 1
+```
+
+`foreground_weight` defaults to 1 and `foreground_margin` to 0. Both are immutable
+run settings. Future masks and their spatial margin supervise the loss only and
+never enter inference. Diffusion applies the same optional weighting to its
+epsilon/velocity objective. Keep the settings matched across compared methods.
+
 Training requires one visible GPU in the MGPU-TC2 partition. The process limit is
 5.5 hours within a six-hour job. It saves weights, optimizer/RNG state, and the shuffle
 cursor. Resume with the same options and `--resume runs/cvae-overfit/latest.pt`.
 `best.pt` uses fixed-seed validation reconstruction plus beta KL; prior-sample quality
-must be evaluated separately. Full GPU training/resume remains unverified.
+must be evaluated separately. TC2 training and exact continuation have been checked;
+these checks do not establish generated-video quality.
 
 ```sh
 python -m click2future.training.sample_cvae --help
