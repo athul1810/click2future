@@ -19,7 +19,15 @@ The same module's `--train-only` option uses that prepared corpus inside an allo
 After all training finishes, set `C2F_PILOT_RESULTS` to a new directory and submit
 `submission/evaluate_pilot.sbatch`. It evaluates validation clips, zero/reversed
 forces, changed selection, reference coverage, E4 heads and CVAE latent diagnostics.
-The pilot uses SSIM; this does not replace final LPIPS comparisons. The 1.5 GPU-hour
+The initial GPU evaluation uses SSIM. Supplement its saved validation videos on CPU:
+
+```sh
+python submission/pilot_image_metrics.py --dataset outputs/new-pilot/data --evaluation outputs/pilot-evaluation --output outputs/pilot-images
+```
+
+This verifies saved reference/video hashes, excludes frame zero and includes a
+static-copy control. It requires the image-metrics extra and cached LPIPS weights.
+It does not establish physical accuracy. The 1.5 GPU-hour
 cap includes evaluation. Keep checkpoints, generated data and result archives outside
 the submitted source package.
 
@@ -35,6 +43,17 @@ new RGB. Its zero initialization copies a static image, so action response still
 needs verification. Select the config with `submission/train_cvae.sbatch`, then
 evaluate the trained checkpoint with `submission/flow_evaluation.py` inside an
 allocation. This follow-up keeps the original RGB baseline results separate.
+
+`cvae_flow_motion_pilot.yaml` is a further supervised follow-up. Future object
+masks and centre displacements supervise the predicted field through a loss;
+they never enter the prior or generator inputs. Keep it separate from the ordinary
+CVAE comparison. Select this config with the same training command and use a new
+run/evaluation directory.
+
+`submission/check_e4_collision.sbatch` checks E4 on one fixed training collision
+clip. Set the pilot environment above and `C2F_E4_CHECK` to a new directory. It
+trains 5,000 updates, samples four futures and exports actual final denoiser heads
+separately from RGB scores. Its training-only results do not establish generalization.
 
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 

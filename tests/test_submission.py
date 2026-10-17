@@ -55,6 +55,7 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "submission/flow_evaluation.py" in names
         assert "submission/check_e4_collision.py" in names
         assert "submission/check_e4_collision.sbatch" in names
+        assert "submission/pilot_image_metrics.py" in names
         assert "src/click2future/models/cvae_flow.py" in names
         assert "src/click2future/evaluation/pilot.py" in names
         assert "src/click2future/training/multiscene_pilot.py" in names
