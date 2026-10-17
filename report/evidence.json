@@ -44,11 +44,11 @@
     }
   },
   "source_sha256": {
-    "main.tex": "3986ff3ccf5ebd05629276e7395c8f88458edbae78a928b853ab271423150a75",
+    "main.tex": "2c66fdcc9cb150230bc20aeaaf6a209ea2272a4d13f4832cf03501a5ff88435f",
     "figures/pilot_training.png": "1faabf2077956df10d69630c5520fde85de028c36fa905629a35a7fac037dc6a",
     "figures/pilot_validation.png": "aff8fa9688e2581a19fe754c090ca8e0260e982e17c550c3ac20fbe0f6584439"
   },
-  "rendered_pdf_sha256": "f8400ea61ee0429d026a02bdf4690f6d6ecdb938d58c29d9bf2ec78fec80817f",
+  "rendered_pdf_sha256": "b45dff81147c57c3fa40d98c15e3715405c69520bd55bd8cc8777ad052a71d21",
   "visual_review": "All seven pages rendered; source text, table, figures, captions and bibliography checked. No content is clipped.",
   "remaining": [
     "Successful trained models and matched E0/E2/E3 comparisons",
