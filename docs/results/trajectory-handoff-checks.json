@@ -11,7 +11,8 @@
     "load_checks": "both loaded on CUDA through verified bundle CLI",
     "presets": "two validation scenes; no final tests",
     "release_tag": "trajectory-validation-2026-10-17",
-    "internal_only": true
+    "internal_only": true,
+    "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-bc25eca4153d71c40aec"
   },
   "source_archive": {
     "name": "group_07_code.zip",
@@ -85,7 +86,8 @@
       ],
       "note": "functional rehearsal, not model quality or a latency benchmark"
     },
-    "served_quality_metadata": "strict failure and step-5000 selection confirmed through live state API"
+    "served_quality_metadata": "strict failure and step-5000 selection confirmed through live state API",
+    "uploaded_bundle": "downloaded through gh release; archive byte equality and all 22 inventoried hashes passed"
   },
   "scope": "development checkpoint handoff; strict model quality still fails; final code ZIP must be rebuilt after remaining project work"
 }

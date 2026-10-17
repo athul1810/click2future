@@ -126,6 +126,11 @@ uses `7682ea2282dd35e156a420ac5c3b941ea16b7ed3`. later input-validation checks d
 change the saved model or the sampler equations. original artifacts are packaged
 in the internal checkpoint handoff; all weights/data stay outside the source zip.
 
+the [verified internal handoff](../app/README.md#supervised-trajectory-checkpoint)
+has the exact e5/e3 demo launch and download command. the release download was
+checked against the local archive and every inventoried member. both models load
+through the bundle cli, with strict e5 quality failure visible in the live metadata.
+
 ## next decisions
 
 1. add independent training scenes and more contact geometries with sanjay while

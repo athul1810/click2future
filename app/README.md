@@ -141,3 +141,18 @@ continues to control pixel ddâ€‹â€‹im sampling. both enter the replay 
 the checkpoint requires two separately visible objects, native 64px rgb and the
 matching model source hash. all current quality limitations remain visible in the
 bundle metadata and pixel-track counts.
+
+the [private draft handoff](https://github.com/athul1810/click2future/releases/tag/untagged-bc25eca4153d71c40aec)
+contains e5, the unchanged e3 comparison checkpoint, two validation presets and
+the complete evidence. use the source from pr #46 or its matching release target.
+
+```powershell
+gh release download trajectory-validation-2026-10-17 --repo athul1810/click2future --pattern 'click2future-trajectory-validation.zip*' --dir outputs/trajectory-download
+.\.venv\Scripts\python.exe -m zipfile -e outputs/trajectory-download/click2future-trajectory-validation.zip outputs/trajectory-demo-bundle
+.\.venv\Scripts\python.exe -m click2future.demo.server --bundle outputs/trajectory-demo-bundle --models E5-trajectory E3-spatial --device cuda
+```
+
+archive sha-256: `93d1c7129a82cdc8bf96abdd43dd0fbb2e8eac794d1a2e89a2ef2db72467fd77`.
+the uploaded archive was downloaded again and matched byte-for-byte; all 22
+inventoried member hashes pass. the bundled launch passes 25 browser checks.
+see [handoff checks](../docs/results/trajectory-handoff-checks.json).
