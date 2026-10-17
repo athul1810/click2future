@@ -76,6 +76,10 @@ result. Optional LPIPS weights and the image-metrics extra are not downloaded.
 The automatic CUDA path conservatively requires Linux driver 570.26 or later and
 glibc 2.28 or later. Older CUDA 12 drivers may support some applications through
 minor-version compatibility, but this helper does not assume that works for our stack.
+Current setup installs the image-metrics extra because batch-evaluation tests use
+SSIM. It also checks the native CVAE backward pass with strict CUDA determinism,
+which CPU tests alone cannot establish. LPIPS weights are not downloaded by setup;
+tests needing uncached weights retain their explicit skips.
 If it stops, retain the hardware report and choose a compatible lock without changing
 system drivers. [NVIDIA CUDA 12.8 driver tables](https://docs.nvidia.com/cuda/archive/12.8.0/cuda-toolkit-release-notes/index.html).
 

@@ -199,6 +199,20 @@ export C2F_RUN_DIR=runs/cvae-overfit
 sbatch submission/train_cvae.sbatch --overfit-samples 2 --max-steps 500 --checkpoint-every 50
 ```
 
+Recorded one-clip attempts use `cvae_one_clip_1500.yaml` and
+`cvae_one_clip_5000.yaml`. Both failed sampled-video quality despite low posterior
+reconstruction error. To reproduce the longer diagnostic from source:
+
+```sh
+python -m click2future.cli generate-dataset --output-dir data/one-clip --group-count 10 --variants-per-group 2 --seed 226000 --config configs/simulator/one_clip_diagnostic.toml
+export C2F_DATA_DIR=data/one-clip
+export C2F_RUN_DIR=runs/cvae-one-clip-5000
+sbatch submission/train_cvae.sbatch --config configs/training/cvae_one_clip_5000.yaml --overfit-samples 1
+```
+
+These are diagnostic settings, not accepted final baseline checkpoints. Strict
+CUDA determinism remains enabled; pooled summaries use equivalent slice means.
+
 Training requires one visible GPU in the MGPU-TC2 partition. The process limit is
 5.5 hours within a six-hour job. It saves weights, optimizer/RNG state, and the shuffle
 cursor. Resume with the same options and `--resume runs/cvae-overfit/latest.pt`.
