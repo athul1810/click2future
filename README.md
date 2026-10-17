@@ -6,29 +6,25 @@ Select an object in a tabletop scene, draw a force arrow, and generate four poss
 
 Click2Future is our **AI6132 Generative AI For Visual Synthesis** project at NTU. For Project 1: Technical Review, we will compare a conditional VAE and video diffusion for predicting tabletop motion after a force is applied. A procedural simulator will generate the clips, trajectories, and collision labels. We also plan to test object-centric conditioning and auxiliary physics supervision.
 
-**Status:** seeded simulation, grouped data generation/replay, the development environment,
-and a trainable pixel denoiser are available. Evaluation includes trajectory/collision
-metrics, a pixel tracker, zero/reversed-force controls, SSIM/LPIPS, temporal checks,
-and ensemble diversity/coverage. Contact extraction remains an approximate proxy
-with measured errors.
-A dataset trainer, complete checkpoint/resume and seeded DDIM sampler are implemented,
-including auxiliary-loss integration. The first 2,000-step learning pilot failed
-generated-video checks. The longer epsilon and velocity probes also failed the
-quality gate. CVAE training and prior-sampling code are ready for TC2 checks;
-trained CVAE results, held-out learned-video controls and the demo remain open.
-See [pilot evidence](docs/results/diffusion_pilot_2026-10-16.json)
-and [evaluation results](docs/METRICS.md). See [model training](docs/MODEL_TRAINING.md)
-for the CVAE and E4 workflow.
+**Status:** the simulator, controlled/OOD datasets, model trainers and evaluation
+pipeline are implemented. Evaluation covers trajectories, contacts, image quality,
+uncertainty and action controls. Contact timing remains an approximate proxy.
+
+CVAE and diffusion pilots now run on TC2, with complete saved-state continuation
+verified. Both still fail generated-video quality checks. Main trained comparisons,
+held-out action/uncertainty results and the demo remain open. See the
+[task board](docs/TASKS.md), [GPU checks](docs/results/cvae-training-checks.json),
+[experiment protocol](docs/EXPERIMENT_PROTOCOL.md) and
+[working report draft](report/README.md).
 
 **Working submission deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
 **Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya proposed, awaiting acceptance; demo integration: Shrijeet. See the [task board](docs/TASKS.md).
 
-**Compute:** TC2 access is approved for Athul and Shrijeet. A40 setup and real
-training jobs passed, including exact next-update continuation across allocations.
-The four-clip diagnostic measured 0.04883 s/step and 1.744 s for four 32-step
-samples. These timings do not establish video quality or full-dataset cost.
-Each account has a one-GPU, six-hour-job limit. See [compute details](docs/COMPUTE.md).
+**Compute:** the course-provided TC2 A40 setup and scheduled training are verified,
+including deterministic CVAE CUDA backward. Each account has a one-GPU,
+six-hour-job limit. Measured costs and unreported quota details are in
+[compute details](docs/COMPUTE.md).
 
 ## Group 7
 
@@ -48,7 +44,7 @@ Coordinator: **PRAMOD SANJAY**, following the course rule that the first person 
 | Execute the plan for the 14 November PPT presentation | [16 October execution plan](docs/EXECUTION_PLAN_2026-10-16.md) and [demo specification](app/DEMO_SPEC.md) |
 | Prepare for the 14 October project meeting | [Meeting brief](docs/MEETING_2026-10-14.md) |
 | Assess relevant SOTA and choose an achievable build path | [Research review](docs/SOTA_2026-10-14.md) and [build plan](docs/BUILD_PLAN.md) |
-| Verify TC2 login and run the first diagnostic job | [TC2 workflow](cluster/README.md) and [access status](docs/TC2_ACCESS.md) |
+| Set up a TC2 environment | [TC2 workflow](cluster/README.md) and [access status](docs/TC2_ACCESS.md) |
 | Understand the project and scope | [Requirements](docs/REQUIREMENTS.md) |
 | Prepare the three required submission files | [Submission guide](docs/SUBMISSION.md) |
 | Draft the report and contribution statement | [Report outline](docs/REPORT_OUTLINE.md) and [contribution template](docs/CONTRIBUTION_TEMPLATE.md) |
@@ -154,6 +150,7 @@ cluster/             Allocation-guarded TC2 inventory/bootstrap/probe jobs
 scripts/             Local TC2 network/access preflight
 experiments/         Run manifest template and experiment records
 results/             Small result tables and report figures
+report/              Working report draft and embedded diagnostic figures
 app/                 Planned interactive demo
 tests/               Simulator, data, prototype, and evaluation checks
 ```
@@ -164,10 +161,10 @@ The demo UI remains to be built. The [build plan](docs/BUILD_PLAN.md) records th
 
 ## Next team work
 
-- A: finish appearance/OOD dataset coverage and measure generation/storage costs.
-- B: complete the TC2 learning/resume pilot, inspect generated motion, then pass held-out action controls.
-- C: improve contact timing, add the remaining metrics, then integrate auxiliary losses with B.
-- Confirm the CVAE lead; Shrijeet owns demo integration.
+- A: review the controlled/OOD data changes and freeze the main training corpus.
+- B: improve generated-video quality, then pass held-out action controls.
+- C: evaluate useful checkpoints, finish report analysis, and run E4 checks if budget allows.
+- Confirm the CVAE lead and improve prior-sample quality. Shrijeet owns demo integration.
 
 ## References
 
@@ -175,6 +172,8 @@ See [Research references](docs/REFERENCES.md) for the baselines, diffusion model
 
 ## Results
 
-Environment and simulator/metric controls passed. The first learned-video pilot
-passed full-state resume but failed generated-video quality. No method ranking
-is established. Record run IDs, configs, seeds, failures and checkpoint hashes.
+Technical simulator, checkpoint and packaging checks pass. Real trained E0/E3
+checkpoints complete the evaluator, but both single-clip pilots fail the quality
+gate and have no complete tracked trajectories on the validation example. No
+method ranking is established. The [report draft](report/README.md) and
+[recorded checks](docs/results/trained-checkpoint-suite-checks.json) retain these failures.

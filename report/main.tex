@@ -107,13 +107,13 @@ Both checkpoints were also run on the corpus's complete validation split: one vi
 \centering
 \begin{tabular}{lccc}
 \hline
-Method & SSIM & Tracked observations & Complete trajectories \\
+Method & SSIM & Tracked observations & Complete samples \\
 \hline
 E0 CVAE & 0.8893 & 0/248 & 0/4 \\
 E3 spatial diffusion & 0.8654 & 0/248 & 0/4 \\
 \hline
 \end{tabular}
-\caption{One-condition validation diagnostic, four sampled futures per method. SSIM uses one declared simulator reference and excludes frame zero. Undefined trajectory error is a failure to measure the prediction, not zero physical error.}
+\caption{One-condition validation diagnostic, four sampled futures per method. SSIM uses one declared simulator reference and excludes frame zero. Complete samples require all valid object tracks. Undefined trajectory error is missing measurement, not zero physical error.}
 \label{tab:pilot}
 \end{table}
 
