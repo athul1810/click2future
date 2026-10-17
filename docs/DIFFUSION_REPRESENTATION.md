@@ -54,3 +54,61 @@ Tests check residual round trips, zero residual for unchanged pixels, exact RGB
 recovery with known denoising predictions, legacy loading, exact continuation for
 both objectives/representations, observable-only sampling and matched-suite
 rejection. Numerical and integration checks do not establish learned video quality.
+
+## Measured result: 17 October
+
+TC2 job 43235 completed both 5,000-update runs on an A40 with exit 0:0. The residual
+hypothesis failed. Keep RGB as the default; neither run passes the existing gate.
+
+| Representation | Tracked future observations | Complete all-object clips | Selected ADE | Future RGB MAE [0,1] |
+|---|---:|---:|---:|---:|
+| RGB | 124/248 | 0/4 | 0.00357, four complete selected trajectories | 0.02088 |
+| Frame-0 residual | 70/248 | 0/4 | Undefined, selected trajectories incomplete | 0.03363 |
+| Copy frame 0 | 248/248 | 4/4 | 0.04776, fails the motion threshold | 0.00275 |
+
+These are four dependent samples on one training condition. They establish neither
+generalization nor a method ranking. The copy baseline has lower image error while
+failing selected motion. Training prediction errors are in different coordinates;
+do not rank RGB and residual using their raw denoising losses.
+
+The follow-up job 43238 checked EMA/raw weights and 32/128/1,000 DDIM steps with
+seed 100. RGB stayed at 31/62 tracked observations in all six settings. Residual
+ranged from 6/62 to 14/62. More sampling did not rescue this case. The two jobs
+completed in 567 and 73 seconds, totalling 0.178 allocated GPU-hours. Checkpoints,
+datasets and samples were backed up locally with verified SHA-256 hashes.
+
+### What the missing counts mean
+
+The nonselected object remains visible in the RGB samples, but every future
+observation is rejected as fragmented/duplicated. All 3,448 candidate pixels
+outside its largest component lie in the outer three-pixel border. Noisy border
+colours resemble the dark object's frame-0 palette. Residual has the same problem
+and additional area-change failures. The gate still fails; this diagnosis does
+not turn the generated videos into successful outputs.
+
+A separate control keeps every reference object pixel and trajectory unchanged,
+then adds Gaussian noise only to future background pixels. With four noise seeds,
+the unchanged tracker returns 248/248 observations at standard deviations 0, 2
+and 4; 178/248 at 8; and 124/248 at 12 and 16, in uint8 intensity units. This
+isolates a measurement limitation: background corruption can produce missing
+object tracks even when the objects themselves are unchanged.
+
+To reproduce that control, use the recorded training reference and seeds 0-3.
+For each noise standard deviation, copy its RGB, draw
+`np.random.default_rng(seed).normal(0, std, frames[1:].shape)`, round/clip to uint8,
+and replace only pixels where
+`~reference['instance_masks'][1:].any(axis=1)`. Assert all object pixels remain
+exactly equal, then run the unchanged `TrackerConfig()` tracker on the corrupted
+RGB and frame-0 masks. Future oracle masks construct this known control only;
+they never enter tracking or model inference.
+
+Next: improve appearance/border reconstruction and have the evaluation owners
+calibrate extractor noise sensitivity on independent reference controls. Do not
+relax thresholds against model test outputs. Any extractor change needs a new
+version, retained negative controls and re-evaluation of all methods. Multi-clip
+training and held-out action response remain open.
+
+[Full scores, hashes and controls](results/diffusion-representation-checks.json).
+The [sample panel](results/diffusion-representation.png) shows seed 0; all four
+seeds are retained in the numerical record. Full source validation passed 406
+tests and four subtests, plus lint, format and source-archive inspection.
