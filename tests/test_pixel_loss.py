@@ -8,7 +8,11 @@ import torch
 from click2future.models.cvae import CVAEOutput
 from click2future.training.batch import prepare_video_batch
 from click2future.training.cvae_loss import cvae_loss
-from click2future.training.pixel_loss import future_foreground, pixel_mean
+from click2future.training.pixel_loss import (
+    future_foreground,
+    pixel_mean,
+    validate_foreground_margin,
+)
 from click2future.training.train_diffusion import TrainConfig
 
 
@@ -29,6 +33,15 @@ def test_clip_weights_do_not_depend_on_foreground_area():
         pixel_mean(errors, foreground=masks, foreground_weight=64), torch.tensor([2.0, 5.0])
     )
     assert torch.equal(pixel_mean(errors), errors.flatten(1).mean(1))
+
+
+def test_low_precision_weighted_reduction_does_not_overflow():
+    errors = torch.ones(1, 3, 31, 64, 64, dtype=torch.float16, requires_grad=True)
+    mask = torch.ones(1, 1, 31, 64, 64, dtype=torch.bool)
+    result = pixel_mean(errors, foreground=mask, foreground_weight=64)
+    assert result.item() == 1 and result.dtype == torch.float32
+    result.sum().backward()
+    assert torch.isfinite(errors.grad).all() and (errors.grad > 0).all()
 
 
 @pytest.mark.parametrize("weight", [True, 0, -1, 65, float("nan"), float("inf"), "16"])
@@ -70,6 +83,23 @@ def test_frame_zero_and_padding_do_not_enter_future_loss_mask():
     raw["instance_masks"][:, 2, 1, 2, 3] = True
     with pytest.raises(ValueError, match="valid object slots"):
         future_foreground(raw, device="cpu")
+
+
+def test_boundary_margin_is_spatial_only_and_clips_at_image_edges():
+    raw = loader_batch()
+    raw["instance_masks"][:, 0, 0] = True
+    raw["instance_masks"][:, 1, 0, 0, 0] = True
+    mask = future_foreground(raw, device="cpu", margin=2)
+    assert mask[0, 0, 0].sum() == 9 and not mask[0, 0, 1].any()
+    assert mask[0, 0, 0, :3, :3].all()
+
+
+@pytest.mark.parametrize("margin", [True, -1, 9, 1.5, float("nan")])
+def test_invalid_boundary_margin_rejects(margin):
+    with pytest.raises(ValueError, match="foreground_margin"):
+        validate_foreground_margin(margin)
+    with pytest.raises(ValueError, match="foreground_margin"):
+        TrainConfig(foreground_margin=margin).validate()
 
 
 def test_training_only_masks_cannot_change_observable_conditioning():

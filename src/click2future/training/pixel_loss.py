@@ -6,6 +6,7 @@ import math
 from numbers import Real
 
 import torch
+from torch.nn import functional as F
 
 
 def validate_foreground_weight(weight):
@@ -18,8 +19,14 @@ def validate_foreground_weight(weight):
         raise ValueError("foreground_weight must be finite and between 1 and 64")
 
 
-def future_foreground(batch, *, device):
+def validate_foreground_margin(margin):
+    if isinstance(margin, bool) or not isinstance(margin, int) or not 0 <= margin <= 8:
+        raise ValueError("foreground_margin must be an integer between 0 and 8 pixels")
+
+
+def future_foreground(batch, *, device, margin=0):
     """Union valid future instance masks for loss targets, never model conditioning."""
+    validate_foreground_margin(margin)
     masks = torch.as_tensor(batch["instance_masks"], device=device)
     valid = torch.as_tensor(batch["object_valid"], device=device)
     if (
@@ -33,7 +40,11 @@ def future_foreground(batch, *, device):
         or (masks & ~valid[:, None, :, None, None]).any()
     ):
         raise ValueError("Loss masks must be boolean [B,T,N,H,W] with valid object slots")
-    return masks[:, 1:].any(dim=2).unsqueeze(1)  # [B,1,F,H,W], excludes frame zero
+    union = masks[:, 1:].any(dim=2)
+    if margin:
+        # Pool spatial dimensions only; no dilation across future frames or clips.
+        union = F.max_pool2d(union.float(), 2 * margin + 1, stride=1, padding=margin).bool()
+    return union.unsqueeze(1)  # [B,1,F,H,W], excludes frame zero
 
 
 def pixel_mean(error, *, foreground=None, foreground_weight=1.0):
@@ -46,6 +57,8 @@ def pixel_mean(error, *, foreground=None, foreground_weight=1.0):
     validate_foreground_weight(foreground_weight)
     if error.ndim != 5 or min(error.shape) < 1 or not error.is_floating_point():
         raise ValueError("Pixel errors must be floating [B,C,F,H,W]")
+    if error.dtype in {torch.float16, torch.bfloat16}:
+        error = error.float()
     if foreground is not None and (
         foreground.shape != (len(error), 1, *error.shape[2:])
         or foreground.device != error.device

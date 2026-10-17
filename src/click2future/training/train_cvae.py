@@ -20,7 +20,11 @@ from click2future.models.cvae import ConditionalVideoVAE
 
 from .batch import prepare_video_batch
 from .cvae_loss import beta_at_step, cvae_loss
-from .pixel_loss import future_foreground, validate_foreground_weight
+from .pixel_loss import (
+    future_foreground,
+    validate_foreground_margin,
+    validate_foreground_weight,
+)
 
 
 def sha256(path):
@@ -94,6 +98,7 @@ def dataset_index(root: Path):
 def validate_config(config):
     data, model, train = (config[key] for key in ("data", "model", "training"))
     validate_foreground_weight(train.get("foreground_weight", 1.0))
+    validate_foreground_margin(train.get("foreground_margin", 0))
     for key in ("seed", "batch_size", "max_steps", "checkpoint_every", "validation_batches"):
         value = train[key]
         if (
@@ -141,7 +146,9 @@ def model_batch(root, ids, rows, config, *, device, with_loss_mask=False):
     batch = prepare_video_batch(raw, device=device, force_scale=d["force_scale"])
     if with_loss_mask:
         mask = (
-            future_foreground(raw, device=device)
+            future_foreground(
+                raw, device=device, margin=config["training"].get("foreground_margin", 0)
+            )
             if config["training"].get("foreground_weight", 1.0) != 1
             else None
         )
@@ -233,6 +240,7 @@ def validate(model, root, ids, rows, config):
         "samples": count,
         "criterion": "fixed-seed posterior reconstruction plus beta KL",
         "foreground_weight": t.get("foreground_weight", 1.0),
+        "foreground_margin": t.get("foreground_margin", 0),
         "prior_sample_quality": "not measured by this validation objective",
     }
 
@@ -368,6 +376,7 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
                 state["cursor"] += len(indices)
                 state["step"] += 1
                 row = {"step": state["step"], "epoch": state["epoch"], **loss.record()}
+                row["foreground_margin"] = t.get("foreground_margin", 0)
                 if state["step"] % t["checkpoint_every"] == 0 or state["step"] == t["max_steps"]:
                     row["validation"] = validate(model, root, selected["validation"], rows, config)
                     score = row["validation"]["loss"]

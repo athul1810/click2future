@@ -141,6 +141,14 @@ is adopted, and retain the failed uniform-loss pilots. New loss weights require 
 runs; exact continuation rejects an altered setting. Do not change RGB tracking or
 trajectory thresholds to make the training gate pass.
 
+The boundary diagnostic keeps weight 32 and adds `foreground_margin: 2`. It weights
+the two-pixel neighbourhood as well as object interiors, so nearby background errors
+also receive the increased penalty. Dilation is spatial only and clipped at image
+edges. Margin 0 reproduces foreground-only weighting. Both the weight and margin
+are immutable run settings and must match across compared methods. This follow-up
+tests the enlarged-outline failure of foreground-only CVAE training, without changing
+the model, seeds, step count, sampler or tracking thresholds.
+
 ## Sampling
 
 Use an ID from the dataset manifest; the example ID does not imply a particular split:

@@ -95,6 +95,9 @@ def _describe_run(run, spec_path, plan, sampling_steps, allow_untrained):
         "foreground_weight": config["training"].get("foreground_weight", 1.0)
         if method == "E0"
         else trained.foreground_weight,
+        "foreground_margin": config["training"].get("foreground_margin", 0)
+        if method == "E0"
+        else trained.foreground_margin,
         **settings,
     }
 
@@ -106,8 +109,8 @@ def _check_case_contracts(plan, runs):
     common_scale = plan["comparison_protocol"].get("force_scale", 0.5)
     if any(run["force_scale"] != common_scale for run in runs):
         raise ValueError("Checkpoint force normalization differs from the shared protocol")
-    if len({run["foreground_weight"] for run in runs}) > 1:
-        raise ValueError("Matched comparisons require the same foreground loss weight")
+    if len({(run["foreground_weight"], run["foreground_margin"]) for run in runs}) > 1:
+        raise ValueError("Matched comparisons require the same foreground loss weight and margin")
     diffusion = [run for run in runs if run["method"] != "E0"]
     if (
         len({(r["prediction_type"], r["diffusion_steps"], r["base_channels"]) for r in diffusion})

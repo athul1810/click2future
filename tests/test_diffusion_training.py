@@ -259,6 +259,7 @@ def test_full_training_resume_matches_uninterrupted(
         auxiliary=auxiliary,
         prediction_type=prediction_type,
         foreground_weight=foreground_weight,
+        foreground_margin=2 if foreground_weight > 1 else 0,
     )
     uninterrupted = Trainer(dataset, config)
     records = []
