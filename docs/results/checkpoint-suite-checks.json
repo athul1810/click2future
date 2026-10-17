@@ -1,0 +1,200 @@
+{
+  "status": "passed",
+  "scope": "Untrained checkpoint-to-metrics plumbing on validation scenes; no optimizer updates or learned-quality claim",
+  "dataset_schema": "dataset-0.2",
+  "split": "validation",
+  "scene_groups": 1,
+  "conditions": 6,
+  "reference_futures": 21,
+  "resolution_hw": [
+    64,
+    64
+  ],
+  "total_frames": 32,
+  "fps": 8,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "methods": [
+    "E0",
+    "E2",
+    "E3"
+  ],
+  "training_steps": [
+    0,
+    0,
+    0
+  ],
+  "fixture_ddim_steps": 4,
+  "metric_families": [
+    "trajectory",
+    "images",
+    "futures"
+  ],
+  "image_metrics": [
+    "ssim",
+    "lpips"
+  ],
+  "generated_videos": 72,
+  "all_cases_covered": true,
+  "first_frame_preserved": "enforced by sampling and video/futures evaluators",
+  "untrained_fixture_runs": [
+    "fixture-E0-seed3",
+    "fixture-E2-seed3",
+    "fixture-E3-seed3"
+  ],
+  "sampling_seconds_including_io": 19.77846254198812,
+  "outputs": {
+    "sampling_manifest_sha256": "9ba855a149953328b5e5cf01dc33e93de29467e15a277dbe856aa78efc0958f1",
+    "predictions_manifest_sha256": "f41470c1b1eeff89d08f206c1578c9eac4e40f086197c6a85581ace115d67d33",
+    "summary_sha256": "839d2c2c16b5ebe5c930d3988fc0e0fc246c39374aac7fef18e639c42dba0291"
+  },
+  "source_sha256": {
+    "src/click2future/evaluation/sample_suite.py": "53794aa3a9d36beedaee3e69df5cd647cfee82cde198ab76c81dbe44bd9d8210",
+    "src/click2future/evaluation/suite.py": "aacdcff4452d70c01b1793bf10c03c7e2d78d6ba97187624470cc71fb715bea5",
+    "tests/test_sample_suite.py": "f6a03d5cd4a312a99ed7ab4d062206548bf98ead433954631f08993490017596",
+    "submission/sample_evaluation.sbatch": "28ba931208bdcc26e2743d59be327ad4fc94c916823a61a45bd64051c15d10e2"
+  },
+  "remaining": [
+    "trained TC2 checkpoints and native quality gates",
+    "final matched data/config/sampler selection",
+    "trained comparisons, OOD results and action-control analysis"
+  ],
+  "torch_cpu_rng_preserved": true,
+  "fixture_runs": [
+    {
+      "method": "E0",
+      "training_seed": 3,
+      "training_steps": 0,
+      "training_config": {
+        "status": "untrained_baseline",
+        "data": {
+          "resolution": 64,
+          "total_frames": 32,
+          "fps": 8,
+          "force_scale": 0.5,
+          "force_duration": 0.25
+        },
+        "model": {
+          "future_frames": 31,
+          "base_channels": 8,
+          "latent_dim": 4
+        },
+        "training": {
+          "seed": 3,
+          "batch_size": 2,
+          "learning_rate": 0.0002,
+          "beta": 0.001,
+          "beta_warmup_fraction": 0.2,
+          "reconstruction": "l1",
+          "max_steps": 20000,
+          "checkpoint_every": 250,
+          "validation_batches": 8,
+          "max_hours": 5.5,
+          "gradient_clip_norm": 1.0
+        },
+        "sampling": {
+          "seeds": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "checkpoint_sha256": "98035a1ef8153d77b0638a06e5f8c359cc3bb721d817e46a10fac9059051c702",
+      "untrained_fixture": true
+    },
+    {
+      "method": "E2",
+      "training_seed": 3,
+      "training_steps": 0,
+      "training_config": {
+        "steps": 2000,
+        "batch_size": 1,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.01,
+        "ema_decay": 0.995,
+        "seed": 3,
+        "diffusion_steps": 20,
+        "prediction_type": "epsilon",
+        "base_channels": 8,
+        "conditioning": "numeric",
+        "auxiliary": false,
+        "precision": "float32",
+        "limit_train": 4,
+        "checkpoint_every": 100,
+        "collision_positive_weight": 1.0,
+        "force_limit": 1.1
+      },
+      "checkpoint_sha256": "7b67c8465b21221fd6ff94bace066d81c64936040170314ba0d5411d84237389",
+      "untrained_fixture": true
+    },
+    {
+      "method": "E3",
+      "training_seed": 3,
+      "training_steps": 0,
+      "training_config": {
+        "steps": 2000,
+        "batch_size": 1,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.01,
+        "ema_decay": 0.995,
+        "seed": 3,
+        "diffusion_steps": 20,
+        "prediction_type": "epsilon",
+        "base_channels": 8,
+        "conditioning": "spatial",
+        "auxiliary": false,
+        "precision": "float32",
+        "limit_train": 4,
+        "checkpoint_every": 100,
+        "collision_positive_weight": 1.0,
+        "force_limit": 1.1
+      },
+      "checkpoint_sha256": "c81ca82d234c189dee9f7cc1f1cef1e2b681f6e36efadbbc9f8e6e6755e44302",
+      "untrained_fixture": true
+    }
+  ],
+  "dataset_generation": {
+    "seed": 191000,
+    "scene_groups": 4,
+    "clips": 84,
+    "config": {
+      "collision_force": 0.25,
+      "force_duration": 0.25,
+      "forward_force": 0.15,
+      "fps": 8,
+      "frame_count": 32,
+      "physics_hz": 240,
+      "resolution": 64,
+      "wall_force": 1.1,
+      "world_size": [
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "checks": {
+    "working_tree_tests": 322,
+    "subtests": 4,
+    "skipped": 0,
+    "ruff": "passed",
+    "format": "passed",
+    "source_archive_inspection": "passed",
+    "dependency_lock": "passed",
+    "source_and_wheel_builds": "passed",
+    "tc2_job_syntax": "three scripts passed; embedded diffusion/evaluation Python compiles",
+    "live_gpu_sampling_job": "not run",
+    "fresh_source_archive_tests": 322
+  },
+  "environment": {
+    "device": "cpu",
+    "torch_version": "2.11.0",
+    "python": "3.12.15",
+    "torch_threads": 2
+  }
+}

@@ -20,3 +20,7 @@ paired action controls. Use the commands in [METRICS.md](../docs/METRICS.md).
 
 `training/auxiliary.yaml` configures the loss adapter and low-timestep gate. Its values
 are untuned proposals; see [the integration guide](../docs/AUXILIARY_LOSSES.md).
+
+`evaluation/runs.example.json` declares local checkpoint paths and DDIM steps for
+the fixed-case sampling runner. Edit paths and validation-selected steps before use;
+see [the experiment protocol](../docs/EXPERIMENT_PROTOCOL.md).

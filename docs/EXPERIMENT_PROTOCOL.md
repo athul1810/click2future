@@ -36,6 +36,38 @@ Use the same request for every method. Write uint8 `videos[K,T,H,W,3]` NPZ files
 An optional boolean `frame_valid[K,T]` marks missing RGB; missing observations
 remain in trajectory, contact, image and uncertainty denominators.
 
+## Generate the samples from checkpoints
+
+Edit `configs/evaluation/runs.example.json` to point to the actual frozen E0/E2/E3
+checkpoints. Paths resolve relative to that JSON file. Add independent training
+seeds as separate runs; the runner reads each seed and training step from the
+checkpoint. Set DDIM steps to the validation-selected value before the test run.
+
+```sh
+python -m click2future.evaluation.sample_suite --plan outputs/test-plan.json --runs configs/evaluation/runs.example.json --output-dir outputs/model-samples --device cpu
+python -m click2future.evaluation.suite run --plan outputs/test-plan.json --predictions outputs/model-samples/predictions.json --output-dir outputs/test-results
+```
+
+The runner covers every planned case with its four ordered seeds, using the existing
+CVAE prior sampler or diffusion EMA sampler. It checks the training corpus/split
+hashes, model names, normalization, force limits, dimensions and timing. Diffusion
+runs must share target, schedule length and backbone width. Full training configs
+and sampling times remain in `sampling.json`; these checks do not replace T13's
+validation and budget decisions. Use explicit `--split id_test` when preparing a
+dataset-0.3 ID plan, and its named OOD splits for separate plans.
+
+CUDA sampling requires an allocated TC2 GPU job. `submission/sample_evaluation.sbatch`
+runs sampling and all three metric families with `C2F_EVAL_PLAN`, `C2F_EVAL_RUNS`,
+`C2F_SAMPLE_DIR`, `C2F_RESULT_DIR` and `C2F_SOURCE_REVISION` set. The plan and run
+specification are local files; the script does not train or select models.
+
+Existing output folders are rejected. Partial sampling writes a failure record
+without a complete prediction manifest. Checkpoint/video hashes are bound to that
+manifest, so overwriting an artifact after generation makes evaluation fail.
+Untrained checkpoints are refused unless `--allow-untrained-fixtures` is explicitly
+set for a correctness check; zero-step runs remain labelled in the summary JSON.
+E4 uses generated RGB here; auxiliary heads retain their separate evaluation API.
+
 ## Evaluate the model runs together
 
 Write a prediction manifest next to the outputs. Paths resolve relative to that
@@ -88,8 +120,8 @@ request SSIM and LPIPS. Cached LPIPS weights stay outside the source ZIP.
 
 ## Remaining evidence
 
-T14 needs actual trained E0/E2/E3 samples and repeats. T15 also needs Sanjay's
-separate shape/texture/force OOD datasets. T16 needs generated samples compared
+T14 needs actual trained E0/E2/E3 samples and repeats. T15 needs frozen models
+trained on the matched generalization corpus from T06. T16 needs generated samples compared
 against repeated hidden-physics references and paired action controls. Run the
 existing action evaluator on its controlled, contact-free windows separately.
 This batch workflow does not replace those experiments or their quality checks.

@@ -133,14 +133,9 @@ def prepare_plan(dataset, config, *, split="test", metrics=("ssim", "lpips"), pr
     return plan
 
 
-def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
-    """Score pre-generated videos; never train, select, or silently drop a case.
-
-    Model runs need a local checkpoint for its hash. Simulator controls have a
-    separate source label and cannot use E0-E4 method names.
-    """
-    plan_path, predictions_path, output_dir = map(Path, (plan_path, predictions_path, output_dir))
-    plan = json.loads(plan_path.read_text())
+def read_plan(plan_path):
+    """Verify a frozen plan, its evaluator revision and every referenced input."""
+    plan = json.loads(Path(plan_path).read_text())
     payload = {key: value for key, value in plan.items() if key != "plan_sha256"}
     if plan["schema_version"] != 1 or _digest(payload) != plan["plan_sha256"]:
         raise ValueError("Evaluation plan changed; prepare a new plan explicitly")
@@ -149,6 +144,18 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
     for key, path in plan["files"].items():
         if _sha(path) != plan["input_sha256"][key]:
             raise ValueError(f"Frozen evaluation input changed: {key}")
+    _seeds(plan["sampling_seeds"])
+    return plan
+
+
+def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
+    """Score pre-generated videos; never train, select, or silently drop a case.
+
+    Model runs need a local checkpoint for its hash. Simulator controls have a
+    separate source label and cannot use E0-E4 method names.
+    """
+    plan_path, predictions_path, output_dir = map(Path, (plan_path, predictions_path, output_dir))
+    plan = read_plan(plan_path)
     predictions = json.loads(predictions_path.read_text())
     source = predictions["source"]
     if source not in {"generated_video", "simulator_control"}:
@@ -178,12 +185,33 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
                 training_seed=seed,
                 checkpoint_sha256=_sha(predictions_path.parent / run["checkpoint"]),
             )
+            if (
+                "checkpoint_sha256" in run
+                and run["checkpoint_sha256"] != record["checkpoint_sha256"]
+            ):
+                raise ValueError("Checkpoint changed after sampling")
+            if "training_steps" in run:
+                steps = run["training_steps"]
+                fixture = run.get("untrained_fixture")
+                if (
+                    isinstance(steps, bool)
+                    or not isinstance(steps, int)
+                    or steps < 0
+                    or not isinstance(fixture, bool)
+                    or fixture != (steps == 0)
+                ):
+                    raise ValueError("Training steps and untrained-fixture label disagree")
+                record.update(training_steps=steps, untrained_fixture=fixture)
         videos = {
             key: (predictions_path.parent / path).resolve() for key, path in run["videos"].items()
         }
-        for path in videos.values():
+        if "video_sha256" in run and set(run["video_sha256"]) != expected:
+            raise ValueError("Video hashes must cover every frozen case")
+        for sample_id, path in videos.items():
             if not path.is_file():
                 raise ValueError(f"Missing prediction file: {path.name}")
+            if "video_sha256" in run and _sha(path) != run["video_sha256"][sample_id]:
+                raise ValueError("Video changed after sampling")
         prepared.append((record, videos))
     config = yaml.safe_load(Path(plan["config"]).read_text())
     tracker = TrackerConfig(**config["tracker"])
@@ -296,6 +324,9 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
         )
         report["evaluation_plan_sha256"] = plan["plan_sha256"]
         report["predictions_manifest_sha256"] = _sha(predictions_path)
+        report["untrained_fixture_runs"] = [
+            run["run_id"] for run in manifest["runs"] if run.get("untrained_fixture")
+        ]
         _write(output_dir / "summary.json", report)
         (output_dir / "summary.csv").write_text(csv_table(report))
         return report

@@ -2,9 +2,9 @@
   "status": "passed",
   "artifact": "development source snapshot, not final submission",
   "archive": "group_07_code.zip",
-  "archive_sha256": "be7ab334957cb66878b78fecabdf7df1635c58edfdec98bea18d47197b2f34d8",
-  "file_count": 123,
-  "bytes": 223086,
+  "archive_sha256": "bb0639f52784bd5e840ab9b2ddbb20d92739e4fdc8aeafff74a2bda53c3d22a5",
+  "file_count": 127,
+  "bytes": 232581,
   "fresh_environment": {
     "python": "3.12.15",
     "torch": "2.11.0",
@@ -12,8 +12,8 @@
     "install": "pinned CPU, dev, image-metrics extras with constraints; no inherited project environment"
   },
   "validation": {
-    "working_tree_tests": 310,
-    "extracted_source_tests": 310,
+    "working_tree_tests": 322,
+    "extracted_source_tests": 322,
     "subtests": 4,
     "skipped_tests": 0,
     "generated_smoke_rollouts": 2,
@@ -29,24 +29,26 @@
     "ruff_format": "passed",
     "dependency_lock": "passed",
     "source_and_wheel_builds": "passed",
-    "tc2_job_script_syntax": "both CVAE and diffusion scripts passed",
+    "tc2_job_script_syntax": "CVAE training, diffusion training and checkpoint sampling/evaluation scripts passed; embedded Python compiled",
     "native_simulator_control_suite": "passed: all three metric families, SSIM and LPIPS",
     "collision_report_versions": "encounter scoring and legacy/mixed-version checks passed",
     "dataset_0_2_integration": "passed: diffusion wall-force checkpoint contract, CVAE native wall prior export, six-action held-out plan",
-    "dataset_0_3_integration": "passed: all split coverage, train/validation-only CVAE index, untrained force-OOD prior export, unchanged physical normalization, standalone import orders"
+    "dataset_0_3_integration": "passed: all split coverage, train/validation-only CVAE index, untrained force-OOD prior export, unchanged physical normalization, standalone import orders",
+    "checkpoint_evaluation_bridge": "passed: all five untrained fixture variants; native E0/E2/E3 validation sampling and all metric families"
   },
   "source_sha256": {
-    "src/click2future/submission.py": "c1b0a0455f7be3cceadcc6620a1fe31266907f6afefed951d7ef7ba482e0086c",
-    "submission/allowlist.json": "6fa227cf49bfbc499a6f0fd701018eaecddf0c92602908becdf093bf94cb5228",
+    "src/click2future/submission.py": "7932e219bbca96811487cc7a0ed0a9db79b3cf022382ac2a61b9c31e28b56d30",
+    "submission/allowlist.json": "a47e999858795e48de82c6a8f874f40e63d9ecab9ef579c5fe3e6cfd1b15adf6",
     "submission/smoke.py": "43d58e6f9b8a949189c87aa240ca730920f7c45f14e441ef5f99e7aa0bf1a425",
     "submission/train_cvae.sbatch": "226bc0846ee6db64f5fb695e5fc78b46b09a5845c6468e65057a4dbea44fd0db",
     "submission/train_diffusion.sbatch": "b290d45047ef3c02fcb9712c5372a7f586a3ac49f9ca1e1d3539b6d58c47a6db",
-    "submission/README.md": "7ce1afdbbb4f0651d8d1bcc736cbe6572e55185e23ba10089cb6202bb2c61d29"
+    "submission/README.md": "05d2e8206af687613f27acdc5b8926ca635a613e7e99de981bc6bf6a46008838",
+    "submission/sample_evaluation.sbatch": "28ba931208bdcc26e2743d59be327ad4fc94c916823a61a45bd64051c15d10e2"
   },
   "previous_snapshot": {
-    "archive_sha256": "dd895ce82b680acad4cf2f80f2589bea406ff2a5ff30dcb66c9d886c7bacb6a7",
-    "file_count": 118,
-    "bytes": 212585
+    "archive_sha256": "be7ab334957cb66878b78fecabdf7df1635c58edfdec98bea18d47197b2f34d8",
+    "file_count": 123,
+    "bytes": 223086
   },
   "remaining": [
     "CVAE and E4 TC2 training and quality gates",

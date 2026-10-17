@@ -157,7 +157,7 @@ tensors and RNG state exactly and removes its hook after errors. These are untra
 inference checks without optimizer updates.
 The initial integration snapshot passed 258 tests with no skips, recorded in
 `results/diffusion-integration-checks.json`. The later batch-evaluation and issue-work
-checks pass 310 tests; see `results/issue-work-checks.json`.
+checks pass 322 tests; see `results/issue-work-checks.json`.
 
 The standalone `diffusion_objective` helper remains epsilon-only. The integrated
 diffusion trainer computes the selected epsilon/velocity target itself and applies
