@@ -6,7 +6,7 @@
 2. Record the owner or joint owners and agree on a reviewer. For shared tasks, agree on who implements each part before coding.
 3. Add a short implementation plan and identify any interface changes before coding.
 4. Create a branch such as `feat/t05-simulator` or `docs/t01-course-requirements`.
-5. Open a pull request linking the task (`Closes #...`) with the relevant evidence.
+5. Open a pull request with the relevant evidence. Write `Closes #N` for each task it completes, so the issue closes when the PR merges into `main`, or `Part of #N` when work remains. The linked-issues check fails if the description names neither.
 
 When changing a task's scope or dependencies, update its GitHub issue, [task board](docs/TASKS.md), and [backlog](docs/task_backlog.json) together. Keep live ownership and progress in GitHub Issues.
 
