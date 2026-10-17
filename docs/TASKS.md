@@ -13,9 +13,9 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | None | MAITI SHRIJEET | Done |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | None | Unassigned | Done |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | T01 | PRAMOD SANJAY | Done |
-| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In review |
-| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In review |
-| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
+| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | Done |
+| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | Done |
+| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
@@ -27,7 +27,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
-| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | In review |
+| T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | Done |
 | T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | Not started |
 
 ## Task details
@@ -99,14 +99,14 @@ PR #24 merged the frozen simulator/action contract, versioned schema, condition/
 
 Generate repeatable tabletop clips with usable physical labels.
 
-**Dependencies:** T03, T04. **Owner:** PRAMOD SANJAY. **Status:** In review.
+**Dependencies:** T03, T04. **Owner:** PRAMOD SANJAY. **Status:** Done.
 
 - [x] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
 - [x] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
 - [x] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
 - [x] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
 
-Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review in PR #32. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.
+Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and merged in PR #32. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October.
 
 <a id="t06"></a>
 
@@ -114,7 +114,7 @@ Textured rendering, object-attached stripe/checker patterns, physical triangles 
 
 Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.
 
-**Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In review.
+**Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** Done.
 
 - [x] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [x] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
@@ -122,7 +122,7 @@ Produce a traceable dataset with independent visible-scene groups and controlled
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review in PR #32; trained generalization remains T15.
+Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation merged in PR #32; trained generalization remains T15. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October.
 
 <a id="t07"></a>
 
@@ -130,7 +130,7 @@ Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds t
 
 Measure generated video behavior consistently across models.
 
-**Dependencies:** T04, T05. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
+**Dependencies:** T04, T05. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Done.
 
 - [x] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
 - [x] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
@@ -138,7 +138,7 @@ Measure generated video behavior consistently across models.
 - [x] Separate video-derived metrics from auxiliary-head metrics and export machine-readable records.
 - [x] Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models.
 
-Evaluation implementation is ready for review in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments.
+Evaluation implementation merged in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October.
 
 <a id="t08"></a>
 
@@ -328,7 +328,7 @@ A seven-page working draft now includes introduction, implemented methods, evalu
 
 Prepare a source-only submission package and check that it can be used without the team's working files.
 
-**Dependencies:** T03, T04. **Owner:** Unassigned. **Status:** In review.
+**Dependencies:** T03, T04. **Owner:** Unassigned. **Status:** Done.
 
 - [x] Run internal simulator replay, trained-checkpoint loading, and sampling checks; retain all model weights and datasets outside the submission.
 - [x] Build group_07_code.zip from an explicit source/config/dependency-file list, with local setup and run instructions.
@@ -337,7 +337,7 @@ Prepare a source-only submission package and check that it can be used without t
 - [x] Inspect the archive for Git history, environments, caches, logs, credentials, and working documents with links; follow docs/SUBMISSION.md.
 - [x] Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source.
 
-Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174 ran real 5000-step E0/E3 checkpoints through the frozen sampler and all three metric families over the complete one-condition validation split, producing eight videos. Model quality failed and stays in T09/T10/T14-T16. Source installation, replay, archive inspection and all 364 tests plus four subtests pass. Implementation awaits review; T20 retains final source regeneration and post-experiment artifact checks. Evidence: `results/trained-checkpoint-suite-checks.json`.
+Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174 ran real 5000-step E0/E3 checkpoints through the frozen sampler and all three metric families over the complete one-condition validation split, producing eight videos. Model quality failed and stays in T09/T10/T14-T16. Source installation, replay, archive inspection and all 364 tests plus four subtests pass. Implementation merged after independent review; T20 retains final source regeneration and post-experiment artifact checks. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October. Evidence: `results/trained-checkpoint-suite-checks.json`.
 
 <a id="t20"></a>
 
