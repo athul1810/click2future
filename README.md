@@ -88,7 +88,8 @@ For the core hidden-physics model, friction is **not an input**. Changing the fr
 
 The course requires at least two methods, one evaluation dataset, and a report of at least four pages. E1/E4 and advanced demo features are gated additions to the core comparison. Checkpoints and any demo recordings stay in the team's working files.
 
-No real robot, photorealistic 512px video, or general-purpose physics. The upload workflow targets the synthetic domain; real photographs are outside the course scope.
+No real robot, photorealistic 512px video, or general-purpose physics. The current
+demo uses preset simulator images and selected-object masks. Image uploads are deferred.
 
 ## System overview
 
@@ -152,13 +153,16 @@ scripts/             Local TC2 network/access preflight
 experiments/         Run manifest template and experiment records
 results/             Small result tables and report figures
 report/              Working report draft and embedded diagnostic figures
-app/                 Planned interactive demo
+app/                 Interactive demo specification and launch instructions
 tests/               Simulator, data, prototype, and evaluation checks
 ```
 
 See [development setup](docs/SETUP.md) for the locked environment and
 [metric usage](docs/METRICS.md) for RGB evaluation. The [training guide](docs/TRAINING.md) covers the implemented trainer and sampler.
-The demo UI remains to be built. The [build plan](docs/BUILD_PLAN.md) records the adopted pixel path.
+The [local demo](app/README.md) runs actual checkpoints with click/drag controls,
+four seeded futures and labelled simulator/replay panels. Held-out model quality
+and the final demo rehearsal remain open. The [build plan](docs/BUILD_PLAN.md)
+records the adopted pixel path.
 
 ## Next team work
 

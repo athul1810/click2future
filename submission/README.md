@@ -252,6 +252,22 @@ artifact manifest. The component check runs CPU gradients and untrained samples,
 without optimizer updates. All final trained results still need completion before
 preparing the final code ZIP.
 
+## Local interactive demo
+
+After obtaining a trained checkpoint and generating the matching development data:
+
+```sh
+python -m click2future.demo.server --dataset data/one-clip --checkpoint "e3=runs/e3/checkpoint.pt" --device cpu
+```
+
+Open the loopback address `127.0.0.1:8765` in a browser. `--device cuda` enables
+local GPU inference. TC2 requires a scheduled compute allocation. The app uses
+development/validation presets, never final-test presets; arbitrary image uploads
+are deferred. Four paired seeds and the offline sampler produce the videos.
+Simulator references and cached model replays have separate labels. Checkpoints
+and generated replay files are excluded from this archive. The demo currently
+establishes interface functionality, not held-out quality or a final model ranking.
+
 `MANIFEST.json` lists each included file and its SHA-256. The code ZIP is one of the
 three required submission files, alongside `group_07_report.pdf` and
 `group_07_contribution.pdf`.

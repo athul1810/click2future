@@ -1,6 +1,9 @@
 {
   "include": [
     "src/click2future/**/*.py",
+    "src/click2future/demo/static/index.html",
+    "src/click2future/demo/static/style.css",
+    "src/click2future/demo/static/app.js",
     "configs/**/*.yaml",
     "configs/**/*.toml",
     "configs/**/*.json",

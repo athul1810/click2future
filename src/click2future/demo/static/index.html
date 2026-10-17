@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>click2future</title><link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/">click<span>2</span>future<span class="brand-dot">.</span></a>
+    <span class="pill">interactive research preview</span></header>
+  <main>
+    <section class="intro"><p class="eyebrow">one image. a push. possible futures.</p>
+      <h1>what happens <em>next?</em></h1>
+      <p>choose an object. draw a push. watch the same scene unfold four ways.</p></section>
+    <div class="workspace">
+      <aside class="input-panel">
+        <div class="section-title"><span class="step">01</span><h2>set the scene</h2></div>
+        <label for="scene">starting image</label><select id="scene" disabled></select>
+        <div class="scene-wrap"><canvas id="input" width="512" height="512" aria-label="starting scene: click an object and drag to push" tabindex="0"></canvas></div>
+        <p class="hint" id="selection">click a coloured object, then drag to set its push.</p>
+        <div id="objects" class="object-buttons" aria-label="select an object"></div>
+        <div class="force-line"><span>push strength <b id="strength">0%</b></span><div class="small-actions"><button id="reverse" type="button">reverse</button><button id="zero" type="button">zero</button></div></div>
+        <p class="hint">arrow keys adjust the push; shift makes smaller changes. push duration is always 0.25 seconds.</p>
+        <label for="model">compare models</label><select id="model"></select>
+        <div class="seed-line"><label for="seed">starting seed</label><input id="seed" type="number" min="0" max="2147483644" value="0"></div>
+        <p class="hint">keep the seed fixed when changing the object or push.</p>
+        <button id="generate" class="primary" disabled>generate four futures <span>↗</span></button>
+        <button id="cancel" class="cancel" hidden>cancel generation</button>
+        <div id="status" class="status" role="status" aria-live="polite">loading the local model…</div>
+      </aside>
+      <section class="output-panel">
+        <div class="output-heading"><div class="section-title"><span class="step">02</span><h2>explore the futures</h2></div><span id="mode" class="mode">awaiting a push</span></div>
+        <div id="results"><div class="empty-state"><div class="orbit">↗</div><h3>one action. four possibilities.</h3><p>your model-generated futures appear here.<br>the starting image stays exactly the same.</p></div></div>
+        <div class="timeline"><button id="play" disabled aria-label="play or pause futures">▶</button><input id="timeline" type="range" min="0" max="31" value="0" disabled aria-label="shared playback frame"><span id="time">0.00s</span></div>
+        <details id="reference-details"><summary>compare with a simulator outcome</summary><div class="reference-content"><canvas id="reference" width="256" height="256"></canvas><div><h3>one possible physical world</h3><p>the simulator knows its objects’ physical properties. the model only sees the image and your push.</p><p>different hidden properties can produce different outcomes from the same image.</p></div></div></details>
+        <details><summary>model &amp; run details</summary><pre id="details">load a checkpoint and generate a future to see its record.</pre></details>
+      </section>
+    </div>
+    <footer><span>built for controlled tabletop scenes</span><span>experimental checkpoints · quality checks are still in progress</span></footer>
+  </main>
+</body>
+</html>
