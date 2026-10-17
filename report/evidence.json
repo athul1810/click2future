@@ -1,0 +1,60 @@
+{
+  "status": "working_draft",
+  "pages": 7,
+  "external_links": 0,
+  "external_urls_in_text": 0,
+  "em_or_en_dashes_in_text": 0,
+  "required_main_sections": [
+    "Introduction",
+    "Methods",
+    "Experiments and analysis",
+    "Conclusion"
+  ],
+  "model_comparison_scope": "One deterministic training clip and one validation condition, diagnostic only; main matched experiments are pending",
+  "figure_sample_seed": 0,
+  "methods": [
+    {
+      "method": "E0",
+      "training_seed": 0,
+      "training_steps": 5000,
+      "checkpoint_sha256": "87a46cfd24e5b13765665f3512b4d60afcfe86e15414e1f6add1bc511e0ec768"
+    },
+    {
+      "method": "E3",
+      "training_seed": 7,
+      "training_steps": 5000,
+      "checkpoint_sha256": "632cbd7937f3f54dbe00f19958f9ffb0249928b9e161d950694c5604e699f032"
+    }
+  ],
+  "validation": {
+    "scene_groups": 1,
+    "conditions": 1,
+    "hidden_physics_references": 2,
+    "sample_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "videos": 8,
+    "image_metric": "SSIM only",
+    "complete_trajectories_by_method": {
+      "E0": 0,
+      "E3": 0
+    }
+  },
+  "source_sha256": {
+    "main.tex": "3986ff3ccf5ebd05629276e7395c8f88458edbae78a928b853ab271423150a75",
+    "figures/pilot_training.png": "1faabf2077956df10d69630c5520fde85de028c36fa905629a35a7fac037dc6a",
+    "figures/pilot_validation.png": "aff8fa9688e2581a19fe754c090ca8e0260e982e17c550c3ac20fbe0f6584439"
+  },
+  "rendered_pdf_sha256": "f8400ea61ee0429d026a02bdf4690f6d6ecdb938d58c29d9bf2ec78fec80817f",
+  "visual_review": "All seven pages rendered; source text, table, figures, captions and bibliography checked. No content is clipped.",
+  "remaining": [
+    "Successful trained models and matched E0/E2/E3 comparisons",
+    "Validation hyperparameter and component studies",
+    "Generalization and uncertainty results",
+    "Member-reviewed contribution descriptions",
+    "Final PDF export and course submission checks"
+  ]
+}
