@@ -7,6 +7,22 @@ held-out video quality. Training and checkpoint continuation are verified; final
 experiments and the demo remain unfinished.
 This is not the final submission.
 
+The bounded multi-scene pilot has fixed configs in
+`configs/training/multiscene_pilot.json`. It prepares dataset-0.3, computes contact
+class weights from training labels only, and trains E0/E2/E3/E4 on TC2. Set
+`C2F_PROJECT`, `C2F_PYTHON`, `C2F_PILOT_ROOT` and `C2F_SOURCE_REVISION`, then use
+`sbatch submission/train_pilot.sbatch`. Choose a new pilot directory for each attempt.
+For separate CPU data preparation, run
+`python -m click2future.training.multiscene_pilot --root outputs/new-pilot --prepare-only`.
+The same module's `--train-only` option uses that prepared corpus inside an allocation.
+
+After all training finishes, set `C2F_PILOT_RESULTS` to a new directory and submit
+`submission/evaluate_pilot.sbatch`. It evaluates validation clips, zero/reversed
+forces, changed selection, reference coverage, E4 heads and CVAE latent diagnostics.
+The pilot uses SSIM; this does not replace final LPIPS comparisons. The 1.5 GPU-hour
+cap includes evaluation. Keep checkpoints, generated data and result archives outside
+the submitted source package.
+
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 
 ```sh

@@ -50,6 +50,8 @@ def _check(name, payload):
             "submission/train_cvae.sbatch",
             "submission/train_diffusion.sbatch",
             "submission/sample_evaluation.sbatch",
+            "submission/train_pilot.sbatch",
+            "submission/evaluate_pilot.sbatch",
         }
     )
     if (
