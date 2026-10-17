@@ -137,7 +137,7 @@ method, not a drop-in e3 result. see [the measured pilot](../docs/TRAJECTORY_PIL
 
 or use the new verified e5 bundle with `--bundle` and `--models E5-trajectory`.
 `--trajectory-steps` controls edm heun steps; the existing `--sampling-steps`
-continues to control pixel ddâ€‹â€‹im sampling. both enter the replay identity.
+continues to control pixel DDIM sampling. both enter the replay identity.
 the checkpoint requires two separately visible objects, native 64px rgb and the
 matching model source hash. all current quality limitations remain visible in the
 bundle metadata and pixel-track counts.

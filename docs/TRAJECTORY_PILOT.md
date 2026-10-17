@@ -95,7 +95,7 @@ validation observations when supplied **oracle motion**. its validation ade is
 0.00473; this is rasterization/calibration evidence, not learned model accuracy.
 see [the renderer control](results/trajectory-renderer-ceiling.json).
 
-evaluation job 43403 stopped on a missing ssâ€‹â€‹im dependency. its failed attempt is
+evaluation job 43403 stopped on a missing SSIM dependency. its failed attempt is
 retained. job 43404 installed pinned scikit-image 0.26.0, passed dependency checks
 and completed both frozen suites. this follow-up measures ssim; lpips was not run.
 metric thresholds, sampling seeds and test reservation were unchanged.
