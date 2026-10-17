@@ -13,7 +13,16 @@ from click2future.training.train_diffusion import TrainConfig
 
 
 class CheckpointModel:
-    def __init__(self, name, checkpoint, *, device="cpu", force_limit=0.5, sampling_steps=32):
+    def __init__(
+        self,
+        name,
+        checkpoint,
+        *,
+        device="cpu",
+        force_limit=0.5,
+        sampling_steps=32,
+        trajectory_steps=16,
+    ):
         self.name, self.device = name, device
         checkpoint = Path(checkpoint)
         digest = sha256(checkpoint)
@@ -21,7 +30,18 @@ class CheckpointModel:
         self.sampling_steps = sampling_steps
         self.future_frames = None
         self.resolution = None
-        if state.get("checkpoint_version") == 1:
+        if state.get("trajectory_format_version") == 1:
+            from click2future.training.sample_trajectory import load_trajectory
+
+            self.model, state = load_trajectory(checkpoint, device)
+            if not 2 <= trajectory_steps <= 128:
+                raise ValueError("Use 2-128 trajectory sampling steps")
+            self.sampling_steps = trajectory_steps
+            self.future_frames, self.resolution = self.model.future_frames, 64
+            self.kind, step = "trajectory_diffusion", state["step"]
+            force_limit = min(force_limit, self.model.force_limit)
+            detail = "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA"
+        elif state.get("checkpoint_version") == 1:
             config = TrainConfig(**state["config"])
             config.validate()
             if not 2 <= sampling_steps <= config.diffusion_steps:
@@ -80,7 +100,9 @@ class CheckpointModel:
             "checkpoint_sha256": digest,
             "training_steps": step,
             "quality": "experimental checkpoint; held-out quality is not certified by this demo",
-            "sampling_steps": sampling_steps if self.kind == "diffusion" else None,
+            "sampling_steps": self.sampling_steps
+            if self.kind in {"diffusion", "trajectory_diffusion"}
+            else None,
             "sampling_source_sha256": {
                 str(path.relative_to(Path(__file__).parents[1])): sha256(path)
                 for path in (
@@ -102,6 +124,15 @@ class CheckpointModel:
         flow_source = Path(__file__).parents[1] / "models/cvae_flow.py"
         if self.kind == "cvae" and flow_source.exists():
             self.metadata["sampling_source_sha256"]["models/cvae_flow.py"] = sha256(flow_source)
+        if self.kind == "trajectory_diffusion":
+            folder = Path(__file__).parents[1]
+            for name in ("models/object_motion.py", "training/sample_trajectory.py"):
+                self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
+            self.metadata.update(
+                sampler="EDM rho-7 Heun, no churn, float32 integration",
+                network_evaluations_per_sample=2 * self.sampling_steps - 1,
+                supervision="future positions and checked angular replay; training only",
+            )
 
     @torch.inference_mode()
     def predict(self, first_frame, selected_mask, force_xy, *, seeds, future_frames, cancelled):
@@ -109,6 +140,18 @@ class CheckpointModel:
             raise ValueError("Scene length differs from the CVAE checkpoint")
         if self.resolution is not None and first_frame.shape[:2] != (self.resolution,) * 2:
             raise ValueError("Scene resolution differs from the CVAE checkpoint")
+        if self.kind == "trajectory_diffusion":
+            from click2future.training.sample_trajectory import sample_trajectory_videos
+
+            return sample_trajectory_videos(
+                self.model,
+                first_frame,
+                selected_mask,
+                force_xy,
+                seeds=seeds,
+                sampling_steps=self.sampling_steps,
+                cancelled=cancelled,
+            )
         videos = []
         for seed in seeds:
             if cancelled.is_set():
