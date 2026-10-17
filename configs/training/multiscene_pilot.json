@@ -1,0 +1,33 @@
+{
+  "status": "bounded_validation_pilot_not_final_comparison",
+  "dataset_version": "dataset-0.3",
+  "seed": 730000,
+  "group_counts": {
+    "train": 16,
+    "validation": 4,
+    "id_test": 2,
+    "shape_ood": 2,
+    "texture_ood": 2,
+    "force_ood": 2,
+    "physics_test": 2
+  },
+  "sampling_seeds": [0, 1, 2, 3],
+  "sampling_steps": 32,
+  "image_metrics": ["ssim"],
+  "training_configs": {
+    "E0": "configs/training/cvae_multiscene_pilot.yaml",
+    "E2": "configs/training/diffusion_numeric_multiscene.json",
+    "E3": "configs/training/diffusion_spatial_multiscene.json",
+    "E4": "configs/training/diffusion_auxiliary_multiscene.json"
+  },
+  "evaluation_split": "validation",
+  "test_evaluation_gate": {
+    "minimum_tracking_fraction": 0.9,
+    "maximum_selected_ade": 0.03125,
+    "selected_complete_fraction": 1.0,
+    "action_motion_threshold": 0.015625,
+    "require_reference_comparable_action_response": true
+  },
+  "max_allocated_gpu_hours": 1.5,
+  "scope": "One training seed per method, different CVAE/diffusion step budgets. Not a final method ranking. No test-based tuning. Tracker version 2 remains a review candidate in PR 42."
+}
