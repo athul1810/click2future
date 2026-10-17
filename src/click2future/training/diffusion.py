@@ -116,7 +116,11 @@ class Diffusion:
                 if prediction.shape != noisy.shape or not torch.isfinite(prediction).all():
                     raise ValueError("Sampler received invalid denoising prediction")
                 alpha = self.alpha_bar[timestep]
-                clean = self.predict_clean(noisy, times, prediction).clamp(-1, 1)
+                clean = self.predict_clean(noisy, times, prediction)
+                # Clip x0 in RGB so both representations share the valid pixel range.
+                clean = self.encode_future(
+                    self.decode_future(clean, condition).clamp(-1, 1), condition
+                )
                 # Recompute epsilon after clipping x0 to preserve DDIM consistency.
                 epsilon = (noisy - alpha.sqrt() * clean) / (1 - alpha).sqrt()
                 previous = self.alpha_bar[indices[index + 1]] if index + 1 < len(indices) else 1.0

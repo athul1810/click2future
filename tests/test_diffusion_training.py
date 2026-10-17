@@ -145,6 +145,30 @@ def test_residual_oracle_recovers_rgb_and_zero_residual_means_frame_copy():
     torch.testing.assert_close(result, future, atol=2e-6, rtol=0)
 
 
+def test_residual_sampler_clips_x0_to_valid_rgb():
+    diffusion = Diffusion(50, prediction_type="velocity", representation="frame0_residual")
+    # A white frame 0 only allows zero or negative residuals.
+    condition = observable_condition(
+        torch.ones(1, 3, 4, 4), torch.ones(1, 1, 4, 4), torch.zeros(1, 2)
+    )
+    inputs = []
+
+    class Brightening(nn.Module):
+        def forward(self, noisy, timesteps, **_):
+            inputs.append(noisy.clone())
+            alpha = diffusion.alpha_bar[timesteps][:, None, None, None, None]
+            clean = 0.6 + 0.8 * noisy
+            noise = (noisy - alpha.sqrt() * clean) / (1 - alpha).sqrt()
+            return DenoiserOutput(diffusion.training_target(clean, timesteps, noise))
+
+    diffusion.sample(Brightening(), condition, future_frames=2, sampling_steps=8, seed=3)
+    first, second = diffusion.alpha_bar[torch.linspace(49, 0, 8).round().long()[:2]]
+    clean = (0.6 + 0.8 * inputs[0]).clamp(-1, 0)
+    noise = (inputs[0] - first.sqrt() * clean) / (1 - first).sqrt()
+    expected = second.sqrt() * clean + (1 - second).sqrt() * noise
+    torch.testing.assert_close(inputs[1], expected, atol=1e-5, rtol=0)
+
+
 def test_observable_boundary_ignores_oracle_fields_and_rejects_action_drift(dataset):
     trainer = Trainer(dataset, TrainConfig(base_channels=8))
     batch = load_batch(dataset, trainer.sample_ids[:1])
