@@ -1,0 +1,143 @@
+"""Checkpoint adapters sharing the offline sampling equations and observable inputs."""
+
+from pathlib import Path
+
+import numpy as np
+import torch
+
+from click2future.models.cvae import ConditionalVideoVAE
+from click2future.training.conditioning import observable_condition
+from click2future.training.sample_diffusion import load_generator, sample_videos
+from click2future.training.train_cvae import sha256, validate_config
+from click2future.training.train_diffusion import TrainConfig
+
+
+class CheckpointModel:
+    def __init__(self, name, checkpoint, *, device="cpu", force_limit=0.5, sampling_steps=32):
+        self.name, self.device = name, device
+        checkpoint = Path(checkpoint)
+        digest = sha256(checkpoint)
+        state = torch.load(checkpoint, map_location="cpu", weights_only=True)
+        self.sampling_steps = sampling_steps
+        self.future_frames = None
+        self.resolution = None
+        if state.get("checkpoint_version") == 1:
+            config = TrainConfig(**state["config"])
+            config.validate()
+            if not 2 <= sampling_steps <= config.diffusion_steps:
+                raise ValueError("Sampling steps exceed the saved diffusion schedule")
+            with torch.random.fork_rng(devices=[]):
+                self.model, self.diffusion, _ = load_generator(checkpoint, device)
+            step = state["step"]
+            self.kind = "diffusion"
+            force_limit = min(force_limit, config.force_limit)
+            detail = f"{config.conditioning} diffusion, {config.representation}, EMA"
+        elif state.get("format_version") == 1:
+            config = state["config"]
+            validate_config(config)
+            if state["model_config"] != config["model"]:
+                raise ValueError("Checkpoint model and run configuration disagree")
+            folder = Path(__file__).parents[1] / "models"
+            sources = state["provenance"].get("source_sha256", {})
+            if sources and sources.get("cvae.py") != sha256(folder / "cvae.py"):
+                raise ValueError("CVAE model source differs from the checkpoint")
+            if config["model"].get("decoder_kind") == "flow":
+                if not (folder / "cvae_flow.py").exists():
+                    raise ValueError("This checkpoint needs the reviewed flow decoder source")
+                if sources.get("cvae_flow.py") != sha256(folder / "cvae_flow.py"):
+                    raise ValueError("Flow decoder source differs from the checkpoint")
+                from click2future.models.cvae_flow import build_cvae
+
+                factory = build_cvae
+            else:
+
+                def factory(settings):
+                    return ConditionalVideoVAE(**settings)
+
+            with torch.random.fork_rng(devices=[]):
+                self.model = factory(config["model"])
+            self.model.load_state_dict(state["model"], strict=True)
+            self.model.to(device).eval()
+            self.force_scale = config["data"]["force_scale"]
+            self.future_frames = config["model"]["future_frames"]
+            self.resolution = config["data"]["resolution"]
+            self.kind = "cvae"
+            step = state["state"]["step"]
+            detail = "conditional VAE, learned prior"
+        else:
+            raise ValueError("Use a supported diffusion or CVAE checkpoint")
+        if isinstance(step, bool) or not isinstance(step, int) or step <= 0:
+            raise ValueError(
+                "The demo requires a trained checkpoint; fixtures are not model results"
+            )
+        if sha256(checkpoint) != digest:
+            raise ValueError("Checkpoint changed while loading")
+        self.force_limit = force_limit
+        self.metadata = {
+            "id": name,
+            "kind": self.kind,
+            "detail": detail,
+            "checkpoint_sha256": digest,
+            "training_steps": step,
+            "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+            "sampling_steps": sampling_steps if self.kind == "diffusion" else None,
+            "sampling_source_sha256": {
+                str(path.relative_to(Path(__file__).parents[1])): sha256(path)
+                for path in (
+                    Path(__file__),
+                    Path(__file__).parents[1] / "training/diffusion.py",
+                    Path(__file__).parents[1] / "training/sample_diffusion.py",
+                    Path(__file__).parents[1] / "training/conditioning.py",
+                    Path(__file__).parents[1] / "models/cvae.py",
+                    Path(__file__).parents[1] / "models/pilot_denoiser.py",
+                )
+            },
+            "runtime": {
+                "torch": torch.__version__,
+                "device": str(device),
+                "gpu": torch.cuda.get_device_name() if str(device).startswith("cuda") else None,
+                "precision": "float32",
+            },
+        }
+        flow_source = Path(__file__).parents[1] / "models/cvae_flow.py"
+        if self.kind == "cvae" and flow_source.exists():
+            self.metadata["sampling_source_sha256"]["models/cvae_flow.py"] = sha256(flow_source)
+
+    @torch.inference_mode()
+    def predict(self, first_frame, selected_mask, force_xy, *, seeds, future_frames, cancelled):
+        if self.future_frames is not None and future_frames != self.future_frames:
+            raise ValueError("Scene length differs from the CVAE checkpoint")
+        if self.resolution is not None and first_frame.shape[:2] != (self.resolution,) * 2:
+            raise ValueError("Scene resolution differs from the CVAE checkpoint")
+        videos = []
+        for seed in seeds:
+            if cancelled.is_set():
+                raise InterruptedError("Generation cancelled")
+            if self.kind == "diffusion":
+                video = sample_videos(
+                    self.model,
+                    self.diffusion,
+                    first_frame,
+                    selected_mask,
+                    force_xy,
+                    seeds=(seed,),
+                    future_frames=future_frames,
+                    sampling_steps=self.sampling_steps,
+                    force_limit=self.force_limit,
+                )[0]
+            else:
+                # Match sample_cvae exactly, including float32 conversion order.
+                first = torch.from_numpy(first_frame[None].transpose(0, 3, 1, 2).copy())
+                first = first.to(self.device).float() / 127.5 - 1
+                mask = torch.from_numpy(selected_mask[None, None].copy()).to(self.device)
+                force = torch.from_numpy(force_xy[None].copy()).to(self.device)
+                observable_condition(first / 2 + 0.5, mask, force, force_limit=self.force_limit)
+                future = self.model.sample(first, mask, force / self.force_scale, seeds=[seed])[
+                    0, 0
+                ]
+                if not torch.isfinite(future).all():
+                    raise ValueError("Checkpoint returned nonfinite pixels")
+                pixels = ((future.permute(1, 2, 3, 0) + 1) * 127.5).round().clamp(0, 255)
+                video = np.concatenate((first_frame[None], pixels.byte().cpu().numpy()))
+            videos.append(video)
+        return np.stack(videos)
