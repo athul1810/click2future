@@ -172,8 +172,15 @@ async function showResult(result, current) {
       value.textContent = "seed " + seed;
       caption.append(label, value);
       card.append(canvas, caption);
+      const tracks = model.pixel_tracks;
+      const count = document.createElement("p");
+      count.className = "track-count";
+      count.textContent = tracks?.status === "available"
+        ? tracks.samples[row].future_tracked + "/" + tracks.samples[row].future_expected + " future object observations tracked"
+        : "pixel tracking unavailable";
+      card.append(count);
       grid.append(card);
-      strips.push({canvas, image: loaded[index], row});
+      strips.push({canvas, image: loaded[index], row, tracks});
     });
     section.append(grid);
     $("results").append(section);
@@ -183,10 +190,15 @@ async function showResult(result, current) {
   $("timeline").disabled = false;
   $("play").disabled = false;
   $("reference-details").hidden = false;
-  $("mode").textContent = result.models.every(model => model.source === "cached replay") ? "cached replay" : "live model output";
+  const cached = result.models.filter(model => model.source === "cached replay").length;
+  $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : "live model output";
   $("details").textContent = JSON.stringify({scene: result.scene, split: result.split,
     selected_object: result.object, force: result.force, seeds: result.seeds,
-    models: result.models.map(model => ({name: model.name, source: model.source, ...model.details})),
+    models: result.models.map(model => ({name: model.name, source: model.source, ...model.details,
+      pixel_tracker: model.pixel_tracks?.extractor_version,
+      tracker_status: model.pixel_tracks?.status,
+      tracker_adoption: model.pixel_tracks?.adoption,
+      track_failures: model.pixel_tracks?.samples?.map(sample => sample.reasons)})),
     note: result.notice}, null, 2);
   playing = true;
   $("play").textContent = "Ⅱ";
@@ -195,16 +207,42 @@ async function showResult(result, current) {
 function drawFrame() {
   if (!playback) return;
   const [height, width] = playback.size;
-  strips.forEach(({canvas, image, row}) => {
+  strips.forEach(({canvas, image, row, tracks}) => {
     const ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(image, frame * width, row * height, width, height, 0, 0, canvas.width, canvas.height);
+    if ($("tracks").checked && tracks?.status === "available") {
+      drawTracks(ctx, canvas, tracks.samples[row], tracks.object_ids);
+    }
   });
   const canvas = $("reference"), ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(referenceStrip, frame * width, 0, width, height, 0, 0, canvas.width, canvas.height);
   $("timeline").value = frame;
   $("time").textContent = (frame / playback.fps).toFixed(2) + "s";
+}
+function drawTracks(ctx, canvas, sample, ids) {
+  for (const object of ids) {
+    ctx.strokeStyle = object === playback.object ? "#ffffff" : "#0c719c";
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    let connected = false;
+    for (let index = 0; index <= frame; index++) {
+      if (!sample.tracked[index][object]) {connected = false; continue;}
+      const [x, y] = sample.positions[index][object];
+      if (connected) ctx.lineTo(x * canvas.width, y * canvas.height);
+      else ctx.moveTo(x * canvas.width, y * canvas.height);
+      connected = true;
+    }
+    ctx.stroke();
+    if (sample.tracked[frame][object]) {
+      const [x, y] = sample.positions[frame][object];
+      ctx.beginPath();
+      ctx.arc(x * canvas.width, y * canvas.height, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
 }
 async function generate() {
   if (busy) return;
@@ -293,6 +331,7 @@ $("timeline").oninput = () => {
   $("play").textContent = "▶";
   drawFrame();
 };
+$("tracks").onchange = drawFrame;
 function tick(now) {
   if (playing && playback && now - previous >= 1000 / playback.fps) {
     frame = (frame + 1) % playback.frames;

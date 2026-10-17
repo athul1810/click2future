@@ -1,0 +1,78 @@
+{
+  "dataset": "outputs/representation-20261017/data",
+  "sample_id": "scene-00226000-variant-000",
+  "reference_sha256": {
+    "npz": "c1b6c600f9ee95bd43a4eb56100ad494a49f93126cb0e6fc5fd020208ee93c3e",
+    "json": "508ae1026cccad0d570f1e6b11f910a28fe7a9f881ba6f58991e8b736a5e8b9b"
+  },
+  "historical_records_sha256": {
+    "docs/results/diffusion-representation-checks.json": "4b3ebc0b3e3201134becf74178fc04a4f202e24afc6f30c1a561590249e13ade",
+    "docs/results/diffusion-resampling-2026-10-17.json": "4269c191cb9e9759156dfbcd325b0bd9a5de402ee84ef37c9b74e561aaeb256d"
+  },
+  "videos": [
+    {
+      "id": "rgb-original",
+      "file": "outputs/representation-20261017/rgb/videos.npz",
+      "file_sha256": "8696ba44effc40b3c9cfbbbd7d4e4e07a8500f9c4dc3aac2f1d1a96ce5de10ca",
+      "checkpoint_sha256": "d373879495ba4e7e30980c31d0bdc7e72f3e5ccdf934ad24c2993bdf815a0517",
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "training_source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+      "sampling_steps": 32,
+      "representation": "rgb",
+      "weights": "ema"
+    },
+    {
+      "id": "rgb-corrected",
+      "file": "outputs/representation-20261017/corrected-855236c/rgb.npz",
+      "file_sha256": "8696ba44effc40b3c9cfbbbd7d4e4e07a8500f9c4dc3aac2f1d1a96ce5de10ca",
+      "checkpoint_sha256": "d373879495ba4e7e30980c31d0bdc7e72f3e5ccdf934ad24c2993bdf815a0517",
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sampling_source_revision": "855236cce40000b15a1e451a12580a22dd8f3095",
+      "sampling_steps": 32,
+      "representation": "rgb",
+      "weights": "ema"
+    },
+    {
+      "id": "frame0_residual-original",
+      "file": "outputs/representation-20261017/frame0_residual/videos.npz",
+      "file_sha256": "d8cbc2224c166c8ea3c059089e289fe078ad5b5c79af59b6125416029cf3acfa",
+      "checkpoint_sha256": "931336e0133dceabde6fb9e3a0969dc2b4330f7b1171f7f305481fc8b379f50a",
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "training_source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+      "sampling_steps": 32,
+      "representation": "frame0_residual",
+      "weights": "ema"
+    },
+    {
+      "id": "frame0_residual-corrected",
+      "file": "outputs/representation-20261017/corrected-855236c/frame0_residual.npz",
+      "file_sha256": "afd14b487a39f2e6c2a6e94f962ea33dc368d0be69c9e15d2f359a8ca50d87cd",
+      "checkpoint_sha256": "931336e0133dceabde6fb9e3a0969dc2b4330f7b1171f7f305481fc8b379f50a",
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sampling_source_revision": "855236cce40000b15a1e451a12580a22dd8f3095",
+      "sampling_steps": 32,
+      "representation": "frame0_residual",
+      "weights": "ema"
+    }
+  ]
+}

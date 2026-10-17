@@ -8,8 +8,9 @@ the neural model.
 
 Checkpoint quality is still experimental. Running the app is not evidence of
 held-out action control, calibrated uncertainty or a state-of-the-art result.
-Pixel-derived trajectory overlays, the measured latency benchmark and the final
-presentation rehearsal remain open in [the specification](DEMO_SPEC.md).
+Pixel-derived trajectory overlays and a small warm browser timing study are now
+implemented. Held-out control and the final presentation rehearsal remain open
+in [the specification](DEMO_SPEC.md).
 
 ## launch
 
@@ -48,6 +49,17 @@ current diffusion EMA format or CVAE learned-prior format and must have at
 least one training update. Model/config/source incompatibilities fail visibly.
 No neural generation is replaced by simulator video or a stored nearest scene.
 
+For the private pilot handoff, every member is checked against its manifest:
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/pilot-handoff --models E3-spatial E0-flow-motion --device cuda
+```
+
+All six bundled checkpoints load. Choose up to four names from `MANIFEST.json`.
+Recorded validation failures and extra-supervision notes appear in run details.
+The flow/motion model is an additional supervised variant, not the ordinary CVAE.
+
 ## controls and reproducibility
 
 - Click a coloured object, then drag from it. The arrow anchors at its centre;
@@ -64,6 +76,10 @@ No neural generation is replaced by simulator video or a stored nearest scene.
 - Changing inputs labels existing videos as the previous request. Model details
   retain checkpoint/source hashes, device, sampler settings, force and seeds.
   The demo does not certify action adherence or an outcome probability.
+- The experimental pixel-track toggle overlays accepted trajectories only.
+  Missing observations break paths and remain in the displayed counts. Extractor
+  version/settings and failure reasons are in run details. Candidate v2 still
+  awaits the independent calibration review; overlays do not certify correctness.
 
 The default cache is `outputs/demo-cache`. Its identity includes observed RGB,
 selected mask, force, ordered seeds, horizon, checkpoint, sampling source and
@@ -96,4 +112,15 @@ verification dependency, not an app requirement.
 Unit tests check offline sampler parity, private RNG isolation, exact frame 0,
 cache identity/integrity, hidden-state separation, cancellation, input validation
 and local HTTP boundaries. The browser rehearsal checks 24 interactions with
-two presets. These checks establish functionality, not model quality.
+two presets, plus the pixel-track toggle (25 total). These checks establish
+functionality, not model quality.
+
+Warm end-to-end timing, with one warm-up and fresh seeds on every measured request:
+
+```powershell
+py -3.12 -m uv run --no-project --with playwright python scripts/benchmark_demo_browser.py --output outputs/demo-timing-new.json
+```
+
+This includes sampling, tracking, reference rendering, PNG transfer and the first
+painted browser canvas. It rejects cached requests. Startup/checkpoint loading
+are excluded; the reported empirical p95 is a small-sample estimate.
