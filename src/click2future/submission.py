@@ -13,6 +13,11 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 URL = re.compile(r"(?:[a-z][a-z0-9+.-]*:[/]{2}|www[.]|git[@])", re.IGNORECASE)
 ALLOWED_SUFFIXES = {".py", ".toml", ".yaml", ".json", ".md", ".txt", ".sbatch"}
+DEMO_ASSETS = {
+    "src/click2future/demo/static/index.html",
+    "src/click2future/demo/static/style.css",
+    "src/click2future/demo/static/app.js",
+}
 FORBIDDEN_PARTS = {
     ".git",
     ".venv",
@@ -34,6 +39,7 @@ def _check(name, payload):
         name
         in {"README.md", "pyproject.toml", "constraints.txt", ".python-version", "MANIFEST.json"}
         or (name.startswith("src/click2future/") and path.suffix == ".py")
+        or name in DEMO_ASSETS
         or (name.startswith("configs/") and path.suffix in {".yaml", ".toml", ".json"})
         or (
             path.parent == PurePosixPath("tests")
@@ -69,7 +75,11 @@ def _check(name, payload):
         or any(part in FORBIDDEN_PARTS or part.startswith(".env") for part in path.parts)
     ):
         raise ValueError(f"Forbidden archive path: {name}")
-    if path.suffix not in ALLOWED_SUFFIXES and name != ".python-version":
+    if (
+        path.suffix not in ALLOWED_SUFFIXES
+        and name != ".python-version"
+        and name not in DEMO_ASSETS
+    ):
         raise ValueError(f"Forbidden archive file type: {name}")
     content = payload.decode("utf-8")
     if URL.search(content):

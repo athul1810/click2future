@@ -1,0 +1,135 @@
+{
+  "checks": [
+    "page and checkpoint metadata load",
+    "visible object selectors",
+    "background click cannot select an object",
+    "object buttons update selection",
+    "right drag gives positive x",
+    "down drag gives positive y",
+    "drag outside canvas clamps physical force",
+    "reverse keeps magnitude and negates both coordinates",
+    "zero push",
+    "keyboard direction matches image coordinates",
+    "shift fine adjustment",
+    "invalid seed fails without model execution",
+    "real checkpoint finishes four seeded futures",
+    "controls locked during generation",
+    "four videos retain ordered paired seeds and 32 frames",
+    "shared timeline scrubs all samples and pauses",
+    "timeline returns to supplied frame zero",
+    "simulator reference is separate and labelled",
+    "exact repeated request is identical labelled replay",
+    "changed push cannot relabel old videos as new output",
+    "cancelled generation cannot replace the previous output",
+    "scene change resets playback and output",
+    "mobile layout has no horizontal overflow",
+    "no browser javascript exceptions"
+  ],
+  "count": 24,
+  "browser_errors": [],
+  "ui_seconds": [
+    6.8772096000029705,
+    0.4378940000315197
+  ],
+  "model_sources": [
+    [
+      {
+        "source": "live model",
+        "seconds": 6.460179000045173
+      }
+    ],
+    [
+      {
+        "source": "cached replay",
+        "seconds": 0.017461100011132658
+      }
+    ]
+  ],
+  "note": "functional rehearsal, not model quality or a latency benchmark",
+  "date": "2026-10-17",
+  "scope": "local functional rehearsal on a tiny-training checkpoint; not a held-out quality result",
+  "checkpoint_sha256": "d373879495ba4e7e30980c31d0bdc7e72f3e5ccdf934ad24c2993bdf815a0517",
+  "training_steps": 5000,
+  "model": "E3 RGB EMA",
+  "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "seeds": [
+    432350,
+    432351,
+    432352,
+    432353
+  ],
+  "scene": "scene-00226000-variant-000",
+  "split": "train",
+  "second_preset": "scene-00226008-variant-000",
+  "second_preset_split": "validation",
+  "source_revision": "working tree; see containing commit",
+  "verification": {
+    "full_suite": "435 tests and 4 subtests passed before final worker-start cancellation guard; all 29 demo tests and 9 source-packaging tests rechecked after that guard",
+    "demo_tests": 29,
+    "browser_interactions": 24,
+    "ruff": "passed",
+    "wheel_and_sdist_assets": "all three browser assets present",
+    "limitations": [
+      "one tiny-training checkpoint exercised in the browser",
+      "CVAE parity checked on a one-update unit-test fixture, not a trained baseline quality result",
+      "held-out model quality, pixel-track overlays, warm median/p95 latency and final offline presentation rehearsal remain open"
+    ],
+    "tc2_laptop_source_bytes": "CVAE model source SHA-256 matches the Linux Git blob; Python checkouts pinned to LF",
+    "post_fix_targeted": "29 demo tests; 45 demo, packaging and CVAE workflow tests passed after Python LF normalization"
+  },
+  "final_rehearsal": {
+    "seeds": [
+      432351,
+      432352,
+      432353,
+      432354
+    ],
+    "checks": [
+      "page and checkpoint metadata load",
+      "visible object selectors",
+      "background click cannot select an object",
+      "object buttons update selection",
+      "right drag gives positive x",
+      "down drag gives positive y",
+      "drag outside canvas clamps physical force",
+      "reverse keeps magnitude and negates both coordinates",
+      "zero push",
+      "keyboard direction matches image coordinates",
+      "shift fine adjustment",
+      "invalid seed fails without model execution",
+      "real checkpoint finishes four seeded futures",
+      "controls locked during generation",
+      "four videos retain ordered paired seeds and 32 frames",
+      "shared timeline scrubs all samples and pauses",
+      "timeline returns to supplied frame zero",
+      "simulator reference is separate and labelled",
+      "exact repeated request is identical labelled replay",
+      "changed push cannot relabel old videos as new output",
+      "cancelled generation cannot replace the previous output",
+      "scene change resets playback and output",
+      "mobile layout has no horizontal overflow",
+      "no browser javascript exceptions"
+    ],
+    "count": 24,
+    "browser_errors": [],
+    "ui_seconds": [
+      7.188681300031021,
+      0.44072310003684834
+    ],
+    "model_sources": [
+      [
+        {
+          "source": "live model",
+          "seconds": 6.775728300039191
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.01618619996588677
+        }
+      ]
+    ],
+    "note": "functional rehearsal, not model quality or a latency benchmark"
+  }
+}

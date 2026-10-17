@@ -25,7 +25,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
+| T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | In progress |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | Done |
 | T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | Not started |
@@ -296,15 +296,21 @@ reference replays. It retains the weak-force calibration and records the shared
 
 Make the model and simulator comparison understandable and repeatable.
 
-**Dependencies:** T04, T05, T10. **Owner:** MAITI SHRIJEET. **Status:** Not started.
+**Dependencies:** T04, T05, T10. **Owner:** MAITI SHRIJEET. **Status:** In progress.
 
-- [ ] Support preset scenes and synthetic-domain image input with selected-object masks.
-- [ ] Map drag arrows to the agreed force convention and generate four seeded futures.
-- [ ] Show simulator ground truth only when scene metadata exists.
-- [ ] Label the friction slider as simulator-only for hidden-physics checkpoints.
-- [ ] Add trajectory overlays, loading/error states, and a documented launch path.
+- [x] Support declared development/validation presets with frame-0 selected-object masks; image upload is deferred.
+- [x] Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.
+- [x] Keep the labelled simulator reference and hidden physics outside neural inference.
+- [x] Provide synchronized playback, bounded generation, cancellation, input/error states, labelled exact replay and a documented local launch path.
+- [ ] Add pixel-derived trajectory overlays, pass held-out motion/action quality, measure warm median/p95 latency and rehearse the final demo offline.
 
-Shared EMA inference API exports evaluator-ready uint8 videos with exact frame 0 and paired sampling seeds. UI and live/cached fallback remain to be implemented.
+The local app runs diffusion EMA and CVAE learned-prior checkpoints. CPU sampler
+parity and 24 browser interaction checks pass; a fresh four-future E3 request took
+6.88 seconds through the local browser on an RTX 3060 laptop, with 0.44 seconds
+for exact replay. This single functional run is not a latency benchmark or a
+held-out quality result. See [launch instructions](../app/README.md). T17 stays
+open for overlays, stronger checkpoints and final acceptance. No friction slider
+is exposed; the simulator has contact friction without tabletop drag.
 
 <a id="t18"></a>
 
