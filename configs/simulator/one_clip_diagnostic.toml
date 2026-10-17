@@ -1,0 +1,6 @@
+[simulator]
+resolution = 64
+frame_count = 32
+fps = 8
+physics_hz = 240
+force_duration = 0.25
