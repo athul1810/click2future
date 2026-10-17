@@ -23,6 +23,10 @@ clip and one validation condition. Four seeds are dependent samples; they are no
 four independent test scenes. Both uniform-loss methods shown here fail the declared
 video-quality gate. The later foreground/boundary follow-up is recorded in
 `docs/results/foreground-loss-checks.json`: CVAE passes the training-only gate but
-still fails validation. Incorporate that follow-up before final report export.
+still fails validation. That follow-up was reviewed and merged in PR #37 on
+17 October: 244/248 training observations tracked, selected ADE 0.00249, but
+0/4 fully complete clips and 0/248 validation observations tracked. The figures
+and table in this draft still describe the earlier uniform-loss checkpoints;
+incorporate the separate follow-up before final report export.
 Final E0/E2/E3 results, the validation study, component/generalization/uncertainty
 analysis and reviewed contribution descriptions remain open.

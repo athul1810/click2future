@@ -212,14 +212,14 @@
       "Log validation results, model size, training cost, and checkpoint selection.",
       "Add a run manifest and qualitative successes/failures."
     ],
-    "owner": null,
-    "status": "In progress",
+    "owner": "KAPOOR ANANYA",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/9",
-    "proposed_owner": "KAPOOR ANANYA (awaiting acceptance)",
-    "progress": "TC2 exposed a deterministic CUDA pooling-backward crash, fixed with equivalent slice means. Jobs 43165/43166 trained 1500 steps and reproduced all saved tensors exactly across allocations. The 5000-step retry in job 43171 still fails sampled-video quality: 168/248 training-scene observations tracked and 0/248 on the validation example. Prior-sample quality remains open despite low reconstruction loss. Configs, costs, checkpoints and failure examples are recorded in results/cvae-training-checks.json.",
+    "progress": "PR #37 merged after independent review. Boundary-weighted CVAE training in job 43199 passes the declared selected-object tiny-training gate: 244/248 tracked observations, selected ADE 0.00249 and posterior MAE 0.00392 across four seeded prior samples. All-object completeness remains 0/4 and validation tracking 0/248; full-data training and held-out quality remain open under T13-T16. Ananya confirmed ownership on 17 October; Athul authored the implementation and these diagnostics. Evidence: results/foreground-loss-checks.json.",
     "completed_acceptance": [
       0,
       1,
+      2,
       3,
       4
     ]

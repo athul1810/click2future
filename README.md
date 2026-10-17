@@ -20,7 +20,7 @@ held-out action/uncertainty results and the demo remain open. See the
 
 **Working submission deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
-**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya proposed, awaiting acceptance; demo integration: Shrijeet. See the [task board](docs/TASKS.md).
+**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya (confirmed 17 October); demo integration: Shrijeet. See the [task board](docs/TASKS.md).
 
 **Compute:** the course-provided TC2 A40 setup and scheduled training are verified,
 including deterministic CVAE CUDA backward. Each account has a one-GPU,
@@ -125,10 +125,10 @@ C is shared by Athul and Ananya. Agree on the implementation split within each s
 | A: Simulator and data | Physics, rendering, labels, splits, ground-truth replay | PRAMOD SANJAY |
 | B: Diffusion | Pixel diffusion training/sampling, numeric and spatial action conditioning | MAITI SHRIJEET |
 | C: Evaluation and physics | Tracking, trajectory/collision metrics, uncertainty, experiments, auxiliary supervision with B | BOBAN ATHUL KRISHNA and KAPOOR ANANYA |
-| D: CVAE | Prior/posterior baseline and fair sampling/cost comparison | Ananya proposed; acceptance pending |
+| D: CVAE | Prior/posterior baseline and fair sampling/cost comparison | KAPOOR ANANYA |
 | Demo integration | Shared sampler, four-future UI, simulator comparison and offline fallback | MAITI SHRIJEET |
 
-Confirm Ananya's CVAE acceptance; see [the handoff](docs/CVAE_HANDOFF.md). Report assembly and submission tasks also remain unassigned. Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
+Ananya confirmed CVAE on 17 October; see [the handoff](docs/CVAE_HANDOFF.md). Report assembly and submission tasks also remain unassigned. Each person writes up the methods, results, and limitations of their work. See the [task board](docs/TASKS.md) for dependencies and acceptance criteria.
 
 ## Submission
 
@@ -165,7 +165,7 @@ The demo UI remains to be built. The [build plan](docs/BUILD_PLAN.md) records th
 - A: review the controlled/OOD data changes and freeze the main training corpus.
 - B: improve generated-video quality, then pass held-out action controls.
 - C: evaluate useful checkpoints, finish report analysis, and run E4 checks if budget allows.
-- Confirm the CVAE lead and run a full-data pilot after the passed one-clip check. Shrijeet owns demo integration.
+- Ananya leads the next CVAE pilot after the passed one-clip check; held-out generation still fails. Shrijeet owns demo integration.
 
 ## References
 

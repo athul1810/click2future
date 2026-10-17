@@ -3,7 +3,7 @@
 Internal completion: **14 November 2026**.
 
 A: Sanjay. B and demo integration: Shrijeet. C: Athul and Ananya jointly.
-Ananya is proposed for CVAE; acceptance is pending. Pixel diffusion is adopted;
+Ananya confirmed CVAE on 17 October. Pixel diffusion is adopted;
 the optional autoencoder is outside the critical path. See [decisions](DECISIONS.md),
 [execution plan](EXECUTION_PLAN_2026-10-16.md) and [CVAE handoff](CVAE_HANDOFF.md).
 
@@ -17,7 +17,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In review |
 | T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
-| T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | Unassigned | In progress |
+| T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In progress |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
@@ -161,15 +161,15 @@ Closed as not planned for the adopted pixel-diffusion scope in D011. No autoenco
 
 Establish a lower-cost generative baseline with the agreed action inputs.
 
-**Dependencies:** T03, T06. **Owner:** Unassigned. **Status:** In progress.
+**Dependencies:** T03, T06. **Owner:** KAPOOR ANANYA. **Status:** Done.
 
 - [x] Condition on the first frame, selected-object mask, and numeric force.
 - [x] Define the posterior, prior, reconstruction loss, and KL weight; sample from the prior without future frames at inference.
-- [ ] Pass a tiny-batch overfit check and produce four seeded samples per condition.
+- [x] Pass a tiny-batch overfit check and produce four seeded samples per condition.
 - [x] Log validation results, model size, training cost, and checkpoint selection.
 - [x] Add a run manifest and qualitative successes/failures.
 
-TC2 exposed a deterministic CUDA pooling-backward crash, fixed with equivalent slice means. Jobs 43165/43166 trained 1500 steps and reproduced all saved tensors exactly across allocations. The 5000-step retry in job 43171 still fails sampled-video quality: 168/248 training-scene observations tracked and 0/248 on the validation example. Prior-sample quality remains open despite low reconstruction loss. Configs, costs, checkpoints and failure examples are recorded in results/cvae-training-checks.json.
+PR #37 merged after independent review. Boundary-weighted CVAE training in job 43199 passes the declared selected-object tiny-training gate: 244/248 tracked observations, selected ADE 0.00249 and posterior MAE 0.00392 across four seeded prior samples. All-object completeness remains 0/4 and validation tracking 0/248; full-data training and held-out quality remain open under T13-T16. Ananya confirmed ownership on 17 October; Athul authored the implementation and these diagnostics. Evidence: results/foreground-loss-checks.json.
 
 <a id="t10"></a>
 
