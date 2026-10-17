@@ -126,6 +126,10 @@ def summarize(records, family):
         "overlap_over_ten_percent_frames",
         "clips_outside_interior",
         "outside_interior_object_frames",
+        "clips_with_penetration_over_one_pixel",
+        "penetration_over_one_pixel_frames",
+        "clips_with_boundary_over_one_pixel",
+        "boundary_over_one_pixel_object_frames",
     )
     result = {key: sum(row[family][key] for row in records) for key in keys}
     result["condition_count"] = len(records)

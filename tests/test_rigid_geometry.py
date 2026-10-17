@@ -34,6 +34,8 @@ def test_hidden_sprite_overlap_matches_actual_compositing():
     assert clip["overlap_pixels_per_frame"] == [64] * 3
     assert clip["maximum_overlap_fraction"] == 1
     assert report["clips_with_overlap_over_ten_percent"] == 1
+    assert clip["maximum_hull_penetration_pixels"] == 7
+    assert report["penetration_over_one_pixel_frames"] == 3
     frames = render_motion(obs, motion[0])
     # The later blue sprite hides every red pixel. A successful RGB rendering
     # does not remove the underlying overlap from this separate pose diagnostic.
@@ -49,6 +51,16 @@ def test_off_canvas_object_is_counted_even_when_no_silhouette_survives():
     assert report["clips_outside_interior"] == 1
     assert report["clips"][0]["maximum_outside_pixel_fraction"] == 1
     assert report["expected_object_frames"] == 4
+    assert report["boundary_over_one_pixel_object_frames"] == 2
+
+
+def test_raster_contact_and_subpixel_penetration_are_not_large_penetration():
+    motion = np.zeros((1, 1, 2, 4))
+    motion[:, :, 0, 0] = 13.5 / 32
+    report = geometry_diagnostics(fixture_observation(), motion)
+    assert report["overlap_frames"] == 1
+    assert report["penetration_over_one_pixel_frames"] == 0
+    assert report["clips"][0]["maximum_hull_penetration_pixels"] == 0.5
 
 
 def test_rotation_and_translation_do_not_mutate_inputs():

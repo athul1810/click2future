@@ -7,7 +7,41 @@ compositing and do not correct motion or certify physical validity.
 import numpy as np
 from PIL import Image
 
-GEOMETRY_VERSION = "rigid-silhouettes-1"
+GEOMETRY_VERSION = "rigid-silhouettes-2"
+
+
+def _hull(points):
+    """Convex hull of observed pixel centres, without expanding their borders."""
+    ordered = sorted(set(map(tuple, points)))
+
+    def half(values):
+        result = []
+        for point in values:
+            while len(result) >= 2:
+                a, b = result[-2:]
+                cross = (b[0] - a[0]) * (point[1] - a[1]) - (b[1] - a[1]) * (point[0] - a[0])
+                if cross > 0:
+                    break
+                result.pop()
+            result.append(point)
+        return result
+
+    hull = np.asarray(half(ordered)[:-1] + half(ordered[::-1])[:-1])
+    if len(hull) < 3:
+        raise ValueError("Geometry requires two-dimensional observed silhouettes")
+    return hull
+
+
+def _penetration(first, second):
+    """Minimum separating translation for two convex hulls, in native pixels."""
+    edges = np.concatenate(
+        (np.roll(first, -1, axis=0) - first, np.roll(second, -1, axis=0) - second)
+    )
+    axes = np.stack((-edges[:, 1], edges[:, 0]), axis=-1)
+    axes /= np.linalg.norm(axes, axis=-1, keepdims=True)
+    a, b = first @ axes.T, second @ axes.T
+    distance = np.minimum(a.max(0) - b.min(0), b.max(0) - a.min(0))
+    return float(max(0, distance.min()))
 
 
 def geometry_diagnostics(observation, motions):
@@ -33,11 +67,12 @@ def geometry_diagnostics(observation, motions):
     for mask in observation.masks:
         y, x = np.nonzero(mask)
         points.append(np.stack((x + 0.5, y + 0.5), axis=-1))
+    hulls = [_hull(item) for item in points]
     clips = []
     for motion in motions:
-        intersections, fractions, outside = [], [], []
+        intersections, fractions, outside, penetrations, boundary_depths = [], [], [], [], []
         for state in motion:
-            masks, boundary_fractions = [], []
+            masks, boundary_fractions, transformed_hulls, depths = [], [], [], []
             for index, value in enumerate(state):
                 dx, dy = value[:2] * 0.5 * np.array([width, height])
                 angle = np.arctan2(value[2], value[3] * 2 + 1)
@@ -60,6 +95,19 @@ def geometry_diagnostics(observation, motions):
                 masks.append(np.asarray(warped) != 0)
                 rotation = np.array([[cosine, -sine], [sine, cosine]])
                 transformed = (points[index] - [cx, cy]) @ rotation.T + [cx + dx, cy + dy]
+                hull = (hulls[index] - [cx, cy]) @ rotation.T + [cx + dx, cy + dy]
+                transformed_hulls.append(hull)
+                depths.append(
+                    float(
+                        max(
+                            0,
+                            1 - hull[:, 0].min(),
+                            hull[:, 0].max() - (width - 1),
+                            1 - hull[:, 1].min(),
+                            hull[:, 1].max() - (height - 1),
+                        )
+                    )
+                )
                 inside = (
                     (transformed[:, 0] >= 1)
                     & (transformed[:, 0] < width - 1)
@@ -72,7 +120,10 @@ def geometry_diagnostics(observation, motions):
             intersections.append(intersection)
             fractions.append(intersection / smaller if smaller else 0.0)
             outside.append(boundary_fractions)
+            penetrations.append(_penetration(*transformed_hulls))
+            boundary_depths.append(depths)
         intersections, fractions, outside = map(np.asarray, (intersections, fractions, outside))
+        penetrations, boundary_depths = np.asarray(penetrations), np.asarray(boundary_depths)
         clips.append(
             {
                 "overlap_frames": int((intersections > 0).sum()),
@@ -82,6 +133,12 @@ def geometry_diagnostics(observation, motions):
                 "maximum_overlap_fraction": float(fractions.max()),
                 "outside_interior_object_frames": int((outside > 0).sum()),
                 "maximum_outside_pixel_fraction": float(outside.max()),
+                "penetration_over_one_pixel_frames": int((penetrations > 1).sum()),
+                "maximum_hull_penetration_pixels": float(penetrations.max()),
+                "boundary_over_one_pixel_object_frames": int((boundary_depths > 1).sum()),
+                "maximum_boundary_depth_pixels": float(boundary_depths.max()),
+                "hull_penetration_pixels_per_frame": penetrations.tolist(),
+                "boundary_depth_pixels_per_object_frame": boundary_depths.tolist(),
                 "overlap_pixels_per_frame": intersections.tolist(),
                 "overlap_fraction_per_frame": fractions.tolist(),
                 "outside_pixel_fraction_per_object_frame": outside.tolist(),
@@ -107,10 +164,23 @@ def geometry_diagnostics(observation, motions):
         "outside_interior_object_frames": sum(
             clip["outside_interior_object_frames"] for clip in clips
         ),
+        "clips_with_penetration_over_one_pixel": sum(
+            clip["penetration_over_one_pixel_frames"] > 0 for clip in clips
+        ),
+        "penetration_over_one_pixel_frames": sum(
+            clip["penetration_over_one_pixel_frames"] for clip in clips
+        ),
+        "clips_with_boundary_over_one_pixel": sum(
+            clip["boundary_over_one_pixel_object_frames"] > 0 for clip in clips
+        ),
+        "boundary_over_one_pixel_object_frames": sum(
+            clip["boundary_over_one_pixel_object_frames"] for clip in clips
+        ),
         "clips": clips,
         "limitations": [
             "Rasterized silhouette overlap is not continuous rigid-body penetration depth.",
             "Rotated pixel-centre boundary tests have rasterization bias; compare oracle control.",
             "No momentum, force law or contact timing is certified by these diagnostics.",
+            "Convex pixel-centre hulls approximate visible convex shapes; one-pixel tolerance is an engineering diagnostic, not a physics certificate.",
         ],
     }
