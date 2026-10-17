@@ -1,0 +1,88 @@
+{
+  "status": "technical_integration_passed_quality_failed",
+  "job": 43174,
+  "scope": "Technical checkpoint-to-metric reproducibility check only. One training clip per method, one training seed, different seeds. This does not complete the E0/E2/E3 experiment or establish model quality.",
+  "job_id": "43174",
+  "source_revision": "a7dc2f53087be2f7ff07eee792808f0f60dafda4",
+  "methods": [
+    "E0",
+    "E3"
+  ],
+  "training_steps": [
+    5000,
+    5000
+  ],
+  "cases": 1,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "image_metrics": [
+    "ssim"
+  ],
+  "untrained_fixture_runs": [],
+  "video_count": 8,
+  "families": [
+    "trajectory",
+    "images",
+    "futures"
+  ],
+  "models": [
+    {
+      "method": "E0",
+      "training_seed": 0,
+      "training_steps": 5000,
+      "sampling_seconds_including_load_and_export": 0.8171445159241557,
+      "checkpoint_sha256": "87a46cfd24e5b13765665f3512b4d60afcfe86e15414e1f6add1bc511e0ec768",
+      "ssim": 0.8893306589679373,
+      "tracked_future_observations": 0,
+      "expected_future_observations": 248,
+      "missing_track_rate": 1.0,
+      "complete_trajectory_samples": 0,
+      "total_trajectory_samples": 4
+    },
+    {
+      "method": "E3",
+      "training_seed": 7,
+      "training_steps": 5000,
+      "sampling_seconds_including_load_and_export": 2.063270825892687,
+      "checkpoint_sha256": "632cbd7937f3f54dbe00f19958f9ffb0249928b9e161d950694c5604e699f032",
+      "ssim": 0.8653505741364769,
+      "tracked_future_observations": 0,
+      "expected_future_observations": 248,
+      "missing_track_rate": 1.0,
+      "complete_trajectory_samples": 0,
+      "total_trajectory_samples": 4
+    }
+  ],
+  "fresh_source_code_tests": 364,
+  "fresh_source_subtests": 4,
+  "source_archive_weights_or_data": false,
+  "artifact_sha256": {
+    "plan.json": "5058dd3b35efc334d92fd11c20511f6f191dbf9300883eb710e59a1f327730b7",
+    "samples/predictions.json": "da5543107de41cc0db3ba08e2700b79f8ff3bc75d6abb7f210809992de6f94ba",
+    "metrics/comparison.json": "ad06bc8f7171c8d692b6bf244b3ff409d166d34153e7e59a47bff3a8fdf44ede",
+    "metrics/summary.json": "18273691f62e0248fa23a7b97bcb7d92df8a6d2c582ff2821575e9eb903b83c0",
+    "metrics/summary.csv": "a1a7172e2db41cf12a2c12b73a77300d1e25164daf75de9597576c0aa093953a"
+  },
+  "remaining": "Final package regeneration and checks after the remaining experiments and demo belong to T20. This check does not certify a final course submission.",
+  "saved_tc2_rollouts_replayed_locally": {
+    "count": 20,
+    "atol": 1e-06,
+    "rtol": 1e-06,
+    "maximum_position_error": 0.0
+  },
+  "source_archive": {
+    "file_count": 134,
+    "bytes": 255070,
+    "sha256": "a081a13fc28ae56668977090d1c0dec4a93df92f80bf749974b56c8fd4ddf110",
+    "fresh_install_tests": 364,
+    "subtests": 4,
+    "skips": 0,
+    "seconds": 77.52,
+    "source_smoke": "Two generated rollouts, saved replay and loader imports passed",
+    "content_inspection": "No datasets, models, external links, environments, Git history or personal instructions"
+  }
+}

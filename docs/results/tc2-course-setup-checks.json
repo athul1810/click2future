@@ -1,0 +1,55 @@
+{
+  "status": "setup_verified",
+  "quality_is_not_certified": true,
+  "setup_job": {
+    "id": 43158,
+    "state": "COMPLETED",
+    "elapsed_seconds": 638,
+    "device": "NVIDIA A40",
+    "vram_mib": 46068,
+    "torch": "2.11.0+cu128",
+    "python": "3.12.15",
+    "packages_checked": 77,
+    "tests_passed": 331,
+    "tests_skipped": 4,
+    "skip_reason": "LPIPS pretrained evaluation weights not cached",
+    "subtests_passed": 4
+  },
+  "account_limits": {
+    "gpu_per_user": 1,
+    "cpus_per_user": 10,
+    "system_ram": "30G",
+    "running_jobs_per_user": 2,
+    "max_wall_seconds": 21600,
+    "observed_submit_limit": "A third queued/running job was refused; submit later after a slot frees"
+  },
+  "storage_quota": "Not exposed by quota -s",
+  "total_gpu_hours": "Not exposed by checked account metadata",
+  "service_expiry": "Not exposed by checked account metadata",
+  "checkpoint_backup": {
+    "ignored_directory": "outputs/tc2-ops/cvae-pilot/complete",
+    "bundle_sha256": "dd655297011f4e05ea1e1f293d0c1ebc011eddcb3e91d0728e0c11c9cac34277",
+    "remote_and_local_hash_match": true,
+    "weights_excluded_from_git_and_source_zip": true
+  },
+  "resume": {
+    "full_job": 43165,
+    "resume_job": 43166,
+    "steps": 1500,
+    "resume_from_step": 500,
+    "max_tensor_difference": 0.0,
+    "operation_export_error": "The resume training and state comparison finished; the reporting call then omitted metric arguments. Saved checkpoints and samples were recovered and scored locally."
+  },
+  "final_default_setup": {
+    "job": 43177,
+    "source_revision": "0104b5ecfd54fb1beac283601c25528ddb403beb",
+    "state": "COMPLETED",
+    "elapsed_seconds": 269,
+    "tests_passed": 360,
+    "tests_skipped": 4,
+    "subtests_passed": 4,
+    "skip_reason": "LPIPS weights not cached on TC2; all 364 pass with cached weights locally",
+    "native_cvae_deterministic_backward": "passed",
+    "optimizer_updates_in_probe": 0
+  }
+}

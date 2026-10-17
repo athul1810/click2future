@@ -3,7 +3,7 @@
 import pytest
 import torch
 
-from click2future.models.cvae import ConditionalVideoVAE
+from click2future.models.cvae import ConditionalVideoVAE, _adaptive_mean
 from click2future.training.cvae_loss import beta_at_step, cvae_loss, diagonal_gaussian_kl
 
 
@@ -80,3 +80,30 @@ def test_beta_warmup_is_a_function_of_resumable_step():
     assert beta_at_step(0.001, 100, 500, 0.2) == 0.001
     assert beta_at_step(0.001, 300, 500, 0.2) == 0.001
     assert beta_at_step(0.001, 0, 500, 0) == 0.001
+
+
+@pytest.mark.parametrize(
+    "shape,pooled",
+    [
+        ((2, 3, 8, 8), (2, 2)),
+        ((2, 3, 3, 5), (2, 2)),
+        ((2, 3, 31, 8, 8), (4, 2, 2)),
+        ((2, 3, 3, 3, 5), (4, 2, 2)),
+        ((1, 2, 1, 2, 3), (4, 2, 2)),
+    ],
+)
+def test_deterministic_summary_matches_adaptive_pool_values_and_gradients(shape, pooled):
+    value = torch.randn(shape, dtype=torch.float64, generator=torch.Generator().manual_seed(17))
+    actual_input, reference_input = value.requires_grad_(), value.detach().clone().requires_grad_()
+    actual = _adaptive_mean(actual_input, pooled)
+    pool = (
+        torch.nn.functional.adaptive_avg_pool2d
+        if len(pooled) == 2
+        else (torch.nn.functional.adaptive_avg_pool3d)
+    )
+    reference = pool(reference_input, pooled)
+    weights = torch.linspace(-1, 2, actual.numel()).reshape_as(actual)
+    (actual * weights).sum().backward()
+    (reference * weights).sum().backward()
+    torch.testing.assert_close(actual, reference, rtol=1e-12, atol=1e-12)
+    torch.testing.assert_close(actual_input.grad, reference_input.grad, rtol=1e-12, atol=1e-12)
