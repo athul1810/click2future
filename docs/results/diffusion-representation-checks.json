@@ -386,5 +386,237 @@
     "file": "docs/results/diffusion-representation.png",
     "sample_seed": 0,
     "sha256": "69dea18dd38fa2a6025001bf60e0f5cd7cd6b711fa735719be7387c6561ce0c3"
-  }
+  },
+  "jobs": [
+    {
+      "job_id": 43235,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 567
+    },
+    {
+      "job_id": 43238,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 73
+    }
+  ],
+  "total_allocated_gpu_hours": 0.17777777777777778,
+  "sampler_followup": {
+    "scope": "Training clip only; seed 100 diagnostic, not the main four-seed comparison",
+    "records": {
+      "rgb": {
+        "training_step": 5000,
+        "prediction_type": "velocity",
+        "representation": "rgb",
+        "sample_id": "scene-00226000-variant-000",
+        "seed": 100,
+        "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",
+        "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+        "records": [
+          {
+            "weights": "ema",
+            "steps": 32,
+            "seconds": 0.8596614953130484,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 128,
+            "seconds": 1.6750186728313565,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 1000,
+            "seconds": 13.052250352688134,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 32,
+            "seconds": 0.4216869194060564,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 128,
+            "seconds": 1.673684366978705,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 1000,
+            "seconds": 13.039002906531096,
+            "tracked_future_observations": 31,
+            "expected_future_observations": 62
+          }
+        ]
+      },
+      "frame0_residual": {
+        "training_step": 5000,
+        "prediction_type": "velocity",
+        "representation": "frame0_residual",
+        "sample_id": "scene-00226000-variant-000",
+        "seed": 100,
+        "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",
+        "source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+        "records": [
+          {
+            "weights": "ema",
+            "steps": 32,
+            "seconds": 0.8332578418776393,
+            "tracked_future_observations": 14,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 128,
+            "seconds": 1.668820345774293,
+            "tracked_future_observations": 9,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "ema",
+            "steps": 1000,
+            "seconds": 13.02446786686778,
+            "tracked_future_observations": 9,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 32,
+            "seconds": 0.42015280295163393,
+            "tracked_future_observations": 9,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 128,
+            "seconds": 1.6695195259526372,
+            "tracked_future_observations": 7,
+            "expected_future_observations": 62
+          },
+          {
+            "weights": "model",
+            "steps": 1000,
+            "seconds": 13.032038247212768,
+            "tracked_future_observations": 6,
+            "expected_future_observations": 62
+          }
+        ]
+      }
+    }
+  },
+  "tracker_diagnosis": {
+    "rgb_reasons": {
+      "fragmented_or_duplicate": 124,
+      "ok": 124
+    },
+    "residual_reasons": {
+      "fragmented_or_duplicate": 124,
+      "area_change": 54,
+      "ok": 70
+    },
+    "nonselected_candidate_pixels_outside_largest_component": {
+      "rgb": {
+        "total": 3448,
+        "in_outer_3px": 3448
+      },
+      "frame0_residual": {
+        "total": 2453,
+        "in_outer_3px": 2452
+      }
+    },
+    "interpretation": "The visible nonselected object is rejected by global palette fragmentation when noisy border pixels resemble its colour. A missing track is not proof of object disappearance. Keep the unchanged metric and report this limitation."
+  },
+  "background_noise_control": {
+    "scope": "Training-reference corruption control, not model output or metric retuning",
+    "sample_id": "scene-00226000-variant-000",
+    "noise_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "corruption": "Independent Gaussian noise on reference background pixels only, frame 0 unchanged",
+    "oracle_use": "Future masks construct the known corruption only; tracker receives RGB and frame-0 masks",
+    "records": [
+      {
+        "background_noise_std_uint8": 0,
+        "tracked": 248,
+        "expected": 248,
+        "tracking_reasons": {
+          "ok": 248
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 2,
+        "tracked": 248,
+        "expected": 248,
+        "tracking_reasons": {
+          "ok": 248
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 4,
+        "tracked": 248,
+        "expected": 248,
+        "tracking_reasons": {
+          "ok": 248
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 8,
+        "tracked": 178,
+        "expected": 248,
+        "tracking_reasons": {
+          "fragmented_or_duplicate": 70,
+          "ok": 178
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 12,
+        "tracked": 124,
+        "expected": 248,
+        "tracking_reasons": {
+          "fragmented_or_duplicate": 124,
+          "ok": 124
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      },
+      {
+        "background_noise_std_uint8": 16,
+        "tracked": 124,
+        "expected": 248,
+        "tracking_reasons": {
+          "fragmented_or_duplicate": 124,
+          "ok": 124
+        },
+        "object_pixels_and_trajectories": "unchanged"
+      }
+    ]
+  },
+  "backups": {
+    "representation-43235-backup.tar.gz": {
+      "sha256": "9284cb5c7b63fe98d3317b56d0fe7e803f4bd8088e1e2fd3b016e5e316f092d9",
+      "local_copy_verified": true,
+      "location": "ignored local outputs; datasets and weights not committed"
+    },
+    "representation-sampling-43238-backup.tar.gz": {
+      "sha256": "4498b8989ab55a61211c7e158954dc78ee6c2882b42eaa9556048652d25337ef",
+      "local_copy_verified": true,
+      "location": "ignored local outputs; datasets and weights not committed"
+    }
+  },
+  "decision": "Keep RGB default. Residual target is a failed training-only hypothesis. Do not scale or claim held-out success. Check reconstruction/border artifacts and independently calibrate extractor noise sensitivity before interpreting missing trajectories."
 }
