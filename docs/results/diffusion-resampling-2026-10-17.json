@@ -1,0 +1,408 @@
+{
+  "status": "measured_training_only_resampling",
+  "sampler_source_revision": "855236cce40000b15a1e451a12580a22dd8f3095",
+  "training_source_revision": "ff4f196c8aece26669e3ca28e0865f89ccf3241f",
+  "review": "athul identified that clipping residual x0 to [-1,1] allowed invalid RGB; fixed sampler clips in RGB and converts back before recomputing epsilon",
+  "job": {
+    "job_id": 43244,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 15,
+    "node": "TC2N02",
+    "gpu": "NVIDIA A40"
+  },
+  "scope": "same saved 5000-step checkpoints, same training clip, observable condition, EMA, seeds 0-3 and 32 DDIM steps; no retraining or held-out quality claim",
+  "clip_policy": "RGB x0 clipped to [-1,1]; residual x0 clipped to [(-1-c)/2,(1-c)/2]",
+  "source_archive_sha256": "2ee9682c92e55f1a8bd6b32010e7853e8b598aa5cfe74a01a0a923a35c2f23e4",
+  "checks": {
+    "sampler_tests_passed": 37,
+    "new_regression_passes_corrected_source_and_fails_original": true,
+    "lint": "passed",
+    "format": "passed",
+    "checkpoint_hashes_unchanged": true,
+    "original_frame_zero_preserved": true,
+    "independent_RGB_replay_pixel_exact": true
+  },
+  "records": [
+    {
+      "representation": "rgb",
+      "checkpoint_sha256": "d373879495ba4e7e30980c31d0bdc7e72f3e5ccdf934ad24c2993bdf815a0517",
+      "original_scores": {
+        "units": "normalized_image_coordinates",
+        "frame_zero_scored": false,
+        "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+        "all_objects": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 248,
+          "tracked_future_observations": 124,
+          "missing_track_rate": 0.5,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "selected_object": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": 0.0037597039875099532,
+              "fde": 0.007500370186347839
+            },
+            {
+              "sample_index": 1,
+              "ade": 0.004112847498925546,
+              "fde": 0.011036463998807464
+            },
+            {
+              "sample_index": 2,
+              "ade": 0.0033972511694668537,
+              "fde": 0.005716918669282214
+            },
+            {
+              "sample_index": 3,
+              "ade": 0.0030244674132044423,
+              "fde": 0.004383618128197692
+            }
+          ],
+          "complete_samples": 4,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": 0.0035735675172766986,
+          "mean_fde_over_complete_samples": 0.007159342745658802,
+          "best_of_k": {
+            "k": 4,
+            "min_ade": 0.0030244674132044423,
+            "min_ade_sample_index": 3,
+            "fde_at_min_ade": 0.004383618128197692,
+            "min_fde": 0.004383618128197692,
+            "min_fde_sample_index": 3
+          },
+          "expected_future_observations": 124,
+          "tracked_future_observations": 124,
+          "missing_track_rate": 0.0,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "rgb_mae_future_0_1": 0.02087984047830105
+      },
+      "corrected_scores": {
+        "units": "normalized_image_coordinates",
+        "frame_zero_scored": false,
+        "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+        "all_objects": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 248,
+          "tracked_future_observations": 124,
+          "missing_track_rate": 0.5,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "selected_object": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": 0.0037597039875099532,
+              "fde": 0.007500370186347839
+            },
+            {
+              "sample_index": 1,
+              "ade": 0.004112847498925546,
+              "fde": 0.011036463998807464
+            },
+            {
+              "sample_index": 2,
+              "ade": 0.0033972511694668537,
+              "fde": 0.005716918669282214
+            },
+            {
+              "sample_index": 3,
+              "ade": 0.0030244674132044423,
+              "fde": 0.004383618128197692
+            }
+          ],
+          "complete_samples": 4,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": 0.0035735675172766986,
+          "mean_fde_over_complete_samples": 0.007159342745658802,
+          "best_of_k": {
+            "k": 4,
+            "min_ade": 0.0030244674132044423,
+            "min_ade_sample_index": 3,
+            "fde_at_min_ade": 0.004383618128197692,
+            "min_fde": 0.004383618128197692,
+            "min_fde_sample_index": 3
+          },
+          "expected_future_observations": 124,
+          "tracked_future_observations": 124,
+          "missing_track_rate": 0.0,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "rgb_mae_future_0_1": 0.02087984047830105
+      },
+      "video_sha256": "8696ba44effc40b3c9cfbbbd7d4e4e07a8500f9c4dc3aac2f1d1a96ce5de10ca",
+      "same_pixels_as_original": true,
+      "max_uint8_pixel_difference": 0,
+      "training_gate_passed": false,
+      "sampling_metadata": {
+        "checkpoint_sha256": "d373879495ba4e7e30980c31d0bdc7e72f3e5ccdf934ad24c2993bdf815a0517",
+        "condition_sha256": "4383fc442d9b943de907f489bcd27dcbfcf02e0b4d14918697c5238a1350c8df",
+        "training_step": 5000,
+        "prediction_type": "velocity",
+        "representation": "rgb",
+        "force_limit": 0.5,
+        "force_scale": 0.5,
+        "weights": "ema",
+        "seed_policy": "private generator per sample; paired seeds across changed actions",
+        "seeds": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "sampler": "DDIM eta=0, clipped x0 with recomputed epsilon",
+        "sampling_steps": 32,
+        "seconds_including_uint8_transfer": 2.1579037150368094,
+        "shape": [
+          4,
+          32,
+          64,
+          64,
+          3
+        ],
+        "scope": "Generated model video; quality and action response require evaluation"
+      }
+    },
+    {
+      "representation": "frame0_residual",
+      "checkpoint_sha256": "931336e0133dceabde6fb9e3a0969dc2b4330f7b1171f7f305481fc8b379f50a",
+      "original_scores": {
+        "units": "normalized_image_coordinates",
+        "frame_zero_scored": false,
+        "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+        "all_objects": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 248,
+          "tracked_future_observations": 70,
+          "missing_track_rate": 0.717741935483871,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "selected_object": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 124,
+          "tracked_future_observations": 70,
+          "missing_track_rate": 0.43548387096774194,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "rgb_mae_future_0_1": 0.033632636070251465
+      },
+      "corrected_scores": {
+        "units": "normalized_image_coordinates",
+        "frame_zero_scored": false,
+        "missing_track_policy": "complete_sample_only; best_of_k_requires_all_samples_complete",
+        "all_objects": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 248,
+          "tracked_future_observations": 70,
+          "missing_track_rate": 0.717741935483871,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "selected_object": {
+          "per_sample": [
+            {
+              "sample_index": 0,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 1,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 2,
+              "ade": null,
+              "fde": null
+            },
+            {
+              "sample_index": 3,
+              "ade": null,
+              "fde": null
+            }
+          ],
+          "complete_samples": 0,
+          "total_samples": 4,
+          "mean_ade_over_complete_samples": null,
+          "mean_fde_over_complete_samples": null,
+          "best_of_k": null,
+          "expected_future_observations": 124,
+          "tracked_future_observations": 70,
+          "missing_track_rate": 0.43548387096774194,
+          "out_of_bounds_rate_over_tracked": 0.0
+        },
+        "rgb_mae_future_0_1": 0.033228591084480286
+      },
+      "video_sha256": "afd14b487a39f2e6c2a6e94f962ea33dc368d0be69c9e15d2f359a8ca50d87cd",
+      "same_pixels_as_original": false,
+      "max_uint8_pixel_difference": 32,
+      "training_gate_passed": false,
+      "sampling_metadata": {
+        "checkpoint_sha256": "931336e0133dceabde6fb9e3a0969dc2b4330f7b1171f7f305481fc8b379f50a",
+        "condition_sha256": "4383fc442d9b943de907f489bcd27dcbfcf02e0b4d14918697c5238a1350c8df",
+        "training_step": 5000,
+        "prediction_type": "velocity",
+        "representation": "frame0_residual",
+        "force_limit": 0.5,
+        "force_scale": 0.5,
+        "weights": "ema",
+        "seed_policy": "private generator per sample; paired seeds across changed actions",
+        "seeds": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "sampler": "DDIM eta=0, clipped x0 with recomputed epsilon",
+        "sampling_steps": 32,
+        "seconds_including_uint8_transfer": 2.1494786702096462,
+        "shape": [
+          4,
+          32,
+          64,
+          64,
+          3
+        ],
+        "scope": "Generated model video; quality and action response require evaluation"
+      }
+    }
+  ],
+  "decision": "keep RGB default. corrected residual still fails this training gate at 70/248 tracked; RGB remains 124/248. original residual numbers were confounded by clipping and are retained as historical results only.",
+  "backup": {
+    "sha256": "0e4999e69ad16d4a36585dc892ebd27f8af9db25a6e55507f01d9c06cd540fb9",
+    "local_copy_verified": true,
+    "location": "ignored outputs; new samples and observable condition retained without retraining"
+  }
+}

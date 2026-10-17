@@ -59,13 +59,15 @@ rejection. Numerical and integration checks do not establish learned video quali
 
 ## Measured result: 17 October
 
-TC2 job 43235 completed both 5,000-update runs on an A40 with exit 0:0. The residual
-hypothesis failed. Keep RGB as the default; neither run passes the existing gate.
+TC2 job 43235 completed both 5,000-update runs on an A40 with exit 0:0. Its residual
+samples used a looser effective RGB clip, which Athul fixed in `855236c`.
+The table below retains those original measurements. The corrected run is recorded
+separately below; neither corrected representation passes the existing gate.
 
 | Representation | Tracked future observations | Complete all-object clips | Selected ADE | Future RGB MAE [0,1] |
 |---|---:|---:|---:|---:|
 | RGB | 124/248 | 0/4 | 0.00357, four complete selected trajectories | 0.02088 |
-| Frame-0 residual | 70/248 | 0/4 | Undefined, selected trajectories incomplete | 0.03363 |
+| Frame-0 residual, original clip | 70/248 | 0/4 | Undefined, selected trajectories incomplete | 0.03363 |
 | Copy frame 0 | 248/248 | 4/4 | 0.04776, fails the motion threshold | 0.00275 |
 
 These are four dependent samples on one training condition. They establish neither
@@ -82,8 +84,29 @@ datasets and samples were backed up locally with verified SHA-256 hashes.
 Both jobs ran from ff4f196, where the sampler clipped residual x0 to `[-1,1]` in
 residual coordinates instead of to valid RGB. The sampler now clips in RGB. Training
 and the RGB samples are unchanged by that fix, but the residual rows above used the
-looser clip. Re-sample the saved residual checkpoint before treating the residual
-result as final.
+looser clip. They cannot establish the effect of representation alone.
+
+### corrected sampling: 17 october
+
+job 43244 re-sampled the same saved checkpoints at `855236c`, on the same A40 node,
+with EMA, seeds 0-3 and 32 DDIM steps. no retraining. the corrected clip applies
+valid RGB bounds during every DDIM update.
+
+- rgb is byte-for-byte identical to the original: 124/248 tracked, selected ADE
+  0.00357, four complete selected trajectories and zero complete all-object clips.
+- corrected residual still tracks 70/248, with zero complete selected trajectories
+  and undefined selected ADE. RGB MAE changes from 0.03363 to 0.03323; individual
+  pixels change by up to 32 uint8 levels. the correction affects the output even
+  though the tracking count stays the same.
+- both corrected runs fail the unchanged training gate. keep rgb as the default.
+  this is one training condition, not a general result about residual diffusion.
+- job 43244 completed with exit 0:0 in 15 seconds. checkpoint hashes are unchanged;
+  observable inputs and frame 0 match. the new regression passes the fixed code
+  and fails the original sampler; all 37 sampler/training tests pass locally.
+
+[corrected scores and hashes](results/diffusion-resampling-2026-10-17.json).
+the earlier sample panel and seed-100 sampler study retain their original clip
+and should be read as historical diagnostics.
 
 ### What the missing counts mean
 

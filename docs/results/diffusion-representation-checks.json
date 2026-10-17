@@ -618,5 +618,11 @@
       "location": "ignored local outputs; datasets and weights not committed"
     }
   },
-  "decision": "Keep RGB default. Residual target is a failed training-only hypothesis. Do not scale or claim held-out success. Check reconstruction/border artifacts and independently calibrate extractor noise sensitivity before interpreting missing trajectories."
+  "decision": "original residual conclusion required re-sampling after clipping correction. corrected results are in diffusion-resampling-2026-10-17.json; they still fail this training-only gate. keep RGB default.",
+  "review_correction": {
+    "sampler_fix_revision": "855236cce40000b15a1e451a12580a22dd8f3095",
+    "issue": "original residual samples used a wider effective RGB clip than the RGB arm",
+    "corrected_results": "diffusion-resampling-2026-10-17.json",
+    "original_scores": "retained unchanged; do not use the original residual arm as an otherwise matched comparison"
+  }
 }
