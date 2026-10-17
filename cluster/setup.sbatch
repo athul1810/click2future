@@ -58,11 +58,37 @@ uv_path="$bootstrap/bin/uv"
 export UV_CACHE_DIR="$HOME/.cache/click2future/uv"
 export UV_PROJECT_ENVIRONMENT="$C2F_PROJECT/.venv"
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-4}"
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
 # Prebuilt torch wheels supply CUDA runtime libraries; avoid mixing toolkit modules.
-"$uv_path" sync --locked --extra cu128
+"$uv_path" sync --locked --extra cu128 --extra image-metrics
 "$uv_path" pip check --python .venv/bin/python
 .venv/bin/python -m click2future.env_check --device cuda \
     --output "outputs/tc2-device-$SLURM_JOB_ID.json"
+.venv/bin/python - <<'PY'
+import json
+import os
+from pathlib import Path
+
+import torch
+
+from click2future.models.cvae import ConditionalVideoVAE
+from click2future.training.cvae_loss import cvae_loss
+
+torch.use_deterministic_algorithms(True)
+torch.manual_seed(0)
+model = ConditionalVideoVAE().cuda()
+first = torch.zeros(1, 3, 64, 64, device="cuda")
+mask = torch.zeros(1, 1, 64, 64, device="cuda")
+mask[:, :, 8:16, 8:16] = 1
+future = torch.zeros(1, 3, 31, 64, 64, device="cuda")
+output = model(first, mask, torch.zeros(1, 2, device="cuda"), future)
+cvae_loss(output, future).total.backward()
+assert all(p.grad is not None and torch.isfinite(p.grad).all() for p in model.parameters())
+record = {"status": "passed", "device": torch.cuda.get_device_name(),
+          "scope": "Native-shape CVAE backward with strict CUDA determinism; no optimizer update"}
+Path(f"outputs/tc2-cvae-{os.environ['SLURM_JOB_ID']}.json").write_text(json.dumps(record) + "\n")
+print(json.dumps(record))
+PY
 .venv/bin/python -m pytest -q --junitxml="outputs/tc2-tests-$SLURM_JOB_ID.xml"
 .venv/bin/python -m click2future.profile_pilot --device cuda --require-slurm \
     --batch-size 1 --future-frames 31 --warmup 3 --steps 5 \

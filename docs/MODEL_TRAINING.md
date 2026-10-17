@@ -73,6 +73,26 @@ Check loss reduction, reconstructions, and four prior samples. Measure GPU memor
 step cost, and sampling latency before choosing the main budget. The config in
 `configs/training/cvae.yaml` does not guarantee that the pilot fits TC2.
 
+The recorded one-clip diagnostic now runs on the A40 after replacing adaptive
+pooling with equivalent deterministic slice means. Five forward/gradient checks
+cover divisible, nondivisible and overlapping bins. The 1500-step GPU run used
+150,443,008 peak tensor bytes, and saved training states match across allocations.
+The later 5000-step run still fails prior-video quality. These are small diagnostic
+costs, not a full-corpus budget. See `results/cvae-training-checks.json`.
+
+To reproduce the independent 5000-step diagnostic on TC2:
+
+```sh
+python -m click2future.cli generate-dataset --output-dir data/one-clip --group-count 10 --variants-per-group 2 --seed 226000 --config configs/simulator/one_clip_diagnostic.toml
+export C2F_DATA_DIR=data/one-clip
+export C2F_RUN_DIR=runs/cvae-one-clip-5000
+sbatch submission/train_cvae.sbatch --config configs/training/cvae_one_clip_5000.yaml --overfit-samples 1
+```
+
+The 1500-step configuration is recorded separately. Preserve both failed quality
+gates. All four prior samples of the single training clip are checked; examples
+with missing tracks are retained. Use neither checkpoint as a final trained baseline.
+
 `run.json` records source and dataset/split/content hashes, seed, config, parameter count, resume
 history, elapsed time including IO/validation, and peak tensor allocation.
 `metrics.jsonl` records per-step loss. Test arrays are never opened by the trainer.

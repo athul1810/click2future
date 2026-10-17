@@ -1,0 +1,123 @@
+{
+  "status": "cuda_runtime_fixed_quality_gate_failed",
+  "source_revision": "a7dc2f53087be2f7ff07eee792808f0f60dafda4",
+  "pr30_equivalent_fix": "c5d7dfa840c7e61553798d8765389f1ce71c3cef",
+  "bug": {
+    "failed_job": 43159,
+    "message": "adaptive_avg_pool3d_backward_cuda has no deterministic implementation",
+    "fix": "Explicit adaptive-bin slice means in both conditioning and posterior summaries; retain strict determinism",
+    "same_parameter_count": 574659,
+    "cpu_forward_and_gradient_equivalence": "Five shapes, including nondivisible and overlapping bins; float64 atol/rtol 1e-12"
+  },
+  "dataset": {
+    "schema": "dataset-0.1",
+    "seed": 226000,
+    "scene_groups": 10,
+    "clips": 20,
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "total_frames": 32,
+    "fps": 8,
+    "physics_hz": 240,
+    "training_clips_used": 1,
+    "validation_scene_groups": 1,
+    "validation_condition_references": 2
+  },
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "quality_gate": {
+    "posterior_mae_max": 0.02,
+    "prior_track_rate_min": 0.9,
+    "prior_selected_ade_max": 0.03125
+  },
+  "attempts": [
+    {
+      "steps": 1500,
+      "full_job": 43165,
+      "resume_job": 43166,
+      "posterior_mae_cpu_diagnostic": 0.007934686727821827,
+      "prior_samples": [
+        {
+          "split": "train",
+          "sample_id": "scene-00226000-variant-000",
+          "track_rate": 0.5766129032258065,
+          "selected_ade": null
+        },
+        {
+          "split": "validation",
+          "sample_id": "scene-00226008-variant-000",
+          "track_rate": 0.0,
+          "selected_ade": null
+        }
+      ],
+      "training_function_seconds_including_validation_and_checkpointing": 39.5295138861984,
+      "peak_tensor_bytes": 150443008,
+      "best_validation_posterior_objective": 0.029996022582054138,
+      "status": "quality_gate_failed"
+    },
+    {
+      "steps": 5000,
+      "job": 43171,
+      "initialization": "Fresh seed 0, no inherited updates; same data and 20-percent-horizon KL warmup policy",
+      "posterior_mae_cuda": 0.004776587709784508,
+      "prior_samples": [
+        {
+          "split": "train",
+          "sample_id": "scene-00226000-variant-000",
+          "track_rate": 0.6774193548387096,
+          "selected_ade": null
+        },
+        {
+          "split": "validation",
+          "sample_id": "scene-00226008-variant-000",
+          "track_rate": 0.0,
+          "selected_ade": null
+        }
+      ],
+      "training_function_seconds_including_validation_and_checkpointing": 122.47286237124354,
+      "peak_tensor_bytes": 150443008,
+      "best_validation_posterior_objective": 0.03037235699594021,
+      "status": "quality_gate_failed"
+    }
+  ],
+  "checkpoint_selection": "Fixed step counts for training-only gates. Latest checkpoints, not chosen by held-out RGB scores. best.pt remains the fixed-seed validation-posterior criterion. No checkpoint is accepted for final research comparison.",
+  "resume": {
+    "full_job": 43165,
+    "resume_job": 43166,
+    "steps": 1500,
+    "resume_from_step": 500,
+    "max_tensor_difference": 0.0,
+    "operation_export_error": "The resume training and state comparison finished; the reporting call then omitted metric arguments. Saved checkpoints and samples were recovered and scored locally."
+  },
+  "source_sha256": {
+    "src/click2future/models/cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+    "src/click2future/training/train_cvae.py": "99165632e1612e1bf7abe95987616a6f19f3e20eb8c64cedc3bb53a4d1288acc",
+    "tests/test_cvae.py": "ada1907ebf60bde23ab25845051e7e3d9e4a1e2f01dfc453b4ccc4c2b5347ed2"
+  },
+  "artifact_sha256": {
+    "full1500": "aefd44e979b9a5ddf5b397c2ef2b194679f16bef945a20a4e84546f44129dbee",
+    "resumed1500": "3efcd65dc6162fc5e3b4bd91d91a0a4d3ae5d3ef4f79b01fc41fc20a6139588e",
+    "full5000": "87a46cfd24e5b13765665f3512b4d60afcfe86e15414e1f6add1bc511e0ec768",
+    "5000_result": "5c0cde3239c73cf0fbc849014654bea65526af6f6a2cb8166779e2e89c7495da"
+  },
+  "verification": {
+    "pr30_tests": 296,
+    "combined_workspace_tests": 364,
+    "fresh_source_zip_tests": 364,
+    "subtests_per_run": 4,
+    "cpu_skips": 0,
+    "workspace_seconds": 76.38,
+    "fresh_archive_seconds": 78.9
+  },
+  "remaining": [
+    "Coherent prior-sample overfit",
+    "Full-data validation checkpoint selection",
+    "Matched E0/E2/E3 comparisons and repeats"
+  ]
+}
