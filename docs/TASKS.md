@@ -303,16 +303,10 @@ Make the model and simulator comparison understandable and repeatable.
 - [x] Support declared development/validation presets with frame-0 selected-object masks; image upload is deferred.
 - [x] Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.
 - [x] Keep the labelled simulator reference and hidden physics outside neural inference.
-- [x] Provide synchronized playback, bounded generation, cancellation, input/error states, labelled exact replay and a documented local launch path.
-- [ ] Add pixel-derived trajectory overlays, pass held-out motion/action quality, measure warm median/p95 latency and rehearse the final demo offline.
+- [x] Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.
+- [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
 
-The local app runs diffusion EMA and CVAE learned-prior checkpoints. CPU sampler
-parity and 24 browser interaction checks pass; a fresh four-future E3 request took
-6.88 seconds through the local browser on an RTX 3060 laptop, with 0.44 seconds
-for exact replay. This single functional run is not a latency benchmark or a
-held-out quality result. See [launch instructions](../app/README.md). T17 stays
-open for overlays, stronger checkpoints and final acceptance. No friction slider
-is exposed; the simulator has contact friction without tabletop drag.
+The local app supports verified pilot bundles and generated-pixel trajectory overlays, with missing observations retained. All six handoff checkpoints load; a two-model browser rehearsal passes 25 checks. Five fresh warm requests give a 4.69s median and 4.74s empirical p95 on the RTX 3060 laptop, including tracking/reference/display. Small-n latency and interface checks do not establish held-out quality. Stronger checkpoints and final offline presentation acceptance remain open. Candidate tracker v2 awaits independent calibration review. See [launch instructions](../app/README.md).
 
 <a id="t18"></a>
 
