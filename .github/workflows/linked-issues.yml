@@ -26,6 +26,9 @@ jobs:
           import sys
 
           body = os.environ.get("BODY") or ""
+          # Like GitHub, ignore references in comments and code, such as template examples.
+          body = re.sub(r"<!--.*?-->|```.*?```|~~~.*?~~~", "", body, flags=re.S)
+          body = re.sub(r"`[^`\n]*`", "", body)
           base, default = os.environ["BASE"], os.environ["DEFAULT"]
           keyword = r"\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\b:?\s+"
           closes = sorted(set(re.findall(keyword + r"#(\d+)", body, re.I)), key=int)
@@ -36,8 +39,8 @@ jobs:
 
           if re.search(keyword + r"#\d+\s*(?:,|and)\s*#\d+", body, re.I):
               print(
-                  "::error::GitHub only closes the first issue in 'Closes #5, #6'. "
-                  "Write the keyword before each issue: 'Closes #5' and 'Closes #6'."
+                  "::error::GitHub only closes the first issue in 'Closes #123, #124'. "
+                  "Write the keyword before each issue: 'Closes #123' and 'Closes #124'."
               )
               failed = True
           if not (closes or partial or exempt):
