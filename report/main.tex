@@ -1,0 +1,149 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+\pagestyle{myheadings}
+\markright{Click2Future, Group 7. Methods draft; model comparisons pending.}
+\title{Click2Future: Action-Conditioned Video Generation for Tabletop Futures}
+\author{Group 7, AI6132 Generative AI For Visual Synthesis\\
+\small PRAMOD SANJAY, KAPOOR ANANYA,\\
+\small MAITI SHRIJEET, BOBAN ATHUL KRISHNA}
+\date{\small Working draft; final method comparisons pending}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study whether a compact generative video model can predict several physical futures while following an explicit object selection and force. A procedural tabletop simulator provides initial images, action inputs, trajectories and contact labels. The implemented methods comprise a conditional video variational autoencoder and a small pixel diffusion model with numeric or spatial action conditioning. Evaluation separates image appearance, tracked motion, collisions and ensemble uncertainty. This draft describes the implemented system, simulator calibration and early training diagnostics. The main matched method comparisons, planned validation study and final conclusions are not yet available. The measurements reported here establish evaluation behavior and infrastructure, rather than a successful learned physical model.
+\end{abstract}
+
+\section{Introduction}
+An image can show the location and shape of an object without revealing its mass or friction. Applying the same visible force can therefore produce several different motions. A useful video generator should represent this uncertainty while preserving a clear dependence on the requested action. Four visually different samples are insufficient evidence: the selected object must respond, unselected objects must behave consistently with contacts, and differences between futures should resemble variation permitted by the simulator.
+
+Our task is to predict a distribution over future RGB frames given an initial image, a selected-object mask and a force vector. The environment is a bounded, top-down tabletop with rigid objects and simple appearance. This restriction makes physical labels available and keeps training feasible on the course-provided TC2 cluster. We do not study robot control, arbitrary photographs or general three-dimensional dynamics.
+
+The main comparison is a conditional video VAE (E0) against two versions of video diffusion: numeric conditioning (E2) and spatial conditioning (E3). First-frame-only diffusion (E1) is an action-blind control. Auxiliary trajectory and collision supervision (E4) is an optional ablation after the base generator works. The review question is whether localizing the requested action improves generated physical behavior under comparable training settings. No novelty or improvement is inferred from implementing this design.
+
+Variational autoencoders use a learned approximate posterior to optimize latent-variable models~\cite{kingma}. Conditional variants model structured outputs given an observed input~\cite{sohn}. Denoising diffusion models instead learn to reverse a gradual corruption process~\cite{ho}. DDIM provides a sampling procedure that permits a reduced number of denoising steps~\cite{song}. We implement compact versions of these approaches for our own tabletop task. Published image-generation results are not used as evidence for this project's video performance.
+
+\section{Methods}
+\subsection{World, action and observations}
+The simulator uses a unit square with image coordinates: positive $x$ points right and positive $y$ points down. A constant force acts at the selected object's centre for 0.25 seconds, followed by unforced motion. It is a force applied over a duration, rather than an instantaneous velocity change. Clicking elsewhere on an object does not introduce an off-centre torque. Wall contacts and object contacts follow the simulator's rigid-body implementation. Friction and restitution act at contacts; there is no separate tabletop drag. Walls retain frictionless, zero-elasticity defaults.
+
+Core clips contain 32 frames at 8 frames per second and $64\times64$ resolution. Frame zero precedes the action; the 31 predicted future frames extend to 3.875 seconds. Physics advances at 240 Hz. Each record contains RGB frames, object masks, positions, valid object slots, action metadata and contact onsets aggregated over the intervals between rendered frames. Replay uses the saved scene specification and simulator settings. The 128px extension is deferred until coherent 64px generation and the main comparisons are established.
+
+Mass, contact friction and restitution are sampled independently of visible appearance. Multiple references for the same observable condition share frame zero, the selected mask, force and timing while varying hidden physics. All actions and physics variants of a visible scene remain in one split. This grouping prevents a nearly identical initial scene from appearing in both training and evaluation.
+
+The controlled corpus includes zero force, a force and its reverse, two collision directions and a wall interaction. A separate generalization corpus defines disjoint training, validation, ID-test, shape-OOD, texture-OOD, force-OOD and repeated-physics splits. Its triangles and object-attached patterns differ from the earlier corpus. Final ID/OOD claims require models trained on that same corpus; testing an earlier model on a changed corpus does not isolate one factor.
+
+Only frame-zero RGB, the selected mask and numeric force enter the model. Oracle future masks, positions, contacts and hidden physical coefficients are unavailable at inference. RGB is normalized to $[-1,1]$. Numeric forces are divided by 0.5 without clipping; a separately declared physical magnitude limit controls accepted inputs. The spatial action field is
+\[
+ A_c(u,v)=M(u,v)f_c,\qquad c\in\{x,y\},
+\]
+where $M$ is the selected mask and $f$ is the action vector. Using the same selected mask in E2 and E3 prevents object identification alone from explaining their difference.
+
+\subsection{Conditional video VAE}
+E0 has a learned conditional Gaussian prior $p_\psi(z\mid c)$ and posterior $q_\phi(z\mid c,Y)$, where $c$ denotes the observable condition and $Y$ the future clip. A 2D convolutional encoder processes the initial image, mask and broadcast force. A 3D encoder processes future RGB only during posterior training. The decoder receives condition features, a global clip latent and explicit normalized time fields. Its output is a complete future clip, bounded by a tanh activation.
+
+The implemented pilot has 574,659 parameters, base width 16 and latent dimension 64. Its loss combines future-only mean absolute reconstruction error with mean per-latent Gaussian KL divergence:
+\[
+ \mathcal L_{\mathrm{VAE}}=\mathbb E_{z\sim q_\phi}\!\left[\|\hat Y-Y\|_1\right]
+ +\beta\,\mathbb E_{j}\!\left[D_{\mathrm{KL}}(q_{\phi,j}\|p_{\psi,j})\right].
+\]
+The beta warmup depends on the saved absolute training step. Sampling uses the conditional prior, with one private random generator per seed. The posterior never runs during prior inference. Validation posterior reconstruction and actual prior-sample quality are reported separately: a good posterior score need not imply a useful sampled future.
+
+\subsection{Pixel video diffusion}
+The implemented diffusion model operates directly on RGB future frames. It is not a latent video diffusion system; the proposed frame autoencoder is outside the current critical path. The denoiser combines spatial convolutions, temporal convolutions, a spatial encoder-decoder with skip connections, and temporal attention at reduced spatial resolution. The initial frame and action channels are broadcast over future time. Diffusion timesteps and numeric actions provide conditioning embeddings.
+
+For a clean future $Y$ and Gaussian noise $\epsilon$, the forward process is
+\[
+ Y_t=\sqrt{\bar\alpha_t}Y+\sqrt{1-\bar\alpha_t}\epsilon.
+\]
+The code supports either epsilon prediction or velocity prediction,
+$v_t=\sqrt{\bar\alpha_t}\epsilon-\sqrt{1-\bar\alpha_t}Y$, with mean squared target error. Main ablations must use the same selected target, schedule, backbone width and initialization policy. Comparing a velocity model to an epsilon model would confound the conditioning comparison.
+
+E1 replaces the selected mask and action with zero inputs. E2 supplies the selected mask and broadcasts numeric action fields over the image. E3 multiplies those fields by the selected mask, retaining the same backbone dimensions and numeric embedding. This is the implemented object-centric conditioning mechanism. E3 does not add a learned object detector or receive oracle future object states.
+
+Inference uses EMA weights and deterministic DDIM updates with private seed generators. Clean estimates are clipped to $[-1,1]$ and epsilon is recomputed after clipping. The exact original first frame is prepended to every generated future. Reduced-step sampling is a proposed validation study, not a setting already selected from successful final experiments.
+
+\subsection{Auxiliary supervision}
+E4 adds trajectory and contact heads to denoiser features. Training targets use a canonical frame-zero object order and masks for valid objects and pairs. Position estimates use spatial heatmap moments; contact outputs are pair logits. Trajectory and contact losses are applied according to the configured timestep gate and weights. Those settings remain starting values until validated.
+
+The head outputs are additional predictions, not inference conditioning. Auxiliary trajectories can look accurate even when generated RGB is poor. Consequently, head scores are exported separately from trajectories and contacts extracted from the generated video. A comparison of E3 and E4 must assess decoded-video behavior as well as the supervised heads.
+
+\section{Experiments and analysis}
+\subsection{Frozen evaluation and failure handling}
+The evaluator freezes complete held-out condition lists, every reference future, ordered sample seeds and metric settings. Dataset, split, reference, configuration and evaluator-code hashes bind a plan to its inputs. The checkpoint runner checks method identity and training-corpus compatibility, produces four futures for every case and binds checkpoint/video hashes to the prediction manifest. Partial runs cannot produce a successful final summary.
+
+A palette-based tracker uses object identities from the initial frame. It is designed for the synthetic appearance domain and can fail on blur, missing objects, occlusion or unfamiliar texture. Missing RGB and tracking failures remain in the denominators. Conditional averages and undefined rates are accompanied by counts; a completely missing prediction does not receive zero error or a favourable action score.
+
+Trajectory evaluation reports ADE and FDE, both for all objects and for the selected object. Mean-over-samples and whole-clip best-of-four scores remain separate. Collision evaluation distinguishes any encounter during the clip, exact interval labels and one-to-one timed onset matches. High encounter accuracy does not establish correct timing. SSIM and LPIPS measure appearance against one declared reference, while trajectory coverage and ensemble spread use the repeated-physics references. Diversity is assessed alongside quality and adherence, rather than treated as an independent success measure.
+
+Aggregation first averages dependent samples and conditions within a visible scene and training run, then averages training runs and independent scenes. Confidence intervals resample whole scene groups. A single scene group has no bootstrap interval. The planned independent training repeats and final dataset size have not yet been completed or frozen.
+
+\subsection{Action controls and extractor calibration}
+Zero-force and reversed-force checks use the first 0.5 seconds, ending at frame four, with a fixed one-pixel motion threshold at 64px. Every hidden-physics reference must start at rest and avoid contact during this window. Eligibility is decided from references before model output is inspected. Excluded groups remain listed with their reasons.
+
+Selected-object controls require a separate intervention: the initial image, physical objects, force vector and duration remain identical under two different clicks. Derived references live outside the training corpus. Correct target following requires selected motion along the force and no above-threshold excursion by unselected objects in both conditions. A separate per-object contrast rejects identical motion under both clicks. The E1 control produces identical videos for both selections when seeds match, as expected for an action-blind model.
+
+In a two-scene validation correctness check, the original 0.15 force left all eight exact-label target pairs below the one-pixel criterion, whereas rasterized references crossed it more often. This exposes quantization sensitivity rather than a model failure. That calibration was retained. A separate shared-magnitude 0.4 probe kept the threshold unchanged and passed for both continuous-label and rendered-reference controls. Static and ignored-click controls failed. These values describe a simulator validation check, not the performance of any trained method. A magnitude used for final model tests must be frozen using validation beforehand.
+
+Contact extraction has an independent timing limitation. On a fresh 63-clip controlled check over three scene groups, all 3,906 object observations were tracked. Any-encounter scoring produced TP=23, FP=0, FN=1 and TN=39, while timed-event F1 was 0.551. The stronger occurrence result cannot substitute for the weaker event-timing result. These extractor measurements do not count the 63 dependent clips as 63 independent scenes.
+
+\subsection{Training readiness and missing comparisons}
+Recorded TC2 diffusion pilots establish working optimization, sampling and checkpoint continuation. Jobs 42909 and 42910 reproduced the next training update across allocations with zero tensor difference in the saved states. A four-clip pilot reduced its fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remained noisy and none of 248 future object observations were trackable. A later 10,000-step epsilon pilot and a 2,000-step velocity pilot also failed the usable-video gate. A lower noise-prediction loss therefore does not establish successful physical video generation.
+
+\newpage
+A later single-clip study used the same 20-clip procedural corpus with 10 scene groups, but trained each method on only one deterministic training future. E0 used seed 0 and E3 used seed 7, each for 5,000 updates. These are diagnostic runs, not the main matched multi-seed comparison. Equal update counts do not imply equal compute. The CVAE initially crashed under strict CUDA determinism; equivalent adaptive-bin slice means fixed that error without changing its parameter count. Saved model, optimizer, data-order and random states then matched exactly across two allocations.
+
+The 5,000-step CVAE had posterior reconstruction MAE 0.00478 on its training clip, but only 168 of 248 prior-sampled object observations were trackable. E3 with EMA weights and 32 DDIM steps tracked 109 of 248 observations on that same training clip. Neither passed the fixed 90-percent tracking and two-pixel selected-object ADE gate. A 1,500-step CVAE attempt was retained as a failed earlier check, rather than discarded after the longer run. Figure~\ref{fig:train} shows one sampled future from each method.
+
+
+Both checkpoints were also run on the corpus's complete validation split: one visible scene, one condition and two hidden-physics reference futures. Four model seeds produced eight videos in total. All three metric families completed, with no untrained fixture flag. This integration check used SSIM only; final LPIPS comparisons remain pending. Table~\ref{tab:pilot} reports these limited measurements. Neither method produced a complete tracked trajectory, so ADE and FDE are undefined. No scene-group confidence interval is available from one scene. Figure~\ref{fig:validation} shows the corresponding seed-0 outputs. This result establishes that real checkpoints are connected to evaluation; it does not establish successful physical generation or rank the methods reliably.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lccc}
+\hline
+Method & SSIM & Tracked observations & Complete trajectories \\
+\hline
+E0 CVAE & 0.8893 & 0/248 & 0/4 \\
+E3 spatial diffusion & 0.8654 & 0/248 & 0/4 \\
+\hline
+\end{tabular}
+\caption{One-condition validation diagnostic, four sampled futures per method. SSIM uses one declared simulator reference and excludes frame zero. Undefined trajectory error is a failure to measure the prediction, not zero physical error.}
+\label{tab:pilot}
+\end{table}
+
+
+These examples suggest that background resemblance can keep SSIM relatively high while object tracking fails. Physical scores therefore need their tracking and missing counts. Four similar samples from a model trained on one deterministic clip cannot establish hidden-physics uncertainty. The main E0/E2/E3 comparison, repeated runs, generalization tests and component analysis remain pending.
+
+The planned validation sampler study uses 16, 32 and 64 DDIM steps on at most 16 conditions with a 0.5 GPU-hour cap. Every attempted setting should report tracking, action adherence, appearance and latency. Final test tables need successful checkpoints, actual budgets, seed counts and representative generated successes and failures. The present diagnostics do not replace those experiments.
+
+\clearpage
+\begin{figure}[!ht]
+\centering
+\pdfximage width\linewidth{report/figures/pilot_training.png}\pdfrefximage\pdflastximage
+\caption{Training clip after 5,000 updates: simulator, E0 prior and E3 EMA with 32 DDIM steps. Seed 0; the purple object receives $f=(0.0204,-0.1926)$. Neither method passed the training-clip quality gate.}
+\label{fig:train}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\pdfximage width\linewidth{report/figures/pilot_validation.png}\pdfrefximage\pdflastximage
+\caption{Validation condition, seed 0. The selected rectangle receives $f=(-0.1871,0.2453)$. The simulator row shows one of two references. No future object observations were tracked for either method across all four seeds.}
+\label{fig:validation}
+\end{figure}
+\clearpage
+\section{Conclusion}
+The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. Current evidence establishes these tools and documents unsuccessful CVAE and diffusion quality checks. It does not yet answer whether spatial conditioning or auxiliary supervision improves trained generated futures. Completing coherent tiny-data generation, matched training runs and the frozen held-out comparisons is necessary before drawing that conclusion. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
+
+\begin{thebibliography}{9}
+\bibitem{kingma} Diederik P. Kingma and Max Welling. Auto-Encoding Variational Bayes. arXiv:1312.6114, 2013.
+\bibitem{sohn} Kihyuk Sohn, Honglak Lee and Xinchen Yan. Learning Structured Output Representation using Deep Conditional Generative Models. Advances in Neural Information Processing Systems 28, 2015.
+\bibitem{ho} Jonathan Ho, Ajay Jain and Pieter Abbeel. Denoising Diffusion Probabilistic Models. arXiv:2006.11239, 2020.
+\bibitem{song} Jiaming Song, Chenlin Meng and Stefano Ermon. Denoising Diffusion Implicit Models. ICLR, 2021.
+\end{thebibliography}
+\end{document}

@@ -431,8 +431,12 @@
       "Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs."
     ],
     "owner": null,
-    "status": "Not started",
-    "issue_url": "https://github.com/athul1810/click2future/issues/18"
+    "status": "In progress",
+    "issue_url": "https://github.com/athul1810/click2future/issues/18",
+    "completed_acceptance": [
+      0
+    ],
+    "progress": "A seven-page working draft now includes introduction, implemented methods, evaluation, simulator calibration, real E0/E3 diagnostic figures and a conclusion. Main matched comparisons, the validation/component studies and member-reviewed contributions remain open. The draft is not the final submission PDF."
   },
   {
     "id": "T19",
