@@ -3,6 +3,8 @@
 - `simulator/smoke.toml`: short simulator checks.
 - `simulator/pilot.toml`: frozen 32-frame, 64px simulator setting.
 - `simulator/dataset_0_2.toml`: controlled zero, directional, object-contact, and wall dataset.
+- `training/pilot_diffusion_0_3.json`: separate generalization-corpus diagnostic with
+  a declared 1.5 force limit; see [the data guide](../docs/GENERALIZATION_DATA.md).
 - `development.yaml`: artifact-directory conventions.
 - `pilot.yaml`: synthetic denoiser profiler dimensions, conditioning, heads, object count,
   and precision. This is a prototype configuration, not a dataset trainer.

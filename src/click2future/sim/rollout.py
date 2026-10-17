@@ -86,8 +86,10 @@ def run_rollout(
         "wall_contact_onset": wall_contact_onset,
         "scene_spec": scene,
         "metadata": {
-            "sim_version": "sim-0.1",
-            "render_version": "render-0.1",
+            "sim_version": "sim-0.2" if scene["schema_version"] == "scene-0.3" else "sim-0.1",
+            "render_version": "render-0.2"
+            if scene["schema_version"] == "scene-0.3"
+            else "render-0.1",
             "frame_count": frame_count,
             "fps": fps,
             "physics_hz": physics_hz,

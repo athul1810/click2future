@@ -136,6 +136,13 @@ python -m click2future.cli validate-controlled-dataset `
 
 ## Boundaries
 
+Dataset-0.3 supplies a separate matched training and OOD corpus with seven disjoint
+scene-group splits. It adds object-attached stripes/checker textures, physical
+triangles, stronger held-out forces and repeated-hidden-physics references.
+The [generalization guide](GENERALIZATION_DATA.md) describes its factor ranges,
+generation, replay and limitations. It is not the frozen training revision.
+Dataset-0.1 and dataset-0.2 remain reproducible.
+
 This dataset measures planar motion, action adherence, collisions, wall
 contacts, and variation caused by hidden physical properties. It does not model
 3D depth, stacking, lifting, photorealism, or transfer to real video.

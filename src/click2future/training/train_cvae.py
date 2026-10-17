@@ -48,7 +48,7 @@ def dataset_index(root: Path):
         json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()
     if (
-        manifest.get("schema_version") not in {"dataset-0.1", "dataset-0.2"}
+        manifest.get("schema_version") not in {"dataset-0.1", "dataset-0.2", "dataset-0.3"}
         or manifest.get("manifest_hash") != digest
     ):
         raise ValueError("Dataset manifest hash/schema does not match")

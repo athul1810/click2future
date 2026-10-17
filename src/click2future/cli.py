@@ -12,10 +12,12 @@ from .data import (
     build_split_manifest,
     generate_controlled_dataset,
     generate_dataset,
+    generate_generalization_dataset,
     load_rollout,
     save_rollout,
     save_split_manifest,
     validate_controlled_dataset,
+    validate_generalization_dataset,
 )
 from .sim import make_scene, replay_saved_rollout, run_rollout
 
@@ -60,6 +62,19 @@ def main(argv: list[str] | None = None) -> int:
     )
     controlled.set_defaults(handler=_generate_controlled_dataset)
 
+    generalization = subparsers.add_parser(
+        "generate-generalization-dataset", help="generate dataset-0.3 with seven disjoint splits"
+    )
+    generalization.add_argument("--output-dir", type=Path, required=True)
+    generalization.add_argument("--seed", type=int, default=200000)
+    generalization.add_argument("--groups-per-split", type=int, default=1)
+    generalization.set_defaults(handler=_generate_generalization_dataset)
+
+    validate_generalization = subparsers.add_parser("validate-generalization-dataset")
+    validate_generalization.add_argument("--input-dir", type=Path, required=True)
+    validate_generalization.add_argument("--replay", action="store_true")
+    validate_generalization.set_defaults(handler=_validate_generalization_dataset)
+
     split = subparsers.add_parser("make-splits", help="make a scene-group split manifest")
     split.add_argument("--input-dir", type=Path, required=True)
     split.add_argument("--output", type=Path, required=True)
@@ -86,6 +101,32 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     return int(args.handler(args))
+
+
+def _generate_generalization_dataset(args):
+    from .sim.generalization import SPLITS
+
+    result = generate_generalization_dataset(
+        args.output_dir,
+        seed=args.seed,
+        group_counts=dict.fromkeys(SPLITS, args.groups_per_split),
+    )
+    print(
+        json.dumps(
+            {
+                "manifest_path": str(result["manifest_path"]),
+                "sample_count": result["manifest"]["sample_count"],
+                "validation": result["validation"],
+            }
+        )
+    )
+    return 0
+
+
+def _validate_generalization_dataset(args):
+    report = validate_generalization_dataset(args.input_dir, replay=args.replay)
+    print(json.dumps(report))
+    return 0 if report["ok"] else 1
 
 
 def _generate_smoke(args: argparse.Namespace) -> int:

@@ -8,6 +8,8 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw
 
+from .geometry import polygon_vertices
+
 DEFAULT_BACKGROUND = (210, 214, 220)
 DEFAULT_BORDER = (70, 75, 82)
 
@@ -30,7 +32,7 @@ def render_rgb(
         outline=border_color,
         width=1,
     )
-    _draw_objects(scene, snapshot, draw, resolution, masks=None)
+    _draw_objects(scene, snapshot, draw, resolution, masks=None, image=image)
     return np.asarray(image, dtype=np.uint8)
 
 
@@ -76,6 +78,7 @@ def _draw_objects(
     draw: ImageDraw.ImageDraw | None,
     resolution: int,
     masks: tuple[dict[int, int], list[ImageDraw.ImageDraw]] | None,
+    image: Image.Image | None = None,
 ) -> None:
     poses = {int(obj["object_id"]): obj for obj in snapshot["objects"]}
     for scene_object in sorted(scene["objects"], key=lambda value: value["object_id"]):
@@ -88,12 +91,17 @@ def _draw_objects(
             if draw is not None:
                 draw.ellipse(points_or_box, fill=color)
             _draw_mask(masks, object_id, "ellipse", points_or_box)
-        elif scene_object["shape"] == "rectangle":
+        elif scene_object["shape"] in {"rectangle", "triangle"}:
             if draw is not None:
                 draw.polygon(points_or_box, fill=color)
             _draw_mask(masks, object_id, "polygon", points_or_box)
         else:
             raise ValueError(f"unsupported shape: {scene_object['shape']}")
+        texture = scene_object["appearance"].get("texture", "solid")
+        if texture not in {"solid", "stripes", "checker"}:
+            raise ValueError(f"unsupported texture: {texture}")
+        if image is not None and texture != "solid":
+            _apply_texture(image, scene, scene_object, pose, points_or_box, resolution)
 
 
 def _shape_pixels(
@@ -115,14 +123,7 @@ def _shape_pixels(
         ry = radius / float(world_height) * resolution
         return (px - rx, py - ry, px + rx, py + ry)
 
-    width = float(geometry["width"])
-    height = float(geometry["height"])
-    local_points = (
-        (-width / 2.0, -height / 2.0),
-        (width / 2.0, -height / 2.0),
-        (width / 2.0, height / 2.0),
-        (-width / 2.0, height / 2.0),
-    )
+    local_points = polygon_vertices(scene_object["shape"], geometry)
     cos_angle = math.cos(angle)
     sin_angle = math.sin(angle)
     return [
@@ -132,6 +133,28 @@ def _shape_pixels(
         )
         for local_x, local_y in local_points
     ]
+
+
+def _apply_texture(image, scene, obj, pose, geometry_pixels, resolution):
+    """Two-tone patterns fixed in object coordinates, without changing masks."""
+    mask_image = Image.new("1", image.size, 0)
+    draw = ImageDraw.Draw(mask_image)
+    if obj["shape"] == "circle":
+        draw.ellipse(geometry_pixels, fill=1)
+    else:
+        draw.polygon(geometry_pixels, fill=1)
+    y, x = np.indices((resolution, resolution), dtype=np.float64)
+    x = x / resolution * scene["world_size"][0] - pose["position"][0]
+    y = y / resolution * scene["world_size"][1] - pose["position"][1]
+    c, s = math.cos(pose["angle"]), math.sin(pose["angle"])
+    local_x, local_y = c * x + s * y, -s * x + c * y
+    bands = np.floor((local_x + 0.01) / 0.04).astype(np.int64)
+    if obj["appearance"]["texture"] == "checker":
+        bands += np.floor((local_y + 0.01) / 0.04).astype(np.int64)
+    accent = np.clip(np.array(obj["appearance"]["color"], dtype=np.int16) + 12, 0, 255)
+    pixels = np.array(image)
+    pixels[np.asarray(mask_image, dtype=bool) & (bands % 2 == 0)] = accent
+    image.paste(Image.fromarray(pixels))
 
 
 def _draw_mask(

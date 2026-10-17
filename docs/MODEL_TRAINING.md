@@ -43,12 +43,14 @@ It rejects invalid RGB/force and empty/nonbinary masks. Future masks, positions,
 collisions, and hidden physics do not enter conditioning. Use the same frozen
 normalization for comparable model runs.
 
-The CVAE accepts both dataset-0.1 and controlled dataset-0.2 manifests, with the
+The CVAE accepts dataset-0.1, controlled dataset-0.2 and dataset-0.3 manifests, with the
 same split and file-hash checks. For matched comparisons, use the same dataset
 revision for E0/E2/E3. Dataset-0.2 includes wall forces of magnitude 1.1, which
 become 2.2 after normalization. A native wall condition passes the CVAE loader
 and four-sample prior export in an untrained integration check. This does not
 establish learned wall behavior. Test arrays remain outside the training index.
+Dataset-0.3 is a separate matched generalization corpus; use its own training
+and validation splits. See [its guide](GENERALIZATION_DATA.md).
 
 ## TC2 pilot
 
@@ -155,7 +157,7 @@ tensors and RNG state exactly and removes its hook after errors. These are untra
 inference checks without optimizer updates.
 The initial integration snapshot passed 258 tests with no skips, recorded in
 `results/diffusion-integration-checks.json`. The later batch-evaluation and issue-work
-checks pass 291 tests; see `results/issue-work-checks.json`.
+checks pass 310 tests; see `results/issue-work-checks.json`.
 
 The standalone `diffusion_objective` helper remains epsilon-only. The integrated
 diffusion trainer computes the selected epsilon/velocity target itself and applies

@@ -13,8 +13,8 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T02 | [Verify TC2 login and GPU training setup](https://github.com/athul1810/click2future/issues/2) | None | MAITI SHRIJEET | Done |
 | T03 | [Create a reproducible development environment](https://github.com/athul1810/click2future/issues/3) | None | Unassigned | Done |
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | T01 | PRAMOD SANJAY | Done |
-| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In progress |
-| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In progress |
+| T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In review |
+| T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In review |
 | T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | Unassigned | In progress |
@@ -24,7 +24,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
-| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | Not started |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | In review |
@@ -99,14 +99,14 @@ PR #24 merged the frozen simulator/action contract, versioned schema, condition/
 
 Generate repeatable tabletop clips with usable physical labels.
 
-**Dependencies:** T03, T04. **Owner:** PRAMOD SANJAY. **Status:** In progress.
+**Dependencies:** T03, T04. **Owner:** PRAMOD SANJAY. **Status:** In review.
 
-- [ ] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
+- [x] Render 2-4 objects with randomized supported shapes/textures, mass, and friction.
 - [x] Apply the agreed centre force and export positions, masks, object collisions, and wall contacts.
 - [x] Verify deterministic replay, zero-force behavior, force reversal, and a known collision case.
 - [x] Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance.
 
-PR #24 merged seeded circles/rectangles, centre-force rollout labels, and verified replay/control cases. Appearance currently varies solid colours only; textured rendering remains outstanding.
+Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review in PR #32. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.
 
 <a id="t06"></a>
 
@@ -114,15 +114,15 @@ PR #24 merged seeded circles/rectangles, centre-force rollout labels, and verifi
 
 Produce a traceable dataset with independent visible-scene groups and controlled OOD tests.
 
-**Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In progress.
+**Dependencies:** T05. **Owner:** PRAMOD SANJAY. **Status:** In review.
 
 - [x] Export a smoke dataset, measure generation cost/storage, and propose the main dataset size.
 - [x] Split by scene_group_id; keep all actions and physics variants of a visible scene together.
-- [ ] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
+- [x] Create train, validation, ID-test, shape-OOD, texture-OOD, force-OOD, and repeated-hidden-physics test manifests with disjoint scene groups.
 - [x] Check identical initial inputs within condition_id and independence of hidden physics from appearance.
 - [x] Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link.
 
-Dataset-0.2 generation is merged in PR #31: six controlled actions and 21 clips per visible scene, with all actions and hidden-physics variants in one split. The recommended size is 200 groups and 4,200 clips; final training data is not frozen here. All 84 independently generated pilot clips replayed exactly. The earlier 80-clip dataset-0.1 CPU/storage benchmark remains in the evidence record. Separate shape, texture and force OOD suites remain outstanding.
+Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review in PR #32; trained generalization remains T15.
 
 <a id="t07"></a>
 
@@ -251,7 +251,7 @@ Produce the main evidence for conditioning and supervision claims.
 - [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
-The batch evaluator produces trajectory, image and uncertainty reports plus scene-group comparison tables for every frozen case. Full-length oracle/static simulator controls run end to end with SSIM and LPIPS. Actual trained E0/E2/E3 runs, hyperparameter results and their comparisons remain pending.
+Checkpoint sampling is connected to fixed-case evaluation. The runner covers every case with the same four seeds, derives training seeds/method settings from checkpoints, verifies the corpus/normalization and binds checkpoint/video hashes. A native six-condition validation fixture produced 72 untrained E0/E2/E3 videos and ran all three metric families with SSIM and LPIPS. Actual trained runs, hyperparameter results and comparisons remain pending.
 
 <a id="t15"></a>
 
@@ -266,7 +266,7 @@ Measure which action-conditioned behaviors generalize beyond training.
 - [ ] Compare against ID performance and include tracker failure rates.
 - [ ] Save representative successes/failures and state generalization limits.
 
-The batch evaluator can apply identical frozen extraction/reporting to held-out splits and rejects missing cases or changed inputs. Separate shape/texture/force OOD data from T06 and trained frozen checkpoints remain required.
+The fixed-case evaluator and separate dataset-0.3 suites are implemented. PR #32 adds disjoint shape, texture and force OOD data, with repeated-physics references and full plan coverage. It builds on #30 and is awaiting review. Train/select models on that same corpus before making matched ID/OOD claims; final corpus/checkpoint settings and actual model measurements are still required. Frozen simulator extractor controls retain their failures, including 25% missing observations in the small texture check. No trained generalization result is claimed.
 
 <a id="t16"></a>
 
@@ -274,14 +274,21 @@ The batch evaluator can apply identical frozen extraction/reporting to held-out 
 
 Distinguish physically meaningful uncertainty from visual noise.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
 - [ ] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
 - [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The batch evaluator groups all hidden-physics references per condition and reports K=4 spread, coverage, plausibility distances and failure counts alongside image/trajectory quality. Full-length simulator controls validate this workflow. Actual generated ensembles and paired action-control measurements remain open.
+The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Selected-object-only intervention plans now keep the force fixed and the training corpus unchanged. The shared sampler/evaluator reports target following, response contrasts, drift and missing tracks with reference-only eligibility. Actual trained ensembles and uncertainty/action measurements remain open.
+
+Correctness evidence: `results/paired-action-suite-checks.json` records 192 native simulator-control videos and 72 explicitly untrained E0/E2/E3 videos. All 335 tests and four subtests pass locally and from the source ZIP. These checks do not complete the trained-model experiment.
+
+The selected-object check in `results/selected-object-control-checks.json` adds
+64 simulator-control videos, 32 explicitly untrained E0/E1/E2/E3 videos and 16 exact
+reference replays. It retains the weak-force calibration and records the shared
+0.4-force validation probe separately. The original training corpus is unchanged.
 
 <a id="t17"></a>
 

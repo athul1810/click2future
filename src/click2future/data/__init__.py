@@ -2,6 +2,7 @@
 
 from .controlled import generate_controlled_dataset, validate_controlled_dataset
 from .export import load_rollout, save_rollout
+from .generalization import generate_generalization_dataset, validate_generalization_dataset
 from .generate import generate_dataset
 from .loader import load_batch, load_sample
 from .splits import (
@@ -18,6 +19,7 @@ __all__ = [
     "build_split_manifest",
     "generate_controlled_dataset",
     "generate_dataset",
+    "generate_generalization_dataset",
     "load_rollout",
     "load_batch",
     "load_sample",
@@ -26,5 +28,6 @@ __all__ = [
     "save_split_manifest",
     "validate_split_manifest",
     "validate_controlled_dataset",
+    "validate_generalization_dataset",
     "validate_rollout",
 ]
