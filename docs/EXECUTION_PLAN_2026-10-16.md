@@ -14,8 +14,8 @@ The brief's 16 November upload date and exact NTULearn cutoff
 still need confirmation and do not extend the internal finish date. Dates use Singapore time.
 
 Shrijeet adopted the pixel-first scope on 16 October. Sanjay leads A, Shrijeet leads
-B and demo integration, and Athul/Ananya retain joint C ownership. Ananya has been
-asked to lead CVAE; acceptance is pending. Contact-only friction and the frozen
+B and demo integration, and Athul/Ananya retain joint C ownership. Ananya confirmed
+the CVAE lead on 17 October. Contact-only friction and the frozen
 dataset remain unchanged. The task board, backlog and issues track this decision.
 
 ## Starting snapshot, before GPU setup and integration on 16 October
@@ -116,7 +116,7 @@ Even an external win on our task does not establish superiority on its original 
 | A: data and physics | Sanjay | Physics decision, versioned control fixtures, multi-action scene groups, loaders/manifests | Shrijeet for model interface; C for labels |
 | B: diffusion | Shrijeet | Safe condition adapter, trainer/sampler, resume, E2/E3 pilots and inference API | C for controls; D for integration once assigned |
 | C: evaluation and physics | Athul + Ananya | Tracker reliability, action/uncertainty metrics, calibrated contacts, experiment protocol and tables | A for oracle controls; B for model outputs |
-| D: CVAE | **Ananya proposed; acceptance pending** | Prior/posterior baseline, tiny overfit, prior samples and cost | Shrijeet for model API; Athul for fair scoring |
+| D: CVAE | **Ananya, confirmed 17 October** | Prior/posterior baseline, tiny overfit, prior samples and cost | Shrijeet for model API; Athul for fair scoring |
 | Demo/integration | Shrijeet | Four-future UI, shared sampler, simulator comparison and offline fallback | Team rehearsal |
 | TC2 run coordination | Shrijeet for own account; Athul for own account | Run registry, checkpoint/retry budget, backups | Coordinate aggregate resource limits |
 | Presentation assembly / submission coordination | Sanjay coordinates as group coordinator; assembly owner pending | Slot/cutoff confirmation, combined deck, rehearsals, upload checklist | Every member owns their technical content |
@@ -125,8 +125,8 @@ Athul/Ananya remain joint owners of C. Agree a non-overlapping internal division
 tracking/contact work and action/uncertainty/aggregation work; review each other's outputs.
 Every person writes their own method/results/limitations and records contribution evidence.
 
-Confirm the CVAE lead before scheduling its runs. Its acceptance checks are in the handoff.
-Do not mark the baseline staffed until Ananya replies; independent work proceeds.
+Ananya confirmed CVAE on 17 October. Its acceptance checks and next pilot are in
+the handoff; the existing implementation and GPU diagnostics were done by Athul.
 
 Shared interfaces to freeze together:
 
@@ -313,7 +313,7 @@ records and essential weights outside TC2; do not rely on its home directory as 
 Stop large runs if tiny overfit or held-out controls fail. Diagnose data, timing,
 normalization, the noise schedule, optimization and foreground preservation before
 scaling width. Preserve the two-method comparison when reducing optional scope.
-If CVAE remains unassigned or the pilots fail, agree on a recovery plan before scaling.
+If the multi-clip or held-out pilots fail, agree on a recovery plan before scaling.
 
 ## Demo acceptance and stretch gate
 
@@ -361,11 +361,11 @@ checking the submission's external-link restriction; do not strip required notic
 | Assessment need | Evidence to finish | Accountable work |
 |---|---|---|
 | Clear task and methods | Formal condition/output definition, related-work comparison, architecture figure | B, with all reviewers |
-| At least two methods and one dataset | Trained CVAE and diffusion; versioned procedural benchmark and own results | D pending, B, A |
-| Hyperparameter analysis | Validation-selected sampler-step quality/latency curve; CVAE tuning documented | B, D pending, C |
+| At least two methods and one dataset | Trained CVAE and diffusion; versioned procedural benchmark and own results | D: Ananya, B, A |
+| Hyperparameter analysis | Validation-selected sampler-step quality/latency curve; CVAE tuning documented | B, D: Ananya, C |
 | Component analysis | Matched E2/E3 and E3/E4 where feasible; full costs and seed counts | B and C |
 | Insightful comparison | Action, uncertainty, OOD and failure analysis; discuss negative results | C with all method owners |
-| Useful visualizations | Comparable strips, arrows, tracks, endpoint distributions, cost curve and representative failures | C, D pending |
+| Useful visualizations | Comparable strips, arrows, tracks, endpoint distributions, cost curve and representative failures | C, D: Ananya |
 | Organization and communication | Complete report, timed PPT and two rehearsals | Coordinator and all members |
 | Contributions and reproducibility | Reviewed contribution descriptions, run manifests, clean extraction and source checks | All; packaging owner pending |
 

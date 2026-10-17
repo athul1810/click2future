@@ -1,18 +1,26 @@
 # CVAE handoff
 
-Proposed lead: Ananya, awaiting acceptance. Athul and Ananya remain joint owners
-of evaluation; agree their internal split without leaving CVAE unstaffed.
+Lead: Ananya, confirmed 17 October 2026. Athul and Ananya remain joint owners
+of evaluation; agree their internal split before duplicating work.
 Shrijeet owns the shared inference integration and demo. Finish by 14 November.
 
 ## Core implementation
 
-The model, loss, TC2 trainer and prior sampler are implemented in PR #30.
+Athul implemented the model, loss, TC2 trainer and prior sampler in PR #30.
+Ananya takes the next CVAE training, prior-quality and validation work; this
+ownership change does not reattribute the existing implementation.
 See [the training guide](MODEL_TRAINING.md) for commands and correctness checks.
 TC2 training, exact saved-state continuation and four-seed prior samples are now
 measured in [the pilot record](results/cvae-training-checks.json). A CUDA pooling
 backward crash is fixed without disabling determinism. The 1500-step and 5000-step
-one-clip pilots still fail sampled-video quality, so overfitting and held-out action
-response remain open. Low reconstruction error alone does not pass this gate.
+uniform-loss one-clip pilots failed sampled-video quality. The boundary-loss
+follow-up in PR #37 passes the declared selected-object training gate: 244/248
+tracked observations, selected ADE 0.00249 and posterior MAE 0.00392. All-object
+completeness remains 0/4, and validation tracking remains 0/248. See
+[the complete follow-up](results/foreground-loss-checks.json), including failures.
+Ananya should reproduce the saved prior samples, inspect the four missing
+nonselected observations, then run a bounded multi-clip pilot and validation
+action controls before scaling. Low reconstruction error alone is insufficient.
 
 Use the same 64px/32-frame data, scene-group splits and observable condition
 adapter as diffusion. Start with a compact conditional video VAE: encode

@@ -107,7 +107,7 @@
       "Replay a saved scene using its specification, config, assets, physics, and action; provide a documented generation/replay command and tolerance."
     ],
     "owner": "PRAMOD SANJAY",
-    "status": "In review",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/5",
     "completed_acceptance": [
       0,
@@ -115,7 +115,7 @@
       2,
       3
     ],
-    "progress": "Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and ready for review in PR #32. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed.",
+    "progress": "Textured rendering, object-attached stripe/checker patterns, physical triangles and 2-4-object texture checks are implemented and merged in PR #32. Native centre-force labels and legacy replay remain unchanged. The independent smoke replays 332 new clips plus 80 dataset-0.1 and 84 dataset-0.2 saved clips exactly. No learned-model result is claimed. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October.",
     "evidence": "docs/GENERALIZATION_DATA.md; docs/results/generalization-data-checks.json; docs/results/generalization-extractor-controls.json. Procedural data and simulator controls only."
   },
   {
@@ -134,7 +134,7 @@
       "Record dataset/schema versions and split hashes; provide procedural generation code, configs, and seeds so the submitted code needs no packaged dataset or external data link."
     ],
     "owner": "PRAMOD SANJAY",
-    "status": "In review",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/6",
     "completed_acceptance": [
       0,
@@ -143,7 +143,7 @@
       3,
       4
     ],
-    "progress": "Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation is ready for review in PR #32; trained generalization remains T15.",
+    "progress": "Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds train, validation, ID, shape-OOD, texture-OOD, force-OOD and repeated-physics splits with disjoint visible seeds and complete reference coverage. A 332-clip native smoke took 3.176 seconds to generate and occupies 3,129,140 bytes; every clip replays exactly. Models can load the new corpus, but its final size and training revision are not frozen. Implementation merged in PR #32; trained generalization remains T15. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October.",
     "evidence": "docs/GENERALIZATION_DATA.md; docs/results/generalization-data-checks.json; docs/results/generalization-extractor-controls.json. Procedural data and simulator controls only."
   },
   {
@@ -163,7 +163,7 @@
       "Define whole-sample best-of-K selection, metric preprocessing, missing-track handling, and collision-aware temporal checks before evaluating models."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In review",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/7",
     "evidence": "docs/METRICS.md; docs/results/contact-normal-calibration.json; docs/results/controlled-extractor-checks.json; docs/results/issue-work-checks.json. Collision occurrence and timed-event scores stay separate.",
     "completed_acceptance": [
@@ -173,7 +173,7 @@
       3,
       4
     ],
-    "progress": "Evaluation implementation is ready for review in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments."
+    "progress": "Evaluation implementation merged in PR #30. The random-scene contact rule reaches event F1 0.605 on its 200-clip check. Controlled scenes expose weaker timing: a fresh 63-clip, three-group check gives event F1 0.551, with all 3,906 object observations tracked. Separate collision-occurrence scoring reaches TP=23, FP=0, FN=1, TN=39 there; it does not establish correct timing. Trained-model and OOD validation remain part of the experiments. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October."
   },
   {
     "id": "T08",
@@ -212,14 +212,14 @@
       "Log validation results, model size, training cost, and checkpoint selection.",
       "Add a run manifest and qualitative successes/failures."
     ],
-    "owner": null,
-    "status": "In progress",
+    "owner": "KAPOOR ANANYA",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/9",
-    "proposed_owner": "KAPOOR ANANYA (awaiting acceptance)",
-    "progress": "TC2 exposed a deterministic CUDA pooling-backward crash, fixed with equivalent slice means. Jobs 43165/43166 trained 1500 steps and reproduced all saved tensors exactly across allocations. The 5000-step retry in job 43171 still fails sampled-video quality: 168/248 training-scene observations tracked and 0/248 on the validation example. Prior-sample quality remains open despite low reconstruction loss. Configs, costs, checkpoints and failure examples are recorded in results/cvae-training-checks.json.",
+    "progress": "PR #37 merged after independent review. Boundary-weighted CVAE training in job 43199 passes the declared selected-object tiny-training gate: 244/248 tracked observations, selected ADE 0.00249 and posterior MAE 0.00392 across four seeded prior samples. All-object completeness remains 0/4 and validation tracking 0/248; full-data training and held-out quality remain open under T13-T16. Ananya confirmed ownership on 17 October; Athul authored the implementation and these diagnostics. Evidence: results/foreground-loss-checks.json.",
     "completed_acceptance": [
       0,
       1,
+      2,
       3,
       4
     ]
@@ -456,7 +456,7 @@
       "Keep optional demo recordings and checkpoint-based demo checks internal; document how to regenerate data and train models from the submitted source."
     ],
     "owner": null,
-    "status": "In review",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/19",
     "completed_acceptance": [
       0,
@@ -466,7 +466,7 @@
       4,
       5
     ],
-    "progress": "Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174 ran real 5000-step E0/E3 checkpoints through the frozen sampler and all three metric families over the complete one-condition validation split, producing eight videos. Model quality failed and stays in T09/T10/T14-T16. Source installation, replay, archive inspection and all 364 tests plus four subtests pass. Implementation awaits review; T20 retains final source regeneration and post-experiment artifact checks.",
+    "progress": "Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174 ran real 5000-step E0/E3 checkpoints through the frozen sampler and all three metric families over the complete one-condition validation split, producing eight videos. Model quality failed and stays in T09/T10/T14-T16. Source installation, replay, archive inspection and all 364 tests plus four subtests pass. Implementation merged after independent review; T20 retains final source regeneration and post-experiment artifact checks. The merged stack passed 391 tests and four subtests, including real LPIPS, on 17 October.",
     "evidence": "docs/SUBMISSION.md; docs/results/submission-checks.json; submission/allowlist.json; submission/README.md."
   },
   {

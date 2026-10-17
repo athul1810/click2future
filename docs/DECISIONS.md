@@ -89,6 +89,15 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   implementation/control evidence; the new trainer must still demonstrate
   coherent generated video and held-out action response before scale-up.
 
+## D012: CVAE ownership confirmed: 17 October 2026
+
+- Ananya accepted the CVAE lead. Athul and Ananya remain joint evaluation owners.
+- Athul authored the merged CVAE implementation and training diagnostics. Ananya
+  takes subsequent CVAE training, prior-quality checks and validation; ownership
+  does not establish past contributions.
+- Shrijeet keeps diffusion, own-account TC2 runs and demo integration. Sanjay keeps
+  simulator/data. All deliverables remain due internally on 14 November.
+
 ## New decision template
 
 ```text
