@@ -3,7 +3,8 @@
 This archive contains the simulator, data generator, diffusion and CVAE trainers,
 seeded samplers, auxiliary losses, evaluation, configs and correctness checks.
 It contains no datasets or model weights. The diffusion pilots failed video-quality
-checks; CVAE GPU training, final experiments and the demo remain unfinished.
+checks; final experiments and the demo remain unfinished. CVAE GPU training and
+checkpoint continuation are verified, but prior-sample quality still fails.
 This is not the final submission.
 
 Use Python 3.12. Create a fresh environment and install the project from this folder:
@@ -217,7 +218,8 @@ Training requires one visible GPU in the MGPU-TC2 partition. The process limit i
 5.5 hours within a six-hour job. It saves weights, optimizer/RNG state, and the shuffle
 cursor. Resume with the same options and `--resume runs/cvae-overfit/latest.pt`.
 `best.pt` uses fixed-seed validation reconstruction plus beta KL; prior-sample quality
-must be evaluated separately. Full GPU training/resume remains unverified.
+must be evaluated separately. TC2 training and exact continuation have been checked;
+these checks do not establish generated-video quality.
 
 ```sh
 python -m click2future.training.sample_cvae --help

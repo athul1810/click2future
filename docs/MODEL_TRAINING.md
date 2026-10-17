@@ -113,9 +113,33 @@ posterior reconstruction plus beta KL over the configured validation subset; thi
 does not measure prior-sample quality. `latest.pt` supports continuation. Stopping
 before the first validation may leave only `latest.pt`.
 
-GPU optimizer resume and signal handling still need live TC2 checks. CPU tests cover
-checkpoint serialization, synthetic optimizer moments, and RNG/cursor state without
-generator updates. All model weights and generated data stay outside the code ZIP.
+GPU optimizer continuation matched saved states exactly across TC2 allocations in
+jobs 43165/43166. The resume operation's later metric export failed and was recovered
+separately; see `results/cvae-training-checks.json`. Scheduler-signal interruption
+still needs a live check. All model weights and generated data stay outside the code ZIP.
+
+## Foreground-loss diagnostic
+
+The seed-226000 training clip has only 2.36% object pixels. Low average image error
+can therefore hide poor object reconstruction. Both trainers accept an optional
+`foreground_weight`, defaulting to 1 so existing configurations keep their objective.
+The new one-clip diagnostic configurations use 32, with the same 5000-step horizons,
+model sizes, initial seeds and precision as the recorded unweighted attempts.
+
+For each future pixel, the loss weight is 32 inside the union of valid object masks
+and 1 elsewhere. Divide by the total weights, including RGB channels, within each
+clip before averaging clips. CVAE applies this to L1 or MSE reconstruction; diffusion
+applies it to epsilon/velocity prediction MSE. Uniform image errors remain in logs
+separately. Reconstruction plus the declared KL still selects the CVAE validation
+checkpoint; the diagnostic inspects the fixed-step latest checkpoint.
+
+Future masks are training loss targets only. They never enter the model or sampler.
+This is extra mask supervision shared by both model families, not an improvement
+claim or the final selected training setting. Matched evaluation rejects checkpoints
+with different foreground weights. Keep this setting identical across E0-E4 if it
+is adopted, and retain the failed uniform-loss pilots. New loss weights require new
+runs; exact continuation rejects an altered setting. Do not change RGB tracking or
+trajectory thresholds to make the training gate pass.
 
 ## Sampling
 

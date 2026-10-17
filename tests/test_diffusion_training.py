@@ -248,13 +248,17 @@ def test_recorded_source_change_cannot_be_called_exact_resume(dataset, tmp_path,
 
 @pytest.mark.parametrize("auxiliary", [False, True])
 @pytest.mark.parametrize("prediction_type", ["epsilon", "velocity"])
-def test_full_training_resume_matches_uninterrupted(dataset, tmp_path, auxiliary, prediction_type):
+@pytest.mark.parametrize("foreground_weight", [1.0, 32.0])
+def test_full_training_resume_matches_uninterrupted(
+    dataset, tmp_path, auxiliary, prediction_type, foreground_weight
+):
     config = TrainConfig(
         steps=6,
         base_channels=8,
         diffusion_steps=20,
         auxiliary=auxiliary,
         prediction_type=prediction_type,
+        foreground_weight=foreground_weight,
     )
     uninterrupted = Trainer(dataset, config)
     records = []
@@ -295,6 +299,9 @@ def test_full_training_resume_matches_uninterrupted(dataset, tmp_path, auxiliary
     changed_config = Trainer(dataset, replace(config, learning_rate=0.002))
     with pytest.raises(ValueError, match="config differs"):
         changed_config.resume(checkpoint)
+    changed_weight = Trainer(dataset, replace(config, foreground_weight=16.0))
+    with pytest.raises(ValueError, match="config differs"):
+        changed_weight.resume(checkpoint)
     # Hash actual sample bytes, not merely a self-reported manifest identifier.
     sample = dataset / f"{resumed.sample_ids[0]}.npz"
     sample.write_bytes(sample.read_bytes() + b"changed")

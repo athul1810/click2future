@@ -1,0 +1,30 @@
+data:
+  force_duration: 0.25
+  force_scale: 0.5
+  fps: 8
+  resolution: 64
+  total_frames: 32
+model:
+  base_channels: 16
+  future_frames: 31
+  latent_dim: 64
+sampling:
+  seeds:
+  - 0
+  - 1
+  - 2
+  - 3
+status: training_only_diagnostic
+training:
+  batch_size: 1
+  beta: 0.001
+  beta_warmup_fraction: 0.2
+  checkpoint_every: 250
+  gradient_clip_norm: 1.0
+  learning_rate: 0.0002
+  max_hours: 0.25
+  max_steps: 5000
+  reconstruction: l1
+  seed: 0
+  validation_batches: 1
+  foreground_weight: 32.0

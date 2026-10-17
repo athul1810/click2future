@@ -20,6 +20,7 @@ from click2future.models.cvae import ConditionalVideoVAE
 
 from .batch import prepare_video_batch
 from .cvae_loss import beta_at_step, cvae_loss
+from .pixel_loss import future_foreground, validate_foreground_weight
 
 
 def sha256(path):
@@ -92,6 +93,7 @@ def dataset_index(root: Path):
 
 def validate_config(config):
     data, model, train = (config[key] for key in ("data", "model", "training"))
+    validate_foreground_weight(train.get("foreground_weight", 1.0))
     for key in ("seed", "batch_size", "max_steps", "checkpoint_every", "validation_batches"):
         value = train[key]
         if (
@@ -126,7 +128,7 @@ def validate_config(config):
         raise ValueError("Model frames, image dimensions, timing, and normalization must agree")
 
 
-def model_batch(root, ids, rows, config, *, device):
+def model_batch(root, ids, rows, config, *, device, with_loss_mask=False):
     raw = load_batch(root, ids)
     d = config["data"]
     if raw["frames"].shape[1:] != (d["total_frames"], 3, d["resolution"], d["resolution"]):
@@ -136,7 +138,15 @@ def model_batch(root, ids, rows, config, *, device):
     for sample_id, scene in zip(ids, raw["scene_specs"], strict=True):
         if any(scene[key] != rows[sample_id][key] for key in ("scene_group_id", "condition_id")):
             raise ValueError("Saved rollout identity differs from the split index")
-    return prepare_video_batch(raw, device=device, force_scale=d["force_scale"])
+    batch = prepare_video_batch(raw, device=device, force_scale=d["force_scale"])
+    if with_loss_mask:
+        mask = (
+            future_foreground(raw, device=device)
+            if config["training"].get("foreground_weight", 1.0) != 1
+            else None
+        )
+        return batch, mask
+    return batch
 
 
 def save_checkpoint(
@@ -193,7 +203,9 @@ def validate(model, root, ids, rows, config):
         0, min(len(ids), t["batch_size"] * t["validation_batches"]), t["batch_size"]
     ):
         selected = ids[start : start + t["batch_size"]]
-        batch = model_batch(root, selected, rows, config, device=device)
+        batch, loss_mask = model_batch(
+            root, selected, rows, config, device=device, with_loss_mask=True
+        )
         output = model(
             batch.first_frame,
             batch.selected_mask,
@@ -202,19 +214,25 @@ def validate(model, root, ids, rows, config):
             generator=generator,
         )
         loss = cvae_loss(
-            output, batch.future, beta=t["beta"], reconstruction=t["reconstruction"]
+            output,
+            batch.future,
+            beta=t["beta"],
+            reconstruction=t["reconstruction"],
+            foreground=loss_mask,
+            foreground_weight=t.get("foreground_weight", 1.0),
         ).record()
         records.append((len(selected), loss))
         count += len(selected)
     result = {
         key: sum(n * loss[key] for n, loss in records) / count
-        for key in ("loss", "future_mse", "future_mae", "kl_mean_per_latent")
+        for key in ("loss", "future_mse", "future_mae", "reconstruction_loss", "kl_mean_per_latent")
     }
     model.train()
     return {
         **result,
         "samples": count,
         "criterion": "fixed-seed posterior reconstruction plus beta KL",
+        "foreground_weight": t.get("foreground_weight", 1.0),
         "prior_sample_quality": "not measured by this validation objective",
     }
 
@@ -232,6 +250,7 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
             Path(__file__),
             Path(__file__).with_name("batch.py"),
             Path(__file__).with_name("cvae_loss.py"),
+            Path(__file__).with_name("pixel_loss.py"),
             Path(__file__).parents[1] / "models/cvae.py",
         )
     }
@@ -319,7 +338,9 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
                     state["epoch"] += 1
                 indices = state["order"][state["cursor"] : state["cursor"] + t["batch_size"]]
                 ids = [selected["train"][index] for index in indices]
-                batch = model_batch(root, ids, rows, config, device="cuda")
+                batch, loss_mask = model_batch(
+                    root, ids, rows, config, device="cuda", with_loss_mask=True
+                )
                 optimizer.zero_grad(set_to_none=True)
                 prediction = model(
                     batch.first_frame,
@@ -332,7 +353,12 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
                     t["beta"], state["step"], t["max_steps"], t["beta_warmup_fraction"]
                 )
                 loss = cvae_loss(
-                    prediction, batch.future, beta=beta, reconstruction=t["reconstruction"]
+                    prediction,
+                    batch.future,
+                    beta=beta,
+                    reconstruction=t["reconstruction"],
+                    foreground=loss_mask,
+                    foreground_weight=t.get("foreground_weight", 1.0),
                 )
                 loss.total.backward()
                 torch.nn.utils.clip_grad_norm_(
