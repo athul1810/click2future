@@ -150,3 +150,32 @@ In an allocation, `submission/flow_evaluation.py` accepts `--root`, `--checkpoin
 objects and posterior/prior diagnostics using a fresh source-bound plan. This
 follow-up also stays within the combined pilot budget; it does not replace the
 original E0 results.
+
+## Motion supervision and E4 collision check
+
+The unsupervised flow decoder preserved appearance but failed the short-window
+force and selection controls. The separate `cvae_flow_motion_pilot.yaml` adds a
+weight-1 displacement loss. It compares the mask-average backward flow, scaled
+to normalized world units, with simulator object-centre displacement. On the
+training circles/rectangles the rotation term averages to zero up to rasterization.
+Future masks and positions enter only this training loss, never generator inputs.
+The decoder, initialization, latent distribution and RGB/KL objective are unchanged.
+This is additional supervision and must not be described as an ordinary unsupervised
+CVAE baseline or a decoder-only improvement.
+
+Validation checkpoint selection includes the same displacement term. The helper
+logs its raw loss and displacement MAE separately. A low field loss still does not
+prove correct RGB motion; force/selection controls and pixel tracking remain the
+acceptance checks. The new run uses 20,000 updates with an 18-minute process cap
+and the same frozen training/validation corpus. Its original unsupervised results
+are retained.
+
+The remaining E4 overfit check uses the first sorted training sample,
+`g03-scene-00730000-collision_0_to_1-p00`. Its simulator RGB tracks all 62 future
+observations and contains one object-contact onset. The fixed 5,000-update config
+sets `limit_train=1`; one positive and 30 negative intervals give capped weight 20.
+Submit `submission/check_e4_collision.sbatch` with `C2F_E4_CHECK` pointing to a new
+directory. It trains, samples four futures and checks actual final DDIM heads,
+RGB tracking and collision scores. This is a training-only mechanics check, not
+generalization or conditional uncertainty evidence. Both follow-ups stay inside
+the combined 1.5 allocated GPU-hour cap.

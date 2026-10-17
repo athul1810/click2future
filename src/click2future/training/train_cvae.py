@@ -19,7 +19,8 @@ from click2future.data import assign_split, load_batch, load_split_manifest
 from click2future.models.cvae_flow import build_cvae
 
 from .batch import prepare_video_batch
-from .cvae_loss import beta_at_step, cvae_loss
+from .cvae_loss import beta_at_step
+from .cvae_motion import objective
 from .pixel_loss import (
     future_foreground,
     validate_foreground_margin,
@@ -99,6 +100,15 @@ def validate_config(config):
     data, model, train = (config[key] for key in ("data", "model", "training"))
     if "decoder_kind" in model and model["decoder_kind"] != "flow":
         raise ValueError("Optional decoder_kind must be flow")
+    motion_weight = train.get("flow_motion_weight", 0)
+    if (
+        isinstance(motion_weight, bool)
+        or not isinstance(motion_weight, (int, float))
+        or not math.isfinite(motion_weight)
+        or motion_weight < 0
+        or (motion_weight > 0 and model.get("decoder_kind") != "flow")
+    ):
+        raise ValueError("Nonnegative flow_motion_weight requires the flow decoder")
     validate_foreground_weight(train.get("foreground_weight", 1.0))
     validate_foreground_margin(train.get("foreground_margin", 0))
     for key in ("seed", "batch_size", "max_steps", "checkpoint_every", "validation_batches"):
@@ -215,32 +225,41 @@ def validate(model, root, ids, rows, config):
         batch, loss_mask = model_batch(
             root, selected, rows, config, device=device, with_loss_mask=True
         )
-        output = model(
-            batch.first_frame,
-            batch.selected_mask,
-            batch.force_xy,
-            batch.future,
+        loss = objective(
+            model,
+            batch,
             generator=generator,
-        )
-        loss = cvae_loss(
-            output,
-            batch.future,
             beta=t["beta"],
             reconstruction=t["reconstruction"],
             foreground=loss_mask,
             foreground_weight=t.get("foreground_weight", 1.0),
+            motion_weight=t.get("flow_motion_weight", 0),
+            raw=load_batch(root, selected) if t.get("flow_motion_weight", 0) else None,
         ).record()
         records.append((len(selected), loss))
         count += len(selected)
     result = {
         key: sum(n * loss[key] for n, loss in records) / count
-        for key in ("loss", "future_mse", "future_mae", "reconstruction_loss", "kl_mean_per_latent")
+        for key in (
+            "loss",
+            "future_mse",
+            "future_mae",
+            "reconstruction_loss",
+            "kl_mean_per_latent",
+            *(
+                ("flow_motion_loss", "flow_displacement_mae")
+                if t.get("flow_motion_weight", 0)
+                else ()
+            ),
+        )
     }
     model.train()
     return {
         **result,
         "samples": count,
-        "criterion": "fixed-seed posterior reconstruction plus beta KL",
+        "criterion": "posterior RGB plus beta KL and flow displacement supervision"
+        if t.get("flow_motion_weight", 0)
+        else "fixed-seed posterior reconstruction plus beta KL",
         "foreground_weight": t.get("foreground_weight", 1.0),
         "foreground_margin": t.get("foreground_margin", 0),
         "prior_sample_quality": "not measured by this validation objective",
@@ -260,6 +279,7 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
             Path(__file__),
             Path(__file__).with_name("batch.py"),
             Path(__file__).with_name("cvae_loss.py"),
+            Path(__file__).with_name("cvae_motion.py"),
             Path(__file__).with_name("pixel_loss.py"),
             Path(__file__).parents[1] / "models/cvae.py",
             Path(__file__).parents[1] / "models/cvae_flow.py",
@@ -353,23 +373,19 @@ def train(root, output, config, *, resume=None, overfit_samples=0):
                     root, ids, rows, config, device="cuda", with_loss_mask=True
                 )
                 optimizer.zero_grad(set_to_none=True)
-                prediction = model(
-                    batch.first_frame,
-                    batch.selected_mask,
-                    batch.force_xy,
-                    batch.future,
-                    generator=train_rng,
-                )
                 beta = beta_at_step(
                     t["beta"], state["step"], t["max_steps"], t["beta_warmup_fraction"]
                 )
-                loss = cvae_loss(
-                    prediction,
-                    batch.future,
+                loss = objective(
+                    model,
+                    batch,
+                    generator=train_rng,
                     beta=beta,
                     reconstruction=t["reconstruction"],
                     foreground=loss_mask,
                     foreground_weight=t.get("foreground_weight", 1.0),
+                    motion_weight=t.get("flow_motion_weight", 0),
+                    raw=load_batch(root, ids) if t.get("flow_motion_weight", 0) else None,
                 )
                 loss.total.backward()
                 torch.nn.utils.clip_grad_norm_(

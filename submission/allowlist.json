@@ -17,6 +17,8 @@
     "submission/evaluate_pilot.sbatch",
     "submission/sampler_study.py",
     "submission/study_sampler.sbatch",
-    "submission/flow_evaluation.py"
+    "submission/flow_evaluation.py",
+    "submission/check_e4_collision.py",
+    "submission/check_e4_collision.sbatch"
   ]
 }

@@ -55,6 +55,8 @@ def _check(name, payload):
             "submission/sampler_study.py",
             "submission/study_sampler.sbatch",
             "submission/flow_evaluation.py",
+            "submission/check_e4_collision.py",
+            "submission/check_e4_collision.sbatch",
         }
     )
     if (
