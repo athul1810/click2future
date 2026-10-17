@@ -8,7 +8,11 @@ Shrijeet owns the shared inference integration and demo. Finish by 14 November.
 
 The model, loss, TC2 trainer and prior sampler are implemented in PR #30.
 See [the training guide](MODEL_TRAINING.md) for commands and correctness checks.
-The TC2 overfit, GPU resume, trained samples and measured costs remain pending.
+TC2 training, exact saved-state continuation and four-seed prior samples are now
+measured in [the pilot record](results/cvae-training-checks.json). A CUDA pooling
+backward crash is fixed without disabling determinism. The 1500-step and 5000-step
+one-clip pilots still fail sampled-video quality, so overfitting and held-out action
+response remain open. Low reconstruction error alone does not pass this gate.
 
 Use the same 64px/32-frame data, scene-group splits and observable condition
 adapter as diffusion. Start with a compact conditional video VAE: encode

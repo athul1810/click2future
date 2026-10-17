@@ -14,6 +14,7 @@ The email lists these Slurm settings:
 | QoS | `normal` |
 | Per-user resource limits (`MaxTRESPU`) | 10 CPUs, 1 GPU, `30G` system memory |
 | Running-job limit per user (`MaxJobsPU`) | 2 |
+| Observed submission limit | A third queued/running job was rejected with `QOSMaxSubmitJobPerUserLimit` on Athul's account; submit the next dependency after one finishes |
 | Maximum job duration (`MaxWall`) | 6 hours (`06:00:00`) |
 | GPU model and VRAM | Job 42886 on TC2N01: NVIDIA A40; 46,068 MiB reported by nvidia-smi; 44.43 GiB visible to PyTorch |
 | Total GPU-hour quota and access expiry | Not stated in the email |
@@ -30,6 +31,15 @@ The resource limits apply across the user's running jobs. Two job slots do not p
 - [x] Run a small scheduled GPU job and record GPU model, VRAM and software versions: job 42886, completed with exit 0:0 on 16 October 2026.
 - [ ] Check storage limits, any total usage quota, and access expiry.
 - [x] Keep code/configs in Git and full private checkpoint/result bundles under ignored local `outputs/tc2-ops`, copied from TC2 after each completed pilot. TC2 provides no backup service; datasets and model files stay out of Git and the course submission.
+
+Athul's account independently completed setup job 43158 on TC2N01 with an A40
+and the locked CUDA/evaluation environment. `mytcinfo` confirms the same normal
+QoS limits. `quota -s` returned no personal quota, and the checked account metadata
+does not expose total GPU-hours or service expiry. These values remain unknown;
+they do not indicate a pending login or GPU setup. T02 is complete. Final model
+quality remains part of T09/T10, and quota information should be used if support
+later provides it. Trained CVAE checkpoints and GPU-generated samples from jobs
+43165/43166 are backed up under ignored `outputs/tc2-ops/cvae-pilot/collected`.
 
 Shrijeet's initial SSH attempt closed, followed by a successful plain interactive login
 and confirmed home-directory creation on 16 October. Setup job `42886` completed on
