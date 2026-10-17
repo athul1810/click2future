@@ -1,0 +1,276 @@
+{
+  "status": "passed",
+  "scope": "Simulator controls and explicitly untrained model fixtures; no training or learned-quality claim",
+  "dataset": {
+    "schema_version": "dataset-0.2",
+    "seed": 219000,
+    "total_scene_groups": 20,
+    "total_clips": 420,
+    "split": "validation",
+    "evaluation_scene_groups": 2,
+    "evaluation_conditions": 12,
+    "reference_futures": 42
+  },
+  "resolution_hw": [
+    64,
+    64
+  ],
+  "total_frames": 32,
+  "fps": 8,
+  "end_frame": 4,
+  "motion_threshold": 0.015625,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "control_video_count": 192,
+  "control_summary": [
+    {
+      "method": "ignored-force",
+      "force_sign_rate": {
+        "estimate": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "reversal_missing_rate": 0.0,
+      "stationary_pairs": 3,
+      "missing_pairs": 0,
+      "total_pairs": 8,
+      "zero_force_mean_drift": 0.0
+    },
+    {
+      "method": "missing-rgb",
+      "force_sign_rate": {
+        "estimate": 0.6666666666666666,
+        "ci": [
+          0.3333333333333333,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "reversal_missing_rate": 0.25,
+      "stationary_pairs": 2,
+      "missing_pairs": 2,
+      "total_pairs": 8,
+      "zero_force_mean_drift": 0.0
+    },
+    {
+      "method": "oracle",
+      "force_sign_rate": {
+        "estimate": 0.625,
+        "ci": [
+          0.25,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "reversal_missing_rate": 0.0,
+      "stationary_pairs": 3,
+      "missing_pairs": 0,
+      "total_pairs": 8,
+      "zero_force_mean_drift": 0.0
+    },
+    {
+      "method": "static",
+      "force_sign_rate": {
+        "estimate": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "reversal_missing_rate": 0.0,
+      "stationary_pairs": 8,
+      "missing_pairs": 0,
+      "total_pairs": 8,
+      "zero_force_mean_drift": 0.0
+    }
+  ],
+  "reference_calibration": [
+    {
+      "method": "reference-labels",
+      "force_sign_rate": {
+        "estimate": 0.375,
+        "ci": [
+          0.25,
+          0.5
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "reversal_missing_rate": 0.0,
+      "stationary_pairs": 5,
+      "missing_pairs": 0,
+      "total_pairs": 8,
+      "zero_force_mean_drift": 0.0
+    },
+    {
+      "method": "reference-rgb",
+      "force_sign_rate": {
+        "estimate": 0.625,
+        "ci": [
+          0.25,
+          1.0
+        ],
+        "scored_scene_groups": 2,
+        "expected_scene_groups": 2,
+        "defined_bootstrap_replicates": 200
+      },
+      "reversal_missing_rate": 0.0,
+      "stationary_pairs": 3,
+      "missing_pairs": 0,
+      "total_pairs": 8,
+      "zero_force_mean_drift": 0.0
+    }
+  ],
+  "limitation_observed": "Low-force references include below-threshold responses, and rasterization changes movement near the fixed one-pixel threshold. Continuous-label and rendered-reference baselines are both retained. No case was dropped and the threshold was not changed",
+  "untrained_checkpoint_fixture": {
+    "methods": [
+      "E0",
+      "E2",
+      "E3"
+    ],
+    "training_steps": [
+      0,
+      0,
+      0
+    ],
+    "fixture_ddim_steps": 4,
+    "video_count": 72,
+    "cpu_rng_preserved": true,
+    "scene_groups": 1,
+    "labelled_runs": [
+      "fixture-E0-seed3",
+      "fixture-E2-seed3",
+      "fixture-E3-seed3"
+    ],
+    "action_summary": [
+      {
+        "method": "E0",
+        "force_sign_rate": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "reversal_missing_rate": 1.0,
+        "stationary_pairs": 0,
+        "missing_pairs": 4,
+        "total_pairs": 4,
+        "zero_force_mean_drift": null
+      },
+      {
+        "method": "E2",
+        "force_sign_rate": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "reversal_missing_rate": 1.0,
+        "stationary_pairs": 0,
+        "missing_pairs": 4,
+        "total_pairs": 4,
+        "zero_force_mean_drift": null
+      },
+      {
+        "method": "E3",
+        "force_sign_rate": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 1,
+          "defined_bootstrap_replicates": 0
+        },
+        "reversal_missing_rate": 1.0,
+        "stationary_pairs": 0,
+        "missing_pairs": 4,
+        "total_pairs": 4,
+        "zero_force_mean_drift": null
+      }
+    ]
+  },
+  "generalization_plan_preflight": [
+    {
+      "split": "validation",
+      "scene_groups": 2,
+      "eligible_scene_groups": 2
+    },
+    {
+      "split": "id_test",
+      "scene_groups": 2,
+      "eligible_scene_groups": 2
+    },
+    {
+      "split": "shape_ood",
+      "scene_groups": 2,
+      "eligible_scene_groups": 2
+    },
+    {
+      "split": "texture_ood",
+      "scene_groups": 2,
+      "eligible_scene_groups": 2
+    },
+    {
+      "split": "physics_test",
+      "scene_groups": 2,
+      "eligible_scene_groups": 2
+    }
+  ],
+  "source_sha256": {
+    "src/click2future/evaluation/paired_actions.py": "1d4968b97c312b89abcf3322c41044426d847e56b58fb9b711be4bde37744a34",
+    "src/click2future/evaluation/controls.py": "489481e874b53eeb3a1f4e1d804111e0f4192f422f2d72dc8437a77bf6347895",
+    "src/click2future/evaluation/suite.py": "1983485d27a848b7a8e08752a573383b1ed5b5b048bf2ec560c04790e2fc4f42",
+    "src/click2future/evaluation/sample_suite.py": "99ea3ebfcdb08db039114bd9c07e61c85fb95c68ec390b7cc130fa3f4cd86757",
+    "tests/test_paired_action_suite.py": "b45bdadbad972d0c0b915020c615868f187141667d8675fc213519ca3e58d682"
+  },
+  "output_sha256": {
+    "plan.json": "0d68543904c933172899fb6a042597a17fd14b50ffa8c34d1308fe1a0c7377da",
+    "metrics/actions.json": "76ead62471693184c7ea6ed8f1c1bcf4480694c6c71b9e8747ac11465e3c711e",
+    "metrics/actions.csv": "e22702f898b831f20f3a538d7eb08f208bd22ae8a74de25e49fdb2500624f0fb",
+    "untrained-samples/predictions.json": "0f4bc49d576365b0cc32e2837f8a0c05af5f697e9b5545a710bf2afc6fadc38b",
+    "untrained-metrics/actions.json": "df0b8b16f9eebf9d3d2937b9491283ab3fcf7964b9e962d37c5f85978203a784"
+  },
+  "seconds_including_generation_sampling_and_metrics": 109.33913500000199,
+  "checks": {
+    "working_tree_tests": 335,
+    "fresh_source_archive_tests": 335,
+    "subtests": 4,
+    "skipped": 0,
+    "ruff": "passed",
+    "format": "passed",
+    "dependency_lock": "passed",
+    "source_and_wheel_builds": "passed",
+    "tc2_job_syntax": "three scripts passed",
+    "fresh_source_smoke": "two generated rollouts, replay, batch and source import paths passed",
+    "source_archive": {
+      "inspection": "passed",
+      "files": 129,
+      "bytes": 241335,
+      "sha256": "c0ae23737dc4077a69d32c6756c8d43cc5e9181b0151e1b6f65e2025babe9783"
+    },
+    "live_gpu_training_or_sampling": "not run"
+  },
+  "remaining": [
+    "Trained TC2 model comparisons",
+    "Selected-object-only controls with fixed force",
+    "Full experiment settings and budgets selected on validation"
+  ]
+}

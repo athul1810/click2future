@@ -64,6 +64,7 @@ def evaluate_controls(
     run_id: str,
     resolution_hw: tuple[int, int] = (64, 64),
     fps: int = 8,
+    frame_valid: dict | None = None,
 ) -> dict:
     if source not in ("simulator_control", "generated_video"):
         raise ValueError("Source must be simulator_control or generated_video")
@@ -91,12 +92,23 @@ def evaluate_controls(
         if count is not None and count != len(clips):
             raise ValueError("All controls must have the same number of paired sample seeds")
         count = len(clips)
+        known = (
+            np.ones(clips.shape[:2], dtype=bool)
+            if frame_valid is None or frame_valid.get(kind) is None
+            else np.asarray(frame_valid[kind])
+        )
+        if known.dtype != np.bool_ or known.shape != clips.shape[:2] or not known[:, 0].all():
+            raise ValueError("frame_valid must be boolean [K,T] with valid first frames")
         tracks = [
-            track_video(clip, ref["instance_masks"][0], ref["object_valid"], tracker)
+            track_video(
+                clip[: end_frame + 1], ref["instance_masks"][0], ref["object_valid"], tracker
+            )
             for clip in clips
         ]
         positions = np.stack([track.positions for track in tracks])
         tracked = np.stack([track.tracked for track in tracks])
+        tracked &= known[:, : end_frame + 1, None]
+        positions[~tracked] = np.nan
         arrays[kind] = positions, tracked
         scores[kind] = action_metrics(
             positions,
@@ -124,7 +136,7 @@ def evaluate_controls(
         "source": source,
         "run_id": run_id,
         "extractor_version": TRACKER_VERSION,
-        "action_metric_version": "1",
+        "action_metric_version": "2",
         "settings": {
             "tracker": asdict(tracker),
             "end_frame": end_frame,
@@ -230,12 +242,22 @@ def main(argv: list[str] | None = None) -> int:
             }
             with np.load(args.videos, allow_pickle=False) as archive:
                 videos = {kind: archive[kind] for kind in KINDS}
+                frame_valid = {
+                    kind: archive[kind + "_frame_valid"]
+                    for kind in KINDS
+                    if kind + "_frame_valid" in archive
+                }
             if any(len(clips) != len(args.sample_seeds) for clips in videos.values()) or len(
                 set(args.sample_seeds)
             ) != len(args.sample_seeds):
                 raise ValueError("Provide one distinct paired sampling seed per video sample")
             report = evaluate_controls(
-                refs, videos, source="generated_video", run_id=args.run_id, **settings
+                refs,
+                videos,
+                frame_valid=frame_valid,
+                source="generated_video",
+                run_id=args.run_id,
+                **settings,
             )
             report["sample_seeds"] = args.sample_seeds
         report["input_sha256"] = {

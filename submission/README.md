@@ -156,6 +156,17 @@ E0/E2/E3 and the plan's seeds. Paths are relative to the prediction JSON.
 The evaluator writes per-case reports and summary JSON/CSV. It rejects changed
 reference/config hashes and incomplete coverage. It never trains or selects a model.
 
+For controlled data, add `--actions-config configs/evaluation/actions.yaml` to
+plan preparation. The same evaluation then writes `actions.json` and `actions.csv`
+for zero-force drift and paired reversed-force response. The fixed window is the
+first 0.5 seconds. Every hidden-physics reference must be contact-free; exclusions
+are recorded before model scoring. Missing RGB and stationary outputs keep their
+counts. Bootstrap intervals resample scene groups, with no interval for one group.
+Separate simulator-label and rendered-reference scores calibrate low-force cases
+that remain below the motion threshold. These references never condition sampling.
+Selected-object-only changes are not measured by these existing action families.
+Dataset-0.3 force-OOD has no zero-force cases, so omit this flag for that split.
+
 
 The CVAE baseline has a scheduled TC2 workflow. Generate a dataset with at least
 ten scene groups, using `configs/simulator/pilot.toml` for 32-frame clips. With a

@@ -118,10 +118,50 @@ Simulator controls use `source: simulator_control` and names such as `oracle` or
 development checks require an explicit `--metrics ssim` plan; final comparisons
 request SSIM and LPIPS. Cached LPIPS weights stay outside the source ZIP.
 
+## Paired zero-force and reversed-force checks
+
+For dataset-0.2, freeze the action configuration when preparing the plan:
+
+```sh
+python -m click2future.evaluation.suite prepare --dataset data/controlled --split test --actions-config configs/evaluation/actions.yaml --output outputs/action-test-plan.json
+```
+
+Use that plan in the same sampling and evaluation commands above. In addition to
+the trajectory/image/futures tables, evaluation writes `actions.json` and
+`actions.csv` from the same four ordered seeds. It reports direction, zero-force
+drift, reversal/sign scores, stationary outputs and missing tracks. Optional
+`frame_valid` flags apply to the fixed action window too.
+
+Eligibility is frozen from references before evaluating models. The first 0.5
+seconds must be contact-free in every forward/reverse hidden-physics variant.
+Groups with reference contacts remain listed with an exclusion reason. Missing
+actions, changed targets, mismatched physics or timing reject plan preparation.
+The zero reference starts at rest and shares physics with one reversal pair;
+all other forward/reverse physics variants must match exactly.
+
+Summaries average within each scene and training run, then across scene groups.
+Confidence intervals resample whole scene groups; one group has no interval.
+Conditional rates retain their complete/missing counts in JSON and missing rates
+in the CSV. An entirely excluded suite has no scored action metrics.
+
+The same outputs include separate simulator-label and rendered-reference scores
+over all matched physics variants. Some low-force references stay below the fixed
+motion threshold, so a low sign-response rate alone does not establish a physics
+failure. Compare it with these reference scores, tracking rates and trajectory
+errors. Reference trajectories are calibration data only; they never condition
+model sampling.
+
+Dataset-0.3 validation, ID, shape, texture and repeated-physics splits support the
+same checks. Its force-OOD split deliberately omits zero force, so evaluate that
+split with the regular metrics and no `--actions-config`. Existing target-change
+conditions also reverse the force, so they do not isolate selected-object changes.
+That control still needs a separate matched-force condition set.
+
 ## Remaining evidence
 
 T14 needs actual trained E0/E2/E3 samples and repeats. T15 needs frozen models
 trained on the matched generalization corpus from T06. T16 needs generated samples compared
-against repeated hidden-physics references and paired action controls. Run the
-existing action evaluator on its controlled, contact-free windows separately.
+against repeated hidden-physics references and paired action controls. Zero and
+reversed-force scoring is connected to the batch workflow; selected-object-only
+controls and actual trained-model measurements remain open.
 This batch workflow does not replace those experiments or their quality checks.

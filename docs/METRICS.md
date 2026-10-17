@@ -6,7 +6,7 @@ event detection is currently too inaccurate to support model-comparison claims.
 
 ## Controlled contact stress check
 
-Candidate dataset-0.2 from PR #31 exposes a distinction between collision occurrence
+Dataset-0.2 from merged PR #31 exposes a distinction between collision occurrence
 and event timing. On its initial held-out check, timed-event F1 was 0.321 even though
 23 of 24 colliding clips had at least one detected encounter, with no false collision
 clips. This motivated the separate encounter diagnostic; it did not change the tracker
@@ -20,8 +20,9 @@ not generated-model results. Three scene groups and existing solid-colour shape
 families do not establish general reliability. Keep timed-event errors visible.
 
 The recorded data revision, original check and fresh check are in
-`results/controlled-extractor-checks.json`. The data PR still needs its model force-range
-integration fixed before training uses it.
+`results/controlled-extractor-checks.json`. PR #31 also fixed the model force bound:
+the dataset-0.2 training config accepts 1.1, while normalization remains division
+by 0.5 without clipping.
 
 ## Input contract
 
@@ -280,7 +281,17 @@ python -m click2future.evaluation.controls \
 Records distinguish `generated_video` from `simulator_control`, include input hashes and
 configuration, and retain sample counts. A `passed` status means calculation succeeded,
 not that the model follows the action. The CLI checks seed count/order declarations;
-the sampler remains responsible for actually using those seeds.
+the sampler remains responsible for actually using those seeds. Optional boolean
+`forward_frame_valid`, `reverse_frame_valid` and `zero_frame_valid` arrays mark
+missing RGB in this combined NPZ. A missing frame within the window makes its
+sample/pair incomplete; later missing frames do not change this short-window score.
+
+The batch evaluator now supports the same checks through `--actions-config` at
+plan preparation. It certifies every reference physics variant before scoring,
+records contact-based exclusions, and exports action JSON/CSV with scene-group
+bootstrap intervals and complete/missing counts. See [EXPERIMENT_PROTOCOL.md](EXPERIMENT_PROTOCOL.md).
+Existing target-change conditions also change force, so selected-object-only
+adherence remains a separate experiment.
 
 ## Image quality
 
