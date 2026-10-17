@@ -155,7 +155,56 @@ Dataset-0.3 validation, ID, shape, texture and repeated-physics splits support t
 same checks. Its force-OOD split deliberately omits zero force, so evaluate that
 split with the regular metrics and no `--actions-config`. Existing target-change
 conditions also reverse the force, so they do not isolate selected-object changes.
-That control still needs a separate matched-force condition set.
+
+## Selected-object controls with the same force
+
+Derive a separate intervention plan from an ordinary frozen held-out plan:
+
+```sh
+python -m click2future.evaluation.targets --plan outputs/test-plan.json --output-dir outputs/target-controls
+python -m click2future.evaluation.sample_suite --plan outputs/target-controls/plan.json --runs configs/evaluation/runs.example.json --output-dir outputs/target-samples --device cpu
+python -m click2future.evaluation.suite run --plan outputs/target-controls/plan.json --predictions outputs/target-samples/predictions.json --output-dir outputs/target-results
+```
+
+The recipe uses every scene group's forward condition. For each hidden-physics
+reference it replays the same image, force, duration and physical objects, selecting
+the original target and then the lowest-index other valid object. Only the clicked
+object changes. It keeps all reference variants and writes them outside the training
+corpus. The original manifest and split hashes remain the checkpoint compatibility
+checks. The intervention plan binds the parent plan, original inputs, simulator
+revision, generated references and fixed action settings. Changing an input rejects
+sampling or evaluation; use a fresh directory for every preparation.
+
+This suite is labelled `SPLIT-selected-object` and stays separate from ordinary
+ID/OOD tables. It does not establish generalization to a different visual corpus.
+Sources without a forward condition, such as dataset-0.1, are rejected.
+
+The optional `--force-magnitude 0.4` sets one shared magnitude in the source forward
+direction for both clicks and records it in the plan. Without it the source force
+is preserved. Choose any override using validation before trained-model test
+evaluation; never choose a magnitude per scene or retune the motion threshold.
+The first validation correctness check at force 0.15 had all eight exact-label
+pairs below threshold, while rasterized references scored differently. That record
+is retained alongside a separate 0.4 control check in
+`results/selected-object-control-checks.json`. Neither is a learned-model result.
+
+The same checkpoint runner generates four paired futures for each condition.
+Evaluation writes the ordinary trajectory/image/futures reports plus `targets.json`
+and `targets.csv`. A successful target pair requires the selected object to move
+at least one pixel along the force and every unselected object to remain below
+the one-pixel drift threshold throughout the first 0.5 seconds, in both conditions.
+A separate contrast checks that each object's force projection increases by at
+least one pixel when it is clicked. Identical motion under both clicks fails that
+contrast. Stationary, missing and unselected-object drift counts remain explicit.
+Both conditions require complete tracks of every valid object in this window.
+
+Eligibility uses only simulator references: every physics variant under both
+clicks must start at rest and avoid contact within the fixed window. Excluded groups
+stay in the plan with reasons. No group is excluded for weak reference motion or
+poor model output. Exact-label and rendered-RGB reference calibration, paired
+sample seeds and scene-group confidence intervals follow the action protocol above.
+The first-frame-only E1 control must produce identical videos under both clicks
+with paired seeds; it cannot observe the selection.
 
 ## Remaining evidence
 
@@ -163,5 +212,6 @@ T14 needs actual trained E0/E2/E3 samples and repeats. T15 needs frozen models
 trained on the matched generalization corpus from T06. T16 needs generated samples compared
 against repeated hidden-physics references and paired action controls. Zero and
 reversed-force scoring is connected to the batch workflow; selected-object-only
-controls and actual trained-model measurements remain open.
+controls use the separate intervention plan. Actual trained-model measurements
+remain open.
 This batch workflow does not replace those experiments or their quality checks.

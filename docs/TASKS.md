@@ -15,7 +15,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T04 | [Freeze simulator, action, and dataset interfaces](https://github.com/athul1810/click2future/issues/4) | T01 | PRAMOD SANJAY | Done |
 | T05 | [Implement the seeded 64px tabletop simulator](https://github.com/athul1810/click2future/issues/5) | T03, T04 | PRAMOD SANJAY | In review |
 | T06 | [Build versioned datasets and leakage-safe splits](https://github.com/athul1810/click2future/issues/6) | T05 | PRAMOD SANJAY | In review |
-| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
+| T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | Unassigned | In progress |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
@@ -129,7 +129,7 @@ Dataset-0.2 remains available through merged PR #31. Separate dataset-0.3 adds t
 
 Measure generated video behavior consistently across models.
 
-**Dependencies:** T04, T05. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
+**Dependencies:** T04, T05. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
 
 - [x] Implement ADE/FDE, action-direction and zero-force controls, interval collision accuracy, event precision/recall/F1, and image/temporal/diversity metrics.
 - [x] Validate the object tracker and contact estimator on held-out simulator clips; record extraction failures.
@@ -278,9 +278,14 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Actual trained ensembles, uncertainty measurements and selected-object-only controls with matched force remain open.
+The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Selected-object-only intervention plans now keep the force fixed and the training corpus unchanged. The shared sampler/evaluator reports target following, response contrasts, drift and missing tracks with reference-only eligibility. Actual trained ensembles and uncertainty/action measurements remain open.
 
 Correctness evidence: `results/paired-action-suite-checks.json` records 192 native simulator-control videos and 72 explicitly untrained E0/E2/E3 videos. All 335 tests and four subtests pass locally and from the source ZIP. These checks do not complete the trained-model experiment.
+
+The selected-object check in `results/selected-object-control-checks.json` adds
+64 simulator-control videos, 32 explicitly untrained E0/E1/E2/E3 videos and 16 exact
+reference replays. It retains the weak-force calibration and records the shared
+0.4-force validation probe separately. The original training corpus is unchanged.
 
 <a id="t17"></a>
 

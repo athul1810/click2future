@@ -167,6 +167,27 @@ that remain below the motion threshold. These references never condition samplin
 Selected-object-only changes are not measured by these existing action families.
 Dataset-0.3 force-OOD has no zero-force cases, so omit this flag for that split.
 
+To isolate the clicked object, derive a separate held-out intervention plan:
+
+```sh
+python -m click2future.evaluation.targets --plan outputs/test-plan.json --output-dir outputs/target-controls
+python -m click2future.evaluation.sample_suite --plan outputs/target-controls/plan.json --runs configs/evaluation/runs.example.json --output-dir outputs/target-samples --device cpu
+python -m click2future.evaluation.suite run --plan outputs/target-controls/plan.json --predictions outputs/target-samples/predictions.json --output-dir outputs/target-results
+```
+
+Each scene's forward force is applied to two different objects with the same image,
+duration, hidden physics and four sampling seeds. Derived references stay outside
+the training corpus, whose original manifest/split hashes remain the compatibility
+checks. The new plan freezes parent inputs and generated references. Keep its
+`SPLIT-selected-object` results separate from ordinary ID/OOD tables.
+The additional targets JSON/CSV report click following, per-object response
+contrasts, nonselected drift, stationary pairs and missing tracks. All reference
+physics must be contact-free in the fixed 0.5-second window. Below-threshold
+reference responses stay in calibration and are never used to drop scenes.
+An optional `--force-magnitude 0.4` uses the same shared magnitude in both
+conditions while preserving the source direction. Choose it on validation, freeze
+it before test evaluation, and keep the original-force calibration in the record.
+
 
 The CVAE baseline has a scheduled TC2 workflow. Generate a dataset with at least
 ten scene groups, using `configs/simulator/pilot.toml` for 32-frame clips. With a
