@@ -39,5 +39,17 @@
     "resume_from_step": 500,
     "max_tensor_difference": 0.0,
     "operation_export_error": "The resume training and state comparison finished; the reporting call then omitted metric arguments. Saved checkpoints and samples were recovered and scored locally."
+  },
+  "final_default_setup": {
+    "job": 43177,
+    "source_revision": "0104b5ecfd54fb1beac283601c25528ddb403beb",
+    "state": "COMPLETED",
+    "elapsed_seconds": 269,
+    "tests_passed": 360,
+    "tests_skipped": 4,
+    "subtests_passed": 4,
+    "skip_reason": "LPIPS weights not cached on TC2; all 364 pass with cached weights locally",
+    "native_cvae_deterministic_backward": "passed",
+    "optimizer_updates_in_probe": 0
   }
 }

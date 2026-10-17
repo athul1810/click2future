@@ -36,7 +36,9 @@ Athul's account independently completed setup job 43158 on TC2N01 with an A40
 and the locked CUDA/evaluation environment. `mytcinfo` confirms the same normal
 QoS limits. `quota -s` returned no personal quota, and the checked account metadata
 does not expose total GPU-hours or service expiry. These values remain unknown;
-they do not indicate a pending login or GPU setup. T02 is complete. Final model
+they do not indicate a pending login or GPU setup. Default setup job 43177 also passed the native CVAE CUDA backward check and
+360 tests plus four subtests; four LPIPS-weight tests skipped because TC2 lacks
+those cached weights. All 364 pass locally with cached weights. T02 is complete. Final model
 quality remains part of T09/T10, and quota information should be used if support
 later provides it. Trained CVAE checkpoints and GPU-generated samples from jobs
 43165/43166 are backed up under ignored `outputs/tc2-ops/cvae-pilot/collected`.
