@@ -208,11 +208,21 @@ def test_malformed_or_undeclared_requests_rejected(service, field, value):
     assert not service.jobs and not service.models["fixture"].calls
 
 
-def test_final_test_presets_are_refused(dataset, tmp_path):
+@pytest.mark.parametrize(
+    "split", ["test", "id_test", "shape_ood", "texture_ood", "force_ood", "physics_test", "unknown"]
+)
+def test_final_test_presets_are_refused_before_loading_any_arrays(tmp_path, monkeypatch, split):
+    sample = "reserved-example"
+    (tmp_path / "dataset_manifest.json").write_text(
+        json.dumps({"samples": [{"sample_id": sample, "split": split}]})
+    )
+
+    def forbidden_load(*_args, **_kwargs):
+        pytest.fail("A reserved split was loaded before the demo rejected it")
+
+    monkeypatch.setattr("click2future.demo.service.load_rollout", forbidden_load)
     with pytest.raises(ValueError, match="Final-test"):
-        DemoService(
-            dataset, [first_id(dataset, "test")], {"fixture": ObservableSpy()}, cache=tmp_path
-        )
+        DemoService(tmp_path, [sample], {"fixture": ObservableSpy()}, cache=tmp_path / "cache")
 
 
 def test_running_and_queued_cancellation_are_bounded_and_publish_nothing(dataset, tmp_path):

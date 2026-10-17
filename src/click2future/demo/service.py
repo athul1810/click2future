@@ -61,8 +61,8 @@ class DemoService:
             }
         self.presets = {}
         for sample_id in sample_ids:
-            if self.splits.get(sample_id) == "test":
-                raise ValueError("Final-test examples cannot be demo presets")
+            if self.splits and self.splits.get(sample_id) not in {"train", "validation"}:
+                raise ValueError("Final-test or unsupported splits cannot be demo presets")
             if self.splits and sample_id not in self.splits:
                 raise ValueError("Preset is absent from the dataset manifest")
             ref = load_rollout(dataset, sample_id)

@@ -36,7 +36,9 @@ do not bypass its provenance check.
 Default presets are the first available example from up to eight validation
 scene groups. `--split train` selects development/training examples instead.
 For a declared development example, use `--samples sample-id another-id`.
-The app refuses final-test presets. Without a dataset manifest, explicit sample
+The app permits only train/validation presets when a manifest exists. It refuses
+legacy test, ID-test, every OOD/physics-test split and unknown split names before
+loading their arrays. Without a dataset manifest, explicit sample
 IDs are allowed but labelled as having an unverified split. The operator must
 verify those examples before a presentation.
 
