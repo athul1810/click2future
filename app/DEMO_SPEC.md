@@ -3,8 +3,8 @@
 Specification updated 17 October 2026. The local app and checkpoint adapters are
 implemented; [launch instructions](README.md) cover the current interface.
 Trained diagnostic checkpoints exist, but held-out quality and final demo acceptance
-remain open. Trajectory overlays, uncertainty overlays, latency statistics and a
-presentation rehearsal are not implemented or passed by this change.
+remain open. Pixel-track overlays and a small warm latency study are implemented.
+Uncertainty overlays and the final presentation rehearsal remain open.
 The confirmed PPT date is 14 November. Read the
 [execution plan](../docs/EXECUTION_PLAN_2026-10-16.md) for delivery gates and pending ownership.
 

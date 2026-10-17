@@ -1,0 +1,232 @@
+{
+  "scope": "warm browser request through first painted canvas; headless Chrome/Edge",
+  "included": "queue, neural sampling, conversion, pixel tracking, reference, PNG transfer and browser display",
+  "excluded": "server startup and checkpoint loading",
+  "condition": {
+    "scene": "g03-scene-00730016-forward-p00",
+    "object": 0,
+    "force": [
+      0.15000000596046448,
+      0
+    ]
+  },
+  "models": [
+    {
+      "id": "E3-spatial",
+      "kind": "diffusion",
+      "detail": "spatial diffusion, rgb, EMA",
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+      "training_steps": 5000,
+      "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+      "sampling_steps": 32,
+      "sampling_source_sha256": {
+        "demo\\models.py": "3556e0b00174c9b8f2a2704147ff71a56420080f621a345a59c892042b1814e6",
+        "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+        "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+        "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+        "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+        "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad"
+      },
+      "runtime": {
+        "torch": "2.11.0+cu128",
+        "device": "cuda",
+        "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "precision": "float32"
+      },
+      "validation_quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 269,
+        "tracking_fraction": 0.04519489247311828,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "variant_notes": "Original four-method pilot"
+    },
+    {
+      "id": "E0-flow-motion",
+      "kind": "cvae",
+      "detail": "conditional VAE, learned prior",
+      "checkpoint_sha256": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100",
+      "training_steps": 9000,
+      "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+      "sampling_steps": null,
+      "sampling_source_sha256": {
+        "demo\\models.py": "3556e0b00174c9b8f2a2704147ff71a56420080f621a345a59c892042b1814e6",
+        "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+        "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+        "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+        "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+        "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+        "models/cvae_flow.py": "9f80061d2d0b5e946258beb8e8ad261dc0e464878184a028db242e74b033e2d5"
+      },
+      "runtime": {
+        "torch": "2.11.0+cu128",
+        "device": "cuda",
+        "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "precision": "float32"
+      },
+      "validation_quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5765,
+        "tracking_fraction": 0.9685819892473119,
+        "complete_selected_clips": 80,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 80,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "variant_notes": "Additional displacement-label supervision"
+    }
+  ],
+  "runs": [
+    {
+      "warmup": true,
+      "seconds": 4.8000841999892145,
+      "seeds": [
+        61017000,
+        61017001,
+        61017002,
+        61017003
+      ],
+      "models": [
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.099599500012118
+        },
+        {
+          "name": "E0-flow-motion",
+          "source": "live model",
+          "seconds": 0.06535769999027252
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 4.6854939999757335,
+      "seeds": [
+        61017004,
+        61017005,
+        61017006,
+        61017007
+      ],
+      "models": [
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.019465399964247
+        },
+        {
+          "name": "E0-flow-motion",
+          "source": "live model",
+          "seconds": 0.059309300035238266
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 4.694887900026515,
+      "seeds": [
+        61017008,
+        61017009,
+        61017010,
+        61017011
+      ],
+      "models": [
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.033719900005963
+        },
+        {
+          "name": "E0-flow-motion",
+          "source": "live model",
+          "seconds": 0.0626505000400357
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 4.693478800007142,
+      "seeds": [
+        61017012,
+        61017013,
+        61017014,
+        61017015
+      ],
+      "models": [
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.009072299988475
+        },
+        {
+          "name": "E0-flow-motion",
+          "source": "live model",
+          "seconds": 0.06303129997104406
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 4.753071599989198,
+      "seeds": [
+        61017016,
+        61017017,
+        61017018,
+        61017019
+      ],
+      "models": [
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 3.972898499981966
+        },
+        {
+          "name": "E0-flow-motion",
+          "source": "live model",
+          "seconds": 0.06309090001741424
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 4.68809270003112,
+      "seeds": [
+        61017020,
+        61017021,
+        61017022,
+        61017023
+      ],
+      "models": [
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 3.9255670999991708
+        },
+        {
+          "name": "E0-flow-motion",
+          "source": "live model",
+          "seconds": 0.07134460000088438
+        }
+      ]
+    }
+  ],
+  "n": 5,
+  "median_seconds": 4.693478800007142,
+  "empirical_p95_seconds": 4.741434859996661,
+  "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
+  "browser_errors": [],
+  "date": "2026-10-17",
+  "hardware": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "quality_scope": "validation integration checkpoints; both variants fail reliable force/selection control"
+}

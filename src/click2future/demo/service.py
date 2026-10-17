@@ -19,6 +19,8 @@ from PIL import Image
 from click2future.data import load_rollout
 from click2future.sim import run_rollout
 
+from .diagnostics import pixel_diagnostics
+
 
 def png(array):
     stream = io.BytesIO()
@@ -277,6 +279,9 @@ class DemoService:
                         "seconds": time.perf_counter() - started,
                         "strip": filmstrip(videos),
                         "details": model.metadata,
+                        "pixel_tracks": pixel_diagnostics(
+                            videos, ref["instance_masks"][0], ref["object_valid"]
+                        ),
                     }
                 )
             if event.is_set():

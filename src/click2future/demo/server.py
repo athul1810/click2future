@@ -8,6 +8,7 @@ from importlib.resources import files
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from .bundle import load_bundle
 from .models import CheckpointModel
 from .service import DemoService
 
@@ -97,18 +98,27 @@ def make_server(service, *, port=8765):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dataset", type=Path, required=True)
+    parser.add_argument("--dataset", type=Path)
+    parser.add_argument("--bundle", type=Path, help="Verified local checkpoint handoff directory")
+    parser.add_argument("--models", nargs="+", help="One to four names in the bundle manifest")
     parser.add_argument("--samples", nargs="+", help="Explicit development/validation sample IDs")
     parser.add_argument("--split", default="validation", choices=("train", "validation"))
-    parser.add_argument(
-        "--checkpoint", action="append", required=True, help="DisplayName=local_checkpoint.pt"
-    )
+    parser.add_argument("--checkpoint", action="append", help="DisplayName=local_checkpoint.pt")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--sampling-steps", type=int, default=32)
     parser.add_argument("--force-limit", type=float, default=0.5)
     parser.add_argument("--cache", type=Path, default=Path("outputs/demo-cache"))
     parser.add_argument("--port", type=int, default=8765)
     args = parser.parse_args(argv)
+    bundled = {}
+    if args.bundle:
+        if args.dataset or args.checkpoint or not args.models:
+            parser.error("Use --bundle with --models, without --dataset/--checkpoint")
+        args.dataset, rows = load_bundle(args.bundle, args.models)
+        args.checkpoint = [row["name"] + "=" + str(row["path"]) for row in rows]
+        bundled = {row["name"]: row for row in rows}
+    elif not args.dataset or not args.checkpoint or args.models:
+        parser.error("Provide --dataset and --checkpoint, or --bundle and --models")
     if not 0 <= args.port <= 65535:
         parser.error("Invalid local port")
     import os
@@ -139,6 +149,13 @@ def main(argv=None):
             force_limit=args.force_limit,
             sampling_steps=args.sampling_steps,
         )
+        if name in bundled:
+            row = bundled[name]
+            if models[name].metadata["training_steps"] != row["evaluated_checkpoint_step"]:
+                parser.error("Checkpoint update count disagrees with bundle manifest")
+            models[name].metadata.update(
+                validation_quality=row["quality"], variant_notes=row["notes"]
+            )
     service = DemoService(
         args.dataset, samples, models, cache=args.cache, force_limit=args.force_limit
     )

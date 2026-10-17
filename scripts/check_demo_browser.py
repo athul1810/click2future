@@ -141,7 +141,9 @@ def main():
             )
         checks.append("real checkpoint finishes four seeded futures")
         checks.append("controls locked during generation")
-        assert page.locator(".future-card canvas").count() == 4
+        assert page.locator(".future-card canvas").count() == 4 * len(
+            page.evaluate("playback.models")
+        )
         assert page.evaluate("playback.seeds") == list(range(args.seed, args.seed + 4))
         assert page.evaluate("playback.frames") == 32
         checks.append("four videos retain ordered paired seeds and 32 frames")
@@ -150,6 +152,11 @@ def main():
         assert page.locator("#time").inner_text() == "3.88s"
         assert not page.evaluate("playing")
         checks.append("shared timeline scrubs all samples and pauses")
+        page.locator("#tracks").check()
+        assert page.locator(".track-count").count() == page.locator(".future-card").count()
+        assert page.evaluate("playback.models.every(model=>model.pixel_tracks)")
+        checks.append("pixel-track overlay and missing-count labels")
+        page.locator("#tracks").uncheck()
         page.locator("#timeline").focus()
         page.keyboard.press("Home")
         assert page.locator("#time").inner_text() == "0.00s"

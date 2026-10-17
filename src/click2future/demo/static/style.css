@@ -333,6 +333,20 @@ canvas {
   gap:12px;
   padding-top:22px
 }
+.track-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+.track-toggle input {
+  accent-color: var(--accent);
+}
+.future-card .track-count {
+  border-top: 1px solid var(--edge);
+  line-height: 1.5;
+  font-size: 9px;
+}
 .timeline button {
   height:30px;
   width:32px;
