@@ -26,7 +26,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Not started |
-| T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | Not started |
+| T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | In review |
 | T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | Not started |
 
@@ -312,13 +312,15 @@ Shared EMA inference API exports evaluator-ready uint8 videos with exact frame 0
 
 Prepare the two required PDFs using the course structure and the team's measured results.
 
-**Dependencies:** T01, T13. **Owner:** Unassigned. **Status:** Not started.
+**Dependencies:** T01, T13. **Owner:** Unassigned. **Status:** In progress.
 
-- [ ] Draft at least four pages using introduction, methods, experiments and analysis, and conclusion; follow docs/REPORT_OUTLINE.md.
+- [x] Draft at least four pages using introduction, methods, experiments and analysis, and conclusion; follow docs/REPORT_OUTLINE.md.
 - [ ] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
 - [ ] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
+
+A seven-page working draft now includes introduction, implemented methods, evaluation, simulator calibration, real E0/E3 diagnostic figures and a conclusion. Main matched comparisons, the validation/component studies and member-reviewed contributions remain open. The draft is not the final submission PDF. Source: `report/main.tex`. Build instructions: `report/README.md`.
 
 <a id="t19"></a>
 
