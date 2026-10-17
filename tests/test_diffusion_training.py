@@ -31,8 +31,9 @@ def dataset(tmp_path):
 
 
 @pytest.mark.parametrize("prediction_type", ["epsilon", "velocity"])
-def test_ddim_recovers_known_clean_signal_and_preserves_rng(prediction_type):
-    diffusion = Diffusion(20, prediction_type=prediction_type)
+@pytest.mark.parametrize("representation", ["rgb", "frame0_residual"])
+def test_ddim_recovers_known_clean_signal_and_preserves_rng(prediction_type, representation):
+    diffusion = Diffusion(20, prediction_type=prediction_type, representation=representation)
     condition = observable_condition(
         torch.zeros(1, 3, 8, 8), torch.ones(1, 1, 8, 8), torch.zeros(1, 2)
     )
@@ -49,7 +50,8 @@ def test_ddim_recovers_known_clean_signal_and_preserves_rng(prediction_type):
     oracle = Oracle().train()
     state = torch.get_rng_state().clone()
     sampled = diffusion.sample(oracle, condition, future_frames=3, sampling_steps=7, seed=42)
-    torch.testing.assert_close(sampled, torch.full_like(sampled, 0.25), atol=1e-6, rtol=0)
+    expected = diffusion.decode_future(torch.full_like(sampled, 0.25), condition).clamp(-1, 1)
+    torch.testing.assert_close(sampled, expected, atol=1e-6, rtol=0)
     assert torch.equal(state, torch.get_rng_state())
     assert oracle.training
 
@@ -98,6 +100,51 @@ def test_velocity_round_trip_stays_well_conditioned_at_low_signal():
     assert epsilon_error > 1000 * velocity_error
 
 
+def test_frame_zero_residual_round_trip_and_static_target():
+    generator = torch.Generator().manual_seed(41)
+    condition = observable_condition(
+        torch.rand((2, 3, 8, 8), generator=generator),
+        torch.ones(2, 1, 8, 8),
+        torch.zeros(2, 2),
+    )
+    future = torch.rand((2, 3, 5, 8, 8), generator=generator) * 2 - 1
+    future[0, :, 0] = -1
+    future[1, :, 0] = 1
+    diffusion = Diffusion(representation="frame0_residual")
+    residual = diffusion.encode_future(future, condition)
+    assert residual.min() >= -1 and residual.max() <= 1
+    torch.testing.assert_close(
+        diffusion.decode_future(residual, condition), future, atol=2e-7, rtol=0
+    )
+    static = condition.first_frame.unsqueeze(2).expand_as(future)
+    assert torch.count_nonzero(diffusion.encode_future(static, condition)) == 0
+    assert torch.equal(diffusion.decode_future(torch.zeros_like(future), condition), static)
+    identity = Diffusion()
+    assert identity.encode_future(future, condition) is future
+    assert identity.decode_future(future, condition) is future
+    with pytest.raises(ValueError, match="representation"):
+        TrainConfig(representation="motion_guess").validate()
+
+
+def test_residual_oracle_recovers_rgb_and_zero_residual_means_frame_copy():
+    diffusion = Diffusion(20, prediction_type="velocity", representation="frame0_residual")
+    first = torch.arange(192).reshape(1, 3, 8, 8).float() / 191
+    condition = observable_condition(first, torch.ones(1, 1, 8, 8), torch.zeros(1, 2))
+    # Future pixels include both ends of the RGB range and one unchanged frame.
+    future = torch.stack((condition.first_frame, -condition.first_frame), dim=2)
+    residual = diffusion.encode_future(future, condition)
+
+    class Oracle(nn.Module):
+        def forward(self, noisy, timesteps, **observables):
+            assert set(observables) == {"first_frame", "selected_mask", "force_xy"}
+            alpha = diffusion.alpha_bar[timesteps][:, None, None, None, None]
+            noise = (noisy - alpha.sqrt() * residual) / (1 - alpha).sqrt()
+            return DenoiserOutput(diffusion.training_target(residual, timesteps, noise))
+
+    result = diffusion.sample(Oracle(), condition, future_frames=2, sampling_steps=7, seed=2)
+    torch.testing.assert_close(result, future, atol=2e-6, rtol=0)
+
+
 def test_observable_boundary_ignores_oracle_fields_and_rejects_action_drift(dataset):
     trainer = Trainer(dataset, TrainConfig(base_channels=8))
     batch = load_batch(dataset, trainer.sample_ids[:1])
@@ -117,13 +164,18 @@ def test_observable_boundary_ignores_oracle_fields_and_rejects_action_drift(data
         observable_condition(torch.zeros(1, 3, 8, 8), torch.ones(1, 1, 8, 8), torch.ones(1, 2))
 
 
-def test_checkpoint_to_video_inference_preserves_frame_zero(dataset, tmp_path):
-    trainer = Trainer(dataset, TrainConfig(steps=2, base_channels=8, diffusion_steps=10))
+@pytest.mark.parametrize("representation", ["rgb", "frame0_residual"])
+def test_checkpoint_to_video_inference_preserves_frame_zero(dataset, tmp_path, representation):
+    trainer = Trainer(
+        dataset,
+        TrainConfig(steps=2, base_channels=8, diffusion_steps=10, representation=representation),
+    )
     trainer.train_step()
     checkpoint = tmp_path / "inference.pt"
     trainer.save(checkpoint)
     model, diffusion, state = load_generator(checkpoint)
     assert state["step"] == 1
+    assert diffusion.representation == representation
     batch = load_batch(dataset, trainer.sample_ids[:1])
     first = (batch["frames"][0, 0].transpose(1, 2, 0) * 255).round().astype(np.uint8)
     kwargs = dict(seeds=(17, 18), future_frames=3, sampling_steps=4)
@@ -228,10 +280,12 @@ def test_legacy_checkpoint_defaults_to_original_force_limit(dataset, tmp_path):
     trainer.save(checkpoint)
     state = torch.load(checkpoint, weights_only=True)
     del state["config"]["force_limit"]
+    del state["config"]["representation"]
     torch.save(state, checkpoint)
     trainer.resume(checkpoint)
-    _, _, loaded = load_generator(checkpoint)
+    _, diffusion, loaded = load_generator(checkpoint)
     assert TrainConfig(**loaded["config"]).force_limit == 0.5
+    assert diffusion.representation == "rgb"
 
 
 def test_recorded_source_change_cannot_be_called_exact_resume(dataset, tmp_path, monkeypatch):
@@ -249,8 +303,9 @@ def test_recorded_source_change_cannot_be_called_exact_resume(dataset, tmp_path,
 @pytest.mark.parametrize("auxiliary", [False, True])
 @pytest.mark.parametrize("prediction_type", ["epsilon", "velocity"])
 @pytest.mark.parametrize("foreground_weight", [1.0, 32.0])
+@pytest.mark.parametrize("representation", ["rgb", "frame0_residual"])
 def test_full_training_resume_matches_uninterrupted(
-    dataset, tmp_path, auxiliary, prediction_type, foreground_weight
+    dataset, tmp_path, auxiliary, prediction_type, foreground_weight, representation
 ):
     config = TrainConfig(
         steps=6,
@@ -260,6 +315,7 @@ def test_full_training_resume_matches_uninterrupted(
         prediction_type=prediction_type,
         foreground_weight=foreground_weight,
         foreground_margin=2 if foreground_weight > 1 else 0,
+        representation=representation,
     )
     uninterrupted = Trainer(dataset, config)
     records = []
@@ -303,6 +359,15 @@ def test_full_training_resume_matches_uninterrupted(
     changed_weight = Trainer(dataset, replace(config, foreground_weight=16.0))
     with pytest.raises(ValueError, match="config differs"):
         changed_weight.resume(checkpoint)
+    changed_representation = Trainer(
+        dataset,
+        replace(
+            config,
+            representation="rgb" if representation == "frame0_residual" else "frame0_residual",
+        ),
+    )
+    with pytest.raises(ValueError, match="config differs"):
+        changed_representation.resume(checkpoint)
     # Hash actual sample bytes, not merely a self-reported manifest identifier.
     sample = dataset / f"{resumed.sample_ids[0]}.npz"
     sample.write_bytes(sample.read_bytes() + b"changed")

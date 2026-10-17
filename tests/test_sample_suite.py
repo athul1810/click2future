@@ -127,6 +127,7 @@ def test_untrained_checkpoint_requires_explicit_fixture_opt_in(prepared, tmp_pat
         "dataset",
         "force_limit",
         "target",
+        "representation",
         "normalization",
         "duplicate",
         "loss_weight",
@@ -151,6 +152,8 @@ def test_incompatible_runs_fail_before_creating_outputs(prepared, tmp_path, muta
             state["config"]["force_limit"] = 0.01
         elif mutation == "target":
             state["config"]["prediction_type"] = "velocity"
+        elif mutation == "representation":
+            state["config"]["representation"] = "frame0_residual"
         elif mutation == "loss_weight":
             state["config"]["foreground_weight"] = 32.0
         elif mutation == "loss_margin":

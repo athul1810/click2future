@@ -69,6 +69,7 @@ def main(argv=None):
     record = {
         "training_step": state["step"],
         "prediction_type": diffusion.prediction_type,
+        "representation": diffusion.representation,
         "sample_id": sample_id,
         "seed": 100,
         "scope": "Training-scene sampler diagnostic; not model selection or held-out evidence",

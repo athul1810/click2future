@@ -43,6 +43,7 @@ class TrainConfig:
     seed: int = 7
     diffusion_steps: int = 1000
     prediction_type: str = "epsilon"
+    representation: str = "rgb"
     base_channels: int = 32
     conditioning: str = "spatial"
     auxiliary: bool = False
@@ -66,6 +67,8 @@ class TrainConfig:
             raise ValueError("diffusion_steps must be >= 2")
         if self.prediction_type not in {"epsilon", "velocity"}:
             raise ValueError("prediction_type must be epsilon or velocity")
+        if self.representation not in {"rgb", "frame0_residual"}:
+            raise ValueError("representation must be rgb or frame0_residual")
         if self.precision not in {"float32", "bfloat16"}:
             raise ValueError("precision must be float32 or bfloat16")
         if self.limit_train is not None and (
@@ -191,7 +194,10 @@ class Trainer:
             self.optimizer, T_max=config.steps, eta_min=config.learning_rate * 0.1
         )
         self.diffusion = Diffusion(
-            config.diffusion_steps, self.device, prediction_type=config.prediction_type
+            config.diffusion_steps,
+            self.device,
+            prediction_type=config.prediction_type,
+            representation=config.representation,
         )
         self.order_rng = torch.Generator().manual_seed(config.seed + 1)
         self.order = torch.randperm(len(self.sample_ids), generator=self.order_rng).tolist()
@@ -215,6 +221,7 @@ class Trainer:
         self.model.train()
         batch = load_batch(self.dataset, self._next_ids())
         clean, condition = training_inputs(batch, self.device, force_limit=self.config.force_limit)
+        clean = self.diffusion.encode_future(clean, condition)
         times = torch.randint(self.config.diffusion_steps, (len(clean),), device=self.device)
         noise = torch.randn_like(clean)
         noisy = self.diffusion.add_noise(clean, times, noise)
@@ -280,6 +287,7 @@ class Trainer:
             "foreground_weight": self.config.foreground_weight,
             "foreground_margin": self.config.foreground_margin,
             "prediction_type": self.config.prediction_type,
+            "representation": self.config.representation,
             "noise_loss": float(noise_loss.detach())
             if self.config.prediction_type == "epsilon"
             else None,
@@ -303,6 +311,7 @@ class Trainer:
             clean, condition = training_inputs(
                 batch, self.device, force_limit=self.config.force_limit
             )
+            clean = self.diffusion.encode_future(clean, condition)
             times = torch.full((len(clean),), self.config.diffusion_steps // 2, device=self.device)
             noise = torch.randn_like(clean)
             predicted = self.model(

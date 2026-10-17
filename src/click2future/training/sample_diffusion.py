@@ -35,7 +35,12 @@ def load_generator(checkpoint: Path, device="cpu"):
     model.eval()
     return (
         model,
-        Diffusion(config.diffusion_steps, device, prediction_type=config.prediction_type),
+        Diffusion(
+            config.diffusion_steps,
+            device,
+            prediction_type=config.prediction_type,
+            representation=config.representation,
+        ),
         state,
     )
 
@@ -125,6 +130,7 @@ def main(argv=None):
         "condition_sha256": hashlib.sha256(args.condition.read_bytes()).hexdigest(),
         "training_step": state["step"],
         "prediction_type": diffusion.prediction_type,
+        "representation": diffusion.representation,
         "force_limit": TrainConfig(**state["config"]).force_limit,
         "force_scale": 0.5,
         "weights": "ema",
