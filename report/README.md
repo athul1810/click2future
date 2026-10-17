@@ -20,6 +20,9 @@ simulator reference rows. Bibliography entries contain no external links.
 
 Figure and run hashes are recorded in `evidence.json`. The pilot uses one training
 clip and one validation condition. Four seeds are dependent samples; they are not
-four independent test scenes. Both methods fail the declared video-quality gate.
+four independent test scenes. Both uniform-loss methods shown here fail the declared
+video-quality gate. The later foreground/boundary follow-up is recorded in
+`docs/results/foreground-loss-checks.json`: CVAE passes the training-only gate but
+still fails validation. Incorporate that follow-up before final report export.
 Final E0/E2/E3 results, the validation study, component/generalization/uncertainty
 analysis and reviewed contribution descriptions remain open.

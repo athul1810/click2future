@@ -149,6 +149,24 @@ are immutable run settings and must match across compared methods. This follow-u
 tests the enlarged-outline failure of foreground-only CVAE training, without changing
 the model, seeds, step count, sampler or tracking thresholds.
 
+TC2 job 43199 passes the predeclared CVAE one-clip gate: 244/248 tracked future
+observations, selected-object ADE 0.00249 in normalized image coordinates, and
+posterior MAE 0.00392. All four selected-object trajectories are complete. Four
+nonselected observations fail, leaving zero fully complete all-object clips; those
+failures remain reported. CPU prior inference on the complete one-condition
+validation split still tracks 0/248 observations against each of its two hidden
+references. Sampling is identical across those references, whose future labels
+never enter inference. This verifies tiny overfit only. Full-data training and
+held-out method comparisons remain open.
+
+The matched E3 loss diagnostics still fail the same gate. EMA/32-step sampling
+tracks 109/248 observations with uniform loss and 124/248 with either weighted
+setting. The boundary setting has complete selected-object tracks and ADE 0.00348,
+but the nonselected object's palette mask remains fragmented. Those missing tracks
+remain failures. Both new TC2 jobs completed normally; together they used 0.3183
+allocated GPU-hours, including sampling and reporting. Configs, seeds, raw counts
+and sample strips are in [the diagnostic record](results/foreground-loss-checks.json).
+
 ## Sampling
 
 Use an ID from the dataset manifest; the example ID does not imply a particular split:
@@ -194,6 +212,8 @@ checks pass 322 tests; see `results/issue-work-checks.json`.
 The standalone `diffusion_objective` helper remains epsilon-only. The integrated
 diffusion trainer computes the selected epsilon/velocity target itself and applies
 the same auxiliary loss. Do not pass a velocity target to the epsilon helper.
+The standalone helper uses uniform pixel MSE; the optional foreground settings are
+handled by the integrated trainer.
 
 Use `with CaptureFinalHeads(model) as captured:` around each separate sampler call,
 then pass `captured.output` to head evaluation. This uses actual generated-sample

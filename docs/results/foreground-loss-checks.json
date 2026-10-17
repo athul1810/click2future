@@ -1,0 +1,358 @@
+{
+  "status": "measured_training_only_diagnostic",
+  "scope": "One fixed training clip; no held-out method ranking, generalization, calibrated uncertainty or successful physical action control claim",
+  "dataset": {
+    "schema": "dataset-0.1",
+    "seed": 226000,
+    "training_sample_id": "scene-00226000-variant-000",
+    "training_clips": 1,
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "frames": 32,
+    "fps": 8,
+    "manifest_sha256": "1b57ba14c573aec70bae15ac1671584240734dcdceb121166e11612707412916",
+    "foreground_fraction": 0.023618636592741934
+  },
+  "controls": {
+    "steps": 5000,
+    "sample_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "diffusion_report_weights": "EMA",
+    "diffusion_report_sampling_steps": 32,
+    "held_fixed_within_method": [
+      "model architecture",
+      "training initialization seed",
+      "training clip",
+      "optimizer and learning-rate policy",
+      "precision",
+      "training horizon",
+      "sampler and sample seeds",
+      "RGB tracker and quality thresholds"
+    ],
+    "training_loss_labels": "Future instance-mask union; margin variant also weights its two-pixel spatial neighbourhood. No inference inputs added.",
+    "settings_selection": "Foreground-only test followed low object quality under uniform loss. Two-pixel margin was chosen from the enlarged-outline failure on the training clip. No test scenes used."
+  },
+  "quality_gate": {
+    "cvae_posterior_mae_max": 0.02,
+    "prior_track_rate_min": 0.9,
+    "prior_selected_ade_max": 0.03125,
+    "missing_selected_track": "ADE remains null and the gate fails"
+  },
+  "methods": [
+    {
+      "method": "E0",
+      "training_seed": 0,
+      "records": [
+        {
+          "setting": "uniform",
+          "foreground_weight": 1.0,
+          "foreground_margin": 0,
+          "job": 43171,
+          "source_revision": "a7dc2f53087be2f7ff07eee792808f0f60dafda4",
+          "checkpoint_sha256": "87a46cfd24e5b13765665f3512b4d60afcfe86e15414e1f6add1bc511e0ec768",
+          "posterior_mae": 0.004776587709784508,
+          "quality_gate": false,
+          "tracked_future_observations": 168,
+          "expected_future_observations": 248,
+          "track_rate": 0.6774193548387096,
+          "complete_samples": 0,
+          "sample_count": 4,
+          "selected_ade": null,
+          "selected_ade_per_sample": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "tracker_reasons": {
+            "ok": 168,
+            "area_change": 74,
+            "fragmented_or_duplicate": 6
+          },
+          "uniform_mae": 0.003729586722329259,
+          "foreground_mae": 0.06771408021450043,
+          "background_mae": 0.002181803807616234
+        },
+        {
+          "setting": "foreground",
+          "foreground_weight": 32.0,
+          "foreground_margin": 0,
+          "job": 43197,
+          "source_revision": "cf642d204c4047ab22997b9b57431156bbd88521",
+          "operation_sha256": "e71c6830563e9163a3be77fe03f18bd8c0a9c5e5d1a04aa034f6f70259209813",
+          "checkpoint_sha256": "ea401e182e5df0de77bb9918432228da209e43d7c0b462b3182aface56a3e553",
+          "posterior_mae": 0.012446396052837372,
+          "tracked_future_observations": 156,
+          "expected_future_observations": 248,
+          "track_rate": 0.6290322580645161,
+          "complete_samples": 0,
+          "sample_count": 4,
+          "selected_ade": null,
+          "selected_ade_per_sample": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "tracker_reasons": {
+            "fragmented_or_duplicate": 8,
+            "ok": 156,
+            "area_change": 84
+          },
+          "uniform_mae": 0.011691762134432793,
+          "foreground_mae": 0.003656338667497039,
+          "background_mae": 0.011886140331625938,
+          "quality_gate": false
+        },
+        {
+          "setting": "boundary",
+          "foreground_weight": 32.0,
+          "foreground_margin": 2,
+          "job": 43199,
+          "source_revision": "cc6c8fd1e8c343b73c08a497c957fbf5f1eb6295",
+          "operation_sha256": "c137cf101b63f95cdf5cdf7b866b849e994bb56792d3c93bba263ec903b6e70b",
+          "checkpoint_sha256": "83b7287d05610b8a6a62fd9a7aea972bff8b28134c80b735066a5d18a18251fa",
+          "posterior_mae": 0.00392326433211565,
+          "tracked_future_observations": 244,
+          "expected_future_observations": 248,
+          "track_rate": 0.9838709677419355,
+          "complete_samples": 0,
+          "sample_count": 4,
+          "selected_ade": 0.002488161361861174,
+          "selected_ade_per_sample": [
+            0.0025343783600749407,
+            0.0024679688110158323,
+            0.0025356408809367897,
+            0.0024146573954171345
+          ],
+          "tracker_reasons": {
+            "ok": 244,
+            "fragmented_or_duplicate": 4
+          },
+          "uniform_mae": 0.0032003477681428194,
+          "foreground_mae": 0.022759221494197845,
+          "background_mae": 0.0027272189036011696,
+          "quality_gate": true
+        }
+      ]
+    },
+    {
+      "method": "E3",
+      "training_seed": 7,
+      "records": [
+        {
+          "setting": "uniform",
+          "foreground_weight": 1.0,
+          "foreground_margin": 0,
+          "job": 43168,
+          "source_revision": "a7dc2f53087be2f7ff07eee792808f0f60dafda4",
+          "checkpoint_sha256": "632cbd7937f3f54dbe00f19958f9ffb0249928b9e161d950694c5604e699f032",
+          "posterior_mae": null,
+          "quality_gate": false,
+          "tracked_future_observations": 109,
+          "expected_future_observations": 248,
+          "track_rate": 0.43951612903225806,
+          "complete_samples": 0,
+          "sample_count": 4,
+          "selected_ade": null,
+          "selected_ade_per_sample": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "tracker_reasons": {
+            "fragmented_or_duplicate": 24,
+            "area_change": 112,
+            "ok": 109,
+            "missing_or_ambiguous": 3
+          },
+          "uniform_mae": 0.02276991493999958,
+          "foreground_mae": 0.11195214092731476,
+          "background_mae": 0.020612599328160286
+        },
+        {
+          "setting": "foreground",
+          "foreground_weight": 32.0,
+          "foreground_margin": 0,
+          "job": 43197,
+          "source_revision": "cf642d204c4047ab22997b9b57431156bbd88521",
+          "operation_sha256": "e71c6830563e9163a3be77fe03f18bd8c0a9c5e5d1a04aa034f6f70259209813",
+          "checkpoint_sha256": "fc39c4de88e99a934b20cf73f1a2176b5dd5cfe5c2b5dd721bb56b440037f2ef",
+          "posterior_mae": null,
+          "tracked_future_observations": 124,
+          "expected_future_observations": 248,
+          "track_rate": 0.5,
+          "complete_samples": 0,
+          "sample_count": 4,
+          "selected_ade": 0.024453738300454782,
+          "selected_ade_per_sample": [
+            0.02297813089237952,
+            0.025217252101977356,
+            0.023989148537759526,
+            0.02563042166970272
+          ],
+          "tracker_reasons": {
+            "fragmented_or_duplicate": 124,
+            "ok": 124
+          },
+          "uniform_mae": 0.038396552205085754,
+          "foreground_mae": 0.04997177794575691,
+          "background_mae": 0.03811654821038246,
+          "quality_gate": false
+        },
+        {
+          "setting": "boundary",
+          "foreground_weight": 32.0,
+          "foreground_margin": 2,
+          "job": 43199,
+          "source_revision": "cc6c8fd1e8c343b73c08a497c957fbf5f1eb6295",
+          "operation_sha256": "c137cf101b63f95cdf5cdf7b866b849e994bb56792d3c93bba263ec903b6e70b",
+          "checkpoint_sha256": "415187137844432f17cddccfda39781b39cb165e2270ea3b5d0adceb73d461d2",
+          "posterior_mae": null,
+          "tracked_future_observations": 124,
+          "expected_future_observations": 248,
+          "track_rate": 0.5,
+          "complete_samples": 0,
+          "sample_count": 4,
+          "selected_ade": 0.0034779347704845484,
+          "selected_ade_per_sample": [
+            0.0036835587385101445,
+            0.003973744366860864,
+            0.0032432405712168755,
+            0.0030111954053503084
+          ],
+          "tracker_reasons": {
+            "fragmented_or_duplicate": 124,
+            "ok": 124
+          },
+          "uniform_mae": 0.04165470972657204,
+          "foreground_mae": 0.04438168182969093,
+          "background_mae": 0.04158874601125717,
+          "quality_gate": false
+        }
+      ]
+    }
+  ],
+  "additional_diffusion_samples": "Both weighted runs also retain raw weights and 128-step diagnostics in their private result files. EMA/32 is the predeclared common comparison here.",
+  "verification": {
+    "tests_passed": 391,
+    "subtests_passed": 4,
+    "skips": 0,
+    "fresh_source_zip_seconds": 68.55,
+    "archive_files": 140,
+    "archive_sha256": "9f6bde9c5a8032a66ee4fe484d520fd25bde6119f36f5f3c653dbfb6132c2f60",
+    "mask_gradient_and_precision_checks": "Analytic normalized loss/gradients, empty/full foreground, padded slots, no cross-frame dilation, FP16 reduction overflow, unchanged observable batch, strict weighted resume and incompatible evaluation settings",
+    "archive_bytes": 261819,
+    "fresh_install": "31 cached pinned packages; source smoke and 391 tests plus four subtests, no skips, from the final extracted ZIP"
+  },
+  "cvae_validation": {
+    "scope": "Complete one-condition validation split, four unique seeded prior videos scored against two hidden-physics references; diagnostic only",
+    "training_updates": 0,
+    "device": "cpu",
+    "checkpoint_sha256": "83b7287d05610b8a6a62fd9a7aea972bff8b28134c80b735066a5d18a18251fa",
+    "dataset_manifest_sha256": "1b57ba14c573aec70bae15ac1671584240734dcdceb121166e11612707412916",
+    "source_sha256": "c4aa1004fda52b12b16cc6e08d0f86fbf4442add1c4ac47e47064521c8a339f8",
+    "cpu_operation_seconds": 0.8942099170089932,
+    "sampling_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "records": [
+      {
+        "sample_id": "scene-00226008-variant-000",
+        "scene_group_id": "scene-00226008",
+        "condition_id": "scene-00226008-action-00226008",
+        "tracked_future_observations": 0,
+        "expected_future_observations": 248,
+        "track_rate": 0.0,
+        "complete_samples": 0,
+        "sample_count": 4,
+        "selected_ade": null,
+        "selected_ade_per_sample": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "tracker_reasons": {
+          "missing_or_ambiguous": 248
+        },
+        "uniform_mae": 0.03905359283089638,
+        "foreground_mae": 0.4381095767021179,
+        "background_mae": 0.023436738178133965,
+        "quality_gate": false
+      },
+      {
+        "sample_id": "scene-00226008-variant-001",
+        "scene_group_id": "scene-00226008",
+        "condition_id": "scene-00226008-action-00226008",
+        "tracked_future_observations": 0,
+        "expected_future_observations": 248,
+        "track_rate": 0.0,
+        "complete_samples": 0,
+        "sample_count": 4,
+        "selected_ade": null,
+        "selected_ade_per_sample": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "tracker_reasons": {
+          "missing_or_ambiguous": 248
+        },
+        "uniform_mae": 0.039013225585222244,
+        "foreground_mae": 0.4382731318473816,
+        "background_mae": 0.023435920476913452,
+        "quality_gate": false
+      }
+    ]
+  },
+  "figures": {
+    "docs/results/foreground-loss-cvae.png": "5561a16e098ec01a68b2548020794e07ce13549ea255b0c63a1a654ac0f1cf3d",
+    "docs/results/foreground-loss-diffusion.png": "2074569519980bc33df7e356ddce2d7931f1e6eb5c903df35e3179653033b082"
+  },
+  "jobs": [
+    {
+      "id": 43197,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "allocated_seconds": 585,
+      "source_revision": "cf642d204c4047ab22997b9b57431156bbd88521"
+    },
+    {
+      "id": 43199,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "allocated_seconds": 561,
+      "source_revision": "cc6c8fd1e8c343b73c08a497c957fbf5f1eb6295"
+    }
+  ],
+  "new_allocated_gpu_hours": 0.31833333333333336,
+  "backups": {
+    "foreground": {
+      "sha256": "62c31df56f29cef79f658aa3139144a5f6bdbfc8d065c6a3f040d73af9cd420a",
+      "remote_and_local_match": true
+    },
+    "boundary": {
+      "sha256": "79768a8929205df9d3e33459b8fe49493b0f867047259f4faf3513d88a06c425",
+      "remote_and_local_match": true
+    },
+    "location": "Ignored outputs/tc2-ops, excluded from Git and the course source ZIP"
+  },
+  "remaining": [
+    "Full-data CVAE training and validation checkpoint selection",
+    "Diffusion tiny-overfit quality gate",
+    "Frozen matched E0/E2/E3 experiments",
+    "Actual held-out action/uncertainty/OOD results"
+  ]
+}

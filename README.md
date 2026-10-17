@@ -11,9 +11,10 @@ pipeline are implemented. Evaluation covers trajectories, contacts, image qualit
 uncertainty and action controls. Contact timing remains an approximate proxy.
 
 CVAE and diffusion pilots now run on TC2, with complete saved-state continuation
-verified. Both still fail generated-video quality checks. Main trained comparisons,
+verified. Boundary-weighted CVAE training passes the one-clip overfit gate, while
+diffusion and held-out video quality remain unresolved. Main trained comparisons,
 held-out action/uncertainty results and the demo remain open. See the
-[task board](docs/TASKS.md), [GPU checks](docs/results/cvae-training-checks.json),
+[task board](docs/TASKS.md), [loss diagnostics](docs/results/foreground-loss-checks.json),
 [experiment protocol](docs/EXPERIMENT_PROTOCOL.md) and
 [working report draft](report/README.md).
 
@@ -164,7 +165,7 @@ The demo UI remains to be built. The [build plan](docs/BUILD_PLAN.md) records th
 - A: review the controlled/OOD data changes and freeze the main training corpus.
 - B: improve generated-video quality, then pass held-out action controls.
 - C: evaluate useful checkpoints, finish report analysis, and run E4 checks if budget allows.
-- Confirm the CVAE lead and improve prior-sample quality. Shrijeet owns demo integration.
+- Confirm the CVAE lead and run a full-data pilot after the passed one-clip check. Shrijeet owns demo integration.
 
 ## References
 
@@ -172,8 +173,11 @@ See [Research references](docs/REFERENCES.md) for the baselines, diffusion model
 
 ## Results
 
-Technical simulator, checkpoint and packaging checks pass. Real trained E0/E3
-checkpoints complete the evaluator, but both single-clip pilots fail the quality
-gate and have no complete tracked trajectories on the validation example. No
-method ranking is established. The [report draft](report/README.md) and
-[recorded checks](docs/results/trained-checkpoint-suite-checks.json) retain these failures.
+Technical simulator, checkpoint and packaging checks pass. The original uniform-loss
+E0/E3 checkpoints complete the evaluator but fail the quality gate. A later
+boundary-weighted CVAE reaches 244/248 tracked training observations and passes the
+tiny-overfit gate; its validation condition still has no tracked future objects.
+Diffusion remains below the tracking gate. No held-out method ranking is established.
+The [loss diagnostics](docs/results/foreground-loss-checks.json) retain all settings,
+failures and sample strips. The [report draft](report/README.md) currently describes
+the earlier uniform-loss runs and still needs the newer analysis.
