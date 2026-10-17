@@ -1,0 +1,139 @@
+{
+  "status": "quality_gate_failed",
+  "scope": "Training-only diagnostic, not a held-out method comparison",
+  "source_revision": "a7dc2f53087be2f7ff07eee792808f0f60dafda4",
+  "job": 43168,
+  "config": {
+    "steps": 5000,
+    "batch_size": 1,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "ema_decay": 0.995,
+    "seed": 7,
+    "diffusion_steps": 1000,
+    "prediction_type": "velocity",
+    "base_channels": 32,
+    "conditioning": "spatial",
+    "auxiliary": false,
+    "precision": "float32",
+    "limit_train": 1,
+    "checkpoint_every": 100,
+    "collision_positive_weight": 1.0,
+    "force_limit": 0.5
+  },
+  "operation_sha256": "0dbfcbd53b87a6e7fccbf1cc2eef3602679894e4a676eaa930faa291bbfbc179",
+  "training_sample_id": "scene-00226000-variant-000",
+  "same_training_clip_as_cvae": true,
+  "scope_change": "One deterministic clip and FP32 jointly isolate basic plumbing; this does not isolate a causal precision effect from previous four-clip pilots",
+  "quality_gate": {
+    "prior_track_rate_min": 0.9,
+    "prior_selected_ade_max": 0.03125
+  },
+  "training": {
+    "probe_training_prediction_mse_before": 0.8314296007156372,
+    "probe_training_prediction_mse_after": 0.005877707619220018,
+    "mean_step_seconds_excluding_first_10": 0.07578103667804467,
+    "peak_cuda_allocated_bytes": 876081152
+  },
+  "noise_level_reconstruction": [
+    {
+      "timestep": 0,
+      "alpha_bar": 0.9999586939811707,
+      "fp32_x0_mae": 0.0045488085597753525,
+      "fp32_object_mae": 0.005632808431982994,
+      "fp32_background_mae": 0.004522586241364479,
+      "bf16_x0_mae": 0.004548665136098862,
+      "oracle_x0_max_error": 1.1920928955078125e-07
+    },
+    {
+      "timestep": 10,
+      "alpha_bar": 0.9992789030075073,
+      "fp32_x0_mae": 0.010286163538694382,
+      "fp32_object_mae": 0.01886262558400631,
+      "fp32_background_mae": 0.010078699328005314,
+      "bf16_x0_mae": 0.010384655557572842,
+      "oracle_x0_max_error": 1.1920928955078125e-07
+    },
+    {
+      "timestep": 100,
+      "alpha_bar": 0.9715756773948669,
+      "fp32_x0_mae": 0.015964625403285027,
+      "fp32_object_mae": 0.04692770540714264,
+      "fp32_background_mae": 0.015215630643069744,
+      "bf16_x0_mae": 0.016002755612134933,
+      "oracle_x0_max_error": 2.384185791015625e-07
+    },
+    {
+      "timestep": 500,
+      "alpha_bar": 0.4922851622104645,
+      "fp32_x0_mae": 0.03870420530438423,
+      "fp32_object_mae": 0.09787488728761673,
+      "fp32_background_mae": 0.0372728668153286,
+      "bf16_x0_mae": 0.03873250260949135,
+      "oracle_x0_max_error": 3.5762786865234375e-07
+    },
+    {
+      "timestep": 900,
+      "alpha_bar": 0.023616109043359756,
+      "fp32_x0_mae": 0.025545114651322365,
+      "fp32_object_mae": 0.15082715451717377,
+      "fp32_background_mae": 0.022514546290040016,
+      "bf16_x0_mae": 0.025767095386981964,
+      "oracle_x0_max_error": 1.7881393432617188e-07
+    },
+    {
+      "timestep": 999,
+      "alpha_bar": 2.428766965323348e-09,
+      "fp32_x0_mae": 0.07026829570531845,
+      "fp32_object_mae": 0.1940930187702179,
+      "fp32_background_mae": 0.06727297604084015,
+      "bf16_x0_mae": 0.0701969638466835,
+      "oracle_x0_max_error": 5.960464477539063e-08
+    }
+  ],
+  "sampling": [
+    {
+      "weights": "model",
+      "sampling_steps": 32,
+      "sampling_seconds_four_seeds": 2.1149223651736975,
+      "tracked_future_observations": 106,
+      "expected_future_observations": 248,
+      "track_rate": 0.4274193548387097,
+      "selected_ade": null,
+      "quality_gate": false
+    },
+    {
+      "weights": "model",
+      "sampling_steps": 128,
+      "sampling_seconds_four_seeds": 8.41200873721391,
+      "tracked_future_observations": 95,
+      "expected_future_observations": 248,
+      "track_rate": 0.38306451612903225,
+      "selected_ade": null,
+      "quality_gate": false
+    },
+    {
+      "weights": "ema",
+      "sampling_steps": 32,
+      "sampling_seconds_four_seeds": 2.1115819849073887,
+      "tracked_future_observations": 109,
+      "expected_future_observations": 248,
+      "track_rate": 0.43951612903225806,
+      "selected_ade": null,
+      "quality_gate": false
+    },
+    {
+      "weights": "ema",
+      "sampling_steps": 128,
+      "sampling_seconds_four_seeds": 8.425463599152863,
+      "tracked_future_observations": 104,
+      "expected_future_observations": 248,
+      "track_rate": 0.41935483870967744,
+      "selected_ade": null,
+      "quality_gate": false
+    }
+  ],
+  "interpretation": "Training-only diagnostics. Neither raw nor EMA four-sample output passes the predeclared tracking/trajectory gate. The joint change to one clip and FP32 does not isolate a precision effect.",
+  "checkpoint_sha256": "632cbd7937f3f54dbe00f19958f9ffb0249928b9e161d950694c5604e699f032",
+  "result_sha256": "8c484090d22413801902078687de0098e1e08078564555c75575d174df3a5da9"
+}

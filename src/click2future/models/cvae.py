@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from itertools import product
 
 import torch
 from torch import Tensor, nn
@@ -21,6 +22,24 @@ class CVAEOutput:
 def _statistics(value):
     mean, logvar = value.float().chunk(2, dim=-1)
     return mean, logvar.clamp(-10, 5)
+
+
+def _adaptive_mean(value, output_shape):
+    """Use the adaptive-pooling bins without its nondeterministic CUDA backward.
+
+    Small 2x2 and 4x2x2 summaries need few reductions. Explicit slice means also
+    preserve overlapping bins when a future length is not divisible by four.
+    """
+    sizes = value.shape[-len(output_shape) :]
+    axes = tuple(range(-len(output_shape), 0))
+    cells = []
+    for indices in product(*(range(size) for size in output_shape)):
+        slices = tuple(
+            slice(index * size // count, ((index + 1) * size + count - 1) // count)
+            for index, size, count in zip(indices, sizes, output_shape, strict=True)
+        )
+        cells.append(value[(..., *slices)].mean(dim=axes))
+    return torch.stack(cells, dim=-1).reshape(*value.shape[: -len(output_shape)], *output_shape)
 
 
 class ConditionalVideoVAE(nn.Module):
@@ -115,7 +134,7 @@ class ConditionalVideoVAE(nn.Module):
         features = self.condition_encoder(
             torch.cat((first_frame, selected_mask.float(), fields), 1)
         )
-        summary = F.adaptive_avg_pool2d(features, (2, 2)).flatten(1)
+        summary = _adaptive_mean(features, (2, 2)).flatten(1)
         return features, summary
 
     def _decode(self, features, latent):
@@ -143,7 +162,7 @@ class ConditionalVideoVAE(nn.Module):
             or ((future < -1) | (future > 1)).any()
         ):
             raise ValueError("Future RGB must match [B,3,F,H,W] and lie in [-1,1]")
-        future_features = F.adaptive_avg_pool3d(self.future_encoder(future), (4, 2, 2)).flatten(1)
+        future_features = _adaptive_mean(self.future_encoder(future), (4, 2, 2)).flatten(1)
         mean, logvar = _statistics(self.posterior(torch.cat((condition, future_features), dim=1)))
         prior_mean, prior_logvar = _statistics(self.prior(condition))
         noise = torch.randn(mean.shape, device=mean.device, dtype=mean.dtype, generator=generator)
