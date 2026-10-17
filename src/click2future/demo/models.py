@@ -137,9 +137,9 @@ class CheckpointModel:
     @torch.inference_mode()
     def predict(self, first_frame, selected_mask, force_xy, *, seeds, future_frames, cancelled):
         if self.future_frames is not None and future_frames != self.future_frames:
-            raise ValueError("Scene length differs from the CVAE checkpoint")
+            raise ValueError("Scene length differs from the checkpoint")
         if self.resolution is not None and first_frame.shape[:2] != (self.resolution,) * 2:
-            raise ValueError("Scene resolution differs from the CVAE checkpoint")
+            raise ValueError("Scene resolution differs from the checkpoint")
         if self.kind == "trajectory_diffusion":
             from click2future.training.sample_trajectory import sample_trajectory_videos
 
@@ -150,6 +150,7 @@ class CheckpointModel:
                 force_xy,
                 seeds=seeds,
                 sampling_steps=self.sampling_steps,
+                force_limit=self.force_limit,
                 cancelled=cancelled,
             )
         videos = []

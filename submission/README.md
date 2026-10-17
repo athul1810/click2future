@@ -319,3 +319,29 @@ establishes interface functionality, not held-out quality or a final model ranki
 `MANIFEST.json` lists each included file and its SHA-256. The code ZIP is one of the
 three required submission files, alongside `group_07_report.pdf` and
 `group_07_contribution.pdf`.
+
+## supervised object-trajectory variant
+
+e5 is a separate pose-supervised trajectory diffusion model with rigid decoding
+of observed object pixels. its neural inputs remain the first image, selected
+mask and physical force. it requires exactly two separately visible objects,
+64px rgb and 32 frames. future positions and checked replay angles supervise
+training only; no simulator generates its inference-time motion.
+
+inside a tc2 slurm gpu allocation, using the matching generated frozen corpus:
+
+```sh
+python -m click2future.training.train_trajectory --dataset data/frozen --run-dir runs/trajectory --config configs/training/trajectory_pilot.json
+python -m click2future.evaluation.trajectory_pilot --dataset data/frozen --checkpoint runs/trajectory/best.pt --output outputs/trajectory-validation --device cuda --steps 16
+```
+
+the pilot evaluator accepts validation only and requires the image-metrics extra.
+model source hashes must match the checkpoint. this variant improves validation
+action response but still fails strict completeness/contact quality; it does not
+establish a sota result. weights, generated data and internal bundles are excluded.
+
+`submission/train_trajectory.sbatch` and `submission/evaluate_trajectory.sbatch`
+provide the tc2 job wrappers. set the required paths/revision listed at their top.
+the training wrapper uses `C2F_DATA_DIR`/`C2F_RUN_DIR`; evaluation uses the same
+data plus `C2F_TRAJECTORY_CHECKPOINT`/`C2F_TRAJECTORY_RESULTS`. use new output
+directories and keep attempted runs. install dependencies before submitting.

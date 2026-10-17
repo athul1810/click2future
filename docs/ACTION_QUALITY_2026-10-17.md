@@ -45,7 +45,7 @@ controls that the current pixel and dense-flow models fail.
 
 ## next model and gates
 
-Proposed separate supervised variant: infer two object regions from frame-0 RGB
+Implemented separate supervised variant: infer two object regions from frame-0 RGB
 and the selected mask, condition a compact trajectory diffusion model on their
 visible geometry and the routed force, then render sampled rigid motions using the
 observed object pixels. Hidden mass/friction/restitution remain unavailable.
@@ -75,3 +75,7 @@ propagation and hidden-physics uncertainty still have to be learned and measured
 This changes model representation and uses pose supervision. It must be named as
 an additional method, not silently substituted for E2/E3 or called a pure spatial
 conditioning ablation. Ananya retains CVAE ownership and shares evaluation with Athul.
+
+the first trained e5 pilot and its remaining contact failures are recorded in
+[trajectory_pilot.md](TRAJECTORY_PILOT.md). the original model results and thresholds
+stay unchanged.

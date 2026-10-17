@@ -57,8 +57,18 @@ def sample_trajectory_videos(
     *,
     seeds=(0, 1, 2, 3),
     sampling_steps=16,
+    force_limit=None,
     cancelled=None,
 ):
+    if (
+        not seeds
+        or len(set(seeds)) != len(seeds)
+        or any(isinstance(seed, bool) or not isinstance(seed, int) or seed < 0 for seed in seeds)
+        or isinstance(sampling_steps, bool)
+        or not isinstance(sampling_steps, int)
+        or not 2 <= sampling_steps <= 128
+    ):
+        raise ValueError("Use distinct nonnegative integer seeds and 2-128 sampling steps")
     first_frame = np.asarray(first_frame)
     if first_frame.shape != (64, 64, 3) or first_frame.dtype != np.uint8:
         raise ValueError("This trajectory checkpoint requires native 64px uint8 RGB")
@@ -67,7 +77,10 @@ def sample_trajectory_videos(
     force = torch.as_tensor(np.array(force_xy, dtype=np.float32, copy=True), device=device)[None]
     frame = torch.from_numpy(first_frame.copy()).to(device).permute(2, 0, 1)[None].float() / 255
     mask = torch.as_tensor(np.array(selected_mask, copy=True), device=device)[None, None]
-    observable_condition(frame, mask, force, force_limit=model.force_limit)
+    force_limit = model.force_limit if force_limit is None else force_limit
+    if not 0 < force_limit <= model.force_limit:
+        raise ValueError("The requested force bound exceeds the checkpoint's range")
+    observable_condition(frame, mask, force, force_limit=force_limit)
     features = torch.from_numpy(obs.features[None]).to(device)
     videos = []
     for seed in seeds:

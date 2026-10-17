@@ -1,6 +1,7 @@
 """Frozen validation/action checks for the separate pose-supervised E5 variant."""
 
 import argparse
+import importlib
 import json
 import os
 import time
@@ -24,9 +25,9 @@ PROJECT = Path(__file__).parents[3]
 def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16):
     plan = read_plan(plan_path)
     checkpoint, output = Path(checkpoint).resolve(), Path(output)
-    model, state = load_trajectory(checkpoint, device)
     if plan["split"] not in {"validation", "validation-selected-object"}:
         raise ValueError("This bounded pilot may not evaluate final-test splits")
+    model, state = load_trajectory(checkpoint, device)
     provenance = state["provenance"]
     if (
         provenance["dataset_manifest_sha256"] != plan["input_sha256"]["dataset_manifest"]
@@ -117,6 +118,10 @@ def main(argv=None):
         require_tc2()
     if args.output.exists():
         parser.error("Keep attempted evaluations; use a fresh output directory")
+    try:
+        importlib.import_module("skimage.metrics")
+    except ImportError as error:
+        raise RuntimeError("Install the image-metrics extra before this SSIM pilot") from error
     torch.set_num_threads(4)
     torch.use_deterministic_algorithms(True)
     args.output.mkdir(parents=True)

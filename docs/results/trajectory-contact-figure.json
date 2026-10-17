@@ -1,0 +1,27 @@
+{
+  "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+  "frames": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    31
+  ],
+  "fps": 8,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "scope": "single validation contact failure; one reference is not the complete hidden-physics ensemble",
+  "sha256": {
+    "figure": "3d760a0a0ee5c115311e5d83a937b8e6794c9b97c0689a976ad27a28b302aca5",
+    "plot_source": "c7b28634fa1a1189a3b61125582a4a6d52d03baba8567453c1ae4c72b5331821",
+    "generated_video": "1ea457d1ec366ef713992591637a6c80d5103df0b25f9ac1ab17e2e7ffe94f29",
+    "reference": "20ecc329c9b57eed81effb7dc546931a961111785a487f6844384545101bd8c2"
+  }
+}

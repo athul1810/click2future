@@ -189,6 +189,21 @@ def test_model_runs_require_checkpoint_provenance(prepared, tmp_path):
         run_suite(plan_path, prediction_path, tmp_path / "no-checkpoint")
 
 
+def test_e5_keeps_generated_video_provenance_and_shared_metrics(prepared, tmp_path):
+    plan_path, prediction_path, _, predictions = prepared
+    predictions["source"] = "generated_video"
+    checkpoint = tmp_path / "unit-fixture.pt"
+    checkpoint.write_bytes(b"unit fixture; supplied video is a simulator control")
+    run = predictions["runs"][0]
+    run.update(method="E5", training_seed=19, checkpoint=checkpoint.name)
+    predictions["runs"] = [run]
+    prediction_path.write_text(json.dumps(predictions))
+    report = run_suite(plan_path, prediction_path, tmp_path / "e5-unit", bootstrap=100)
+    assert report["source"] == "video_tracking"
+    assert report["methods"][0]["method"] == "E5"
+    assert report["methods"][0]["metrics"]["image.ssim"]["estimate"] == pytest.approx(1)
+
+
 def test_changed_evaluator_code_invalidates_the_plan(prepared, tmp_path, monkeypatch):
     from click2future.evaluation import suite
 

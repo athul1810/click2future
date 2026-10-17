@@ -124,3 +124,20 @@ py -3.12 -m uv run --no-project --with playwright python scripts/benchmark_demo_
 This includes sampling, tracking, reference rendering, PNG transfer and the first
 painted browser canvas. It rejects cached requests. Startup/checkpoint loading
 are excluded; the reported empirical p95 is a small-sample estimate.
+
+## supervised trajectory checkpoint
+
+e5 uses the same observable inputs and public offline sampler. it adds future-pose
+supervision during training and a rigid observed-pixel renderer. it is a separate
+method, not a drop-in e3 result. see [the measured pilot](../docs/TRAJECTORY_PILOT.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server --dataset outputs/pilot-handoff/presets --checkpoint E5-trajectory=outputs/trajectory-handoff/best.pt --device cuda --trajectory-steps 16
+```
+
+or use the new verified e5 bundle with `--bundle` and `--models E5-trajectory`.
+`--trajectory-steps` controls edm heun steps; the existing `--sampling-steps`
+continues to control pixel ddâ€‹â€‹im sampling. both enter the replay identity.
+the checkpoint requires two separately visible objects, native 64px rgb and the
+matching model source hash. all current quality limitations remain visible in the
+bundle metadata and pixel-track counts.
