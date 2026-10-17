@@ -60,6 +60,27 @@ def test_corrupt_or_ambiguous_objects_are_not_silently_tracked(failure):
     assert not result.masks[1, 0].any()
 
 
+def test_isolated_specks_do_not_reject_a_visible_object():
+    frames, masks = rectangles([[(2, 2), (22, 22)]] * 2)
+    clean = track_video(frames, masks[0], np.ones(2, bool))
+    # Scattered single pixels in the object's colour, like background noise near its palette.
+    for y, x in [(14, 0), (14, 4), (0, 14), (4, 18), (30, 9), (18, 30), (9, 30), (31, 31)]:
+        frames[1, y, x] = [220, 30, 30]
+    result = track_video(frames, masks[0], np.ones(2, bool))
+    assert result.tracked.all()
+    np.testing.assert_array_equal(result.positions, clean.positions)
+    assert not result.masks[1, 0, 14, 0]
+
+
+def test_fragment_at_least_min_pixels_is_still_rejected():
+    frames, masks = rectangles([[(2, 2), (22, 22)]] * 2)
+    # Six pixels is above min_pixels and leaves the main piece below dominant_fraction.
+    frames[1, 12:14, 12:15] = [220, 30, 30]
+    result = track_video(frames, masks[0], np.ones(2, bool))
+    assert not result.tracked[1, 0]
+    assert result.reasons[1, 0] == "fragmented_or_duplicate"
+
+
 def test_padding_is_ignored():
     frames, masks = rectangles([[(2, 2), (22, 22)]])
     initial = np.concatenate([masks[0], np.zeros((1, 32, 32), bool)])

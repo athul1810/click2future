@@ -145,7 +145,8 @@ extraction. All compared models must use the same initialization.
 
 Objects are matched to their frame-0 colours and separated into connected components.
 Similar colours, disappearance, fragmentation, and large area changes produce missing
-observations. Partial occlusion can still bias accepted centres. This baseline supports
+observations. Specks smaller than `min_pixels` are ignored rather than counted as
+fragments; see [background noise sensitivity](#background-noise-sensitivity). Partial occlusion can still bias accepted centres. This baseline supports
 solid colours; textures and generated-video artefacts need separate validation.
 
 The current contact estimator combines pixel proximity with opposing velocity changes
@@ -156,6 +157,52 @@ This is offline evaluation:
 it uses future RGB context, but no future oracle labels. The initial velocity is assumed
 zero under the simulator contract. The returned `state` is pixel proximity, not confirmed
 physical contact. Close repeated events, small impulses, and wall interactions remain hard.
+
+## Background noise sensitivity
+
+Tracker `palette-components-1` rejected an object as fragmented when less than 85% of
+its colour-matched pixels formed one piece. Background noise near an object's colour
+created scattered matching pixels, so visible objects were lost. The diffusion samples
+in #37 and #39 showed this pattern: the nonselected object stayed visible, but every
+observation of it failed.
+
+`palette-components-2` ignores candidate pieces smaller than `min_pixels` (4) in that
+check. The tracker already refuses to accept anything that small as an object, so it
+no longer counts as a fragment or duplicate either. Larger pieces still count. No
+setting changed, and the rule was fixed on reference controls before any model output
+was re-scored.
+
+Background-only Gaussian noise, with object pixels unchanged and noise seeds 0-3:
+
+| Reference corpus | Noise std (uint8) | Version 1 tracked | Version 2 tracked |
+|---|---:|---:|---:|
+| Calibration, 24 clips | 24 | 5,666/5,952 | 5,952/5,952 |
+| Held-out check, 24 clips | 8 | 5,594/5,952 | 5,952/5,952 |
+| Held-out check, 24 clips | 16 | 5,166/5,952 | 5,704/5,952 |
+| One-clip diagnostic corpus, 20 clips | 16 | 4,472/4,960 | 4,960/4,960 |
+
+All stray pieces in the calibration corpus were 1-3 pixels. The remaining held-out
+failures are one object whose colour is 25.2 units from a background colour; there,
+noise forms pieces of 4 or more pixels. Accepted centres moved by at most 0.32 pixels.
+
+Clean renders are unchanged: 200 plain clips and 332 dataset-0.3 clips, including
+textures, give identical tracks and positions under both versions. Earlier simulator
+calibration records therefore still apply. On the held-out corpus, 48 pasted duplicate
+objects and 48 removed objects stay untracked, with and without noise.
+
+Re-scoring the saved #37 training-clip samples changes the missing counts, not the
+selected-object errors:
+
+| Saved samples | Version 1 tracked | Version 2 tracked | Complete all-object clips (v1 / v2) |
+|---|---:|---:|---:|
+| Boundary-loss CVAE | 244/248 | 248/248 | 0/4 / 4/4 |
+| Boundary-loss diffusion, EMA, 32 steps | 124/248 | 247/248 | 0/4 / 3/4 |
+| Boundary-loss CVAE, validation condition | 0/248 | 0/248 | 0/4 / 0/4 |
+
+Do not mix version 1 and version 2 reports; aggregation already rejects different
+extractor versions. Earlier result files keep their recorded version. Gaussian noise is
+a simple control, so inspect generated samples as well. Commands, hashes and all noise
+levels are in [the calibration record](results/tracker-noise-calibration.json).
 
 ## Simulator extraction measurements
 

@@ -10,7 +10,7 @@ from dataclasses import asdict, dataclass
 
 import numpy as np
 
-TRACKER_VERSION = "palette-components-1"
+TRACKER_VERSION = "palette-components-2"
 
 
 @dataclass(frozen=True)
@@ -48,12 +48,16 @@ class Tracks:
     reasons: np.ndarray  # [T,N], explicit failure categories
 
 
-def _largest_component(mask: np.ndarray) -> tuple[np.ndarray, int, int]:
-    """Find 8-connected components; return the largest, its area, and total area."""
+def _largest_component(mask: np.ndarray, min_pixels: int) -> tuple[np.ndarray, int, int]:
+    """Find 8-connected components; return the largest, its area, and counted area.
+
+    Specks smaller than min_pixels cannot be tracked as an object, so they do not
+    count as fragments or duplicates either. Larger pieces still do.
+    """
     height, width = mask.shape
     remaining = mask.copy()
     largest = []
-    total = int(mask.sum())
+    total = 0
     for y, x in zip(*np.nonzero(mask), strict=True):
         if not remaining[y, x]:
             continue
@@ -68,6 +72,8 @@ def _largest_component(mask: np.ndarray) -> tuple[np.ndarray, int, int]:
                     if remaining[ny, nx]:
                         remaining[ny, nx] = False
                         stack.append((ny, nx))
+        if len(component) >= min_pixels:
+            total += len(component)
         if len(component) > len(largest):
             largest = component
     result = np.zeros_like(mask)
@@ -82,6 +88,8 @@ def track_video(frames, initial_masks, object_valid, config: TrackerConfig | Non
 
     This baseline is limited to solid colours. Similar colours, fragmentation,
     disappearing objects, and large area changes cause abstention, not fabricated tracks.
+    Isolated specks below min_pixels, such as background noise near an object colour,
+    are ignored rather than treated as fragments.
     Frame-0 masks align evaluation identities only; they are not model conditioning.
     """
     config = config or TrackerConfig()
@@ -131,7 +139,7 @@ def track_video(frames, initial_masks, object_valid, config: TrackerConfig | Non
         )
         for obj in np.flatnonzero(valid):
             candidates = (best == obj) & confident
-            mask, area, total = _largest_component(candidates)
+            mask, area, total = _largest_component(candidates, config.min_pixels)
             reason = "ok"
             if area < config.min_pixels:
                 reason = "missing_or_ambiguous"
