@@ -345,3 +345,28 @@ provide the tc2 job wrappers. set the required paths/revision listed at their to
 the training wrapper uses `C2F_DATA_DIR`/`C2F_RUN_DIR`; evaluation uses the same
 data plus `C2F_TRAJECTORY_CHECKPOINT`/`C2F_TRAJECTORY_RESULTS`. use new output
 directories and keep attempted runs. install dependencies before submitting.
+
+## Contact and uncertainty audits
+
+After the E5 validation run, replay its exact checkpoint and seeds inside TC2:
+
+```sh
+python -m click2future.evaluation.trajectory_audit --plan outputs/trajectory-validation/plan.json --predictions outputs/trajectory-validation/validation-samples/predictions.json --dataset data/frozen --checkpoint runs/trajectory/best.pt --output outputs/geometry-audit --device cuda
+```
+
+`submission/audit_trajectory.sbatch` declares a five-minute GPU allocation and
+the required paths. Every saved RGB pixel must match before pose geometry is
+scored. Oracle-motion renders calibrate the diagnostic only; they are never
+model predictions. Raw overlap and approximate boundary counts are not accepted
+physical-validity scores.
+
+The CPU report audit retains all action families, null coverage and late drift:
+
+```sh
+python -m click2future.evaluation.uncertainty_strata --comparison outputs/trajectory-validation/validation-metrics/comparison.json --plan outputs/trajectory-validation/plan.json --predictions outputs/trajectory-validation/validation-samples/predictions.json --dataset data/frozen --checkpoint runs/trajectory/best.pt --output outputs/uncertainty-audit.json
+```
+
+The full-horizon stationary check supplements the unchanged half-second control.
+Use fresh output paths. These commands measure failures rather than correct
+sampled motion. Trained weights, data, raw pose arrays and measured working
+artifacts remain outside this source ZIP.

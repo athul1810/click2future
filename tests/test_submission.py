@@ -52,6 +52,7 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "submission/evaluate_pilot.sbatch" in names
         assert "submission/train_trajectory.sbatch" in names
         assert "submission/evaluate_trajectory.sbatch" in names
+        assert "submission/audit_trajectory.sbatch" in names
         assert "src/click2future/models/object_motion.py" in names
         assert "src/click2future/training/sample_trajectory.py" in names
         assert "src/click2future/evaluation/trajectory_pilot.py" in names

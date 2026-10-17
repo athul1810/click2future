@@ -250,7 +250,7 @@
       3,
       4
     ],
-    "progress": "Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up jobs 42917 (10000-step epsilon) and 42920 (2000-step velocity) completed. Longer epsilon still failed tracking; velocity reduced visible noise but recovered only 1-7/62 observations. Tiny-overfit remains open. Next isolate a deterministic single clip, noise-level reconstruction and precision. Evidence: docs/results/diffusion_debug_2026-10-16.json. A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json. Candidate tracker-v2 update: the saved #37 boundary-loss EMA/32-step RGB spatial diagnostic tracks 247/248 observations, with all four selected tracks complete and selected ADE 0.00348. This passes the original selected-object training gate under v2. Version 2 is still awaiting Ananya's calibration review; the shared acceptance box stays open until that review. Shrijeet's separate #39/#41 v2 rescore is reported in the PR #42 discussion; its structured v2 reports/video hashes are still needed. Preserve all historical v1 scores. The multi-scene E2/E3 validation failures remain separate and unresolved."
+    "progress": "Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up jobs 42917 (10000-step epsilon) and 42920 (2000-step velocity) completed. Longer epsilon still failed tracking; velocity reduced visible noise but recovered only 1-7/62 observations. Tiny-overfit remains open. Next isolate a deterministic single clip, noise-level reconstruction and precision. Evidence: docs/results/diffusion_debug_2026-10-16.json. A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json. Candidate tracker-v2 update: the saved #37 boundary-loss EMA/32-step RGB spatial diagnostic tracks 247/248 observations, with all four selected tracks complete and selected ADE 0.00348. This passes the original selected-object training gate under v2. Version 2 is still awaiting Ananya's calibration review; the shared acceptance box stays open until that review. Shrijeet's separate #39/#41 structured v2 rescore and video hashes are now recorded in results/diffusion-tracker-v2-checks.json and were reviewed in PR #45. Preserve all historical v1 scores. The multi-scene E2/E3 validation failures remain separate and unresolved."
   },
   {
     "id": "T11",
@@ -395,15 +395,16 @@
       "Present quality/adherence alongside diversity and clearly label single-reference metrics."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In progress",
+    "status": "In review",
     "issue_url": "https://github.com/athul1810/click2future/issues/16",
-    "progress": "Actual K=4 ensembles now cover all 24 validation conditions and all 84 hidden-physics references. Zero/reversed-force and changed-selection controls are measured. The original E0/E2/E3/E4 runs have no complete selected tracks; the unsupervised flow CVAE has complete eligible pairs but all are stationary. The displacement-supervised flow follow-up passes only 1/16 reversal pairs and 0/16 selection pairs despite 96.86 percent tracking. Trajectory spread/coverage remain null when required tracks are missing. Quality and action failures are shown with diversity diagnostics; meaningful hidden-physics uncertainty is not established. Evidence: results/multiscene-validation-checks.json and MULTISCENE_PILOT.md. e5 now measures 5895/5952 tracked observations, 14/16 reversal and 16/16 changed-selection pairs on four validation scenes. strict completeness/contact quality still fails; reference-force limitations and undefined coverage stay explicit. see results/trajectory-pilot-validation.json.",
+    "progress": "The validation measurement work is complete and ready for review. E5 is assessed against all 84 hidden-physics references across all 24 conditions. Six action strata retain spread, reference coverage, collision-frequency variation, missing counts and scene intervals. Pixel-exact pose replay finds geometric penetration above one native pixel in 22/96 generated clips versus 0/84 oracle controls. Full-horizon zero-force drift is 16/16 versus 0/16 static copies; the original half-second 0/16 result is retained. Boundary calibration remains limited and candidate tracker v2 still needs independent review. These negative results distinguish model diversity from useful physical uncertainty. Source: CONTACT_UNCERTAINTY_AUDIT.md; results/contact-uncertainty-audit.json. Model improvements and final ID/OOD comparisons remain in T13-T15/T17.",
     "completed_acceptance": [
       0,
+      1,
       2,
       3
     ],
-    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
+    "evidence": "docs/CONTACT_UNCERTAINTY_AUDIT.md; docs/results/contact-uncertainty-audit.json; report/main.tex."
   },
   {
     "id": "T17",
@@ -457,7 +458,7 @@
       1,
       2
     ],
-    "progress": "The eight-page working draft includes the implemented methods, four-method validation table, LPIPS intervals, E4 head-versus-RGB results, the actual 16/32/64-step study, flow-decoder failure analysis and a generated sample figure. Negative results and reserved tests remain explicit. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.",
+    "progress": "The twelve-page working draft adds E5 methods, contact/uncertainty tables, full-horizon zero-force failure and a fixed four-seed contact figure to the earlier four-method comparison, LPIPS intervals, E4 heads, sampler study and CVAE follow-ups. Every page is rendered and checked, with no external URLs or hyperlink annotations. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.",
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {

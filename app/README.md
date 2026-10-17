@@ -131,6 +131,10 @@ e5 uses the same observable inputs and public offline sampler. it adds future-po
 supervision during training and a rigid observed-pixel renderer. it is a separate
 method, not a drop-in e3 result. see [the measured pilot](../docs/TRAJECTORY_PILOT.md).
 
+The later [physics audit](../docs/CONTACT_UNCERTAINTY_AUDIT.md) finds contact
+penetration and late zero-force drift despite improved initial action response.
+The checkpoint remains experimental; its four futures are not calibrated outcomes.
+
 ```powershell
 .\.venv\Scripts\python.exe -m click2future.demo.server --dataset outputs/pilot-handoff/presets --checkpoint E5-trajectory=outputs/trajectory-handoff/best.pt --device cuda --trajectory-steps 16
 ```

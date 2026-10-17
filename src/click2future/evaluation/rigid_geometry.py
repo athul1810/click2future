@@ -181,6 +181,7 @@ def geometry_diagnostics(observation, motions):
             "Rasterized silhouette overlap is not continuous rigid-body penetration depth.",
             "Rotated pixel-centre boundary tests have rasterization bias; compare oracle control.",
             "No momentum, force law or contact timing is certified by these diagnostics.",
-            "Convex pixel-centre hulls approximate visible convex shapes; one-pixel tolerance is an engineering diagnostic, not a physics certificate.",
+            "Convex pixel-centre hulls approximate visible convex shapes; one-pixel tolerance "
+            "is an engineering diagnostic, not a physics certificate.",
         ],
     }

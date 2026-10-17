@@ -16,7 +16,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-We study whether a compact generative video model can predict several physical futures while following an explicit object selection and force. A procedural tabletop simulator provides initial images, action inputs, trajectories and contact labels. The implemented methods comprise a conditional video variational autoencoder and a small pixel diffusion model with numeric or spatial action conditioning. Evaluation separates image appearance, tracked motion, collisions and ensemble uncertainty. We train E0, E2, E3 and E4 on 336 synthetic clips and evaluate 24 validation conditions from four held-out scenes. None produces complete tracked trajectories. A flow-decoder CVAE improves object visibility but remains stationary under force controls. A fixed-checkpoint 16/32/64-step DDIM study also fails the video-quality gate. These negative results expose the limits of the current models and appearance metrics; they do not establish a successful learned physical model or a final test-set ranking.
+We study whether a compact generative video model can predict several physical futures while following an explicit object selection and force. A procedural tabletop simulator provides initial images, action inputs, trajectories and contact labels. The implemented methods comprise a conditional video variational autoencoder and a small pixel diffusion model with numeric or spatial action conditioning. Evaluation separates image appearance, tracked motion, collisions and ensemble uncertainty. We train E0, E2, E3 and E4 on 336 synthetic clips and evaluate 24 validation conditions from four held-out scenes. None produces complete tracked trajectories. A flow-decoder CVAE improves object visibility but remains stationary under force controls. A fixed-checkpoint 16/32/64-step DDIM study also fails the video-quality gate. A separate pose-supervised trajectory diffusion model (E5) improves short-window force and selection response, but 22 of 96 clips show geometric penetration above one native pixel. All 16 zero-force samples drift over the full horizon. These results expose limits of appearance metrics and short-window controls; they do not establish calibrated physical uncertainty or a final test-set ranking.
 \end{abstract}
 
 \section{Introduction}
@@ -72,6 +72,15 @@ Inference uses EMA weights and deterministic DDIM updates with private seed gene
 E4 adds trajectory and contact heads to denoiser features. Training targets use a canonical frame-zero object order and masks for valid objects and pairs. Position estimates use spatial heatmap moments; contact outputs are pair logits. Trajectory and contact losses are applied according to the configured timestep gate and weights. Those settings remain starting values until validated.
 
 The head outputs are additional predictions, not inference conditioning. Auxiliary trajectories can look accurate even when generated RGB is poor. Consequently, head scores are exported separately from trajectories and contacts extracted from the generated video. A comparison of E3 and E4 must assess decoded-video behavior as well as the supervised heads.
+
+\subsection{Supervised object-trajectory diffusion}
+E5 separates stochastic motion from observed appearance. Two separately visible objects are extracted using frame-zero RGB and the selected mask. Canonical centroid order is independent of the click. Each object receives visible geometry and its local force, routed through the selected-mask indicator. A four-block transformer of width 128 predicts 31 future rigid poses per object, using 845,828 parameters. Its motion coordinates are
+\[
+ z_{t,i}=\left[\Delta x/0.5,\ \Delta y/0.5,\ \sin(\Delta\theta),\ (\cos(\Delta\theta)-1)/2\right].
+\]
+EDM preconditioning and weighted denoising~\cite{karras} are combined with a temporal error-difference penalty. Sampling uses 16 rho-7 Heun steps, 31 network evaluations per future and private seeds. An observed-pixel renderer translates and rotates the original object sprites; it does not apply a physics solver, reject samples or correct contacts.
+
+Future positions and checked replay angles supervise training only. Angular-label replay must match every saved trajectory within $10^{-6}$. Train-only square rotations and reflections transform images, masks, forces and motion consistently. Mass, friction, restitution and future labels remain unavailable at inference. Extra pose supervision and the renderer change the method, so E5 is an additional model rather than a conditioning-only E2/E3 ablation. Its interface is limited to two separately visible rigid objects and the frozen synthetic appearance domain.
 
 \section{Experiments and analysis}
 \subsection{Frozen evaluation and failure handling}
@@ -161,13 +170,79 @@ This flow model tracks 5,654/5,952 observations (94.99 percent), with 80/96 comp
 \label{fig:multiscene}
 \end{figure}
 \clearpage
+\subsection{Trajectory model and contact audit}
+TC2 job 43396 trains E5 for 6,000 updates on the same 336 training and 84 validation clips. Eight training symmetries yield 2,688 examples; validation is not augmented. Seed 19, batch 64, AdamW learning rate $3\times10^{-4}$ and EMA 0.995 are used. Fixed-seed validation denoising loss selects update 5,000. The allocation lasts 160 seconds, recorded separately from the earlier pilot. CUDA checkpoint continuation reproduces subsequent losses, model weights and EMA exactly. All final-test clips remain reserved.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lr}
+\hline
+E5 validation check & Result \\
+\hline
+Tracked future object observations & 5,895 / 5,952 \\
+Complete all-object clips; selected-object clips & 87 / 96; 93 / 96 \\
+Conditional selected ADE; FDE & 0.0303; 0.0476 \\
+Single-reference SSIM & 0.9517 \\
+Timed contact-event F1 & 0.2118 \\
+Force-reversal pairs; changed-selection pairs & 14 / 16; 16 / 16 \\
+Zero-force drift in first 0.5 seconds & 0 / 16 \\
+Zero-force drift over full 3.875 seconds & 16 / 16 \\
+\hline
+\end{tabular}
+\caption{One E5 training seed and four validation scenes. ADE/FDE average complete samples within cases and then scenes; missing trajectories are excluded from those conditional averages, retained in counts and still fail strict quality. LPIPS was not run for this follow-up. The selected-object probe uses shared force magnitude 0.4.}
+\label{tab:trajectory}
+\end{table}
+
+The native-force rendered references pass only 8/16 reversal pairs in the initial window, limiting interpretation of the model's 14/16. At force 0.4, both reference and generated selection controls pass 16/16. Timed contact-event F1 has scene-bootstrap interval $[0.1316,0.2947]$; encounter F1 of 0.8235 cannot substitute for timing. All 57 missing RGB observations occur in contact conditions. The strict tracking and selected-trajectory gate still fails.
+
+A separate geometry audit replays every sampled pose and reproduces all saved RGB pixels exactly before scoring. Independent amodal silhouettes expose overlap hidden by renderer layer order. Raw raster overlap appears in 39/96 generated clips and 32/84 oracle-motion renders; pixel overlap alone therefore cannot diagnose penetration. Convex hulls of initial pixel centres provide a second approximate check, with a fixed one-native-pixel tolerance. Generated hull penetration exceeds this tolerance in 22/96 clips and 369/2,976 pair frames; oracle-motion controls have zero such clips and a maximum depth of 0.855 pixels. The generated maximum is 5.737 pixels. This supports a contact failure diagnosis without changing RGB tracking or correcting model motion.
+
+Boundary checks remain insufficiently calibrated: 13/96 generated clips and 12/84 oracle renders exceed the one-pixel interior tolerance. Their maximum depths are 3.872 and 1.385 pixels. We retain these measurements without treating the generated count as a wall-violation accuracy result. Static-copy controls have no overlap or boundary excursions but fail nonzero-action behavior. Audit jobs 43514/43515 use 28 and 30 allocated seconds; no training or final-test evaluation is added.
+
+\clearpage
+\subsection{Uncertainty after action conditioning}
+We stratify all 24 validation conditions by their six action families. Every family remains present, including incomplete contact ensembles. Table~\ref{tab:uncertainty} uses selected-object trajectories. Spread is conditional on complete sample pairs; nearest-reference coverage requires all four sampled trajectories for a case. The scored-scene count is reported rather than filling missing coverage with zero.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lrrrr}
+\hline
+Condition & Model spread & Ref. spread & Ref. to samples & Scenes \\
+\hline
+Forward & 0.0167 & 0.0258 & 0.0257 & 4 / 4 \\
+Reverse & 0.0248 & 0.0258 & 0.0171 & 4 / 4 \\
+Wall & 0.0440 & 0.0429 & 0.0272 & 4 / 4 \\
+Zero & 0.0147 & undefined & 0.0113 & 4 / 4 \\
+Contact 0 to 1 & 0.0309 & 0.0156 & 0.0192 & 2 / 4 \\
+Contact 1 to 0 & 0.0206 & 0.0160 & 0.0167 & 3 / 4 \\
+\hline
+\end{tabular}
+\caption{Whole-trajectory distances in normalized image coordinates. Model/reference spread is mean pairwise distance; reference-to-samples is the mean distance to the nearest of four sampled trajectories. Scenes denotes those with defined selected-object coverage. Zero force has one stationary reference, so reference pairwise spread is undefined. These are diagnostics, not calibrated probabilities.}
+\label{tab:uncertainty}
+\end{table}
+
+All-object completeness is 16/16 clips for each free, zero and wall family, but only 12/16 and 11/16 for the two contact directions. All-object coverage is undefined in every scene for contact 0 to 1 and available in only one scene for contact 1 to 0. Reporting a favourable mean over the surviving contact samples would hide that limitation.
+
+In complete timelines, estimated any-contact frequency is 0.25 under forward force and 0.1875 under zero force, versus zero in their finite simulator references. Reverse and wall conditions give zero for both. Contact-condition generated frequencies remain undefined when required timelines are incomplete. These frequencies depend on the approximate contact estimator and four samples per condition; they are not calibrated outcome probabilities.
+
+A supplementary zero-force control verifies that all reference frames and positions remain stationary, then checks maximum excursion of any valid object over the full clip with the unchanged one-pixel motion threshold. All 16 E5 clips have complete tracks and exceed that threshold; static-reference copies drift in 0/16. The original half-second result of 0/16 drifting clips remains unchanged. Late motion explains why short-window adherence and visible sample diversity cannot establish useful hidden-physics uncertainty.
+
+\begin{figure}[!ht]
+\centering
+\pdfximage width0.86\linewidth{report/figures/trajectory_contact.png}\pdfrefximage\pdflastximage
+\caption{First sorted validation contact-0-to-1 condition, one simulator reference and all four E5 seeds at fixed times. Some generated futures overlap substantially. The view retains the same image and action; visual diversity does not make every sampled motion physically valid.}
+\label{fig:contact}
+\end{figure}
+
+\clearpage
 \section{Conclusion}
-The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow follow-up shows that appearance can improve without force adherence. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. Improving coherent, action-responsive validation generation is necessary before opening the reserved test suites or claiming physical uncertainty. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
+The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow follow-up shows that appearance can improve without force adherence. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. Contact-aware learning and stationary-world consistency need improvement before opening reserved test suites or selecting final models. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
 
 \begin{thebibliography}{9}
 \bibitem{kingma} Diederik P. Kingma and Max Welling. Auto-Encoding Variational Bayes. arXiv:1312.6114, 2013.
 \bibitem{sohn} Kihyuk Sohn, Honglak Lee and Xinchen Yan. Learning Structured Output Representation using Deep Conditional Generative Models. Advances in Neural Information Processing Systems 28, 2015.
 \bibitem{ho} Jonathan Ho, Ajay Jain and Pieter Abbeel. Denoising Diffusion Probabilistic Models. arXiv:2006.11239, 2020.
 \bibitem{song} Jiaming Song, Chenlin Meng and Stefano Ermon. Denoising Diffusion Implicit Models. ICLR, 2021.
+\bibitem{karras} Tero Karras, Miika Aittala, Timo Aila and Samuli Laine. Elucidating the Design Space of Diffusion-Based Generative Models. NeurIPS, 2022.
 \end{thebibliography}
 \end{document}

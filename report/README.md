@@ -3,6 +3,10 @@
 `main.tex` is Group 7's working AI6132 technical review. It includes the
 E0/E2/E3/E4 validation comparison, SSIM/LPIPS, auxiliary head-versus-RGB scores,
 the measured 16/32/64-step sampler study and the CVAE decoder follow-ups.
+It now also includes the separate E5 trajectory model, its contact/uncertainty
+audit, the full-horizon zero-force failure and an embedded contact example from
+all four seeds. The twelve-page draft keeps conditional metrics, failed controls
+and oracle-calibration limits explicit.
 The original methods fail useful validation generation. This is not the final
 submission PDF or a successful physical-world model claim.
 

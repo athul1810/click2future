@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 8,
+  "pages": 12,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -10,7 +10,7 @@
     "Experiments and analysis",
     "Conclusion"
   ],
-  "model_comparison_scope": "Four-method bounded validation pilot plus two exploratory CVAE follow-ups; no model test split evaluated",
+  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups and a separate pose-supervised E5 model; no model test split evaluated",
   "dataset": {
     "version": "dataset-0.3",
     "seed": 730000,
@@ -127,7 +127,9 @@
   ],
   "followups": {
     "flow_decoder_followup": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
-    "motion_supervised_followup": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100"
+    "motion_supervised_followup": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100",
+    "trajectory_model": "docs/results/trajectory-pilot-validation.json",
+    "contact_uncertainty_audit": "docs/results/contact-uncertainty-audit.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -147,29 +149,72 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "eac429ad08ec9d42b32e0990a4da6d86aa833c0b2e5f5889d038ce852cc65511",
+    "main.tex": "bb4e374bdcbab57b84e8824cb6cdd47e7fc9c28740cf5f1bd69fa9e2eff03185",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
-    "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e"
+    "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
+    "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
+    "../docs/results/trajectory-pilot-validation.json": "cfec5d305fbc6c6d3fe61dafa14f9f7d70c2b6da35b4257f2ec9e9adb83087ae",
+    "../docs/results/contact-uncertainty-audit.json": "1a4ad78d7f98713923170e7b8f6daf195a76a7565d67d799f58c120e7efefe71"
   },
-  "rendered_pdf_sha256": "0e2056d68a2cc898a5bcb29fb21cfb50aa551e6c571c54e8e3748998fbfdf0b6",
-  "visual_review": "All eight pages rendered with macOS PDFKit. Tables, full frame strip, captions, equations and bibliography checked; no clipping, overlap or hyperlink annotations.",
+  "rendered_pdf_sha256": "35eb71c8e688d29764669dafff455055fab31df5b0423d498b5bf99f82869687",
+  "visual_review": "All twelve pages rendered and inspected. Tables, two frame strips, captions, equations and bibliography are readable, without clipping or overlap. No external URLs, hyperlink annotations, em dashes or en dashes.",
   "source_package_verification": {
-    "archive_sha256": "728c8a85880a703bcd6944342de30c94aebff7f59bd10213423843b7bdf00519",
-    "file_count": 175,
-    "bytes": 326378,
-    "extracted_source_tests": 465,
+    "status": "passed",
+    "file_count": 198,
+    "bytes": 375690,
+    "archive_sha256": "c040e8a566cbd9abf040ad15b8b689803f1168dfff6ac019b59f8f0dae344628",
+    "checks": [
+      "allowed text files",
+      "no external links",
+      "source inventory hashes",
+      "no datasets, weights, environments, or Git history"
+    ],
+    "extracted_source_tests": 527,
     "subtests": 4,
     "skips": 0,
+    "extracted_source_test_seconds": 81.49,
+    "tested_archive_sha256": "dbdcd2e9705401a6d7d01cb2f8d1482679e153df7c69f73a351545eb2f5667bd",
+    "final_archive_difference": "Only README.md, submission/README.md and MANIFEST.json updated after the full suite. All runtime, test, config and wrapper bytes match the tested archive.",
     "isolated_smoke": "passed",
-    "fresh_cached_install": "passed",
-    "extracted_source_test_seconds": 94.18,
-    "pre_demo_workspace_tests": 430
+    "final_archive_packaging_tests": 9
   },
   "remaining": [
-    "Useful action-responsive validation generation",
+    "Contact-aware model learning and full-horizon stationary-world consistency",
     "Independent training repeats and frozen final comparisons",
     "Reserved ID/OOD/physics model evaluations",
     "Member-reviewed contribution descriptions",
     "Final course submission checks"
-  ]
+  ],
+  "trajectory_followup": {
+    "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
+    "training_seed": 19,
+    "evaluated_step": 5000,
+    "training_allocated_seconds": 160,
+    "geometry_audit_allocated_seconds": 58,
+    "penetration_clips": 22,
+    "expected_clips": 96,
+    "oracle_penetration_clips": 0,
+    "oracle_clips": 84,
+    "full_horizon_zero_drift_clips": 16,
+    "zero_clips": 16,
+    "static_drift_clips": 0,
+    "test_splits_evaluated": []
+  },
+  "contact_figure": {
+    "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "frames": [
+      0,
+      8,
+      16,
+      31
+    ],
+    "selection": "first sorted validation contact-0-to-1 condition; all seeds",
+    "figure_sha256": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91"
+  }
 }

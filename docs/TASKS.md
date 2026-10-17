@@ -194,8 +194,8 @@ spatial diagnostic tracks 247/248 observations, with all four selected tracks
 complete and selected ADE 0.00348. This passes the original selected-object
 training gate under v2. Version 2 is still awaiting Ananya's calibration review;
 the shared acceptance box stays open until that review. Shrijeet's separate
-#39/#41 v2 rescore is reported in the PR #42 discussion; its structured v2
-reports/video hashes are still needed. Preserve all historical v1 scores.
+#39/#41 structured v2 rescore and video hashes are now recorded in
+results/diffusion-tracker-v2-checks.json and were reviewed in PR #45. Preserve all historical v1 scores.
 The multi-scene E2/E3 validation failures remain separate and unresolved.
 
 <a id="t11"></a>
@@ -285,16 +285,14 @@ Separate dataset-0.3 ID, shape, texture, force and physics suites are implemente
 
 Distinguish physically meaningful uncertainty from visual noise.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
 
 - [x] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
-- [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
+- [x] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
 - [x] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [x] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-Actual K=4 ensembles now cover all 24 validation conditions and all 84 hidden-physics references. Zero/reversed-force and changed-selection controls are measured. The original E0/E2/E3/E4 runs have no complete selected tracks; the unsupervised flow CVAE has complete eligible pairs but all are stationary. The displacement-supervised flow follow-up passes only 1/16 reversal pairs and 0/16 selection pairs despite 96.86 percent tracking. Trajectory spread/coverage remain null when required tracks are missing. Quality and action failures are shown with diversity diagnostics; meaningful hidden-physics uncertainty is not established. Evidence: results/multiscene-validation-checks.json and MULTISCENE_PILOT.md.
-
-e5 now measures 5895/5952 tracked observations, 14/16 reversal and 16/16 changed-selection pairs on four validation scenes. strict completeness/contact quality still fails; reference-force limitations and undefined coverage stay explicit. see results/trajectory-pilot-validation.json.
+The validation measurement work is complete and ready for review. E5 is assessed against all 84 hidden-physics references across all 24 conditions. Six action strata retain spread, reference coverage, collision-frequency variation, missing counts and scene intervals. Pixel-exact pose replay finds geometric penetration above one native pixel in 22/96 generated clips versus 0/84 oracle controls. Full-horizon zero-force drift is 16/16 versus 0/16 static copies; the original half-second 0/16 result is retained. Boundary calibration remains limited and candidate tracker v2 still needs independent review. These negative results distinguish model diversity from useful physical uncertainty. Source: CONTACT_UNCERTAINTY_AUDIT.md; results/contact-uncertainty-audit.json. Model improvements and final ID/OOD comparisons remain in T13-T15/T17.
 
 <a id="t17"></a>
 
@@ -328,7 +326,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-The eight-page working draft includes the implemented methods, four-method validation table, LPIPS intervals, E4 head-versus-RGB results, the actual 16/32/64-step study, flow-decoder failure analysis and a generated sample figure. Negative results and reserved tests remain explicit. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
+The twelve-page working draft adds E5 methods, contact/uncertainty tables, full-horizon zero-force failure and a fixed four-seed contact figure to the earlier four-method comparison, LPIPS intervals, E4 heads, sampler study and CVAE follow-ups. Every page is rendered and checked, with no external URLs or hyperlink annotations. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
 
 <a id="t19"></a>
 
