@@ -1,0 +1,1765 @@
+{
+  "status": "saved_rgb_passive_rescore",
+  "metric_version": "2",
+  "motion_rule": "maximum excursion >= one native pixel",
+  "historical_rule": "version 1 used > one native pixel; original files unchanged",
+  "records": {
+    "E5": {
+      "current": {
+        "passive_metric_version": "2",
+        "motion_rule": "maximum excursion >= motion_threshold",
+        "scope": "supplementary full-horizon passive rest in forward/reverse families; not original early-window success",
+        "method": "E5",
+        "cases": [
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-forward",
+            "sample_id": "g03-scene-00730016-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730016-forward-p00",
+              "g03-scene-00730016-forward-p01",
+              "g03-scene-00730016-forward-p02",
+              "g03-scene-00730016-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 4,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.027371974225346273,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0446363943698306,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-reverse",
+            "sample_id": "g03-scene-00730016-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730016-reverse-p00",
+              "g03-scene-00730016-reverse-p01",
+              "g03-scene-00730016-reverse-p02",
+              "g03-scene-00730016-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 4,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.04038335859430472,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.03125,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.09397080584977395,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-forward",
+            "sample_id": "g03-scene-00730017-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730017-forward-p00",
+              "g03-scene-00730017-forward-p01",
+              "g03-scene-00730017-forward-p02",
+              "g03-scene-00730017-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 4,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.023496052948015676,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.018143049000947483,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.04373258753739947,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-reverse",
+            "sample_id": "g03-scene-00730017-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730017-reverse-p00",
+              "g03-scene-00730017-reverse-p01",
+              "g03-scene-00730017-reverse-p02",
+              "g03-scene-00730017-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0602294529822363,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.013671875,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.027442531266966597,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.08514163821358094,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-forward",
+            "sample_id": "g03-scene-00730018-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730018-forward-p00",
+              "g03-scene-00730018-forward-p01",
+              "g03-scene-00730018-forward-p02",
+              "g03-scene-00730018-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.027537094905100645,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.014819587628865927,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.04159703441592314,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-reverse",
+            "sample_id": "g03-scene-00730018-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730018-reverse-p00",
+              "g03-scene-00730018-reverse-p01",
+              "g03-scene-00730018-reverse-p02",
+              "g03-scene-00730018-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 4,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.03991647370676056,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.026908488615156788,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.09443967950316566,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-forward",
+            "sample_id": "g03-scene-00730019-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730019-forward-p00",
+              "g03-scene-00730019-forward-p01",
+              "g03-scene-00730019-forward-p02",
+              "g03-scene-00730019-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 4,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.023324702851639623,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.018267890417683744,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.04063190024822279,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-reverse",
+            "sample_id": "g03-scene-00730019-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730019-reverse-p00",
+              "g03-scene-00730019-reverse-p01",
+              "g03-scene-00730019-reverse-p02",
+              "g03-scene-00730019-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.06079751549714019,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.012499999999999956,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.02902423156511721,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.08572198934672073,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          }
+        ],
+        "expected_cases": 8,
+        "eligible_cases": 8,
+        "expected_samples": 32,
+        "summary": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 29
+        },
+        "reference_rule": "passive pose/mask stationary and contact-free in every hidden-physics reference",
+        "plan_sha256": "e54555f587ab826948fb1ad025dd5a97ce1624a9acb9f337912b7949ab341951",
+        "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
+        "source_sha256": "934e2875aa1356332f6600b93b7a24580ed771e45082e2a804c69cb6959c0c2b",
+        "test_splits_evaluated": []
+      },
+      "historical_summary": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 22
+      },
+      "historical_sha256": "f9e4139f78c47f367fb8ab24de4b7b1566e3705e983ce9315e7743e702c1d186"
+    },
+    "E6-first": {
+      "current": {
+        "passive_metric_version": "2",
+        "motion_rule": "maximum excursion >= motion_threshold",
+        "scope": "supplementary full-horizon passive rest in forward/reverse families; not original early-window success",
+        "method": "E6",
+        "cases": [
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-forward",
+            "sample_id": "g03-scene-00730016-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730016-forward-p00",
+              "g03-scene-00730016-forward-p01",
+              "g03-scene-00730016-forward-p02",
+              "g03-scene-00730016-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.03613543937506076,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-reverse",
+            "sample_id": "g03-scene-00730016-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730016-reverse-p00",
+              "g03-scene-00730016-reverse-p01",
+              "g03-scene-00730016-reverse-p02",
+              "g03-scene-00730016-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 2,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.036932155420199085,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-forward",
+            "sample_id": "g03-scene-00730017-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730017-forward-p00",
+              "g03-scene-00730017-forward-p01",
+              "g03-scene-00730017-forward-p02",
+              "g03-scene-00730017-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 2,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.036361711624532035,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-reverse",
+            "sample_id": "g03-scene-00730017-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730017-reverse-p00",
+              "g03-scene-00730017-reverse-p01",
+              "g03-scene-00730017-reverse-p02",
+              "g03-scene-00730017-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.05158012294131145,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-forward",
+            "sample_id": "g03-scene-00730018-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730018-forward-p00",
+              "g03-scene-00730018-forward-p01",
+              "g03-scene-00730018-forward-p02",
+              "g03-scene-00730018-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.03612651860524753,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-reverse",
+            "sample_id": "g03-scene-00730018-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730018-reverse-p00",
+              "g03-scene-00730018-reverse-p01",
+              "g03-scene-00730018-reverse-p02",
+              "g03-scene-00730018-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 2,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.03406618231726255,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-forward",
+            "sample_id": "g03-scene-00730019-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730019-forward-p00",
+              "g03-scene-00730019-forward-p01",
+              "g03-scene-00730019-forward-p02",
+              "g03-scene-00730019-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 2,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0354641591423131,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-reverse",
+            "sample_id": "g03-scene-00730019-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730019-reverse-p00",
+              "g03-scene-00730019-reverse-p01",
+              "g03-scene-00730019-reverse-p02",
+              "g03-scene-00730019-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 3,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.015625,
+                  "drifting": true
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.05220596326112206,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          }
+        ],
+        "expected_cases": 8,
+        "eligible_cases": 8,
+        "expected_samples": 32,
+        "summary": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 20
+        },
+        "reference_rule": "passive pose/mask stationary and contact-free in every hidden-physics reference",
+        "plan_sha256": "f2fdcda6b70f3a73e7e74cc56079eb4945edacd3c50c29bf5addf0a90d0140bb",
+        "checkpoint_sha256": "30745754a4d4b649d10b6b6706370c186115bed3ab44ff7c791721ff47bf634f",
+        "source_sha256": "934e2875aa1356332f6600b93b7a24580ed771e45082e2a804c69cb6959c0c2b",
+        "test_splits_evaluated": []
+      },
+      "historical_summary": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 8
+      },
+      "historical_sha256": "b269f1ea0c8977666cf9d4f854dd4149511956ac45952cb3f3b30db60ee7aeb8"
+    },
+    "E6-token": {
+      "current": {
+        "passive_metric_version": "2",
+        "motion_rule": "maximum excursion >= motion_threshold",
+        "scope": "supplementary full-horizon passive rest in forward/reverse families; not original early-window success",
+        "method": "E6",
+        "cases": [
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-forward",
+            "sample_id": "g03-scene-00730016-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730016-forward-p00",
+              "g03-scene-00730016-forward-p01",
+              "g03-scene-00730016-forward-p02",
+              "g03-scene-00730016-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.05120743440042365,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-reverse",
+            "sample_id": "g03-scene-00730016-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730016-reverse-p00",
+              "g03-scene-00730016-reverse-p01",
+              "g03-scene-00730016-reverse-p02",
+              "g03-scene-00730016-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.08050651419683377,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-forward",
+            "sample_id": "g03-scene-00730017-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730017-forward-p00",
+              "g03-scene-00730017-forward-p01",
+              "g03-scene-00730017-forward-p02",
+              "g03-scene-00730017-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.050474206966010425,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-reverse",
+            "sample_id": "g03-scene-00730017-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730017-reverse-p00",
+              "g03-scene-00730017-reverse-p01",
+              "g03-scene-00730017-reverse-p02",
+              "g03-scene-00730017-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.004687500000000011,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.08474537128422745,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-forward",
+            "sample_id": "g03-scene-00730018-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730018-forward-p00",
+              "g03-scene-00730018-forward-p01",
+              "g03-scene-00730018-forward-p02",
+              "g03-scene-00730018-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.05033745798890666,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-reverse",
+            "sample_id": "g03-scene-00730018-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730018-reverse-p00",
+              "g03-scene-00730018-reverse-p01",
+              "g03-scene-00730018-reverse-p02",
+              "g03-scene-00730018-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.08020398622364995,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-forward",
+            "sample_id": "g03-scene-00730019-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730019-forward-p00",
+              "g03-scene-00730019-forward-p01",
+              "g03-scene-00730019-forward-p02",
+              "g03-scene-00730019-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.04906349521283613,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-reverse",
+            "sample_id": "g03-scene-00730019-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730019-reverse-p00",
+              "g03-scene-00730019-reverse-p01",
+              "g03-scene-00730019-reverse-p02",
+              "g03-scene-00730019-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 1,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.004687500000000011,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.08601344576010563,
+                  "drifting": true
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          }
+        ],
+        "expected_cases": 8,
+        "eligible_cases": 8,
+        "expected_samples": 32,
+        "summary": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 8
+        },
+        "reference_rule": "passive pose/mask stationary and contact-free in every hidden-physics reference",
+        "plan_sha256": "f2ad5bf62c33b081e9b4dbb8ccda56429da4e198fa0ef7b45a8ad25ca0115992",
+        "checkpoint_sha256": "dd590805854ff6c35b3836db084baf53eea860fe352f1dc8ec5b7eaa821eafa7",
+        "source_sha256": "934e2875aa1356332f6600b93b7a24580ed771e45082e2a804c69cb6959c0c2b",
+        "test_splits_evaluated": []
+      },
+      "historical_summary": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 8
+      },
+      "historical_sha256": "fe14ec0cd4b20591e0b9d14da0ae3ecd12af137a1e8ff4001d616c3eec820b81"
+    },
+    "E6-grid": {
+      "current": {
+        "passive_metric_version": "2",
+        "motion_rule": "maximum excursion >= motion_threshold",
+        "scope": "supplementary full-horizon passive rest in forward/reverse families; not original early-window success",
+        "method": "E6",
+        "cases": [
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-forward",
+            "sample_id": "g03-scene-00730016-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730016-forward-p00",
+              "g03-scene-00730016-forward-p01",
+              "g03-scene-00730016-forward-p02",
+              "g03-scene-00730016-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730016",
+            "condition_id": "g03-scene-00730016-reverse",
+            "sample_id": "g03-scene-00730016-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730016-reverse-p00",
+              "g03-scene-00730016-reverse-p01",
+              "g03-scene-00730016-reverse-p02",
+              "g03-scene-00730016-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-forward",
+            "sample_id": "g03-scene-00730017-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730017-forward-p00",
+              "g03-scene-00730017-forward-p01",
+              "g03-scene-00730017-forward-p02",
+              "g03-scene-00730017-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730017",
+            "condition_id": "g03-scene-00730017-reverse",
+            "sample_id": "g03-scene-00730017-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730017-reverse-p00",
+              "g03-scene-00730017-reverse-p01",
+              "g03-scene-00730017-reverse-p02",
+              "g03-scene-00730017-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.012740976864991179,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-forward",
+            "sample_id": "g03-scene-00730018-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730018-forward-p00",
+              "g03-scene-00730018-forward-p01",
+              "g03-scene-00730018-forward-p02",
+              "g03-scene-00730018-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730018",
+            "condition_id": "g03-scene-00730018-reverse",
+            "sample_id": "g03-scene-00730018-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730018-reverse-p00",
+              "g03-scene-00730018-reverse-p01",
+              "g03-scene-00730018-reverse-p02",
+              "g03-scene-00730018-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-forward",
+            "sample_id": "g03-scene-00730019-forward-p00",
+            "reference_ids": [
+              "g03-scene-00730019-forward-p00",
+              "g03-scene-00730019-forward-p01",
+              "g03-scene-00730019-forward-p02",
+              "g03-scene-00730019-forward-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          },
+          {
+            "scene_group_id": "g03-scene-00730019",
+            "condition_id": "g03-scene-00730019-reverse",
+            "sample_id": "g03-scene-00730019-reverse-p00",
+            "reference_ids": [
+              "g03-scene-00730019-reverse-p00",
+              "g03-scene-00730019-reverse-p01",
+              "g03-scene-00730019-reverse-p02",
+              "g03-scene-00730019-reverse-p03"
+            ],
+            "eligible": true,
+            "exclusion_reason": null,
+            "model": {
+              "passive_metric_version": "2",
+              "motion_rule": "maximum excursion >= motion_threshold",
+              "total_samples": 4,
+              "complete_samples": 4,
+              "missing_samples": 0,
+              "drifting_samples": 0,
+              "samples": [
+                {
+                  "sample_index": 0,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 1,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 2,
+                  "complete": true,
+                  "max_excursion": 0.0,
+                  "drifting": false
+                },
+                {
+                  "sample_index": 3,
+                  "complete": true,
+                  "max_excursion": 0.01384378527083545,
+                  "drifting": false
+                }
+              ],
+              "passive_object_id": 1,
+              "motion_threshold": 0.015625,
+              "end_frame": 31,
+              "extractor_version": "palette-components-2"
+            }
+          }
+        ],
+        "expected_cases": 8,
+        "eligible_cases": 8,
+        "expected_samples": 32,
+        "summary": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "reference_rule": "passive pose/mask stationary and contact-free in every hidden-physics reference",
+        "plan_sha256": "c29c80a1d75138d92ce1ed18c82740210e2a57f668d8237c60c6741bb9cc5642",
+        "checkpoint_sha256": "278f419d41d4abdfcacbe29b1f38457f608a33200fd29967b13f544df15746b2",
+        "source_sha256": "934e2875aa1356332f6600b93b7a24580ed771e45082e2a804c69cb6959c0c2b",
+        "test_splits_evaluated": []
+      },
+      "historical_summary": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "historical_sha256": "3747c6c6f2139e01202bd4245e3226f7f6a9c647203044d5dc1e7f5dcd521fa3"
+    }
+  },
+  "test_splits_evaluated": []
+}

@@ -1,0 +1,194 @@
+{
+  "status": "passed_after_review_fix",
+  "reviewed_original_head": "3b5c63ec109727de29d9d6b0793790479a2e9971",
+  "clean_source_zip_tests": 543,
+  "subtests": 4,
+  "skips": 0,
+  "test_seconds": 87.25,
+  "source_zip_sha256": "118a063389442612d1b37fea8935ee3e810b3464f0cff58bccf37a07106559d6",
+  "source_zip_files": 210,
+  "source_zip_bytes": 399097,
+  "passive_metric_version": "2",
+  "motion_rule": "maximum excursion >= one native pixel",
+  "original_exact_one_pixel_regression": "failed before fix; passes after fix",
+  "inclusive_passive_drift_counts": {
+    "E5": 29,
+    "E6-first": 20,
+    "E6-token": 8,
+    "E6-grid": 0
+  },
+  "expected_passive_samples_per_model": 32,
+  "historical_reports_unchanged": true,
+  "candidate_trajectory_collision_reports_reproduced": 72,
+  "trajectory_checks": {
+    "contact-20261018": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5936,
+        "tracking_fraction": 0.9973118279569892,
+        "complete_selected_clips": 94,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 94,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "cases_recomputed": 24,
+      "zero_drift": 0,
+      "zero_complete": 16
+    },
+    "contact-token-20261018": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5936,
+        "tracking_fraction": 0.9973118279569892,
+        "complete_selected_clips": 94,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 94,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "cases_recomputed": 24,
+      "zero_drift": 0,
+      "zero_complete": 16
+    },
+    "contact-grid-20261018": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5920,
+        "tracking_fraction": 0.9946236559139785,
+        "complete_selected_clips": 90,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 90,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "cases_recomputed": 24,
+      "zero_drift": 0,
+      "zero_complete": 16
+    }
+  },
+  "geometry_checks": {
+    "contact-20261018": {
+      "cases": 24,
+      "maximum_float_difference_pixels": 4.973065874658289e-07,
+      "changed_rgb_pixels": 0,
+      "all_counts_exact": true,
+      "penetrating_clips": 17
+    },
+    "contact-token-20261018": {
+      "cases": 24,
+      "maximum_float_difference_pixels": 1.1136072224360305e-06,
+      "changed_rgb_pixels": 0,
+      "all_counts_exact": true,
+      "penetrating_clips": 18
+    },
+    "contact-grid-20261018": {
+      "cases": 24,
+      "maximum_float_difference_pixels": 6.805827794664765e-07,
+      "changed_rgb_pixels": 0,
+      "all_counts_exact": true,
+      "penetrating_clips": 12
+    }
+  },
+  "geometry_float_tolerance_native_pixels": 5e-06,
+  "geometry_note": "Every event/count agrees exactly. Small cross-platform floating differences do not change rendered RGB or threshold decisions.",
+  "loading_and_manifest": {
+    "supplement_cases": 2080,
+    "training_worlds": 16,
+    "checkpoint_step": 15500,
+    "adapter_exact_offline": true,
+    "checkpoint_model_source_verified": true
+  },
+  "downloaded_archive_hashes_verified": 4,
+  "diagnostic_member_hashes_verified": 44,
+  "browser": {
+    "checks": [
+      "page and checkpoint metadata load",
+      "one primary model is selected by default",
+      "visible object selectors",
+      "background click cannot select an object",
+      "object buttons update selection",
+      "right drag gives positive x",
+      "down drag gives positive y",
+      "drag outside canvas clamps physical force",
+      "reverse keeps magnitude and negates both coordinates",
+      "zero push",
+      "keyboard direction matches image coordinates",
+      "shift fine adjustment",
+      "invalid seed fails without model execution",
+      "real checkpoint finishes four seeded futures",
+      "controls locked during generation",
+      "native-fps playback advances without an extra click",
+      "four videos retain ordered paired seeds and 32 frames",
+      "shared timeline scrubs all samples and pauses",
+      "pixel-track overlay and missing-count labels",
+      "timeline returns to supplied frame zero",
+      "simulator reference is separate and labelled",
+      "all four primary futures fit common desktop viewport heights",
+      "exact repeated request is identical labelled replay",
+      "reduced-motion preference keeps playback paused",
+      "explicit comparison includes every selected model",
+      "changed push cannot relabel old videos as new output",
+      "cancelled generation cannot replace the previous output",
+      "scene change resets playback and output",
+      "mobile layout has no horizontal overflow",
+      "no browser javascript exceptions"
+    ],
+    "count": 30,
+    "browser_errors": [],
+    "ui_seconds": [
+      0.45342674999847077,
+      0.35791129199787974,
+      0.3506850419798866,
+      0.6732189579925034
+    ],
+    "model_sources": [
+      [
+        {
+          "source": "live model",
+          "seconds": 0.1951780420204159
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.0014142910076770931
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.0008834170002955943
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.001143707981100306
+        },
+        {
+          "source": "live model",
+          "seconds": 0.14855787498527206
+        }
+      ]
+    ],
+    "note": "functional rehearsal, not model quality or a latency benchmark"
+  },
+  "browser_scope": "functional rehearsal; not a latency benchmark",
+  "test_splits_evaluated": [],
+  "training_repeated_during_review": false,
+  "source_checks": {
+    "lint": "passed",
+    "train_contact_sbatch_syntax": "passed"
+  },
+  "contact_quality": "all candidates still fail strict quality; no checkpoint promoted"
+}

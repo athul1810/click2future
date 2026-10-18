@@ -23,6 +23,12 @@ references pass only 8/16 reversal pairs at the original weak forces; that limit
 interpretation of the model's 14/16. changed-selection references pass 16/16.
 the tracker remains candidate v2 pending independent review.
 
+The later [contact and uncertainty audit](CONTACT_UNCERTAINTY_AUDIT.md) retains
+the initial-window results but finds drift in all 16 zero-force clips over the
+full horizon. Pixel-exact pose replay also exposes penetration above one native
+pixel in 22/96 generated clips, versus none of 84 oracle-motion controls.
+These are additional diagnostics, not a changed tracker or a successful model.
+
 all 57 missing observations are `area_change` rejections in contact conditions.
 free-motion, zero-force and wall cases retain every observation. this points to
 contact/overlap handling as the next target; it does not justify changing tracker

@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 8,
+  "pages": 15,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -10,7 +10,7 @@
     "Experiments and analysis",
     "Conclusion"
   ],
-  "model_comparison_scope": "Four-method bounded validation pilot plus two exploratory CVAE follow-ups; no model test split evaluated",
+  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages; no model test split evaluated",
   "dataset": {
     "version": "dataset-0.3",
     "seed": 730000,
@@ -127,7 +127,13 @@
   ],
   "followups": {
     "flow_decoder_followup": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
-    "motion_supervised_followup": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100"
+    "motion_supervised_followup": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100",
+    "trajectory_model": "docs/results/trajectory-pilot-validation.json",
+    "contact_uncertainty_audit": "docs/results/contact-uncertainty-audit.json",
+    "contact_training": "docs/results/contact-training-validation.json",
+    "passive_stationarity_v2": "docs/results/passive-stationarity-v2.json",
+    "contact_uncertainty_comparison": "docs/results/contact-uncertainty-comparison.json",
+    "wall_clipping": "docs/results/contact-wall-clipping.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -147,29 +153,133 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "eac429ad08ec9d42b32e0990a4da6d86aa833c0b2e5f5889d038ce852cc65511",
+    "main.tex": "ca018e8c9d44d7cf9531682c0d3a0a2b1bd30816b559d9c9589ecd278ef752db",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
-    "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e"
+    "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
+    "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
+    "../docs/results/trajectory-pilot-validation.json": "cfec5d305fbc6c6d3fe61dafa14f9f7d70c2b6da35b4257f2ec9e9adb83087ae",
+    "../docs/results/contact-uncertainty-audit.json": "1a4ad78d7f98713923170e7b8f6daf195a76a7565d67d799f58c120e7efefe71",
+    "figures/contact_followup.png": "a018e62ab8901a80ca7f7cb1d96d9bf6586483ab3b3c833695176c0eb22af834",
+    "../docs/results/contact-training-validation.json": "e6570e14b542cd3e21addd53ccb5d08eb62283757f65d11e3e8e0a15f94e4e44",
+    "../docs/results/passive-stationarity-v2.json": "1cf6a4e69d5b249a4bd33782288f6f4a8289662c62c8de64d6698858159e77a2",
+    "../docs/results/contact-review-checks.json": "a21ac6915df11f3bd1cbe3804c1037907c7b86bc7a704904b59a6df56594b23f",
+    "../docs/results/contact-uncertainty-comparison.json": "79adad44823bf2f8953891ff74ec59cbc01785460a2ac09e68051d22612d6176",
+    "../docs/results/contact-wall-clipping.json": "88a891c73ae09401a9083f5b0c067d6a7ebf4cb44403f434d4493c2f744d1cbf",
+    "../docs/results/c-followup-checks.json": "f9f219bd58418789f4d5e1a6050a881f4b995064ab43024219dc3ce7dbcbc8c9"
   },
-  "rendered_pdf_sha256": "0e2056d68a2cc898a5bcb29fb21cfb50aa551e6c571c54e8e3748998fbfdf0b6",
-  "visual_review": "All eight pages rendered with macOS PDFKit. Tables, full frame strip, captions, equations and bibliography checked; no clipping, overlap or hyperlink annotations.",
+  "rendered_pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
+  "visual_review": "All fifteen pages rendered and inspected. Tables, three frame figures, captions, equations and bibliography are readable without clipping or overlap. No external URLs, hyperlink annotations, em dashes or en dashes.",
   "source_package_verification": {
-    "archive_sha256": "728c8a85880a703bcd6944342de30c94aebff7f59bd10213423843b7bdf00519",
-    "file_count": 175,
-    "bytes": 326378,
-    "extracted_source_tests": 465,
+    "status": "passed",
+    "file_count": 212,
+    "bytes": 403881,
+    "archive_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
+    "checks": [
+      "allowed text files",
+      "no external links",
+      "source inventory hashes",
+      "no datasets, weights, environments, or Git history"
+    ],
+    "extracted_source_tests": 550,
     "subtests": 4,
     "skips": 0,
-    "isolated_smoke": "passed",
-    "fresh_cached_install": "passed",
-    "extracted_source_test_seconds": 94.18,
-    "pre_demo_workspace_tests": 430
+    "extracted_source_test_seconds": 85.83,
+    "tested_archive_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
+    "current_archive_matches_tested_archive_exactly": true,
+    "scope": "The final rebuilt archive exactly matches the extracted archive that passed 550 tests and four subtests. Report, analysis JSON and contribution drafts are outside the source allowlist."
   },
   "remaining": [
-    "Useful action-responsive validation generation",
+    "Contact quality, wall completeness and forward-motion uncertainty",
     "Independent training repeats and frozen final comparisons",
     "Reserved ID/OOD/physics model evaluations",
     "Member-reviewed contribution descriptions",
-    "Final course submission checks"
-  ]
+    "Independent tracker/integration review and final course submission checks"
+  ],
+  "trajectory_followup": {
+    "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
+    "training_seed": 19,
+    "evaluated_step": 5000,
+    "training_allocated_seconds": 160,
+    "geometry_audit_allocated_seconds": 58,
+    "penetration_clips": 22,
+    "expected_clips": 96,
+    "oracle_penetration_clips": 0,
+    "oracle_clips": 84,
+    "full_horizon_zero_drift_clips": 16,
+    "zero_clips": 16,
+    "static_drift_clips": 0,
+    "test_splits_evaluated": []
+  },
+  "contact_figure": {
+    "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "frames": [
+      0,
+      8,
+      16,
+      31
+    ],
+    "selection": "first sorted validation contact-0-to-1 condition; all seeds",
+    "figure_sha256": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91"
+  },
+  "contact_followup_figure": {
+    "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "frames": [
+      0,
+      8,
+      16,
+      31
+    ],
+    "selection": "first sorted validation contact-0-to-1 condition; same as original E5 figure; all seeds",
+    "figure_sha256": "a018e62ab8901a80ca7f7cb1d96d9bf6586483ab3b3c833695176c0eb22af834",
+    "input_video_sha256": {
+      "E5": "d6b61262fcd9febcdc0b232181c1ca5aba1d1379d9fb5d15d68ac5bc7f36f032",
+      "E6-grid": "ce38748443427f65c3f4a9d904f322f5d5f803c218a1ec2f54efd94c91632792"
+    },
+    "reference_npz_sha256": "bc4466c2963988463e1edeaa196b9a77d1f70d782536e7717af25b59e4e69b2e"
+  },
+  "contact_followup_verification": {
+    "status": "passed",
+    "report_table_cells_checked_against_measured_records": 58,
+    "pages": 15,
+    "external_urls": 0,
+    "link_annotations": 0,
+    "em_or_en_dashes": 0,
+    "overfull_boxes": 0,
+    "independent_futures_reports": 72,
+    "independent_action_strata": 18,
+    "exact_source_zip_matches_550_test_archive": true,
+    "pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
+    "test_splits_evaluated": []
+  },
+  "contribution_draft": {
+    "source": "contributions.md",
+    "status": "member review required; completed-work account for Ananya still pending",
+    "sha256": "d86ee3fded97bef10979f4a1fa717a903f9b3c904cecca0a235e7cd36fe7ec5d"
+  },
+  "wall_clipping": {
+    "record": "docs/results/contact-wall-clipping.json",
+    "wall_clips": 16,
+    "incomplete_wall_clips": 6,
+    "missing_observations": 32,
+    "reasons": {
+      "area_change": 32
+    },
+    "native_mask_fails_area_count": 32,
+    "unclipped_mask_passes_area_count": 32,
+    "clipped_fraction_min": 0.5,
+    "clipped_fraction_max": 0.6538461538461539,
+    "video_scores_unchanged": true
+  }
 }

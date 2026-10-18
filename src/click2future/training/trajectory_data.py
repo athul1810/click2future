@@ -2,6 +2,7 @@
 
 import hashlib
 import time
+from pathlib import Path
 
 import numpy as np
 
@@ -45,8 +46,16 @@ def canonical_ids(observation, selected_id):
 
 def prepare_trajectories(root, *, augment=True):
     """Read train/validation only. Replay is label creation, never model inference."""
-    started = time.perf_counter()
     selected, _, provenance = dataset_index(root)
+    result, labels = encode_trajectory_rows(root, selected, augment=augment)
+    return result, {**provenance, **labels}
+
+
+def encode_trajectory_rows(root, selected, *, augment=True):
+    """Encode an already validated train/validation inventory, never test rows."""
+    if not selected or not set(selected) <= {"train", "validation"}:
+        raise ValueError("Trajectory encoding accepts training and validation only")
+    started = time.perf_counter()
     result, calibration = {}, {}
     label_digest = hashlib.sha256()
     for split, ids in selected.items():
@@ -112,10 +121,36 @@ def prepare_trajectories(root, *, augment=True):
             "minimum_frame0_mask_iou": minimum_iou,
         }
     return result, {
-        **provenance,
         "calibration": calibration,
         "angular_labels_sha256": label_digest.hexdigest(),
         "angular_label_policy": "training-only checked replay; original rollout files unchanged",
         "augmentation": "train-only square rotations/reflections" if augment else "none",
         "preparation_seconds": time.perf_counter() - started,
+    }
+
+
+def add_training_supplement(root, supplement, data, provenance, *, augment=True):
+    """Append checked training actions while preserving original validation bytes."""
+    from click2future.data.action_supplement import validate_action_supplement
+
+    manifest = validate_action_supplement(root, supplement)
+    ids = [row["sample_id"] for row in manifest["samples"]]
+    extra, labels = encode_trajectory_rows(supplement, {"train": ids}, augment=augment)
+    contacts = {row["sample_id"]: row["contact"] for row in manifest["samples"]}
+    for example in extra["train"]["examples"]:
+        example.update(root=str(Path(supplement).resolve()), contact=contacts[example["sample_id"]])
+    merged = dict(data)
+    merged["train"] = {
+        key: (
+            data["train"][key] + extra["train"][key]
+            if key == "examples"
+            else np.concatenate((data["train"][key], extra["train"][key]))
+        )
+        for key in data["train"]
+    }
+    labels.pop("preparation_seconds", None)
+    return merged, {
+        **provenance,
+        "training_supplement": {"manifest": manifest, "labels": labels},
+        "combined_training_examples": len(merged["train"]["examples"]),
     }

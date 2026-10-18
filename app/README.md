@@ -131,6 +131,10 @@ e5 uses the same observable inputs and public offline sampler. it adds future-po
 supervision during training and a rigid observed-pixel renderer. it is a separate
 method, not a drop-in e3 result. see [the measured pilot](../docs/TRAJECTORY_PILOT.md).
 
+The later [physics audit](../docs/CONTACT_UNCERTAINTY_AUDIT.md) finds contact
+penetration and late zero-force drift despite improved initial action response.
+The checkpoint remains experimental; its four futures are not calibrated outcomes.
+
 ```powershell
 .\.venv\Scripts\python.exe -m click2future.demo.server --dataset outputs/pilot-handoff/presets --checkpoint E5-trajectory=outputs/trajectory-handoff/best.pt --device cuda --trajectory-steps 16
 ```
@@ -156,3 +160,23 @@ archive sha-256: `93d1c7129a82cdc8bf96abdd43dd0fbb2e8eac794d1a2e89a2ef2db72467fd
 the uploaded archive was downloaded again and matched byte-for-byte; all 22
 inventoried member hashes pass. the bundled launch passes 25 browser checks.
 see [handoff checks](../docs/results/trajectory-handoff-checks.json).
+
+## contact candidate comparison
+
+the 18 october paired-action candidate fixes passive drift on the saved push,
+but still fails overall contact/completeness quality. it is an optional comparison,
+not a replacement for the frozen handoff. after obtaining the private artifacts:
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --dataset outputs/tc2-action-quality/data `
+  --samples g03-scene-00730016-forward-p00 g03-scene-00730017-forward-p00 `
+  --checkpoint "e6-paired-actions=outputs/tc2-contact-20261018/contact-grid-20261018/best.pt" `
+  --checkpoint "e5-frozen=outputs/trajectory-handoff/best.pt" --device cuda
+```
+
+the default shows the first model's four futures. select the explicit comparison
+option to show both models. native 8 fps playback starts after generation unless
+reduced motion is enabled; changing the input pauses the old output. four primary
+futures fit common laptop heights. see the [measured comparison](../docs/CONTACT_TRAINING.md)
+for the remaining failures; no quality ranking is inferred from the interface.
