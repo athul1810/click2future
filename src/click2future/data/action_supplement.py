@@ -168,7 +168,7 @@ def generate_action_supplement(parent, output, *, directions=8, magnitudes=(0.25
 def validate_action_supplement(parent, root):
     """Reject incomplete grids, changed physics/appearance, test worlds and bytes."""
     parent, root = Path(parent), Path(root)
-    _, sources = parent_inventory(parent)
+    parent_manifest, sources = parent_inventory(parent)
     manifest = json.loads((root / "supplement_manifest.json").read_text(encoding="utf-8"))
     if (
         manifest["schema_version"] != "training-action-supplement-0.1"
@@ -176,6 +176,7 @@ def validate_action_supplement(parent, root):
         != _digest({k: v for k, v in manifest.items() if k != "manifest_hash"})
         or manifest["parent_manifest_sha256"] != _sha(parent / "dataset_manifest.json")
         or manifest["parent_split_sha256"] != _sha(parent / "splits.json")
+        or manifest["parent_manifest_hash"] != parent_manifest["manifest_hash"]
         or manifest["recipe"]["zero_per_object_world"] is not True
     ):
         raise ValueError("Supplement manifest/parent binding changed")

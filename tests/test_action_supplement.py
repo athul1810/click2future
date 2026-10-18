@@ -58,7 +58,7 @@ def test_generation_never_opens_validation_or_test_rollouts(corpus, tmp_path, mo
     assert set(calls) == allowed
 
 
-@pytest.mark.parametrize("change", ["leak", "coverage", "bytes"])
+@pytest.mark.parametrize("change", ["leak", "coverage", "bytes", "binding"])
 def test_tampered_supplement_is_rejected(corpus, tmp_path, change):
     import shutil
 
@@ -71,6 +71,8 @@ def test_tampered_supplement_is_rejected(corpus, tmp_path, change):
         manifest["samples"][0]["split"] = "validation"
     elif change == "coverage":
         manifest["samples"][-1] = manifest["samples"][0]
+    elif change == "binding":
+        manifest["parent_manifest_hash"] = "0" * 64
     else:
         target = root / (manifest["samples"][0]["sample_id"] + ".npz")
         target.write_bytes(target.read_bytes() + b"changed")

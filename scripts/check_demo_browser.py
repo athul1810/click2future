@@ -182,6 +182,15 @@ def main():
         assert "simulator reference" in page.evaluate("playback.reference.source")
         checks.append("simulator reference is separate and labelled")
         page.locator("#reference-details summary").click()
+        for width, height in ((1440, 1080), (1440, 900), (1366, 768)):
+            page.set_viewport_size({"width": width, "height": height})
+            page.evaluate("window.scrollTo(0,0)")
+            bottoms = page.locator(".future-card").evaluate_all(
+                "cards => cards.map(card => card.getBoundingClientRect().bottom)"
+            )
+            assert max(bottoms) <= height, (width, height, bottoms)
+        checks.append("all four primary futures fit common desktop viewport heights")
+        page.set_viewport_size({"width": 1440, "height": 1080})
         page.screenshot(path=str(args.output / "02-futures.png"), full_page=True)
         first = page.evaluate("playback.models[0].strip")
         generate()

@@ -304,7 +304,7 @@ canvas {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
-  max-width:clamp(420px,calc(100vh - 480px),720px);
+  max-width:clamp(260px,calc(100vh - 500px),640px);
   margin-inline:auto
 }
 .future-card {
