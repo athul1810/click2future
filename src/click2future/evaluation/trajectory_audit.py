@@ -59,7 +59,7 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
         raise ValueError("Audit replay requires the recorded 16-step E5 sampler")
     expected = {case["sample_id"] for case in plan["cases"]}
     if (
-        run["method"] != "E5"
+        run["method"] not in {"E5", "E6"}
         or run["checkpoint_sha256"] != sha256(checkpoint)
         or run.get("untrained_fixture") is not False
         or set(run["videos"]) != expected
@@ -144,6 +144,8 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
         raise ValueError("Use a fresh audit directory; preserve earlier attempts")
     plan, run, paths, hashes = verify_inputs(plan_path, predictions_path, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
+    if run["method"] != ("E6" if state["trajectory_format_version"] == 2 else "E5"):
+        raise ValueError("Checkpoint training variant and audit method disagree")
     if (
         state["step"] != run["training_steps"]
         or state["config"]["seed"] != run["training_seed"]
@@ -202,7 +204,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
         report = {
             "status": "measured_geometry_audit",
             "version": GEOMETRY_VERSION,
-            "method": "E5",
+            "method": run["method"],
             "scope": "validation-only pose/silhouette diagnostics; not generated-RGB tracking",
             "sampling_steps": 16,
             "sampling_seeds": plan["sampling_seeds"],

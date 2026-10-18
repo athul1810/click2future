@@ -30,7 +30,7 @@ class CheckpointModel:
         self.sampling_steps = sampling_steps
         self.future_frames = None
         self.resolution = None
-        if state.get("trajectory_format_version") == 1:
+        if state.get("trajectory_format_version") in (1, 2):
             from click2future.training.sample_trajectory import load_trajectory
 
             self.model, state = load_trajectory(checkpoint, device)
@@ -41,6 +41,8 @@ class CheckpointModel:
             self.kind, step = "trajectory_diffusion", state["step"]
             force_limit = min(force_limit, self.model.force_limit)
             detail = "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA"
+            if state["trajectory_format_version"] == 2:
+                detail += "; contact/stationary training; unchanged inference"
         elif state.get("checkpoint_version") == 1:
             config = TrainConfig(**state["config"])
             config.validate()
@@ -133,6 +135,11 @@ class CheckpointModel:
                 network_evaluations_per_sample=2 * self.sampling_steps - 1,
                 supervision="future positions and checked angular replay; training only",
             )
+            if state["trajectory_format_version"] == 2:
+                self.metadata["training_variant"] = "contact_regularized"
+                self.metadata["sampling_source_sha256"]["training/contact_checkpoint.py"] = sha256(
+                    folder / "training/contact_checkpoint.py"
+                )
 
     @torch.inference_mode()
     def predict(self, first_frame, selected_mask, force_xy, *, seeds, future_frames, cancelled):

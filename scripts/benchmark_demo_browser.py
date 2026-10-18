@@ -66,6 +66,8 @@ def main():
                 raise RuntimeError("Local demo did not initialize")
             time.sleep(0.1)
         metadata = page.evaluate("state.models")
+        if len(metadata) > 1:
+            page.locator("#model").select_option("__all")
         condition = page.evaluate("({scene:scene.id,object:selected,force:force.slice()})")
         runs = []
         for index in range(args.repeats + 1):

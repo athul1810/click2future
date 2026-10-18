@@ -370,3 +370,45 @@ The full-horizon stationary check supplements the unchanged half-second control.
 Use fresh output paths. These commands measure failures rather than correct
 sampled motion. Trained weights, data, raw pose arrays and measured working
 artifacts remain outside this source ZIP.
+
+## contact/stationary training candidates
+
+e6 uses the same trajectory network and sampler with contact/stationary losses.
+this is extra training supervision, not an inference correction. its checkpoints
+use trajectory format 2. the original e5 checkpoint and format remain supported.
+
+inside a tc2 allocation, use a fresh run directory:
+
+```sh
+python -m click2future.training.train_contact --dataset data/frozen --run-dir runs/contact --config configs/training/contact_token_pilot.json
+python -m click2future.evaluation.trajectory_pilot --dataset data/frozen --checkpoint runs/contact/best.pt --output outputs/contact-validation --device cuda --steps 16 --method E6
+```
+
+an optional, separately hashed action supplement uses only existing training
+worlds and physics. both selected objects receive the same eight directions and
+two force magnitudes. original validation and final tests remain unchanged:
+
+```sh
+python -m click2future.data.action_supplement --parent data/frozen --output data/train-actions
+python -m click2future.training.train_contact --dataset data/frozen --supplement data/train-actions --run-dir runs/contact-grid --config configs/training/contact_grid_pilot.json
+```
+
+these combined training changes are separate experiments, not isolated ablations
+or accepted replacements. `submission/train_contact.sbatch` supplies the guarded
+training wrapper. generate the supplement in a compute allocation too.
+
+score full-horizon passive rest separately from the original early action checks:
+
+```sh
+python -m click2future.evaluation.passive_stationarity --plan outputs/contact-validation/plan.json --predictions outputs/contact-validation/validation-samples/predictions.json --dataset data/frozen --checkpoint runs/contact/best.pt --output outputs/contact-validation/passive-rest.json
+```
+
+all hidden-physics references must leave the passive object stationary and
+contact-free. incomplete generated tracks remain missing rather than passing.
+
+Passive-stationarity metric version 2 counts excursion at least one pixel as
+drift, matching the shared motion protocol. Earlier strict-greater-than reports
+remain historical results. For the 30-minute grid configuration, request a
+40-minute allocation with `sbatch --time=00:40:00 submission/train_contact.sbatch`
+and pass its grid config/supplement arguments. The default wrapper time is for
+the shorter first recipe.

@@ -22,12 +22,14 @@ from .tracking import TRACKER_VERSION
 PROJECT = Path(__file__).parents[3]
 
 
-def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16):
+def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method="E5"):
     plan = read_plan(plan_path)
     checkpoint, output = Path(checkpoint).resolve(), Path(output)
     if plan["split"] not in {"validation", "validation-selected-object"}:
         raise ValueError("This bounded pilot may not evaluate final-test splits")
     model, state = load_trajectory(checkpoint, device)
+    if method != ("E6" if state["trajectory_format_version"] == 2 else "E5"):
+        raise ValueError("Checkpoint training variant and requested method disagree")
     provenance = state["provenance"]
     if (
         provenance["dataset_manifest_sha256"] != plan["input_sha256"]["dataset_manifest"]
@@ -62,8 +64,8 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16):
         if sha256(checkpoint) != checksum:
             raise ValueError("Checkpoint changed during sampling")
         run = {
-            "method": "E5",
-            "run_id": "trajectory-E5",
+            "method": method,
+            "run_id": "trajectory-" + method,
             "training_seed": state["config"]["seed"],
             "training_steps": state["step"],
             "untrained_fixture": False,
@@ -113,6 +115,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--steps", type=int, default=16)
+    parser.add_argument("--method", choices=("E5", "E6"), default="E5")
     args = parser.parse_args(argv)
     if args.device == "cuda":
         require_tc2()
@@ -152,6 +155,7 @@ def main(argv=None):
                 args.output / (name + "-samples"),
                 device=args.device,
                 steps=args.steps,
+                method=args.method,
             )
             print(json.dumps({"scoring": name}), flush=True)
             run_suite(
@@ -167,7 +171,7 @@ def main(argv=None):
         state = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
         result = {
             "status": "measured_validation_followup",
-            "method": "E5",
+            "method": args.method,
             "quality": summarize_quality(reports),
             "checkpoint_sha256": sha256(args.checkpoint),
             "training_steps": state["step"],
@@ -182,10 +186,72 @@ def main(argv=None):
             ),
         }
         _write(args.output / "trajectory-results.json", result)
+        if args.method == "E6":
+            extended_audit(args.output, args.dataset, args.checkpoint, args.device)
         print(json.dumps(result["quality"]), flush=True)
     except Exception as error:
         _write(args.output / "failure.json", {"status": "failed", "error": str(error)})
         raise
+
+
+def extended_audit(output, dataset, checkpoint, device):
+    from .trajectory_audit import audit
+    from .uncertainty_strata import action_family, stratify, zero_horizon
+
+    geometry = audit(
+        output / "plan.json",
+        output / "validation-samples/predictions.json",
+        dataset,
+        checkpoint,
+        output / "geometry-audit",
+        device=device,
+    )
+    strata = stratify(output / "validation-metrics/comparison.json")
+    plan = read_plan(output / "plan.json")
+    rows = []
+    for case in plan["cases"]:
+        if action_family(case) != "zero":
+            continue
+        reference = load_rollout(dataset, case["sample_id"])
+        with np.load(
+            output / "validation-samples" / (case["sample_id"] + ".npz"), allow_pickle=False
+        ) as archive:
+            videos = archive["videos"]
+        rows.append(
+            {
+                "sample_id": case["sample_id"],
+                "model": zero_horizon(reference, videos),
+                "static_control": zero_horizon(
+                    reference, np.repeat(reference["frames"][None], len(videos), axis=0)
+                ),
+            }
+        )
+    if len(rows) != 4:
+        raise ValueError("Retain all four frozen zero-force validation conditions")
+    _write(output / "uncertainty-strata.json", strata)
+    result = {
+        "scope": "E6 full-horizon and geometry follow-up; validation only",
+        "geometry": geometry["summary"],
+        "zero_force_full_horizon": {
+            "cases": rows,
+            "summary": {
+                family: {
+                    key: sum(row[family][key] for row in rows)
+                    for key in (
+                        "total_samples",
+                        "complete_samples",
+                        "missing_samples",
+                        "drifting_samples",
+                    )
+                }
+                for family in ("model", "static_control")
+            },
+        },
+        "test_splits_evaluated": [],
+        "no_sampling_correction": True,
+    }
+    _write(output / "contact-results.json", result)
+    print(json.dumps(result["zero_force_full_horizon"]["summary"]), flush=True)
 
 
 if __name__ == "__main__":
