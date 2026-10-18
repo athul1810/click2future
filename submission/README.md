@@ -430,3 +430,27 @@ an unclipped padded view for each missing observation. It rejects truncated
 measurement canvases. Original video metrics and missing observations remain
 unchanged; the padded view is never used for model inference or replacement
 scores. This is a clipping diagnosis, not a calibrated wall-contact accuracy.
+
+
+## Matched wall-loss training comparison
+
+The contact trainer supports an optional `boundary_weight` (default zero) and
+`boundary_margin_pixels` (default one). It penalizes native-canvas excursion
+during training only, using observed hulls and the existing low-noise gate. Old
+contact checkpoints still load and resume when the added loss is disabled.
+
+`contact_wall_control.json` and `contact_wall_pilot.json` differ only in that loss
+weight. One allocated TC2 job regenerates a shared train-only action supplement,
+trains both models from scratch, then evaluates every validation case and selected
+object control with the unchanged 16-step sampler. Both recipes have 16,000
+updates and a 20-minute process cap. The whole allocation is capped at 50 minutes.
+
+```sh
+sbatch submission/wall_comparison.sbatch
+```
+
+Set `C2F_PROJECT`, `C2F_PYTHON`, `C2F_DATA_DIR`, `C2F_WALL_RESULTS` and
+`C2F_SOURCE_REVISION`. The output directory must be new. The driver retains
+training records, validation reports, full-horizon zero/passive checks and saved
+pose clipping diagnostics. It never evaluates final-test splits or changes
+inference motion, tracking thresholds or the declared physics-quality gate.

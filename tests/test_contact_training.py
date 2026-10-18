@@ -195,3 +195,82 @@ def test_cli_training_requires_actual_allocation(tmp_path, monkeypatch):
             ]
         )
     assert not (tmp_path / "run").exists()
+
+
+def test_canvas_loss_matches_independent_geometry_and_pushes_motion_inward():
+    from click2future.training.contact_geometry import canvas_excess
+
+    obs = observation()
+    motion = np.zeros((1, 4, 2, 4), np.float32)
+    motion[:, :, 0, :2] = [1.5, -0.8]
+    motion[:, :, 1, :2] = [-1.4, 0.9]
+    features = torch.from_numpy(obs.features)[None]
+    geometry = tensor_geometry(obs)
+    independent = geometry_diagnostics(obs, motion)["clips"][0]
+    # The old diagnostic measures from a one-pixel interior; the training loss
+    # measures the native canvas and keeps that raster bias separate.
+    expected = np.maximum(np.array(independent["boundary_depth_pixels_per_object_frame"]) - 1, 0)
+    value = torch.tensor(motion, requires_grad=True)
+    excess = canvas_excess(value, features, geometry)
+    np.testing.assert_allclose(excess.detach()[0].numpy() * 64, expected, atol=5e-6)
+    loss = excess.square().mean()
+    loss.backward()
+    assert torch.isfinite(value.grad).all() and value.grad.abs().sum() > 0
+    improved = canvas_excess(value.detach() - value.grad * 0.2, features, geometry)
+    assert improved.square().mean() < loss
+
+
+def test_wall_regularization_preserves_legacy_objective_when_disabled():
+    data, geometry, _ = fixture_data()
+    features = torch.from_numpy(data["train"]["features"][:1])
+    geometry = {key: torch.from_numpy(value[:1]) for key, value in geometry["train"].items()}
+    clean = torch.zeros((1, 31, 2, 4))
+    prediction = torch.ones_like(clean, requires_grad=True)
+
+    class FixedPrediction:
+        sigma_data = 0.25
+
+        def __call__(self, *args):
+            return prediction
+
+    arguments = (
+        FixedPrediction(), clean, features, torch.tensor([[0.25, 0]]),
+        torch.tensor([0.1]), torch.zeros_like(clean), geometry,
+    )
+    original, original_parts = contact_objective(*arguments, ContactConfig())
+    enabled, enabled_parts = contact_objective(*arguments, ContactConfig(boundary_weight=256))
+    assert "canvas_excess" not in original_parts
+    assert enabled_parts["canvas_excess"] > 0
+    torch.testing.assert_close(
+        enabled, original + 256 * enabled_parts["canvas_excess"], rtol=0, atol=0
+    )
+    for key in original_parts:
+        torch.testing.assert_close(enabled_parts[key], original_parts[key], rtol=0, atol=0)
+    enabled.backward()
+    assert torch.isfinite(prediction.grad).all()
+
+
+def test_old_contact_checkpoints_resume_with_default_wall_loss_only(tmp_path):
+    data, geometry, _ = fixture_data()
+    config = ContactConfig(steps=4, width=16, layers=1, batch_size=3)
+    trainer = ContactTrainer(data, geometry, config)
+    trainer.train_step()
+    checkpoint = tmp_path / "legacy.pt"
+    identity = {
+        "source_sha256": {
+            "models/object_motion.py": sha256(Path("src/click2future/models/object_motion.py"))
+        }
+    }
+    trainer.save(checkpoint, identity)
+    state = torch.load(checkpoint, weights_only=True)
+    state["config"].pop("boundary_weight")
+    state["config"].pop("boundary_margin_pixels")
+    torch.save(state, checkpoint)
+    restored = ContactTrainer(data, geometry, config)
+    restored.resume(checkpoint, identity)
+    assert trainer.train_step() == restored.train_step()
+    with pytest.raises(ValueError, match="identical"):
+        ContactTrainer(
+            data, geometry, ContactConfig(**{**config.__dict__, "boundary_weight": 256})
+        ).resume(checkpoint, identity)
+    assert load_trajectory(checkpoint)[1]["config"]["stationary_tokens"] is False
