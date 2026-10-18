@@ -1,0 +1,608 @@
+{
+  "status": "measured_extractor_calibration",
+  "scope": "Reference simulator controls and a re-score of saved training-clip samples. No tracker setting was chosen using model outputs; this is not a model-quality result.",
+  "change": {
+    "previous_version": "palette-components-1",
+    "new_version": "palette-components-2",
+    "rule": "Candidate components smaller than min_pixels (4) no longer count toward the dominant_fraction check. Pieces of at least min_pixels still count, so fragments and duplicates are still rejected. No tracker setting changed.",
+    "reason": "Background-only noise made visible objects fail as fragmented_or_duplicate when an object colour is close to a background colour. All stray components in the calibration set were 1-3 pixels."
+  },
+  "noise_protocol": "Copy reference RGB; add np.random.default_rng(seed).normal(0, std) to future frames; round and clip to uint8; replace only pixels outside every future object mask; object pixels stay exactly equal. Seeds 0-3. Frame-0 masks only enter tracking; future masks build the control only.",
+  "corpora": {
+    "calibration": {
+      "command": "generate-dataset --group-count 12 --variants-per-group 2 --seed 610000 --config configs/simulator/pilot.toml",
+      "dataset_manifest_sha256": "6e186d24e3ae431da3f2b3bb9d7eeb1a45c251ccda4c3fc07cc198167a6ddf7b",
+      "clips": 24
+    },
+    "held_out_check": {
+      "command": "generate-dataset --group-count 12 --variants-per-group 2 --seed 620000 --config configs/simulator/pilot.toml",
+      "dataset_manifest_sha256": "8466000bad6656b419bbc5ae4a559351e49eee366883a0531d0444312f164f1f",
+      "clips": 24
+    },
+    "diagnostic_one_clip": {
+      "command": "generate-dataset --group-count 10 --variants-per-group 2 --seed 226000 --config configs/simulator/one_clip_diagnostic.toml",
+      "dataset_manifest_sha256": "1b57ba14c573aec70bae15ac1671584240734dcdceb121166e11612707412916",
+      "clips": 20
+    },
+    "clean_pilot": {
+      "command": "generate-dataset --group-count 100 --variants-per-group 2 --seed 640000 --config configs/simulator/pilot.toml",
+      "dataset_manifest_sha256": "264747774000b8390b3b724e5d7f7207901b767b73d7b133664339b8fc7c7ac0",
+      "clips": 200
+    },
+    "clean_dataset_0_3": {
+      "command": "generate-generalization-dataset --seed 630000 --groups-per-split 2",
+      "dataset_manifest_sha256": "30e2c29ba1065ef68ea8cd6778368329253a40238d639ce35750e6d365af8812",
+      "clips": 332
+    }
+  },
+  "reserved_seed_ranges": "Extractor controls only: visible seeds 610000-610011, 620000-620011 and 640000-640099, plus the dataset-0.3 check generated from seed 630000. Keep them out of model datasets.",
+  "background_noise": {
+    "noise-calib": {
+      "clips": 24,
+      "noise_seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by_std": {
+        "0": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "4": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "8": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.06263307827602965,
+          "mean_centre_shift_px": 4.209212249733175e-05,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 4.209212249733175e-05
+        },
+        "12": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.12831575951637095,
+          "mean_centre_shift_px": 0.0006871510372565025,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.0006871510372565025
+        },
+        "16": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.18248246906323665,
+          "mean_centre_shift_px": 0.0012237639928773891,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.0012237639928773891
+        },
+        "24": {
+          "expected": 5952,
+          "v1_tracked": 5666,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.18224299065420269,
+          "mean_centre_shift_px": 0.002307936325214217,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.002307936325214217
+        }
+      }
+    },
+    "noise-check": {
+      "clips": 24,
+      "noise_seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by_std": {
+        "0": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "4": {
+          "expected": 5952,
+          "v1_tracked": 5952,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.06425059778128574,
+          "mean_centre_shift_px": 1.0794791293898814e-05,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 1.0794791293898814e-05
+        },
+        "8": {
+          "expected": 5952,
+          "v1_tracked": 5594,
+          "v2_tracked": 5952,
+          "max_centre_shift_px": 0.23697156594200625,
+          "mean_centre_shift_px": 0.0021564189100310538,
+          "v2_reasons": {
+            "ok": 5952
+          },
+          "centre_shift_observations": 5952,
+          "pooled_mean_centre_shift_px": 0.0021564189100310538
+        },
+        "12": {
+          "expected": 5952,
+          "v1_tracked": 5404,
+          "v2_tracked": 5714,
+          "max_centre_shift_px": 0.3183258722547495,
+          "mean_centre_shift_px": 0.0006109611571718517,
+          "v2_reasons": {
+            "ok": 5714,
+            "fragmented_or_duplicate": 238
+          },
+          "centre_shift_observations": 5714,
+          "pooled_mean_centre_shift_px": 0.0003745871533010772
+        },
+        "16": {
+          "expected": 5952,
+          "v1_tracked": 5166,
+          "v2_tracked": 5704,
+          "max_centre_shift_px": 0.0975664047463113,
+          "mean_centre_shift_px": 0.0003291072833041843,
+          "v2_reasons": {
+            "ok": 5704,
+            "fragmented_or_duplicate": 248
+          },
+          "centre_shift_observations": 5704,
+          "pooled_mean_centre_shift_px": 0.0003434162956217575
+        },
+        "24": {
+          "expected": 5952,
+          "v1_tracked": 4837,
+          "v2_tracked": 5725,
+          "max_centre_shift_px": 0.2540172078837018,
+          "mean_centre_shift_px": 0.0020704142554105634,
+          "v2_reasons": {
+            "ok": 5725,
+            "fragmented_or_duplicate": 227
+          },
+          "centre_shift_observations": 5725,
+          "pooled_mean_centre_shift_px": 0.0017842603334703307
+        }
+      }
+    },
+    "one-clip": {
+      "clips": 20,
+      "noise_seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by_std": {
+        "0": {
+          "expected": 4960,
+          "v1_tracked": 4960,
+          "v2_tracked": 4960,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 4960
+          },
+          "centre_shift_observations": 4960,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "4": {
+          "expected": 4960,
+          "v1_tracked": 4960,
+          "v2_tracked": 4960,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 4960
+          },
+          "centre_shift_observations": 4960,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "8": {
+          "expected": 4960,
+          "v1_tracked": 4815,
+          "v2_tracked": 4960,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 4960
+          },
+          "centre_shift_observations": 4960,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "12": {
+          "expected": 4960,
+          "v1_tracked": 4504,
+          "v2_tracked": 4960,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 4960
+          },
+          "centre_shift_observations": 4960,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "16": {
+          "expected": 4960,
+          "v1_tracked": 4472,
+          "v2_tracked": 4960,
+          "max_centre_shift_px": 0.0,
+          "mean_centre_shift_px": 0.0,
+          "v2_reasons": {
+            "ok": 4960
+          },
+          "centre_shift_observations": 4960,
+          "pooled_mean_centre_shift_px": 0.0
+        },
+        "24": {
+          "expected": 4960,
+          "v1_tracked": 4547,
+          "v2_tracked": 4960,
+          "max_centre_shift_px": 0.09583148474999383,
+          "mean_centre_shift_px": 9.236070275081246e-05,
+          "v2_reasons": {
+            "ok": 4960
+          },
+          "centre_shift_observations": 4960,
+          "pooled_mean_centre_shift_px": 9.236070275081245e-05
+        }
+      }
+    }
+  },
+  "negative_controls": {
+    "description": "Paste a copy of each object at a free location in frame 16, or paint it with the dominant background colour, on the held-out check corpus. Neither may be tracked.",
+    "tracker": "palette-components-2",
+    "clips": 24,
+    "std_0": {
+      "duplicate_accepted": 0,
+      "duplicate_cases": 48,
+      "removed_accepted": 0,
+      "removed_cases": 48
+    },
+    "std_12": {
+      "duplicate_accepted": 0,
+      "duplicate_cases": 48,
+      "removed_accepted": 0,
+      "removed_cases": 48
+    }
+  },
+  "clean_equivalence": {
+    "description": "Old and new tracker on clean renders: tracked flags and positions compared exactly; errors against simulator positions in pixels.",
+    "by_corpus": {
+      "clean-pilot/all": {
+        "clips": 200,
+        "expected": 12400,
+        "v1": 12400,
+        "v2": 12400,
+        "identical_clips": 200,
+        "newly_tracked": 0,
+        "newly_lost": 0,
+        "v1_mean_err_px": 0.2241,
+        "v2_mean_err_px": 0.2241,
+        "v2_max_err_px": 0.669
+      },
+      "gen03/all": {
+        "clips": 332,
+        "expected": 20584,
+        "v1": 20583,
+        "v2": 20583,
+        "identical_clips": 332,
+        "newly_tracked": 0,
+        "newly_lost": 0,
+        "v1_mean_err_px": 0.2747,
+        "v2_mean_err_px": 0.2747,
+        "v2_max_err_px": 0.803
+      }
+    }
+  },
+  "saved_model_rescore": {
+    "description": "Saved #37 samples re-scored with both versions against the same references (dataset-0.1 seed 226000, manifest 1b57ba14...). Rule fixed before scoring. Thresholds in the declared training gate are unchanged.",
+    "records": [
+      {
+        "run": "foreground-loss-20261017",
+        "samples": "cvae",
+        "file_sha256": "7657d4a30e581c460dbd59c3ef6e8508dca22c613b9e4cc2313dac004aa22bb3",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "156/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 0,
+          "selected_mean_ade": null
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "156/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 0,
+          "selected_mean_ade": null
+        }
+      },
+      {
+        "run": "foreground-loss-20261017",
+        "samples": "diffusion ema-128",
+        "file_sha256": "44713c5fa733c531381b51fb9e2b98e3d953ce385ba4aea1d762e93f8e7f6800",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.024403303629998416
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.024403303629998416
+        }
+      },
+      {
+        "run": "foreground-loss-20261017",
+        "samples": "diffusion ema-32",
+        "file_sha256": "1a79bb80c192c851597da682553833452d563925a86579ddf1b29700bf5ea40d",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.024453738300454782
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.024453738300454782
+        }
+      },
+      {
+        "run": "foreground-loss-20261017",
+        "samples": "diffusion model-128",
+        "file_sha256": "a438360d1d9919b657a8b19360d6e5dfe4fd5e1d1234ee15c0dd7d5377292489",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.024513066598761086
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "248/248",
+          "complete_all_object_samples": 4,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.024513066598761086
+        }
+      },
+      {
+        "run": "foreground-loss-20261017",
+        "samples": "diffusion model-32",
+        "file_sha256": "7f0105c39e54b18338d5284ecd7fbc4cbff436dacf5d1b10ad0ec671986fc660",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.02453932774439909
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.02453932774439909
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "cvae",
+        "file_sha256": "faa3794e9129183c3caa08a8cdae46e08469dacb99ce800262ed44ac8de14732",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "244/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.0024881613618611743
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "248/248",
+          "complete_all_object_samples": 4,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.0024881613618611743
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "diffusion ema-128",
+        "file_sha256": "3bbb0ffbe008435eb5aedcf87ee970a400b2acc7b3bb291ec1fcd12744088f55",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "123/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 3,
+          "selected_mean_ade": 0.0037390220411442658
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 3,
+          "selected_mean_ade": 0.0037390220411442658
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "diffusion ema-32",
+        "file_sha256": "5175fbdd473acd5b1da3db0181b5475448197bd77091155206579572663cc449",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.003477934770484548
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.003477934770484548
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "diffusion model-128",
+        "file_sha256": "af98c49e2640366d92ac0c9a6d60c441a0a34502126e73e485a8501c1928fad8",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.003672214687757072
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.003672214687757072
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "diffusion model-32",
+        "file_sha256": "b0da6c64b2d847829c17769bf2ac346baf7e340b1c0345e06f2edbf6c82e4be2",
+        "reference": "scene-00226000-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "124/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.00370051776967748
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "247/248",
+          "complete_all_object_samples": 3,
+          "complete_selected_samples": 4,
+          "selected_mean_ade": 0.00370051776967748
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "cvae validation vs scene-00226008-variant-000",
+        "file_sha256": "4d379ae0ef88814dfba417ae4278aac9e6abbd9fd3e86f63002b88d4dc6e6cea",
+        "reference": "scene-00226008-variant-000",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "0/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 0,
+          "selected_mean_ade": null
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "0/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 0,
+          "selected_mean_ade": null
+        }
+      },
+      {
+        "run": "boundary-loss-20261017",
+        "samples": "cvae validation vs scene-00226008-variant-001",
+        "file_sha256": "4d379ae0ef88814dfba417ae4278aac9e6abbd9fd3e86f63002b88d4dc6e6cea",
+        "reference": "scene-00226008-variant-001",
+        "v1": {
+          "tracker": "palette-components-1",
+          "tracked": "0/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 0,
+          "selected_mean_ade": null
+        },
+        "v2": {
+          "tracker": "palette-components-2",
+          "tracked": "0/248",
+          "complete_all_object_samples": 0,
+          "complete_selected_samples": 0,
+          "selected_mean_ade": null
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "On the held-out check corpus, noise std 12-24 still loses about 4 percent of observations. All of them are object 1 in visible scene 620007 (both physics variants), whose colour is 25.2 units from a background colour; noise there forms pieces of 4 or more pixels.",
+    "Gaussian background noise is a simple control. Generated-video artefacts can differ, so generated-video tracking still needs visual inspection.",
+    "The validation-scene CVAE samples still track 0/248 under both versions."
+  ],
+  "centre_shift_mean_policy": {
+    "mean_centre_shift_px": "Equal average across noisy videos of each video mean over future observations accepted in both clean and noisy tracking.",
+    "pooled_mean_centre_shift_px": "Mean over all accepted future observations across videos; centre_shift_observations is its denominator. Missing observations are excluded, not assigned zero."
+  },
+  "review_checks": {
+    "tracker_source_revision": "108f11ae0dac737f24be565924fef3f1a32559f1",
+    "previous_tracker_source_sha256": "ca3640629ee5e55665eb3bc5b644d928ce4fcfdac07b9833aa11335947be5bd4",
+    "candidate_tracker_source_sha256": "a5f1594e06cb4b551512b0d6c22edc0d663c6c9e4c319d61730ff127593bd2ee",
+    "background_noise_rows_independently_reproduced": 18,
+    "corpus_manifest_hashes_verified": 3,
+    "saved_model_records_reproduced_under_both_versions": 12,
+    "saved_model_archive_hashes_verified": 12,
+    "historical_measurements_unchanged": true,
+    "full_suite_tests_passed": 415,
+    "subtests_passed": 4,
+    "source_archive_inspection": "passed",
+    "source_archive_replay_smoke": "passed",
+    "scope": "The 18 background-noise rows and 12 saved-model records were rechecked. The earlier clean-equivalence and pasted/removed corpus counts are not additional review reruns."
+  }
+}
