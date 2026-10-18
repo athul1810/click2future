@@ -8,8 +8,9 @@ the neural model.
 
 Checkpoint quality is still experimental. Running the app is not evidence of
 held-out action control, calibrated uncertainty or a state-of-the-art result.
-Pixel-derived trajectory overlays, the measured latency benchmark and the final
-presentation rehearsal remain open in [the specification](DEMO_SPEC.md).
+Pixel-derived trajectory overlays and a small warm browser timing study are now
+implemented. Held-out control and the final presentation rehearsal remain open
+in [the specification](DEMO_SPEC.md).
 
 ## launch
 
@@ -48,6 +49,17 @@ current diffusion EMA format or CVAE learned-prior format and must have at
 least one training update. Model/config/source incompatibilities fail visibly.
 No neural generation is replaced by simulator video or a stored nearest scene.
 
+For the private pilot handoff, every member is checked against its manifest:
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/pilot-handoff --models E3-spatial E0-flow-motion --device cuda
+```
+
+All six bundled checkpoints load. Choose up to four names from `MANIFEST.json`.
+Recorded validation failures and extra-supervision notes appear in run details.
+The flow/motion model is an additional supervised variant, not the ordinary CVAE.
+
 ## controls and reproducibility
 
 - Click a coloured object, then drag from it. The arrow anchors at its centre;
@@ -64,6 +76,10 @@ No neural generation is replaced by simulator video or a stored nearest scene.
 - Changing inputs labels existing videos as the previous request. Model details
   retain checkpoint/source hashes, device, sampler settings, force and seeds.
   The demo does not certify action adherence or an outcome probability.
+- The experimental pixel-track toggle overlays accepted trajectories only.
+  Missing observations break paths and remain in the displayed counts. Extractor
+  version/settings and failure reasons are in run details. Candidate v2 still
+  awaits the independent calibration review; overlays do not certify correctness.
 
 The default cache is `outputs/demo-cache`. Its identity includes observed RGB,
 selected mask, force, ordered seeds, horizon, checkpoint, sampling source and
@@ -96,4 +112,47 @@ verification dependency, not an app requirement.
 Unit tests check offline sampler parity, private RNG isolation, exact frame 0,
 cache identity/integrity, hidden-state separation, cancellation, input validation
 and local HTTP boundaries. The browser rehearsal checks 24 interactions with
-two presets. These checks establish functionality, not model quality.
+two presets, plus the pixel-track toggle (25 total). These checks establish
+functionality, not model quality.
+
+Warm end-to-end timing, with one warm-up and fresh seeds on every measured request:
+
+```powershell
+py -3.12 -m uv run --no-project --with playwright python scripts/benchmark_demo_browser.py --output outputs/demo-timing-new.json
+```
+
+This includes sampling, tracking, reference rendering, PNG transfer and the first
+painted browser canvas. It rejects cached requests. Startup/checkpoint loading
+are excluded; the reported empirical p95 is a small-sample estimate.
+
+## supervised trajectory checkpoint
+
+e5 uses the same observable inputs and public offline sampler. it adds future-pose
+supervision during training and a rigid observed-pixel renderer. it is a separate
+method, not a drop-in e3 result. see [the measured pilot](../docs/TRAJECTORY_PILOT.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server --dataset outputs/pilot-handoff/presets --checkpoint E5-trajectory=outputs/trajectory-handoff/best.pt --device cuda --trajectory-steps 16
+```
+
+or use the new verified e5 bundle with `--bundle` and `--models E5-trajectory`.
+`--trajectory-steps` controls edm heun steps; the existing `--sampling-steps`
+continues to control pixel DDIM sampling. both enter the replay identity.
+the checkpoint requires two separately visible objects, native 64px rgb and the
+matching model source hash. all current quality limitations remain visible in the
+bundle metadata and pixel-track counts.
+
+the [private draft handoff](https://github.com/athul1810/click2future/releases/tag/untagged-bc25eca4153d71c40aec)
+contains e5, the unchanged e3 comparison checkpoint, two validation presets and
+the complete evidence. use the source from pr #46 or its matching release target.
+
+```powershell
+gh release download trajectory-validation-2026-10-17 --repo athul1810/click2future --pattern 'click2future-trajectory-validation.zip*' --dir outputs/trajectory-download
+.\.venv\Scripts\python.exe -m zipfile -e outputs/trajectory-download/click2future-trajectory-validation.zip outputs/trajectory-demo-bundle
+.\.venv\Scripts\python.exe -m click2future.demo.server --bundle outputs/trajectory-demo-bundle --models E5-trajectory E3-spatial --device cuda
+```
+
+archive sha-256: `93d1c7129a82cdc8bf96abdd43dd0fbb2e8eac794d1a2e89a2ef2db72467fd77`.
+the uploaded archive was downloaded again and matched byte-for-byte; all 22
+inventoried member hashes pass. the bundled launch passes 25 browser checks.
+see [handoff checks](../docs/results/trajectory-handoff-checks.json).

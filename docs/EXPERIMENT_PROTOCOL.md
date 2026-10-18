@@ -208,10 +208,15 @@ with paired seeds; it cannot observe the selection.
 
 ## Remaining evidence
 
-T14 needs actual trained E0/E2/E3 samples and repeats. T15 needs frozen models
-trained on the matched generalization corpus from T06. T16 needs generated samples compared
-against repeated hidden-physics references and paired action controls. Zero and
-reversed-force scoring is connected to the batch workflow; selected-object-only
-controls use the separate intervention plan. Actual trained-model measurements
-remain open.
-This batch workflow does not replace those experiments or their quality checks.
+The [multi-scene pilot](MULTISCENE_PILOT.md) now measures actual E0/E2/E3/E4
+validation ensembles, repeated-physics coverage and both action-control families.
+Its [result record](results/multiscene-validation-checks.json) retains failures,
+image intervals, E4 heads and the 16/32/64-step study. The original models fail
+complete trajectory extraction; the flow decoder improves appearance but remains
+stationary under the action controls without displacement labels. With those
+labels, only 1/16 reversal pairs and 0/16 selected-object pairs pass.
+
+T14 still needs useful-checkpoint comparisons and independent repeats. T15 keeps
+all 248 ID/OOD/physics test clips reserved while validation fails. T16 still needs
+an ensemble that supports physical uncertainty measurements. Completing a batch
+workflow or observing RGB variation does not satisfy these quality checks.

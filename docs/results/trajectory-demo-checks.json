@@ -1,0 +1,58 @@
+{
+  "checks": [
+    "page and checkpoint metadata load",
+    "visible object selectors",
+    "background click cannot select an object",
+    "object buttons update selection",
+    "right drag gives positive x",
+    "down drag gives positive y",
+    "drag outside canvas clamps physical force",
+    "reverse keeps magnitude and negates both coordinates",
+    "zero push",
+    "keyboard direction matches image coordinates",
+    "shift fine adjustment",
+    "invalid seed fails without model execution",
+    "real checkpoint finishes four seeded futures",
+    "controls locked during generation",
+    "four videos retain ordered paired seeds and 32 frames",
+    "shared timeline scrubs all samples and pauses",
+    "pixel-track overlay and missing-count labels",
+    "timeline returns to supplied frame zero",
+    "simulator reference is separate and labelled",
+    "exact repeated request is identical labelled replay",
+    "changed push cannot relabel old videos as new output",
+    "cancelled generation cannot replace the previous output",
+    "scene change resets playback and output",
+    "mobile layout has no horizontal overflow",
+    "no browser javascript exceptions"
+  ],
+  "count": 25,
+  "browser_errors": [],
+  "ui_seconds": [
+    5.660667000047397,
+    0.7518407999887131
+  ],
+  "model_sources": [
+    [
+      {
+        "source": "live model",
+        "seconds": 0.9562318000243977
+      },
+      {
+        "source": "live model",
+        "seconds": 4.138140199996997
+      }
+    ],
+    [
+      {
+        "source": "cached replay",
+        "seconds": 0.011668299965094775
+      },
+      {
+        "source": "cached replay",
+        "seconds": 0.017395799979567528
+      }
+    ]
+  ],
+  "note": "functional rehearsal, not model quality or a latency benchmark"
+}

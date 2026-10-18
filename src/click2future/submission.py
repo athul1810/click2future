@@ -56,6 +56,16 @@ def _check(name, payload):
             "submission/train_cvae.sbatch",
             "submission/train_diffusion.sbatch",
             "submission/sample_evaluation.sbatch",
+            "submission/train_pilot.sbatch",
+            "submission/evaluate_pilot.sbatch",
+            "submission/train_trajectory.sbatch",
+            "submission/evaluate_trajectory.sbatch",
+            "submission/sampler_study.py",
+            "submission/study_sampler.sbatch",
+            "submission/flow_evaluation.py",
+            "submission/check_e4_collision.py",
+            "submission/check_e4_collision.sbatch",
+            "submission/pilot_image_metrics.py",
         }
     )
     if (

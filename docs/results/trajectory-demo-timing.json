@@ -1,0 +1,205 @@
+{
+  "scope": "warm browser request through first painted canvas; headless Chrome/Edge",
+  "included": "queue, neural sampling, conversion, pixel tracking, reference, PNG transfer and browser display",
+  "excluded": "server startup and checkpoint loading",
+  "condition": {
+    "scene": "g03-scene-00730016-forward-p00",
+    "object": 0,
+    "force": [
+      0.15000000596046448,
+      0
+    ]
+  },
+  "models": [
+    {
+      "id": "E5-trajectory",
+      "kind": "trajectory_diffusion",
+      "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA",
+      "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
+      "training_steps": 5000,
+      "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+      "sampling_steps": 16,
+      "sampling_source_sha256": {
+        "demo\\models.py": "d11e4c9511780964c879b31d817549983b20428db3f1054f19e8b8479167a5b5",
+        "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+        "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+        "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+        "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+        "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+        "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+        "training/sample_trajectory.py": "69b5d8da0d54c70f8d6105daa99ff6dae9a61915e8a5bf08b33946f821b85a76"
+      },
+      "runtime": {
+        "torch": "2.11.0+cu128",
+        "device": "cuda",
+        "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "precision": "float32"
+      },
+      "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+      "network_evaluations_per_sample": 31,
+      "supervision": "future positions and checked angular replay; training only"
+    },
+    {
+      "id": "E3-spatial",
+      "kind": "diffusion",
+      "detail": "spatial diffusion, rgb, EMA",
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+      "training_steps": 5000,
+      "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+      "sampling_steps": 32,
+      "sampling_source_sha256": {
+        "demo\\models.py": "d11e4c9511780964c879b31d817549983b20428db3f1054f19e8b8479167a5b5",
+        "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+        "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+        "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+        "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+        "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad"
+      },
+      "runtime": {
+        "torch": "2.11.0+cu128",
+        "device": "cuda",
+        "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "precision": "float32"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "warmup": true,
+      "seconds": 5.117891300003976,
+      "seeds": [
+        917340,
+        917341,
+        917342,
+        917343
+      ],
+      "models": [
+        {
+          "name": "E5-trajectory",
+          "source": "live model",
+          "seconds": 0.5572408000007272
+        },
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.05220360000385
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 5.3102295999997295,
+      "seeds": [
+        917344,
+        917345,
+        917346,
+        917347
+      ],
+      "models": [
+        {
+          "name": "E5-trajectory",
+          "source": "live model",
+          "seconds": 0.5577128999866545
+        },
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.128780400031246
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 5.3028026999672875,
+      "seeds": [
+        917348,
+        917349,
+        917350,
+        917351
+      ],
+      "models": [
+        {
+          "name": "E5-trajectory",
+          "source": "live model",
+          "seconds": 0.5372154000215232
+        },
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.114686199987773
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 5.369728800025769,
+      "seeds": [
+        917352,
+        917353,
+        917354,
+        917355
+      ],
+      "models": [
+        {
+          "name": "E5-trajectory",
+          "source": "live model",
+          "seconds": 0.5450926999910735
+        },
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.150483000034001
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 5.060633499990217,
+      "seeds": [
+        917356,
+        917357,
+        917358,
+        917359
+      ],
+      "models": [
+        {
+          "name": "E5-trajectory",
+          "source": "live model",
+          "seconds": 0.5462159000453539
+        },
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.02733770001214
+        }
+      ]
+    },
+    {
+      "warmup": false,
+      "seconds": 5.311401700018905,
+      "seeds": [
+        917360,
+        917361,
+        917362,
+        917363
+      ],
+      "models": [
+        {
+          "name": "E5-trajectory",
+          "source": "live model",
+          "seconds": 0.6010393000324257
+        },
+        {
+          "name": "E3-spatial",
+          "source": "live model",
+          "seconds": 4.044928200019058
+        }
+      ]
+    }
+  ],
+  "n": 5,
+  "median_seconds": 5.3102295999997295,
+  "empirical_p95_seconds": 5.3580633800243955,
+  "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
+  "browser_errors": []
+}

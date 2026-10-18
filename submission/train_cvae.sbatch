@@ -13,6 +13,10 @@ set -euo pipefail
 : "${SLURM_JOB_ID:?Submit this script with sbatch}"
 : "${C2F_DATA_DIR:?Set C2F_DATA_DIR to the generated dataset folder}"
 : "${C2F_RUN_DIR:?Set C2F_RUN_DIR to a new run folder}"
+if [[ -n "${C2F_PROJECT:-}" ]]; then
+  cd -- "$C2F_PROJECT"
+  export PYTHONPATH="$C2F_PROJECT/src${PYTHONPATH:+:$PYTHONPATH}"
+fi
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-4}"
-exec .venv/bin/python -m click2future.training.train_cvae \
+exec "${C2F_PYTHON:-.venv/bin/python}" -m click2future.training.train_cvae \
   --data-dir "$C2F_DATA_DIR" --output-dir "$C2F_RUN_DIR" "$@"

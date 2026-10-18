@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 7,
+  "pages": 8,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -10,51 +10,166 @@
     "Experiments and analysis",
     "Conclusion"
   ],
-  "model_comparison_scope": "One deterministic training clip and one validation condition, diagnostic only; main matched experiments are pending",
-  "figure_sample_seed": 0,
-  "methods": [
-    {
-      "method": "E0",
-      "training_seed": 0,
-      "training_steps": 5000,
-      "checkpoint_sha256": "87a46cfd24e5b13765665f3512b4d60afcfe86e15414e1f6add1bc511e0ec768"
-    },
-    {
-      "method": "E3",
-      "training_seed": 7,
-      "training_steps": 5000,
-      "checkpoint_sha256": "632cbd7937f3f54dbe00f19958f9ffb0249928b9e161d950694c5604e699f032"
-    }
-  ],
-  "validation": {
-    "scene_groups": 1,
-    "conditions": 1,
-    "hidden_physics_references": 2,
-    "sample_seeds": [
+  "model_comparison_scope": "Four-method bounded validation pilot plus two exploratory CVAE follow-ups; no model test split evaluated",
+  "dataset": {
+    "version": "dataset-0.3",
+    "seed": 730000,
+    "train_scene_groups": 16,
+    "validation_scene_groups": 4,
+    "train_clips": 336,
+    "validation_clips": 84,
+    "reserved_test_clips": 248,
+    "exact_replay_clips": 668,
+    "manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "split_manifest_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51"
+  },
+  "evaluation": {
+    "split": "validation",
+    "conditions": 24,
+    "physics_references": 84,
+    "seeds": [
       0,
       1,
       2,
       3
     ],
-    "videos": 8,
-    "image_metric": "SSIM only",
-    "complete_trajectories_by_method": {
-      "E0": 0,
-      "E3": 0
+    "primary_unique_videos": 384,
+    "selected_object_unique_videos": 128,
+    "primary_RGB_frame_zero_scored": false,
+    "bootstrap": {
+      "unit": "scene_group_id",
+      "replicates": 2000,
+      "seed": 0,
+      "training_seed_uncertainty": false
     }
   },
-  "source_sha256": {
-    "main.tex": "2c66fdcc9cb150230bc20aeaaf6a209ea2272a4d13f4832cf03501a5ff88435f",
-    "figures/pilot_training.png": "1faabf2077956df10d69630c5520fde85de028c36fa905629a35a7fac037dc6a",
-    "figures/pilot_validation.png": "aff8fa9688e2581a19fe754c090ca8e0260e982e17c550c3ac20fbe0f6584439"
+  "methods": [
+    {
+      "method": "E0",
+      "run_id": "pilot-E0",
+      "training_seed": 0,
+      "evaluated_checkpoint_step": 16000,
+      "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 398,
+        "tracking_fraction": 0.06686827956989247,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      }
+    },
+    {
+      "method": "E2",
+      "run_id": "pilot-E2",
+      "training_seed": 7,
+      "evaluated_checkpoint_step": 5000,
+      "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 378,
+        "tracking_fraction": 0.06350806451612903,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      }
+    },
+    {
+      "method": "E3",
+      "run_id": "pilot-E3",
+      "training_seed": 7,
+      "evaluated_checkpoint_step": 5000,
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 269,
+        "tracking_fraction": 0.04519489247311828,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      }
+    },
+    {
+      "method": "E4",
+      "run_id": "pilot-E4",
+      "training_seed": 7,
+      "evaluated_checkpoint_step": 5000,
+      "checkpoint_sha256": "541e9829e86f97a40e84ab3049968bea949bdb505891cf21ad7630ef6fa3028d",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 162,
+        "tracking_fraction": 0.02721774193548387,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      }
+    }
+  ],
+  "followups": {
+    "flow_decoder_followup": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
+    "motion_supervised_followup": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100"
   },
-  "rendered_pdf_sha256": "b45dff81147c57c3fa40d98c15e3715405c69520bd55bd8cc8777ad052a71d21",
-  "visual_review": "All seven pages rendered; source text, table, figures, captions and bibliography checked. No content is clipped.",
+  "figure": {
+    "sample_id": "g03-scene-00730016-forward-p00",
+    "seed": 0,
+    "frames": [
+      0,
+      4,
+      8,
+      16,
+      24,
+      31
+    ],
+    "figure_sha256": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
+    "force_xy": [
+      0.15000000596046448,
+      0.0
+    ]
+  },
+  "source_sha256": {
+    "main.tex": "eac429ad08ec9d42b32e0990a4da6d86aa833c0b2e5f5889d038ce852cc65511",
+    "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
+    "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e"
+  },
+  "rendered_pdf_sha256": "0e2056d68a2cc898a5bcb29fb21cfb50aa551e6c571c54e8e3748998fbfdf0b6",
+  "visual_review": "All eight pages rendered with macOS PDFKit. Tables, full frame strip, captions, equations and bibliography checked; no clipping, overlap or hyperlink annotations.",
+  "source_package_verification": {
+    "archive_sha256": "728c8a85880a703bcd6944342de30c94aebff7f59bd10213423843b7bdf00519",
+    "file_count": 175,
+    "bytes": 326378,
+    "extracted_source_tests": 465,
+    "subtests": 4,
+    "skips": 0,
+    "isolated_smoke": "passed",
+    "fresh_cached_install": "passed",
+    "extracted_source_test_seconds": 94.18,
+    "pre_demo_workspace_tests": 430
+  },
   "remaining": [
-    "Successful trained models and matched E0/E2/E3 comparisons",
-    "Validation hyperparameter and component studies",
-    "Generalization and uncertainty results",
+    "Useful action-responsive validation generation",
+    "Independent training repeats and frozen final comparisons",
+    "Reserved ID/OOD/physics model evaluations",
     "Member-reviewed contribution descriptions",
-    "Final PDF export and course submission checks"
+    "Final course submission checks"
   ]
 }

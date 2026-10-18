@@ -27,6 +27,15 @@ a learning issue rather than an access failure. See
 
 Storage quota, total usage allowance and access expiry remain unconfirmed.
 
+17 october: vpn reachability and authenticated ssh worked after reconnecting.
+jobs 43389/43396 prepared the frozen corpus and trained the trajectory pilot on
+the a40; job 43404 completed validation after installing pinned scikit-image
+0.26.0. dependency checks and exact cuda checkpoint continuation pass. the first
+evaluation attempt, 43403, failed on that missing dependency and is retained in
+[the experiment record](results/trajectory-pilot-validation.json). weights and
+results have verified local backups. access is working; model contact quality
+remains open. no per-user storage quota or access expiry was exposed by these checks.
+
 Access for the remaining members is not recorded. Members who need their own account should
 follow the course application form and send it to `ccdsgpu-tc@ntu.edu.sg`. Keep completed
 forms, credentials, and private connection reports outside Git.

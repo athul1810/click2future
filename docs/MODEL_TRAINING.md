@@ -2,8 +2,10 @@
 
 The CVAE model, training command, checkpoint handling, and prior sampler are implemented.
 The shared batch adapter and joint diffusion/auxiliary objective are also implemented.
-No generator has been trained by the CPU checks. TC2 overfitting, GPU resume, budgets,
-and trained-sample comparisons remain required.
+CPU checks do not train a generator. Actual TC2 training, exact saved-state
+continuation and the multi-scene comparison are now measured. The models still
+fail useful held-out motion. See [the pilot](MULTISCENE_PILOT.md) for budgets,
+checkpoint selection, flow follow-ups, E4 training and separate head/RGB scores.
 
 ## CPU correctness
 

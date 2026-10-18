@@ -7,6 +7,54 @@ held-out video quality. Training and checkpoint continuation are verified; final
 experiments and the demo remain unfinished.
 This is not the final submission.
 
+The bounded multi-scene pilot has fixed configs in
+`configs/training/multiscene_pilot.json`. It prepares dataset-0.3, computes contact
+class weights from training labels only, and trains E0/E2/E3/E4 on TC2. Set
+`C2F_PROJECT`, `C2F_PYTHON`, `C2F_PILOT_ROOT` and `C2F_SOURCE_REVISION`, then use
+`sbatch submission/train_pilot.sbatch`. Choose a new pilot directory for each attempt.
+For separate CPU data preparation, run
+`python -m click2future.training.multiscene_pilot --root outputs/new-pilot --prepare-only`.
+The same module's `--train-only` option uses that prepared corpus inside an allocation.
+
+After all training finishes, set `C2F_PILOT_RESULTS` to a new directory and submit
+`submission/evaluate_pilot.sbatch`. It evaluates validation clips, zero/reversed
+forces, changed selection, reference coverage, E4 heads and CVAE latent diagnostics.
+The initial GPU evaluation uses SSIM. Supplement its saved validation videos on CPU:
+
+```sh
+python submission/pilot_image_metrics.py --dataset outputs/new-pilot/data --evaluation outputs/pilot-evaluation --output outputs/pilot-images
+```
+
+This verifies saved reference/video hashes, excludes frame zero and includes a
+static-copy control. It requires the image-metrics extra and cached LPIPS weights.
+It does not establish physical accuracy. The 1.5 GPU-hour
+cap includes evaluation. Keep checkpoints, generated data and result archives outside
+the submitted source package.
+
+The reserved 16/32/64-step validation study uses the same E3 checkpoint and
+16 fixed cases. After pilot evaluation, set `C2F_STUDY_RESULTS` and submit
+`submission/study_sampler.sbatch`. It reads the parent validation plan from
+`C2F_PILOT_RESULTS`, retains excluded cases and uses the same four sampling seeds.
+Its 0.5-hour limit is part of the combined pilot budget.
+
+The optional flow-decoder CVAE uses `configs/training/cvae_flow_pilot.yaml` and a
+separate training folder. It warps observed frame-0 pixels rather than predicting
+new RGB. Its zero initialization copies a static image, so action response still
+needs verification. Select the config with `submission/train_cvae.sbatch`, then
+evaluate the trained checkpoint with `submission/flow_evaluation.py` inside an
+allocation. This follow-up keeps the original RGB baseline results separate.
+
+`cvae_flow_motion_pilot.yaml` is a further supervised follow-up. Future object
+masks and centre displacements supervise the predicted field through a loss;
+they never enter the prior or generator inputs. Keep it separate from the ordinary
+CVAE comparison. Select this config with the same training command and use a new
+run/evaluation directory.
+
+`submission/check_e4_collision.sbatch` checks E4 on one fixed training collision
+clip. Set the pilot environment above and `C2F_E4_CHECK` to a new directory. It
+trains 5,000 updates, samples four futures and exports actual final denoiser heads
+separately from RGB scores. Its training-only results do not establish generalization.
+
 Use Python 3.12. Create a fresh environment and install the project from this folder:
 
 ```sh
@@ -271,3 +319,29 @@ establishes interface functionality, not held-out quality or a final model ranki
 `MANIFEST.json` lists each included file and its SHA-256. The code ZIP is one of the
 three required submission files, alongside `group_07_report.pdf` and
 `group_07_contribution.pdf`.
+
+## supervised object-trajectory variant
+
+e5 is a separate pose-supervised trajectory diffusion model with rigid decoding
+of observed object pixels. its neural inputs remain the first image, selected
+mask and physical force. it requires exactly two separately visible objects,
+64px rgb and 32 frames. future positions and checked replay angles supervise
+training only; no simulator generates its inference-time motion.
+
+inside a tc2 slurm gpu allocation, using the matching generated frozen corpus:
+
+```sh
+python -m click2future.training.train_trajectory --dataset data/frozen --run-dir runs/trajectory --config configs/training/trajectory_pilot.json
+python -m click2future.evaluation.trajectory_pilot --dataset data/frozen --checkpoint runs/trajectory/best.pt --output outputs/trajectory-validation --device cuda --steps 16
+```
+
+the pilot evaluator accepts validation only and requires the image-metrics extra.
+model source hashes must match the checkpoint. this variant improves validation
+action response but still fails strict completeness/contact quality; it does not
+establish a sota result. weights, generated data and internal bundles are excluded.
+
+`submission/train_trajectory.sbatch` and `submission/evaluate_trajectory.sbatch`
+provide the tc2 job wrappers. set the required paths/revision listed at their top.
+the training wrapper uses `C2F_DATA_DIR`/`C2F_RUN_DIR`; evaluation uses the same
+data plus `C2F_TRAJECTORY_CHECKPOINT`/`C2F_TRAJECTORY_RESULTS`. use new output
+directories and keep attempted runs. install dependencies before submitting.

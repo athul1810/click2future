@@ -1,0 +1,5390 @@
+{
+  "status": "measured_validation_pilot",
+  "date": "2026-10-17",
+  "extractor_version": "palette-components-2",
+  "extractor_status": "candidate in PR 42; do not mix with version 1",
+  "training_source": "2ac7710953c6754ab3404ec104b50234386e19b1",
+  "evaluation_source": "ae84bdd8c932c5fd98517b8bc00a566de304ec83",
+  "dataset": {
+    "version": "dataset-0.3",
+    "seed": 730000,
+    "train_scene_groups": 16,
+    "validation_scene_groups": 4,
+    "train_clips": 336,
+    "validation_clips": 84,
+    "reserved_test_clips": 248,
+    "exact_replay_clips": 668,
+    "manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "split_manifest_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51"
+  },
+  "evaluation": {
+    "split": "validation",
+    "conditions": 24,
+    "physics_references": 84,
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "primary_unique_videos": 384,
+    "selected_object_unique_videos": 128,
+    "primary_RGB_frame_zero_scored": false,
+    "bootstrap": {
+      "unit": "scene_group_id",
+      "replicates": 2000,
+      "seed": 0,
+      "training_seed_uncertainty": false
+    }
+  },
+  "models": [
+    {
+      "method": "E0",
+      "run_id": "pilot-E0",
+      "training_seed": 0,
+      "evaluated_checkpoint_step": 16000,
+      "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 398,
+        "tracking_fraction": 0.06686827956989247,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "metrics": {
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_reference_to_nearest_sample": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_sample_to_nearest_reference": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.object_translation_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.background_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.mean_acceleration_norm_over_scored": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "image.ssim": {
+          "estimate": 0.9290657629082477,
+          "ci": [
+            0.9168549575443946,
+            0.9389301965472384
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.fde_at_min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "counts": {
+        "all_objects.complete_samples": 0,
+        "all_objects.total_samples": 96,
+        "all_objects.expected_future_observations": 5952,
+        "all_objects.tracked_future_observations": 398,
+        "selected_object.complete_samples": 0,
+        "selected_object.total_samples": 96,
+        "selected_object.expected_future_observations": 2976,
+        "selected_object.tracked_future_observations": 226,
+        "collision.interval.true_positive": 0,
+        "collision.interval.false_positive": 0,
+        "collision.interval.false_negative": 0,
+        "collision.interval.true_negative": 0,
+        "collision.interval.scored_bins": 0,
+        "collision.interval.expected_bins": 2976,
+        "collision.interval.missing_bins": 2976,
+        "collision.event.true_positive": 0,
+        "collision.event.false_positive": 0,
+        "collision.event.false_negative": 0,
+        "collision.event.complete_pair_timelines": 0,
+        "collision.event.expected_pair_timelines": 96,
+        "collision.encounter.true_positive": 0,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 0,
+        "collision.encounter.scored_pairs": 0,
+        "collision.encounter.expected_pairs": 96,
+        "collision.encounter.missing_pairs": 96
+      },
+      "actions": {
+        "method": "E0",
+        "runs": 1,
+        "counts": {
+          "forward.total_samples": 16,
+          "forward.complete_samples": 0,
+          "forward.missing_samples": 16,
+          "forward.stationary_samples": 0,
+          "forward.moving_samples": 0,
+          "reverse.total_samples": 16,
+          "reverse.complete_samples": 0,
+          "reverse.missing_samples": 16,
+          "reverse.stationary_samples": 0,
+          "reverse.moving_samples": 0,
+          "zero.total_samples": 16,
+          "zero.complete_samples": 0,
+          "zero.missing_samples": 16,
+          "zero.drifting_samples": 0,
+          "reversal.total_pairs": 16,
+          "reversal.complete_pairs": 0,
+          "reversal.missing_pairs": 16,
+          "reversal.moving_pairs": 0,
+          "reversal.stationary_pairs": 0
+        },
+        "metrics": {
+          "forward.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "forward.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "forward.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.correct_force_sign_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.mean_reversal_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reverse.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.mean_max_drift": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "selected_object": {
+        "method": "E0",
+        "runs": 1,
+        "counts": {
+          "selection.total_pairs": 16,
+          "selection.complete_pairs": 0,
+          "selection.missing_pairs": 16,
+          "selection.stationary_pairs": 0,
+          "selection.moving_pairs": 0
+        },
+        "metrics": {
+          "selection.correct_contrast_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.correct_target_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "sampling_seconds_including_load_and_export": 4.439660261385143,
+      "case_tracking": [
+        {
+          "condition_id": "g03-scene-00730016-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_0_to_1",
+          "tracked": 24,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_1_to_0",
+          "tracked": 124,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_0_to_1",
+          "tracked": 117,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_1_to_0",
+          "tracked": 47,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-reverse",
+          "tracked": 44,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-wall",
+          "tracked": 21,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-zero",
+          "tracked": 21,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        }
+      ]
+    },
+    {
+      "method": "E2",
+      "run_id": "pilot-E2",
+      "training_seed": 7,
+      "evaluated_checkpoint_step": 5000,
+      "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 378,
+        "tracking_fraction": 0.06350806451612903,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "metrics": {
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_reference_to_nearest_sample": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_sample_to_nearest_reference": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.object_translation_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.background_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.mean_acceleration_norm_over_scored": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "image.ssim": {
+          "estimate": 0.47359238726150105,
+          "ci": [
+            0.45726441756135117,
+            0.49100247254278595
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.fde_at_min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "counts": {
+        "all_objects.complete_samples": 0,
+        "all_objects.total_samples": 96,
+        "all_objects.expected_future_observations": 5952,
+        "all_objects.tracked_future_observations": 378,
+        "selected_object.complete_samples": 0,
+        "selected_object.total_samples": 96,
+        "selected_object.expected_future_observations": 2976,
+        "selected_object.tracked_future_observations": 0,
+        "collision.interval.true_positive": 0,
+        "collision.interval.false_positive": 0,
+        "collision.interval.false_negative": 0,
+        "collision.interval.true_negative": 0,
+        "collision.interval.scored_bins": 0,
+        "collision.interval.expected_bins": 2976,
+        "collision.interval.missing_bins": 2976,
+        "collision.event.true_positive": 0,
+        "collision.event.false_positive": 0,
+        "collision.event.false_negative": 0,
+        "collision.event.complete_pair_timelines": 0,
+        "collision.event.expected_pair_timelines": 96,
+        "collision.encounter.true_positive": 0,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 0,
+        "collision.encounter.scored_pairs": 0,
+        "collision.encounter.expected_pairs": 96,
+        "collision.encounter.missing_pairs": 96
+      },
+      "actions": {
+        "method": "E2",
+        "runs": 1,
+        "counts": {
+          "forward.total_samples": 16,
+          "forward.complete_samples": 0,
+          "forward.missing_samples": 16,
+          "forward.stationary_samples": 0,
+          "forward.moving_samples": 0,
+          "reverse.total_samples": 16,
+          "reverse.complete_samples": 0,
+          "reverse.missing_samples": 16,
+          "reverse.stationary_samples": 0,
+          "reverse.moving_samples": 0,
+          "zero.total_samples": 16,
+          "zero.complete_samples": 0,
+          "zero.missing_samples": 16,
+          "zero.drifting_samples": 0,
+          "reversal.total_pairs": 16,
+          "reversal.complete_pairs": 0,
+          "reversal.missing_pairs": 16,
+          "reversal.moving_pairs": 0,
+          "reversal.stationary_pairs": 0
+        },
+        "metrics": {
+          "forward.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "forward.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "forward.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.correct_force_sign_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.mean_reversal_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reverse.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.mean_max_drift": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "selected_object": {
+        "method": "E2",
+        "runs": 1,
+        "counts": {
+          "selection.total_pairs": 16,
+          "selection.complete_pairs": 0,
+          "selection.missing_pairs": 16,
+          "selection.stationary_pairs": 0,
+          "selection.moving_pairs": 0
+        },
+        "metrics": {
+          "selection.correct_contrast_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.correct_target_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "sampling_seconds_including_load_and_export": 43.86421960033476,
+      "case_tracking": [
+        {
+          "condition_id": "g03-scene-00730016-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-forward",
+          "tracked": 22,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-reverse",
+          "tracked": 43,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-wall",
+          "tracked": 52,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-zero",
+          "tracked": 35,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_1_to_0",
+          "tracked": 1,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-forward",
+          "tracked": 48,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-reverse",
+          "tracked": 54,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-wall",
+          "tracked": 40,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-zero",
+          "tracked": 56,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-forward",
+          "tracked": 3,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-reverse",
+          "tracked": 13,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-wall",
+          "tracked": 6,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-zero",
+          "tracked": 5,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        }
+      ]
+    },
+    {
+      "method": "E3",
+      "run_id": "pilot-E3",
+      "training_seed": 7,
+      "evaluated_checkpoint_step": 5000,
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 269,
+        "tracking_fraction": 0.04519489247311828,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "metrics": {
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_reference_to_nearest_sample": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_sample_to_nearest_reference": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.object_translation_mae_over_observed": {
+          "estimate": 0.030008606783086932,
+          "ci": null,
+          "scored_scene_groups": 1,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.background_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.mean_acceleration_norm_over_scored": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "image.ssim": {
+          "estimate": 0.48057268745913956,
+          "ci": [
+            0.46455627160957463,
+            0.496357492273228
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.fde_at_min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "counts": {
+        "all_objects.complete_samples": 0,
+        "all_objects.total_samples": 96,
+        "all_objects.expected_future_observations": 5952,
+        "all_objects.tracked_future_observations": 269,
+        "selected_object.complete_samples": 0,
+        "selected_object.total_samples": 96,
+        "selected_object.expected_future_observations": 2976,
+        "selected_object.tracked_future_observations": 0,
+        "collision.interval.true_positive": 0,
+        "collision.interval.false_positive": 0,
+        "collision.interval.false_negative": 0,
+        "collision.interval.true_negative": 0,
+        "collision.interval.scored_bins": 0,
+        "collision.interval.expected_bins": 2976,
+        "collision.interval.missing_bins": 2976,
+        "collision.event.true_positive": 0,
+        "collision.event.false_positive": 0,
+        "collision.event.false_negative": 0,
+        "collision.event.complete_pair_timelines": 0,
+        "collision.event.expected_pair_timelines": 96,
+        "collision.encounter.true_positive": 0,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 0,
+        "collision.encounter.scored_pairs": 0,
+        "collision.encounter.expected_pairs": 96,
+        "collision.encounter.missing_pairs": 96
+      },
+      "actions": {
+        "method": "E3",
+        "runs": 1,
+        "counts": {
+          "forward.total_samples": 16,
+          "forward.complete_samples": 0,
+          "forward.missing_samples": 16,
+          "forward.stationary_samples": 0,
+          "forward.moving_samples": 0,
+          "reverse.total_samples": 16,
+          "reverse.complete_samples": 0,
+          "reverse.missing_samples": 16,
+          "reverse.stationary_samples": 0,
+          "reverse.moving_samples": 0,
+          "zero.total_samples": 16,
+          "zero.complete_samples": 0,
+          "zero.missing_samples": 16,
+          "zero.drifting_samples": 0,
+          "reversal.total_pairs": 16,
+          "reversal.complete_pairs": 0,
+          "reversal.missing_pairs": 16,
+          "reversal.moving_pairs": 0,
+          "reversal.stationary_pairs": 0
+        },
+        "metrics": {
+          "forward.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "forward.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "forward.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.correct_force_sign_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.mean_reversal_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reverse.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.mean_max_drift": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "selected_object": {
+        "method": "E3",
+        "runs": 1,
+        "counts": {
+          "selection.total_pairs": 16,
+          "selection.complete_pairs": 0,
+          "selection.missing_pairs": 16,
+          "selection.stationary_pairs": 0,
+          "selection.moving_pairs": 0
+        },
+        "metrics": {
+          "selection.correct_contrast_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.correct_target_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "sampling_seconds_including_load_and_export": 43.71397759951651,
+      "case_tracking": [
+        {
+          "condition_id": "g03-scene-00730016-collision_0_to_1",
+          "tracked": 6,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-forward",
+          "tracked": 46,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-reverse",
+          "tracked": 58,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-wall",
+          "tracked": 43,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-zero",
+          "tracked": 54,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_0_to_1",
+          "tracked": 5,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_1_to_0",
+          "tracked": 4,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-forward",
+          "tracked": 15,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-reverse",
+          "tracked": 18,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-wall",
+          "tracked": 2,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-zero",
+          "tracked": 18,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        }
+      ]
+    },
+    {
+      "method": "E4",
+      "run_id": "pilot-E4",
+      "training_seed": 7,
+      "evaluated_checkpoint_step": 5000,
+      "checkpoint_sha256": "541e9829e86f97a40e84ab3049968bea949bdb505891cf21ad7630ef6fa3028d",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 162,
+        "tracking_fraction": 0.02721774193548387,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "metrics": {
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_reference_to_nearest_sample": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_sample_to_nearest_reference": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.object_translation_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.background_mae_over_observed": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.mean_acceleration_norm_over_scored": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "image.ssim": {
+          "estimate": 0.47107440623483654,
+          "ci": [
+            0.46172488590491717,
+            0.4831625038141359
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.fde_at_min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.event.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.precision": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.recall": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.f1": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.accuracy": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": null,
+          "ci": null,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "counts": {
+        "all_objects.complete_samples": 0,
+        "all_objects.total_samples": 96,
+        "all_objects.expected_future_observations": 5952,
+        "all_objects.tracked_future_observations": 162,
+        "selected_object.complete_samples": 0,
+        "selected_object.total_samples": 96,
+        "selected_object.expected_future_observations": 2976,
+        "selected_object.tracked_future_observations": 0,
+        "collision.interval.true_positive": 0,
+        "collision.interval.false_positive": 0,
+        "collision.interval.false_negative": 0,
+        "collision.interval.true_negative": 0,
+        "collision.interval.scored_bins": 0,
+        "collision.interval.expected_bins": 2976,
+        "collision.interval.missing_bins": 2976,
+        "collision.event.true_positive": 0,
+        "collision.event.false_positive": 0,
+        "collision.event.false_negative": 0,
+        "collision.event.complete_pair_timelines": 0,
+        "collision.event.expected_pair_timelines": 96,
+        "collision.encounter.true_positive": 0,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 0,
+        "collision.encounter.scored_pairs": 0,
+        "collision.encounter.expected_pairs": 96,
+        "collision.encounter.missing_pairs": 96
+      },
+      "actions": {
+        "method": "E4",
+        "runs": 1,
+        "counts": {
+          "forward.total_samples": 16,
+          "forward.complete_samples": 0,
+          "forward.missing_samples": 16,
+          "forward.stationary_samples": 0,
+          "forward.moving_samples": 0,
+          "reverse.total_samples": 16,
+          "reverse.complete_samples": 0,
+          "reverse.missing_samples": 16,
+          "reverse.stationary_samples": 0,
+          "reverse.moving_samples": 0,
+          "zero.total_samples": 16,
+          "zero.complete_samples": 0,
+          "zero.missing_samples": 16,
+          "zero.drifting_samples": 0,
+          "reversal.total_pairs": 16,
+          "reversal.complete_pairs": 0,
+          "reversal.missing_pairs": 16,
+          "reversal.moving_pairs": 0,
+          "reversal.stationary_pairs": 0
+        },
+        "metrics": {
+          "forward.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "forward.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "forward.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.correct_force_sign_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.mean_reversal_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reversal.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.mean_direction_error_degrees": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "reverse.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          },
+          "reverse.stationary_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.mean_max_drift": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "zero.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "selected_object": {
+        "method": "E4",
+        "runs": 1,
+        "counts": {
+          "selection.total_pairs": 16,
+          "selection.complete_pairs": 0,
+          "selection.missing_pairs": 16,
+          "selection.stationary_pairs": 0,
+          "selection.moving_pairs": 0
+        },
+        "metrics": {
+          "selection.correct_contrast_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.correct_target_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.drift_rate_over_complete": {
+            "estimate": null,
+            "ci": null,
+            "scored_scene_groups": 0,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 0
+          },
+          "selection.missing_rate": {
+            "estimate": 1.0,
+            "ci": [
+              1.0,
+              1.0
+            ],
+            "scored_scene_groups": 4,
+            "expected_scene_groups": 4,
+            "defined_bootstrap_replicates": 2000
+          }
+        }
+      },
+      "sampling_seconds_including_load_and_export": 44.42146489676088,
+      "case_tracking": [
+        {
+          "condition_id": "g03-scene-00730016-collision_0_to_1",
+          "tracked": 2,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-forward",
+          "tracked": 27,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-reverse",
+          "tracked": 40,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-wall",
+          "tracked": 21,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730016-zero",
+          "tracked": 38,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_0_to_1",
+          "tracked": 2,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-collision_1_to_0",
+          "tracked": 4,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-forward",
+          "tracked": 11,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-reverse",
+          "tracked": 7,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730017-zero",
+          "tracked": 10,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730018-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_0_to_1",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-collision_1_to_0",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-forward",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-reverse",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-wall",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        },
+        {
+          "condition_id": "g03-scene-00730019-zero",
+          "tracked": 0,
+          "expected": 248,
+          "complete_all": 0,
+          "complete_selected": 0,
+          "samples": 4
+        }
+      ]
+    }
+  ],
+  "flow_decoder_followup": {
+    "method": "E0",
+    "run_id": "flow-E0",
+    "training_seed": 0,
+    "evaluated_checkpoint_step": 20000,
+    "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
+    "quality": {
+      "case_count": 24,
+      "expected_observations": 5952,
+      "tracked_observations": 5654,
+      "tracking_fraction": 0.9499327956989247,
+      "complete_selected_clips": 80,
+      "expected_selected_clips": 96,
+      "complete_all_object_clips": 80,
+      "expected_all_object_clips": 96,
+      "selected_ade_mean_cases_if_all_complete": null,
+      "passes_tracking_and_selected_trajectory_gate": false,
+      "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+    },
+    "metrics": {
+      "all_objects.mean_pairwise_trajectory_distance": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.mean_reference_to_nearest_sample": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.mean_sample_to_nearest_reference": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "temporal.object_translation_mae_over_observed": {
+        "estimate": 0.0010132440782321872,
+        "ci": [
+          0.00024991750247899705,
+          0.0020484207482807447
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "temporal.background_mae_over_observed": {
+        "estimate": 0.0003172649997806103,
+        "ci": [
+          0.00024281669084960428,
+          0.0003639655351980371
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "temporal.mean_acceleration_norm_over_scored": {
+        "estimate": 0.1372604088779881,
+        "ci": [
+          0.1275772860479529,
+          0.14694353170802327
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "image.ssim": {
+        "estimate": 0.9693400771786277,
+        "ci": [
+          0.9615576697077165,
+          0.977122484649539
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "all_objects.mean_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.mean_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.min_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.min_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.fde_at_min_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.mean_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.mean_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.min_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.min_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      }
+    },
+    "collision_micro": {
+      "collision.interval.precision": {
+        "estimate": 0.12121212121212122,
+        "ci": [
+          0.034482758620689655,
+          0.18421052631578946
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.recall": {
+        "estimate": 0.0625,
+        "ci": [
+          0.017857142857142856,
+          0.125
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.f1": {
+        "estimate": 0.08247422680412371,
+        "ci": [
+          0.023529411764705882,
+          0.14285714285714285
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.accuracy": {
+        "estimate": 0.9659525631216527,
+        "ci": [
+          0.9571373899732109,
+          0.9751623996943064
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.positive_prevalence": {
+        "estimate": 0.02448355011476664,
+        "ci": [
+          0.015284677111196026,
+          0.033677765021048606
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.event.precision": {
+        "estimate": 0.3939393939393939,
+        "ci": [
+          0.1875,
+          0.5882352941176471
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.event.recall": {
+        "estimate": 0.203125,
+        "ci": [
+          0.07954545454545454,
+          0.34375
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.event.f1": {
+        "estimate": 0.26804123711340205,
+        "ci": [
+          0.11764705882352941,
+          0.425531914893617
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.precision": {
+        "estimate": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.recall": {
+        "estimate": 0.875,
+        "ci": [
+          0.75,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.f1": {
+        "estimate": 0.9333333333333333,
+        "ci": [
+          0.8571428571428571,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.accuracy": {
+        "estimate": 0.95,
+        "ci": [
+          0.9,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.positive_prevalence": {
+        "estimate": 0.4,
+        "ci": [
+          0.4,
+          0.4
+        ],
+        "defined_bootstrap_replicates": 2000
+      }
+    },
+    "counts": {
+      "all_objects.complete_samples": 80,
+      "all_objects.total_samples": 96,
+      "all_objects.expected_future_observations": 5952,
+      "all_objects.tracked_future_observations": 5654,
+      "selected_object.complete_samples": 80,
+      "selected_object.total_samples": 96,
+      "selected_object.expected_future_observations": 2976,
+      "selected_object.tracked_future_observations": 2678,
+      "collision.interval.true_positive": 4,
+      "collision.interval.false_positive": 29,
+      "collision.interval.false_negative": 60,
+      "collision.interval.true_negative": 2521,
+      "collision.interval.scored_bins": 2614,
+      "collision.interval.expected_bins": 2976,
+      "collision.interval.missing_bins": 362,
+      "collision.event.true_positive": 13,
+      "collision.event.false_positive": 20,
+      "collision.event.false_negative": 51,
+      "collision.event.complete_pair_timelines": 80,
+      "collision.event.expected_pair_timelines": 96,
+      "collision.encounter.true_positive": 28,
+      "collision.encounter.false_positive": 0,
+      "collision.encounter.false_negative": 4,
+      "collision.encounter.true_negative": 48,
+      "collision.encounter.scored_pairs": 80,
+      "collision.encounter.expected_pairs": 96,
+      "collision.encounter.missing_pairs": 16
+    },
+    "actions": {
+      "method": "E0",
+      "runs": 1,
+      "counts": {
+        "forward.total_samples": 16,
+        "forward.complete_samples": 16,
+        "forward.missing_samples": 0,
+        "forward.stationary_samples": 16,
+        "forward.moving_samples": 0,
+        "reverse.total_samples": 16,
+        "reverse.complete_samples": 16,
+        "reverse.missing_samples": 0,
+        "reverse.stationary_samples": 16,
+        "reverse.moving_samples": 0,
+        "zero.total_samples": 16,
+        "zero.complete_samples": 16,
+        "zero.missing_samples": 0,
+        "zero.drifting_samples": 0,
+        "reversal.total_pairs": 16,
+        "reversal.complete_pairs": 16,
+        "reversal.missing_pairs": 0,
+        "reversal.moving_pairs": 0,
+        "reversal.stationary_pairs": 16
+      },
+      "metrics": {
+        "forward.mean_direction_error_degrees": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "forward.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "forward.stationary_rate_over_complete": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reversal.correct_force_sign_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reversal.mean_reversal_error_degrees": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "reversal.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reverse.mean_direction_error_degrees": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "reverse.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reverse.stationary_rate_over_complete": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "zero.drift_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "zero.mean_max_drift": {
+          "estimate": 0.00310631016171774,
+          "ci": [
+            0.0015934129853142167,
+            0.005129230443102978
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "zero.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      }
+    },
+    "selected_object": {
+      "method": "E0",
+      "runs": 1,
+      "counts": {
+        "selection.total_pairs": 16,
+        "selection.complete_pairs": 16,
+        "selection.missing_pairs": 0,
+        "selection.stationary_pairs": 16,
+        "selection.moving_pairs": 0
+      },
+      "metrics": {
+        "selection.correct_contrast_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selection.correct_target_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selection.drift_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selection.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      }
+    },
+    "sampling_seconds_including_load_and_export": 1.5459824418649077,
+    "case_tracking": [
+      {
+        "condition_id": "g03-scene-00730016-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-wall",
+        "tracked": 172,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-wall",
+        "tracked": 174,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-wall",
+        "tracked": 173,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-wall",
+        "tracked": 175,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      }
+    ]
+  },
+  "flow_source": "9084ae0a1d23b92e68643ac640450e8da8954728",
+  "cvae_diagnostics": {
+    "rgb": {
+      "status": "measured_diagnostic",
+      "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1",
+      "training_steps": 16000,
+      "untrained_fixture": false,
+      "units": "RGB MAE in [-1,1]; frame 0 excluded",
+      "sample_seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "posterior_seed": 100000,
+      "splits": {
+        "train": {
+          "clips": 336,
+          "posterior_future_mae": 0.01204921691844772,
+          "prior_future_mae": 0.013862430722275306,
+          "prior_pairwise_rgb_mae": 0.003460407446254976,
+          "kl_mean_per_latent": 0.19091784954071045,
+          "latent_dimensions_kl_above_0_01": 64
+        },
+        "validation": {
+          "clips": 84,
+          "posterior_future_mae": 0.020905459089027273,
+          "prior_future_mae": 0.02112768277791994,
+          "prior_pairwise_rgb_mae": 0.0032960143123221186,
+          "kl_mean_per_latent": 0.2741438150405884,
+          "latent_dimensions_kl_above_0_01": 64
+        }
+      },
+      "scope": "Posterior uses future RGB for diagnosis only. Small KL or RGB spread alone does not establish posterior collapse or physical uncertainty."
+    },
+    "flow": {
+      "status": "measured_diagnostic",
+      "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
+      "training_steps": 20000,
+      "untrained_fixture": false,
+      "units": "RGB MAE in [-1,1]; frame 0 excluded",
+      "sample_seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "posterior_seed": 100000,
+      "splits": {
+        "train": {
+          "clips": 336,
+          "posterior_future_mae": 0.003099826187684314,
+          "prior_future_mae": 0.005685773424242295,
+          "prior_pairwise_rgb_mae": 0.0028058891457584693,
+          "kl_mean_per_latent": 0.3161201775074005,
+          "latent_dimensions_kl_above_0_01": 64
+        },
+        "validation": {
+          "clips": 84,
+          "posterior_future_mae": 0.004291124646052984,
+          "prior_future_mae": 0.006044624985883101,
+          "prior_pairwise_rgb_mae": 0.0025369707540708725,
+          "kl_mean_per_latent": 0.3251710534095764,
+          "latent_dimensions_kl_above_0_01": 64
+        }
+      },
+      "scope": "Posterior uses future RGB for diagnosis only. Small KL or RGB spread alone does not establish posterior collapse or physical uncertainty."
+    },
+    "flow_motion": {
+      "status": "measured_diagnostic",
+      "checkpoint_sha256": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100",
+      "training_steps": 9000,
+      "untrained_fixture": false,
+      "units": "RGB MAE in [-1,1]; frame 0 excluded",
+      "sample_seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "posterior_seed": 100000,
+      "splits": {
+        "train": {
+          "clips": 336,
+          "posterior_future_mae": 0.003302402710368196,
+          "prior_future_mae": 0.005741623406585123,
+          "prior_pairwise_rgb_mae": 0.0015107387714552022,
+          "kl_mean_per_latent": 0.3925534784793854,
+          "latent_dimensions_kl_above_0_01": 64
+        },
+        "validation": {
+          "clips": 84,
+          "posterior_future_mae": 0.00426493615772675,
+          "prior_future_mae": 0.005631962385710462,
+          "prior_pairwise_rgb_mae": 0.0013503100685089261,
+          "kl_mean_per_latent": 0.4075729250907898,
+          "latent_dimensions_kl_above_0_01": 64
+        }
+      },
+      "scope": "Posterior uses future RGB for diagnosis only. Small KL or RGB spread alone does not establish posterior collapse or physical uncertainty."
+    }
+  },
+  "e4_heads": {
+    "source": "actual_final_DDIM_timestep_0_heads",
+    "cases": 24,
+    "samples": 96,
+    "collision_threshold": 0.5,
+    "threshold_status": "fixed pilot threshold, not final validation calibration",
+    "mean_all_object_ade": 0.13140121734130564,
+    "mean_all_object_fde": 0.15599488284584648,
+    "collision_micro": {
+      "interval": {
+        "true_positive": 23,
+        "false_positive": 336,
+        "false_negative": 41,
+        "true_negative": 2576,
+        "scored_bins": 2976,
+        "expected_bins": 2976,
+        "missing_bins": 0,
+        "scored_pairs": 0,
+        "expected_pairs": 0,
+        "missing_pairs": 0,
+        "complete_pair_timelines": 0,
+        "expected_pair_timelines": 0,
+        "precision": 0.06406685236768803,
+        "recall": 0.359375,
+        "f1": 0.10874704491725769,
+        "positive_prevalence": 0.021505376344086023
+      },
+      "event": {
+        "true_positive": 28,
+        "false_positive": 331,
+        "false_negative": 36,
+        "true_negative": 0,
+        "scored_bins": 0,
+        "expected_bins": 0,
+        "missing_bins": 0,
+        "scored_pairs": 0,
+        "expected_pairs": 0,
+        "missing_pairs": 0,
+        "complete_pair_timelines": 96,
+        "expected_pair_timelines": 96,
+        "precision": 0.07799442896935933,
+        "recall": 0.4375,
+        "f1": 0.13238770685579196
+      },
+      "encounter": {
+        "true_positive": 32,
+        "false_positive": 48,
+        "false_negative": 0,
+        "true_negative": 16,
+        "scored_bins": 0,
+        "expected_bins": 0,
+        "missing_bins": 0,
+        "scored_pairs": 96,
+        "expected_pairs": 96,
+        "missing_pairs": 0,
+        "complete_pair_timelines": 0,
+        "expected_pair_timelines": 0,
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285714
+      }
+    },
+    "head_vs_rgb": {
+      "joint_future_object_observations": 162,
+      "expected_future_object_observations": 5952,
+      "mean_distance_over_joint_observations": 0.1480653581373746,
+      "joint_pair_intervals": 0,
+      "expected_pair_intervals": 2976,
+      "collision_agreement_over_joint_observations": null
+    },
+    "scope": "Single declared reference, pooled diagnostic. Head quality does not establish RGB quality. No head-score training-seed confidence interval."
+  },
+  "sampler_study": {
+    "source": "b134da0d2ae21946eac53e057344739ee4b0f468",
+    "slurm_job_id": "43327",
+    "cases_per_setting": 16,
+    "samples_per_setting": 64,
+    "sampling_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "settings": [
+      {
+        "sampling_steps": 16,
+        "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+        "seconds_including_load_and_export": 16.245673869736493,
+        "quality": {
+          "case_count": 16,
+          "expected_observations": 3968,
+          "tracked_observations": 330,
+          "tracking_fraction": 0.08316532258064516,
+          "complete_selected_clips": 0,
+          "expected_selected_clips": 64,
+          "complete_all_object_clips": 0,
+          "expected_all_object_clips": 64,
+          "selected_ade_mean_cases_if_all_complete": null,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "ssim": {
+          "estimate": 0.5473276084880537,
+          "ci": [
+            0.5282410078804153,
+            0.5655616580590134
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "actions": {
+          "methods": [
+            {
+              "method": "E3",
+              "runs": 1,
+              "counts": {
+                "forward.total_samples": 16,
+                "forward.complete_samples": 0,
+                "forward.missing_samples": 16,
+                "forward.stationary_samples": 0,
+                "forward.moving_samples": 0,
+                "reverse.total_samples": 16,
+                "reverse.complete_samples": 0,
+                "reverse.missing_samples": 16,
+                "reverse.stationary_samples": 0,
+                "reverse.moving_samples": 0,
+                "zero.total_samples": 16,
+                "zero.complete_samples": 0,
+                "zero.missing_samples": 16,
+                "zero.drifting_samples": 0,
+                "reversal.total_pairs": 16,
+                "reversal.complete_pairs": 0,
+                "reversal.missing_pairs": 16,
+                "reversal.moving_pairs": 0,
+                "reversal.stationary_pairs": 0
+              }
+            }
+          ],
+          "bootstrap": {
+            "unit": "scene_group_id",
+            "replicates": 2000,
+            "confidence": 0.95,
+            "seed": 0
+          }
+        }
+      },
+      {
+        "sampling_steps": 32,
+        "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+        "seconds_including_load_and_export": 29.36642724275589,
+        "quality": {
+          "case_count": 16,
+          "expected_observations": 3968,
+          "tracked_observations": 220,
+          "tracking_fraction": 0.055443548387096774,
+          "complete_selected_clips": 0,
+          "expected_selected_clips": 64,
+          "complete_all_object_clips": 0,
+          "expected_all_object_clips": 64,
+          "selected_ade_mean_cases_if_all_complete": null,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "ssim": {
+          "estimate": 0.5083308525346851,
+          "ci": [
+            0.4899039335415196,
+            0.5269551791221677
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "actions": {
+          "methods": [
+            {
+              "method": "E3",
+              "runs": 1,
+              "counts": {
+                "forward.total_samples": 16,
+                "forward.complete_samples": 0,
+                "forward.missing_samples": 16,
+                "forward.stationary_samples": 0,
+                "forward.moving_samples": 0,
+                "reverse.total_samples": 16,
+                "reverse.complete_samples": 0,
+                "reverse.missing_samples": 16,
+                "reverse.stationary_samples": 0,
+                "reverse.moving_samples": 0,
+                "zero.total_samples": 16,
+                "zero.complete_samples": 0,
+                "zero.missing_samples": 16,
+                "zero.drifting_samples": 0,
+                "reversal.total_pairs": 16,
+                "reversal.complete_pairs": 0,
+                "reversal.missing_pairs": 16,
+                "reversal.moving_pairs": 0,
+                "reversal.stationary_pairs": 0
+              }
+            }
+          ],
+          "bootstrap": {
+            "unit": "scene_group_id",
+            "replicates": 2000,
+            "confidence": 0.95,
+            "seed": 0
+          }
+        }
+      },
+      {
+        "sampling_steps": 64,
+        "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+        "seconds_including_load_and_export": 57.59487683326006,
+        "quality": {
+          "case_count": 16,
+          "expected_observations": 3968,
+          "tracked_observations": 184,
+          "tracking_fraction": 0.046370967741935484,
+          "complete_selected_clips": 0,
+          "expected_selected_clips": 64,
+          "complete_all_object_clips": 0,
+          "expected_all_object_clips": 64,
+          "selected_ade_mean_cases_if_all_complete": null,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "ssim": {
+          "estimate": 0.4931292446758285,
+          "ci": [
+            0.4748468913288786,
+            0.5120328446666466
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "actions": {
+          "methods": [
+            {
+              "method": "E3",
+              "runs": 1,
+              "counts": {
+                "forward.total_samples": 16,
+                "forward.complete_samples": 0,
+                "forward.missing_samples": 16,
+                "forward.stationary_samples": 0,
+                "forward.moving_samples": 0,
+                "reverse.total_samples": 16,
+                "reverse.complete_samples": 0,
+                "reverse.missing_samples": 16,
+                "reverse.stationary_samples": 0,
+                "reverse.moving_samples": 0,
+                "zero.total_samples": 16,
+                "zero.complete_samples": 0,
+                "zero.missing_samples": 16,
+                "zero.drifting_samples": 0,
+                "reversal.total_pairs": 16,
+                "reversal.complete_pairs": 0,
+                "reversal.missing_pairs": 16,
+                "reversal.moving_pairs": 0,
+                "reversal.stationary_pairs": 0
+              }
+            }
+          ],
+          "bootstrap": {
+            "unit": "scene_group_id",
+            "replicates": 2000,
+            "confidence": 0.95,
+            "seed": 0
+          }
+        }
+      }
+    ],
+    "selected_setting": null,
+    "reason": "All settings fail tracking and action eligibility; no successful sampler selected."
+  },
+  "supplemental_image_metrics": {
+    "status": "measured_supplementary_cpu_image_analysis",
+    "scope": "Single-reference distances do not establish physical validity.",
+    "weights": {
+      "implementation": "lpips.LPIPS",
+      "package_version": "0.1.4",
+      "torch_version": "2.11.0",
+      "torchvision_version": "0.26.0",
+      "backbone": "alex",
+      "backbone_weights": "AlexNet_Weights.IMAGENET1K_V1",
+      "calibration_version": "0.1",
+      "backbone_sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+      "calibration_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+      "input": "uint8 RGB -> float32 NCHW / 127.5 - 1; normalize=False",
+      "resize": "none",
+      "spatial": false,
+      "device": "cpu",
+      "mode": "eval; frozen parameters; inference_mode"
+    },
+    "aggregation": "equal cases within scene, then equal scenes; 2000 scene bootstrap draws, seed 0",
+    "source_analysis_sha256": "1e42d3f5b7f4690cef62da97781b46d933d68d53989fd51bdf403be0e6a66d84",
+    "flow_analysis_sha256": "d262983f4f07fc3a53bfbe7f45b0a90d3f57cc2bd91740c8cc79ded6549836e8",
+    "models": [
+      {
+        "method": "E0",
+        "run_id": "pilot-E0",
+        "source": "generated_video",
+        "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1",
+        "summary": {
+          "ssim": {
+            "mean": 0.9290657629082465,
+            "ci95": [
+              0.9168549575443936,
+              0.9389301965472352
+            ]
+          },
+          "lpips": {
+            "mean": 0.12296185896466538,
+            "ci95": [
+              0.07966569427811411,
+              0.1745914739684292
+            ]
+          }
+        }
+      },
+      {
+        "method": "E2",
+        "run_id": "pilot-E2",
+        "source": "generated_video",
+        "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2",
+        "summary": {
+          "ssim": {
+            "mean": 0.47359238726150105,
+            "ci95": [
+              0.4572644175613516,
+              0.4910024725427853
+            ]
+          },
+          "lpips": {
+            "mean": 0.1502881102334027,
+            "ci95": [
+              0.1403831187923569,
+              0.1600642471201217
+            ]
+          }
+        }
+      },
+      {
+        "method": "E3",
+        "run_id": "pilot-E3",
+        "source": "generated_video",
+        "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+        "summary": {
+          "ssim": {
+            "mean": 0.4805726874591396,
+            "ci95": [
+              0.4645562716095752,
+              0.4963574922732275
+            ]
+          },
+          "lpips": {
+            "mean": 0.14928908879938785,
+            "ci95": [
+              0.13936100227593054,
+              0.15790013772290282
+            ]
+          }
+        }
+      },
+      {
+        "method": "E4",
+        "run_id": "pilot-E4",
+        "source": "generated_video",
+        "checkpoint_sha256": "541e9829e86f97a40e84ab3049968bea949bdb505891cf21ad7630ef6fa3028d",
+        "summary": {
+          "ssim": {
+            "mean": 0.4710744062348367,
+            "ci95": [
+              0.4617248859049177,
+              0.4831625038141355
+            ]
+          },
+          "lpips": {
+            "mean": 0.15368530957243576,
+            "ci95": [
+              0.14248561949008495,
+              0.16488499965478653
+            ]
+          }
+        }
+      },
+      {
+        "method": "copy-frame0",
+        "run_id": "copy-frame0",
+        "source": "control",
+        "checkpoint_sha256": null,
+        "summary": {
+          "ssim": {
+            "mean": 0.9445505770517257,
+            "ci95": [
+              0.9402393867777485,
+              0.9500779791828504
+            ]
+          },
+          "lpips": {
+            "mean": 0.062157503854729346,
+            "ci95": [
+              0.04603327854592178,
+              0.0782817291635369
+            ]
+          }
+        }
+      }
+    ],
+    "flow": [
+      {
+        "method": "E0",
+        "run_id": "flow-E0",
+        "source": "generated_video",
+        "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
+        "summary": {
+          "ssim": {
+            "mean": 0.9693400771786286,
+            "ci95": [
+              0.9615576697077176,
+              0.9771224846495395
+            ]
+          },
+          "lpips": {
+            "mean": 0.022703160975265993,
+            "ci95": [
+              0.01411347477711701,
+              0.033224490475648606
+            ]
+          }
+        }
+      },
+      {
+        "method": "copy-frame0",
+        "run_id": "copy-frame0",
+        "source": "control",
+        "checkpoint_sha256": null,
+        "summary": {
+          "ssim": {
+            "mean": 0.9445505770517257,
+            "ci95": [
+              0.9402393867777485,
+              0.9500779791828504
+            ]
+          },
+          "lpips": {
+            "mean": 0.062157503854729346,
+            "ci95": [
+              0.04603327854592178,
+              0.0782817291635369
+            ]
+          }
+        }
+      }
+    ],
+    "flow_motion": [
+      {
+        "method": "E0",
+        "run_id": "flow-E0",
+        "source": "generated_video",
+        "checkpoint_sha256": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100",
+        "summary": {
+          "ssim": {
+            "mean": 0.972944254129354,
+            "ci95": [
+              0.966615307901889,
+              0.9784871789610335
+            ]
+          },
+          "lpips": {
+            "mean": 0.01675372773559903,
+            "ci95": [
+              0.010236431852629926,
+              0.025849363271940855
+            ]
+          }
+        }
+      },
+      {
+        "method": "copy-frame0",
+        "run_id": "copy-frame0",
+        "source": "control",
+        "checkpoint_sha256": null,
+        "summary": {
+          "ssim": {
+            "mean": 0.9445505770517257,
+            "ci95": [
+              0.9402393867777485,
+              0.9500779791828504
+            ]
+          },
+          "lpips": {
+            "mean": 0.062157503854729346,
+            "ci95": [
+              0.04603327854592178,
+              0.0782817291635369
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "test_splits_evaluated": [],
+  "limitations": [
+    "One training seed per method and four validation scenes.",
+    "Unequal CVAE and diffusion update/batch budgets; no final ranking.",
+    "Flow variants were selected after inspecting validation failures, so their validation estimates are exploratory.",
+    "No generated test data used to change tracker or action thresholds.",
+    "No successful physical-action or meaningful-uncertainty claim.",
+    "At native forward/reverse force, 11/16 continuous and 8/16 rendered references are stationary by the fixed short-window threshold; stronger selected-object controls pass all 16 reference pairs."
+  ],
+  "input_report_sha256": {
+    "evaluation/validation-metrics/summary.json": "0c6aff1aa58fbfb362460271eaf014766db51a54edea744caf187a6ff54a43f0",
+    "evaluation/validation-metrics/actions.json": "70d59b3f862d90cdd174d6ce46cd1d4ce257a385fb8c218f38fb1ca53fbb4112",
+    "evaluation/selected-object-metrics/targets.json": "fba24f1470384e6bbd9bf9ada29f4dfbe5d963bd4f432029c097fbb70e89ea71",
+    "evaluation/validation-samples/sampling.json": "97e87fef428a4308dd178477ddb070ba534f414d9e82583f2b98c584273ba1ef",
+    "evaluation/pilot-results.json": "19c79476c0f50a1c75d5255bd83ae68fd5cdc5ebe7804113c977bd99306495a4",
+    "flow-evaluation/validation-metrics/summary.json": "aee4620b316fefed5c4ed6a34ddad905f678227edc0e15efea5aab00df2920cd",
+    "flow-evaluation/validation-metrics/actions.json": "f3fac41993555737d682b6565b12defd785026b0cad6d3398a90fa5d9e8f65fa",
+    "flow-evaluation/selected-object-metrics/targets.json": "dc1a4f3bf53801e734863aff8529ad516cf8666f53115ad46086d340cbb01ba9",
+    "flow-evaluation/validation-samples/sampling.json": "aa60e0f05018bb8715bb90fb9916de3b351a47bec06850111e9f2c27e78f9119",
+    "flow-evaluation/flow-results.json": "2d1442d6beb3012319ac09fe66f051b6d5b00b5d69c37baf602197311590f2fc",
+    "sampler-study/study.json": "7cc98109211f56524e97ff0908bf0eedd7191ffc2116bc219033466b23f7f392",
+    "evaluation/heads/manifest.json": "f1050101213c8e242237faa8cfc07251bd34379c535fc77d5f02c24ed2928bb8",
+    "evaluation/heads/g03-scene-00730016-collision_0_to_1-p00.json": "f9d846902c7bbef10951f683bb8c144f766cae23a9da8458a7523ab2996aa805",
+    "evaluation/heads/g03-scene-00730016-collision_1_to_0-p00.json": "8c334c2a67dc016b398d0bc43c1dc5506929eed11db6d08a85e78b6da0ec7267",
+    "evaluation/heads/g03-scene-00730016-forward-p00.json": "17f9b21eb8e527c3fbe40ae8ea326cf4d920f64519908449bf3f0a9638078b2d",
+    "evaluation/heads/g03-scene-00730016-reverse-p00.json": "57aef8a59ff1c15b6d1b9ce42ef6d8adbf61797f34393880d8a61fa127860db6",
+    "evaluation/heads/g03-scene-00730016-wall-p00.json": "47acb40f7c9a442cc5923d363dd0e1a92f6bde7278af89e1e74c5cba0c935620",
+    "evaluation/heads/g03-scene-00730016-zero-p00.json": "15d94fb2bf13b87a282f60cf36929cc7d891ea31433406d12c37a6a35840164a",
+    "evaluation/heads/g03-scene-00730017-collision_0_to_1-p00.json": "554e2e4b5801594838055df677ed556ff7945d364fb3226b2b0cea2e30bfdd0c",
+    "evaluation/heads/g03-scene-00730017-collision_1_to_0-p00.json": "15fd4af43248351ce00b345d5d3bb4a835c302ebc4e6c1c0a1e0c499b66ee4be",
+    "evaluation/heads/g03-scene-00730017-forward-p00.json": "b99d2a85c9bfaf0a15ae547cbb0117ed1988e4a1c2906c28ffa144acd7514809",
+    "evaluation/heads/g03-scene-00730017-reverse-p00.json": "516458aba0bc51a6d7676dc673bfb9d4516daba05b86cf52c3cf18f05b992273",
+    "evaluation/heads/g03-scene-00730017-wall-p00.json": "3e713e0aaee2a8e544563ac804a6657cf67d709dca3ca02105f9d711560da70e",
+    "evaluation/heads/g03-scene-00730017-zero-p00.json": "13e7c46db0df78cb83fe5d561590c831a07c3b4cb61bde4d1d9193a56255e929",
+    "evaluation/heads/g03-scene-00730018-collision_0_to_1-p00.json": "6887f9ad005dbe40a16767647e8f544c9fb88ce99458eb93f1f19fd0951fb4a1",
+    "evaluation/heads/g03-scene-00730018-collision_1_to_0-p00.json": "6a93491e33bbc0763c4d578704ba2428758572345fc5b8751a01f97ce0317862",
+    "evaluation/heads/g03-scene-00730018-forward-p00.json": "e78aa894b27458413c26da9d2683b6089514c8c0e82fa9d3d0543335eeb38453",
+    "evaluation/heads/g03-scene-00730018-reverse-p00.json": "60096ddcddde68ed2124b54612b24954153713d4554a9089aa6e1ab998dc3ab9",
+    "evaluation/heads/g03-scene-00730018-wall-p00.json": "7defccfe8527bd15009b8125361435da648445f13f48f02aa85be26bd18f014c",
+    "evaluation/heads/g03-scene-00730018-zero-p00.json": "482e8f0dc7a9e6d06c7006ec717a6b13146a38fe22c7ffd41c66049e45440f1d",
+    "evaluation/heads/g03-scene-00730019-collision_0_to_1-p00.json": "a9849f9ebab9f1edb9b1fc7b27970aac6b27820b4e91a5c86b77d52fd4926389",
+    "evaluation/heads/g03-scene-00730019-collision_1_to_0-p00.json": "59d63c1afcc723e2a653f788752faaf582249d5caddc797c76685654031d88cf",
+    "evaluation/heads/g03-scene-00730019-forward-p00.json": "10ff92dd9cd695589fd7d7b2027e9774775f33f09465fb65a3add9dd041176b2",
+    "evaluation/heads/g03-scene-00730019-reverse-p00.json": "32066aed6d30b406d0719ec1def775185bd1ae706eed87db8180b5781d72706a",
+    "evaluation/heads/g03-scene-00730019-wall-p00.json": "a2f9de09b1053ec494abb05ae9077269c5eda8eff6650d646cc3ff73b9ac7faf",
+    "evaluation/heads/g03-scene-00730019-zero-p00.json": "c8199417fff8525253d5b302e0d774db4f8227aeddeaf3f03e42ff8a3ca6f398",
+    "evaluation/cvae-diagnostics.json": "c09b0fc72807c92f1936fe8322747b593eb8a30ae1cbb0c6321376cd049d441e",
+    "flow-evaluation/cvae-diagnostics.json": "61e1a523181a208de06fc18cb5e74ee9c77be9ca6fe0d243073a4539bbe9e1b9",
+    "flow-motion-evaluation/validation-metrics/summary.json": "e1bbba3338b08da0d697ab4542850c4e8094d2cc342ca9595918eb65c54a393a",
+    "flow-motion-evaluation/validation-samples/sampling.json": "4e5409fd227b35c07654afb4f7a715cb6dba887db6035ef62e7466c62ee86837",
+    "flow-motion-evaluation/flow-results.json": "d09e96bc9793be3583059c3a13644e7351d31e3780b077ff228ec7091750f595",
+    "flow-motion-evaluation/validation-metrics/actions.json": "eb601289c32dbf79f8848376e2f8914aaa955f899d37e7e874adc2d0b639f344",
+    "flow-motion-evaluation/selected-object-metrics/targets.json": "f33781df48fd7487930e92cfa0cef0e1fee33a8fc2577b60754213a2c46ccb3c",
+    "flow-motion-evaluation/validation-metrics/comparison.json": "f6a889f2ae107454838b643d8767db3b4e80a120b7daf30af374dcacef1c6b75",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00000-trajectory.json": "00b8a295681a2fc28202cd925b1a8b90bbef0c6b2780dd1cd16cce9a360b9c9d",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00001-trajectory.json": "101e1190c76034ed04183d05353a1b0ee0f4b87a710c37f28709f1e690ec4f67",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00002-trajectory.json": "59836e130a7621c70c8e6e8349935fd39a35f3d320f378d9297b0b7a445244a3",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00003-trajectory.json": "73367a13ba51d1bc23b3986f3debed2229a522664287d904d66293e36b09ab52",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00004-trajectory.json": "7513e26760b06dc80e25e9489a7b9fecf6a330a565a63342919eca032a5df263",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00005-trajectory.json": "252921e6d82c2fcc7ff0b24d3a720d8567a49da1ead278a13c4850387ff85e86",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00006-trajectory.json": "e26e9ee5c30d621db3622c4dbff21ec20bb3fcd89b42fa6a958cbd168992471a",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00007-trajectory.json": "d75f6d1e5e3224508dae503057169d5c730dc6cdcd4b3b2cbfa6d98bff816028",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00008-trajectory.json": "8ac35189ed81d2afe4dcbbdc5118aaffbdfbb3664c02755dbff99fa9139e2b39",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00009-trajectory.json": "088310c316bd128dbc1f860b5b839f6919ffee3a36b9bdf5fd896255057d0765",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00010-trajectory.json": "0cab35a18822ccc7c841a1bc164e6cd026c0049e78779e1c7e5e849d0aa2acbc",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00011-trajectory.json": "802fd5af69c726992102cd81572219e6dd763cfc9a61d789e9c8b84df318aaac",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00012-trajectory.json": "c11557f41f5873f3e0305dd1e2cb99a6f3de5a054b81e57dae207e0e9953d021",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00013-trajectory.json": "2092e49ecb6edcf34214866f2b86e883f9939ddb609a24fc49dabaecab07d753",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00014-trajectory.json": "aefe3b1c2447da1e1732bf16c13af0aa58b5469882065fa08ea169c226d9e970",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00015-trajectory.json": "d7c963658e9269266a79c406334d38f17fad226d50350f31515d5e428fad31d0",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00016-trajectory.json": "e2a745c8228d87d561f72c1f2b3f5273adefd4d80761f603f7d327b726e46820",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00017-trajectory.json": "f2c4471c9a91574dc45a6040e1582ff1d952bde37643eb78a7d69d03de6ef116",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00018-trajectory.json": "ceefefae4c542dca138a9340fba9ac7b41f02dd93a27a5992e02507e2462293b",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00019-trajectory.json": "1ed562c38fba633d5c99cbf57af915476b94de63b30302c7d1cc22eb72775683",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00020-trajectory.json": "5d4843c8072f2bc2243bc51af2f50e72c3a613d5941542658f6925b85ab9e7e6",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00021-trajectory.json": "fb0ca864651896125a91220985a3cbaf72c1a870e54027710a00ed3fce3dc244",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00022-trajectory.json": "72f28c9b345c5bd29cab4484fc255a5459cb7fae5589e0bb0311cd3f2d36adca",
+    "flow-motion-evaluation/validation-metrics/flow-E0-00023-trajectory.json": "3366f1bbd52c2ee6349711254fdcbac949172bc8b1ea780854e0536eb8713e68",
+    "flow-motion-evaluation/cvae-diagnostics.json": "69d5b9a7312eef8634ae00e071bca91e29fc8900465853c99d5d272fd6666ed0",
+    "evaluation/plan.json": "b2de5309da0f96f9076c82fd83b267669597e596c151602ac5ce478aae0cf4ee"
+  },
+  "e4_collision_overfit": {
+    "status": "measured_training_only_overfit_check",
+    "sample_id": "g03-scene-00730000-collision_0_to_1-p00",
+    "reference_contact_onsets": 1,
+    "quality": {
+      "case_count": 1,
+      "expected_observations": 248,
+      "tracked_observations": 247,
+      "tracking_fraction": 0.9959677419354839,
+      "complete_selected_clips": 3,
+      "expected_selected_clips": 4,
+      "complete_all_object_clips": 3,
+      "expected_all_object_clips": 4,
+      "selected_ade_mean_cases_if_all_complete": null,
+      "passes_tracking_and_selected_trajectory_gate": false,
+      "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+    },
+    "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "checkpoint_sha256": "8c291c4ab055013088d4274bc3b0771010b629e6ba16e8efb1df2ca3dfc6fed1",
+    "source_revision": "d007086235f61fd00255a2c9a01529fa0fecdba3",
+    "slurm_job_id": "43342",
+    "scope": "One fixed training clip, four prior-noise seeds. Not generalization or physical uncertainty evidence.",
+    "head_vs_rgb": {
+      "rgb_extractor_version": "palette-components-2",
+      "expected_future_object_observations": 248,
+      "jointly_observed_future_objects": 247,
+      "mean_trajectory_distance_over_joint_observations": 0.005688769258229061,
+      "jointly_observed_pair_intervals": 114,
+      "collision_interval_agreement_over_joint_observations": 0.9035087719298246,
+      "scope": "Agreement with approximate RGB extraction, not simulator ground truth."
+    },
+    "head_trajectory": {
+      "all_objects": {
+        "complete_samples": 4,
+        "total_samples": 4,
+        "mean_ade_over_complete_samples": 0.004925183351734004,
+        "mean_fde_over_complete_samples": 0.0055369605755776164,
+        "best_of_k": {
+          "k": 4,
+          "min_ade": 0.004802676012316839,
+          "min_ade_sample_index": 3,
+          "fde_at_min_ade": 0.00589640525051831,
+          "min_fde": 0.005174134727128251,
+          "min_fde_sample_index": 0
+        },
+        "expected_future_observations": 248,
+        "tracked_future_observations": 248,
+        "missing_track_rate": 0.0,
+        "out_of_bounds_rate_over_tracked": 0.0
+      },
+      "selected_object": {
+        "complete_samples": 4,
+        "total_samples": 4,
+        "mean_ade_over_complete_samples": 0.005101782909659281,
+        "mean_fde_over_complete_samples": 0.0004917095855244113,
+        "best_of_k": {
+          "k": 4,
+          "min_ade": 0.00493253536586369,
+          "min_ade_sample_index": 3,
+          "fde_at_min_ade": 0.00020436785633796669,
+          "min_fde": 0.00020436785633796669,
+          "min_fde_sample_index": 3
+        },
+        "expected_future_observations": 124,
+        "tracked_future_observations": 124,
+        "missing_track_rate": 0.0,
+        "out_of_bounds_rate_over_tracked": 0.0
+      }
+    },
+    "rgb_trajectory": {
+      "all_objects": {
+        "complete_samples": 3,
+        "total_samples": 4,
+        "mean_ade_over_complete_samples": 0.0040185143823717115,
+        "mean_fde_over_complete_samples": 0.004118300441754916,
+        "best_of_k": null,
+        "expected_future_observations": 248,
+        "tracked_future_observations": 247,
+        "missing_track_rate": 0.004032258064516129,
+        "out_of_bounds_rate_over_tracked": 0.0
+      },
+      "selected_object": {
+        "complete_samples": 3,
+        "total_samples": 4,
+        "mean_ade_over_complete_samples": 0.003958546723873263,
+        "mean_fde_over_complete_samples": 0.004831719889555422,
+        "best_of_k": null,
+        "expected_future_observations": 124,
+        "tracked_future_observations": 123,
+        "missing_track_rate": 0.008064516129032258,
+        "out_of_bounds_rate_over_tracked": 0.0
+      }
+    },
+    "head_collision": {
+      "interval": {
+        "true_positive": 4,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 120,
+        "f1": 1.0
+      },
+      "event": {
+        "true_positive": 4,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 0,
+        "f1": 1.0
+      },
+      "encounter": {
+        "true_positive": 4,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 0,
+        "f1": 1.0
+      }
+    },
+    "rgb_collision": {
+      "collision_metric_version": "2",
+      "tolerance_intervals": 1,
+      "pair_rule": "valid_upper_triangle; object_object_only",
+      "undefined_ratio": "null",
+      "missing_policy": "known_interval_bins; complete_pair_timelines_for_event_and_encounter",
+      "encounter_definition": "any_contact_onset_per_pair_over_clip; no_timing_or_count_score",
+      "per_sample": [
+        {
+          "sample_index": 0,
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 1,
+            "false_negative": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "true_negative": 29,
+            "accuracy": 0.9354838709677419,
+            "positive_prevalence": 0.03225806451612903,
+            "scored_bins": 31,
+            "expected_bins": 31,
+            "missing_bins": 0
+          },
+          "event": {
+            "true_positive": 1,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "complete_pair_timelines": 1,
+            "expected_pair_timelines": 1
+          },
+          "encounter": {
+            "true_positive": 1,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "true_negative": 0,
+            "accuracy": 1.0,
+            "positive_prevalence": 1.0,
+            "scored_pairs": 1,
+            "expected_pairs": 1,
+            "missing_pairs": 0
+          }
+        },
+        {
+          "sample_index": 1,
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 2,
+            "false_negative": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "true_negative": 28,
+            "accuracy": 0.9032258064516129,
+            "positive_prevalence": 0.03225806451612903,
+            "scored_bins": 31,
+            "expected_bins": 31,
+            "missing_bins": 0
+          },
+          "event": {
+            "true_positive": 1,
+            "false_positive": 1,
+            "false_negative": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "complete_pair_timelines": 1,
+            "expected_pair_timelines": 1
+          },
+          "encounter": {
+            "true_positive": 1,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "true_negative": 0,
+            "accuracy": 1.0,
+            "positive_prevalence": 1.0,
+            "scored_pairs": 1,
+            "expected_pairs": 1,
+            "missing_pairs": 0
+          }
+        },
+        {
+          "sample_index": 2,
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 2,
+            "false_negative": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "true_negative": 28,
+            "accuracy": 0.9032258064516129,
+            "positive_prevalence": 0.03225806451612903,
+            "scored_bins": 31,
+            "expected_bins": 31,
+            "missing_bins": 0
+          },
+          "event": {
+            "true_positive": 0,
+            "false_positive": 2,
+            "false_negative": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "complete_pair_timelines": 1,
+            "expected_pair_timelines": 1
+          },
+          "encounter": {
+            "true_positive": 1,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "true_negative": 0,
+            "accuracy": 1.0,
+            "positive_prevalence": 1.0,
+            "scored_pairs": 1,
+            "expected_pairs": 1,
+            "missing_pairs": 0
+          }
+        },
+        {
+          "sample_index": 3,
+          "interval": {
+            "true_positive": 0,
+            "false_positive": 2,
+            "false_negative": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "true_negative": 18,
+            "accuracy": 0.8571428571428571,
+            "positive_prevalence": 0.047619047619047616,
+            "scored_bins": 21,
+            "expected_bins": 31,
+            "missing_bins": 10
+          },
+          "event": {
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "complete_pair_timelines": 0,
+            "expected_pair_timelines": 1
+          },
+          "encounter": {
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "true_negative": 0,
+            "accuracy": null,
+            "positive_prevalence": null,
+            "scored_pairs": 0,
+            "expected_pairs": 1,
+            "missing_pairs": 1
+          }
+        }
+      ]
+    }
+  },
+  "source_package_verification": {
+    "archive_sha256": "728c8a85880a703bcd6944342de30c94aebff7f59bd10213423843b7bdf00519",
+    "file_count": 175,
+    "bytes": 326378,
+    "extracted_source_tests": 465,
+    "subtests": 4,
+    "skips": 0,
+    "isolated_smoke": "passed",
+    "fresh_cached_install": "passed",
+    "extracted_source_test_seconds": 94.18,
+    "pre_demo_workspace_tests": 430
+  },
+  "artifact_backups_sha256": {
+    "pilot-data.tar.gz": "86ae2136ef85cd5f22859505497fe41da16b42b76e9703fd6aa7a6a4ed71bd32",
+    "training-complete.tar.gz": "19e637d16b3b4a17c6e5552e73ce4a840a6fb05aae7d2d14f9962790c375a866",
+    "evaluation-complete.tar.gz": "58e608059cd178177196d7822ba8e93c7330ef12eb52795a1cffd1f34a616731",
+    "flow-complete.tar.gz": "2b36c54480dad3207da836d0d694fc9069befe53b9219b3b011602c7cec5f0a7",
+    "study-complete.tar.gz": "30feb6eb72b145b9baf77800cf52248aa162ec220ba0d33ebc963708d093d0ac",
+    "e4-check-complete.tar.gz": "ec25a90eb28f8bd31533a01efaa8b0d216cf3c39e0cec468b91ebee9cd790cd8",
+    "motion-complete.tar.gz": "ac4265a2cc3b2501e3d1a76ff9a94920b590de04f53d7c6454f42889592a1009"
+  },
+  "demo_integration": {
+    "pull_request": 44,
+    "merged_revision": "0d94d0958d391c9269038bed687aa09afb699b6a",
+    "fix_revision": "fdc4da04a2bafc24d475a7f4bc9093bd1ea6d7da",
+    "reviewed_tests": 442,
+    "subtests": 4,
+    "independent_browser_checks_per_model": 24,
+    "browser": "isolated Chrome on macOS",
+    "models": [
+      "E3 5000-update EMA",
+      "E0 16000-update learned prior"
+    ],
+    "scope": "Functional checks only; no video-quality or latency-distribution claim.",
+    "flow_prior_pixel_parity": "four seeded CPU videos match the offline sampler exactly",
+    "browser-review": {
+      "sha256": "2f30b0ccadc5a998cfa6b9e92c27e2d50db6ee4c29a454196bf033323079be87",
+      "checks": [
+        "page and checkpoint metadata load",
+        "visible object selectors",
+        "background click cannot select an object",
+        "object buttons update selection",
+        "right drag gives positive x",
+        "down drag gives positive y",
+        "drag outside canvas clamps physical force",
+        "reverse keeps magnitude and negates both coordinates",
+        "zero push",
+        "keyboard direction matches image coordinates",
+        "shift fine adjustment",
+        "invalid seed fails without model execution",
+        "real checkpoint finishes four seeded futures",
+        "controls locked during generation",
+        "four videos retain ordered paired seeds and 32 frames",
+        "shared timeline scrubs all samples and pauses",
+        "timeline returns to supplied frame zero",
+        "simulator reference is separate and labelled",
+        "exact repeated request is identical labelled replay",
+        "changed push cannot relabel old videos as new output",
+        "cancelled generation cannot replace the previous output",
+        "scene change resets playback and output",
+        "mobile layout has no horizontal overflow",
+        "no browser javascript exceptions"
+      ],
+      "count": 24,
+      "browser_errors": [],
+      "ui_seconds": [
+        43.195945999992546,
+        0.4672157080058241
+      ],
+      "model_sources": [
+        [
+          {
+            "source": "live model",
+            "seconds": 42.81261108300532
+          }
+        ],
+        [
+          {
+            "source": "cached replay",
+            "seconds": 0.007401834009215236
+          }
+        ]
+      ],
+      "note": "functional rehearsal, not model quality or a latency benchmark"
+    },
+    "browser-cvae-review": {
+      "sha256": "ddd318c8e3b42ca7d40af62980bc92ddacfa7c258b0c5e99b93148403121aed9",
+      "checks": [
+        "page and checkpoint metadata load",
+        "visible object selectors",
+        "background click cannot select an object",
+        "object buttons update selection",
+        "right drag gives positive x",
+        "down drag gives positive y",
+        "drag outside canvas clamps physical force",
+        "reverse keeps magnitude and negates both coordinates",
+        "zero push",
+        "keyboard direction matches image coordinates",
+        "shift fine adjustment",
+        "invalid seed fails without model execution",
+        "real checkpoint finishes four seeded futures",
+        "controls locked during generation",
+        "four videos retain ordered paired seeds and 32 frames",
+        "shared timeline scrubs all samples and pauses",
+        "timeline returns to supplied frame zero",
+        "simulator reference is separate and labelled",
+        "exact repeated request is identical labelled replay",
+        "changed push cannot relabel old videos as new output",
+        "cancelled generation cannot replace the previous output",
+        "scene change resets playback and output",
+        "mobile layout has no horizontal overflow",
+        "no browser javascript exceptions"
+      ],
+      "count": 24,
+      "browser_errors": [],
+      "ui_seconds": [
+        0.6768124590016669,
+        0.35398245799297
+      ],
+      "model_sources": [
+        [
+          {
+            "source": "live model",
+            "seconds": 0.3577921249961946
+          }
+        ],
+        [
+          {
+            "source": "cached replay",
+            "seconds": 0.002710916000069119
+          }
+        ]
+      ],
+      "note": "functional rehearsal, not model quality or a latency benchmark"
+    }
+  },
+  "reference_calibration": {
+    "force": {
+      "source": "simulator reference labels and rendered RGB, not model output",
+      "pairing": "All matched hidden-physics variants; zero-force starts at rest",
+      "summary": {
+        "methods": [
+          {
+            "method": "reference-labels",
+            "runs": 1,
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 11,
+              "forward.moving_samples": 5,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 11,
+              "reverse.moving_samples": 5,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 5,
+              "reversal.stationary_pairs": 11
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 1991
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.3125,
+                "ci": [
+                  0.0625,
+                  0.625
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 1991
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 1991
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          },
+          {
+            "method": "reference-rgb",
+            "runs": 1,
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 8,
+              "forward.moving_samples": 8,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 8,
+              "reverse.moving_samples": 8,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 8,
+              "reversal.stationary_pairs": 8
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.25,
+                  0.8125
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          }
+        ],
+        "bootstrap": {
+          "unit": "scene_group_id",
+          "replicates": 2000,
+          "confidence": 0.95,
+          "seed": 0
+        }
+      }
+    },
+    "selection": {
+      "source": "simulator reference labels and rendered RGB, not model output",
+      "summary": {
+        "methods": [
+          {
+            "method": "reference-labels",
+            "runs": 1,
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          },
+          {
+            "method": "reference-rgb",
+            "runs": 1,
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          }
+        ],
+        "bootstrap": {
+          "unit": "scene_group_id",
+          "replicates": 2000,
+          "confidence": 0.95,
+          "seed": 0
+        }
+      }
+    }
+  },
+  "motion_supervised_followup": {
+    "method": "E0",
+    "variant": "flow_with_training_only_displacement_supervision",
+    "run_id": "flow-E0",
+    "source_revision": "d007086235f61fd00255a2c9a01529fa0fecdba3",
+    "training_updates": 20000,
+    "evaluated_checkpoint_step": 9000,
+    "training_seed": 0,
+    "flow_motion_weight": 1.0,
+    "checkpoint_sha256": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100",
+    "quality": {
+      "case_count": 24,
+      "expected_observations": 5952,
+      "tracked_observations": 5765,
+      "tracking_fraction": 0.9685819892473119,
+      "complete_selected_clips": 80,
+      "expected_selected_clips": 96,
+      "complete_all_object_clips": 80,
+      "expected_all_object_clips": 96,
+      "selected_ade_mean_cases_if_all_complete": null,
+      "passes_tracking_and_selected_trajectory_gate": false,
+      "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+    },
+    "metrics": {
+      "all_objects.mean_pairwise_trajectory_distance": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.mean_reference_to_nearest_sample": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.mean_sample_to_nearest_reference": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "temporal.object_translation_mae_over_observed": {
+        "estimate": 0.0008969249449326395,
+        "ci": [
+          0.00021497595103309045,
+          0.0017154308542016673
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "temporal.background_mae_over_observed": {
+        "estimate": 0.00026039452029913716,
+        "ci": [
+          0.00020086802515150812,
+          0.0003084217459781557
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "temporal.mean_acceleration_norm_over_scored": {
+        "estimate": 0.1341908637152837,
+        "ci": [
+          0.12859172228773047,
+          0.14095580422644396
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "image.ssim": {
+        "estimate": 0.9729442541293531,
+        "ci": [
+          0.9666153079018879,
+          0.9784871789610329
+        ],
+        "scored_scene_groups": 4,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 2000
+      },
+      "all_objects.mean_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.mean_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.min_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.min_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "all_objects.fde_at_min_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.mean_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.mean_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.min_ade": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      },
+      "selected_object.min_fde": {
+        "estimate": null,
+        "ci": null,
+        "scored_scene_groups": 0,
+        "expected_scene_groups": 4,
+        "defined_bootstrap_replicates": 0
+      }
+    },
+    "counts": {
+      "ensemble.all_objects.complete_samples": 80,
+      "ensemble.all_objects.total_samples": 96,
+      "ensemble.all_objects.scored_sample_pairs": 120,
+      "ensemble.all_objects.expected_sample_pairs": 144,
+      "ensemble.all_objects.reference_futures": 84,
+      "ensemble.selected_object.complete_samples": 80,
+      "ensemble.selected_object.total_samples": 96,
+      "ensemble.selected_object.scored_sample_pairs": 120,
+      "ensemble.selected_object.expected_sample_pairs": 144,
+      "ensemble.selected_object.reference_futures": 84,
+      "temporal.scored_object_transitions": 5554,
+      "temporal.expected_object_transitions": 5760,
+      "temporal.scored_background_transitions": 2674,
+      "temporal.expected_background_transitions": 2880,
+      "temporal.scored_acceleration_windows": 4433,
+      "temporal.expected_acceleration_windows": 5568,
+      "temporal.excluded_reference_contact_or_force_windows": 1020,
+      "temporal.missing_acceleration_windows": 115,
+      "image.complete_samples": 96,
+      "image.total_samples": 96,
+      "image.scored_future_frames": 2976,
+      "image.expected_future_frames": 2976,
+      "image.missing_future_frames": 0,
+      "all_objects.complete_samples": 80,
+      "all_objects.total_samples": 96,
+      "all_objects.expected_future_observations": 5952,
+      "all_objects.tracked_future_observations": 5765,
+      "selected_object.complete_samples": 80,
+      "selected_object.total_samples": 96,
+      "selected_object.expected_future_observations": 2976,
+      "selected_object.tracked_future_observations": 2789,
+      "collision.interval.true_positive": 1,
+      "collision.interval.false_positive": 30,
+      "collision.interval.false_negative": 63,
+      "collision.interval.true_negative": 2551,
+      "collision.interval.scored_bins": 2645,
+      "collision.interval.expected_bins": 2976,
+      "collision.interval.missing_bins": 331,
+      "collision.event.true_positive": 11,
+      "collision.event.false_positive": 20,
+      "collision.event.false_negative": 53,
+      "collision.event.complete_pair_timelines": 80,
+      "collision.event.expected_pair_timelines": 96,
+      "collision.encounter.true_positive": 24,
+      "collision.encounter.false_positive": 0,
+      "collision.encounter.false_negative": 8,
+      "collision.encounter.true_negative": 48,
+      "collision.encounter.scored_pairs": 80,
+      "collision.encounter.expected_pairs": 96,
+      "collision.encounter.missing_pairs": 16
+    },
+    "collision_micro": {
+      "collision.interval.precision": {
+        "estimate": 0.03225806451612903,
+        "ci": [
+          0.0,
+          0.125
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.recall": {
+        "estimate": 0.015625,
+        "ci": [
+          0.0,
+          0.046875
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.f1": {
+        "estimate": 0.021052631578947368,
+        "ci": [
+          0.0,
+          0.06818181818181818
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.accuracy": {
+        "estimate": 0.9648393194706995,
+        "ci": [
+          0.9529768676526356,
+          0.9750943396226415
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.interval.positive_prevalence": {
+        "estimate": 0.024196597353497166,
+        "ci": [
+          0.015065913370998116,
+          0.03335860500379075
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.event.precision": {
+        "estimate": 0.3548387096774194,
+        "ci": [
+          0.11764705882352941,
+          0.6428571428571429
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.event.recall": {
+        "estimate": 0.171875,
+        "ci": [
+          0.0625,
+          0.32142857142857145
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.event.f1": {
+        "estimate": 0.23157894736842105,
+        "ci": [
+          0.08163265306122448,
+          0.4044943820224719
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.precision": {
+        "estimate": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.recall": {
+        "estimate": 0.75,
+        "ci": [
+          0.5,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.f1": {
+        "estimate": 0.8571428571428571,
+        "ci": [
+          0.6666666666666666,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.accuracy": {
+        "estimate": 0.9,
+        "ci": [
+          0.8,
+          1.0
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "collision.encounter.positive_prevalence": {
+        "estimate": 0.4,
+        "ci": [
+          0.4,
+          0.4
+        ],
+        "defined_bootstrap_replicates": 2000
+      }
+    },
+    "actions": {
+      "method": "E0",
+      "runs": 1,
+      "counts": {
+        "forward.total_samples": 16,
+        "forward.complete_samples": 16,
+        "forward.missing_samples": 0,
+        "forward.stationary_samples": 1,
+        "forward.moving_samples": 15,
+        "reverse.total_samples": 16,
+        "reverse.complete_samples": 16,
+        "reverse.missing_samples": 0,
+        "reverse.stationary_samples": 15,
+        "reverse.moving_samples": 1,
+        "zero.total_samples": 16,
+        "zero.complete_samples": 16,
+        "zero.missing_samples": 0,
+        "zero.drifting_samples": 0,
+        "reversal.total_pairs": 16,
+        "reversal.complete_pairs": 16,
+        "reversal.missing_pairs": 0,
+        "reversal.moving_pairs": 1,
+        "reversal.stationary_pairs": 15
+      },
+      "metrics": {
+        "forward.mean_direction_error_degrees": {
+          "estimate": 1.922029788425901,
+          "ci": [
+            0.19351971237224774,
+            3.681885537408636
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "forward.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "forward.stationary_rate_over_complete": {
+          "estimate": 0.0625,
+          "ci": [
+            0.0,
+            0.1875
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reversal.correct_force_sign_rate_over_complete": {
+          "estimate": 0.0625,
+          "ci": [
+            0.0,
+            0.1875
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reversal.mean_reversal_error_degrees": {
+          "estimate": 0.0,
+          "ci": null,
+          "scored_scene_groups": 1,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "reversal.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reverse.mean_direction_error_degrees": {
+          "estimate": 0.0,
+          "ci": null,
+          "scored_scene_groups": 1,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "reverse.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "reverse.stationary_rate_over_complete": {
+          "estimate": 0.9375,
+          "ci": [
+            0.8125,
+            1.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "zero.drift_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "zero.mean_max_drift": {
+          "estimate": 0.004596140277237459,
+          "ci": [
+            0.0026679666649071453,
+            0.006623459461415087
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "zero.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      }
+    },
+    "selected_object": {
+      "method": "E0",
+      "runs": 1,
+      "counts": {
+        "selection.total_pairs": 16,
+        "selection.complete_pairs": 16,
+        "selection.missing_pairs": 0,
+        "selection.stationary_pairs": 16,
+        "selection.moving_pairs": 0
+      },
+      "metrics": {
+        "selection.correct_contrast_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selection.correct_target_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selection.drift_rate_over_complete": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selection.missing_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      }
+    },
+    "case_tracking": [
+      {
+        "condition_id": "g03-scene-00730016-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-wall",
+        "tracked": 199,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730016-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-wall",
+        "tracked": 201,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730017-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-wall",
+        "tracked": 195,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730018-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-collision_0_to_1",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-collision_1_to_0",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-forward",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-reverse",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-wall",
+        "tracked": 210,
+        "expected": 248,
+        "complete_all": 0,
+        "complete_selected": 0,
+        "samples": 4
+      },
+      {
+        "condition_id": "g03-scene-00730019-zero",
+        "tracked": 248,
+        "expected": 248,
+        "complete_all": 4,
+        "complete_selected": 4,
+        "samples": 4
+      }
+    ]
+  },
+  "compute": {
+    "cluster": "TC2",
+    "gpu": "NVIDIA A40",
+    "max_allocated_gpu_seconds": 5400,
+    "total_allocated_gpu_seconds": 4936,
+    "jobs": [
+      {
+        "job_id": 43291,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "allocated_gpu_seconds": 2087
+      },
+      {
+        "job_id": 43294,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "allocated_gpu_seconds": 372
+      },
+      {
+        "job_id": 43315,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "allocated_gpu_seconds": 836
+      },
+      {
+        "job_id": 43327,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "allocated_gpu_seconds": 160
+      },
+      {
+        "job_id": 43342,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "allocated_gpu_seconds": 423
+      },
+      {
+        "job_id": 43343,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "allocated_gpu_seconds": 1058
+      }
+    ]
+  },
+  "figure": {
+    "sample_id": "g03-scene-00730016-forward-p00",
+    "seed": 0,
+    "frames": [
+      0,
+      4,
+      8,
+      16,
+      24,
+      31
+    ],
+    "figure_sha256": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
+    "force_xy": [
+      0.15000000596046448,
+      0.0
+    ]
+  },
+  "source_analysis_revision": "38a515dba9275b077216d45d70c6e4579d8c498a"
+}

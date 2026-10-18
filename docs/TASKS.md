@@ -20,9 +20,9 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In progress |
-| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
+| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | In progress |
@@ -189,6 +189,15 @@ Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation pa
 
 A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json.
 
+Candidate tracker-v2 update: the saved #37 boundary-loss EMA/32-step RGB
+spatial diagnostic tracks 247/248 observations, with all four selected tracks
+complete and selected ADE 0.00348. This passes the original selected-object
+training gate under v2. Version 2 is still awaiting Ananya's calibration review;
+the shared acceptance box stays open until that review. Shrijeet's separate
+#39/#41 v2 rescore is reported in the PR #42 discussion; its structured v2
+reports/video hashes are still needed. Preserve all historical v1 scores.
+The multi-scene E2/E3 validation failures remain separate and unresolved.
+
 <a id="t11"></a>
 
 ### T11: Implement object-centric spatial conditioning E3
@@ -210,15 +219,15 @@ Numeric/spatial conditioning and selected-object identity are implemented with i
 
 Test whether physical supervision improves decoded future behavior.
 
-**Dependencies:** T11, T07. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
+**Dependencies:** T11, T07. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
 
 - [x] Predict trajectories and object-pair collision probabilities from denoiser features.
 - [x] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
 - [x] Keep oracle trajectories/collisions/physics out of inference conditioning; any extra object extraction must use first-frame pixels only.
-- [ ] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
+- [x] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
 - [x] Report head predictions separately from generated-video tracking metrics.
 
-Canonical trajectory/contact losses, real-loader gradients and separate auxiliary-head export are implemented. Actual final DDIM heads are captured for both prediction targets without changing sampled pixels or RNG state. E4 overfitting and trained head-versus-video comparisons remain open.
+E4 training, sampling and actual final-head capture are measured in PR #43. The 5,000-update multi-scene run has head ADE 0.1314 and event F1 0.1324, while RGB tracks 162/5,952 observations. The separate collision overfit check learns the contact (head event F1 1.0 on its single training clip) and tracks 247/248 RGB observations. Its one missing selected observation still fails the strict gate. Implementation is ready for review; generated-video quality remains in T14/T16. Evidence: results/multiscene-validation-checks.json.
 
 <a id="t13"></a>
 
@@ -235,7 +244,9 @@ Commit to a comparable experiment suite that fits the remaining budget.
 - [ ] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
 - [x] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
 
-Recorded 64px scope, deferred 128px, common sampling/training seeds, independent initialization policy, extractor settings and bootstrap rules in configs/evaluation/comparison.yaml. Reserved a validation-only 16/32/64-step study on at most 16 conditions with a 0.5 GPU-hour cap. The batch evaluator hashes all cases, references, metric code and configs. Final data/OOD versions, successful model settings, checkpoints and main training budgets are not frozen.
+The bounded pilot freezes dataset-0.3 seed 730000, 16 training/four validation scenes, all four model configs, checkpoint criteria, sampler seeds and candidate tracker version 2. It uses a combined 1.5 allocated GPU-hour cap. The 16/32/64-step study is complete. All models fail useful validation motion, so no final model/sampler or main test protocol is selected. No 128px or E1 run was added. See MULTISCENE_PILOT.md and results/multiscene-validation-checks.json.
+
+separate e5 follow-up: one seed, 6000 training updates with step 5000 selected by validation denoising loss. pose supervision changes the method; final protocol and independent repeats remain open. see docs/TRAJECTORY_PILOT.md.
 
 <a id="t14"></a>
 
@@ -243,15 +254,15 @@ Recorded 64px scope, deferred 128px, common sampling/training seeds, independent
 
 Produce the main evidence for conditioning and supervision claims.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
 - [ ] Run E0/E2/E3 under the frozen protocol; add E1/E4 only after explicit budget gates and record actual budgets/seed counts.
 - [ ] Compare CVAE-to-diffusion and E2-to-E3; compare E3-to-E4 if funded, using generated-video quality, physical behavior and cost.
 - [ ] Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.
-- [ ] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
-- [ ] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
+- [x] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
+- [x] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
-Checkpoint sampling is connected to fixed-case evaluation. The runner covers every case with the same four seeds, derives training seeds/method settings from checkpoints, verifies the corpus/normalization and binds checkpoint/video hashes. A native six-condition validation fixture produced 72 untrained E0/E2/E3 videos and ran all three metric families with SSIM and LPIPS. Actual trained runs, hyperparameter results and comparisons remain pending.
+The four-method TC2 pilot and validation sampler study are measured in PR #43. Each method generates 96 validation videos and 32 selected-object-control videos. Tables retain SSIM/LPIPS, scene bootstrap intervals, null ADE/FDE/coverage, contact prevalence and tracking/action failures. All four original methods fail; static copying has better appearance scores. Flow follow-ups are exploratory and stay separate. Final useful-checkpoint comparisons and independent repeats remain open. Evidence: results/multiscene-validation-checks.json; report/main.tex.
 
 <a id="t15"></a>
 
@@ -266,7 +277,7 @@ Measure which action-conditioned behaviors generalize beyond training.
 - [ ] Compare against ID performance and include tracker failure rates.
 - [ ] Save representative successes/failures and state generalization limits.
 
-The fixed-case evaluator and separate dataset-0.3 suites are implemented. PR #32 adds disjoint shape, texture and force OOD data, with repeated-physics references and full plan coverage. It builds on #30 and is awaiting review. Train/select models on that same corpus before making matched ID/OOD claims; final corpus/checkpoint settings and actual model measurements are still required. Frozen simulator extractor controls retain their failures, including 25% missing observations in the small texture check. No trained generalization result is claimed.
+Separate dataset-0.3 ID, shape, texture, force and physics suites are implemented and merged. The multi-scene pilot is trained on that corpus, but validation generation and action response fail. All 248 test clips remain reserved; there is no trained ID/OOD result. Improve validation before opening these suites. Extractor failures and candidate tracker version 2 remain explicit in MULTISCENE_PILOT.md.
 
 <a id="t16"></a>
 
@@ -276,19 +287,14 @@ Distinguish physically meaningful uncertainty from visual noise.
 
 **Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
-- [ ] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
+- [x] Sample K=4 model futures for identical visible conditions and compare with multiple simulator rollouts.
 - [ ] Measure trajectory spread, reference coverage, sample plausibility, and collision-frequency variation.
-- [ ] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
-- [ ] Present quality/adherence alongside diversity and clearly label single-reference metrics.
+- [x] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
+- [x] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The shared runner generates complete ensembles for the frozen case list. Paired zero/reversed-force scoring is now connected to the same videos and seeds, with reference-only eligibility, missing/stationary counts and scene-group bootstrap intervals. Separate simulator-label and rendered-reference scores show when low-force controls barely move. Selected-object-only intervention plans now keep the force fixed and the training corpus unchanged. The shared sampler/evaluator reports target following, response contrasts, drift and missing tracks with reference-only eligibility. Actual trained ensembles and uncertainty/action measurements remain open.
+Actual K=4 ensembles now cover all 24 validation conditions and all 84 hidden-physics references. Zero/reversed-force and changed-selection controls are measured. The original E0/E2/E3/E4 runs have no complete selected tracks; the unsupervised flow CVAE has complete eligible pairs but all are stationary. The displacement-supervised flow follow-up passes only 1/16 reversal pairs and 0/16 selection pairs despite 96.86 percent tracking. Trajectory spread/coverage remain null when required tracks are missing. Quality and action failures are shown with diversity diagnostics; meaningful hidden-physics uncertainty is not established. Evidence: results/multiscene-validation-checks.json and MULTISCENE_PILOT.md.
 
-Correctness evidence: `results/paired-action-suite-checks.json` records 192 native simulator-control videos and 72 explicitly untrained E0/E2/E3 videos. All 335 tests and four subtests pass locally and from the source ZIP. These checks do not complete the trained-model experiment.
-
-The selected-object check in `results/selected-object-control-checks.json` adds
-64 simulator-control videos, 32 explicitly untrained E0/E1/E2/E3 videos and 16 exact
-reference replays. It retains the weak-force calibration and records the shared
-0.4-force validation probe separately. The original training corpus is unchanged.
+e5 now measures 5895/5952 tracked observations, 14/16 reversal and 16/16 changed-selection pairs on four validation scenes. strict completeness/contact quality still fails; reference-force limitations and undefined coverage stay explicit. see results/trajectory-pilot-validation.json.
 
 <a id="t17"></a>
 
@@ -301,16 +307,12 @@ Make the model and simulator comparison understandable and repeatable.
 - [x] Support declared development/validation presets with frame-0 selected-object masks; image upload is deferred.
 - [x] Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.
 - [x] Keep the labelled simulator reference and hidden physics outside neural inference.
-- [x] Provide synchronized playback, bounded generation, cancellation, input/error states, labelled exact replay and a documented local launch path.
-- [ ] Add pixel-derived trajectory overlays, pass held-out motion/action quality, measure warm median/p95 latency and rehearse the final demo offline.
+- [x] Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.
+- [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
 
-The local app runs diffusion EMA and CVAE learned-prior checkpoints. CPU sampler
-parity and 24 browser interaction checks pass; a fresh four-future E3 request took
-6.88 seconds through the local browser on an RTX 3060 laptop, with 0.44 seconds
-for exact replay. This single functional run is not a latency benchmark or a
-held-out quality result. See [launch instructions](../app/README.md). T17 stays
-open for overlays, stronger checkpoints and final acceptance. No friction slider
-is exposed; the simulator has contact friction without tabletop drag.
+The local app supports verified pilot bundles and generated-pixel trajectory overlays, with missing observations retained. All six handoff checkpoints load; a two-model browser rehearsal passes 25 checks. Five fresh warm requests give a 4.69s median and 4.74s empirical p95 on the RTX 3060 laptop, including tracking/reference/display. Small-n latency and interface checks do not establish held-out quality. Stronger checkpoints and final offline presentation acceptance remain open. Candidate tracker v2 awaits independent calibration review. See [launch instructions](../app/README.md).
+
+the new e5 adapter shares the offline sampler and retains source, force-bound and private-seed checks. e5/e3 passes 25 browser checks; five fresh warm requests have 5.31s median and 5.36s empirical p95 on the laptop. final motion quality and presentation acceptance remain open. see docs/TRAJECTORY_PILOT.md.
 
 <a id="t18"></a>
 
@@ -321,12 +323,12 @@ Prepare the two required PDFs using the course structure and the team's measured
 **Dependencies:** T01, T13. **Owner:** Unassigned. **Status:** In progress.
 
 - [x] Draft at least four pages using introduction, methods, experiments and analysis, and conclusion; follow docs/REPORT_OUTLINE.md.
-- [ ] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
-- [ ] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
+- [x] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
+- [x] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-A seven-page working draft now includes introduction, implemented methods, evaluation, simulator calibration, real E0/E3 diagnostic figures and a conclusion. Main matched comparisons, the validation/component studies and member-reviewed contributions remain open. The draft is not the final submission PDF. Source: `report/main.tex`. Build instructions: `report/README.md`.
+The eight-page working draft includes the implemented methods, four-method validation table, LPIPS intervals, E4 head-versus-RGB results, the actual 16/32/64-step study, flow-decoder failure analysis and a generated sample figure. Negative results and reserved tests remain explicit. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
 
 <a id="t19"></a>
 

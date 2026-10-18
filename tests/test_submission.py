@@ -48,6 +48,23 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "src/click2future/evaluation/suite.py" in names
         assert "src/click2future/evaluation/sample_suite.py" in names
         assert "submission/sample_evaluation.sbatch" in names
+        assert "submission/train_pilot.sbatch" in names
+        assert "submission/evaluate_pilot.sbatch" in names
+        assert "submission/train_trajectory.sbatch" in names
+        assert "submission/evaluate_trajectory.sbatch" in names
+        assert "src/click2future/models/object_motion.py" in names
+        assert "src/click2future/training/sample_trajectory.py" in names
+        assert "src/click2future/evaluation/trajectory_pilot.py" in names
+        assert "configs/training/trajectory_pilot.json" in names
+        assert "submission/sampler_study.py" in names
+        assert "submission/study_sampler.sbatch" in names
+        assert "submission/flow_evaluation.py" in names
+        assert "submission/check_e4_collision.py" in names
+        assert "submission/check_e4_collision.sbatch" in names
+        assert "submission/pilot_image_metrics.py" in names
+        assert "src/click2future/models/cvae_flow.py" in names
+        assert "src/click2future/evaluation/pilot.py" in names
+        assert "src/click2future/training/multiscene_pilot.py" in names
         assert "src/click2future/demo/static/index.html" in names
         assert "src/click2future/demo/static/app.js" in names
         assert "src/click2future/demo/static/style.css" in names

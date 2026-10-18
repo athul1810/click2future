@@ -1,11 +1,11 @@
 # Auxiliary trajectory and collision losses
 
-T12 has target preparation, fixed object matching, masked losses, class-balance estimation,
-and CPU gradient checks. The dataset diffusion trainer and sampler are still pending.
-The starting configuration is [auxiliary.yaml](../configs/training/auxiliary.yaml).
-Its weights and timestep cutoff are untuned proposals, to be checked on validation data.
-The [model workflow](MODEL_TRAINING.md#e4-handoff) covers the implemented joint epsilon
-objective, loader adapter, and head export. B still owns scheduler and sampler integration.
+T12 includes label preparation, fixed matching, masked losses, training-only class
+weights, dataset training, DDIM head capture and measured TC2 checks. The
+[multi-scene pilot](MULTISCENE_PILOT.md) records the actual E4 settings and results.
+The default [auxiliary.yaml](../configs/training/auxiliary.yaml) remains a starting
+configuration. A fixed 0.5 contact threshold was used for the pilot; it is not a
+validation-calibrated final threshold.
 
 ## Object identity and target shapes
 
@@ -135,5 +135,9 @@ Fixture class counts are not a production training-set estimate.
 Tests cover simulator-ID permutation, crossing futures without rematching, both collision
 axes, padding and missing frames, timestep boundaries, component ablations, class-weight
 caps/degenerate cases, mixed-precision head outputs, and finite/nonzero real-model gradients.
-E4 dataset training, tiny-batch model overfitting, checkpoint/sampling checks, and measured
-comparisons remain to be completed with B.
+The multi-scene E4 run completed 5,000 updates, and actual final DDIM heads replayed
+all 96 validation videos pixel-exactly. Head ADE is 0.1314 and event F1 is 0.1324;
+RGB tracks only 162/5,952 observations. A separate one-clip collision check tracks
+247/248 observations, but one missing selected observation keeps its strict gate
+failed. These measure training and inference mechanics, not a physics improvement.
+See [the result record](results/multiscene-validation-checks.json).
