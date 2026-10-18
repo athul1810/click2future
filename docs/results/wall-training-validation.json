@@ -1,0 +1,4063 @@
+{
+  "status": "measured_validation_comparison",
+  "training_source_revision": "74338688670a56228caee011e5b0a578ffd90784",
+  "evaluation_source_revision": "bc77c7d90c5af773b1835c032bc3a5dfe5144578",
+  "training_job_id": 43788,
+  "evaluation_recovery_job_id": 43808,
+  "allocated_gpu_seconds": 893,
+  "scope": "Matched training-only boundary-loss comparison. Same source, generated training actions, initialization seed, data order, 16000 updates, checkpoint criterion and sampler; only boundary weight differs. One seed and four validation scenes.",
+  "models": {
+    "control": {
+      "training": {
+        "status": "completed",
+        "steps_completed": 16000,
+        "elapsed_seconds": 338.8489813897759,
+        "best_validation_denoising_loss": 0.025527254456565493,
+        "peak_cuda_allocated_bytes": 418293760,
+        "gpu": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "slurm_job_id": "43788",
+        "config": {
+          "seed": 19,
+          "steps": 16000,
+          "batch_size": 64,
+          "width": 128,
+          "layers": 4,
+          "learning_rate": 0.0003,
+          "ema_decay": 0.995,
+          "sigma_data": 0.25,
+          "log_sigma_mean": -1.2,
+          "log_sigma_std": 1.2,
+          "sigma_min": 0.002,
+          "sigma_max": 20.0,
+          "temporal_weight": 0.1,
+          "checkpoint_every": 500,
+          "max_seconds": 1200,
+          "augment": true,
+          "force_limit": 1.1,
+          "penetration_weight": 256.0,
+          "contact_weight": 64.0,
+          "acceleration_weight": 2.0,
+          "stationary_weight": 4.0,
+          "physics_sigma_max": 1.0,
+          "penetration_margin_pixels": 1.0,
+          "contact_window_pixels": 2.0,
+          "zero_probability": 0.25,
+          "collision_probability": 0.4,
+          "stationary_tokens": true,
+          "boundary_weight": 0.0,
+          "boundary_margin_pixels": 1.0
+        },
+        "oracle_geometry_max_penetration_pixels": {
+          "train": 0.9353561401367188,
+          "validation": 0.8546905517578125
+        },
+        "oracle_geometry_max_canvas_excess_pixels": {
+          "train": 0.6377191543579102,
+          "validation": 0.38483238220214844
+        }
+      },
+      "data_identity": {
+        "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+        "split_manifest_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51",
+        "train_validation_content_sha256": "91ae80287df5bfb593ae94bdb0c31756d11b17bfa2b0fa6bdfb40d2f6e4d0354",
+        "angular_labels_sha256": "746882c2e47b357c1c60d0dd146a25a445d06079bb35aa7dcae3971163aacdbc",
+        "geometry_sha256": {
+          "train": {
+            "hulls": "8210f1e205973b74a1bf484a928050b637152f5b181377f969c7c3dce9eae3ff",
+            "normals": "ae25295f51170f732548917887edbc8fd0542227b454f3a80224a54ca121e906",
+            "axis_valid": "d07a9b1b35dc32aff669735ce5415b6b43fffe1e4cf60e11c11acbaac5279bc7"
+          },
+          "validation": {
+            "hulls": "a013538376ca1c8c020038638a4148fc971b6edbbf7e00a89eddad9aa3cf343e",
+            "normals": "725968756094495c81743f5f3161c6c3004f08c6c564d7c610935042384a33a5",
+            "axis_valid": "c0834b6f61af9e9bcad8851c21026b9ef7672ba4700e915b57470ce74803f549"
+          }
+        }
+      },
+      "training_supplement": {
+        "manifest_hash": "fab734629860bf7454990adf5bdd2695b82ffd9ca4a670efb101f91dce691f30",
+        "sample_count": 2080,
+        "labels": {
+          "calibration": {
+            "train": {
+              "original_clips": 2080,
+              "training_examples": 16640,
+              "minimum_frame0_mask_iou": 1.0
+            }
+          },
+          "angular_labels_sha256": "2fd0361bb77391fb867fcaa9b372b69008c61b0d00bd422ae97c518ed5d5bc5b",
+          "angular_label_policy": "training-only checked replay; original rollout files unchanged",
+          "augmentation": "train-only square rotations/reflections"
+        },
+        "combined_training_examples": 19328
+      },
+      "selected_checkpoint_step": 15500,
+      "checkpoint_sha256": "438b5778ef42df830405313b27dae99ea87d2e8d093ff9c0153b11a9fafaf282",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5909,
+        "tracking_fraction": 0.9927755376344086,
+        "complete_selected_clips": 88,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 88,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "zero_full_horizon": {
+        "model": {
+          "total_samples": 16,
+          "complete_samples": 16,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "static_control": {
+          "total_samples": 16,
+          "complete_samples": 16,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        }
+      },
+      "passive_full_horizon": {
+        "passive_metric_version": "2",
+        "summary": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "expected_cases": 8,
+        "eligible_cases": 8,
+        "expected_samples": 32
+      },
+      "geometry": {
+        "learned": {
+          "samples": 96,
+          "expected_pair_frames": 2976,
+          "expected_object_frames": 5952,
+          "clips_with_overlap": 32,
+          "clips_with_overlap_over_ten_percent": 28,
+          "overlap_frames": 704,
+          "overlap_over_ten_percent_frames": 313,
+          "clips_outside_interior": 16,
+          "outside_interior_object_frames": 207,
+          "clips_with_penetration_over_one_pixel": 15,
+          "penetration_over_one_pixel_frames": 141,
+          "clips_with_boundary_over_one_pixel": 14,
+          "boundary_over_one_pixel_object_frames": 166,
+          "condition_count": 24,
+          "scene_groups": 4,
+          "aggregation": "descriptive counts over all declared clips; no independent-clip CI"
+        },
+        "oracle_control": {
+          "samples": 84,
+          "expected_pair_frames": 2604,
+          "expected_object_frames": 5208,
+          "clips_with_overlap": 32,
+          "clips_with_overlap_over_ten_percent": 28,
+          "overlap_frames": 672,
+          "overlap_over_ten_percent_frames": 204,
+          "clips_outside_interior": 16,
+          "outside_interior_object_frames": 243,
+          "clips_with_penetration_over_one_pixel": 0,
+          "penetration_over_one_pixel_frames": 0,
+          "clips_with_boundary_over_one_pixel": 12,
+          "boundary_over_one_pixel_object_frames": 154,
+          "condition_count": 24,
+          "scene_groups": 4,
+          "aggregation": "descriptive counts over all declared clips; no independent-clip CI"
+        },
+        "static_control": {
+          "samples": 96,
+          "expected_pair_frames": 2976,
+          "expected_object_frames": 5952,
+          "clips_with_overlap": 0,
+          "clips_with_overlap_over_ten_percent": 0,
+          "overlap_frames": 0,
+          "overlap_over_ten_percent_frames": 0,
+          "clips_outside_interior": 0,
+          "outside_interior_object_frames": 0,
+          "clips_with_penetration_over_one_pixel": 0,
+          "penetration_over_one_pixel_frames": 0,
+          "clips_with_boundary_over_one_pixel": 0,
+          "boundary_over_one_pixel_object_frames": 0,
+          "condition_count": 24,
+          "scene_groups": 4,
+          "aggregation": "descriptive counts over all declared clips; no independent-clip CI"
+        }
+      },
+      "actions": {
+        "methods": [
+          {
+            "method": "E6",
+            "runs": 1,
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          }
+        ],
+        "bootstrap": {
+          "unit": "scene_group_id",
+          "replicates": 2000,
+          "confidence": 0.95,
+          "seed": 0
+        }
+      },
+      "selected_object": {
+        "methods": [
+          {
+            "method": "E6",
+            "runs": 1,
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          }
+        ],
+        "bootstrap": {
+          "unit": "scene_group_id",
+          "replicates": 2000,
+          "confidence": 0.95,
+          "seed": 0
+        }
+      },
+      "metrics": {
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": 0.011463095776399135,
+          "ci": [
+            0.010194776577419618,
+            0.012731414975378653
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_pairwise_endpoint_distance": {
+          "estimate": 0.020570515425296303,
+          "ci": [
+            0.0195015922956959,
+            0.02146275801120516
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_reference_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_reference_to_nearest_sample": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_sample_to_nearest_reference": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_pairwise_trajectory_distance": {
+          "estimate": 0.01703304861815185,
+          "ci": [
+            0.01447187905500599,
+            0.019594218181297716
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_pairwise_endpoint_distance": {
+          "estimate": 0.027135673143253734,
+          "ci": [
+            0.024755470205847875,
+            0.029515876080659594
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_reference_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_reference_to_nearest_sample": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_sample_to_nearest_reference": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "temporal.object_translation_mae_over_observed": {
+          "estimate": 0.00042050874338500486,
+          "ci": [
+            3.0134007851669994e-18,
+            0.0009310378761264619
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "temporal.background_mae_over_observed": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "temporal.mean_acceleration_norm_over_scored": {
+          "estimate": 0.17356382124470957,
+          "ci": [
+            0.17141195344311266,
+            0.1762188301518643
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "temporal.warp_valid_pixel_fraction": {
+          "estimate": 0.7661852415388957,
+          "ci": [
+            0.7579785871592315,
+            0.7765916608359148
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "image.ssim": {
+          "estimate": 0.9699244660967234,
+          "ci": [
+            0.9630038483453757,
+            0.9752714519554374
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_ade": {
+          "estimate": 0.01654989996005258,
+          "ci": [
+            0.012916652573731056,
+            0.02214365397872213
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_fde": {
+          "estimate": 0.023934613532866314,
+          "ci": [
+            0.017978161192708345,
+            0.031619132911648896
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.fde_at_min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.missing_track_rate": {
+          "estimate": 0.007224462365591398,
+          "ci": [
+            0.006384408602150538,
+            0.008064516129032258
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.out_of_bounds_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_ade": {
+          "estimate": 0.025401614417888144,
+          "ci": [
+            0.017703438403121635,
+            0.03734822123877192
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_fde": {
+          "estimate": 0.0353826716858332,
+          "ci": [
+            0.022648886330146528,
+            0.05053925823044702
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.fde_at_min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.missing_track_rate": {
+          "estimate": 0.014448924731182797,
+          "ci": [
+            0.012768817204301076,
+            0.016129032258064516
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.out_of_bounds_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": 0.16666666666666666,
+          "ci": [
+            0.1111111111111111,
+            0.2222222222222222
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.recall": {
+          "estimate": 0.09375,
+          "ci": [
+            0.07142857142857142,
+            0.125
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.f1": {
+          "estimate": 0.12,
+          "ci": [
+            0.09523809523809523,
+            0.14814814814814814
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.accuracy": {
+          "estimate": 0.9696656325405033,
+          "ci": [
+            0.9627842866988284,
+            0.9758537426698861
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": 0.022061358152361255,
+          "ci": [
+            0.013812154696132596,
+            0.030292598967297763
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.precision": {
+          "estimate": 0.4722222222222222,
+          "ci": [
+            0.3157894736842105,
+            0.6470588235294118
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.recall": {
+          "estimate": 0.265625,
+          "ci": [
+            0.2,
+            0.375
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.f1": {
+          "estimate": 0.34,
+          "ci": [
+            0.25925925925925924,
+            0.4380952380952381
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.precision": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.recall": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.f1": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.accuracy": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": 0.36363636363636365,
+          "ci": [
+            0.36363636363636365,
+            0.36363636363636365
+          ],
+          "defined_bootstrap_replicates": 2000
+        }
+      },
+      "counts": {
+        "ensemble.all_objects.complete_samples": 88,
+        "ensemble.all_objects.total_samples": 96,
+        "ensemble.all_objects.scored_sample_pairs": 124,
+        "ensemble.all_objects.expected_sample_pairs": 144,
+        "ensemble.all_objects.reference_futures": 84,
+        "ensemble.selected_object.complete_samples": 88,
+        "ensemble.selected_object.total_samples": 96,
+        "ensemble.selected_object.scored_sample_pairs": 124,
+        "ensemble.selected_object.expected_sample_pairs": 144,
+        "ensemble.selected_object.reference_futures": 84,
+        "temporal.scored_object_transitions": 5717,
+        "temporal.expected_object_transitions": 5760,
+        "temporal.scored_background_transitions": 2837,
+        "temporal.expected_background_transitions": 2880,
+        "temporal.scored_acceleration_windows": 4518,
+        "temporal.expected_acceleration_windows": 5568,
+        "temporal.excluded_reference_contact_or_force_windows": 1020,
+        "temporal.missing_acceleration_windows": 30,
+        "image.complete_samples": 96,
+        "image.total_samples": 96,
+        "image.scored_future_frames": 2976,
+        "image.expected_future_frames": 2976,
+        "image.missing_future_frames": 0,
+        "all_objects.complete_samples": 88,
+        "all_objects.total_samples": 96,
+        "all_objects.expected_future_observations": 5952,
+        "all_objects.tracked_future_observations": 5909,
+        "selected_object.complete_samples": 88,
+        "selected_object.total_samples": 96,
+        "selected_object.expected_future_observations": 2976,
+        "selected_object.tracked_future_observations": 2933,
+        "collision.interval.true_positive": 6,
+        "collision.interval.false_positive": 30,
+        "collision.interval.false_negative": 58,
+        "collision.interval.true_negative": 2807,
+        "collision.interval.scored_bins": 2901,
+        "collision.interval.expected_bins": 2976,
+        "collision.interval.missing_bins": 75,
+        "collision.event.true_positive": 17,
+        "collision.event.false_positive": 19,
+        "collision.event.false_negative": 47,
+        "collision.event.complete_pair_timelines": 88,
+        "collision.event.expected_pair_timelines": 96,
+        "collision.encounter.true_positive": 32,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 56,
+        "collision.encounter.scored_pairs": 88,
+        "collision.encounter.expected_pairs": 96,
+        "collision.encounter.missing_pairs": 8
+      },
+      "wall_clipping": {
+        "wall_clips": 16,
+        "incomplete_wall_clips": 8,
+        "missing_observations": 43,
+        "reasons": {
+          "area_change": 43
+        },
+        "native_mask_fails_area_count": 43,
+        "unclipped_mask_passes_area_count": 43,
+        "clipped_fraction_min": 0.4897959183673469,
+        "clipped_fraction_max": 0.6538461538461539
+      },
+      "uncertainty_strata": {
+        "collision_0_to_1": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.018068947802808634,
+                  "ci": [
+                    0.013538587664348577,
+                    0.022599307941268687
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.04097587100744653,
+                  "ci": [
+                    0.03131890161510439,
+                    0.05063284039978867
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.013646338654209353,
+                  "ci": [
+                    0.011526944073221164,
+                    0.01620759072397033
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.012076967835036877,
+                  "ci": [
+                    0.008674444135861424,
+                    0.017412536121258863
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.013716021060611526,
+                  "ci": [
+                    0.009146117775256514,
+                    0.01828592434596654
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.018983203703063393,
+                  "ci": [
+                    0.01258598283019368,
+                    0.025380424575933102
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.043506894138525265,
+                  "ci": [
+                    0.030077262951407994,
+                    0.05693652532564254
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.01559137445868511,
+                  "ci": [
+                    0.014161516982713951,
+                    0.017439212139310458
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.012872365095029006,
+                  "ci": [
+                    0.009505059215217672,
+                    0.01907244469102497
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.015037735344226295,
+                  "ci": [
+                    0.00926097583739295,
+                    0.02315597292381859
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 1.0,
+                "mean_reference_any_contact_rate": 1.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "collision_1_to_0": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.018266001046927292,
+                  "ci": [
+                    0.012931070127936685,
+                    0.023600931965917896
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.04140680482109291,
+                  "ci": [
+                    0.029514715273408657,
+                    0.05329889436877716
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.013668914717125488,
+                  "ci": [
+                    0.009088365906587917,
+                    0.018543990638261395
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.011446740545995843,
+                  "ci": [
+                    0.010206297149562553,
+                    0.01245497792016434
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.012728783731367233,
+                  "ci": [
+                    0.01125111474030919,
+                    0.014706818617191142
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.01905200051962655,
+                  "ci": [
+                    0.010174286963478161,
+                    0.027929714075774936
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.03981603756062532,
+                  "ci": [
+                    0.022900746370247797,
+                    0.056731328751002855
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.015973926476174516,
+                  "ci": [
+                    0.01018472220746313,
+                    0.022095491338668463
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.011196757135296227,
+                  "ci": [
+                    0.009911689946208151,
+                    0.012524378482893705
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.011612808004890764,
+                  "ci": [
+                    0.009678874533614152,
+                    0.013027800774114319
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 1.0,
+                "mean_reference_any_contact_rate": 1.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "forward": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0023191484254992322,
+                  "ci": [
+                    0.0013200844854070661,
+                    0.003318212365591398
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.006184895833333333,
+                  "ci": [
+                    0.004557291666666666,
+                    0.0078125
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.012901346089058024,
+                  "ci": [
+                    0.009098322040611697,
+                    0.018423719271536795
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.014739191783154422,
+                  "ci": [
+                    0.009277109535083018,
+                    0.020662778022936003
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.008025610540527847,
+                  "ci": [
+                    0.003952833470320589,
+                    0.013596881140145713
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0046382968509984645,
+                  "ci": [
+                    0.0026401689708141322,
+                    0.006636424731182796
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.012369791666666666,
+                  "ci": [
+                    0.009114583333333332,
+                    0.015625
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.02580269217811605,
+                  "ci": [
+                    0.018196644081223394,
+                    0.03684743854307359
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.02571982490253745,
+                  "ci": [
+                    0.015270347659212452,
+                    0.03828341894731922
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.012292662417284297,
+                  "ci": [
+                    0.006165677086943182,
+                    0.0236118056888733
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 0.0,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "reverse": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.006497965181650378,
+                  "ci": [
+                    0.006167377754899847,
+                    0.0068784522853346
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.016814070685530216,
+                  "ci": [
+                    0.015801300318617283,
+                    0.01791674938984721
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.012901346028972699,
+                  "ci": [
+                    0.009098322521294316,
+                    0.018423718490427544
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.010320543650781906,
+                  "ci": [
+                    0.006461597158858344,
+                    0.014179490142705468
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.0067576901609360755,
+                  "ci": [
+                    0.005558346756034269,
+                    0.008217647900616052
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.012271766232204166,
+                  "ci": [
+                    0.012006936234151742,
+                    0.012581865468621951
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.031038415084955487,
+                  "ci": [
+                    0.030474229532676405,
+                    0.031646124235168716
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.025802692057945397,
+                  "ci": [
+                    0.01819664504258863,
+                    0.03684743698085509
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.0168070028574485,
+                  "ci": [
+                    0.009639322906763104,
+                    0.023974766479054478
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.00954175385116737,
+                  "ci": [
+                    0.006889656914517264,
+                    0.01246594332089151
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 0.0,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "wall": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.02362651220150927,
+                  "ci": [
+                    0.018108112721439883,
+                    0.029144911681578664
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.018041450204374837,
+                  "ci": [
+                    0.0078125,
+                    0.028270400408749674
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.021472414855354578,
+                  "ci": [
+                    0.013588696893464817,
+                    0.02704468800596172
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.047253024403018554,
+                  "ci": [
+                    0.036216225442879765,
+                    0.05828982336315733
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.036082900408749674,
+                  "ci": [
+                    0.015625,
+                    0.05654080081749935
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.042944829710709155,
+                  "ci": [
+                    0.027177393786929634,
+                    0.05408937601192344
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.04334677419354839,
+                  "ci": [
+                    0.038306451612903226,
+                    0.04838709677419355
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.08669354838709678,
+                  "ci": [
+                    0.07661290322580645,
+                    0.0967741935483871
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 8,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 4,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 8,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 4,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 8,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": null,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": null,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "zero": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.003832404331885698,
+                  "ci": [
+                    0.002432500887313474,
+                    0.004994964150049016
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.003832404331885698,
+                  "ci": [
+                    0.002432500887313474,
+                    0.004994964150049016
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.00390625,
+                  "ci": [
+                    0.003125011920928955,
+                    0.004687488079071045
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.00390625,
+                  "ci": [
+                    0.003125011920928955,
+                    0.004687488079071045
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 4,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 4
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 0.0,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        }
+      },
+      "case_tracking": [
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-wall-p00",
+          "tracked": 239,
+          "expected": 248,
+          "complete_all": 2,
+          "complete_selected": 2,
+          "reasons": {
+            "area_change": 9,
+            "ok": 239
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-wall-p00",
+          "tracked": 236,
+          "expected": 248,
+          "complete_all": 2,
+          "complete_selected": 2,
+          "reasons": {
+            "area_change": 12,
+            "ok": 236
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-wall-p00",
+          "tracked": 238,
+          "expected": 248,
+          "complete_all": 2,
+          "complete_selected": 2,
+          "reasons": {
+            "area_change": 10,
+            "ok": 238
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-wall-p00",
+          "tracked": 236,
+          "expected": 248,
+          "complete_all": 2,
+          "complete_selected": 2,
+          "reasons": {
+            "area_change": 12,
+            "ok": 236
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        }
+      ]
+    },
+    "wall": {
+      "training": {
+        "status": "completed",
+        "steps_completed": 16000,
+        "elapsed_seconds": 351.47230578027666,
+        "best_validation_denoising_loss": 0.025830491224215144,
+        "peak_cuda_allocated_bytes": 418357760,
+        "gpu": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "slurm_job_id": "43788",
+        "config": {
+          "seed": 19,
+          "steps": 16000,
+          "batch_size": 64,
+          "width": 128,
+          "layers": 4,
+          "learning_rate": 0.0003,
+          "ema_decay": 0.995,
+          "sigma_data": 0.25,
+          "log_sigma_mean": -1.2,
+          "log_sigma_std": 1.2,
+          "sigma_min": 0.002,
+          "sigma_max": 20.0,
+          "temporal_weight": 0.1,
+          "checkpoint_every": 500,
+          "max_seconds": 1200,
+          "augment": true,
+          "force_limit": 1.1,
+          "penetration_weight": 256.0,
+          "contact_weight": 64.0,
+          "acceleration_weight": 2.0,
+          "stationary_weight": 4.0,
+          "physics_sigma_max": 1.0,
+          "penetration_margin_pixels": 1.0,
+          "contact_window_pixels": 2.0,
+          "zero_probability": 0.25,
+          "collision_probability": 0.4,
+          "stationary_tokens": true,
+          "boundary_weight": 256.0,
+          "boundary_margin_pixels": 1.0
+        },
+        "oracle_geometry_max_penetration_pixels": {
+          "train": 0.9353561401367188,
+          "validation": 0.8546905517578125
+        },
+        "oracle_geometry_max_canvas_excess_pixels": {
+          "train": 0.6377191543579102,
+          "validation": 0.38483238220214844
+        }
+      },
+      "data_identity": {
+        "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+        "split_manifest_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51",
+        "train_validation_content_sha256": "91ae80287df5bfb593ae94bdb0c31756d11b17bfa2b0fa6bdfb40d2f6e4d0354",
+        "angular_labels_sha256": "746882c2e47b357c1c60d0dd146a25a445d06079bb35aa7dcae3971163aacdbc",
+        "geometry_sha256": {
+          "train": {
+            "hulls": "8210f1e205973b74a1bf484a928050b637152f5b181377f969c7c3dce9eae3ff",
+            "normals": "ae25295f51170f732548917887edbc8fd0542227b454f3a80224a54ca121e906",
+            "axis_valid": "d07a9b1b35dc32aff669735ce5415b6b43fffe1e4cf60e11c11acbaac5279bc7"
+          },
+          "validation": {
+            "hulls": "a013538376ca1c8c020038638a4148fc971b6edbbf7e00a89eddad9aa3cf343e",
+            "normals": "725968756094495c81743f5f3161c6c3004f08c6c564d7c610935042384a33a5",
+            "axis_valid": "c0834b6f61af9e9bcad8851c21026b9ef7672ba4700e915b57470ce74803f549"
+          }
+        }
+      },
+      "training_supplement": {
+        "manifest_hash": "fab734629860bf7454990adf5bdd2695b82ffd9ca4a670efb101f91dce691f30",
+        "sample_count": 2080,
+        "labels": {
+          "calibration": {
+            "train": {
+              "original_clips": 2080,
+              "training_examples": 16640,
+              "minimum_frame0_mask_iou": 1.0
+            }
+          },
+          "angular_labels_sha256": "2fd0361bb77391fb867fcaa9b372b69008c61b0d00bd422ae97c518ed5d5bc5b",
+          "angular_label_policy": "training-only checked replay; original rollout files unchanged",
+          "augmentation": "train-only square rotations/reflections"
+        },
+        "combined_training_examples": 19328
+      },
+      "selected_checkpoint_step": 15500,
+      "checkpoint_sha256": "cfc618f637f1afb6ba36cb281e895c096288fbc3cbea962fcfc11830513cbeed",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5951,
+        "tracking_fraction": 0.9998319892473119,
+        "complete_selected_clips": 95,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 95,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "zero_full_horizon": {
+        "model": {
+          "total_samples": 16,
+          "complete_samples": 16,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "static_control": {
+          "total_samples": 16,
+          "complete_samples": 16,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        }
+      },
+      "passive_full_horizon": {
+        "passive_metric_version": "2",
+        "summary": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "expected_cases": 8,
+        "eligible_cases": 8,
+        "expected_samples": 32
+      },
+      "geometry": {
+        "learned": {
+          "samples": 96,
+          "expected_pair_frames": 2976,
+          "expected_object_frames": 5952,
+          "clips_with_overlap": 32,
+          "clips_with_overlap_over_ten_percent": 26,
+          "overlap_frames": 712,
+          "overlap_over_ten_percent_frames": 324,
+          "clips_outside_interior": 16,
+          "outside_interior_object_frames": 155,
+          "clips_with_penetration_over_one_pixel": 15,
+          "penetration_over_one_pixel_frames": 142,
+          "clips_with_boundary_over_one_pixel": 10,
+          "boundary_over_one_pixel_object_frames": 100,
+          "condition_count": 24,
+          "scene_groups": 4,
+          "aggregation": "descriptive counts over all declared clips; no independent-clip CI"
+        },
+        "oracle_control": {
+          "samples": 84,
+          "expected_pair_frames": 2604,
+          "expected_object_frames": 5208,
+          "clips_with_overlap": 32,
+          "clips_with_overlap_over_ten_percent": 28,
+          "overlap_frames": 672,
+          "overlap_over_ten_percent_frames": 204,
+          "clips_outside_interior": 16,
+          "outside_interior_object_frames": 243,
+          "clips_with_penetration_over_one_pixel": 0,
+          "penetration_over_one_pixel_frames": 0,
+          "clips_with_boundary_over_one_pixel": 12,
+          "boundary_over_one_pixel_object_frames": 154,
+          "condition_count": 24,
+          "scene_groups": 4,
+          "aggregation": "descriptive counts over all declared clips; no independent-clip CI"
+        },
+        "static_control": {
+          "samples": 96,
+          "expected_pair_frames": 2976,
+          "expected_object_frames": 5952,
+          "clips_with_overlap": 0,
+          "clips_with_overlap_over_ten_percent": 0,
+          "overlap_frames": 0,
+          "overlap_over_ten_percent_frames": 0,
+          "clips_outside_interior": 0,
+          "outside_interior_object_frames": 0,
+          "clips_with_penetration_over_one_pixel": 0,
+          "penetration_over_one_pixel_frames": 0,
+          "clips_with_boundary_over_one_pixel": 0,
+          "boundary_over_one_pixel_object_frames": 0,
+          "condition_count": 24,
+          "scene_groups": 4,
+          "aggregation": "descriptive counts over all declared clips; no independent-clip CI"
+        }
+      },
+      "actions": {
+        "methods": [
+          {
+            "method": "E6",
+            "runs": 1,
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          }
+        ],
+        "bootstrap": {
+          "unit": "scene_group_id",
+          "replicates": 2000,
+          "confidence": 0.95,
+          "seed": 0
+        }
+      },
+      "selected_object": {
+        "methods": [
+          {
+            "method": "E6",
+            "runs": 1,
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4,
+                "defined_bootstrap_replicates": 2000
+              }
+            }
+          }
+        ],
+        "bootstrap": {
+          "unit": "scene_group_id",
+          "replicates": 2000,
+          "confidence": 0.95,
+          "seed": 0
+        }
+      },
+      "metrics": {
+        "all_objects.mean_pairwise_trajectory_distance": {
+          "estimate": 0.011177902789442959,
+          "ci": [
+            0.010876858562765775,
+            0.011478947016120143
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_pairwise_endpoint_distance": {
+          "estimate": 0.021556610372339993,
+          "ci": [
+            0.02111383564146226,
+            0.02186332835685584
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_reference_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "all_objects.mean_reference_to_nearest_sample": {
+          "estimate": 0.01043422797808953,
+          "ci": [
+            0.008691202181178673,
+            0.011855436861240356
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "all_objects.mean_sample_to_nearest_reference": {
+          "estimate": 0.009354824740231575,
+          "ci": [
+            0.007946369061663263,
+            0.011502569017856012
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "selected_object.mean_pairwise_trajectory_distance": {
+          "estimate": 0.01607611257763975,
+          "ci": [
+            0.015539874999382025,
+            0.01665423990729272
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_pairwise_endpoint_distance": {
+          "estimate": 0.028040679885650944,
+          "ci": [
+            0.026601307281865324,
+            0.02947104926975818
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_reference_pairwise_trajectory_distance": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.mean_reference_to_nearest_sample": {
+          "estimate": 0.01477557343322327,
+          "ci": [
+            0.013548804713908305,
+            0.01658096356206964
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "selected_object.mean_sample_to_nearest_reference": {
+          "estimate": 0.011503907047224425,
+          "ci": [
+            0.009769838795518172,
+            0.01307643615517367
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "temporal.object_translation_mae_over_observed": {
+          "estimate": 0.0003808292600271235,
+          "ci": [
+            2.86601305110867e-18,
+            0.0008166236620703116
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "temporal.background_mae_over_observed": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "temporal.mean_acceleration_norm_over_scored": {
+          "estimate": 0.1755722437368133,
+          "ci": [
+            0.1715386052590212,
+            0.18038594339957958
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "temporal.warp_valid_pixel_fraction": {
+          "estimate": 0.7659570622684765,
+          "ci": [
+            0.7577507874692874,
+            0.7763035552662816
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "image.ssim": {
+          "estimate": 0.9698511418447965,
+          "ci": [
+            0.9630121353859944,
+            0.9754164469740189
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_ade": {
+          "estimate": 0.016599109355087235,
+          "ci": [
+            0.013809929683311921,
+            0.02168508212111712
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.mean_fde": {
+          "estimate": 0.024318769746045826,
+          "ci": [
+            0.018511920474603243,
+            0.03186480198877822
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.min_ade": {
+          "estimate": 0.009472769885995795,
+          "ci": [
+            0.008408020883015701,
+            0.010826612060506113
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "all_objects.min_fde": {
+          "estimate": 0.012150646438262623,
+          "ci": [
+            0.009305313470780218,
+            0.016006042345945087
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "all_objects.fde_at_min_ade": {
+          "estimate": 0.012769158512585026,
+          "ci": [
+            0.009763583913126254,
+            0.016148354816631703
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "all_objects.missing_track_rate": {
+          "estimate": 0.00016801075268817203,
+          "ci": [
+            0.0,
+            0.0005040322580645161
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "all_objects.out_of_bounds_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_ade": {
+          "estimate": 0.025345301093128127,
+          "ci": [
+            0.01837613824597792,
+            0.03543170690700732
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_fde": {
+          "estimate": 0.035683649396552906,
+          "ci": [
+            0.023181378949185594,
+            0.05070780035899107
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.min_ade": {
+          "estimate": 0.013261649187482821,
+          "ci": [
+            0.010485537286075998,
+            0.01776044890211005
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "selected_object.min_fde": {
+          "estimate": 0.01655536799220538,
+          "ci": [
+            0.012003676020406265,
+            0.02350325988098473
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "selected_object.fde_at_min_ade": {
+          "estimate": 0.01950692414649845,
+          "ci": [
+            0.016669074695094238,
+            0.02404366605919496
+          ],
+          "scored_scene_groups": 3,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1994
+        },
+        "selected_object.missing_track_rate": {
+          "estimate": 0.00033602150537634406,
+          "ci": [
+            0.0,
+            0.0010080645161290322
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.out_of_bounds_rate": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.0
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        }
+      },
+      "collision_micro": {
+        "collision.interval.precision": {
+          "estimate": 0.2,
+          "ci": [
+            0.125,
+            0.2857142857142857
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.recall": {
+          "estimate": 0.109375,
+          "ci": [
+            0.078125,
+            0.125
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.f1": {
+          "estimate": 0.1414141414141414,
+          "ci": [
+            0.1,
+            0.17391304347826086
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.accuracy": {
+          "estimate": 0.9713901043419724,
+          "ci": [
+            0.9653897849462365,
+            0.9783856805133401
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.interval.positive_prevalence": {
+          "estimate": 0.021541568495456076,
+          "ci": [
+            0.013508949679162444,
+            0.02956989247311828
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.precision": {
+          "estimate": 0.45714285714285713,
+          "ci": [
+            0.2222222222222222,
+            0.7058823529411765
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.recall": {
+          "estimate": 0.25,
+          "ci": [
+            0.16666666666666666,
+            0.3333333333333333
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.event.f1": {
+          "estimate": 0.32323232323232326,
+          "ci": [
+            0.19047619047619047,
+            0.4318181818181818
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.precision": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.recall": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.f1": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.accuracy": {
+          "estimate": 1.0,
+          "ci": [
+            1.0,
+            1.0
+          ],
+          "defined_bootstrap_replicates": 2000
+        },
+        "collision.encounter.positive_prevalence": {
+          "estimate": 0.3368421052631579,
+          "ci": [
+            0.3333333333333333,
+            0.34408602150537637
+          ],
+          "defined_bootstrap_replicates": 2000
+        }
+      },
+      "counts": {
+        "ensemble.all_objects.complete_samples": 95,
+        "ensemble.all_objects.total_samples": 96,
+        "ensemble.all_objects.scored_sample_pairs": 141,
+        "ensemble.all_objects.expected_sample_pairs": 144,
+        "ensemble.all_objects.reference_futures": 84,
+        "ensemble.selected_object.complete_samples": 95,
+        "ensemble.selected_object.total_samples": 96,
+        "ensemble.selected_object.scored_sample_pairs": 141,
+        "ensemble.selected_object.expected_sample_pairs": 144,
+        "ensemble.selected_object.reference_futures": 84,
+        "temporal.scored_object_transitions": 5759,
+        "temporal.expected_object_transitions": 5760,
+        "temporal.scored_background_transitions": 2879,
+        "temporal.expected_background_transitions": 2880,
+        "temporal.scored_acceleration_windows": 4547,
+        "temporal.expected_acceleration_windows": 5568,
+        "temporal.excluded_reference_contact_or_force_windows": 1020,
+        "temporal.missing_acceleration_windows": 1,
+        "image.complete_samples": 96,
+        "image.total_samples": 96,
+        "image.scored_future_frames": 2976,
+        "image.expected_future_frames": 2976,
+        "image.missing_future_frames": 0,
+        "all_objects.complete_samples": 95,
+        "all_objects.total_samples": 96,
+        "all_objects.expected_future_observations": 5952,
+        "all_objects.tracked_future_observations": 5951,
+        "selected_object.complete_samples": 95,
+        "selected_object.total_samples": 96,
+        "selected_object.expected_future_observations": 2976,
+        "selected_object.tracked_future_observations": 2975,
+        "collision.interval.true_positive": 7,
+        "collision.interval.false_positive": 28,
+        "collision.interval.false_negative": 57,
+        "collision.interval.true_negative": 2879,
+        "collision.interval.scored_bins": 2971,
+        "collision.interval.expected_bins": 2976,
+        "collision.interval.missing_bins": 5,
+        "collision.event.true_positive": 16,
+        "collision.event.false_positive": 19,
+        "collision.event.false_negative": 48,
+        "collision.event.complete_pair_timelines": 95,
+        "collision.event.expected_pair_timelines": 96,
+        "collision.encounter.true_positive": 32,
+        "collision.encounter.false_positive": 0,
+        "collision.encounter.false_negative": 0,
+        "collision.encounter.true_negative": 63,
+        "collision.encounter.scored_pairs": 95,
+        "collision.encounter.expected_pairs": 96,
+        "collision.encounter.missing_pairs": 1
+      },
+      "wall_clipping": {
+        "wall_clips": 16,
+        "incomplete_wall_clips": 1,
+        "missing_observations": 1,
+        "reasons": {
+          "area_change": 1
+        },
+        "native_mask_fails_area_count": 1,
+        "unclipped_mask_passes_area_count": 1,
+        "clipped_fraction_min": 0.5,
+        "clipped_fraction_max": 0.5
+      },
+      "uncertainty_strata": {
+        "collision_0_to_1": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.019551244627397504,
+                  "ci": [
+                    0.014058642199774877,
+                    0.025043847055020135
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.043807101385113796,
+                  "ci": [
+                    0.03231950511492958,
+                    0.05529469765529802
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.013646338654209353,
+                  "ci": [
+                    0.011526944073221164,
+                    0.01620759072397033
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.011348306570389807,
+                  "ci": [
+                    0.008153426846046204,
+                    0.0162452160988081
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.013742390879374077,
+                  "ci": [
+                    0.009248091451994601,
+                    0.018236690306753553
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.02082592629991244,
+                  "ci": [
+                    0.013440956002907466,
+                    0.028210896596917414
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.046357672118904514,
+                  "ci": [
+                    0.03108277545651534,
+                    0.061632568781293674
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.01559137445868511,
+                  "ci": [
+                    0.014161516982713951,
+                    0.017439212139310458
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.012074360827211096,
+                  "ci": [
+                    0.008896132618776996,
+                    0.01766964302757573
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.015111322355671154,
+                  "ci": [
+                    0.009439879573714274,
+                    0.022530865340471464
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 1.0,
+                "mean_reference_any_contact_rate": 1.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "collision_1_to_0": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.01912304874509853,
+                  "ci": [
+                    0.01307644658181632,
+                    0.02516965090838074
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.04424875852267676,
+                  "ci": [
+                    0.030129000246835076,
+                    0.05836851679851844
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.013668914717125488,
+                  "ci": [
+                    0.009088365906587917,
+                    0.018543990638261395
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.011693782764481155,
+                  "ci": [
+                    0.011152277458226884,
+                    0.012235288070735427
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.01293792983911703,
+                  "ci": [
+                    0.011588586979204004,
+                    0.014749732841933798
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.019535970184612325,
+                  "ci": [
+                    0.010746637919858377,
+                    0.028325302449366277
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.04195854918700925,
+                  "ci": [
+                    0.02495868673521846,
+                    0.05895841163880006
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.015973926476174516,
+                  "ci": [
+                    0.01018472220746313,
+                    0.022095491338668463
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.01163811006270388,
+                  "ci": [
+                    0.011230637354571697,
+                    0.01197459124797139
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.011877318737471408,
+                  "ci": [
+                    0.009884043324317852,
+                    0.013826632934640933
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 1.0,
+                "mean_reference_any_contact_rate": 1.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "forward": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0020925762325711924,
+                  "ci": [
+                    0.001100955076509512,
+                    0.0030841973886328727
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.00390625,
+                  "ci": [
+                    0.0,
+                    0.0078125
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.012901346089058024,
+                  "ci": [
+                    0.009098322040611697,
+                    0.018423719271536795
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.014606395941023791,
+                  "ci": [
+                    0.009072421841849415,
+                    0.020608944254710524
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.007823142189077842,
+                  "ci": [
+                    0.0038092597896803616,
+                    0.013249716996225394
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.004185152465142385,
+                  "ci": [
+                    0.002201910153019024,
+                    0.0061683947772657455
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.0078125,
+                  "ci": [
+                    0.0,
+                    0.015625
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.02580269217811605,
+                  "ci": [
+                    0.018196644081223394,
+                    0.03684743854307359
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.02545423321827619,
+                  "ci": [
+                    0.014860972272745248,
+                    0.038186398790536584
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.01188772571438429,
+                  "ci": [
+                    0.005774053480846049,
+                    0.023021953645849334
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 0.0,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "reverse": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.005873802281603041,
+                  "ci": [
+                    0.005543032786601804,
+                    0.0061920300312087295
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.01547899919245548,
+                  "ci": [
+                    0.013805720176207266,
+                    0.017152278208703697
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.012901346028972699,
+                  "ci": [
+                    0.009098322521294316,
+                    0.018423718490427544
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.01067721891811628,
+                  "ci": [
+                    0.006568320092650473,
+                    0.01478611774358209
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.006861951541336732,
+                  "ci": [
+                    0.00549632763917524,
+                    0.008591219744187807
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.011056136816196402,
+                  "ci": [
+                    0.009728213569975348,
+                    0.012384060062417457
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.028318251740404067,
+                  "ci": [
+                    0.022331947063400744,
+                    0.03430455641740739
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.025802692057945397,
+                  "ci": [
+                    0.01819664504258863,
+                    0.03684743698085509
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.01754523760131413,
+                  "ci": [
+                    0.00985276877434736,
+                    0.025391477057938372
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.009770451335770671,
+                  "ci": [
+                    0.006941601792802164,
+                    0.013281298548987087
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 0.0,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "wall": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.020426744849987476,
+                  "ci": [
+                    0.01954982862597742,
+                    0.021882533291945064
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.02189855313379391,
+                  "ci": [
+                    0.015831864425273047,
+                    0.027965241842314775
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.021472414855354578,
+                  "ci": [
+                    0.013588696893464817,
+                    0.02704468800596172
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.018169592543005583,
+                  "ci": [
+                    0.016977204297662005,
+                    0.0192608249170503
+                  ],
+                  "scored_scene_groups": 3,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 1994
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.015937802481729938,
+                  "ci": [
+                    0.014021676964082411,
+                    0.018763490894387662
+                  ],
+                  "scored_scene_groups": 3,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 1994
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.04085348969997495,
+                  "ci": [
+                    0.03909965725195484,
+                    0.04376506658389013
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.04379710626758782,
+                  "ci": [
+                    0.031663728850546094,
+                    0.05593048368462955
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": 0.042944829710709155,
+                  "ci": [
+                    0.027177393786929634,
+                    0.05408937601192344
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.03223501179318721,
+                  "ci": [
+                    0.028209631538759314,
+                    0.03613643604253313
+                  ],
+                  "scored_scene_groups": 3,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 1994
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.02777143167063592,
+                  "ci": [
+                    0.02229857687160012,
+                    0.031364299752943914
+                  ],
+                  "scored_scene_groups": 3,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 1994
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0010080645161290322,
+                  "ci": [
+                    0.0,
+                    0.0030241935483870967
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0020161290322580645,
+                  "ci": [
+                    0.0,
+                    0.006048387096774193
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 15,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 21,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 16,
+                "ensemble.selected_object.complete_samples": 15,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 21,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 16
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 15,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": null,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": null,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        },
+        "zero": {
+          "case_count": 4,
+          "methods": [
+            {
+              "method": "E6",
+              "run_ids": [
+                "trajectory-E6"
+              ],
+              "scene_groups": 4,
+              "metrics": {
+                "all_objects.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "all_objects.mean_reference_to_nearest_sample": {
+                  "estimate": 0.003832404331885698,
+                  "ci": [
+                    0.002432500887313474,
+                    0.004994964150049016
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.mean_sample_to_nearest_reference": {
+                  "estimate": 0.003832404331885698,
+                  "ci": [
+                    0.002432500887313474,
+                    0.004994964150049016
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_trajectory_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_pairwise_endpoint_distance": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_reference_pairwise_trajectory_distance": {
+                  "estimate": null,
+                  "ci": null,
+                  "scored_scene_groups": 0,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 0
+                },
+                "selected_object.mean_reference_to_nearest_sample": {
+                  "estimate": 0.00390625,
+                  "ci": [
+                    0.003125011920928955,
+                    0.004687488079071045
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.mean_sample_to_nearest_reference": {
+                  "estimate": 0.00390625,
+                  "ci": [
+                    0.003125011920928955,
+                    0.004687488079071045
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "all_objects.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                },
+                "selected_object.missing_track_rate": {
+                  "estimate": 0.0,
+                  "ci": [
+                    0.0,
+                    0.0
+                  ],
+                  "scored_scene_groups": 4,
+                  "expected_scene_groups": 4,
+                  "defined_bootstrap_replicates": 2000
+                }
+              },
+              "counts": {
+                "ensemble.all_objects.complete_samples": 16,
+                "ensemble.all_objects.total_samples": 16,
+                "ensemble.all_objects.scored_sample_pairs": 24,
+                "ensemble.all_objects.expected_sample_pairs": 24,
+                "ensemble.all_objects.reference_futures": 4,
+                "ensemble.selected_object.complete_samples": 16,
+                "ensemble.selected_object.total_samples": 16,
+                "ensemble.selected_object.scored_sample_pairs": 24,
+                "ensemble.selected_object.expected_sample_pairs": 24,
+                "ensemble.selected_object.reference_futures": 4
+              },
+              "collision_frequency": {
+                "complete_sample_pair_timelines": 16,
+                "expected_sample_pair_timelines": 16,
+                "mean_generated_any_contact_rate_if_complete": 0.0,
+                "mean_reference_any_contact_rate": 0.0,
+                "mean_generated_bernoulli_variance_if_complete": 0.0,
+                "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+              }
+            }
+          ]
+        }
+      },
+      "case_tracking": [
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-wall-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730016-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-wall-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730017-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-wall-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730018-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-forward-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-reverse-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-wall-p00",
+          "tracked": 247,
+          "expected": 248,
+          "complete_all": 3,
+          "complete_selected": 3,
+          "reasons": {
+            "area_change": 1,
+            "ok": 247
+          }
+        },
+        {
+          "sample_id": "g03-scene-00730019-zero-p00",
+          "tracked": 248,
+          "expected": 248,
+          "complete_all": 4,
+          "complete_selected": 4,
+          "reasons": {
+            "ok": 248
+          }
+        }
+      ]
+    }
+  },
+  "input_sha256": {
+    "collected/results/control/summary.json": "b567226c9443f7fce4bd7e89f77130fab81f4c95343416a657561156ec1b7875",
+    "collected/results/control/best.pt": "438b5778ef42df830405313b27dae99ea87d2e8d093ff9c0153b11a9fafaf282",
+    "collected/results/control/latest.pt": "e96df490e40586fdc706e67960f4e175d732d97f69e05f7a304cc0e4d7ec39a0",
+    "collected/results/control-validation/trajectory-results.json": "f17d852f4434dc21a925d7b0d07a5b116bcdb1baee9813062e8a0cc13e4ee6f1",
+    "collected/results/control-validation/contact-results.json": "07fe19d8959831a996ac3803fa3f1983aed02c6644701b65b9be84eb94f54519",
+    "collected/results/control-validation/passive-stationarity.json": "c31bfc311ac697480b1b89e3f4ef8d98b5344948b5303d51965c9c3598dcabc3",
+    "recovery-collected/evaluation-recovery/control-wall-clipping-v2.json": "8daa0297182b175b6d6ba65ed4d6d4a5970e4aeda72447b13ac99d7577123f6d",
+    "collected/results/control-validation/uncertainty-strata.json": "36822b74a48e981fbfe911c6f70ccf8abf221b71aa694836fee008aeb07674ca",
+    "collected/results/control-validation/validation-metrics/summary.json": "01fef8d6fb1e33f9f5959cd06bc1c50f5e579b33de7136ce244645c95481967c",
+    "collected/results/control-validation/validation-metrics/actions.json": "5ddd355fd5759ca66bc0d52401efcfcb3aefefb36f27b9285a39a41993b4b366",
+    "collected/results/control-validation/selected-object-metrics/targets.json": "01260b4be23c1d6836b7b7d03342d0d1a58fb134f4def1b8f3425f537687ac67",
+    "collected/results/control-validation/plan.json": "035242fd0864ae9ec9bc0d03553a5c17cff856e872b6b7fbc6682bc9a00a8b03",
+    "collected/results/control-validation/validation-samples/predictions.json": "da5a546ca9589fb4cb68167379b8b58af593060b287e7e88659824b646e5d45f",
+    "collected/results/wall/summary.json": "f10b47c07bccd4bc9cf499d2806cda0cb61f60eee23dfe6aba5bde6398c09d79",
+    "collected/results/wall/best.pt": "cfc618f637f1afb6ba36cb281e895c096288fbc3cbea962fcfc11830513cbeed",
+    "collected/results/wall/latest.pt": "ba54a138598b9e8a05a38c2a98429012561b8ead30e372cd7222b7a3f412b9fb",
+    "recovery-collected/evaluation-recovery/wall-validation/trajectory-results.json": "ebe74e46b871a27131cf71b9c2d6a09a7a89eb3b95913bc80d343aad892860fd",
+    "recovery-collected/evaluation-recovery/wall-validation/contact-results.json": "8de6457ae13ad3face53133404a63a805a5da6ec4c63148bcd34b7135df6c1b7",
+    "recovery-collected/evaluation-recovery/wall-validation/passive-stationarity.json": "6e817ff1f20dcd4d58123e7ef61bc842fda990609b40172386b0aeb9ed9bcbfb",
+    "recovery-collected/evaluation-recovery/wall-wall-clipping-v2.json": "38dd7b6837dbcc4180e912832ce958cf87b39fc5531fbdf95825801b3c8db74e",
+    "recovery-collected/evaluation-recovery/wall-validation/uncertainty-strata.json": "1f344fc0e54e802f1a7c33f9521ccb802b7c18f8e3d7ef7382b6e66aa44df697",
+    "recovery-collected/evaluation-recovery/wall-validation/validation-metrics/summary.json": "7b3b485263acf9c5e969bc57e317a44bcb700df72d3cfeaf8a1457f8fd8c5e99",
+    "recovery-collected/evaluation-recovery/wall-validation/validation-metrics/actions.json": "264c4216990ac34e9e26ec9f5ccbc41c4321b3a29b74d8a536092ad95808e842",
+    "recovery-collected/evaluation-recovery/wall-validation/selected-object-metrics/targets.json": "334fb2699f18c7ae8b56d58e740423476fe0daa83521984aa179b2c2410cc317",
+    "recovery-collected/evaluation-recovery/wall-validation/plan.json": "bb7e22ef1e6b86e3ef1450be3d577079d248fc64014ebea8bebf516ff432e2d5",
+    "recovery-collected/evaluation-recovery/wall-validation/validation-samples/predictions.json": "673c51c5ee1abf986478283ef4736a2a02f3875ff0475a761b4cefcaee377fe4",
+    "collected/results/comparison.json": "f8a2b7b49faeeb7e3c0c221f4bd9fd3272ecf4b13b885e7ab282a3774054216c",
+    "recovery-collected/evaluation-recovery/recovery.json": "cc528c63dc1358d7b7c99b1017490f96de701933506af948ebe8cf79d6d73a3f",
+    "recovery-collected/accounting.txt": "305d70039ebdcea89f7ef7a799f7b062d73d3e27d07756c85a1a2deba122eb7c",
+    "collected-job43788.tar.gz": "8c7119b3259e9357e28a01390365f26a1ca0efcb395074d10760c37c82048e0c",
+    "collected-job43808.tar.gz": "6a4ea2ba8897c211401e97f84af41770f3431688b9d1c65a307e84ceb300c594",
+    "source.tar.gz": "9581b567dc471edd94c4a9e85055d358962aa32a338dd3a57c6e192fd08f767f",
+    "evaluation-source.tar.gz": "48dbb70d0c5005c49551ab2f6d974a587c099617888ab3157557e6c79c440bf4"
+  },
+  "test_splits_evaluated": [],
+  "no_inference_correction": true,
+  "raster_metric_version": "native-grid-extension-2",
+  "failed_attempt_preserved": true,
+  "supplement_manifest_sha256": "21de31ef144f986147a7bd9ed98f6d36ac92c045a6feade5268017e81a90d2ec",
+  "supplement_manifest_identity": "fab734629860bf7454990adf5bdd2695b82ffd9ca4a670efb101f91dce691f30",
+  "limitations": [
+    "The new L40S control completes 88/96 clips versus the earlier A40 E6-grid 90/96. Only this newly matched pair isolates the boundary-weight switch.",
+    "The wall model still fails the strict tracking/selected-trajectory gate, retains 15/96 penetrating clips, and has low forward spread.",
+    "Historical one-pixel-interior boundary counts are not calibrated wall accuracy: oracle controls also cross that proxy.",
+    "No independent training-seed uncertainty, final-test results, conservation-law guarantee or probability-calibration claim."
+  ]
+}

@@ -181,7 +181,7 @@ See [Research references](docs/REFERENCES.md) for the baselines, diffusion model
 
 The [multi-scene record](docs/results/multiscene-validation-checks.json) contains
 validation counts, checkpoint hashes, image scores, action controls, auxiliary heads
-and the sampler study. Candidate tracker version 2 is under review in PR #42;
+and the sampler study. Tracker version 2 was reviewed by Sanjay and merged in PR #42;
 these results must remain separate from older version-1 measurements.
 
 Static copying beats the original four models on SSIM and LPIPS, showing why image
@@ -189,3 +189,7 @@ scores need physical checks. No final method ranking or meaningful uncertainty i
 established. The [report draft](report/README.md) includes the measured comparison
 and limitations. Earlier [loss diagnostics](docs/results/foreground-loss-checks.json)
 are retained as historical training checks.
+
+The [matched canvas-loss comparison](docs/WALL_TRAINING.md) improves complete
+validation clips from 88/96 to 95/96. Penetration remains in 15/96 clips and
+collision timing regresses slightly. Overall physics quality still fails.

@@ -1,0 +1,29 @@
+{
+  "status": "implementation_acceptance_complete",
+  "main_commit": "91fe1e504292331e2fa44b9f05ac2613b17d29b4",
+  "tracker_review": {
+    "pr": 42,
+    "reviewer": "comicsans-02",
+    "approved_commit": "1578274100f5d5dc418fbeeff86071dd15391d8a",
+    "merged": true
+  },
+  "training_gate": {
+    "source": "docs/results/tracker-noise-calibration.json",
+    "record": "boundary-loss-20261017 / diffusion ema-32",
+    "tracked": 247,
+    "expected": 248,
+    "complete_selected_samples": 4,
+    "expected_samples": 4,
+    "selected_ade": 0.003477934770484548,
+    "sampling_steps": 32,
+    "sample_file_sha256": "5175fbdd473acd5b1da3db0181b5475448197bd77091155206579572663cc449",
+    "scope": "Common-trainer spatial diagnostic; not held-out numeric-action success or overall physics quality"
+  },
+  "main_calibration_file_sha256": "ac97b433d5f1269424b13ffa2e0cb5a6aa4b3431ab1ae46b0eec2ee754705622",
+  "preserve_original_version_1_scores": true,
+  "quality_followups": [
+    14,
+    15,
+    16
+  ]
+}

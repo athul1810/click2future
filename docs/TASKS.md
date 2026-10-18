@@ -18,7 +18,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T07 | [Implement and validate the evaluation pipeline](https://github.com/athul1810/click2future/issues/7) | T04, T05 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
-| T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
+| T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | Done |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In review |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
@@ -29,6 +29,11 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | Done |
 | T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | Not started |
+
+The matched canvas-loss follow-up in #49 completes 95/96 validation clips versus
+88/96 for its control. Penetration remains in 15/96 clips and overall quality
+still fails. See [the comparison](WALL_TRAINING.md) for T13-T16 evidence and
+remaining limits. No final-test split is opened.
 
 ## Task details
 
@@ -177,11 +182,11 @@ PR #37 merged after independent review. Boundary-weighted CVAE training in job 4
 
 Create the common diffusion backbone and the main numeric-action baseline.
 
-**Dependencies:** T03, T04, T06. **Owner:** MAITI SHRIJEET. **Status:** In progress.
+**Dependencies:** T03, T04, T06. **Owner:** MAITI SHRIJEET. **Status:** Done.
 
 - [x] Implement pixel video training and DDIM sampling with a shared backbone/configuration.
 - [x] Support first-frame-only E1 and selected-mask-plus-numeric-force E2.
-- [ ] Pass forward/backward, tiny-batch overfit, and checkpoint resume checks.
+- [x] Pass forward/backward, tiny-batch overfit, and checkpoint resume checks.
 - [x] Measure 64px peak VRAM, seconds/step, and four-sample inference latency.
 - [x] Record baseline samples and proposed run budgets.
 
@@ -189,14 +194,14 @@ Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation pa
 
 A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json.
 
-Candidate tracker-v2 update: the saved #37 boundary-loss EMA/32-step RGB
-spatial diagnostic tracks 247/248 observations, with all four selected tracks
-complete and selected ADE 0.00348. This passes the original selected-object
-training gate under v2. Version 2 is still awaiting Ananya's calibration review;
-the shared acceptance box stays open until that review. Shrijeet's separate
-#39/#41 structured v2 rescore and video hashes are now recorded in
-results/diffusion-tracker-v2-checks.json and were reviewed in PR #45. Preserve all historical v1 scores.
-The multi-scene E2/E3 validation failures remain separate and unresolved.
+Tracker version 2 was reviewed by Sanjay at commit `1578274` and merged in #42.
+The saved #37 boundary-loss EMA/32-step spatial diagnostic passes the existing
+common-trainer tiny-training gate: 247/248 tracked observations, all four selected
+tracks complete and selected ADE 0.00348. Shrijeet's separate RGB rescore also
+passes and is recorded in results/diffusion-tracker-v2-checks.json. These are
+training diagnostics of the shared backbone, not held-out E2 action success.
+Historical version-1 scores are preserved. Implementation acceptance is complete on main after #42 merged; overall E2/E3
+validation failures remain in T14-T16. See results/diffusion-implementation-acceptance.json.
 
 <a id="t11"></a>
 
@@ -292,7 +297,7 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [x] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [x] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The validation measurement work is complete and ready for review in #47, stacked on #43 and #42. The frozen E5 audit finds penetration in 22/96 clips versus 0/84 oracle controls and full-horizon zero-force drift in 16/16 clips. PR #48 adds three E6 packages. The paired-action package has 0/16 zero-force drift, 0/32 passive drift and penetration in 12/96 clips. All six incomplete clips are wall cases. The reproducible clipping audit traces all 32 missing observations to sprite area lost at the canvas. Independent C review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. Forward spread remains below the finite references and wall coverage is undefined. Version 2 passive scores retain the original reports and count exactly one pixel as drift. Overall physics quality, independent repeats and final ID/OOD results remain open. See CONTACT_UNCERTAINTY_AUDIT.md and results/contact-uncertainty-comparison.json.
+The validation measurement work is complete and ready for review in #47, stacked on #43; #42 has merged. The frozen E5 audit finds penetration in 22/96 clips versus 0/84 oracle controls and full-horizon zero-force drift in 16/16 clips. PR #48 adds three E6 packages. The paired-action package has 0/16 zero-force drift, 0/32 passive drift and penetration in 12/96 clips. All six incomplete clips are wall cases. The reproducible clipping audit traces all 32 missing observations to sprite area lost at the canvas. Independent C review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. Forward spread remains below the finite references and wall coverage is undefined. Version 2 passive scores retain the original reports and count exactly one pixel as drift. Overall physics quality, independent repeats and final ID/OOD results remain open. See CONTACT_UNCERTAINTY_AUDIT.md and results/contact-uncertainty-comparison.json.
 
 
 <a id="t17"></a>
@@ -309,7 +314,7 @@ Make the model and simulator comparison understandable and repeatable.
 - [x] Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.
 - [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
 
-The app now supports E6 with the shared offline sampler, generated-pixel overlays and missing counts. PR #48 is reviewed and merged into #47. The source ZIP with the clipping diagnostic passes 550 tests plus four subtests; the unchanged E6-grid/E5 interface passed all 30 browser checks during PR #48 review. Four primary futures fit laptop screens, comparison is explicit and reduced-motion playback stays paused. The earlier five-request E5/E3 latency estimate of 5.31s median and 5.36s empirical p95 belongs to the RTX 3060 laptop; it does not benchmark the new E6/E5 setup. Final physical quality, fresh final-model timing and an offline presentation rehearsal remain open. Candidate tracker v2 awaits independent review. See app/README.md and CONTACT_TRAINING.md.
+The app now supports E6 with the shared offline sampler, generated-pixel overlays and missing counts. PR #48 is reviewed and merged into #47. The source ZIP with the clipping diagnostic passes 550 tests plus four subtests; the unchanged E6-grid/E5 interface passed all 30 browser checks during PR #48 review. Four primary futures fit laptop screens, comparison is explicit and reduced-motion playback stays paused. The earlier five-request E5/E3 latency estimate of 5.31s median and 5.36s empirical p95 belongs to the RTX 3060 laptop; it does not benchmark the new E6/E5 setup. Final physical quality, fresh final-model timing and an offline presentation rehearsal remain open. Tracker v2 was reviewed by Sanjay and merged in #42. See app/README.md and CONTACT_TRAINING.md.
 
 
 <a id="t18"></a>
@@ -326,7 +331,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-The fifteen-page working draft retains the earlier method comparison, sampler study and CVAE follow-ups, and now includes E5, all three E6 packages, the corrected passive scores, action-family uncertainty and a fixed E5/E6 four-seed figure. All 15 pages are rendered and inspected, with no external URLs or hyperlink annotations. report/contributions.md records evidence-supported draft descriptions; member reviews and Ananya's completed-work account remain pending. Final export remains open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
+The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5, all three E6 packages, corrected passive scores, action-family uncertainty and the fixed E5/E6 four-seed figure. It also includes the matched canvas-loss comparison and its remaining failures. report/contributions.md records evidence-supported draft descriptions; member reviews and Ananya's completed-work account remain pending. Final export remains open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
 
 <a id="t19"></a>
 
