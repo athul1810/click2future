@@ -11,7 +11,11 @@ import torch
 from click2future.evaluation.rigid_geometry import geometry_diagnostics
 from click2future.models.object_motion import observe
 from click2future.sim import run_rollout
-from click2future.training.contact_geometry import observed_hulls, signed_penetration
+from click2future.training.contact_geometry import (
+    contact_objective,
+    observed_hulls,
+    signed_penetration,
+)
 from click2future.training.sample_trajectory import load_trajectory, sample_trajectory_videos
 from click2future.training.train_contact import ContactConfig, ContactTrainer, main, resume_probe
 from click2future.training.train_cvae import sha256
@@ -143,6 +147,38 @@ def test_invalid_stationary_labels_and_config_are_rejected():
         ContactTrainer(data, geometry, ContactConfig())
     with pytest.raises(ValueError, match="configuration"):
         ContactConfig(zero_probability=0.8, collision_probability=0.4).validate()
+
+
+def test_stationary_token_supervision_covers_unpushed_rest_without_freezing_moving_targets():
+    data, geometry, _ = fixture_data()
+    features = torch.from_numpy(data["train"]["features"][:1])
+    geometry = {key: torch.from_numpy(value[:1]) for key, value in geometry["train"].items()}
+    clean = torch.zeros((1, 31, 2, 4))
+    clean[:, :, 0, 0] = 0.1
+
+    class Prediction:
+        sigma_data = 0.25
+
+        def __init__(self, object_id):
+            self.value = clean.clone()
+            self.value[:, :, object_id, 0] += 0.01
+
+        def __call__(self, *args):
+            return self.value
+
+    config = ContactConfig(stationary_tokens=True)
+    arguments = (
+        clean,
+        features,
+        torch.tensor([[0.25, 0]]),
+        torch.tensor([0.1]),
+        torch.zeros_like(clean),
+        geometry,
+        config,
+    )
+    _, passive = contact_objective(Prediction(1), *arguments)
+    _, active = contact_objective(Prediction(0), *arguments)
+    assert passive["stationary"] > 0 and active["stationary"] == 0
 
 
 def test_cli_training_requires_actual_allocation(tmp_path, monkeypatch):

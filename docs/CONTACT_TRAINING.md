@@ -58,3 +58,18 @@ sbatch submission/evaluate_trajectory.sbatch --method E6
 
 training uses `C2F_DATA_DIR` and a fresh `C2F_RUN_DIR`. evaluation uses the same
 data plus `C2F_TRAJECTORY_CHECKPOINT` and a fresh `C2F_TRAJECTORY_RESULTS`.
+
+## second declared candidate
+
+job 43598 completed the first recipe. full-horizon zero drift is 0/16 and
+penetration falls to 17/96 clips, but changed-selection success regresses to
+7/16 from e5's 16/16. contact event f1 is 0.3333. the unpushed object can drift
+under nonzero force, so this recipe is not accepted as a replacement.
+
+the next six-thousand-update run starts from the same seed on the same corpus.
+`contact_token_pilot.json` extends stationary supervision to training tokens whose
+labelled pose is unchanged, including passive objects before contact. it raises
+penetration/contact weights to 256/64 and the geometric-loss sigma ceiling to
+1.0. this combined training change is explicit; it does not isolate one component.
+selection, uncertainty, contact timing and every failure remain in the comparison.
+no zero-force or passive-object override is used during sampling.

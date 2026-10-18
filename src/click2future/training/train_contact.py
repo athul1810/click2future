@@ -30,6 +30,7 @@ class ContactConfig(TrajectoryConfig):
     contact_window_pixels: float = 2.0
     zero_probability: float = 0.25
     collision_probability: float = 0.4
+    stationary_tokens: bool = False
 
     def validate(self):
         super().validate()
@@ -46,6 +47,7 @@ class ContactConfig(TrajectoryConfig):
             or not 0 < self.contact_window_pixels <= 4
             or not 0 < self.zero_probability < 1
             or not 0 < self.collision_probability < 1 - self.zero_probability
+            or not isinstance(self.stationary_tokens, bool)
         ):
             raise ValueError("Invalid contact/stationary training configuration")
 

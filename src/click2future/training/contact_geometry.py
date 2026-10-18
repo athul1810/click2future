@@ -89,7 +89,13 @@ def contact_objective(model, clean, features, force, sigma, noise, geometry, con
     acceleration = (error[:, 2:] - 2 * error[:, 1:-1] + error[:, :-2]).square().flatten(1).mean(1)
     zero = (force == 0).all(-1)
     denoising = (weight * (point + config.temporal_weight * velocity)).mean()
-    stationary = (weight * point * zero).mean()
+    if config.stationary_tokens:
+        # Ground-truth rest is training supervision, never an inference-time mask.
+        stationary_mask = clean.abs().amax(-1) <= 1e-7
+        stationary_error = (error.square().mean(-1) * stationary_mask).mean((1, 2))
+        stationary = (weight * stationary_error).mean()
+    else:
+        stationary = (weight * point * zero).mean()
     predicted_depth = signed_penetration(prediction, features, geometry)
     with torch.no_grad():
         true_depth = signed_penetration(clean, features, geometry)
