@@ -16,7 +16,7 @@ from click2future.models.object_motion import MOTION_CONTRACT
 from .contact_geometry import contact_objective, prepare_contact_geometry, signed_penetration
 from .train_cvae import require_tc2, sha256
 from .train_trajectory import TrajectoryConfig, TrajectoryTrainer, model_config
-from .trajectory_data import prepare_trajectories
+from .trajectory_data import add_training_supplement, prepare_trajectories
 
 
 @dataclass(frozen=True)
@@ -78,7 +78,10 @@ class ContactTrainer(TrajectoryTrainer):
         zero = (force == 0).all(-1)
         collision = (
             torch.tensor(
-                ["-collision_" in item["sample_id"] for item in data["train"]["examples"]],
+                [
+                    item.get("contact", "-collision_" in item["sample_id"])
+                    for item in data["train"]["examples"]
+                ],
                 device=device,
             )
             & ~zero
@@ -219,6 +222,7 @@ def main(argv=None):
     for name in ("dataset", "run-dir", "config"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--supplement", type=Path)
     args = parser.parse_args(argv)
     require_tc2()
     config = ContactConfig(**json.loads(args.config.read_text()))
@@ -231,6 +235,10 @@ def main(argv=None):
     started = time.perf_counter()
     data, provenance = prepare_trajectories(args.dataset, augment=config.augment)
     provenance.pop("preparation_seconds", None)
+    if args.supplement:
+        data, provenance = add_training_supplement(
+            args.dataset, args.supplement, data, provenance, augment=config.augment
+        )
     geometry = prepare_contact_geometry(args.dataset, data)
     provenance["geometry_sha256"] = {
         split: {key: hashlib.sha256(value.tobytes()).hexdigest() for key, value in row.items()}
@@ -247,6 +255,9 @@ def main(argv=None):
             Path(__file__).with_name("train_trajectory.py"),
             source / "models/object_motion.py",
             source / "evaluation/rigid_geometry.py",
+            source / "data/action_supplement.py",
+            source / "sim/backend.py",
+            source / "sim/rollout.py",
         )
     }
     if not args.resume:

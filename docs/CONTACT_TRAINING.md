@@ -73,3 +73,40 @@ penetration/contact weights to 256/64 and the geometric-loss sigma ceiling to
 1.0. this combined training change is explicit; it does not isolate one component.
 selection, uncertainty, contact timing and every failure remain in the comparison.
 no zero-force or passive-object override is used during sampling.
+
+## third declared candidate: paired training actions
+
+the second recipe (job 43600) restores early reversal and changed-selection to
+16/16 and keeps zero-force full-horizon drift at 0/16. penetration remains 18/96.
+both contact candidates still have passive drift in 8/32 complete forward/reverse
+samples over the full horizon; e5 has 22/32. these are additional diagnostics,
+not replacements for the original early checks.
+
+the last saved interactive request is also retained: force (-0.42855, 0.25758)
+on object 1. e5 reproduces the cached video pixel-for-pixel. its passive object
+moves up to 9.83 pixels; the token candidate reaches 11.66 pixels. one matched
+simulator realization has no collision and no passive motion. this diagnostic is
+not a frozen validation case or a distributional reference.
+
+the generator only selects object 1 for an action toward object 0. whole-scene
+symmetries preserve this confound. the third candidate therefore adds a separate,
+hashed training-only action supplement to the original corpus:
+
+- exactly the existing 16 training worlds and their four existing physics
+  profiles, with both objects selected, eight compass directions and force
+  magnitudes 0.25/0.5: 2,048 nonzero clips plus 32 zero-force clips;
+- first-frame pixels, object geometry, hidden physics and native rollout settings
+  are preserved; only action changes. the original 84 validation clips and all
+  248 reserved tests are untouched. no test rollout is opened;
+- supplement validation rejects missing actions, changed bytes, changed physics,
+  changed parent hashes or non-training membership. angular labels must replay;
+- `contact_grid_pilot.json` keeps the token candidate architecture/loss/sampler,
+  seed 19 and checkpoint selection rule, with 16,000 updates from scratch and a
+  30-minute process limit inside a 40-minute allocation. increased data and
+  updates are a combined change, not an isolated causal ablation;
+- original validation, exact-pixel replay, calibrated geometry, full-horizon zero
+  and passive checks, and the saved interactive request are all reported. all
+  three experiments are retained even if the third candidate fails.
+
+this expands training support, not the project's claimed deployment domain. it
+cannot establish general image understanding, physical correctness or a sota win.

@@ -1,5 +1,7 @@
 """Differentiable convex-silhouette training losses; never a sampling correction."""
 
+from pathlib import Path
+
 import numpy as np
 import torch
 
@@ -35,15 +37,17 @@ def prepare_contact_geometry(root, data):
     frames = {}
     for row in data.values():
         for example in row["examples"]:
-            sample = example["sample_id"]
+            sample = (str(Path(example.get("root", root)).resolve()), example["sample_id"])
             if sample not in frames:
-                reference = load_rollout(root, sample)
+                reference = load_rollout(*sample)
                 frames[sample] = reference["frames"][0], reference["selected_mask"]
     result = {}
     for split, row in data.items():
         values = {key: [] for key in ("hulls", "normals", "axis_valid")}
         for index, example in enumerate(row["examples"]):
-            image, mask = frames[example["sample_id"]]
+            image, mask = frames[
+                (str(Path(example.get("root", root)).resolve()), example["sample_id"])
+            ]
             image = np.rot90(image, example["quarter_turns"]).copy()
             mask = np.rot90(mask, example["quarter_turns"]).copy()
             if example["mirror"]:

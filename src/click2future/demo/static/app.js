@@ -39,6 +39,7 @@ function setBusy(value) {
 }
 function changed() {
   if (!playback) return;
+  setPlaying(false);
   $("mode").textContent = "previous request · generate to update";
   message("the videos show the previous request. generate to apply these changes.");
 }
@@ -122,11 +123,10 @@ async function chooseScene() {
       $("objects").append(button);
     });
     playback = null;
-    playing = false;
+    setPlaying(false);
     strips = [];
     $("results").replaceChildren(emptyState.cloneNode(true));
     $("play").disabled = true;
-    $("play").textContent = "▶";
     $("timeline").disabled = true;
     $("timeline").value = 0;
     $("time").textContent = "0.00s";
@@ -189,6 +189,7 @@ async function showResult(result, current) {
   $("timeline").value = 0;
   $("timeline").disabled = false;
   $("play").disabled = false;
+  setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   $("reference-details").hidden = false;
   const cached = result.models.filter(model => model.source === "cached replay").length;
   $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : "live model output";
@@ -200,8 +201,6 @@ async function showResult(result, current) {
       tracker_adoption: model.pixel_tracks?.adoption,
       track_failures: model.pixel_tracks?.samples?.map(sample => sample.reasons)})),
     note: result.notice}, null, 2);
-  playing = true;
-  $("play").textContent = "Ⅱ";
   drawFrame();
 }
 function drawFrame() {
@@ -324,11 +323,16 @@ $("model").onchange = changed;
 $("seed").oninput = changed;
 $("generate").onclick = generate;
 $("cancel").onclick = cancel;
-$("play").onclick = () => {playing = !playing; previous = 0; $("play").textContent = playing ? "Ⅱ" : "▶";};
+function setPlaying(value) {
+  playing = value;
+  previous = performance.now();
+  $("play").textContent = playing ? "pause" : "play";
+  $("play").setAttribute("aria-label", playing ? "pause futures" : "play futures");
+}
+$("play").onclick = () => setPlaying(!playing);
 $("timeline").oninput = () => {
   frame = Number($("timeline").value);
-  playing = false;
-  $("play").textContent = "▶";
+  setPlaying(false);
   drawFrame();
 };
 $("tracks").onchange = drawFrame;
@@ -362,6 +366,7 @@ async function init() {
       option.textContent = model.id;
       $("model").append(option);
     });
+    $("model").value = state.models[0].id;
     await chooseScene();
   } catch (error) {message("could not start the demo: " + error.message, true);}
 }

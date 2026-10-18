@@ -64,6 +64,8 @@ def main():
         wait("state && scene && !busy")
         assert page.title() == "click2future"
         checks.append("page and checkpoint metadata load")
+        assert page.locator("#model").input_value() == page.evaluate("state.models[0].id")
+        checks.append("one primary model is selected by default")
         assert page.locator("#objects button").count() >= 2
         checks.append("visible object selectors")
         page.screenshot(path=str(args.output / "01-ready.png"), full_page=True)
@@ -151,6 +153,10 @@ def main():
             )
         checks.append("real checkpoint finishes four seeded futures")
         checks.append("controls locked during generation")
+        assert len(page.evaluate("playback.models")) == 1
+        assert page.evaluate("playing")
+        wait("frame > 0")
+        checks.append("native-fps playback advances without an extra click")
         assert page.locator(".future-card canvas").count() == 4 * len(
             page.evaluate("playback.models")
         )
@@ -182,6 +188,18 @@ def main():
         assert page.locator("#mode").inner_text() == "cached replay"
         assert page.evaluate("playback.models[0].strip") == first
         checks.append("exact repeated request is identical labelled replay")
+        page.emulate_media(reduced_motion="reduce")
+        generate()
+        assert not page.evaluate("playing")
+        page.emulate_media(reduced_motion="no-preference")
+        checks.append("reduced-motion preference keeps playback paused")
+        if len(page.evaluate("state.models")) > 1:
+            page.locator("#model").select_option("__all")
+            generate()
+            assert page.locator(".future-card canvas").count() == 4 * len(
+                page.evaluate("state.models")
+            )
+            checks.append("explicit comparison includes every selected model")
         page.locator("#reverse").click()
         assert "previous request" in page.locator("#mode").inner_text()
         assert page.evaluate("playback.models[0].strip") == first
