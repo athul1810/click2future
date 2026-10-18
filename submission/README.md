@@ -405,3 +405,10 @@ python -m click2future.evaluation.passive_stationarity --plan outputs/contact-va
 
 all hidden-physics references must leave the passive object stationary and
 contact-free. incomplete generated tracks remain missing rather than passing.
+
+Passive-stationarity metric version 2 counts excursion at least one pixel as
+drift, matching the shared motion protocol. Earlier strict-greater-than reports
+remain historical results. For the 30-minute grid configuration, request a
+40-minute allocation with `sbatch --time=00:40:00 submission/train_contact.sbatch`
+and pass its grid config/supplement arguments. The default wrapper time is for
+the shorter first recipe.

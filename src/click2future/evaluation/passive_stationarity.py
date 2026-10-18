@@ -14,6 +14,8 @@ from .tracking import TRACKER_VERSION, TrackerConfig, track_video
 from .trajectory_audit import verify_inputs
 from .uncertainty_strata import action_family
 
+PASSIVE_METRIC_VERSION = "2"
+
 
 def stationary_reference(reference):
     if len(reference["object_valid"]) != 2 or not reference["object_valid"].all():
@@ -69,10 +71,12 @@ def passive_horizon(reference, videos):
                 "sample_index": index,
                 "complete": complete,
                 "max_excursion": excursion,
-                "drifting": excursion > threshold if complete else None,
+                "drifting": excursion >= threshold if complete else None,
             }
         )
     return {
+        "passive_metric_version": PASSIVE_METRIC_VERSION,
+        "motion_rule": "maximum excursion >= motion_threshold",
         "total_samples": len(samples),
         "complete_samples": sum(row["complete"] for row in samples),
         "missing_samples": sum(not row["complete"] for row in samples),
@@ -112,6 +116,8 @@ def audit(plan_path, predictions_path, dataset, checkpoint):
         if sha256(path) != digest:
             raise ValueError("Passive-stationarity input changed during scoring")
     return {
+        "passive_metric_version": PASSIVE_METRIC_VERSION,
+        "motion_rule": "maximum excursion >= motion_threshold",
         "scope": (
             "supplementary full-horizon passive rest in forward/reverse families; "
             "not original early-window success"

@@ -34,6 +34,12 @@ def collect(evaluation, passive, geometry, zero):
         "early_selection": selection["metrics"]["selection.correct_target_rate_over_complete"],
         "full_horizon_zero": zero,
         "full_horizon_passive": raw["passive"]["summary"],
+        "full_horizon_passive_definition": {
+            "metric_version": raw["passive"].get("passive_metric_version", "1"),
+            "motion_rule": raw["passive"].get(
+                "motion_rule", "maximum excursion > motion_threshold"
+            ),
+        },
         "geometry": geometry,
         "image_ssim": summary["metrics"]["image.ssim"],
         "all_original_metrics": summary["metrics"],

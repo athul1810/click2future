@@ -39,3 +39,14 @@ def test_nonstationary_reference_is_ineligible():
     assert not stationary_reference(ref)
     with pytest.raises(ValueError, match="stationary"):
         passive_horizon(ref, ref["frames"][None])
+
+
+def test_exactly_one_pixel_drift_matches_the_shared_motion_threshold():
+    ref = reference()
+    videos = ref["frames"][None].copy()
+    mask = ref["instance_masks"][0, 1 - ref["selected_object_id"]]
+    videos[0, -1, mask] = ref["frames"][0, 1, 1]
+    videos[0, -1, np.roll(mask, 1, axis=1)] = ref["frames"][0, mask]
+    result = passive_horizon(ref, videos)
+    assert result["samples"][0]["max_excursion"] == result["motion_threshold"]
+    assert result["drifting_samples"] == 1

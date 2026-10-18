@@ -78,8 +78,10 @@ no zero-force or passive-object override is used during sampling.
 
 the second recipe (job 43600) restores early reversal and changed-selection to
 16/16 and keeps zero-force full-horizon drift at 0/16. penetration remains 18/96.
-both contact candidates still have passive drift in 8/32 complete forward/reverse
-samples over the full horizon; e5 has 22/32. these are additional diagnostics,
+the original strict-greater-than passive diagnostic counted 8/32 drifting clips
+for both contact candidates and 22/32 for e5. the corrected inclusive one-pixel
+rule counts 20/32 for the first candidate, 8/32 for the token candidate and
+29/32 for e5. these are additional diagnostics,
 not replacements for the original early checks.
 
 the last saved interactive request is also retained: force (-0.42855, 0.25758)
@@ -118,7 +120,7 @@ a fresh path, then pass it explicitly; it is never merged into the frozen data:
 
 ```sh
 python -m click2future.data.action_supplement --parent "$C2F_DATA_DIR" --output "$C2F_EXTRA"
-sbatch submission/train_contact.sbatch --config configs/training/contact_grid_pilot.json --supplement "$C2F_EXTRA"
+sbatch --time=00:40:00 submission/train_contact.sbatch --config configs/training/contact_grid_pilot.json --supplement "$C2F_EXTRA"
 ```
 
 the generation command must also run inside an allocated job. the measured run
@@ -142,8 +144,8 @@ single-model default. no latency claim follows from this rehearsal.
 
 | candidate | complete clips /96 | zero drift /16 | passive drift /32 | penetration >1px /96 | early reversal /16 | early selection /16 | contact event f1 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| e5 frozen | 87 | 16 | 22 | 22 | 14 | 16 | 0.2118 |
-| e6 first | 94 | 0 | 8 | 17 | 14 | 7 | 0.3333 |
+| e5 frozen | 87 | 16 | 29 | 22 | 14 | 16 | 0.2118 |
+| e6 first | 94 | 0 | 20 | 17 | 14 | 7 | 0.3333 |
 | e6 stationary tokens | 94 | 0 | 8 | 18 | 16 | 16 | 0.2449 |
 | e6 paired actions | 90 | 0 | 0 | 12 | 16 | 16 | 0.3000 |
 
@@ -154,6 +156,15 @@ cover the first half-second. these windows are not interchangeable. contact f1
 uses the original approximate tracker and event scorer; missing tracks and scored
 counts remain in the [machine record](results/contact-training-validation.json).
 none of these candidates passes the strict overall quality gate.
+
+Passive rest now uses metric version 2: maximum excursion **at least** one
+pixel counts as drift, matching the shared zero-force and selection protocol.
+Version 1 used a strict greater-than comparison and missed seven E5 clips and
+twelve first-candidate clips exactly on the boundary. All excursions and original
+reports are retained unchanged. The [versioned saved-pixel rescore](results/passive-stationarity-v2.json)
+recomputes all four methods from their exact saved videos, with full counts and
+historical report hashes. The token/grid counts and every non-passive metric
+remain unchanged.
 
 the paired-action run completed 16,000 updates. fixed validation denoising loss
 selects step 15,500, checkpoint `278f419d41d4abdfcacbe29b1f38457f608a33200fd29967b13f544df15746b2`.
@@ -191,3 +202,10 @@ adapter matches all four offline samples pixel-for-pixel. the source zip is
 revalidated after readme-only changes. [verification record](results/contact-training-checks.json).
 the demo is closed. private raw checkpoints, logs, source snapshots and all three
 attempts are retained in the draft [experiment backup](https://github.com/athul1810/click2future/releases/tag/untagged-fe3b35eb1613942e8199).
+
+The independent PR review reproduces all 72 candidate trajectory/collision
+reports and renders their saved poses with zero changed RGB pixels. All geometry
+counts agree; cross-platform depth differences are below 0.000005 native pixels.
+The corrected source ZIP passes 543 tests and four subtests, and the real E6/E5
+demo passes all 30 browser checks. The [review record](results/contact-review-checks.json)
+retains the exact tested archive hash and checks. No candidate is promoted.
