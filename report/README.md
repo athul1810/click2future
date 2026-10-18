@@ -5,7 +5,7 @@ E0/E2/E3/E4 validation comparison, SSIM/LPIPS, auxiliary head-versus-RGB scores,
 the measured 16/32/64-step sampler study and the CVAE decoder follow-ups.
 It now also includes the separate E5 trajectory model, its contact/uncertainty
 audit, the full-horizon zero-force failure and an embedded contact example from
-all four seeds. The sixteen-page draft also includes all three E6 contact-aware attempts, the
+all four seeds. The seventeen-page draft also includes all three E6 contact-aware attempts, the
 version 2 passive rescore, E6 uncertainty by action family and a fixed E5/E6
 four-seed comparison, and the matched canvas-loss study. It keeps conditional metrics, failed controls and
 oracle-calibration limits explicit.
@@ -49,3 +49,8 @@ The matched training-only canvas penalty improves complete clips from 88/96 to
 95/96 without fixing penetration or overall strict quality. See
 `docs/results/wall-training-validation.json`. Both completed checkpoints and the
 failed diagnostic attempt are retained; recovery evaluates without retraining.
+
+The collision audit adds reference-video calibration and all sustained-overlap
+failures. Its timing scores retain the original estimator, including its errors
+on correct simulator videos. The current E6 force-range mismatch is recorded
+before opening force-OOD tests. See docs/COLLISION_VALIDATION.md.

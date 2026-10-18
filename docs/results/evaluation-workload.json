@@ -1,0 +1,159 @@
+{
+  "status": "metadata_inventory_only_final_selection_pending",
+  "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+  "splits_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51",
+  "comparison_protocol_sha256": "4d0d86e12604c2dc3e28306976644ec3920504ed2971869e422446ac4c421e9b",
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "core_methods": [
+    "E0",
+    "E2",
+    "E3"
+  ],
+  "planned_training_seeds": [
+    0,
+    1,
+    2
+  ],
+  "splits": {
+    "force_ood": {
+      "scene_groups": 2,
+      "reference_clips": 40,
+      "conditions": 10,
+      "primary_videos_per_run": 40,
+      "proposed_selection_conditions": 4,
+      "proposed_selection_videos_per_run": 16,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "omitted_for_force_ood"
+    },
+    "id_test": {
+      "scene_groups": 2,
+      "reference_clips": 42,
+      "conditions": 12,
+      "primary_videos_per_run": 48,
+      "proposed_selection_conditions": 4,
+      "proposed_selection_videos_per_run": 16,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "declared"
+    },
+    "physics_test": {
+      "scene_groups": 2,
+      "reference_clips": 82,
+      "conditions": 12,
+      "primary_videos_per_run": 48,
+      "proposed_selection_conditions": 4,
+      "proposed_selection_videos_per_run": 16,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "declared"
+    },
+    "shape_ood": {
+      "scene_groups": 2,
+      "reference_clips": 42,
+      "conditions": 12,
+      "primary_videos_per_run": 48,
+      "proposed_selection_conditions": 4,
+      "proposed_selection_videos_per_run": 16,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "declared"
+    },
+    "texture_ood": {
+      "scene_groups": 2,
+      "reference_clips": 42,
+      "conditions": 12,
+      "primary_videos_per_run": 48,
+      "proposed_selection_conditions": 4,
+      "proposed_selection_videos_per_run": 16,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "declared"
+    },
+    "train": {
+      "scene_groups": 16,
+      "reference_clips": 336,
+      "conditions": 96,
+      "primary_videos_per_run": 384,
+      "proposed_selection_conditions": 32,
+      "proposed_selection_videos_per_run": 128,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "declared"
+    },
+    "validation": {
+      "scene_groups": 4,
+      "reference_clips": 84,
+      "conditions": 24,
+      "primary_videos_per_run": 96,
+      "proposed_selection_conditions": 8,
+      "proposed_selection_videos_per_run": 32,
+      "selection_eligibility": "Requires later reference checks; no arrays opened here",
+      "action_controls": "declared"
+    }
+  },
+  "reserved_totals": {
+    "scene_groups": 10,
+    "reference_clips": 248,
+    "conditions": 58,
+    "primary_videos_per_run": 232,
+    "proposed_selection_conditions": 20,
+    "proposed_selection_videos_per_run": 80
+  },
+  "reference_arrays_opened": 0,
+  "test_splits_evaluated": [],
+  "limitations": [
+    "Inventory is workload planning, not a checkpoint freeze or test authorization.",
+    "Proposed target controls require reference eligibility checks after the freeze.",
+    "Training-seed entries describe the protocol; they do not assert completed runs.",
+    "No GPU allocation or unmeasured latency is inferred from these counts."
+  ],
+  "historical_sampling_estimates": [
+    {
+      "method": "E0",
+      "hardware": "TC2 A40",
+      "measured_videos": 128,
+      "measured_seconds_including_load_and_export": 5.562423129566014,
+      "estimated_312_video_seconds": 13.558406378317159,
+      "training_seed": 0,
+      "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1"
+    },
+    {
+      "method": "E2",
+      "hardware": "TC2 A40",
+      "measured_videos": 128,
+      "measured_seconds_including_load_and_export": 58.479711522348225,
+      "estimated_312_video_seconds": 142.5442968357238,
+      "training_seed": 7,
+      "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2"
+    },
+    {
+      "method": "E3",
+      "hardware": "TC2 A40",
+      "measured_videos": 128,
+      "measured_seconds_including_load_and_export": 58.34279297571629,
+      "estimated_312_video_seconds": 142.21055787830846,
+      "training_seed": 7,
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f"
+    }
+  ],
+  "estimate_limitations": "Linear planning estimate for the same saved architectures/samplers on the same hardware; excludes metrics, queueing, transfers and final-model changes. Not a reserved-test measurement.",
+  "budget_proposal": {
+    "sampling_only_job_cap_seconds": 900,
+    "core_seed_sets": 3,
+    "retry_reserve_seconds": 900,
+    "maximum_sampling_allocated_seconds": 3600,
+    "metrics": "CPU scoring after sampling; not included in the sampling timing estimates",
+    "status": "proposal_pending_final_checkpoint_freeze; no new allocations submitted"
+  },
+  "force_ood_compatibility": {
+    "recipe_magnitudes": [
+      1.3,
+      1.5
+    ],
+    "recipe_source_sha256": "f20c4ae7bc6e462f97bcc97b6f2dc9865e6cd71e0459a2ed20ef0cdbef249b6d",
+    "current_E6_force_limit": 1.1,
+    "current_E6_config_sha256": "df69f61b0c188b8ba72b079325db705bda5c50d94e6931390f1c268f448de8af",
+    "status": "incompatible_with_current_checkpoint_force_contract",
+    "required": "An explicitly reviewed OOD inference contract or an unsupported-suite result; preserve native forces and original checkpoint metadata."
+  }
+}

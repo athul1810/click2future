@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 16,
+  "pages": 17,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -134,7 +134,9 @@
     "passive_stationarity_v2": "docs/results/passive-stationarity-v2.json",
     "contact_uncertainty_comparison": "docs/results/contact-uncertainty-comparison.json",
     "wall_clipping": "docs/results/contact-wall-clipping.json",
-    "wall_training": "docs/results/wall-training-validation.json"
+    "wall_training": "docs/results/wall-training-validation.json",
+    "collision_validation": "docs/results/collision-validation-audit.json",
+    "evaluation_inventory": "docs/results/evaluation-workload.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -154,7 +156,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "b1686db353d59376d6d510f83776c619f6d58f3c1b7c9db7a3c7b38d792de53c",
+    "main.tex": "2e7dc211a0c27639d7aa8a88f1aad6ca150c7c65a4dfb5a686a180467ba9afc6",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -168,26 +170,29 @@
     "../docs/results/contact-wall-clipping.json": "88a891c73ae09401a9083f5b0c067d6a7ebf4cb44403f434d4493c2f744d1cbf",
     "../docs/results/c-followup-checks.json": "f9f219bd58418789f4d5e1a6050a881f4b995064ab43024219dc3ce7dbcbc8c9",
     "../docs/results/wall-training-validation.json": "e0922ee475cbd435deaf3607ebb33963254cad748d7d7bb7ee2d2a2701fff6ca",
-    "../docs/results/wall-training-checks.json": "ba6e2244c66bcaa94b5d233a067be0e8a4be214fc94202bf6924efe5d91b380a"
+    "../docs/results/wall-training-checks.json": "ba6e2244c66bcaa94b5d233a067be0e8a4be214fc94202bf6924efe5d91b380a",
+    "../docs/results/collision-validation-audit.json": "5a4eae76021bff939762788fedc258615a7a601e9446914a9c08ca65f597b4d2",
+    "../docs/results/collision-validation-checks.json": "7bd7efabbd29d5fe1294712090a80796ec6c4353b619cc8cad5821b320c8c8b3",
+    "../docs/results/evaluation-workload.json": "dc8edbb6daf3189bd930bcdd06fd507079a243f47fdcc30d7d53b7da2fa40ceb"
   },
-  "rendered_pdf_sha256": "0384cf518a8f6a7b9bd1b347a3523d65ff410e71362a1c36fc10c84697c9a666",
-  "visual_review": "All sixteen pages rendered. Pages 1-14 are pixel-identical to the previous reviewed draft; pages 15-16 inspected. Tables and text are readable, with no clipping, overlap, external URLs, hyperlink annotations, or em/en dashes.",
+  "rendered_pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
+  "visual_review": "All 17 pages rendered. Pages 1-15 are pixel-identical to the previously reviewed 16-page draft; pages 16-17 inspected. Tables and text are readable with no clipping, overlap, external links, em/en dashes or overfull boxes.",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 217,
-    "bytes": 411251,
-    "archive_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+    "file_count": 221,
+    "bytes": 421136,
+    "archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
     "checks": [
       "allowed text files",
       "no external links",
       "source inventory hashes",
       "no datasets, weights, environments, or Git history"
     ],
-    "extracted_source_tests": 559,
+    "extracted_source_tests": 576,
     "subtests": 4,
     "skips": 0,
-    "extracted_source_test_seconds": 93.33,
-    "tested_archive_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+    "extracted_source_test_seconds": 88.7,
+    "tested_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
     "current_archive_matches_tested_archive_exactly": true
   },
   "remaining": [
@@ -254,7 +259,7 @@
   "contribution_draft": {
     "source": "contributions.md",
     "status": "member review required; completed-work account for Ananya still pending",
-    "sha256": "03826b4b016fdc04b712d1dabaca5c80fee5c1738797969e5c71215f5d2708d3"
+    "sha256": "a7fade431340e3a4fbf18f3d443d674f01bbb491d617f8b8ab5291f6ab586655"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -342,6 +347,63 @@
     "extracted_source_tests": 559,
     "subtests": 4,
     "pdf_sha256": "0384cf518a8f6a7b9bd1b347a3523d65ff410e71362a1c36fc10c84697c9a666",
+    "test_splits_evaluated": []
+  },
+  "wall_report_snapshot": {
+    "pages": 16,
+    "pdf_sha256": "0384cf518a8f6a7b9bd1b347a3523d65ff410e71362a1c36fc10c84697c9a666",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 217,
+      "bytes": 411251,
+      "archive_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "extracted_source_tests": 559,
+      "subtests": 4,
+      "skips": 0,
+      "extracted_source_test_seconds": 93.33,
+      "tested_archive_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+      "current_archive_matches_tested_archive_exactly": true
+    },
+    "scope": "Historical 16-page draft remains in the wall-training private release."
+  },
+  "collision_validation_verification": {
+    "status": "passed",
+    "pages": 17,
+    "checked_followup_table_cells": 100,
+    "new_calibration_table_cells": 20,
+    "external_urls": 0,
+    "link_annotations": 0,
+    "em_or_en_dashes": 0,
+    "overfull_boxes": 0,
+    "unchanged_previously_reviewed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "pages_requiring_visual_review": [
+      16,
+      17
+    ],
+    "pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
+    "source_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
     "test_splits_evaluated": []
   }
 }

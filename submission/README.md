@@ -431,6 +431,25 @@ measurement canvases. Original video metrics and missing observations remain
 unchanged; the padded view is never used for model inference or replacement
 scores. This is a clipping diagnosis, not a calibrated wall-contact accuracy.
 
+## Diagnose collision errors and plan evaluation work
+
+The validation collision audit retains every saved sample, matches all pose
+renders to the original RGB, reports penetration severity/duration, and checks
+the pixel collision estimator on every reference's own rendered video. It keeps
+all hidden-physics reference comparisons without choosing a best reference.
+Metric code and configuration must match the historical plan. It neither changes
+official scores nor permits final-test tuning.
+
+```sh
+python -m click2future.evaluation.collision_audit --plan outputs/contact-validation/plan.json --predictions outputs/contact-validation/validation-samples/predictions.json --dataset data/frozen --checkpoint runs/contact/best.pt --poses-dir outputs/contact-geometry --config configs/evaluation/pixel.yaml --output outputs/collision-audit.json
+python -m click2future.evaluation.inventory --dataset data/frozen --protocol configs/evaluation/comparison.yaml --output outputs/evaluation-inventory.json
+```
+
+The inventory reads only the dataset index, split manifest and comparison
+protocol. It counts reference clips, conditions and proposed generated videos.
+It does not open rollout arrays, certify reference eligibility, select a final
+checkpoint or authorize test evaluation. Use fresh output paths for both tools.
+
 
 ## Matched wall-loss training comparison
 

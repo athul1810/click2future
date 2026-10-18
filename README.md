@@ -193,3 +193,8 @@ are retained as historical training checks.
 The [matched canvas-loss comparison](docs/WALL_TRAINING.md) improves complete
 validation clips from 88/96 to 95/96. Penetration remains in 15/96 clips and
 collision timing regresses slightly. Overall physics quality still fails.
+
+The [collision validation handoff](docs/COLLISION_VALIDATION.md) locates sustained
+overlap in the contact cases and checks the scorer on correct reference videos.
+The [evaluation workload](docs/EXPERIMENT_PROTOCOL.md#prepared-workload-and-final-run-packet)
+is prepared from metadata; final checkpoints and test results remain pending.
