@@ -19,7 +19,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | In progress |
-| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In progress |
+| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In review |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
@@ -204,14 +204,14 @@ The multi-scene E2/E3 validation failures remain separate and unresolved.
 
 Test whether localizing the action improves physical action adherence.
 
-**Dependencies:** T10, T04. **Owner:** MAITI SHRIJEET. **Status:** In progress.
+**Dependencies:** T10, T04. **Owner:** MAITI SHRIJEET. **Status:** In review.
 
 - [x] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
 - [x] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
-- [ ] Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.
-- [ ] Record added parameter count, ablation switch, and working E3 training/sampling.
+- [x] Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.
+- [x] Record added parameter count, ablation switch, and working E3 training/sampling.
 
-Numeric/spatial conditioning and selected-object identity are implemented with identical backbone capacity. Forward/backward and zero-force wiring controls pass. The trainer/sampler supports both modes. Trained selected-object and reversed-force controls, coherent E3 videos and the matched E2/E3 comparison remain open.
+The E3 implementation checks are complete and in review. E2 and E3 each have 964,035 parameters; spatial routing adds no capacity. The two actual 5,000-update checkpoints respond to changed selection, zero force and reversal under one fixed-noise input, and empty/nonbinary/wrong-shape masks are rejected before inference. The existing 96-video validation and 16-pair selected-object controls have also run for both methods. Their generated-video action quality fails through missing tracks, so no physical action-adherence improvement is claimed. Model quality and final comparisons remain in T14-T16. Evidence: results/conditioning-implementation-checks.json and results/multiscene-validation-checks.json. This implementation issue closes when its reviewed changes reach main.
 
 <a id="t12"></a>
 
