@@ -48,3 +48,13 @@ All four sampled videos from each of the three legacy E6 checkpoints are
 pixel-identical before and after this source change on the same CPU runtime.
 Legacy config fields normalize to the disabled wall loss for trainer resume;
 existing strict source/data provenance checks still apply.
+
+Job 43788 completed both training runs, then stopped in the control clipping
+diagnostic. Re-rounding a translated affine matrix changed one pixel in a
+rotated sprite's native crop. Raster diagnostic version 2 extends the original
+16.16 nearest-neighbour grid instead. Its native crop must still match Pillow
+exactly. This follows Pillow's affine raster implementation in
+[Geometry.c](https://github.com/python-pillow/Pillow/blob/12.2.0/src/libImaging/Geometry.c).
+The generated RGB, tracker and existing scores are unchanged. The failed job and
+its completed checkpoints are preserved; recovery evaluates those checkpoints
+without training again.
