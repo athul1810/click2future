@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "source_package": {
+    "status": "passed",
+    "source_zip_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
+    "source_zip_files": 212,
+    "source_zip_bytes": 403881,
+    "clean_source_zip_tests": 550,
+    "subtests": 4,
+    "skips": 0,
+    "test_seconds": 85.83,
+    "warnings": 6,
+    "warning_scope": "Existing LPIPS/TorchVision deprecation warnings",
+    "tested_archive_matches_current_archive_exactly": true
+  },
+  "report": {
+    "status": "passed",
+    "report_table_cells_checked_against_measured_records": 58,
+    "pages": 15,
+    "external_urls": 0,
+    "link_annotations": 0,
+    "em_or_en_dashes": 0,
+    "overfull_boxes": 0,
+    "independent_futures_reports": 72,
+    "independent_action_strata": 18,
+    "exact_source_zip_matches_550_test_archive": true,
+    "pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
+    "test_splits_evaluated": []
+  },
+  "independent_uncertainty": {
+    "status": "passed",
+    "checks": {
+      "E6-first": {
+        "recomputed_futures_reports": 24,
+        "futures_reports_exact": true,
+        "all_six_strata_exact": true,
+        "input_hashes_verified": 198,
+        "checkpoint_sha256": "30745754a4d4b649d10b6b6706370c186115bed3ab44ff7c791721ff47bf634f",
+        "comparison_sha256": "5d1f4a7072791c7326f7719d95137968ccf52026effe7c85933b543306126e53"
+      },
+      "E6-token": {
+        "recomputed_futures_reports": 24,
+        "futures_reports_exact": true,
+        "all_six_strata_exact": true,
+        "input_hashes_verified": 198,
+        "checkpoint_sha256": "dd590805854ff6c35b3836db084baf53eea860fe352f1dc8ec5b7eaa821eafa7",
+        "comparison_sha256": "157908df370ef08d00a9d1521e8ccfbdec5ce9c6516024ab0fe28585e756bedd"
+      },
+      "E6-grid": {
+        "recomputed_futures_reports": 24,
+        "futures_reports_exact": true,
+        "all_six_strata_exact": true,
+        "input_hashes_verified": 198,
+        "checkpoint_sha256": "278f419d41d4abdfcacbe29b1f38457f608a33200fd29967b13f544df15746b2",
+        "comparison_sha256": "4073d352129a6296d7ead3efb7af7f84b43988174814aa0757509c7964a72c7a"
+      }
+    },
+    "test_splits_evaluated": []
+  },
+  "wall_clipping": {
+    "wall_clips": 16,
+    "incomplete_wall_clips": 6,
+    "missing_observations": 32,
+    "reasons": {
+      "area_change": 32
+    },
+    "native_mask_fails_area_count": 32,
+    "unclipped_mask_passes_area_count": 32,
+    "clipped_fraction_min": 0.5,
+    "clipped_fraction_max": 0.6538461538461539
+  },
+  "new_physics_unit_tests": 7,
+  "source_checks": {
+    "ruff": "passed",
+    "diff_whitespace": "passed"
+  },
+  "browser_recheck": "No UI code changed. Historical PR #48 evidence retains all 30 real-checkpoint browser checks; not a new latency benchmark.",
+  "test_splits_evaluated": [],
+  "training_jobs_started": 0,
+  "input_sha256": {
+    "docs/results/contact-uncertainty-comparison.json": "79adad44823bf2f8953891ff74ec59cbc01785460a2ac09e68051d22612d6176",
+    "docs/results/contact-wall-clipping.json": "88a891c73ae09401a9083f5b0c067d6a7ebf4cb44403f434d4493c2f744d1cbf",
+    "src/click2future/evaluation/wall_clipping.py": "e889e45384e4d935736aea2dbe5b89bd963558fd76eddca1e68f0594eed7d16c",
+    "tests/test_wall_clipping.py": "2a526ea28576ba65314174c4e122f60725f1be2026cda9a2e362f5fdfe93e559"
+  }
+}

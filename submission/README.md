@@ -412,3 +412,21 @@ remain historical results. For the 30-minute grid configuration, request a
 40-minute allocation with `sbatch --time=00:40:00 submission/train_contact.sbatch`
 and pass its grid config/supplement arguments. The default wrapper time is for
 the shorter first recipe.
+
+
+## Diagnose incomplete wall videos
+
+After the pixel-exact pose audit, use its saved pose directory to measure canvas
+clipping on CPU. For an E6 validation run, use matching E6 paths throughout:
+
+```sh
+python -m click2future.evaluation.wall_clipping --plan outputs/contact-validation/plan.json --predictions outputs/contact-validation/validation-samples/predictions.json --dataset data/frozen --checkpoint runs/contact/best.pt --poses-dir outputs/contact-geometry --output outputs/contact-wall-clipping.json
+```
+
+Create `outputs/contact-geometry` with the trajectory audit command above using
+that same E6 plan, prediction manifest and checkpoint. The diagnostic verifies
+every saved wall video against its poses, then compares native sprite area with
+an unclipped padded view for each missing observation. It rejects truncated
+measurement canvases. Original video metrics and missing observations remain
+unchanged; the padded view is never used for model inference or replacement
+scores. This is a clipping diagnosis, not a calibrated wall-contact accuracy.

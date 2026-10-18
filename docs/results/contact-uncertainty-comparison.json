@@ -1,0 +1,1663 @@
+{
+  "status": "measured_validation_comparison",
+  "scope": "Same 24 conditions, four validation scenes, four sample seeds and one training seed per package. No method is promoted and no final test split is opened.",
+  "input_sha256": {
+    "docs/results/contact-training-validation.json": "e6570e14b542cd3e21addd53ccb5d08eb62283757f65d11e3e8e0a15f94e4e44",
+    "docs/results/passive-stationarity-v2.json": "1cf6a4e69d5b249a4bd33782288f6f4a8289662c62c8de64d6698858159e77a2",
+    "docs/results/contact-review-checks.json": "a21ac6915df11f3bd1cbe3804c1037907c7b86bc7a704904b59a6df56594b23f"
+  },
+  "independent_recheck": {
+    "status": "passed",
+    "checks": {
+      "E6-first": {
+        "recomputed_futures_reports": 24,
+        "futures_reports_exact": true,
+        "all_six_strata_exact": true,
+        "input_hashes_verified": 198,
+        "checkpoint_sha256": "30745754a4d4b649d10b6b6706370c186115bed3ab44ff7c791721ff47bf634f",
+        "comparison_sha256": "5d1f4a7072791c7326f7719d95137968ccf52026effe7c85933b543306126e53"
+      },
+      "E6-token": {
+        "recomputed_futures_reports": 24,
+        "futures_reports_exact": true,
+        "all_six_strata_exact": true,
+        "input_hashes_verified": 198,
+        "checkpoint_sha256": "dd590805854ff6c35b3836db084baf53eea860fe352f1dc8ec5b7eaa821eafa7",
+        "comparison_sha256": "157908df370ef08d00a9d1521e8ccfbdec5ce9c6516024ab0fe28585e756bedd"
+      },
+      "E6-grid": {
+        "recomputed_futures_reports": 24,
+        "futures_reports_exact": true,
+        "all_six_strata_exact": true,
+        "input_hashes_verified": 198,
+        "checkpoint_sha256": "278f419d41d4abdfcacbe29b1f38457f608a33200fd29967b13f544df15746b2",
+        "comparison_sha256": "4073d352129a6296d7ead3efb7af7f84b43988174814aa0757509c7964a72c7a"
+      }
+    },
+    "test_splits_evaluated": []
+  },
+  "metric_scope": {
+    "trajectory_units": "normalized image coordinates",
+    "motion_window": "full 32-frame clip for zero/passive; first 0.5 seconds for reversal/selection",
+    "passive_version": "2",
+    "motion_rule": "maximum excursion >= one native pixel",
+    "spread": "complete sample trajectory pairs only",
+    "coverage": "all four selected trajectories required per case; retain undefined values and scored scene counts",
+    "intervals": "2,000 scene-group bootstrap replicates; conditional on checkpoints, no training-seed interval",
+    "contact_frequency": "descriptive finite-ensemble occurrence, not calibrated probability"
+  },
+  "models": {
+    "E5": {
+      "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
+      "selected_step": 5000,
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5895,
+        "tracking_fraction": 0.9904233870967742,
+        "complete_selected_clips": 93,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 87,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "selected_trajectory": {
+        "selected_object.mean_ade": {
+          "estimate": 0.03026591148744008,
+          "ci": [
+            0.02404666673164984,
+            0.03856836432582646
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_fde": {
+          "estimate": 0.04755934813282457,
+          "ci": [
+            0.03419093864216339,
+            0.06181087363401734
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.min_ade": {
+          "estimate": 0.028334792477188706,
+          "ci": null,
+          "scored_scene_groups": 1,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": 0.04222169454168681,
+          "ci": null,
+          "scored_scene_groups": 1,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "timed_contact_event_f1": {
+        "estimate": 0.21176470588235294,
+        "ci": [
+          0.13157894736842105,
+          0.29473684210526313
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "action_strata": {
+        "collision_0_to_1": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.030942643598377763,
+              "ci": [
+                0.02360057205090661,
+                0.03828471514584891
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.01559137445868511,
+              "ci": [
+                0.014161516982713951,
+                0.017439212139310458
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.019151761924598484,
+              "ci": [
+                0.011997204771338092,
+                0.026306319077858874
+              ],
+              "scored_scene_groups": 2,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1894
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.02299685240002463,
+              "ci": [
+                0.021625156069440384,
+                0.024368548730608872
+              ],
+              "scored_scene_groups": 2,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1894
+            }
+          },
+          "complete_all_object_clips": 12,
+          "complete_selected_clips": 14,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 12,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": null,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": null,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "collision_1_to_0": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.020634526546958038,
+              "ci": [
+                0.01767825949938551,
+                0.024047481986351895
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.015973926476174516,
+              "ci": [
+                0.01018472220746313,
+                0.022095491338668463
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.016726128690504567,
+              "ci": [
+                0.015447234479382357,
+                0.01736959239076595
+              ],
+              "scored_scene_groups": 3,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1993
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.018883175256795528,
+              "ci": [
+                0.015905399300009768,
+                0.022297089689416412
+              ],
+              "scored_scene_groups": 3,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1993
+            }
+          },
+          "complete_all_object_clips": 11,
+          "complete_selected_clips": 15,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 11,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": null,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": null,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "forward": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.01672258768198255,
+              "ci": [
+                0.016060588132436222,
+                0.01738458723152888
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.02580269217811605,
+              "ci": [
+                0.018196644081223394,
+                0.03684743854307359
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.02570576985782836,
+              "ci": [
+                0.01730844102092771,
+                0.03693180969000421
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.017276659132161948,
+              "ci": [
+                0.011981797389190287,
+                0.025324619922222815
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.25,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.1875,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "reverse": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.024787640821316383,
+              "ci": [
+                0.02167518178876217,
+                0.027900099853870597
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.025802692057945397,
+              "ci": [
+                0.01819664504258863,
+                0.03684743698085509
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.017059070612159576,
+              "ci": [
+                0.015838387173679053,
+                0.018648784029357476
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.016760307130676434,
+              "ci": [
+                0.013539803841810256,
+                0.020085292748628067
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "wall": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.043953514277926375,
+              "ci": [
+                0.03875121463273831,
+                0.04915581392311444
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.042944829710709155,
+              "ci": [
+                0.027177393786929634,
+                0.05408937601192344
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.027231732418596288,
+              "ci": [
+                0.025452982095576473,
+                0.02952921552304489
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.02899024374921274,
+              "ci": [
+                0.024068544300170053,
+                0.03333030522383863
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "zero": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.014669268081501294,
+              "ci": [
+                0.013270060905822636,
+                0.01606847525717995
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": null,
+              "ci": null,
+              "scored_scene_groups": 0,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 0
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.011257512761311138,
+              "ci": [
+                0.007914931960243109,
+                0.014600093562379166
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.014882405042387754,
+              "ci": [
+                0.01191439238122438,
+                0.018082522416775347
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.1875,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.140625,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        }
+      }
+    },
+    "E6-first": {
+      "checkpoint_sha256": "30745754a4d4b649d10b6b6706370c186115bed3ab44ff7c791721ff47bf634f",
+      "selected_step": 6000,
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5936,
+        "tracking_fraction": 0.9973118279569892,
+        "complete_selected_clips": 94,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 94,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "selected_trajectory": {
+        "selected_object.mean_ade": {
+          "estimate": 0.0254282642620849,
+          "ci": [
+            0.02107476424725027,
+            0.03314794587017876
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_fde": {
+          "estimate": 0.03631941836911701,
+          "ci": [
+            0.029336272347902544,
+            0.046722446479274
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.min_ade": {
+          "estimate": 0.02322335891330744,
+          "ci": [
+            0.016429953044111382,
+            0.030016764782503497
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1894
+        },
+        "selected_object.min_fde": {
+          "estimate": 0.02258510715606756,
+          "ci": [
+            0.013660753479228169,
+            0.03150946083290695
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1894
+        }
+      },
+      "timed_contact_event_f1": {
+        "estimate": 0.3333333333333333,
+        "ci": [
+          0.2857142857142857,
+          0.40425531914893614
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "action_strata": {
+        "collision_0_to_1": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.03057043894859555,
+              "ci": [
+                0.029751442016476486,
+                0.03138943588071462
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.01559137445868511,
+              "ci": [
+                0.014161516982713951,
+                0.017439212139310458
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.015552945176086314,
+              "ci": [
+                0.01350457006089079,
+                0.01860032715862037
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.020289607703132127,
+              "ci": [
+                0.017270575467279024,
+                0.02330863993898523
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.875,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.09375,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "collision_1_to_0": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.018914555612196585,
+              "ci": [
+                0.017626517109641256,
+                0.020202594114751914
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.015973926476174516,
+              "ci": [
+                0.01018472220746313,
+                0.022095491338668463
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.016187085329874826,
+              "ci": [
+                0.013601928047209187,
+                0.018359519088252847
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.014799667315221317,
+              "ci": [
+                0.012688030281834316,
+                0.016758668387052155
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.9375,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.046875,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "forward": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.00971516149099318,
+              "ci": [
+                0.008912288705944866,
+                0.010518034276041494
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.02580269217811605,
+              "ci": [
+                0.018196644081223394,
+                0.03684743854307359
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.018492190197815478,
+              "ci": [
+                0.011351402813960831,
+                0.026685999144115388
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.009866232637023815,
+              "ci": [
+                0.006958009209150578,
+                0.014687346484557013
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "reverse": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.011223955706983283,
+              "ci": [
+                0.010570636641391878,
+                0.011877274772574688
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.025802692057945397,
+              "ci": [
+                0.01819664504258863,
+                0.03684743698085509
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.01959911606416067,
+              "ci": [
+                0.017636211818876826,
+                0.022023931609419414
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.01099195194281143,
+              "ci": [
+                0.009129555793419508,
+                0.01285434809220335
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "wall": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.02565765745767885,
+              "ci": [
+                0.024246528088662976,
+                0.027068786826694724
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.042944829710709155,
+              "ci": [
+                0.027177393786929634,
+                0.05408937601192344
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.041537700269322284,
+              "ci": [
+                0.034943991128797265,
+                0.0481314094098473
+              ],
+              "scored_scene_groups": 2,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1894
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.02600293166677583,
+              "ci": [
+                0.021618790163854696,
+                0.03038707316969696
+              ],
+              "scored_scene_groups": 2,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1894
+            }
+          },
+          "complete_all_object_clips": 14,
+          "complete_selected_clips": 14,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 14,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": null,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": null,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "zero": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": null,
+              "ci": null,
+              "scored_scene_groups": 0,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 0
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.00390625,
+              "ci": [
+                0.003125011920928955,
+                0.004687488079071045
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.00390625,
+              "ci": [
+                0.003125011920928955,
+                0.004687488079071045
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        }
+      }
+    },
+    "E6-token": {
+      "checkpoint_sha256": "dd590805854ff6c35b3836db084baf53eea860fe352f1dc8ec5b7eaa821eafa7",
+      "selected_step": 6000,
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5936,
+        "tracking_fraction": 0.9973118279569892,
+        "complete_selected_clips": 94,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 94,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "selected_trajectory": {
+        "selected_object.mean_ade": {
+          "estimate": 0.025046900113105793,
+          "ci": [
+            0.020591861588266622,
+            0.03151916093085337
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_fde": {
+          "estimate": 0.03529873589908035,
+          "ci": [
+            0.02884612316910608,
+            0.045893562770524414
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.min_ade": {
+          "estimate": 0.022336879216583623,
+          "ci": [
+            0.016721167598579653,
+            0.027952590834587593
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1894
+        },
+        "selected_object.min_fde": {
+          "estimate": 0.022501470423444702,
+          "ci": [
+            0.014298462168222626,
+            0.03070447867866678
+          ],
+          "scored_scene_groups": 2,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 1894
+        }
+      },
+      "timed_contact_event_f1": {
+        "estimate": 0.24489795918367346,
+        "ci": [
+          0.1643835616438356,
+          0.3025210084033613
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "action_strata": {
+        "collision_0_to_1": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.031674701901800835,
+              "ci": [
+                0.028798288472786152,
+                0.03455111533081552
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.01559137445868511,
+              "ci": [
+                0.014161516982713951,
+                0.017439212139310458
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.014339464336043769,
+              "ci": [
+                0.011111282265924265,
+                0.01886353302144171
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.018544687231731666,
+              "ci": [
+                0.012889303182733174,
+                0.024200071280730158
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.75,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.1875,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "collision_1_to_0": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.017918332310630353,
+              "ci": [
+                0.017537345135018506,
+                0.018299319486242204
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.015973926476174516,
+              "ci": [
+                0.01018472220746313,
+                0.022095491338668463
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.016629066032269248,
+              "ci": [
+                0.012142183575385816,
+                0.020523711386042018
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.01491052438618292,
+              "ci": [
+                0.011941590426845545,
+                0.018144147670273312
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.875,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.09375,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "forward": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.0132008924294417,
+              "ci": [
+                0.01041501766413811,
+                0.01598676719474529
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.02580269217811605,
+              "ci": [
+                0.018196644081223394,
+                0.03684743854307359
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.01778704182640572,
+              "ci": [
+                0.012072374211374536,
+                0.02444975913993277
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.01025206435362095,
+              "ci": [
+                0.008165052485811276,
+                0.014028091804458766
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "reverse": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.012668772276656496,
+              "ci": [
+                0.011236428606995755,
+                0.014101115946317237
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.025802692057945397,
+              "ci": [
+                0.01819664504258863,
+                0.03684743698085509
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.019433084921236465,
+              "ci": [
+                0.01724966447853736,
+                0.02161650536393557
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.011135265786189452,
+              "ci": [
+                0.009668909795174424,
+                0.012601621777204478
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "wall": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.025328217181318634,
+              "ci": [
+                0.025145901025044794,
+                0.025645063476845288
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.042944829710709155,
+              "ci": [
+                0.027177393786929634,
+                0.05408937601192344
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.037592633085782354,
+              "ci": [
+                0.03311235112027827,
+                0.04207291505128643
+              ],
+              "scored_scene_groups": 2,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1894
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.023401123585064333,
+              "ci": [
+                0.02033549410760696,
+                0.026466753062521706
+              ],
+              "scored_scene_groups": 2,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 1894
+            }
+          },
+          "complete_all_object_clips": 14,
+          "complete_selected_clips": 14,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 14,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": null,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": null,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "zero": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.0008099200652842709,
+              "ci": [
+                0.0,
+                0.0016198401305685419
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": null,
+              "ci": null,
+              "scored_scene_groups": 0,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 0
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.00390625,
+              "ci": [
+                0.003125011920928955,
+                0.004687488079071045
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.004121496087792607,
+              "ci": [
+                0.0035156309604644775,
+                0.00471740221536225
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        }
+      }
+    },
+    "E6-grid": {
+      "checkpoint_sha256": "278f419d41d4abdfcacbe29b1f38457f608a33200fd29967b13f544df15746b2",
+      "selected_step": 15500,
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5920,
+        "tracking_fraction": 0.9946236559139785,
+        "complete_selected_clips": 90,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 90,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "selected_trajectory": {
+        "selected_object.mean_ade": {
+          "estimate": 0.0249627997909811,
+          "ci": [
+            0.018568599459466296,
+            0.03541817753278201
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.mean_fde": {
+          "estimate": 0.034591311871853776,
+          "ci": [
+            0.02257899126697259,
+            0.04918579136142413
+          ],
+          "scored_scene_groups": 4,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 2000
+        },
+        "selected_object.min_ade": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        },
+        "selected_object.min_fde": {
+          "estimate": null,
+          "ci": null,
+          "scored_scene_groups": 0,
+          "expected_scene_groups": 4,
+          "defined_bootstrap_replicates": 0
+        }
+      },
+      "timed_contact_event_f1": {
+        "estimate": 0.3,
+        "ci": [
+          0.23255813953488372,
+          0.3508771929824561
+        ],
+        "defined_bootstrap_replicates": 2000
+      },
+      "action_strata": {
+        "collision_0_to_1": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.02030634747589327,
+              "ci": [
+                0.012457722117211033,
+                0.02815497283457551
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.01559137445868511,
+              "ci": [
+                0.014161516982713951,
+                0.017439212139310458
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.012079810532812266,
+              "ci": [
+                0.00831337102390971,
+                0.018363745809698066
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.014997629700774086,
+              "ci": [
+                0.009122374352831836,
+                0.02274573764652244
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 1.0,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "collision_1_to_0": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.018619197621584236,
+              "ci": [
+                0.009877608454780295,
+                0.02736078678838818
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.015973926476174516,
+              "ci": [
+                0.01018472220746313,
+                0.022095491338668463
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.012587277434077677,
+              "ci": [
+                0.01200054796166804,
+                0.013174006906487314
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.011755262803684932,
+              "ci": [
+                0.009817553634903614,
+                0.013381927450471474
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 1.0,
+            "mean_reference_any_contact_rate": 1.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "forward": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.004038373840541179,
+              "ci": [
+                0.001752342919177597,
+                0.00632440476190476
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.02580269217811605,
+              "ci": [
+                0.018196644081223394,
+                0.03684743854307359
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.02475846518558698,
+              "ci": [
+                0.014652335424697486,
+                0.03701879413686366
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.011660170793999655,
+              "ci": [
+                0.005721289152843193,
+                0.0223571744097986
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "reverse": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.011277396456607752,
+              "ci": [
+                0.010638976423687666,
+                0.011999207945886851
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.025802692057945397,
+              "ci": [
+                0.01819664504258863,
+                0.03684743698085509
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.01742809698681059,
+              "ci": [
+                0.010366096145863687,
+                0.024587442646380332
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.009301476205807766,
+              "ci": [
+                0.006894804024908913,
+                0.011767372282406171
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "wall": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.040903195539080985,
+              "ci": [
+                0.0379341276827474,
+                0.04387226339541457
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": 0.042944829710709155,
+              "ci": [
+                0.027177393786929634,
+                0.05408937601192344
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": null,
+              "ci": null,
+              "scored_scene_groups": 0,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 0
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": null,
+              "ci": null,
+              "scored_scene_groups": 0,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 0
+            }
+          },
+          "complete_all_object_clips": 10,
+          "complete_selected_clips": 10,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 10,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": null,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": null,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        },
+        "zero": {
+          "conditions": 4,
+          "selected_trajectory_metrics": {
+            "selected_object.mean_pairwise_trajectory_distance": {
+              "estimate": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_reference_pairwise_trajectory_distance": {
+              "estimate": null,
+              "ci": null,
+              "scored_scene_groups": 0,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 0
+            },
+            "selected_object.mean_reference_to_nearest_sample": {
+              "estimate": 0.00390625,
+              "ci": [
+                0.003125011920928955,
+                0.004687488079071045
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            },
+            "selected_object.mean_sample_to_nearest_reference": {
+              "estimate": 0.00390625,
+              "ci": [
+                0.003125011920928955,
+                0.004687488079071045
+              ],
+              "scored_scene_groups": 4,
+              "expected_scene_groups": 4,
+              "defined_bootstrap_replicates": 2000
+            }
+          },
+          "complete_all_object_clips": 16,
+          "complete_selected_clips": 16,
+          "total_clips": 16,
+          "collision_frequency": {
+            "complete_sample_pair_timelines": 16,
+            "expected_sample_pair_timelines": 16,
+            "mean_generated_any_contact_rate_if_complete": 0.0,
+            "mean_reference_any_contact_rate": 0.0,
+            "mean_generated_bernoulli_variance_if_complete": 0.0,
+            "scope": "descriptive finite-ensemble frequency; not calibrated probability"
+          }
+        }
+      }
+    }
+  },
+  "test_splits_evaluated": [],
+  "interpretation": {
+    "paired_forward_spread": 0.004038373840541179,
+    "paired_forward_reference_spread": 0.02580269217811605,
+    "paired_forward_spread_to_reference_ratio": 0.15650978636896778,
+    "paired_wall_complete_clips": 10,
+    "paired_wall_expected_clips": 16,
+    "paired_wall_coverage_scored_scenes": 0,
+    "paired_wall_coverage_expected_scenes": 4,
+    "paired_contact_families_complete_clips": 32,
+    "paired_contact_families_expected_clips": 32,
+    "overall_quality": "failed for every retained package",
+    "conclusion": "Stationarity improves, but forward samples remain less dispersed than the finite references and wall coverage is undefined. Contact occurrence does not establish correct timing or collision laws."
+  },
+  "wall_clipping_diagnostic": {
+    "source": "docs/results/contact-wall-clipping.json",
+    "sha256": "88a891c73ae09401a9083f5b0c067d6a7ebf4cb44403f434d4493c2f744d1cbf",
+    "missing_observations": 32,
+    "incomplete_wall_clips": 6,
+    "all_missing_observations_fail_native_area_but_pass_padded_area": true,
+    "video_scores_unchanged": true
+  }
+}

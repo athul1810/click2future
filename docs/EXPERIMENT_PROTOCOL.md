@@ -1,9 +1,18 @@
 # Experiment protocol and batch evaluation
 
 This implements the evaluation workflow for T13-T16. The core comparison is
-E0/E2/E3 at 64px, 32 total frames and 8 FPS. Training results are still required.
-The selected prediction target, final dataset/OOD versions, checkpoints and main
-training budget remain open. The protocol cannot be called fully frozen yet.
+E0/E2/E3 at 64px, 32 total frames and 8 FPS. The bounded validation pilot, E4,
+CVAE follow-ups, E5 and three E6 packages have measured results. Every package
+still fails strict physical-video quality. Final checkpoints, independent repeats
+and the main test budget remain open; this protocol is not a final test freeze.
+
+Before opening the 248 reserved ID/OOD/physics clips, record the chosen checkpoint
+hashes, exact source/tracker versions, sampling seeds and steps, action-control
+magnitude, complete split lists, metrics and allocated budget. Use one frozen
+setting across suites and retain all missing-track failures. Training or tuning
+on those results would require a new independent test set. Current E6 evidence
+and the action-family uncertainty comparison are in CONTACT_TRAINING.md and
+results/contact-uncertainty-comparison.json.
 
 `configs/evaluation/comparison.yaml` records common sampling seeds 0-3, independent
 training seeds 0-2, metric configuration and scene-group bootstrap settings.
