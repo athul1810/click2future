@@ -20,7 +20,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | Done |
 | T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In review |
-| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
+| T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
@@ -224,7 +224,7 @@ The E3 implementation checks are complete and in review. E2 and E3 each have 964
 
 Test whether physical supervision improves decoded future behavior.
 
-**Dependencies:** T11, T07. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
+**Dependencies:** T11, T07. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Done.
 
 - [x] Predict trajectories and object-pair collision probabilities from denoiser features.
 - [x] Define timestep supervision, object-slot matching, valid masks, imbalance handling, and loss weights.
@@ -232,7 +232,7 @@ Test whether physical supervision improves decoded future behavior.
 - [x] Validate loss gradients and tiny-batch behavior; demonstrate E4 training and sampling.
 - [x] Report head predictions separately from generated-video tracking metrics.
 
-E4 training, sampling and actual final-head capture are measured in PR #43. The 5,000-update multi-scene run has head ADE 0.1314 and event F1 0.1324, while RGB tracks 162/5,952 observations. The separate collision overfit check learns the contact (head event F1 1.0 on its single training clip) and tracks 247/248 RGB observations. Its one missing selected observation still fails the strict gate. Implementation is ready for review; generated-video quality remains in T14/T16. Evidence: results/multiscene-validation-checks.json.
+E4 training, sampling and actual final-head capture are measured in PR #43. The 5,000-update multi-scene run has head ADE 0.1314 and event F1 0.1324, while RGB tracks 162/5,952 observations. The separate collision overfit check learns the contact (head event F1 1.0 on its single training clip) and tracks 247/248 RGB observations. Its one missing selected observation still fails the strict gate. Implementation was reviewed by Sanjay and merged in #43; generated-video quality remains in T14/T16. Evidence: results/multiscene-validation-checks.json.
 
 <a id="t13"></a>
 
@@ -297,7 +297,7 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [x] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [x] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The validation measurement work is complete and ready for review in #47, stacked on #43; #42 has merged. The frozen E5 audit finds penetration in 22/96 clips versus 0/84 oracle controls and full-horizon zero-force drift in 16/16 clips. PR #48 adds three E6 packages. The paired-action package has 0/16 zero-force drift, 0/32 passive drift and penetration in 12/96 clips. All six incomplete clips are wall cases. The reproducible clipping audit traces all 32 missing observations to sprite area lost at the canvas. Independent C review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. Forward spread remains below the finite references and wall coverage is undefined. Version 2 passive scores retain the original reports and count exactly one pixel as drift. Overall physics quality, independent repeats and final ID/OOD results remain open. See CONTACT_UNCERTAINTY_AUDIT.md and results/contact-uncertainty-comparison.json.
+The validation measurement work is complete and awaiting review in #47, which now targets main. #42 and #43 have merged. The frozen E5 audit finds penetration in 22/96 clips versus 0/84 oracle controls and full-horizon zero-force drift in 16/16 clips. PR #48 adds three E6 packages. The paired-action package has 0/16 zero-force drift, 0/32 passive drift and penetration in 12/96 clips. All six incomplete clips are wall cases. The reproducible clipping audit traces all 32 missing observations to sprite area lost at the canvas. Independent C review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. Forward spread remains below the finite references and wall coverage is undefined. Version 2 passive scores retain the original reports and count exactly one pixel as drift. Overall physics quality, independent repeats and final ID/OOD results remain open. See CONTACT_UNCERTAINTY_AUDIT.md and results/contact-uncertainty-comparison.json.
 
 
 <a id="t17"></a>
