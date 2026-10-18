@@ -160,3 +160,23 @@ archive sha-256: `93d1c7129a82cdc8bf96abdd43dd0fbb2e8eac794d1a2e89a2ef2db72467fd
 the uploaded archive was downloaded again and matched byte-for-byte; all 22
 inventoried member hashes pass. the bundled launch passes 25 browser checks.
 see [handoff checks](../docs/results/trajectory-handoff-checks.json).
+
+## contact candidate comparison
+
+the 18 october paired-action candidate fixes passive drift on the saved push,
+but still fails overall contact/completeness quality. it is an optional comparison,
+not a replacement for the frozen handoff. after obtaining the private artifacts:
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --dataset outputs/tc2-action-quality/data `
+  --samples g03-scene-00730016-forward-p00 g03-scene-00730017-forward-p00 `
+  --checkpoint "e6-paired-actions=outputs/tc2-contact-20261018/contact-grid-20261018/best.pt" `
+  --checkpoint "e5-frozen=outputs/trajectory-handoff/best.pt" --device cuda
+```
+
+the default shows the first model's four futures. select the explicit comparison
+option to show both models. native 8 fps playback starts after generation unless
+reduced motion is enabled; changing the input pauses the old output. four primary
+futures fit common laptop heights. see the [measured comparison](../docs/CONTACT_TRAINING.md)
+for the remaining failures; no quality ranking is inferred from the interface.

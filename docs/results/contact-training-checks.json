@@ -1,0 +1,143 @@
+{
+  "status": "passed",
+  "clean_extraction_tests": 542,
+  "subtests": 4,
+  "warnings": 6,
+  "warning_scope": "existing torchvision deprecation warnings in lpips",
+  "clean_extraction_smoke": "passed; imports restricted to extracted source",
+  "tested_archive_sha256": "2b71a5a008f52e755c36f3dfa65f2cf98fc27fad946146f2b117589a53fb2c30",
+  "final_archive_sha256": "241174ddfe06d303df4b2482343634e0b1ff4467678e8952eb6e91368712d4ac",
+  "archive_changes_after_tests": [
+    "MANIFEST.json",
+    "README.md",
+    "submission/README.md"
+  ],
+  "all_tested_code_and_fixture_bytes_unchanged": true,
+  "browser": {
+    "checks": [
+      "page and checkpoint metadata load",
+      "one primary model is selected by default",
+      "visible object selectors",
+      "background click cannot select an object",
+      "object buttons update selection",
+      "right drag gives positive x",
+      "down drag gives positive y",
+      "drag outside canvas clamps physical force",
+      "reverse keeps magnitude and negates both coordinates",
+      "zero push",
+      "keyboard direction matches image coordinates",
+      "shift fine adjustment",
+      "invalid seed fails without model execution",
+      "real checkpoint finishes four seeded futures",
+      "controls locked during generation",
+      "native-fps playback advances without an extra click",
+      "four videos retain ordered paired seeds and 32 frames",
+      "shared timeline scrubs all samples and pauses",
+      "pixel-track overlay and missing-count labels",
+      "timeline returns to supplied frame zero",
+      "simulator reference is separate and labelled",
+      "all four primary futures fit common desktop viewport heights",
+      "exact repeated request is identical labelled replay",
+      "reduced-motion preference keeps playback paused",
+      "explicit comparison includes every selected model",
+      "changed push cannot relabel old videos as new output",
+      "cancelled generation cannot replace the previous output",
+      "scene change resets playback and output",
+      "mobile layout has no horizontal overflow",
+      "no browser javascript exceptions"
+    ],
+    "count": 30,
+    "browser_errors": [],
+    "ui_seconds": [
+      1.301979800045956,
+      0.3691994000109844,
+      0.3769338999991305,
+      5.3738337000249885
+    ],
+    "model_sources": [
+      [
+        {
+          "source": "live model",
+          "seconds": 0.7676847000257112
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.01936179999029264
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.008332400000654161
+        }
+      ],
+      [
+        {
+          "source": "cached replay",
+          "seconds": 0.005249799985904247
+        },
+        {
+          "source": "live model",
+          "seconds": 4.4456818999606185
+        }
+      ]
+    ],
+    "note": "functional rehearsal, not model quality or a latency benchmark"
+  },
+  "browser_scope": "functional rehearsal, not quality or benchmark",
+  "demo_server_stopped": true,
+  "test_splits_evaluated": [],
+  "real_contact_checkpoint_adapter": {
+    "status": "passed",
+    "adapter_pixel_equal_to_offline_sampler": true,
+    "shape": [
+      4,
+      32,
+      64,
+      64,
+      3
+    ],
+    "metadata": {
+      "id": "E6-grid",
+      "kind": "trajectory_diffusion",
+      "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA; contact/stationary training; unchanged inference",
+      "checkpoint_sha256": "278f419d41d4abdfcacbe29b1f38457f608a33200fd29967b13f544df15746b2",
+      "training_steps": 15500,
+      "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+      "sampling_steps": 16,
+      "sampling_source_sha256": {
+        "demo\\models.py": "5a8c2d0ebf46bb9f09338ef3bb018dfd697909ac57a8beba2f889ae93cf4761a",
+        "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+        "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+        "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+        "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+        "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+        "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+        "training/sample_trajectory.py": "725368a5d747d5420439a6ead6409863d7fdc791fab89d1294f72dee4e622822",
+        "training/contact_checkpoint.py": "451a8bd24ed9d2c2ce52d0df390d531e0b5a72b08fd4ffb507de0625fa297cb4"
+      },
+      "runtime": {
+        "torch": "2.11.0+cu128",
+        "device": "cuda",
+        "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "precision": "float32"
+      },
+      "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+      "network_evaluations_per_sample": 31,
+      "supervision": "future positions and checked angular replay; training only",
+      "training_variant": "contact_regularized"
+    }
+  },
+  "compute": {
+    "jobs": {
+      "43598": 313,
+      "43600": 309,
+      "43605": 820
+    },
+    "allocated_seconds": 1442,
+    "all_completed_exit_zero": true,
+    "queued_or_running_jobs": 0
+  }
+}
