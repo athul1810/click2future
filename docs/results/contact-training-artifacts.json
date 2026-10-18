@@ -5,24 +5,34 @@
     {
       "name": "contact-20261018.tar.gz",
       "bytes": 25623261,
-      "sha256": "4cd89c6157f87916365af0ec40562284aa151d2a48c5ce399e1e6164798e3208"
+      "sha256": "4cd89c6157f87916365af0ec40562284aa151d2a48c5ce399e1e6164798e3208",
+      "downloaded_and_hash_verified": true,
+      "checksum_file_verified": true
     },
     {
       "name": "contact-token-20261018.tar.gz",
       "bytes": 25613918,
-      "sha256": "44e26c6603c627c897f819ebc22f552549baa3c7132981d3ec9375d456f1832c"
+      "sha256": "44e26c6603c627c897f819ebc22f552549baa3c7132981d3ec9375d456f1832c",
+      "downloaded_and_hash_verified": true,
+      "checksum_file_verified": true
     },
     {
       "name": "contact-grid-20261018.tar.gz",
       "bytes": 26454833,
-      "sha256": "edd591db8baae36e7673ef3bad7322b09b187a0745741624bf88444382f92df8"
+      "sha256": "edd591db8baae36e7673ef3bad7322b09b187a0745741624bf88444382f92df8",
+      "downloaded_and_hash_verified": true,
+      "checksum_file_verified": true
     },
     {
       "name": "contact-training-diagnostics.zip",
-      "bytes": 5285850,
-      "sha256": "0f965d0c3af2c30eb1dc5be7b48ba09f0cc74b74cfa03c444a2fdfba77725b95"
+      "bytes": 5285863,
+      "sha256": "005d94f0ab2f24ca585426648f3fe2bb366f5e533f1b98d6a46364e3c20dfb64",
+      "downloaded_and_hash_verified": true,
+      "checksum_file_verified": true
     }
   ],
   "checkpoints_promoted": false,
-  "test_splits_evaluated": []
+  "test_splits_evaluated": [],
+  "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-fe3b35eb1613942e8199",
+  "diagnostic_member_hashes_verified": true
 }

@@ -190,4 +190,4 @@ lpips/torchvision deprecation warnings. 30 browser checks pass; the real e6 demo
 adapter matches all four offline samples pixel-for-pixel. the source zip is
 revalidated after readme-only changes. [verification record](results/contact-training-checks.json).
 the demo is closed. private raw checkpoints, logs, source snapshots and all three
-attempts are retained in the draft [experiment backup](https://github.com/athul1810/click2future/releases/tag/contact-training-2026-10-18).
+attempts are retained in the draft [experiment backup](https://github.com/athul1810/click2future/releases/tag/untagged-fe3b35eb1613942e8199).
