@@ -1771,6 +1771,1340 @@
           "minimum_centre_gap": 0.1457021167251609
         }
       }
+    },
+    "flow_seed1": {
+      "slurm_job_id": 46562,
+      "config": "configs/training/cvae_repeats/flow_seed1.yaml",
+      "config_sha256": "b227debba2c85c5f6c08fc2a1c33ccdb09b2f4aecaae9daded1a70f805846ce9",
+      "source_revision": "757498b598616f95f591ac0d2772683acf5fa878",
+      "training_seed": 1,
+      "beta": 0.001,
+      "latent_dim": 64,
+      "decoder_kind": "flow",
+      "training_status": "completed",
+      "completed_updates": 20000,
+      "selected_update": 14000,
+      "training_seconds": 757.1,
+      "peak_tensor_bytes": 248945664,
+      "checkpoint_sha256": "9bad6a79a50f2c23d453fffe26e3c9afe6c25c4b519fc511a0a602d90201a3a2",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5916,
+        "tracking_fraction": 0.9939516129032258,
+        "complete_selected_clips": 96,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 92,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": 0.02107809113482802,
+        "passes_tracking_and_selected_trajectory_gate": false
+      },
+      "validation_cvae_diagnostics": {
+        "posterior_future_mae": 0.003639174986996555,
+        "prior_future_mae": 0.005396073023716565,
+        "prior_pairwise_rgb_mae": 0.0023322629852676378,
+        "kl_mean_per_latent": 0.35269609093666077,
+        "latent_dimensions_kl_above_0_01": 64
+      },
+      "action_counts": {
+        "forward.total_samples": 16,
+        "forward.complete_samples": 16,
+        "forward.missing_samples": 0,
+        "forward.stationary_samples": 16,
+        "forward.moving_samples": 0,
+        "reverse.total_samples": 16,
+        "reverse.complete_samples": 16,
+        "reverse.missing_samples": 0,
+        "reverse.stationary_samples": 6,
+        "reverse.moving_samples": 10,
+        "zero.total_samples": 16,
+        "zero.complete_samples": 16,
+        "zero.missing_samples": 0,
+        "zero.drifting_samples": 0,
+        "reversal.total_pairs": 16,
+        "reversal.complete_pairs": 16,
+        "reversal.missing_pairs": 0,
+        "reversal.moving_pairs": 0,
+        "reversal.stationary_pairs": 16
+      },
+      "selection_counts": {
+        "selection.total_pairs": 16,
+        "selection.complete_pairs": 16,
+        "selection.missing_pairs": 0,
+        "selection.stationary_pairs": 16,
+        "selection.moving_pairs": 0
+      },
+      "force_probe_foreground_mae": {
+        "force_total": 0.15440512750627872,
+        "force_via_features": 0.157161150990357,
+        "force_via_prior": 0.019780241427557427,
+        "prior_seed_spread": 0.007235881870224258,
+        "posterior_minus_prior": 0.04641917066639758,
+        "true_motion": 0.12363681152548571
+      },
+      "motion_timing_validation": {
+        "model": {
+          "forward": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.009548835366974371,
+                "mean_along_force": 0.009410164628464314,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9081101190476191
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.023965765878902617,
+                "mean_along_force": 0.023804640501239593,
+                "moving_fraction": 0.9375,
+                "mean_area_ratio": 0.8879635989010989
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.05417721593113679,
+                "mean_along_force": 0.054166891458851625,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9104281135531136
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.1087921661641947,
+                "mean_along_force": 0.10878614481552086,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9007698031135531
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.00405775965724618,
+                "mean_along_force": -0.002524981406804558,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.906069392377382
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.003043964459218721,
+                "mean_along_force": -0.0014925507149840152,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8898170330886181
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.002347017962130967,
+                "mean_along_force": 0.00012760082792684715,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8822878104498594
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0032885314483296737,
+                "mean_along_force": -0.000853175318137115,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8891995177288348
+              }
+            }
+          },
+          "reverse": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.015279472828609263,
+                "mean_along_force": 0.0152584206617602,
+                "moving_fraction": 0.375,
+                "mean_area_ratio": 0.9273265796703296
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0310344913305205,
+                "mean_along_force": 0.031022624121465035,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9297447344322345
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.06260176360028097,
+                "mean_along_force": 0.06259589961644348,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9048763736263736
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.12220788744192485,
+                "mean_along_force": 0.12220156437620627,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.8719808836996337
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.002811684185800063,
+                "mean_along_force": 0.0015732775352717207,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9022089288503592
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0031979448065072693,
+                "mean_along_force": 0.001471938596117637,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8933689830001041
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0034154621624051676,
+                "mean_along_force": 0.0007169605454226124,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8862750410028116
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.003279798767192101,
+                "mean_along_force": 0.000408950810169062,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8840686016088721
+              }
+            }
+          },
+          "zero": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.000319267969532945,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9955357142857143
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0002455489468384094,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9966517857142857
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.000684875543384384,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9903273809523809
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.001053011755004155,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9827008928571429
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.003752489755701318,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9079771295428511
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.004026900313154023,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9004069040924711
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0032895572544577555,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8914580241851505
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0028477193917833487,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9028110356138708
+              }
+            }
+          }
+        },
+        "reference": {
+          "forward": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.013210337609052658,
+                "mean_along_force": 0.013210337609052658,
+                "moving_fraction": 0.3125,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.03092252090573311,
+                "mean_along_force": 0.03092252090573311,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0663468949496746,
+                "mean_along_force": 0.0663468949496746,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.13276759162545204,
+                "mean_along_force": 0.13276759162545204,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          },
+          "reverse": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.013210341334342957,
+                "mean_along_force": 0.013210341334342957,
+                "moving_fraction": 0.3125,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.030922528356313705,
+                "mean_along_force": 0.030922528356313705,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.06634689681231976,
+                "mean_along_force": 0.06634689681231976,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.13276759535074234,
+                "mean_along_force": 0.13276759535074234,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          },
+          "zero": {
+            "selected": {
+              "4": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          }
+        }
+      },
+      "motion_timing_selection": {
+        "model": {
+          "select": {
+            "selected": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.007418828946911022,
+                "mean_along_force": 0.0038876627784917416,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8777086057377617
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.01576917668765824,
+                "mean_along_force": 0.01368003164329168,
+                "moving_fraction": 0.4375,
+                "mean_area_ratio": 0.8641202217563364
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.035478958025683294,
+                "mean_along_force": 0.034006230243526975,
+                "moving_fraction": 0.71875,
+                "mean_area_ratio": 0.8472515779788654
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.08951683155926009,
+                "mean_along_force": 0.08890302286308718,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.8882585459357367
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0031697241917231058,
+                "mean_along_force": 0.0005201322308542346,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.897738880088268
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.007147503602957383,
+                "mean_along_force": 0.004897205610530102,
+                "moving_fraction": 0.125,
+                "mean_area_ratio": 0.8663057774663767
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.020670672021424707,
+                "mean_along_force": 0.018546009217559403,
+                "moving_fraction": 0.5,
+                "mean_area_ratio": 0.8753614784413754
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.05098572043952323,
+                "mean_along_force": 0.04852333276628912,
+                "moving_fraction": 0.5,
+                "mean_area_ratio": 0.8812142514558752
+              }
+            }
+          }
+        },
+        "reference": {
+          "select": {
+            "selected": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.03286426141858101,
+                "mean_along_force": 0.03286426141858101,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.07692806236445904,
+                "mean_along_force": 0.07692806236445904,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.1650556679815054,
+                "mean_along_force": 0.1650556679815054,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.3071553409099579,
+                "mean_along_force": 0.3071553409099579,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          }
+        }
+      },
+      "selection_drift": {
+        "selected_object_0": {
+          "complete_samples": 16,
+          "samples": 16,
+          "other_moving_over_one_pixel": 0,
+          "other_moving_along_force": 0,
+          "other_final_range": [
+            0.002462395225863745,
+            0.009049965543330497
+          ],
+          "minimum_centre_gap": 0.15540082467504876
+        },
+        "selected_object_1": {
+          "complete_samples": 14,
+          "samples": 16,
+          "other_moving_over_one_pixel": 14,
+          "other_moving_along_force": 14,
+          "other_final_range": [
+            0.062243507332881406,
+            0.14952174034038115
+          ],
+          "minimum_centre_gap": 0.14787961001541047
+        }
+      }
+    },
+    "flow_seed2": {
+      "slurm_job_id": 46562,
+      "config": "configs/training/cvae_repeats/flow_seed2.yaml",
+      "config_sha256": "b8d87c29f194bed60136e9b3e5241d8cdb511b5e015a8510e7b7d6a8aac4046f",
+      "source_revision": "757498b598616f95f591ac0d2772683acf5fa878",
+      "training_seed": 2,
+      "beta": 0.001,
+      "latent_dim": 64,
+      "decoder_kind": "flow",
+      "training_status": "completed",
+      "completed_updates": 20000,
+      "selected_update": 13000,
+      "training_seconds": 741.6,
+      "peak_tensor_bytes": 248945664,
+      "checkpoint_sha256": "49b393c4d06c7f7260018c6ccf312d6cdbe7b9de6248f295d98a3deec836de2b",
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5947,
+        "tracking_fraction": 0.9991599462365591,
+        "complete_selected_clips": 91,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 91,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false
+      },
+      "validation_cvae_diagnostics": {
+        "posterior_future_mae": 0.003293908115232452,
+        "prior_future_mae": 0.004946657029254961,
+        "prior_pairwise_rgb_mae": 0.0011882420398078033,
+        "kl_mean_per_latent": 0.35964393615722656,
+        "latent_dimensions_kl_above_0_01": 64
+      },
+      "action_counts": {
+        "forward.total_samples": 16,
+        "forward.complete_samples": 16,
+        "forward.missing_samples": 0,
+        "forward.stationary_samples": 16,
+        "forward.moving_samples": 0,
+        "reverse.total_samples": 16,
+        "reverse.complete_samples": 16,
+        "reverse.missing_samples": 0,
+        "reverse.stationary_samples": 13,
+        "reverse.moving_samples": 3,
+        "zero.total_samples": 16,
+        "zero.complete_samples": 16,
+        "zero.missing_samples": 0,
+        "zero.drifting_samples": 0,
+        "reversal.total_pairs": 16,
+        "reversal.complete_pairs": 16,
+        "reversal.missing_pairs": 0,
+        "reversal.moving_pairs": 0,
+        "reversal.stationary_pairs": 16
+      },
+      "selection_counts": {
+        "selection.total_pairs": 16,
+        "selection.complete_pairs": 16,
+        "selection.missing_pairs": 0,
+        "selection.stationary_pairs": 16,
+        "selection.moving_pairs": 0
+      },
+      "force_probe_foreground_mae": {
+        "force_total": 0.15080077747696316,
+        "force_via_features": 0.15367763910182897,
+        "force_via_prior": 0.03338606832862154,
+        "prior_seed_spread": 0.032907265351355096,
+        "posterior_minus_prior": 0.0427690804941978,
+        "true_motion": 0.12363681152548571
+      },
+      "motion_timing_validation": {
+        "model": {
+          "forward": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.008227737046354891,
+                "mean_along_force": 0.008180009557845737,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.8835851648351648
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.02290567195623769,
+                "mean_along_force": 0.02290160267065603,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.8798076923076923
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.05396894236644053,
+                "mean_along_force": 0.053966628819295266,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.89453125
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.1069962932608102,
+                "mean_along_force": 0.10699277947076066,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.8899954212454213
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.002180864619245386,
+                "mean_along_force": 0.00014445377022291594,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9629996160054151
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.003074647636957217,
+                "mean_along_force": 0.00033705503318318814,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9482734562116006
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.002741055936101991,
+                "mean_along_force": 0.000640147550986285,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9522443995366031
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.001070955772158175,
+                "mean_along_force": -0.0005332835150608194,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9763925335832553
+              }
+            }
+          },
+          "reverse": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.011019501214825582,
+                "mean_along_force": 0.010999300927519835,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9260674221611722
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.02462756020378046,
+                "mean_along_force": 0.024615421942604486,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9087396978021979
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.05390101383773588,
+                "mean_along_force": 0.05384907869397759,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9272836538461539
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.11242297098689484,
+                "mean_along_force": 0.11239104635526348,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.9270547161172161
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.001066947853176754,
+                "mean_along_force": -0.0004633516272386992,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9729381443298969
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0016468635836314899,
+                "mean_along_force": 9.38662571305128e-05,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9584345386858273
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0028834175379798743,
+                "mean_along_force": 0.00015939818064047984,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9351181922315943
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.003346998509541895,
+                "mean_along_force": -4.43035408593008e-05,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9421845386858274
+              }
+            }
+          },
+          "zero": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0002916579773998207,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9951923076923077
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.000400313090134501,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9943337912087913
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0007859739844549613,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9888392857142858
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.002872767830186073,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9527815934065934
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.001725135704294113,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9765657216494845
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0031477985949367633,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9556704935957513
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.003099161720227006,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9524685645110903
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0019278136096211784,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9675064432989691
+              }
+            }
+          }
+        },
+        "reference": {
+          "forward": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.013210337609052658,
+                "mean_along_force": 0.013210337609052658,
+                "moving_fraction": 0.3125,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.03092252090573311,
+                "mean_along_force": 0.03092252090573311,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0663468949496746,
+                "mean_along_force": 0.0663468949496746,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.13276759162545204,
+                "mean_along_force": 0.13276759162545204,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          },
+          "reverse": {
+            "selected": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.013210341334342957,
+                "mean_along_force": 0.013210341334342957,
+                "moving_fraction": 0.3125,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.030922528356313705,
+                "mean_along_force": 0.030922528356313705,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.06634689681231976,
+                "mean_along_force": 0.06634689681231976,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.13276759535074234,
+                "mean_along_force": 0.13276759535074234,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 16,
+                "total": 16,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          },
+          "zero": {
+            "selected": {
+              "4": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 4,
+                "total": 4,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          }
+        }
+      },
+      "motion_timing_selection": {
+        "model": {
+          "select": {
+            "selected": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.00504915197441588,
+                "mean_along_force": 0.0043774495629959,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9072891251789447
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.010822742920927194,
+                "mean_along_force": 0.010646690522155444,
+                "moving_fraction": 0.1875,
+                "mean_area_ratio": 0.8920793304991115
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.038098487617617756,
+                "mean_along_force": 0.037840837412132206,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.8437911271682212
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.11193336233368376,
+                "mean_along_force": 0.1117555922854864,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 0.7379153505965683
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.003411235364176461,
+                "mean_along_force": 0.0026226051697433705,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 0.9277565846774931
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.007621572286663865,
+                "mean_along_force": 0.004423826548661332,
+                "moving_fraction": 0.0625,
+                "mean_area_ratio": 0.8514845956413288
+              },
+              "16": {
+                "tracked": 29,
+                "total": 32,
+                "mean_displacement": 0.022775835251002987,
+                "mean_along_force": 0.019940185219479975,
+                "moving_fraction": 0.4482758620689655,
+                "mean_area_ratio": 0.7972928898924277
+              },
+              "31": {
+                "tracked": 23,
+                "total": 32,
+                "mean_displacement": 0.03913409370734776,
+                "mean_along_force": 0.03736167257329093,
+                "moving_fraction": 0.30434782608695654,
+                "mean_area_ratio": 0.8925220913107511
+              }
+            }
+          }
+        },
+        "reference": {
+          "select": {
+            "selected": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.03286426141858101,
+                "mean_along_force": 0.03286426141858101,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.07692806236445904,
+                "mean_along_force": 0.07692806236445904,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.1650556679815054,
+                "mean_along_force": 0.1650556679815054,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.3071553409099579,
+                "mean_along_force": 0.3071553409099579,
+                "moving_fraction": 1.0,
+                "mean_area_ratio": 1.0
+              }
+            },
+            "other": {
+              "4": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "8": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "16": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              },
+              "31": {
+                "tracked": 32,
+                "total": 32,
+                "mean_displacement": 0.0,
+                "mean_along_force": 0.0,
+                "moving_fraction": 0.0,
+                "mean_area_ratio": 1.0
+              }
+            }
+          }
+        }
+      },
+      "selection_drift": {
+        "selected_object_0": {
+          "complete_samples": 16,
+          "samples": 16,
+          "other_moving_over_one_pixel": 0,
+          "other_moving_along_force": 0,
+          "other_final_range": [
+            0.0,
+            0.00595579616922767
+          ],
+          "minimum_centre_gap": 0.15934435979977452
+        },
+        "selected_object_1": {
+          "complete_samples": 6,
+          "samples": 16,
+          "other_moving_over_one_pixel": 6,
+          "other_moving_along_force": 6,
+          "other_final_range": [
+            0.10229600075342213,
+            0.14611113754951996
+          ],
+          "minimum_centre_gap": 0.14338316192708728
+        }
+      }
     }
   },
   "checkpoint_backup": "Verified local copies of every best.pt (SHA-256 above) under ignored outputs/tc2-ops/cvae-study; not in Git.",
@@ -1882,6 +3216,131 @@
       "zero": {
         "0": 4
       }
+    }
+  },
+  "flow_cvae_training_seeds": {
+    "note": "Unsupervised flow CVAE, cvae_flow_pilot.yaml with training seeds 0 (job 46333), 1 and 2 (job 46562); identical data, model, objective, budget and checkpoint rule.",
+    "tracked_observations_of_5952": {
+      "per_seed": {
+        "0": 5654,
+        "1": 5916,
+        "2": 5947
+      },
+      "mean": 5839.0,
+      "range": [
+        5654,
+        5947
+      ]
+    },
+    "complete_all_object_clips_of_96": {
+      "per_seed": {
+        "0": 80,
+        "1": 92,
+        "2": 91
+      },
+      "mean": 87.66666666666667,
+      "range": [
+        80,
+        92
+      ]
+    },
+    "forward_selected_displacement_frame31": {
+      "per_seed": {
+        "0": 0.10723228405004577,
+        "1": 0.1087921661641947,
+        "2": 0.1069962932608102
+      },
+      "mean": 0.10767358115835023,
+      "range": [
+        0.1069962932608102,
+        0.1087921661641947
+      ]
+    },
+    "reverse_selected_displacement_frame31": {
+      "per_seed": {
+        "0": 0.09797780707014439,
+        "1": 0.12220788744192485,
+        "2": 0.11242297098689484
+      },
+      "mean": 0.11086955516632135,
+      "range": [
+        0.09797780707014439,
+        0.12220788744192485
+      ]
+    },
+    "zero_selected_displacement_frame31": {
+      "per_seed": {
+        "0": 0.0009697612242095545,
+        "1": 0.001053011755004155,
+        "2": 0.002872767830186073
+      },
+      "mean": 0.0016318469364665943,
+      "range": [
+        0.0009697612242095545,
+        0.002872767830186073
+      ]
+    },
+    "selection_probe_selected_displacement_frame31": {
+      "per_seed": {
+        "0": 0.0705580435102395,
+        "1": 0.08951683155926009,
+        "2": 0.11193336233368376
+      },
+      "mean": 0.09066941246772779,
+      "range": [
+        0.0705580435102395,
+        0.11193336233368376
+      ]
+    },
+    "selection_probe_other_displacement_frame31": {
+      "per_seed": {
+        "0": 0.020137555940643138,
+        "1": 0.05098572043952323,
+        "2": 0.03913409370734776
+      },
+      "mean": 0.03675245669583804,
+      "range": [
+        0.020137555940643138,
+        0.05098572043952323
+      ]
+    },
+    "force_probe_via_features": {
+      "per_seed": {
+        "0": 0.15205785068802527,
+        "1": 0.157161150990357,
+        "2": 0.15367763910182897
+      },
+      "mean": 0.1542988802600704,
+      "range": [
+        0.15205785068802527,
+        0.157161150990357
+      ]
+    },
+    "reference_forward_displacement_frame31": 0.13276759162545204,
+    "scope": "Three training seeds, four validation scene groups; no test split opened.",
+    "official_window_moving_reversal_pairs_of_16": {
+      "per_seed": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "mean": 0.0,
+      "range": [
+        0,
+        0
+      ]
+    },
+    "official_window_moving_selection_pairs_of_16": {
+      "per_seed": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "mean": 0.0,
+      "range": [
+        0,
+        0
+      ]
     }
   }
 }
