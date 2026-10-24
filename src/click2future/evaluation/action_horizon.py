@@ -434,6 +434,8 @@ def evaluate(plan_path, predictions_path, *, actions_config=None, bootstrap=None
             {
                 "method": run["method"],
                 "run_id": run["run_id"],
+                "training_seed": run.get("training_seed"),
+                "checkpoint_sha256": run.get("checkpoint_sha256"),
                 "groups": _score_run(plan, families, paths, settings),
             }
         )

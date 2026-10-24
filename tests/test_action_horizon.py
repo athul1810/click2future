@@ -123,13 +123,29 @@ def test_selected_object_pairs_are_scored_at_each_eligible_horizon(controlled, t
     plan_path = tmp_path / "targets/plan.json"
     plan = json.loads(plan_path.read_text())
     predictions = write_predictions(plan, tmp_path / "videos", ("oracle", "late"))
-    report = action_horizon.evaluate(plan_path, predictions, bootstrap=20)
+    run_suite(plan_path, predictions, tmp_path / "suite", bootstrap=20)
+    original = json.loads((tmp_path / "suite/targets.json").read_text())
+    output = tmp_path / "horizon.json"
+    action_horizon.main(
+        ["--plan", str(plan_path), "--predictions", str(predictions), "--output", str(output)]
+    )
+    report = json.loads(output.read_text())
 
     assert "actions" not in report["groups"]
     (group,) = report["groups"]["selection"]
     window = report["summary"]["selection"]["window"]
     target = "selection.correct_target_rate_over_complete"
     assert estimates(window, target) == {"late": 0.0, "oracle": 1.0}
+    # The CLI uses the plan's bootstrap settings, so compare point estimates.
+    assert {
+        (row["method"], key): metric["estimate"]
+        for row in original["summary"]["methods"]
+        for key, metric in row["metrics"].items()
+    } == {
+        (row["method"], key): metric["estimate"]
+        for row in window["methods"]
+        for key, metric in row["metrics"].items()
+    }
     assert group["horizons"]["full"]["eligible"] is False
 
 

@@ -228,7 +228,7 @@ python -m click2future.evaluation.action_horizon --plan outputs/test-plan.json -
 
 A horizon is scored only if no hidden-physics reference has a collision or wall
 onset before its end frame. Excluded groups keep their reason. Its window scores
-reproduce the original `actions.json` summary exactly. The original window result
+reproduce the original `actions.json` and `targets.json` results. The original window result
 stays reported; the full-horizon score is reported beside it, never instead.
 Reference label and rendered-RGB calibration are given for both horizons.
 
