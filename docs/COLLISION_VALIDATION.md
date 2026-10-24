@@ -37,6 +37,21 @@ Neither reference result is a performance bound or a replacement model score.
 All per-reference comparisons are retained; no nearest reference is chosen to
 improve the result. Existing published scores and thresholds stay unchanged.
 
+The exact simulator labels give the same result without any estimator. Matching
+each alternative reference's exact onsets against the first reference's exact
+onsets, with the same one-to-one rule and one-interval tolerance, gives 9 matched,
+19 extra and 39 missed events over the same 60 timelines: F1 0.2368. The 0.2353
+above therefore reflects genuine hidden-physics timing variation, not estimator
+error, and single-reference timed F1 cannot rank models whose futures differ only
+in plausible hidden physics. No video, tracker or model is involved:
+
+```sh
+python -m click2future.evaluation.label_agreement --dataset data/frozen --config configs/evaluation/pixel.yaml --output outputs/collision-label-agreement.json
+```
+
+The [label-agreement record](results/collision-label-agreement.json) retains every
+condition and alternative reference.
+
 The new audit verifies every saved pose against the original RGB, hashes all
 inputs, and requires the historical collision configuration and metric source.
 It records one-to-one event matches, unmatched events, missing intervals and
