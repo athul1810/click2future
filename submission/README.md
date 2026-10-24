@@ -430,3 +430,37 @@ an unclipped padded view for each missing observation. It rejects truncated
 measurement canvases. Original video metrics and missing observations remain
 unchanged; the padded view is never used for model inference or replacement
 scores. This is a clipping diagnosis, not a calibrated wall-contact accuracy.
+
+## CVAE reproduction, sweep and diagnostics
+
+`submission/cvae_evaluation.py` applies the flow-follow-up validation protocol to
+any trained CVAE checkpoint, RGB or flow; `flow_evaluation.py` stays unchanged for
+its recorded results. Inside an allocation, pass the prepared pilot `--root`, a
+trained `--checkpoint`, a new `--output` folder and `--device cuda`. Use the
+β/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
+`latent_dim` from `cvae_multiscene_pilot.yaml`.
+
+`submission/cvae_force_probe.py` negates the force on nonzero-force validation
+clips and decodes with fixed latents. It separates change through the condition
+features from change through the prior mean, against prior seed spread and the
+posterior-prior gap:
+
+```sh
+python submission/cvae_force_probe.py --dataset outputs/new-pilot/data --checkpoint runs/cvae/best.pt --output outputs/cvae-force-probe.json --device cuda
+```
+
+`submission/cvae_motion_timing.py` runs on CPU after an evaluation. It tracks every
+frame of the saved samples of one suite and reports selected- and other-object
+displacement at frames 4, 8, 16 and 31 against the simulator references:
+
+```sh
+python submission/cvae_motion_timing.py --plan outputs/cvae-eval/plan.json --data outputs/new-pilot/data --samples outputs/cvae-eval/validation-samples --output outputs/cvae-motion-timing.json
+```
+
+For the selected-object suite, pass `target-controls/plan.json`, its
+`target-controls/references` folder and `selected-object-samples`. Future masks
+choose scored regions and align identities only; they never enter the model. These
+are validation diagnostics; they reinterpret the 0.5-second action controls but do
+not replace them.
+These three scripts are in the working repository but not yet listed in the
+source-archive builder, so this archive does not contain them.
