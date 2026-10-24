@@ -1,0 +1,28 @@
+status: cvae_validation_sweep
+# Baseline cvae_multiscene_pilot.yaml with only beta and latent_dim changed.
+data:
+  resolution: 64
+  total_frames: 32
+  fps: 8
+  force_scale: 0.5
+  force_duration: 0.25
+model:
+  future_frames: 31
+  base_channels: 16
+  latent_dim: 32
+training:
+  seed: 0
+  batch_size: 2
+  learning_rate: 0.0002
+  beta: 0.0001
+  beta_warmup_fraction: 0.2
+  reconstruction: l1
+  foreground_weight: 32.0
+  foreground_margin: 2
+  max_steps: 20000
+  checkpoint_every: 1000
+  validation_batches: 42
+  max_hours: 0.5
+  gradient_clip_norm: 1.0
+sampling:
+  seeds: [0, 1, 2, 3]
