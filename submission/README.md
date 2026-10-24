@@ -465,3 +465,12 @@ not replace them.
 `submission/cvae_selection_drift.py` breaks the selected-object probe down per case
 and seed: the other object's displacement, its motion along the force, onset frame and
 minimum centre gap, plus the selected object per training action from clip metadata.
+
+## Full-horizon action scores
+
+`python -m click2future.evaluation.action_horizon --plan PLAN --predictions PREDICTIONS --output NEW.json`
+reruns the unchanged action and selected-object scorers at the 0.5-second window
+and at the final frame. A horizon is scored only where every hidden-physics
+reference is contact-free. Plans without zero force, such as force-OOD, keep their
+forward, reverse and reversal scores. The original window results stay unchanged.
+It reads saved videos only; it never samples or trains.

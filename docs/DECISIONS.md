@@ -98,6 +98,32 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
 - Shrijeet keeps diffusion, own-account TC2 runs and demo integration. Sanjay keeps
   simulator/data. All deliverables remain due internally on 14 November.
 
+## D013: E0 baseline, action horizons and force-OOD: 24 October 2026
+
+- E0 is the plain flow-decoder CVAE (`configs/training/cvae_flow_pilot.yaml`). On
+  validation it tracks 5,654/5,952 observations with 80/96 complete clips. The RGB
+  CVAE tracks 398 with none, so most physical metrics are undefined for it. The RGB
+  CVAE stays in the report as a decoder ablation. The displacement-supervised flow
+  variant uses future positions in its loss and stays a separate follow-up.
+- E0 uses training seeds 0-2 under the frozen protocol. The flow decoder warps
+  frame-0 pixels, so the CVAE-diffusion comparison also differs in output
+  representation; the report states this.
+- Action controls gain a supplementary full-horizon score
+  (`evaluation/action_horizon.py`, version 1). It reruns the unchanged action,
+  reversal and selected-object scorers at the final frame, only where every
+  hidden-physics reference is contact-free until then. The original 0.5-second
+  scores stay unchanged and reported. At native force 11/16 continuous and 8/16
+  rendered reference pairs fall below the threshold inside that window.
+- Force-OOD is evaluated for E0/E2/E3 as labelled magnitude extrapolation and
+  reported per action family. E5/E6 declare a 1.1 force limit and are reported as
+  unsupported unless they enter the final comparison under a reviewed contract.
+  Forward, reverse and reversal scores run on force-OOD; only zero force is absent.
+- These choices follow validation results, including the flow-CVAE timing
+  diagnostic in #52. No test split was opened. Both horizons are reported for
+  every method; neither is chosen per model.
+- Proposed by Ananya in #52 and her review of #50; confirmed by Athul. Final
+  checkpoints, diffusion recipes and the training budget remain open under T13.
+
 ## New decision template
 
 ```text
