@@ -1,0 +1,140 @@
+{
+  "scope": "Implementation and trained-checkpoint input routing only; not generated-video physical action adherence",
+  "initial_validation_case": "g03-scene-00730016-forward-p00",
+  "input_fields": [
+    "first_frame",
+    "selected_mask",
+    "force_xy"
+  ],
+  "noise_seed": 916,
+  "denoising_timestep": 500,
+  "models": {
+    "E2": {
+      "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2",
+      "step": 5000,
+      "conditioning": "numeric",
+      "parameters": 964035,
+      "single_fixed_noise_prediction_changes": {
+        "reverse": 0.01670798286795616,
+        "zero": 0.008003024384379387,
+        "changed_selection": 0.014676711522042751
+      },
+      "invalid_masks_rejected_before_inference": [
+        "empty",
+        "nonbinary",
+        "wrong_shape"
+      ],
+      "saved_action_control_counts": {
+        "forward.total_samples": 16,
+        "forward.complete_samples": 0,
+        "forward.missing_samples": 16,
+        "forward.stationary_samples": 0,
+        "forward.moving_samples": 0,
+        "reverse.total_samples": 16,
+        "reverse.complete_samples": 0,
+        "reverse.missing_samples": 16,
+        "reverse.stationary_samples": 0,
+        "reverse.moving_samples": 0,
+        "zero.total_samples": 16,
+        "zero.complete_samples": 0,
+        "zero.missing_samples": 16,
+        "zero.drifting_samples": 0,
+        "reversal.total_pairs": 16,
+        "reversal.complete_pairs": 0,
+        "reversal.missing_pairs": 16,
+        "reversal.moving_pairs": 0,
+        "reversal.stationary_pairs": 0
+      },
+      "saved_selection_control_counts": {
+        "selection.total_pairs": 16,
+        "selection.complete_pairs": 0,
+        "selection.missing_pairs": 16,
+        "selection.stationary_pairs": 0,
+        "selection.moving_pairs": 0
+      },
+      "generated_video_quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 378,
+        "tracking_fraction": 0.06350806451612903,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      }
+    },
+    "E3": {
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f",
+      "step": 5000,
+      "conditioning": "spatial",
+      "parameters": 964035,
+      "single_fixed_noise_prediction_changes": {
+        "reverse": 0.012963386252522469,
+        "zero": 0.006393578834831715,
+        "changed_selection": 0.014642574824392796
+      },
+      "invalid_masks_rejected_before_inference": [
+        "empty",
+        "nonbinary",
+        "wrong_shape"
+      ],
+      "saved_action_control_counts": {
+        "forward.total_samples": 16,
+        "forward.complete_samples": 0,
+        "forward.missing_samples": 16,
+        "forward.stationary_samples": 0,
+        "forward.moving_samples": 0,
+        "reverse.total_samples": 16,
+        "reverse.complete_samples": 0,
+        "reverse.missing_samples": 16,
+        "reverse.stationary_samples": 0,
+        "reverse.moving_samples": 0,
+        "zero.total_samples": 16,
+        "zero.complete_samples": 0,
+        "zero.missing_samples": 16,
+        "zero.drifting_samples": 0,
+        "reversal.total_pairs": 16,
+        "reversal.complete_pairs": 0,
+        "reversal.missing_pairs": 16,
+        "reversal.moving_pairs": 0,
+        "reversal.stationary_pairs": 0
+      },
+      "saved_selection_control_counts": {
+        "selection.total_pairs": 16,
+        "selection.complete_pairs": 0,
+        "selection.missing_pairs": 16,
+        "selection.stationary_pairs": 0,
+        "selection.moving_pairs": 0
+      },
+      "generated_video_quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 269,
+        "tracking_fraction": 0.04519489247311828,
+        "complete_selected_clips": 0,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 0,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": null,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      }
+    }
+  },
+  "test_splits_evaluated": [],
+  "added_spatial_parameters": 0,
+  "conclusion": "All implementation/control wiring checks are measured. Both original E2/E3 video models still fail tracking/action quality; those results remain in T14-T16.",
+  "input_sha256": {
+    "src/click2future/models/pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+    "src/click2future/training/conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+    "src/click2future/training/sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef"
+  },
+  "reference_file_sha256": {
+    "g03-scene-00730016-forward-p00.json": "b229d9e913d6519455e17f00cdb36a8448f93972119c8985e51bb8c924710518",
+    "g03-scene-00730016-forward-p00.npz": "56874fb39f0a35544da1430b4d76150bc084207fe959b99f38f73073786c9844"
+  },
+  "saved_training_evaluation_record_sha256": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e"
+}

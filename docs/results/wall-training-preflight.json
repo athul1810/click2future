@@ -1,0 +1,34 @@
+{
+  "status": "passed_before_allocation",
+  "clean_source_zip_tests": 555,
+  "subtests": 4,
+  "skips": 0,
+  "seconds": 84.73,
+  "source_zip_sha256": "7677c5818d79b3144a179dc1a182c49589e681463278da679cdcb8d2834cc60d",
+  "source_zip_files": 217,
+  "source_zip_bytes": 410368,
+  "legacy_checkpoint_replays": {
+    "E6-first": {
+      "all_four_videos_exact_before_vs_after": true,
+      "changed_rgb_values": 0
+    },
+    "E6-token": {
+      "all_four_videos_exact_before_vs_after": true,
+      "changed_rgb_values": 0
+    },
+    "E6-grid": {
+      "all_four_videos_exact_before_vs_after": true,
+      "changed_rgb_values": 0
+    }
+  },
+  "training_only_calibration": {
+    "scope": "Original training clips only; no validation or final-test rollout read",
+    "training_clips": 336,
+    "maximum_canvas_excess_pixels": 0.5066337585449219,
+    "declared_margin_pixels": 1.0,
+    "margin_covers_training_labels": true
+  },
+  "ruff": "passed",
+  "slurm_syntax": "passed",
+  "test_splits_evaluated": []
+}

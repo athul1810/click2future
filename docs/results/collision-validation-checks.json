@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "frozen_validation_cases": 24,
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "models_rechecked": 2,
+  "pixel_exact_pose_videos": 192,
+  "reference_self_timelines_per_model": 84,
+  "alternative_physics_timelines_per_model": 60,
+  "official_event_f1_and_penetration_totals_reproduced": true,
+  "frozen_metric_source_guard": true,
+  "source_package": {
+    "file_count": 221,
+    "bytes": 421136,
+    "sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+    "extracted_source_tests": 576,
+    "subtests": 4,
+    "skips": 0,
+    "seconds": 88.7,
+    "test_log_sha256": "715c54ba318700ef82f28a5c43ecab163ad8374cd08420a05a1dd31c4ee65d7e"
+  },
+  "report": {
+    "status": "passed",
+    "pages": 17,
+    "checked_followup_table_cells": 100,
+    "new_calibration_table_cells": 20,
+    "external_urls": 0,
+    "link_annotations": 0,
+    "em_or_en_dashes": 0,
+    "overfull_boxes": 0,
+    "unchanged_previously_reviewed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "pages_requiring_visual_review": [
+      16,
+      17
+    ],
+    "pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
+    "source_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+    "test_splits_evaluated": []
+  },
+  "test_splits_evaluated": []
+}
