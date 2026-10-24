@@ -25,6 +25,10 @@
     "submission/sampler_study.py",
     "submission/study_sampler.sbatch",
     "submission/flow_evaluation.py",
+    "submission/cvae_evaluation.py",
+    "submission/cvae_force_probe.py",
+    "submission/cvae_motion_timing.py",
+    "submission/cvae_selection_drift.py",
     "submission/check_e4_collision.py",
     "submission/check_e4_collision.sbatch",
     "submission/pilot_image_metrics.py"
