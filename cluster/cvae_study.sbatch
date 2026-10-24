@@ -1,7 +1,7 @@
 #!/bin/bash -l
 # Train and evaluate one or more CVAE configs in sequence on the frozen dataset-0.3 pilot.
 # Usage: sbatch cluster/cvae_study.sbatch <config.yaml> [<config.yaml> ...]
-# Each config gets $C2F_STUDY_DIR/<config-name>/{train,eval}; existing runs are skipped.
+# Each config gets $C2F_STUDY_DIR/<config-name>/{train,eval,force-probe.json}; existing runs are skipped.
 #SBATCH --partition=MGPU-TC2
 #SBATCH --qos=normal
 #SBATCH --nodes=1
@@ -49,6 +49,9 @@ for config in "$@"; do
     printf '\n=== %s: evaluate %s ===\n' "$(date -u +%H:%M:%S)" "$config"
     "$C2F_PYTHON" submission/cvae_evaluation.py --root "$C2F_PILOT_ROOT" \
         --checkpoint "$run/train/best.pt" --output "$run/eval" --device cuda || status=1
+    printf '\n=== %s: force probe %s ===\n' "$(date -u +%H:%M:%S)" "$config"
+    "$C2F_PYTHON" submission/cvae_force_probe.py --dataset "$C2F_PILOT_ROOT/data" \
+        --checkpoint "$run/train/best.pt" --output "$run/force-probe.json" --device cuda || status=1
 done
 printf '\n=== %s: done, status %s ===\n' "$(date -u +%H:%M:%S)" "$status"
 exit "$status"
