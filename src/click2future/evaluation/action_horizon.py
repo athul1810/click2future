@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -292,9 +293,18 @@ def prepare_selection_groups(plan, settings):
 
 
 def _relocate(path, relocate):
+    """Swap a recorded prefix at a directory boundary; plans may use / or \\ separators."""
     for old, new in relocate:
-        if path == old or path.startswith(old.rstrip("/") + "/"):
-            return str(Path(new) / Path(path).relative_to(old))
+        prefix = old.rstrip("/\\")
+        if path in (old, prefix):
+            return str(Path(new))
+        if (
+            prefix
+            and path.startswith(prefix)
+            and path[len(prefix) : len(prefix) + 1] in ("/", "\\")
+        ):
+            parts = [part for part in re.split(r"[/\\]", path[len(prefix) + 1 :]) if part]
+            return str(Path(new, *parts))
     return path
 
 

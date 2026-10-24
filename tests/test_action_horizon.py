@@ -195,3 +195,17 @@ def test_relocated_plans_read_moved_inputs_and_still_check_hashes(controlled, tm
     (moved / "splits.json").write_text((moved / "splits.json").read_text() + " ")
     with pytest.raises(ValueError, match="input changed: splits"):
         action_horizon.evaluate(plan_path, predictions, relocate=relocate)
+
+
+def test_relocation_handles_both_separators_at_directory_boundaries():
+    windows = [("C:\\runs\\recorded", "moved")]
+    relocate = action_horizon._relocate
+    assert relocate("C:\\runs\\recorded\\data\\a.json", windows) == str(
+        Path("moved", "data", "a.json")
+    )
+    assert relocate("C:\\runs\\recorded", windows) == str(Path("moved"))
+    assert relocate("C:\\runs\\recorded2\\a.json", windows) == "C:\\runs\\recorded2\\a.json"
+    posix = [("/home/user/run/", "local")]
+    assert relocate("/home/user/run/data/b.npz", posix) == str(Path("local", "data", "b.npz"))
+    assert relocate("/home/user/run/data\\c.npz", posix) == str(Path("local", "data", "c.npz"))
+    assert relocate("/home/user/runner/b.npz", posix) == "/home/user/runner/b.npz"
