@@ -182,6 +182,8 @@ A time-resolved diagnostic resolves this. We track every frame of the saved vali
 
 TC2 job 46562 repeats the unsupervised flow decoder with training seeds 1 and 2, changing nothing else. Appearance varies across seeds: 5,654, 5,916 and 5,947 of 5,952 observations are tracked, with 80, 92 and 91 complete clips, so seed 0 is the weakest. The action behaviour does not. At 3.875 seconds the selected object moves 0.107, 0.109 and 0.107 under the forward force and 0.098, 0.122 and 0.112 under the reversed force, against 0.133 for the references, and 0.003 or less on average without force. All three seeds still have no moving reversal or selection pair in the 0.5-second window. In the selection probe the selected object moves 0.071, 0.090 and 0.112 against 0.307 for the references. With object 1 selected, the other object exceeds one pixel in 13 of 14, 14 of 14 and 6 of 6 complete samples; seed 2 loses a track later in the clip in 10 of these 16 samples. The window effect, the missing force scaling and the selection drift are therefore consistent across training seeds rather than properties of one run.
 
+The full-clip action scorer added to the protocol confirms this with the original plans and videos (TC2 job 46615). For all three seeds the reversal correct-sign rate is 0.0 in the 0.5-second window and 1.0 at the final frame, with all 16 forward and 16 reversed samples moving and no zero-force drift. All four validation groups are contact-free at both horizons. In the force-0.4 selection probe only two of four groups stay contact-free to the final frame. On their complete pairs (6, 8 and 2 of 8) the selected object moves, but every pair also counts as drift, so the correct-target rate remains 0.0.
+
 \clearpage
 \begin{figure}[!ht]
 \centering
