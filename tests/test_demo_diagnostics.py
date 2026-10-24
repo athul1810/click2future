@@ -61,6 +61,9 @@ def bundle(tmp_path):
                 "name": "fixture",
                 "file": "checkpoints/fixture.pt",
                 "checkpoint_sha256": hashes["checkpoints/fixture.pt"],
+                "evaluated_checkpoint_step": 1000,
+                "quality": "Test fixture; no measured quality.",
+                "notes": "Test-only checkpoint transport.",
             }
         ],
         "presets": [{"sample_id": "one", "split": "validation"}],
@@ -84,6 +87,29 @@ def test_bundle_rejects_unlisted_checkpoint_with_null_digest(bundle, filename):
     manifest["models"][0].update(file=filename, checkpoint_sha256=None)
     (root / "MANIFEST.json").write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="bundle inventory"):
+        load_bundle(root, ["fixture"])
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("evaluated_checkpoint_step", None),
+        ("evaluated_checkpoint_step", True),
+        ("evaluated_checkpoint_step", "15500"),
+        ("quality", None),
+        ("notes", None),
+        ("notes", ""),
+    ],
+)
+def test_bundle_rejects_model_rows_the_launcher_cannot_label(bundle, field, value):
+    root, manifest = bundle
+    row = manifest["models"][0]
+    if value is None:
+        del row[field]
+    else:
+        row[field] = value
+    (root / "MANIFEST.json").write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="lacks manifest fields: " + field):
         load_bundle(root, ["fixture"])
 
 
