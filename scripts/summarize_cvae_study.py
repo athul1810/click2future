@@ -57,9 +57,13 @@ def summarize(run):
         "forward_moving": action_counts.get("forward.moving_samples"),
         "forward_complete": action_counts.get("forward.complete_samples"),
         "reversal_complete_pairs": action_counts.get("reversal.complete_pairs"),
-        "reversal_correct_sign_rate": _estimate(action, "reversal.correct_force_sign_rate_over_complete"),
+        "reversal_correct_sign_rate": _estimate(
+            action, "reversal.correct_force_sign_rate_over_complete"
+        ),
         "selection_complete_pairs": target_counts.get("selection.complete_pairs"),
-        "selection_correct_target_rate": _estimate(target, "selection.correct_target_rate_over_complete"),
+        "selection_correct_target_rate": _estimate(
+            target, "selection.correct_target_rate_over_complete"
+        ),
         "validation_posterior_mae": validation.get("posterior_future_mae"),
         "validation_prior_mae": validation.get("prior_future_mae"),
         "validation_prior_pairwise_mae": validation.get("prior_pairwise_rgb_mae"),
@@ -89,8 +93,14 @@ def table(rows):
         ("validation_prior_pairwise_mae", "prior spread"),
         ("validation_kl_per_latent", "KL/latent"),
     ]
-    probe_columns = ["force_total", "force_via_features", "force_via_prior", "prior_seed_spread",
-                     "posterior_minus_prior", "true_motion"]
+    probe_columns = [
+        "force_total",
+        "force_via_features",
+        "force_via_prior",
+        "prior_seed_spread",
+        "posterior_minus_prior",
+        "true_motion",
+    ]
     header = [label for _, label in columns] + [f"probe {name}" for name in probe_columns]
     lines = ["| " + " | ".join(header) + " |", "|" + "---|" * len(header)]
     for row in rows:

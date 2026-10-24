@@ -32,6 +32,11 @@ def _region_mae(a, b, region):
     }
 
 
+def _decode(model, flow, first, features, latent):
+    out = model._decode(features, latent)
+    return warp_first_frame(first, out) if flow else out
+
+
 @torch.inference_mode()
 def probe(dataset, checkpoint, *, device):
     payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
@@ -62,10 +67,6 @@ def probe(dataset, checkpoint, *, device):
         region = future_foreground(raw, device=device, margin=margin).float()
         first, mask, force = batch.first_frame, batch.selected_mask, batch.force_xy
 
-        def decode(features, latent):
-            out = model._decode(features, latent)
-            return warp_first_frame(first, out) if flow else out
-
         feat_pos, cond_pos = model._condition(first, mask, force)
         feat_neg, cond_neg = model._condition(first, mask, -force)
         mu_pos, logvar_pos = _statistics(model.prior(cond_pos))
@@ -77,14 +78,17 @@ def probe(dataset, checkpoint, *, device):
         std = (0.5 * logvar_pos).exp()
         z0 = mu_pos + std * torch.randn(mu_pos.shape, device=device, generator=generator)
         z1 = mu_pos + std * torch.randn(mu_pos.shape, device=device, generator=generator)
-        base = decode(feat_pos, mu_pos)
+        base = _decode(model, flow, first, feat_pos, mu_pos)
         still = first[:, :, None].expand_as(batch.future)
         pairs = {
-            "force_total": (base, decode(feat_neg, mu_neg)),
-            "force_via_features": (base, decode(feat_neg, mu_pos)),
-            "force_via_prior": (base, decode(feat_pos, mu_neg)),
-            "prior_seed_spread": (decode(feat_pos, z0), decode(feat_pos, z1)),
-            "posterior_minus_prior": (decode(feat_pos, mu_post), base),
+            "force_total": (base, _decode(model, flow, first, feat_neg, mu_neg)),
+            "force_via_features": (base, _decode(model, flow, first, feat_neg, mu_pos)),
+            "force_via_prior": (base, _decode(model, flow, first, feat_pos, mu_neg)),
+            "prior_seed_spread": (
+                _decode(model, flow, first, feat_pos, z0),
+                _decode(model, flow, first, feat_pos, z1),
+            ),
+            "posterior_minus_prior": (_decode(model, flow, first, feat_pos, mu_post), base),
             "true_motion": (batch.future, still),
         }
         for name, (a, b) in pairs.items():

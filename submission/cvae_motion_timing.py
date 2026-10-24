@@ -63,8 +63,14 @@ def analyse(plan_path, data, samples, run_index=0):
         for video in np.load(samples / run["videos"][case["sample_id"]])["videos"]:
             tracks = track_video(video, masks, valid, tracker)
             areas = tracks.masks.sum(axis=(2, 3)).astype(np.float64)
-            _record(collected["model"][action], tracks.positions.astype(np.float64),
-                    tracks.tracked, areas, selected, direction)
+            _record(
+                collected["model"][action],
+                tracks.positions.astype(np.float64),
+                tracks.tracked,
+                areas,
+                selected,
+                direction,
+            )
         for reference_id in case["reference_ids"]:
             ref = load_batch(data, [reference_id])
             positions = ref["positions"][0].astype(np.float64)
@@ -83,7 +89,9 @@ def analyse(plan_path, data, samples, run_index=0):
                         "total": len(values),
                         "mean_displacement": float(good[:, 0].mean()) if len(good) else None,
                         "mean_along_force": float(good[:, 1].mean()) if len(good) else None,
-                        "moving_fraction": float((good[:, 0] > 1 / 64).mean()) if len(good) else None,
+                        "moving_fraction": float((good[:, 0] > 1 / 64).mean())
+                        if len(good)
+                        else None,
                         "mean_area_ratio": float(good[:, 2].mean()) if len(good) else None,
                     }
     return {
@@ -115,16 +123,20 @@ def main():
     def fmt(value, places=4):
         return "" if value is None else f"{value:.{places}f}"
 
-    print(f"{'source':10s} {'action':8s} {'object':9s} {'frame':>5s} {'tracked':>9s} "
-          f"{'|d|':>8s} {'along f':>8s} {'moving':>7s} {'area':>6s}")
+    print(
+        f"{'source':10s} {'action':8s} {'object':9s} {'frame':>5s} {'tracked':>9s} "
+        f"{'|d|':>8s} {'along f':>8s} {'moving':>7s} {'area':>6s}"
+    )
     for source, actions in record["summary"].items():
         for action, roles in actions.items():
             for role, frames in roles.items():
                 for frame, s in frames.items():
-                    print(f"{source:10s} {action:8s} {role:9s} {frame:>5s} "
-                          f"{s['tracked']:>4d}/{s['total']:<4d} {fmt(s['mean_displacement']):>8s} "
-                          f"{fmt(s['mean_along_force']):>8s} {fmt(s['moving_fraction'], 2):>7s} "
-                          f"{fmt(s['mean_area_ratio'], 2):>6s}")
+                    print(
+                        f"{source:10s} {action:8s} {role:9s} {frame:>5s} "
+                        f"{s['tracked']:>4d}/{s['total']:<4d} {fmt(s['mean_displacement']):>8s} "
+                        f"{fmt(s['mean_along_force']):>8s} {fmt(s['moving_fraction'], 2):>7s} "
+                        f"{fmt(s['mean_area_ratio'], 2):>6s}"
+                    )
 
 
 if __name__ == "__main__":
