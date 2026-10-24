@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "release_assets_downloaded": 7,
+  "asset_digests": {
+    "contact-risk-job46604.tar.gz": "3d14e2c6c85b1f6ec73bd32129a1f903f82c47f39ec22834c8ff014247f97590",
+    "contact-risk-audit-job46609.tar.gz": "2a7ea4c1051a862224bada9e2e0c13babfeecf82f637626986bebfcba6e13f35",
+    "source.tar.gz": "129f8db7263240d55601065376e0b7ccd51fade80a269d65ce521c5630691193",
+    "cpu-verification.zip": "d1b50129cc73ab544c45c8dc2f5ecbdc0713b70bb61e3abf6f60b00be043b0b5",
+    "group_07_code.zip": "843e313918c7d023431f3f179749d37dcfae4b6acd593221312f33ab63798125",
+    "wall.pt": "cfc618f637f1afb6ba36cb281e895c096288fbc3cbea962fcfc11830513cbeed"
+  },
+  "raw_file_digests_verified": 747,
+  "native_exact_pose_replays": 288,
+  "windows_exact_clips": 287,
+  "windows_control_pixel_mismatch": {
+    "clips": 1,
+    "frames": 1,
+    "pixels": 1
+  },
+  "windows_anchor_family_summaries_equal_native": true,
+  "windows_tail_count_and_event_summaries_equal_native": true,
+  "windows_tail_max_depth_difference_pixels": 2.3482648492382244e-08,
+  "full_tests": 596,
+  "subtests": 4,
+  "source_zip_files": 243,
+  "source_zip_clean_extraction_smoke": "passed",
+  "source_zip_initial_targeted_tests": 15,
+  "tc2_jobs_remaining": 0,
+  "tc2_ssh_session_closed": true,
+  "test_splits_evaluated": []
+}
