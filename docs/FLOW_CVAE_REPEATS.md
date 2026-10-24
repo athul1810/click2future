@@ -1,7 +1,12 @@
 # Flow CVAE training-seed repeats
 
-Pending team agreement (T14): if the unsupervised flow CVAE represents E0 in the
-final comparison, repeat its training with independent seeds before main runs.
+The team chose the unsupervised flow CVAE as E0 for the final comparison (T14).
+TC2 job 46562 trained seeds 1 and 2 from source 757498b on 24 October 2026; both
+completed 20,000 updates in about 12.5 minutes each. Results for all three seeds,
+including the summary across seeds, are in `docs/results/cvae-study-checks.json`
+(`runs.flow_seed1`, `runs.flow_seed2` and `flow_cvae_training_seeds`) and report
+subsection 3.7. Checkpoints `9bad6a79…` and `49b393c4…` are backed up locally
+with verified hashes.
 Seed 0 is the existing run, TC2 job 46333 (`cvae_flow_pilot.yaml`, checkpoint
 `df3c5515…`, recorded in `docs/results/cvae-study-checks.json`). The configs in
 `configs/training/cvae_repeats/` change only `training.seed` to 1 and 2. The seed
