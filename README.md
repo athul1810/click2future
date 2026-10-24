@@ -19,7 +19,7 @@ video model. See the [pilot results](docs/MULTISCENE_PILOT.md),
 
 **Working submission deadline:** 14 November 2026. See [submission details](docs/SUBMISSION.md) for the course-brief date discrepancy.
 
-**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya (confirmed 17 October); demo integration: Shrijeet. See the [task board](docs/TASKS.md).
+**Workstream owners:** A: Sanjay; B: Shrijeet; C: Athul and Ananya; CVAE: Ananya (lead from 17 October; Athul built the baseline); demo integration: Shrijeet. Repository maintenance and integration: Athul. See the [task board](docs/TASKS.md) and [who did what](#who-did-what-so-far).
 
 **Compute:** the course-provided TC2 A40 setup and scheduled training are verified,
 including deterministic CVAE CUDA backward. Each account has a one-GPU,
@@ -36,6 +36,17 @@ six-hour-job limit. Measured costs and unreported quota details are in
 | BOBAN ATHUL KRISHNA | athulkri001 |
 
 Coordinator: **PRAMOD SANJAY**, following the course rule that the first person listed in the group is the coordinator.
+
+## Who did what so far
+
+Summarized from the [contribution record](report/contributions.md) and merged pull requests. Each member still reviews their own description before the contribution PDF.
+
+| Member | Main work so far |
+|---|---|
+| PRAMOD SANJAY | Coordinator. Built the tabletop simulator, force/action contract, rollout labels, deterministic replay, dataset pipeline and the controlled dataset-0.2 generator. Reviewed the tracker, pilot and contact-evaluation changes. |
+| KAPOOR ANANYA | CVAE lead. Added the macOS/Linux TC2 helper, reproduced the CVAE pilots, ran the KL-weight and latent-size study and the force, motion-timing and selection-drift diagnostics, and trained the flow-CVAE seed repeats used as E0. Reviewed and extended the collision audit and full-clip scoring. |
+| MAITI SHRIJEET | Set up and profiled the first TC2 training runs. Built diffusion training, sampling and action conditioning, tested frame-zero residual diffusion, built the interactive four-future demo, and trained the E5 trajectory model and the E6 contact packages. |
+| BOBAN ATHUL KRISHNA | Built the CVAE baseline, the held-out datasets and the generated-video evaluation pipeline: tracking, trajectory and contact metrics, action and selected-object controls, and full-clip scoring. Ran the TC2 multi-scene pilot and sampler study, and the E4 supervision, contact, uncertainty, wall and collision analyses. Maintains the repository, source ZIP and report draft, and reviews team changes. |
 
 ## Start here
 
