@@ -4,6 +4,13 @@
   "owner": "KAPOOR ANANYA (kapo0001)",
   "source_revision": "997a015ec88aeabfcd8176c7b238805db5ab73e8",
   "environment_release": "62639efb5f18fefe4d6a50cd40da84e05dfb2bf3",
+  "published_revisions": {
+    "note": "TC2 ran the commits above before their messages were rewritten for publication; the published commits have identical Git trees.",
+    "source_revision": "a768b5c9c489153a59e8d33ecc2349540e951492",
+    "environment_release": "de048cb671786278c8787435e77364e23020bb26",
+    "source_tree": "7e99614df9fb0e0644e52f62b44a659f1de10e5f",
+    "environment_tree": "748821a8d47e8cc58ffc018e6e11730bff53ae89"
+  },
   "setup_job": 46286,
   "hardware": "NVIDIA A40 on TC2N01; PyTorch 2.11.0+cu128; Python 3.12.15",
   "dataset_manifest_sha256": [
