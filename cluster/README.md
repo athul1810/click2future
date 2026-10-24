@@ -31,6 +31,20 @@ Use the NTU network account password, entered directly at the SSH prompt. Passwo
 characters are not displayed. There is no project-specific password to set up.
 See [access status](../docs/TC2_ACCESS.md) for the remaining members.
 
+## macOS/Linux setup helper
+
+`scripts/tc2_setup.sh` mirrors the Windows helper below with the same stages and
+outputs. It reuses one SSH connection, so the password is requested once per run:
+
+```bash
+scripts/tc2_setup.sh -u kapo0001 -s Inventory
+scripts/tc2_setup.sh -u kapo0001 -s Setup -r <40-character-source-commit>
+scripts/tc2_setup.sh -u kapo0001 -s Collect -r <40-character-source-commit>
+```
+
+`-n` is a dry run. Ananya's first interactive login on 24 October 2026 confirmed
+QoS `normal` on `MGPU-TC2` with the standard limits.
+
 ## Windows setup helper
 
 For upload and full setup in one invocation after first login, use:
