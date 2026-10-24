@@ -462,5 +462,9 @@ For the selected-object suite, pass `target-controls/plan.json`, its
 choose scored regions and align identities only; they never enter the model. These
 are validation diagnostics; they reinterpret the 0.5-second action controls but do
 not replace them.
-These three scripts are in the working repository but not yet listed in the
+`submission/cvae_selection_drift.py` breaks the selected-object probe down per case
+and seed: the other object's displacement, its motion along the force, onset frame and
+minimum centre gap, plus the selected object per training action from clip metadata.
+
+These four scripts are in the working repository but not yet listed in the
 source-archive builder, so this archive does not contain them.
