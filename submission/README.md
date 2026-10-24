@@ -473,3 +473,38 @@ Set `C2F_PROJECT`, `C2F_PYTHON`, `C2F_DATA_DIR`, `C2F_WALL_RESULTS` and
 training records, validation reports, full-horizon zero/passive checks and saved
 pose clipping diagnostics. It never evaluates final-test splits or changes
 inference motion, tracking thresholds or the declared physics-quality gate.
+
+## CVAE reproduction, sweep and diagnostics
+
+`submission/cvae_evaluation.py` applies the flow-follow-up validation protocol to
+any trained CVAE checkpoint, RGB or flow; `flow_evaluation.py` stays unchanged for
+its recorded results. Inside an allocation, pass the prepared pilot `--root`, a
+trained `--checkpoint`, a new `--output` folder and `--device cuda`. Use the
+β/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
+`latent_dim` from `cvae_multiscene_pilot.yaml`.
+
+`submission/cvae_force_probe.py` negates the force on nonzero-force validation
+clips and decodes with fixed latents. It separates change through the condition
+features from change through the prior mean, against prior seed spread and the
+posterior-prior gap:
+
+```sh
+python submission/cvae_force_probe.py --dataset outputs/new-pilot/data --checkpoint runs/cvae/best.pt --output outputs/cvae-force-probe.json --device cuda
+```
+
+`submission/cvae_motion_timing.py` runs on CPU after an evaluation. It tracks every
+frame of the saved samples of one suite and reports selected- and other-object
+displacement at frames 4, 8, 16 and 31 against the simulator references:
+
+```sh
+python submission/cvae_motion_timing.py --plan outputs/cvae-eval/plan.json --data outputs/new-pilot/data --samples outputs/cvae-eval/validation-samples --output outputs/cvae-motion-timing.json
+```
+
+For the selected-object suite, pass `target-controls/plan.json`, its
+`target-controls/references` folder and `selected-object-samples`. Future masks
+choose scored regions and align identities only; they never enter the model. These
+are validation diagnostics; they reinterpret the 0.5-second action controls but do
+not replace them.
+`submission/cvae_selection_drift.py` breaks the selected-object probe down per case
+and seed: the other object's displacement, its motion along the force, onset frame and
+minimum centre gap, plus the selected object per training action from clip metadata.

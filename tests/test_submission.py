@@ -66,6 +66,10 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "submission/sampler_study.py" in names
         assert "submission/study_sampler.sbatch" in names
         assert "submission/flow_evaluation.py" in names
+        assert "submission/cvae_evaluation.py" in names
+        assert "submission/cvae_force_probe.py" in names
+        assert "submission/cvae_motion_timing.py" in names
+        assert "submission/cvae_selection_drift.py" in names
         assert "submission/check_e4_collision.py" in names
         assert "submission/check_e4_collision.sbatch" in names
         assert "submission/pilot_image_metrics.py" in names
