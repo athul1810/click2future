@@ -1725,5 +1725,72 @@
     }
   },
   "checkpoint_backup": "Verified local copies of every best.pt (SHA-256 above) under ignored outputs/tc2-ops/cvae-study; not in Git.",
-  "scope": "One training seed per configuration; four validation scene groups. No test split was opened. The motion-timing diagnostic reinterprets the 0.5-second action controls but does not replace them."
+  "scope": "One training seed per configuration; four validation scene groups. No test split was opened. The motion-timing diagnostic reinterprets the 0.5-second action controls but does not replace them.",
+  "force_magnitudes_by_action": {
+    "source": "Clip metadata of dataset 03c9468e; magnitudes of force_xy, clip counts. Test splits other than the force_ood metadata are not read.",
+    "counts": {
+      "force_ood": {
+        "collision_0_to_1": {
+          "1.3": 4,
+          "1.5": 4
+        },
+        "collision_1_to_0": {
+          "1.3": 4,
+          "1.5": 4
+        },
+        "forward": {
+          "1.3": 4,
+          "1.5": 4
+        },
+        "reverse": {
+          "1.3": 4,
+          "1.5": 4
+        },
+        "wall": {
+          "1.3": 4,
+          "1.5": 4
+        }
+      },
+      "train": {
+        "collision_0_to_1": {
+          "0.25": 64
+        },
+        "collision_1_to_0": {
+          "0.25": 64
+        },
+        "forward": {
+          "0.15": 64
+        },
+        "reverse": {
+          "0.15": 64
+        },
+        "wall": {
+          "1.1": 64
+        },
+        "zero": {
+          "0.0": 16
+        }
+      },
+      "validation": {
+        "collision_0_to_1": {
+          "0.25": 16
+        },
+        "collision_1_to_0": {
+          "0.25": 16
+        },
+        "forward": {
+          "0.15": 16
+        },
+        "reverse": {
+          "0.15": 16
+        },
+        "wall": {
+          "1.1": 16
+        },
+        "zero": {
+          "0.0": 4
+        }
+      }
+    }
+  }
 }
