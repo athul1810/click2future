@@ -60,6 +60,13 @@ All six bundled checkpoints load. Choose up to four names from `MANIFEST.json`.
 Recorded validation failures and extra-supervision notes appear in run details.
 The flow/motion model is an additional supervised variant, not the ordinary CVAE.
 
+Each `models` row in a bundle manifest needs `name`, `file`, `checkpoint_sha256`,
+`evaluated_checkpoint_step` (the checkpoint's training update), `quality` and
+`notes`. Bundle verification rejects a row without them before loading any model.
+The published wall bundle below lacks `evaluated_checkpoint_step` and `notes` for
+both models, so it stops at that check; add both when building the combined
+flow-CVAE/E5/E6 bundle.
+
 ## controls and reproducibility
 
 - Click a coloured object, then drag from it. The arrow anchors at its centre;
