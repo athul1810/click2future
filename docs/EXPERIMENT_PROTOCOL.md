@@ -215,6 +215,34 @@ sample seeds and scene-group confidence intervals follow the action protocol abo
 The first-frame-only E1 control must produce identical videos under both clicks
 with paired seeds; it cannot observe the selection.
 
+## Full-horizon and no-zero action scores
+
+The 0.5-second window is too short at native force. In the multi-scene pilot,
+11/16 continuous and 8/16 rendered reference pairs stay below the one-pixel
+threshold inside it. A supplementary scorer reruns the unchanged action, reversal
+and selected-object rules at the window and at the final frame:
+
+```sh
+python -m click2future.evaluation.action_horizon --plan outputs/test-plan.json --predictions outputs/model-samples/predictions.json --output outputs/test-horizon.json
+```
+
+A horizon is scored only if no hidden-physics reference has a collision or wall
+onset before its end frame. Excluded groups keep their reason. Its window scores
+reproduce the original `actions.json` and `targets.json` results. The original window result
+stays reported; the full-horizon score is reported beside it, never instead.
+Reference label and rendered-RGB calibration are given for both horizons.
+
+The same scorer handles splits without zero force. On force-OOD it keeps forward,
+reverse and reversal scores and omits only zero force. Force-OOD has two scene
+groups, so these scores are descriptive and have no useful interval. In the
+smoke check, the force-OOD group reached a wall before the final frame, so only
+its window was scored. For selected-object controls, pass the target plan; its
+force-0.4 smoke group also reached contact before the final frame.
+
+Plans prepared before this module existed keep their recorded evaluator hashes.
+Plans prepared afterwards must match the current evaluator exactly, as in the main
+suite. Prepare the final plans after this change.
+
 ## Remaining evidence
 
 The [multi-scene pilot](MULTISCENE_PILOT.md) now measures actual E0/E2/E3/E4
