@@ -5,9 +5,10 @@ set -euo pipefail
 
 usage() {
     cat >&2 <<'EOF'
-Usage: scripts/tc2_setup.sh -u <ntu-username> [-s Inventory|Setup|Collect|All]
+Usage: scripts/tc2_setup.sh -u <ntu-username> [-s Inventory|Setup|Collect|All|Upload]
                             [-q <qos>] [-r <40-char-commit>] [-H <host>] [-n]
   -n  dry run: prepare the archive and remote script without connecting
+  Upload only extracts a new source release; no job is submitted.
 EOF
     exit 2
 }
@@ -27,7 +28,7 @@ done
 [[ "$username" =~ ^[a-z0-9][a-z0-9._-]*$ ]] || usage
 [[ "$host" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]] || usage
 [[ "$qos" =~ ^[a-zA-Z0-9_-]+$ ]] || usage
-case "$stage" in Inventory|Setup|Collect|All) ;; *) usage ;; esac
+case "$stage" in Inventory|Setup|Collect|All|Upload) ;; *) usage ;; esac
 mode=$(printf '%s' "$stage" | tr '[:upper:]' '[:lower:]')
 
 project_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)
@@ -49,7 +50,7 @@ archive_name="c2f-$revision.tar.gz"
 archive_path="$local_dir/$archive_name"
 target="$username@$host"
 archive_hash=
-if [[ "$stage" == Inventory || "$stage" == All ]]; then
+if [[ "$stage" == Inventory || "$stage" == All || "$stage" == Upload ]]; then
     git -c core.autocrlf=false -c core.eol=lf archive --format=tar.gz --output="$archive_path" "$revision"
     archive_hash=$(shasum -a 256 "$archive_path" | cut -d ' ' -f 1)
 fi
@@ -80,6 +81,7 @@ if [[ ! -f "\$release/outputs/source-revision.txt" ]] || [[ "\$(cat "\$release/o
     printf '%s\n' 'Source release is missing or incomplete. Run Inventory first.' >&2
     exit 2
 fi
+if [[ $mode == upload ]]; then printf 'Release ready: %s\n' "\$release"; exit 0; fi
 export C2F_PROJECT="\$release" C2F_QOS='$qos'
 bash "\$release/cluster/run_setup.sh" $mode
 EOF
@@ -136,4 +138,5 @@ printf '{"checked_at_utc":"%s","stage":"%s","source_revision":"%s","remote_exit_
     "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$mode" "$revision" "$remote_exit" \
     "$( (( bundle_ok )) && echo true || echo false)" > "$local_dir/$mode-result.json"
 if (( remote_exit != 0 )); then echo "Remote stage failed (exit $remote_exit). Inspect the saved diagnostics." >&2; exit 1; fi
+if [[ $mode == upload ]]; then echo "Uploaded source release $revision"; exit 0; fi
 if (( ! bundle_ok )); then echo 'No completed diagnostic bundle was returned; setup remains unverified.' >&2; exit 1; fi
