@@ -94,7 +94,8 @@ if (( dry_run )); then
 fi
 
 # One multiplexed connection, so the password is requested once for upload and run.
-control_dir=$(mktemp -d "${TMPDIR:-/tmp}/c2f-ssh.XXXXXX")
+# Unix socket paths are limited to 104 bytes on macOS, so avoid the long $TMPDIR.
+control_dir=$(mktemp -d /tmp/c2f.XXXXXX)
 ssh_opts=(-o StrictHostKeyChecking=ask -o ConnectTimeout=15 -o NumberOfPasswordPrompts=2
     -o ServerAliveInterval=30 -o ServerAliveCountMax=3
     -o ControlMaster=auto -o "ControlPath=$control_dir/%C" -o ControlPersist=60)
