@@ -27,7 +27,8 @@ Oracle-motion controls remain at 0/84 clips above tolerance.
 The unchanged pixel contact estimator scores 0.4889 event F1 on all 84 validation
 reference videos against their own exact labels: 22 matched, 24 extra and 22
 missed events. All 84 timelines are complete. The model's 0.3232 is therefore not
-a clean measurement of physical timing error alone.
+a clean measurement of physical timing error alone. These are clean simulator
+renders; the estimator's error on generated video may differ.
 
 The 60 alternative hidden-physics reference videos score 0.2353 against the first
 reference's labels, although they are valid simulator realizations. This also
@@ -63,6 +64,19 @@ uses 1.3 and 1.5. Changing the stored config after training or clamping test act
 would misrepresent that experiment. A reviewed OOD inference contract can preserve
 the trained weights and normalization while declaring extrapolation; otherwise
 report that suite as unsupported for this checkpoint.
+
+The mismatch is specific to the 1.1 limit of E5/E6. The E2/E3/E4 configs declare
+1.5, and the CVAE sampler divides force by 0.5 with no declared limit or clipping.
+Every method still extrapolates in magnitude, because training uses one force per
+action type:
+
+| Action family | Training force | Force-OOD multiple at 1.3 / 1.5 |
+|---|---:|---:|
+| Forward and reverse push | 0.15 | 8.7 / 10.0 |
+| Collision, both directions | 0.25 | 5.2 / 6.0 |
+| Wall | 1.1 | 1.2 / 1.4 |
+
+Report force-OOD results per action family rather than pooled.
 
 ## Reproduce the audit
 

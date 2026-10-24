@@ -264,13 +264,19 @@ three sampling-only allocations capped at 15 minutes each, plus one 15-minute
 retry reserve. CPU scoring follows generation outside the GPU allocation.
 This one-GPU-hour sampling ceiling is unsubmitted, assumes the same recipes and
 does not allocate training hours or establish an account quota. Recalculate it
-when final recipes or hardware change.
+when final recipes or hardware change. The estimate covers E0/E2/E3 only; add a
+measured E6 sampling time if E6 enters the final comparison.
 
 The exact [inventory and estimates](results/evaluation-workload.json) also flag a
 force-range mismatch: current E6 checkpoints declare maximum force 1.1, while
 the force-OOD recipe uses 1.3 and 1.5. Resolve the inference contract through
 review before that test. Preserve native actions, trained checkpoint metadata,
-normalization and unsupported-case counts.
+normalization and unsupported-case counts. The E2/E3/E4 configs declare 1.5, and
+CVAE checkpoints declare no limit, so the sampler accepts these magnitudes for the
+core methods. That is not trained coverage: training uses one magnitude per action
+type, so force-OOD pushes are 8.7-10 times, collisions 5.2-6 times and wall cases
+1.2-1.4 times their training force. See the
+[collision handoff](COLLISION_VALIDATION.md) for the per-family figures.
 
 Before releasing the final run, fill the remaining checkpoint/source hashes,
 chosen training recipes and repeat count, validation selection record and total
