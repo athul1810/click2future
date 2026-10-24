@@ -52,5 +52,14 @@ def load_bundle(folder, names):
         row = models[name]
         if row["file"] not in inventory or inventory[row["file"]] != row["checkpoint_sha256"]:
             raise ValueError("Checkpoint digest disagrees with the bundle inventory")
+        # The launcher checks the step against the checkpoint and shows quality/notes.
+        step = row.get("evaluated_checkpoint_step")
+        missing = [
+            key for key in ("quality", "notes") if not isinstance(row.get(key), str) or not row[key]
+        ]
+        if isinstance(step, bool) or not isinstance(step, int) or step < 1:
+            missing.insert(0, "evaluated_checkpoint_step")
+        if missing:
+            raise ValueError(f"Bundled model {name} lacks manifest fields: " + ", ".join(missing))
         selected.append({**row, "path": root / row["file"]})
     return root / "presets", selected
