@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 15,
+  "pages": 17,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -10,7 +10,7 @@
     "Experiments and analysis",
     "Conclusion"
   ],
-  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages; no model test split evaluated",
+  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages; no model test split evaluated; matched training-only canvas penalty with its control",
   "dataset": {
     "version": "dataset-0.3",
     "seed": 730000,
@@ -133,7 +133,10 @@
     "contact_training": "docs/results/contact-training-validation.json",
     "passive_stationarity_v2": "docs/results/passive-stationarity-v2.json",
     "contact_uncertainty_comparison": "docs/results/contact-uncertainty-comparison.json",
-    "wall_clipping": "docs/results/contact-wall-clipping.json"
+    "wall_clipping": "docs/results/contact-wall-clipping.json",
+    "wall_training": "docs/results/wall-training-validation.json",
+    "collision_validation": "docs/results/collision-validation-audit.json",
+    "evaluation_inventory": "docs/results/evaluation-workload.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -153,7 +156,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "ca018e8c9d44d7cf9531682c0d3a0a2b1bd30816b559d9c9589ecd278ef752db",
+    "main.tex": "e5db674aa43acd802bae834881c2fc33398378401e3a4af6fdbd91a137e29fb9",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -165,35 +168,39 @@
     "../docs/results/contact-review-checks.json": "a21ac6915df11f3bd1cbe3804c1037907c7b86bc7a704904b59a6df56594b23f",
     "../docs/results/contact-uncertainty-comparison.json": "79adad44823bf2f8953891ff74ec59cbc01785460a2ac09e68051d22612d6176",
     "../docs/results/contact-wall-clipping.json": "88a891c73ae09401a9083f5b0c067d6a7ebf4cb44403f434d4493c2f744d1cbf",
-    "../docs/results/c-followup-checks.json": "f9f219bd58418789f4d5e1a6050a881f4b995064ab43024219dc3ce7dbcbc8c9"
+    "../docs/results/c-followup-checks.json": "f9f219bd58418789f4d5e1a6050a881f4b995064ab43024219dc3ce7dbcbc8c9",
+    "../docs/results/wall-training-validation.json": "e0922ee475cbd435deaf3607ebb33963254cad748d7d7bb7ee2d2a2701fff6ca",
+    "../docs/results/wall-training-checks.json": "ba6e2244c66bcaa94b5d233a067be0e8a4be214fc94202bf6924efe5d91b380a",
+    "../docs/results/collision-validation-audit.json": "5a4eae76021bff939762788fedc258615a7a601e9446914a9c08ca65f597b4d2",
+    "../docs/results/collision-validation-checks.json": "7bd7efabbd29d5fe1294712090a80796ec6c4353b619cc8cad5821b320c8c8b3",
+    "../docs/results/evaluation-workload.json": "dc8edbb6daf3189bd930bcdd06fd507079a243f47fdcc30d7d53b7da2fa40ceb"
   },
-  "rendered_pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
-  "visual_review": "All fifteen pages rendered and inspected. Tables, three frame figures, captions, equations and bibliography are readable without clipping or overlap. No external URLs, hyperlink annotations, em dashes or en dashes.",
+  "rendered_pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
+  "visual_review": "All 17 pages rendered. Pages 1-15 are pixel-identical to the previously reviewed 16-page draft; pages 16-17 inspected. Tables and text are readable with no clipping, overlap, external links, em/en dashes or overfull boxes.",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 212,
-    "bytes": 403881,
-    "archive_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
+    "file_count": 221,
+    "bytes": 421136,
+    "archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
     "checks": [
       "allowed text files",
       "no external links",
       "source inventory hashes",
       "no datasets, weights, environments, or Git history"
     ],
-    "extracted_source_tests": 550,
+    "extracted_source_tests": 576,
     "subtests": 4,
     "skips": 0,
-    "extracted_source_test_seconds": 85.83,
-    "tested_archive_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
-    "current_archive_matches_tested_archive_exactly": true,
-    "scope": "The final rebuilt archive exactly matches the extracted archive that passed 550 tests and four subtests. Report, analysis JSON and contribution drafts are outside the source allowlist."
+    "extracted_source_test_seconds": 88.7,
+    "tested_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+    "current_archive_matches_tested_archive_exactly": true
   },
   "remaining": [
     "Contact quality, wall completeness and forward-motion uncertainty",
     "Independent training repeats and frozen final comparisons",
     "Reserved ID/OOD/physics model evaluations",
     "Member-reviewed contribution descriptions",
-    "Independent tracker/integration review and final course submission checks"
+    "Independent integration review and final course submission checks"
   ],
   "trajectory_followup": {
     "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
@@ -249,24 +256,10 @@
     },
     "reference_npz_sha256": "bc4466c2963988463e1edeaa196b9a77d1f70d782536e7717af25b59e4e69b2e"
   },
-  "contact_followup_verification": {
-    "status": "passed",
-    "report_table_cells_checked_against_measured_records": 58,
-    "pages": 15,
-    "external_urls": 0,
-    "link_annotations": 0,
-    "em_or_en_dashes": 0,
-    "overfull_boxes": 0,
-    "independent_futures_reports": 72,
-    "independent_action_strata": 18,
-    "exact_source_zip_matches_550_test_archive": true,
-    "pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
-    "test_splits_evaluated": []
-  },
   "contribution_draft": {
     "source": "contributions.md",
     "status": "member review required; completed-work account for Ananya still pending",
-    "sha256": "d86ee3fded97bef10979f4a1fa717a903f9b3c904cecca0a235e7cd36fe7ec5d"
+    "sha256": "a7fade431340e3a4fbf18f3d443d674f01bbb491d617f8b8ab5291f6ab586655"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -281,5 +274,136 @@
     "clipped_fraction_min": 0.5,
     "clipped_fraction_max": 0.6538461538461539,
     "video_scores_unchanged": true
+  },
+  "previous_report_snapshot": {
+    "pages": 15,
+    "rendered_pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 212,
+      "bytes": 403881,
+      "archive_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "extracted_source_tests": 550,
+      "subtests": 4,
+      "skips": 0,
+      "extracted_source_test_seconds": 85.83,
+      "tested_archive_sha256": "68875b38220b46da3e428fecdb5bf38492509361cd95090e80e92e48b9a478cb",
+      "current_archive_matches_tested_archive_exactly": true,
+      "scope": "The final rebuilt archive exactly matches the extracted archive that passed 550 tests and four subtests. Report, analysis JSON and contribution drafts are outside the source allowlist."
+    },
+    "contact_followup_verification": {
+      "status": "passed",
+      "report_table_cells_checked_against_measured_records": 58,
+      "pages": 15,
+      "external_urls": 0,
+      "link_annotations": 0,
+      "em_or_en_dashes": 0,
+      "overfull_boxes": 0,
+      "independent_futures_reports": 72,
+      "independent_action_strata": 18,
+      "exact_source_zip_matches_550_test_archive": true,
+      "pdf_sha256": "c4817c06f89b5576a132cad16348fd3dc75d656dc2f9328dd296a8c16b4bfde5",
+      "test_splits_evaluated": []
+    },
+    "scope": "Historical draft retained in the earlier C-evaluation private release; its source ZIP and PDF are unchanged there."
+  },
+  "wall_training_verification": {
+    "status": "passed",
+    "pages": 16,
+    "report_table_cells_checked_against_measured_records": 80,
+    "new_wall_table_cells": 22,
+    "external_urls": 0,
+    "link_annotations": 0,
+    "em_or_en_dashes": 0,
+    "overfull_boxes": 0,
+    "rendered_pages": 16,
+    "pages_pixel_identical_to_previous_visually_reviewed_draft": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "pages_requiring_new_visual_review": [
+      15,
+      16
+    ],
+    "source_zip_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+    "extracted_source_tests": 559,
+    "subtests": 4,
+    "pdf_sha256": "0384cf518a8f6a7b9bd1b347a3523d65ff410e71362a1c36fc10c84697c9a666",
+    "test_splits_evaluated": []
+  },
+  "wall_report_snapshot": {
+    "pages": 16,
+    "pdf_sha256": "0384cf518a8f6a7b9bd1b347a3523d65ff410e71362a1c36fc10c84697c9a666",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 217,
+      "bytes": 411251,
+      "archive_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "extracted_source_tests": 559,
+      "subtests": 4,
+      "skips": 0,
+      "extracted_source_test_seconds": 93.33,
+      "tested_archive_sha256": "9a6da00989cef6760f884fdf8e543a33154e7fc9b0a2f18abb8604508ad7ac9a",
+      "current_archive_matches_tested_archive_exactly": true
+    },
+    "scope": "Historical 16-page draft remains in the wall-training private release."
+  },
+  "collision_validation_verification": {
+    "status": "passed",
+    "pages": 17,
+    "checked_followup_table_cells": 100,
+    "new_calibration_table_cells": 20,
+    "external_urls": 0,
+    "link_annotations": 0,
+    "em_or_en_dashes": 0,
+    "overfull_boxes": 0,
+    "unchanged_previously_reviewed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "pages_requiring_visual_review": [
+      16,
+      17
+    ],
+    "pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
+    "source_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+    "test_splits_evaluated": []
   }
 }

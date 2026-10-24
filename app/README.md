@@ -78,8 +78,8 @@ The flow/motion model is an additional supervised variant, not the ordinary CVAE
   The demo does not certify action adherence or an outcome probability.
 - The experimental pixel-track toggle overlays accepted trajectories only.
   Missing observations break paths and remain in the displayed counts. Extractor
-  version/settings and failure reasons are in run details. Candidate v2 still
-  awaits the independent calibration review; overlays do not certify correctness.
+  version/settings and failure reasons are in run details. Tracker v2 was
+  reviewed by Sanjay and merged in #42; overlays do not certify correctness.
 
 The default cache is `outputs/demo-cache`. Its identity includes observed RGB,
 selected mask, force, ordered seeds, horizon, checkpoint, sampling source and
@@ -180,3 +180,23 @@ option to show both models. native 8 fps playback starts after generation unless
 reduced motion is enabled; changing the input pauses the old output. four primary
 futures fit common laptop heights. see the [measured comparison](../docs/CONTACT_TRAINING.md)
 for the remaining failures; no quality ranking is inferred from the interface.
+
+## matched canvas-loss comparison
+
+The private `wall-training-validation-2026-10-18` draft release contains two
+matched E6 checkpoints and all 24 validation presets. Use source `bc77c7d` or
+later. Both adapters reproduce four offline-sampler videos exactly on CPU.
+
+```sh
+gh release download wall-training-validation-2026-10-18 --repo athul1810/click2future --pattern click2future-wall-validation.zip --dir outputs/wall-download
+python -m zipfile -e outputs/wall-download/click2future-wall-validation.zip outputs/wall-demo
+python -m click2future.demo.server --bundle outputs/wall-demo --models E6-control E6-wall --device cpu --trajectory-steps 16 --force-limit 1.1 --samples g03-scene-00730016-wall-p00 g03-scene-00730017-wall-p00
+```
+
+The explicit force limit includes the native wall action and matches both saved
+configs. Keep seeds fixed when comparing. The bundle verifies all 52 inventoried
+files before loading. Its ZIP SHA-256 is
+`bab8f39a29e87dca13947de4693f497a793997dda608bf14d748693e5f35b6d1`.
+Complete clips improve from 88/96 to 95/96; penetration remains in 15/96 and
+overall quality still fails. See [the full comparison](../docs/WALL_TRAINING.md).
+The bundle is separate from the source-only course ZIP.

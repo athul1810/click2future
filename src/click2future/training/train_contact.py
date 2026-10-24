@@ -13,7 +13,12 @@ import torch
 
 from click2future.models.object_motion import MOTION_CONTRACT
 
-from .contact_geometry import contact_objective, prepare_contact_geometry, signed_penetration
+from .contact_geometry import (
+    canvas_excess,
+    contact_objective,
+    prepare_contact_geometry,
+    signed_penetration,
+)
 from .train_cvae import require_tc2, sha256
 from .train_trajectory import TrajectoryConfig, TrajectoryTrainer, model_config
 from .trajectory_data import add_training_supplement, prepare_trajectories
@@ -31,6 +36,8 @@ class ContactConfig(TrajectoryConfig):
     zero_probability: float = 0.25
     collision_probability: float = 0.4
     stationary_tokens: bool = False
+    boundary_weight: float = 0.0
+    boundary_margin_pixels: float = 1.0
 
     def validate(self):
         super().validate()
@@ -40,6 +47,7 @@ class ContactConfig(TrajectoryConfig):
                 self.contact_weight,
                 self.acceleration_weight,
                 self.stationary_weight,
+                self.boundary_weight,
             )
             < 0
             or not self.sigma_min < self.physics_sigma_max <= self.sigma_max
@@ -48,6 +56,7 @@ class ContactConfig(TrajectoryConfig):
             or not 0 < self.zero_probability < 1
             or not 0 < self.collision_probability < 1 - self.zero_probability
             or not isinstance(self.stationary_tokens, bool)
+            or not 0 < self.boundary_margin_pixels <= 2
         ):
             raise ValueError("Invalid contact/stationary training configuration")
 
@@ -175,7 +184,7 @@ class ContactTrainer(TrajectoryTrainer):
             state["trajectory_format_version"] != 2
             or state["training_variant"] != "contact_regularized"
             or state["motion_contract"] != MOTION_CONTRACT
-            or state["config"] != asdict(self.config)
+            or asdict(ContactConfig(**state["config"])) != asdict(self.config)
             or state["provenance"] != provenance
             or state["model_config"]
             != {**model_config(self.config), "future_frames": self.model.future_frames}
@@ -273,7 +282,7 @@ def main(argv=None):
     calibration = {}
     with torch.no_grad():
         for split, row in trainer.data.items():
-            maxima = []
+            maxima, boundaries = [], []
             for start in range(0, len(row["motion"]), 64):
                 stop = start + 64
                 depth = signed_penetration(
@@ -282,7 +291,21 @@ def main(argv=None):
                     {key: value[start:stop] for key, value in trainer.geometry[split].items()},
                 )
                 maxima.append(float(depth.max() * 64))
-            calibration[split] = max(maxima)
+                boundary = canvas_excess(
+                    row["motion"][start:stop],
+                    row["features"][start:stop],
+                    {key: value[start:stop] for key, value in trainer.geometry[split].items()},
+                )
+                boundaries.append(float(boundary.max() * 64))
+            calibration[split] = {
+                "penetration_pixels": max(maxima),
+                "canvas_excess_pixels": max(boundaries),
+            }
+    if (
+        config.boundary_weight > 0
+        and calibration["train"]["canvas_excess_pixels"] > config.boundary_margin_pixels + 1e-5
+    ):
+        raise ValueError("Training-label canvas excess exceeds the declared raster margin")
     summary = {
         "scope": "E6 contact/stationarity training package; one seed; validation only",
         "config": asdict(config),
@@ -290,7 +313,12 @@ def main(argv=None):
         "gpu": torch.cuda.get_device_name(),
         "torch": str(torch.__version__),
         "slurm_job_id": os.environ["SLURM_JOB_ID"],
-        "oracle_geometry_max_penetration_pixels": calibration,
+        "oracle_geometry_max_penetration_pixels": {
+            split: values["penetration_pixels"] for split, values in calibration.items()
+        },
+        "oracle_geometry_max_canvas_excess_pixels": {
+            split: values["canvas_excess_pixels"] for split, values in calibration.items()
+        },
         "selection": "fixed-seed validation EDM loss, unchanged from E5",
         "sampler": "unchanged E5 Heun; no projection, clamp or zero override",
     }

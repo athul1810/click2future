@@ -17,6 +17,31 @@ from .tracking import TrackerConfig, track_video
 from .trajectory_audit import verify_inputs
 
 
+def _extended_mask(mask, affine, padding):
+    """Extend the native nearest-neighbour grid without re-rounding its origin.
+
+    Pillow uses 16.16 coefficients for rotated nearest-neighbour affine warps.
+    Translating a floating-point matrix and rounding it again changes that grid.
+    Quantize at the native origin, then evaluate the same integers off canvas.
+    The caller checks the native crop against Pillow before using the result.
+    """
+    height, width = mask.shape
+    y, x = np.ogrid[-padding : height + padding, -padding : width + padding]
+    a, b, c, d, e, f = affine
+    if b == 0 and d == 0:
+        # A rigid transform with no off-diagonal terms is a pure translation.
+        ix = np.floor(c + a * 0.5 + a * x).astype(np.int64)
+        iy = np.floor(f + e * 0.5 + e * y).astype(np.int64)
+    else:
+        matrix = np.array([[a, b, c + a * 0.5 + b * 0.5],
+                           [d, e, f + d * 0.5 + e * 0.5]])
+        fixed = np.floor(matrix * 65536 + 0.5).astype(np.int64)
+        ix = (fixed[0, 0] * x + fixed[0, 1] * y + fixed[0, 2]) >> 16
+        iy = (fixed[1, 0] * x + fixed[1, 1] * y + fixed[1, 2]) >> 16
+    valid = (ix >= 0) & (ix < width) & (iy >= 0) & (iy < height)
+    return valid & mask[np.clip(iy, 0, height - 1), np.clip(ix, 0, width - 1)]
+
+
 def sprite_areas(observation, value, object_index, *, padding=128):
     """Compare native and padded rigid-sprite areas under the same affine transform.
 
@@ -63,17 +88,7 @@ def sprite_areas(observation, value, object_index, *, padding=128):
             (width, height), Image.Transform.AFFINE, affine, resample=Image.Resampling.NEAREST
         )
     ) > 0
-    padded_affine = affine.copy()
-    padded_affine[2] -= (affine[0] + affine[1]) * padding
-    padded_affine[5] -= (affine[3] + affine[4]) * padding
-    full = np.asarray(
-        sprite.transform(
-            (width + 2 * padding, height + 2 * padding),
-            Image.Transform.AFFINE,
-            padded_affine,
-            resample=Image.Resampling.NEAREST,
-        )
-    ) > 0
+    full = _extended_mask(mask, affine, padding)
     if not full.any() or full[[0, -1]].any() or full[:, [0, -1]].any():
         raise ValueError("Padded measurement canvas cannot contain the whole sprite")
     if not np.array_equal(full[padding : padding + height, padding : padding + width], native):
@@ -146,6 +161,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint, poses_dir):
             raise ValueError("Audit input changed during the measurement: " + path.name)
     return {
         "status": "measured_saved_validation_raster_clipping",
+        "raster_metric_version": "native-grid-extension-2",
         "method": run["method"],
         "checkpoint_sha256": run["checkpoint_sha256"],
         "scope": (

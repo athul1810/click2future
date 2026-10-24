@@ -1,0 +1,965 @@
+{
+  "status": "measured_validation_collision_diagnosis",
+  "scope": "All 24 validation conditions, four sample seeds and 84 reference renders; no model or score changes",
+  "models": {
+    "control": {
+      "checkpoint_sha256": "438b5778ef42df830405313b27dae99ea87d2e8d093ff9c0153b11a9fafaf282",
+      "model_events": {
+        "expected_timelines": 96,
+        "complete_timelines": 88,
+        "missing_timelines": 8,
+        "true_positive": 17,
+        "false_positive": 19,
+        "false_negative": 47,
+        "precision": 0.4722222222222222,
+        "recall": 0.265625,
+        "f1": 0.34,
+        "scope": "Descriptive event counts; no independent-training or scene interval"
+      },
+      "action_families": {
+        "collision_0_to_1": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 7,
+            "false_positive": 12,
+            "false_negative": 25,
+            "precision": 0.3684210526315789,
+            "recall": 0.21875,
+            "f1": 0.27450980392156865,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 7,
+          "penetration_frames": 70,
+          "maximum_depth_pixels": 2.111095129060324,
+          "longest_consecutive_penetration_frames": 20
+        },
+        "collision_1_to_0": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 7,
+            "false_negative": 22,
+            "precision": 0.5882352941176471,
+            "recall": 0.3125,
+            "f1": 0.40816326530612246,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 8,
+          "penetration_frames": 71,
+          "maximum_depth_pixels": 2.2156905059379497,
+          "longest_consecutive_penetration_frames": 21
+        },
+        "forward": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        },
+        "reverse": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        },
+        "wall": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 8,
+            "missing_timelines": 8,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        },
+        "zero": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        }
+      },
+      "penetration_failures": [
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_1_to_0",
+          "seed": 2,
+          "maximum_depth_pixels": 2.2156905059379497,
+          "frames_above_one_pixel": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 21,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 2.111095129060324,
+          "frames_above_one_pixel": [
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 8,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730017",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 2.0172012823579557,
+          "frames_above_one_pixel": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ],
+          "longest_consecutive_frames_above_one_pixel": 15,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_0_to_1",
+          "seed": 2,
+          "maximum_depth_pixels": 1.8664266649497634,
+          "frames_above_one_pixel": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 20,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 1.8617675887961411,
+          "frames_above_one_pixel": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 6,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730017",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.8454955379447782,
+          "frames_above_one_pixel": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 15,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730019",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.7988370011907584,
+          "frames_above_one_pixel": [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 10,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730019",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 1.7724157725135612,
+          "frames_above_one_pixel": [
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "longest_consecutive_frames_above_one_pixel": 9,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_0_to_1",
+          "seed": 3,
+          "maximum_depth_pixels": 1.5639198272073997,
+          "frames_above_one_pixel": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 6,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_1_to_0",
+          "seed": 3,
+          "maximum_depth_pixels": 1.342705179093386,
+          "frames_above_one_pixel": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 6,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730018",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.2972611006770762,
+          "frames_above_one_pixel": [
+            21,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 9,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730018",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 1.2864420668627652,
+          "frames_above_one_pixel": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 6,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730019",
+          "action_family": "collision_1_to_0",
+          "seed": 0,
+          "maximum_depth_pixels": 1.0738558732265737,
+          "frames_above_one_pixel": [
+            27,
+            28,
+            29,
+            30
+          ],
+          "longest_consecutive_frames_above_one_pixel": 4,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730017",
+          "action_family": "collision_1_to_0",
+          "seed": 0,
+          "maximum_depth_pixels": 1.0318946910682705,
+          "frames_above_one_pixel": [
+            28,
+            29,
+            30
+          ],
+          "longest_consecutive_frames_above_one_pixel": 3,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730018",
+          "action_family": "collision_0_to_1",
+          "seed": 3,
+          "maximum_depth_pixels": 1.0243434113079815,
+          "frames_above_one_pixel": [
+            27
+          ],
+          "longest_consecutive_frames_above_one_pixel": 1,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        }
+      ]
+    },
+    "wall": {
+      "checkpoint_sha256": "cfc618f637f1afb6ba36cb281e895c096288fbc3cbea962fcfc11830513cbeed",
+      "model_events": {
+        "expected_timelines": 96,
+        "complete_timelines": 95,
+        "missing_timelines": 1,
+        "true_positive": 16,
+        "false_positive": 19,
+        "false_negative": 48,
+        "precision": 0.45714285714285713,
+        "recall": 0.25,
+        "f1": 0.32323232323232326,
+        "scope": "Descriptive event counts; no independent-training or scene interval"
+      },
+      "action_families": {
+        "collision_0_to_1": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 6,
+            "false_positive": 12,
+            "false_negative": 26,
+            "precision": 0.3333333333333333,
+            "recall": 0.1875,
+            "f1": 0.24,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 7,
+          "penetration_frames": 61,
+          "maximum_depth_pixels": 1.9720553045528177,
+          "longest_consecutive_penetration_frames": 21
+        },
+        "collision_1_to_0": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 7,
+            "false_negative": 22,
+            "precision": 0.5882352941176471,
+            "recall": 0.3125,
+            "f1": 0.40816326530612246,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 8,
+          "penetration_frames": 81,
+          "maximum_depth_pixels": 2.176151990569913,
+          "longest_consecutive_penetration_frames": 22
+        },
+        "forward": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        },
+        "reverse": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        },
+        "wall": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 15,
+            "missing_timelines": 1,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        },
+        "zero": {
+          "samples": 16,
+          "events_against_first_reference": {
+            "expected_timelines": 16,
+            "complete_timelines": 16,
+            "missing_timelines": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "penetrating_clips": 0,
+          "penetration_frames": 0,
+          "maximum_depth_pixels": 0.0,
+          "longest_consecutive_penetration_frames": 0
+        }
+      },
+      "penetration_failures": [
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_1_to_0",
+          "seed": 2,
+          "maximum_depth_pixels": 2.176151990569913,
+          "frames_above_one_pixel": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 22,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730017",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 2.1269004986532423,
+          "frames_above_one_pixel": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "longest_consecutive_frames_above_one_pixel": 14,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 2.0024709869158173,
+          "frames_above_one_pixel": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 6,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_0_to_1",
+          "seed": 2,
+          "maximum_depth_pixels": 1.9720553045528177,
+          "frames_above_one_pixel": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 21,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730019",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 1.8225240496386483,
+          "frames_above_one_pixel": [
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27
+          ],
+          "longest_consecutive_frames_above_one_pixel": 15,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730017",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.7561575767974489,
+          "frames_above_one_pixel": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 15,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_0_to_1",
+          "seed": 3,
+          "maximum_depth_pixels": 1.6781487565874116,
+          "frames_above_one_pixel": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 6,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.4819140071054662,
+          "frames_above_one_pixel": [
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 4,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730019",
+          "action_family": "collision_1_to_0",
+          "seed": 0,
+          "maximum_depth_pixels": 1.4204314275312235,
+          "frames_above_one_pixel": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 9,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730016",
+          "action_family": "collision_1_to_0",
+          "seed": 3,
+          "maximum_depth_pixels": 1.4080359728126481,
+          "frames_above_one_pixel": [
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 5,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730019",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.3513021756264258,
+          "frames_above_one_pixel": [
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 5,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730018",
+          "action_family": "collision_0_to_1",
+          "seed": 1,
+          "maximum_depth_pixels": 1.3403455313330426,
+          "frames_above_one_pixel": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 9,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730018",
+          "action_family": "collision_1_to_0",
+          "seed": 1,
+          "maximum_depth_pixels": 1.3101746895487913,
+          "frames_above_one_pixel": [
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 5,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+          "scene_group_id": "g03-scene-00730017",
+          "action_family": "collision_1_to_0",
+          "seed": 0,
+          "maximum_depth_pixels": 1.220143596519378,
+          "frames_above_one_pixel": [
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "longest_consecutive_frames_above_one_pixel": 5,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        },
+        {
+          "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+          "scene_group_id": "g03-scene-00730018",
+          "action_family": "collision_0_to_1",
+          "seed": 3,
+          "maximum_depth_pixels": 1.1689822572325639,
+          "frames_above_one_pixel": [
+            27
+          ],
+          "longest_consecutive_frames_above_one_pixel": 1,
+          "threshold_pixels": 1,
+          "frame_zero_scored": false
+        }
+      ]
+    }
+  },
+  "test_splits_evaluated": [],
+  "source_sha256": {
+    "collision_audit.py": "6cfe6c29bfacb1abce5f3ad48cbe7f2c5568c3dd2dcbcb10817628e3b457fdfd",
+    "contacts.py": "80f74813cb626eec158d76a6c9c23a93b563d5577c7d2213dd3f26944f70b172",
+    "video.py": "7934a97ab615c0f0740cd82686ec5e4ccd8d27daaaa117ea8cc832b693345657",
+    "metrics.py": "4447962c8485057779e66c83c65a6e978652109caa2ed094b154d4e1365613e4",
+    "rigid_geometry.py": "69756ff26bc375920017e178d1c99a0ebbc7222ccdfc4bffd124328bfcfeca00",
+    "tracking.py": "a5f1594e06cb4b551512b0d6c22edc0d663c6c9e4c319d61730ff127593bd2ee"
+  },
+  "raw_report_sha256": {
+    "control": "be4dff32ebd683609bfc2781ab49cdfe7e6f405df085562d05eea7b505b33389",
+    "wall": "fb3d3fbe600dd4e3028432eea8681c74f4c90a5c965aa148c01d6794b51b1ab4"
+  },
+  "reference_calibration": {
+    "rendered_reference_events_against_own_labels": {
+      "expected_timelines": 84,
+      "complete_timelines": 84,
+      "missing_timelines": 0,
+      "true_positive": 22,
+      "false_positive": 24,
+      "false_negative": 22,
+      "precision": 0.4782608695652174,
+      "recall": 0.5,
+      "f1": 0.4888888888888889,
+      "scope": "Descriptive event counts; no independent-training or scene interval"
+    },
+    "other_reference_renders_against_first_labels": {
+      "expected_timelines": 60,
+      "complete_timelines": 60,
+      "missing_timelines": 0,
+      "true_positive": 10,
+      "false_positive": 27,
+      "false_negative": 38,
+      "precision": 0.2702702702702703,
+      "recall": 0.20833333333333334,
+      "f1": 0.23529411764705882,
+      "scope": "Descriptive event counts; no independent-training or scene interval"
+    }
+  },
+  "interpretation": [
+    "All declared cases, seeds, reference variants and missing timelines are retained.",
+    "Own-render calibration measures the pixel estimator, not learned-model quality.",
+    "Other-physics references illustrate uncertainty; they are not a performance bound.",
+    "Per-reference matches retain every reference; the official score is unchanged.",
+    "Pixel-centre hull penetration uses the existing approximate one-pixel tolerance.",
+    "No thresholds, video bytes, model weights or original scores are changed.",
+    "All 15 penetrating clips are in the two contact families; free, zero and wall families have none.",
+    "The contact estimator fails on some correct reference videos; its F1 alone does not isolate a learned physical error.",
+    "Alternative hidden-physics reference scores are a diagnostic, not a lower or upper bound on a valid model."
+  ]
+}

@@ -31,6 +31,8 @@
     "submission/cvae_selection_drift.py",
     "submission/check_e4_collision.py",
     "submission/check_e4_collision.sbatch",
-    "submission/pilot_image_metrics.py"
+    "submission/pilot_image_metrics.py",
+    "submission/wall_comparison.py",
+    "submission/wall_comparison.sbatch"
   ]
 }

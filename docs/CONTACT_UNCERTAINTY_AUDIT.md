@@ -55,7 +55,7 @@ approximate contact estimator cannot certify outcome probabilities.
 The [measured record](results/contact-uncertainty-audit.json) retains every
 condition, bootstrap intervals, denominators, source/artifact hashes and control
 results. The report embeds the tables and a fixed contact example from all four
-seeds. Candidate tracker v2 still needs independent review in PR #42.
+seeds. Tracker v2 was reviewed by Sanjay and merged in PR #42.
 
 ## Contact-aware follow-up
 

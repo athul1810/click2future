@@ -257,3 +257,61 @@ T14 still needs useful-checkpoint comparisons and independent repeats. T15 keeps
 all 248 ID/OOD/physics test clips reserved while validation fails. T16 still needs
 an ensemble that supports physical uncertainty measurements. Completing a batch
 workflow or observing RGB variation does not satisfy these quality checks.
+
+## Prepared workload and final-run packet
+
+The metadata-only inventory binds the current dataset-0.3 index, split manifest
+and comparison config without opening rollout arrays:
+
+```sh
+python -m click2future.evaluation.inventory --dataset data/frozen --protocol configs/evaluation/comparison.yaml --output outputs/evaluation-inventory.json
+```
+
+| Reserved suite | Reference clips | Conditions | Primary videos per run | Proposed selection videos |
+|---|---:|---:|---:|---:|
+| ID | 42 | 12 | 48 | 16 |
+| Shape OOD | 42 | 12 | 48 | 16 |
+| Texture OOD | 42 | 12 | 48 | 16 |
+| Force OOD | 40 | 10 | 40 | 16 |
+| Repeated physics | 82 | 12 | 48 | 16 |
+| Total | 248 | 58 | 232 | 80 |
+
+At K=4, primary sampling plus the proposed selection probes requires 312 videos
+per checkpoint. The current three-method, three-training-seed protocol would
+require nine checkpoints and 2,808 videos. These are workload counts, not completed
+experiments. Selection eligibility still needs the frozen reference checks.
+The shared 0.4 selection probe is separate from native-force OOD evaluation.
+Force-OOD primary scoring omits the zero/reversal action suite because zero force
+is absent from that split.
+
+The saved A40 validation runs generated 128 videos in 5.56 seconds for E0, 58.48
+for E2 and 58.34 for E3, including model loading/export. A linear 312-video estimate
+is 13.6, 142.5 and 142.2 seconds for those exact architectures/samplers. This
+excludes metric computation, transfers and queueing. The planning proposal is
+three sampling-only allocations capped at 15 minutes each, plus one 15-minute
+retry reserve. CPU scoring follows generation outside the GPU allocation.
+This one-GPU-hour sampling ceiling is unsubmitted, assumes the same recipes and
+does not allocate training hours or establish an account quota. Recalculate it
+when final recipes or hardware change. The estimate covers E0/E2/E3 only; add a
+measured E6 sampling time if E6 enters the final comparison.
+
+The exact [inventory and estimates](results/evaluation-workload.json) also flag a
+force-range mismatch: current E6 checkpoints declare maximum force 1.1, while
+the force-OOD recipe uses 1.3 and 1.5. Resolve the inference contract through
+review before that test. Preserve native actions, trained checkpoint metadata,
+normalization and unsupported-case counts. The E2/E3/E4 configs declare 1.5, and
+CVAE checkpoints declare no limit, so the sampler accepts these magnitudes for the
+core methods. That is not trained coverage: training uses one magnitude per action
+type, so force-OOD pushes are 8.7-10 times, collisions 5.2-6 times and wall cases
+1.2-1.4 times their training force. See the
+[collision handoff](COLLISION_VALIDATION.md) for the per-family figures.
+
+Before releasing the final run, fill the remaining checkpoint/source hashes,
+chosen training recipes and repeat count, validation selection record and total
+training/evaluation budget. The four-sample seeds remain 0-3; they do not replace
+independent training seeds. The pixel tracker/config, SSIM/LPIPS, collision
+encounter/interval/event views, missing-track policy and scene bootstrap remain
+as declared above. The inventory is ready; the final checkpoint freeze is pending.
+
+The [collision handoff](COLLISION_VALIDATION.md) records persistent overlap and
+reference-estimator calibration. Keep those qualifications in the final report.

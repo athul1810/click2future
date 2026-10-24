@@ -61,12 +61,8 @@ def prepare_contact_geometry(root, data):
     return result
 
 
-def signed_penetration(motion, features, geometry):
-    """Signed SAT translation in normalized image units; positive is penetration.
-
-    This uses observed hulls before compositing. Negative values are separating
-    projections, not Euclidean distance. No pose is moved or projected.
-    """
+def transformed_hulls(motion, features, geometry):
+    """Transform the observed hulls without modifying predicted poses."""
     sine, cosine = motion[..., 2], 1 + 2 * motion[..., 3]
     degenerate = sine.square() + cosine.square() < 1e-16
     sine = torch.where(degenerate, torch.zeros_like(sine), sine)
@@ -76,6 +72,26 @@ def signed_penetration(motion, features, geometry):
     rotation = torch.stack((cosine, -sine, sine, cosine), -1).unflatten(-1, (2, 2))
     points = torch.einsum("bfnij,bnvj->bfnvi", rotation, geometry["hulls"])
     points = points + (features[:, None, :, :2] + 0.5 * motion[..., :2])[:, :, :, None]
+    return points, rotation
+
+
+def canvas_excess(motion, features, geometry):
+    """Maximum observed-hull excursion beyond the native [0,1] canvas per object.
+
+    This is a training geometry signal, not the historically uncalibrated
+    one-pixel interior wall score. Raster tolerance is declared separately.
+    """
+    points, _ = transformed_hulls(motion, features, geometry)
+    return torch.cat((-points, points - 1), dim=-1).amax(dim=(-1, -2)).clamp_min(0)
+
+
+def signed_penetration(motion, features, geometry):
+    """Signed SAT translation in normalized image units; positive is penetration.
+
+    This uses observed hulls before compositing. Negative values are separating
+    projections, not Euclidean distance. No pose is moved or projected.
+    """
+    points, rotation = transformed_hulls(motion, features, geometry)
     axes = torch.einsum("bfnij,bnvj->bfnvi", rotation, geometry["normals"]).flatten(2, 3)
     projections = torch.einsum("bfnvi,bfai->bfnva", points, axes)
     low, high = projections.amin(-2), projections.amax(-2)
@@ -118,10 +134,17 @@ def contact_objective(model, clean, features, force, sigma, noise, geometry, con
         + config.contact_weight * contact_loss
         + config.acceleration_weight * acceleration_loss
     )
-    return loss, {
+    parts = {
         "denoising": denoising.detach(),
         "stationary": stationary.detach(),
         "penetration": geometry_loss.detach(),
         "contact_gap": contact_loss.detach(),
         "acceleration": acceleration_loss.detach(),
     }
+    if config.boundary_weight > 0:
+        depth = canvas_excess(prediction, features, geometry)
+        boundary = (depth - config.boundary_margin_pixels / 64).relu().square().mean((1, 2))
+        boundary_loss = (boundary * low_noise).mean()
+        loss = loss + config.boundary_weight * boundary_loss
+        parts["canvas_excess"] = boundary_loss.detach()
+    return loss, parts
