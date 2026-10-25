@@ -1,0 +1,4351 @@
+{
+  "status": "measured_validation_rescore",
+  "date": "2026-10-25",
+  "scope": "Validation only. Rescores the saved 17 October TC2 pilot videos with the unchanged action scorers at the 0.5-second window and at the final frame. No sampling, training or test split.",
+  "action_horizon_version": "1",
+  "motion_rule": "unchanged scorers: moving needs displacement >= motion_threshold, correct signs need projections >= motion_threshold and drift is maximum excursion >= threshold",
+  "eligibility_rule": "a horizon is scored only if no hidden-physics reference has a collision or wall onset before its end frame",
+  "motion_threshold": 0.015625,
+  "extractor_version": "palette-components-2",
+  "scorer_source_sha256": {
+    "action_horizon.py": "93ec0b4f3c95a376a56449641d8de50c0606aebb47b7f27e82af571f38b5fcf5",
+    "actions.py": "b3f1508b256eca3a282c8005bfa8c48099bf1d4a5042cd9261ec5284c164fce9",
+    "targets.py": "47302bd508f757d8b1d58b74cef46b95aa668374843d5d8bdc4d679d861f69d4",
+    "tracking.py": "a5f1594e06cb4b551512b0d6c22edc0d663c6c9e4c319d61730ff127593bd2ee"
+  },
+  "corpus": {
+    "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "source": "TC2 copy collected on 17 October; every planned input is hash-checked after relocation"
+  },
+  "relocated_path_prefixes": [
+    [
+      "/home/msai/athulkri001/click2future/operations/multiscene-20261017/pilot",
+      "outputs/tc2-ops/multiscene-20261017/collected"
+    ],
+    [
+      "/home/msai/athulkri001/click2future/operations/multiscene-20261017",
+      "outputs/tc2-ops/multiscene-20261017/collected"
+    ],
+    [
+      "/home/msai/athulkri001/click2future/releases/ae84bdd8c932c5fd98517b8bc00a566de304ec83",
+      "/Users/athulkrishnaboban/Desktop/NTU/Subjects/Semester 1/GenAI/GenAI project"
+    ]
+  ],
+  "command": "python -m click2future.evaluation.action_horizon --plan PLAN --predictions SAMPLES/predictions.json --output NEW.json --relocate TC2_PILOT=LOCAL --relocate TC2_OPERATIONS=LOCAL --relocate TC2_RELEASE=REPOSITORY",
+  "suites": {
+    "pilot-validation": {
+      "plan_sha256": "20cc05065c89c89848e29454d5068f49c60198d811369e7d88fa140ca16f7d34",
+      "predictions_sha256": "30643971303bf8a94607e88c591835d4dac68dd6e745dfac2b0429ca7e17664a",
+      "runs": [
+        {
+          "method": "E0",
+          "run_id": "pilot-E0",
+          "training_seed": 0,
+          "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1"
+        },
+        {
+          "method": "E2",
+          "run_id": "pilot-E2",
+          "training_seed": 7,
+          "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2"
+        },
+        {
+          "method": "E3",
+          "run_id": "pilot-E3",
+          "training_seed": 7,
+          "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f"
+        },
+        {
+          "method": "E4",
+          "run_id": "pilot-E4",
+          "training_seed": 7,
+          "checkpoint_sha256": "541e9829e86f97a40e84ab3049968bea949bdb505891cf21ad7630ef6fa3028d"
+        }
+      ],
+      "recorded_tc2_report_sha256": "70d59b3f862d90cdd174d6ce46cd1d4ce257a385fb8c218f38fb1ca53fbb4112",
+      "window_equals_recorded_tc2_report": true,
+      "window_matches_recorded_within_1e-12": true,
+      "reference_calibration_equals_recorded": true,
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 4
+      },
+      "expected_scene_groups": 4,
+      "excluded": {
+        "window": [],
+        "full": []
+      },
+      "models": {
+        "window": {
+          "E0": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E2": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E3": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E4": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "E0": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E2": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E3": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E4": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 0,
+              "forward.missing_samples": 16,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 0,
+              "reverse.missing_samples": 16,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 0,
+              "zero.missing_samples": 16,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 0,
+              "reversal.missing_pairs": 16,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        }
+      },
+      "references": {
+        "window": {
+          "reference-labels": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 11,
+              "forward.moving_samples": 5,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 11,
+              "reverse.moving_samples": 5,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 5,
+              "reversal.stationary_pairs": 11
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.3125,
+                "ci": [
+                  0.0625,
+                  0.625
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 8,
+              "forward.moving_samples": 8,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 8,
+              "reverse.moving_samples": 8,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 8,
+              "reversal.stationary_pairs": 8
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.25,
+                  0.8125
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "reference-labels": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        }
+      }
+    },
+    "pilot-selection": {
+      "plan_sha256": "16804985da74c6a290a6d156e1bbf18b81e0f03872763407fd13ca5267ad3281",
+      "predictions_sha256": "ae6cb81b9f56e4d827ca79676af85c8f8aa10b18f246edd2007c8980b893d5bc",
+      "runs": [
+        {
+          "method": "E0",
+          "run_id": "pilot-E0",
+          "training_seed": 0,
+          "checkpoint_sha256": "c58a8a085329d36c643e4b583c9fb14bfccf19653c70134585e6f4ef33ec08f1"
+        },
+        {
+          "method": "E2",
+          "run_id": "pilot-E2",
+          "training_seed": 7,
+          "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2"
+        },
+        {
+          "method": "E3",
+          "run_id": "pilot-E3",
+          "training_seed": 7,
+          "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f"
+        },
+        {
+          "method": "E4",
+          "run_id": "pilot-E4",
+          "training_seed": 7,
+          "checkpoint_sha256": "541e9829e86f97a40e84ab3049968bea949bdb505891cf21ad7630ef6fa3028d"
+        }
+      ],
+      "recorded_tc2_report_sha256": "fba24f1470384e6bbd9bf9ada29f4dfbe5d963bd4f432029c097fbb70e89ea71",
+      "window_equals_recorded_tc2_report": true,
+      "window_matches_recorded_within_1e-12": true,
+      "reference_calibration_equals_recorded": true,
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 2
+      },
+      "expected_scene_groups": 4,
+      "excluded": {
+        "window": [],
+        "full": [
+          "reference_contact_within_horizon"
+        ]
+      },
+      "models": {
+        "window": {
+          "E0": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 16,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E2": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 16,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E3": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 16,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "E4": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 16,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "E0": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 8,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          },
+          "E2": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 8,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          },
+          "E3": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 8,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          },
+          "E4": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 0,
+              "selection.missing_pairs": 8,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          }
+        }
+      },
+      "references": {
+        "window": {
+          "reference-labels": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "reference-labels": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    "flow-validation": {
+      "plan_sha256": "5b3a02f3dcb5cac8206518fb04a0b30381614134bb5b3b66a2fd5f87ca8b4b9b",
+      "predictions_sha256": "2afaeff36f7f3c0477e33c2461636d9e04e7348779e03f94cede7ea8b6fe4cda",
+      "runs": [
+        {
+          "method": "E0",
+          "run_id": "flow-E0",
+          "training_seed": 0,
+          "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5"
+        }
+      ],
+      "recorded_tc2_report_sha256": "f3fac41993555737d682b6565b12defd785026b0cad6d3398a90fa5d9e8f65fa",
+      "window_equals_recorded_tc2_report": true,
+      "window_matches_recorded_within_1e-12": true,
+      "reference_calibration_equals_recorded": true,
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 4
+      },
+      "expected_scene_groups": 4,
+      "excluded": {
+        "window": [],
+        "full": []
+      },
+      "models": {
+        "window": {
+          "E0": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 16,
+              "forward.moving_samples": 0,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 16,
+              "reverse.moving_samples": 0,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 0,
+              "reversal.stationary_pairs": 16
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": null,
+                "ci": null,
+                "scored_scene_groups": 0,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.00310631016171774,
+                "ci": [
+                  0.0015934129853142167,
+                  0.005129230443102978
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "E0": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.9847581393246406,
+                "ci": [
+                  0.15760888739287987,
+                  2.0534618065629973
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 1.0726025502728609,
+                "ci": [
+                  0.4599138339665877,
+                  2.0213759583587185
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.32111881833231243,
+                "ci": [
+                  0.16809912367447227,
+                  0.47413851299015264
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.004370105231516137,
+                "ci": [
+                  0.0025203645002929366,
+                  0.006219845962739337
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        }
+      },
+      "references": {
+        "window": {
+          "reference-labels": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 11,
+              "forward.moving_samples": 5,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 11,
+              "reverse.moving_samples": 5,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 5,
+              "reversal.stationary_pairs": 11
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.3125,
+                "ci": [
+                  0.0625,
+                  0.625
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 8,
+              "forward.moving_samples": 8,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 8,
+              "reverse.moving_samples": 8,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 8,
+              "reversal.stationary_pairs": 8
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.25,
+                  0.8125
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "reference-labels": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        }
+      }
+    },
+    "flow-selection": {
+      "plan_sha256": "42dc4a65138cda942ddbbbd6dbde408cc4f555f61f7c079ee4d1881ae7e47a2f",
+      "predictions_sha256": "1f15124758ceb5e3731cb0ad13e7927a27f8c849a1e51d1636965700cde8b30e",
+      "runs": [
+        {
+          "method": "E0",
+          "run_id": "flow-E0",
+          "training_seed": 0,
+          "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5"
+        }
+      ],
+      "recorded_tc2_report_sha256": "dc1a4f3bf53801e734863aff8529ad516cf8666f53115ad46086d340cbb01ba9",
+      "window_equals_recorded_tc2_report": true,
+      "window_matches_recorded_within_1e-12": true,
+      "reference_calibration_equals_recorded": true,
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 2
+      },
+      "expected_scene_groups": 4,
+      "excluded": {
+        "window": [],
+        "full": [
+          "reference_contact_within_horizon"
+        ]
+      },
+      "models": {
+        "window": {
+          "E0": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 16,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "E0": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 6,
+              "selection.missing_pairs": 2,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 6
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 0.75,
+                "ci": [
+                  0.5,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.25,
+                "ci": [
+                  0.0,
+                  0.5
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          }
+        }
+      },
+      "references": {
+        "window": {
+          "reference-labels": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "reference-labels": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    "flow-motion-validation": {
+      "plan_sha256": "7aa7e2eb7266be5cb2455542ce914143baf3fcc6a844f50087f67ea0a345fdfd",
+      "predictions_sha256": "fc92c54ca0e1964550dd46cf444660e5410ffed89759befdf896882f9844112c",
+      "runs": [
+        {
+          "method": "E0",
+          "run_id": "flow-E0",
+          "training_seed": 0,
+          "checkpoint_sha256": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100"
+        }
+      ],
+      "recorded_tc2_report_sha256": "eb601289c32dbf79f8848376e2f8914aaa955f899d37e7e874adc2d0b639f344",
+      "window_equals_recorded_tc2_report": false,
+      "window_matches_recorded_within_1e-12": true,
+      "reference_calibration_equals_recorded": true,
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 4
+      },
+      "expected_scene_groups": 4,
+      "excluded": {
+        "window": [],
+        "full": []
+      },
+      "models": {
+        "window": {
+          "E0": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 1,
+              "forward.moving_samples": 15,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 15,
+              "reverse.moving_samples": 1,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 1,
+              "reversal.stationary_pairs": 15
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 1.9220297884259012,
+                "ci": [
+                  0.19351971237224774,
+                  3.6818855374086366
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0625,
+                "ci": [
+                  0.0,
+                  0.1875
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.0625,
+                "ci": [
+                  0.0,
+                  0.1875
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": null,
+                "scored_scene_groups": 1,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": null,
+                "scored_scene_groups": 1,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.9375,
+                "ci": [
+                  0.8125,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.004596140277237459,
+                "ci": [
+                  0.0026679666649071453,
+                  0.006623459461415087
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "E0": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.6164444029583702,
+                "ci": [
+                  0.5037492250692063,
+                  0.7587142283941432
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.694870135994299,
+                "ci": [
+                  0.5272506414110926,
+                  0.9540728204576475
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.3178269606629004,
+                "ci": [
+                  0.25311300069086906,
+                  0.3825409206349317
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.007124533824010334,
+                "ci": [
+                  0.005880220834351658,
+                  0.0078125
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        }
+      },
+      "references": {
+        "window": {
+          "reference-labels": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 11,
+              "forward.moving_samples": 5,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 11,
+              "reverse.moving_samples": 5,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 5,
+              "reversal.stationary_pairs": 11
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.3125,
+                "ci": [
+                  0.0625,
+                  0.625
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 3,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.6875,
+                "ci": [
+                  0.375,
+                  0.9375
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 8,
+              "forward.moving_samples": 8,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 8,
+              "reverse.moving_samples": 8,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 8,
+              "reversal.stationary_pairs": 8
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.25,
+                  0.8125
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.5,
+                "ci": [
+                  0.1875,
+                  0.75
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "reference-labels": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 4,
+              "zero.complete_samples": 4,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "forward.total_samples": 16,
+              "forward.complete_samples": 16,
+              "forward.missing_samples": 0,
+              "forward.stationary_samples": 0,
+              "forward.moving_samples": 16,
+              "reverse.total_samples": 16,
+              "reverse.complete_samples": 16,
+              "reverse.missing_samples": 0,
+              "reverse.stationary_samples": 0,
+              "reverse.moving_samples": 16,
+              "zero.total_samples": 16,
+              "zero.complete_samples": 16,
+              "zero.missing_samples": 0,
+              "zero.drifting_samples": 0,
+              "reversal.total_pairs": 16,
+              "reversal.complete_pairs": 16,
+              "reversal.missing_pairs": 0,
+              "reversal.moving_pairs": 16,
+              "reversal.stationary_pairs": 0
+            },
+            "metrics": {
+              "forward.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "forward.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.correct_force_sign_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.mean_reversal_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reversal.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.mean_direction_error_degrees": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "reverse.stationary_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.mean_max_drift": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "zero.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        }
+      }
+    },
+    "flow-motion-selection": {
+      "plan_sha256": "404e1938e687e3a0e0b21dc8a11171bbdcf6739c395db3f1202f6eda65bd9985",
+      "predictions_sha256": "7b03ced5852e272778d8ffc4d0de1ccd059e070c4cf5e47b7134c509a9e75225",
+      "runs": [
+        {
+          "method": "E0",
+          "run_id": "flow-E0",
+          "training_seed": 0,
+          "checkpoint_sha256": "2d5a1a466fcb5a9d0b9a9e5a56921dfc62bbfa6581e468e020670e5c20b48100"
+        }
+      ],
+      "recorded_tc2_report_sha256": "f33781df48fd7487930e92cfa0cef0e1fee33a8fc2577b60754213a2c46ccb3c",
+      "window_equals_recorded_tc2_report": true,
+      "window_matches_recorded_within_1e-12": true,
+      "reference_calibration_equals_recorded": true,
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 2
+      },
+      "expected_scene_groups": 4,
+      "excluded": {
+        "window": [],
+        "full": [
+          "reference_contact_within_horizon"
+        ]
+      },
+      "models": {
+        "window": {
+          "E0": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 16,
+              "selection.moving_pairs": 0
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "E0": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          }
+        }
+      },
+      "references": {
+        "window": {
+          "reference-labels": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "selection.total_pairs": 16,
+              "selection.complete_pairs": 16,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 16
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 4,
+                "expected_scene_groups": 4
+              }
+            }
+          }
+        },
+        "full": {
+          "reference-labels": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          },
+          "reference-rgb": {
+            "counts": {
+              "selection.total_pairs": 8,
+              "selection.complete_pairs": 8,
+              "selection.missing_pairs": 0,
+              "selection.stationary_pairs": 0,
+              "selection.moving_pairs": 8
+            },
+            "metrics": {
+              "selection.correct_contrast_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.correct_target_rate_over_complete": {
+                "estimate": 1.0,
+                "ci": [
+                  1.0,
+                  1.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.drift_rate_over_complete": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              },
+              "selection.missing_rate": {
+                "estimate": 0.0,
+                "ci": [
+                  0.0,
+                  0.0
+                ],
+                "scored_scene_groups": 2,
+                "expected_scene_groups": 2
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "verification": "Every window summary reproduces the recorded TC2 actions.json or targets.json. Five are byte-equal; flow-motion-validation differs only in forward.mean_direction_error_degrees at the 16th significant digit (1.9220297884259012 here, 1.922029788425901 on TC2), a cross-platform floating-point difference. All counts are identical.",
+  "regeneration_note": "Regenerating the pilot corpus on macOS arm64 from seed 730000 reproduces all 24 checked validation arrays byte for byte, but 12/24 metadata files differ in the last digit of one geometry float, so the dataset manifest hash differs (dcdd0e0c, not 03c9468e). Checkpoints trained on TC2 then refuse that copy. Use the collected TC2 corpus for checkpoint evaluation.",
+  "detailed_reports": "Per-sample reports stay in the local outputs/horizon-20261025 folder; they are not committed.",
+  "limitations": [
+    "One training seed per model and four validation scene groups.",
+    "Full-horizon selected-object scores rest on 2 of 4 groups; the other two reach contact before the final frame.",
+    "E0 RGB, E2, E3 and E4 have no complete tracks at either horizon, so their action scores stay undefined."
+  ],
+  "test_splits_evaluated": []
+}
