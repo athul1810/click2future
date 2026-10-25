@@ -160,6 +160,9 @@ What this adds to the primary result:
   complete pairs mostly reverse correctly (7 of 10 and 10 of 11), but on
   repeated physics 13 of 14 complete zero-force samples drift, against 2 of 24
   for E0.
+- Object identity is the failure. In an inspected ID forward case, both 40k
+  models turn the small blue ball into a teal square by frame 16, so the
+  palette tracker loses it. The 5k models leave heavy noise in the same case.
 - E0 stays ahead on every score defined for all three methods (tracking, SSIM
   and LPIPS). E2 and E3 still cannot be separated. E3 has lower LPIPS on force
   OOD with intervals that just separate, but with two scene groups per split
