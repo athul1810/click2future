@@ -140,7 +140,8 @@
     "diffusion_seeds_validation": "docs/results/diffusion-seeds-validation.json",
     "final_evaluation": "docs/results/final-evaluation.json",
     "diffusion_long_validation": "docs/results/diffusion-long-validation.json",
-    "final_evaluation_d015": "docs/results/final-evaluation-d015.json"
+    "final_evaluation_d015": "docs/results/final-evaluation-d015.json",
+    "final_cost": "docs/results/final-cost.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -160,7 +161,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "709f689c7d7b482d2ae24e74844a25d314eeecca107afd4d4b7a1553816b0331",
+    "main.tex": "1041cb4141a29a108789b4aa23c69222f3aa7d0ba9e2eeaa0db3dd67c350f7f3",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -185,9 +186,10 @@
     "../docs/results/diffusion-seeds-validation.json": "57f3f0c9c67523f855e3283a6c2142cfd42f4e96c53ab7bda098d5ae21a6ab37",
     "../docs/results/final-evaluation.json": "61f93d10ea7eea189f732956e55f42941f06a5dc54eb34f466254280058fe5c1",
     "../docs/results/diffusion-long-validation.json": "f5986af88466c4539d6a923f243dab19fb9d589bc151a913c5a94a5faff3fa5f",
-    "../docs/results/final-evaluation-d015.json": "bba292ed3114cac81c8ce48f1521c9b653dac7708e9c77f3a50b4b67a09b1a41"
+    "../docs/results/final-evaluation-d015.json": "bba292ed3114cac81c8ce48f1521c9b653dac7708e9c77f3a50b4b67a09b1a41",
+    "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5"
   },
-  "rendered_pdf_sha256": "e5319bd985d221a132fda3032a6bdf500a0d066b4b94190f939fdb95730d3119",
+  "rendered_pdf_sha256": "09bdd586ff1dc4f59f972f33009d28a0170108dc70ff6962010005ac25a28c34",
   "visual_review": "All 23 pages built. Pages 1, 4, 5, 9, 10 and 20-23 rendered and inspected, covering every edited passage, the full-horizon table and the new final held-out sections, figure and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
   "source_package_verification": {
     "status": "passed",
@@ -454,22 +456,26 @@
   "final_evaluation_verification": {
     "status": "built_rendered_and_checked",
     "pages": 23,
-    "pdf_sha256": "e5319bd985d221a132fda3032a6bdf500a0d066b4b94190f939fdb95730d3119",
+    "pdf_sha256": "09bdd586ff1dc4f59f972f33009d28a0170108dc70ff6962010005ac25a28c34",
     "new_sections": [
       "sec:final",
-      "sec:d015"
+      "sec:d015",
+      "sec:cost"
     ],
     "new_tables": [
       "tab:final",
-      "tab:d015"
+      "tab:d015",
+      "tab:split_tracking",
+      "tab:cost"
     ],
     "new_figure": "fig:final",
-    "table_values_checked_against_measured_records": 75,
+    "table_values_checked_against_measured_records": 109,
     "records": [
-      "docs/results/final-evaluation.json",
-      "docs/results/final-evaluation-d015.json",
       "docs/results/diffusion-long-validation.json",
-      "docs/results/diffusion-seeds-validation.json"
+      "docs/results/diffusion-seeds-validation.json",
+      "docs/results/final-cost.json",
+      "docs/results/final-evaluation-d015.json",
+      "docs/results/final-evaluation.json"
     ],
     "figure_videos_matched_to_prediction_manifests": 5,
     "pages_visually_inspected": [
