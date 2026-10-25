@@ -255,6 +255,8 @@ separate e5 follow-up: one seed, 6000 training updates with step 5000 selected b
 
 The metadata-only workload is prepared: 248 reserved references form 58 primary conditions, or 232 primary plus 80 proposed selection videos per checkpoint. Sampling estimates and a bounded reserve are recorded in EXPERIMENT_PROTOCOL.md and results/evaluation-workload.json. No test arrays were opened. Current E6 force limit 1.1 is incompatible with the declared 1.3/1.5 force-OOD recipe; final checkpoint/contract selection and training budget remain open.
 
+D013 freezes E0 as the unsupervised flow CVAE with training seeds 0-2 (#54), adds the supplementary full-horizon action score (#53) and treats force-OOD as labelled extrapolation. Rescoring the saved pilot videos reproduces every recorded window count; both flow CVAEs pass reversal over the full clip, while E0 RGB, E2, E3 and E4 still have no complete tracks. See results/action-horizon-validation.json. Final E2/E3 checkpoints and their training seeds remain open, so the test freeze is not complete.
+
 <a id="t14"></a>
 
 ### T14: Run and analyze E0/E2/E3, with gated E1/E4 ablations

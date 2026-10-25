@@ -243,6 +243,14 @@ Plans prepared before this module existed keep their recorded evaluator hashes.
 Plans prepared afterwards must match the current evaluator exactly, as in the main
 suite. Prepare the final plans after this change.
 
+Saved TC2 plans record TC2 paths. `--relocate OLD=NEW` reads files recorded under
+`OLD` from a local `NEW` copy after the plan hash is verified; every relocated
+input must still match its recorded hash. Rescoring the saved 17 October pilot
+videos this way reproduces every recorded window count. Over the full clip, both
+flow CVAEs move and reverse correctly in 16/16 samples, while the RGB CVAE and
+diffusion models still have no complete tracks. See
+[the validation rescore](results/action-horizon-validation.json).
+
 ## Remaining evidence
 
 The [multi-scene pilot](MULTISCENE_PILOT.md) now measures actual E0/E2/E3/E4
