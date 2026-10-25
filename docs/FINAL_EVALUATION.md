@@ -177,3 +177,38 @@ What this adds to the primary result:
 - So the D014 E2/E3 failure was largely an effect of too few training clips for image
   quality, but the main conclusion holds: no method is a working physical model
   on held-out scenes.
+
+## Tracker failures by split
+
+This table gives the share of future object observations the tracker loses,
+pooled over training seeds. Selected-object missing rates follow the same pattern.
+
+| Split | E0 | E2 5k | E3 5k | E2 40k | E3 40k |
+|---|---:|---:|---:|---:|---:|
+| ID | 2% | 86% | 87% | 47% | 48% |
+| Shape OOD | 5% | 100% | 100% | 71% | 61% |
+| Texture OOD | 3% | 92% | 93% | 48% | 48% |
+| Force OOD | 6% | 97% | 99% | 73% | 69% |
+| Repeated physics | 2% | 100% | 99% | 46% | 46% |
+
+For E0 and the 40k models, new shapes and new forces raise tracker failures,
+while new textures and repeated hidden physics stay close to ID. The 5k models
+lose 86-100% everywhere.
+
+## Cost
+
+| | Parameters | Training | Training clips | Sampling per 32-frame video |
+|---|---:|---:|---:|---:|
+| E0 flow CVAE | 574,226 | 20,000 updates, 742-757 s | 40,000 | 0.012-0.015 s |
+| E2/E3, 5k (D014) | 964,035 | 5,000 updates, 246-281 s | 5,000 | 0.54 s |
+| E2/E3, 40k (D015) | 964,035 | 40,000 updates, 1,965-1,970 s | 40,000 | 0.58-0.59 s |
+
+- Times are wall-clock on A40. E0 seed 0's GPU type is not recorded, and the
+  40k seeds 1-2 trained on an L40S in 1,130-1,156 s.
+- Sampling times come from the test jobs and include checkpoint loading and
+  video export. E2/E3 run 32 denoising steps per video, so on average they
+  sample 42 (5k) and 47 (40k) times slower than E0 in the same job.
+- The final-phase TC2 jobs on Athul's account used 4.9 GPU-hours. TC2 states no
+  total quota; jobs are capped at 6 hours and one GPU.
+
+The record is [results/final-cost.json](results/final-cost.json).
