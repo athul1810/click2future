@@ -321,5 +321,22 @@ independent training seeds. The pixel tracker/config, SSIM/LPIPS, collision
 encounter/interval/event views, missing-track policy and scene bootstrap remain
 as declared above. The inventory is ready; the final checkpoint freeze is pending.
 
+TC2 job 46703 rehearsed this run on validation from current main with
+`cluster/final_rehearsal.sbatch`. One job prepared the validation and force-0.4
+selection plans, sampled the three E0 seeds and the 17 October E2/E3 pilots against
+them, scored SSIM/LPIPS, actions and targets, and added both action horizons. It took
+6.3 minutes on one A40, including 2.6 minutes of sampling for 640 videos. Every
+tracking count, and every E0 action count at both horizons, equals the earlier
+separate records, so scoring the methods together changes no result. At the measured
+rates the 2,808 test videos need about 17 minutes of sampling and 16 minutes of
+scoring. Three points apply to the final run:
+
+- Sampling binds the plan hash, plans store absolute paths and TC2 home folders are
+  private, so all runs must be sampled and scored from one account.
+- The LPIPS AlexNet weights must be cached on that account before the job.
+- The E2/E3 pilots were trained with seed 7, not the declared seeds 0-2.
+
+See [the rehearsal record](results/final-run-rehearsal.json).
+
 The [collision handoff](COLLISION_VALIDATION.md) records persistent overlap and
 reference-estimator calibration. Keep those qualifications in the final report.
