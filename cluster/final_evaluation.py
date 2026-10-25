@@ -1,4 +1,4 @@
-"""Final held-out E0/E2/E3 evaluation from one account and one set of frozen plans (D014).
+"""Final held-out E0/E2/E3 evaluation from one account and one set of frozen plans (D014, D015).
 
 All plans are prepared and recorded before any video is generated. For every reserved
 split the primary plan keeps the action controls, except on splits without zero force,
@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cuda")
     parser.add_argument("--splits", nargs="+", default=list(SPLITS))
     parser.add_argument("--without-actions", nargs="*", default=["force_ood"])
+    parser.add_argument("--decision", default="D014")
     args = parser.parse_args()
     torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "4")))
     torch.backends.cudnn.benchmark = False
@@ -42,7 +43,7 @@ def main():
     out.mkdir(parents=True)
     actions = args.project / "configs/evaluation/actions.yaml"
     record = {
-        "scope": "final held-out evaluation under D014; no tuning on these results",
+        "scope": f"final held-out evaluation under {args.decision}; no tuning on these results",
         "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
         "source_revision": os.environ.get("C2F_SOURCE_REVISION", "unrecorded"),
         "gpu": torch.cuda.get_device_name() if args.device == "cuda" else "cpu",

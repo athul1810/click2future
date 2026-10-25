@@ -104,6 +104,6 @@ seed 0 only. The full record is
 - This uses one training seed.
 
 For the report, the E2/E3 test failure partly reflects a training budget eight
-times smaller than E0's in clips seen. Running the 40k checkpoints on the test
-splits would be a new evaluation chosen after seeing test results, so it needs
-a team decision first.
+times smaller than E0's in clips seen. D015 runs the 40k checkpoints for
+training seeds 0-2 on the test splits as a secondary result, labelled as chosen
+after seeing the test results.

@@ -155,6 +155,31 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   Athul analyses E2/E3.
 - Agreed by Ananya and Athul on 25 October, following Ananya's T13/T14 proposal.
 
+## D015: Budget-matched E2/E3 as a secondary test result: 25 October 2026
+
+- This decision was made after the D014 test results were seen. Its results are
+  reported as a secondary, post-test comparison, labelled as such. The D014
+  results stay the primary comparison and are not replaced.
+- Reason: the D014 E2/E3 runs saw 5,000 training clips and E0 saw 40,000. On
+  validation (job 46733), training E2/E3 seed 0 for 40,000 updates removes the
+  noise and raises SSIM from 0.45 to 0.93, but only 5-7 of 96 clips are fully
+  tracked. See results/diffusion-long-validation.json.
+- E2/E3 use the D014 configs with only `steps` set to 40,000
+  (`configs/training/diffusion_long/`), training seeds 0-2. The cosine schedule
+  runs over 40,000 updates.
+- The 40,000-update checkpoint is used for every seed. It is fixed here as the
+  budget-matched endpoint and is not chosen on validation or test scores. The
+  10k and 20k checkpoints are validation records only.
+- Everything else is as in D014: 32 DDIM steps, the same splits, plans, scorer,
+  sampling seeds and force-OOD handling, from one account with
+  `cluster/final_evaluation.sbatch` and `C2F_DECISION=D015`.
+- The three E0 seeds are sampled again in the same job. They must reproduce the
+  D014 numbers, which checks that the evaluation is repeatable.
+- The nine runs are scored on validation first with
+  `cluster/final_rehearsal.sbatch`. That run is a record, not a gate.
+- No further training, checkpoint or setting changes follow from these results.
+- Proposed by Athul on 25 October after the D014 results, for team review on #64.
+
 ## New decision template
 
 ```text
