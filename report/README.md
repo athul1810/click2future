@@ -38,11 +38,12 @@ the E0 held-out analysis paragraph and the final submission checks remain open.
 Working deadline: 14 November 2026.
 
 The final held-out evaluation (D014, job 46716) and the secondary E2/E3 test
-result at E0's training-clip count (D015, job 46837) are in Sections 3.15 and 3.16, with Tables 10
-and 11 and Figure 4. Every table value is checked against
+result at E0's training-clip count (D015, job 46837) are in Sections 3.15-3.17, with Tables 10-13
+and Figures 4-5. Every table value is checked against
 `docs/results/final-evaluation.json` and `docs/results/final-evaluation-d015.json`.
-The figure uses the first sorted ID-test forward condition, sample seed 0 and
-training seed 0; its five videos match the job prediction manifests.
+Figure 4 uses the first sorted ID-test forward condition and Figure 5 the first
+sorted forward condition of each OOD split, with sample seed 0 and training seed
+0. All 14 videos match the job prediction manifests.
 
 The E6 uncertainty evidence is independently recomputed from all 72 saved RGB
 ensembles and all 18 action strata. The compact comparison is

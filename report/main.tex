@@ -460,7 +460,7 @@ The primary diffusion failure is therefore largely an under-training effect on a
 
 \subsection{Tracking by split and cost}
 \label{sec:cost}
-Table~\ref{tab:split_tracking} gives the share of future object observations the tracker loses on each split, pooled over training seeds. For E0 and the 40,000-update models, new shapes and new forces raise tracker failures, while new textures and repeated hidden physics stay close to ID. The 5,000-update models lose 86 to 100 percent everywhere.
+Table~\ref{tab:split_tracking} gives the share of future object observations the tracker loses on each split, pooled over training seeds. For E0 and the 40,000-update models, new shapes and new forces raise tracker failures, while new textures and repeated hidden physics stay close to ID. The 5,000-update models lose 86 to 100 percent everywhere. Figure~\ref{fig:ood} shows the first forward condition of each OOD split. On shape OOD, both 40,000-update models turn the large triangle into a square, and E0 rounds its corners. On force OOD, the reference pushes the rectangle to the wall within two seconds. No model moves it there: E0 leaves dark streaks at the image border, and E2/E3 smear the rectangle.
 
 \begin{table}[!ht]
 \centering
@@ -502,6 +502,13 @@ E2/E3, 40k & 964,035 & 40,000 at batch one & 1,965-1,970 s & 0.58-0.59 s \\
 \pdfximage width0.86\linewidth{report/figures/final_heldout.png}\pdfrefximage\pdflastximage
 \caption{First sorted ID-test forward condition, sample seed 0 and training seed 0, at six fixed times, with one simulator reference. The 5,000-update diffusion models leave heavy noise in every generated frame. At 40,000 updates the noise is gone, but the small ball becomes a square and changes colour, so the tracker loses it. Selection is fixed before visual inspection; this is not a best-sample comparison.}
 \label{fig:final}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\pdfximage width\linewidth{report/figures/final_ood.png}\pdfrefximage\pdflastximage
+\caption{First sorted forward condition of the shape-OOD, texture-OOD and force-OOD splits, sample seed 0 and training seed 0, at three fixed times, with one simulator reference. The diffusion models are the 40,000-update runs. Selection is fixed before visual inspection; this is not a best-sample comparison.}
+\label{fig:ood}
 \end{figure}
 
 \clearpage
