@@ -141,7 +141,8 @@
     "final_evaluation": "docs/results/final-evaluation.json",
     "diffusion_long_validation": "docs/results/diffusion-long-validation.json",
     "final_evaluation_d015": "docs/results/final-evaluation-d015.json",
-    "final_cost": "docs/results/final-cost.json"
+    "final_cost": "docs/results/final-cost.json",
+    "final_conditional_scores": "docs/results/final-conditional-scores.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -161,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "aba56cdfb12d77d56461060a78c146f0ef991aec8f4ec9861435f91b01da1d72",
+    "main.tex": "25de0567f069a4a2273255befb48b71e9ff14f640bec9455316067ded382b5ca",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -188,9 +189,10 @@
     "../docs/results/diffusion-long-validation.json": "f5986af88466c4539d6a923f243dab19fb9d589bc151a913c5a94a5faff3fa5f",
     "../docs/results/final-evaluation-d015.json": "bba292ed3114cac81c8ce48f1521c9b653dac7708e9c77f3a50b4b67a09b1a41",
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
-    "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119"
+    "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
+    "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813"
   },
-  "rendered_pdf_sha256": "4282726175dc5132acef90c08f4dbc77f0053ef5e93c2da2d4788534d1d3cec5",
+  "rendered_pdf_sha256": "3ffb438f4e6d2f1c5e9783b45efedca591dec67b7faf47dc2c0d532a71811fdc",
   "visual_review": "All 24 pages built. Pages 1, 4, 5, 9, 10 and 20-24 rendered and inspected, covering every edited passage, the full-horizon table and the new final held-out sections, figure and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
   "source_package_verification": {
     "status": "passed",
@@ -457,7 +459,7 @@
   "final_evaluation_verification": {
     "status": "built_rendered_and_checked",
     "pages": 24,
-    "pdf_sha256": "4282726175dc5132acef90c08f4dbc77f0053ef5e93c2da2d4788534d1d3cec5",
+    "pdf_sha256": "3ffb438f4e6d2f1c5e9783b45efedca591dec67b7faf47dc2c0d532a71811fdc",
     "new_sections": [
       "sec:final",
       "sec:d015",
@@ -477,6 +479,7 @@
     "records": [
       "docs/results/diffusion-long-validation.json",
       "docs/results/diffusion-seeds-validation.json",
+      "docs/results/final-conditional-scores.json",
       "docs/results/final-cost.json",
       "docs/results/final-evaluation-d015.json",
       "docs/results/final-evaluation.json"
