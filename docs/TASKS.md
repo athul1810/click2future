@@ -35,6 +35,11 @@ The matched canvas-loss follow-up in #49 completes 95/96 validation clips versus
 still fails. See [the comparison](WALL_TRAINING.md) for T13-T16 evidence and
 remaining limits. No final-test split is opened.
 
+The 25 October matched warm-start comparison completes 96/96 clips for both
+recipes. Tail penetration loss reduces penetrating clips from 15/96 to 12/96,
+but contact-event F1 regresses and seven trajectory cases still fail. Neither
+checkpoint is promoted. See [research and results](RESEARCH_2026-10-25.md).
+
 ## Task details
 
 <a id="t01"></a>

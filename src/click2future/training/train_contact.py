@@ -38,6 +38,8 @@ class ContactConfig(TrajectoryConfig):
     stationary_tokens: bool = False
     boundary_weight: float = 0.0
     boundary_margin_pixels: float = 1.0
+    risk_penetration_weight: float = 0.0
+    risk_tail_fraction: float = 0.25
 
     def validate(self):
         super().validate()
@@ -48,6 +50,7 @@ class ContactConfig(TrajectoryConfig):
                 self.acceleration_weight,
                 self.stationary_weight,
                 self.boundary_weight,
+                self.risk_penetration_weight,
             )
             < 0
             or not self.sigma_min < self.physics_sigma_max <= self.sigma_max
@@ -57,6 +60,8 @@ class ContactConfig(TrajectoryConfig):
             or not 0 < self.collision_probability < 1 - self.zero_probability
             or not isinstance(self.stationary_tokens, bool)
             or not 0 < self.boundary_margin_pixels <= 2
+            or isinstance(self.risk_tail_fraction, bool)
+            or not 0 < self.risk_tail_fraction <= 1
         ):
             raise ValueError("Invalid contact/stationary training configuration")
 
@@ -198,6 +203,34 @@ class ContactTrainer(TrajectoryTrainer):
         return state
 
 
+def initialize_from_ema(trainer, checkpoint, provenance):
+    """Start a new, explicitly warm-started experiment with fresh optimizer/RNG."""
+    from .contact_checkpoint import load_contact
+
+    if trainer.step != 0 or trainer.optimizer.state:
+        raise ValueError("EMA initialization requires a fresh trainer")
+    model, state = load_contact(checkpoint, trainer.device)
+    if state["model_config"] != model_config(trainer.config):
+        raise ValueError("Warm-start model architecture differs")
+    for key in (
+        "dataset_manifest_sha256",
+        "split_manifest_sha256",
+        "train_validation_content_sha256",
+        "angular_labels_sha256",
+        "geometry_sha256",
+    ):
+        if key not in provenance or provenance[key] != state["provenance"].get(key):
+            raise ValueError("Warm-start training data differ: " + key)
+    trainer.model.load_state_dict(model.state_dict(), strict=True)
+    trainer.ema.load_state_dict(model.state_dict(), strict=True)
+    return {
+        "kind": "ema_warm_start; optimizer, step and private RNG reset",
+        "checkpoint_sha256": sha256(checkpoint),
+        "source_step": state["step"],
+        "source_revision": state["provenance"].get("source_revision", "unrecorded"),
+    }
+
+
 def resume_probe(data, geometry, config, path, *, device):
     probe = replace(config, steps=4, width=16, layers=1, batch_size=2)
     trainer = ContactTrainer(data, geometry, probe, device=device)
@@ -230,7 +263,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("dataset", "run-dir", "config"):
         parser.add_argument("--" + name, type=Path, required=True)
-    parser.add_argument("--resume", type=Path)
+    initialization = parser.add_mutually_exclusive_group()
+    initialization.add_argument("--resume", type=Path)
+    initialization.add_argument("--warm-start", type=Path)
     parser.add_argument("--supplement", type=Path)
     args = parser.parse_args(argv)
     require_tc2()
@@ -260,6 +295,7 @@ def main(argv=None):
         for path in (
             Path(__file__),
             Path(__file__).with_name("contact_geometry.py"),
+            Path(__file__).with_name("contact_risk.py"),
             Path(__file__).with_name("trajectory_data.py"),
             Path(__file__).with_name("train_trajectory.py"),
             source / "models/object_motion.py",
@@ -275,6 +311,13 @@ def main(argv=None):
         )
         (args.run_dir / "resume-check.json").write_text(json.dumps(check, indent=2) + "\n")
     trainer = ContactTrainer(data, geometry, config, device="cuda")
+    if args.warm_start:
+        provenance["initialization"] = initialize_from_ema(trainer, args.warm_start, provenance)
+    elif args.resume:
+        # The original initialization is historical provenance, not a new warm start.
+        history = torch.load(args.resume, map_location="cpu", weights_only=True)["provenance"]
+        if "initialization" in history:
+            provenance["initialization"] = history["initialization"]
     best, previous = None, 0
     if args.resume:
         state = trainer.resume(args.resume, provenance)
