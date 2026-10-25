@@ -34,12 +34,19 @@ was reviewed by Sanjay and merged in #42. Its results remain separate from
 historical version-1 scores.
 
 The bibliography contains no external links. Member-reviewed contributions in `contributions.md`,
-useful model quality, independent repeats, reserved ID/OOD tests and the final
-submission checks remain open. Working deadline: 14 November 2026.
+the E0 held-out analysis paragraph and the final submission checks remain open.
+Working deadline: 14 November 2026.
+
+The final held-out evaluation (D014, job 46716) and the secondary budget-matched
+E2/E3 test result (D015, job 46837) are in Sections 3.15 and 3.16, with Tables 10
+and 11 and Figure 4. Every table value is checked against
+`docs/results/final-evaluation.json` and `docs/results/final-evaluation-d015.json`.
+The figure uses the first sorted ID-test forward condition, sample seed 0 and
+training seed 0; its five videos match the job prediction manifests.
 
 The E6 uncertainty evidence is independently recomputed from all 72 saved RGB
 ensembles and all 18 action strata. The compact comparison is
-`docs/results/contact-uncertainty-comparison.json`. No final test split is opened.
+`docs/results/contact-uncertainty-comparison.json`. That audit opened no final test split.
 
 The reproducible wall-clipping diagnostic explains all 32 missing E6-grid wall
 observations while preserving their failed video scores. Results are in
