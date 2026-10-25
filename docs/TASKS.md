@@ -264,6 +264,8 @@ D013 freezes E0 as the unsupervised flow CVAE with training seeds 0-2 (#54), add
 
 D014 completes the freeze. E2/E3 use the pilot recipes with training seeds 0-2 and 32 DDIM steps. On validation (job 46704) they track 1-546 of 5,952 observations with no complete clip, as the seed-7 pilots did. The five reserved splits are opened anyway and reported as measured failures, from one account with `cluster/final_evaluation.sbatch`. See results/diffusion-seeds-validation.json.
 
+TC2 job 46716 ran the final held-out evaluation on all five reserved splits from one account. Every suite completed. E0 keeps appearance (SSIM 0.89-0.98) and reverses correctly over the full clip, but fails the 0.5-second window, force-OOD reversal and selected-object control. E2/E3 have no complete sample on any split. See FINAL_EVALUATION.md and results/final-evaluation.json.
+
 <a id="t14"></a>
 
 ### T14: Run and analyze E0/E2/E3, with gated E1/E4 ablations
