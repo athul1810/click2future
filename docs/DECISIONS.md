@@ -174,7 +174,10 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   sampling seeds and force-OOD handling, from one account with
   `cluster/final_evaluation.sbatch` and `C2F_DECISION=D015`.
 - The three E0 seeds are sampled again in the same job. They must reproduce the
-  D014 numbers, which checks that the evaluation is repeatable.
+  D014 numbers, which checks that the evaluation is repeatable. The validation
+  and test jobs are held to the A40 nodes (TC2N01-02) used for D014, because
+  another GPU model may change results in the last digits. Training seeds 1-2
+  ran on an L40S node (TC2N03).
 - The nine runs are scored on validation first with
   `cluster/final_rehearsal.sbatch`. That run is a record, not a gate.
 - No further training, checkpoint or setting changes follow from these results.
