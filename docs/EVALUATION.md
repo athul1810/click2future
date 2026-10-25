@@ -6,7 +6,8 @@ SSIM/LPIPS, temporal diagnostics, and ensemble diversity/coverage also have simu
 Scene-group aggregation and CSV/JSON comparison tables are available in
 [EVALUATION_REPORTS.md](EVALUATION_REPORTS.md). The line-of-centres contact proxy has
 fresh held-out checks and known errors. Untrained CVAE output exercises tracker failure
-handling; validation on trained generators remains pending.
+handling. Validation and held-out results for the trained generators are in
+[FINAL_EVALUATION.md](FINAL_EVALUATION.md).
 The [experiment protocol](EXPERIMENT_PROTOCOL.md) provides a batch command for fixed
 cases, common sampling seeds, all three metric families and comparison tables.
 
