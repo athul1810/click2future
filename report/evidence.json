@@ -161,7 +161,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "415653bd6dbc113c43b54d5ba9095fa6de7ab1c1e1b5e3f9ca2a5f1e048063d7",
+    "main.tex": "aba56cdfb12d77d56461060a78c146f0ef991aec8f4ec9861435f91b01da1d72",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -190,7 +190,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119"
   },
-  "rendered_pdf_sha256": "c6467cd26f39d2739383e7811dfc9806702dc16b47709d70d57f7669918c3119",
+  "rendered_pdf_sha256": "4282726175dc5132acef90c08f4dbc77f0053ef5e93c2da2d4788534d1d3cec5",
   "visual_review": "All 24 pages built. Pages 1, 4, 5, 9, 10 and 20-24 rendered and inspected, covering every edited passage, the full-horizon table and the new final held-out sections, figure and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
   "source_package_verification": {
     "status": "passed",
@@ -457,7 +457,7 @@
   "final_evaluation_verification": {
     "status": "built_rendered_and_checked",
     "pages": 24,
-    "pdf_sha256": "c6467cd26f39d2739383e7811dfc9806702dc16b47709d70d57f7669918c3119",
+    "pdf_sha256": "4282726175dc5132acef90c08f4dbc77f0053ef5e93c2da2d4788534d1d3cec5",
     "new_sections": [
       "sec:final",
       "sec:d015",
