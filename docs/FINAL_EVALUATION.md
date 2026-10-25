@@ -178,6 +178,48 @@ What this adds to the primary result:
   quality, but the main conclusion holds: no method is a working physical model
   on held-out scenes.
 
+## Conditional trajectory and collision scores
+
+The protocol's scene-level ADE/FDE are undefined for every method, because no
+scene group has all its cases complete. The per-case reports still give scores
+over the samples that are complete. They are listed here for completeness, with
+one caveat: complete samples are not a random subset. Harder, faster and
+contact-heavy cases lose tracks more often, so these scores favour methods that
+complete only easy cases and cannot rank methods with different completion.
+
+Selected-object scores are in normalized image units. Best-of-4 needs all four
+samples of a case complete; the number of such cases is in brackets. Collision
+scores are the suite's pooled values, with the reference contact prevalence over
+the scored intervals.
+
+E0 (identical in D014 and D015):
+
+| Split | Selected-track complete samples | Mean ADE / FDE | Best-of-4 ADE | Contact prevalence | Event F1 | Encounter F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| ID | 136 | 0.014 / 0.017 | 0.010 (34) | 0.020 | 0.09 | 0.92 |
+| Shape OOD | 108 | 0.025 / 0.038 | 0.018 (25) | 0.010 | 0.12 | 0.31 |
+| Texture OOD | 132 | 0.012 / 0.016 | 0.007 (31) | 0.023 | 0.22 | 0.95 |
+| Force OOD | 89 | 0.187 / 0.230 | 0.173 (21) | 0.027 | 0.14 | 0.75 |
+| Repeated physics | 133 | 0.019 / 0.028 | 0.013 (33) | 0.011 | 0.11 | 0.95 |
+
+E2 / E3 at 40k updates (D015). The 5k runs have no complete sample:
+
+| Split | Selected-track complete samples | Mean ADE | Best-of-4 ADE |
+|---|---:|---:|---:|
+| ID | 17 / 22 | 0.023 / 0.008 | 0.007 (1) / 0.002 (4) |
+| Shape OOD | 30 / 40 | 0.018 / 0.014 | 0.007 (3) / 0.006 (7) |
+| Texture OOD | 28 / 35 | 0.018 / 0.011 | 0.003 (2) / 0.005 (6) |
+| Force OOD | 0 / 0 | n/a / n/a | n/a (0) / n/a (0) |
+| Repeated physics | 7 / 10 | 0.035 / 0.020 | n/a (0) / 0.008 (1) |
+
+E2/E3 collision F1 is undefined on every split. Where they have complete pair
+timelines (E2 on texture OOD and repeated physics, E3 on ID, texture OOD and
+repeated physics; 7-15 per split), none contains a contact in either the reference
+or the generated video, so F1 is 0/0. This also shows the bias above: the clips
+E2/E3 complete are contact-free ones. On force OOD, E0's selected-object ADE is
+0.187, against 0.012-0.025 on the other splits.
+The record is [results/final-conditional-scores.json](results/final-conditional-scores.json).
+
 ## Tracker failures by split
 
 This table gives the share of future object observations the tracker loses,
