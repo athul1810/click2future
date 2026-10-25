@@ -524,3 +524,17 @@ different CPU architecture reproduced every checked rollout array, but one
 geometry float in some metadata files differed in its last digit. Its manifest
 hash then differs, and checkpoints trained on the original corpus refuse it.
 Evaluate saved checkpoints against the corpus they were trained on.
+
+## matched contact tail-risk refinement
+
+`submission/contact_risk_comparison.sbatch` runs one bounded comparison. set its
+required immutable source/interpreter/data/supplement/warm-start/output variables.
+it reuses the retained training actions. the two recipes differ only in the
+optional upper-tail penetration loss, with fresh optimizer and private rng from
+the same ema checkpoint. this is explicit warm-start refinement, not resume or
+an independent training repeat. data/label/geometry identities must match.
+
+all three checkpoints, including the untouched anchor, are evaluated on validation
+only. original metrics, passive rest, geometric replay, clipping and both action
+horizons remain reported. the one-pixel margin and the public sampler are unchanged.
+use fresh output directories; preserve failed phases. no final tests are opened.
