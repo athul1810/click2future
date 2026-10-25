@@ -105,7 +105,11 @@ def comparison(reference, tmp_path):
     return path
 
 
-def test_strata_keep_failed_family_and_undefined_reference_spread(comparison):
+@pytest.mark.parametrize("method", ["E5", "E6", "E7"])
+def test_strata_keep_failed_family_and_undefined_reference_spread(comparison, method):
+    manifest = json.loads(comparison.read_text())
+    manifest["runs"][0]["method"] = method
+    comparison.write_text(json.dumps(manifest))
     result = stratify(comparison, bootstrap=10)
     assert result["total_case_count"] == 2
     assert sum(row["case_count"] for row in result["action_strata"].values()) == 2

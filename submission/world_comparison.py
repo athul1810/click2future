@@ -36,10 +36,52 @@ def paired_configs(project):
     return paths
 
 
+def retained_training(root, configs, teacher_sha):
+    """Reuse completed arms after an evaluation failure, without training again."""
+    root = Path(root)
+    previous = json.loads((root / "comparison.json").read_text())
+    if previous["warm_start_sha256"] != teacher_sha or previous["test_splits_evaluated"]:
+        raise ValueError("Retained experiment has a different teacher or test scope")
+    for key, path in (
+        ("cache_manifest_sha256", root / "cache/manifest.json"),
+        ("cache_array_sha256", root / "cache/arrays.npz"),
+    ):
+        if sha256(path) != previous[key]:
+            raise ValueError("Retained training cache changed")
+    models = {}
+    for name, config in configs.items():
+        training = json.loads((root / name / "summary.json").read_text())
+        if (
+            training["status"] != "completed"
+            or training["steps_completed"] != 8000
+            or training["config"] != json.loads(config.read_text())
+            or previous["config_sha256"][name] != sha256(config)
+            or training != previous["models"][name]["training"]
+        ):
+            raise ValueError("Retained arm is incomplete or changed: " + name)
+        from click2future.training.world_checkpoint import load_world
+
+        _, state = load_world(root / name / "best.pt", "cpu")
+        if (
+            state["step"] != training["steps_completed"]
+            or state["config"] != training["config"]
+            or state["provenance"] != training["provenance"]
+        ):
+            raise ValueError("Retained checkpoint does not match its training record")
+        models[name] = {
+            "training": training,
+            "retained_checkpoint_sha256": sha256(root / name / "best.pt"),
+        }
+    return previous, models
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("dataset", "supplement", "warm-start", "output"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument(
+        "--trained-run", type=Path, help="Completed training; fresh evaluation only"
+    )
     args = parser.parse_args(argv)
     require_tc2()
     project = Path(__file__).resolve().parents[1]
@@ -72,34 +114,46 @@ def main(argv=None):
         save()
 
     try:
-        report["phases"].append(
-            {"name": "prepare_cache", "started_seconds": time.perf_counter() - started}
-        )
-        save()
-        print(json.dumps({"phase": "prepare_cache", "state": "started"}), flush=True)
-        prepare_cache(args.dataset, args.supplement, args.output / "cache")
-        report["phases"][-1]["completed_seconds"] = time.perf_counter() - started
-        report["cache_manifest_sha256"] = sha256(args.output / "cache/manifest.json")
-        report["cache_array_sha256"] = sha256(args.output / "cache/arrays.npz")
-        save()
-        for name, config in configs.items():
-            run(
-                "train_" + name,
-                "-m",
-                "click2future.training.train_world",
-                "--cache",
-                args.output / "cache",
-                "--warm-start",
-                args.warm_start,
-                "--config",
-                config,
-                "--run-dir",
-                args.output / name,
+        if args.trained_run:
+            previous, report["models"] = retained_training(args.trained_run, configs, teacher_sha)
+            for key in ("cache_manifest_sha256", "cache_array_sha256"):
+                report[key] = previous[key]
+            report.update(
+                training_source_revision=previous["source_revision"],
+                training_slurm_job_id=previous["slurm_job_id"],
+                retained_comparison_sha256=sha256(args.trained_run / "comparison.json"),
+                scope="evaluation recovery; no retraining; post-D014 exploratory validation",
             )
-            training = json.loads((args.output / name / "summary.json").read_text())
-            if training["status"] != "completed":
-                raise ValueError("Bounded training did not finish: " + name)
-            report["models"][name] = {"training": training}
+            save()
+        else:
+            report["phases"].append(
+                {"name": "prepare_cache", "started_seconds": time.perf_counter() - started}
+            )
+            save()
+            print(json.dumps({"phase": "prepare_cache", "state": "started"}), flush=True)
+            prepare_cache(args.dataset, args.supplement, args.output / "cache")
+            report["phases"][-1]["completed_seconds"] = time.perf_counter() - started
+            report["cache_manifest_sha256"] = sha256(args.output / "cache/manifest.json")
+            report["cache_array_sha256"] = sha256(args.output / "cache/arrays.npz")
+            save()
+            for name, config in configs.items():
+                run(
+                    "train_" + name,
+                    "-m",
+                    "click2future.training.train_world",
+                    "--cache",
+                    args.output / "cache",
+                    "--warm-start",
+                    args.warm_start,
+                    "--config",
+                    config,
+                    "--run-dir",
+                    args.output / name,
+                )
+                training = json.loads((args.output / name / "summary.json").read_text())
+                if training["status"] != "completed":
+                    raise ValueError("Bounded training did not finish: " + name)
+                report["models"][name] = {"training": training}
         identities = [value["training"]["provenance"] for value in report["models"].values()]
         if (
             any(value != identities[0] for value in identities[1:])
@@ -108,7 +162,7 @@ def main(argv=None):
             raise ValueError("Warm-start source/data/provenance changed between recipes")
         checkpoints = {
             "anchor": args.warm_start,
-            **{name: args.output / name / "best.pt" for name in configs},
+            **{name: (args.trained_run or args.output) / name / "best.pt" for name in configs},
         }
         for name, checkpoint in checkpoints.items():
             report["models"].setdefault(name, {})

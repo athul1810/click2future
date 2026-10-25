@@ -14,6 +14,63 @@ from click2future.training.train_cvae import sha256
 from click2future.training.world_data import load_cache
 
 
+@pytest.mark.parametrize("changed", [None, "steps", "cache", "teacher"])
+def test_evaluation_recovery_reuses_only_completed_unchanged_training(
+    tmp_path, monkeypatch, changed
+):
+    module = runpy.run_path("submission/world_comparison.py")
+    configs = module["paired_configs"](Path.cwd())
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    for filename in ("manifest.json", "arrays.npz"):
+        (cache / filename).write_bytes(b"retained fixture")
+    previous = {
+        "warm_start_sha256": "a" * 64,
+        "test_splits_evaluated": [],
+        "cache_manifest_sha256": sha256(cache / "manifest.json"),
+        "cache_array_sha256": sha256(cache / "arrays.npz"),
+        "config_sha256": {name: sha256(path) for name, path in configs.items()},
+        "models": {},
+    }
+    states = {}
+    for name, path in configs.items():
+        folder = tmp_path / name
+        folder.mkdir()
+        config = json.loads(path.read_text())
+        record = {
+            "status": "completed",
+            "steps_completed": 8000,
+            "config": config,
+            "provenance": {"scope": "unit fixture"},
+        }
+        (folder / "summary.json").write_text(json.dumps(record))
+        (folder / "best.pt").write_bytes(b"fixture; no learned quality")
+        previous["models"][name] = {"training": record}
+        states[folder / "best.pt"] = {
+            "step": 8000,
+            "config": config,
+            "provenance": record["provenance"],
+        }
+    monkeypatch.setattr(
+        "click2future.training.world_checkpoint.load_world",
+        lambda path, device: (None, states[path]),
+    )
+    (tmp_path / "comparison.json").write_text(json.dumps(previous))
+    if changed == "steps":
+        record["steps_completed"] = 7999
+        (folder / "summary.json").write_text(json.dumps(record))
+    elif changed == "cache":
+        (cache / "arrays.npz").write_bytes(b"changed")
+    teacher = "b" * 64 if changed == "teacher" else "a" * 64
+    if changed:
+        with pytest.raises(ValueError):
+            module["retained_training"](tmp_path, configs, teacher)
+    else:
+        _, retained = module["retained_training"](tmp_path, configs, teacher)
+        assert list(retained) == list(configs)
+        assert all(row["training"]["steps_completed"] == 8000 for row in retained.values())
+
+
 def test_adjacent_world_recipes_reject_another_changed_factor(tmp_path):
     paired = runpy.run_path("submission/world_comparison.py")["paired_configs"]
     original = paired(Path.cwd())
