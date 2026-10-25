@@ -108,11 +108,13 @@ The full record is
   an L40S node. Rescoring the same checkpoints on A40 moved tracked counts by
   49-208 and complete clips by up to 3. The table uses the A40 numbers.
 
-## Secondary test result: budget-matched E2/E3 (D015)
+## Secondary test result: E2/E3 at E0's clip count (D015)
 
 D015 was declared after the D014 test results were seen and before this run.
 These numbers are a secondary result. The D014 tables above stay the primary
-comparison.
+comparison. D015 matches the number of training clips seen (40,000), not updates
+or GPU time: E2/E3 take 40,000 updates at batch 1, E0 20,000 at batch 2, and
+each 40k diffusion run took about 33 minutes on an A40.
 
 TC2 job 46837 (source fd43f11, A40) ran E0 and the 40k E2/E3 runs, each with
 training seeds 0-2, on all five reserved splits. It used the D014 setup:
@@ -151,7 +153,7 @@ E2/E3 have no complete full-clip pair.
 
 What this adds to the primary result:
 
-- With E0's training budget, E2/E3 produce clean frames on every split. Their
+- Trained on as many clips as E0, E2/E3 produce clean frames on every split. Their
   SSIM rises from 0.45-0.48 to 0.93-0.94, within 0.03-0.05 of E0. On force OOD
   it rises from 0.22-0.26 to 0.74-0.79, against E0's 0.89.
 - Physical behaviour is still not shown. E2/E3 have 0-15 complete samples per
@@ -167,6 +169,6 @@ What this adds to the primary result:
   and LPIPS). E2 and E3 still cannot be separated. E3 has lower LPIPS on force
   OOD with intervals that just separate, but with two scene groups per split
   the intervals are not informative.
-- So the D014 E2/E3 failure was largely a training-budget effect for image
+- So the D014 E2/E3 failure was largely an effect of too few training clips for image
   quality, but the main conclusion holds: no method is a working physical model
   on held-out scenes.

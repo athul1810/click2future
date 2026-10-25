@@ -1,7 +1,7 @@
 {
   "status": "measured_secondary_final_evaluation",
   "decision": "D015",
-  "scope": "Secondary, post-test evaluation: E2/E3 retrained for 40,000 updates (E0's training budget), training seeds 0-2, on all five reserved splits, with the three E0 seeds sampled again. Chosen after the D014 test results were seen. The D014 results stay the primary comparison. Nothing was tuned on these results.",
+  "scope": "Secondary, post-test evaluation: E2/E3 retrained for 40,000 updates (the same 40,000 training clips as E0, not the same updates or GPU time), training seeds 0-2, on all five reserved splits, with the three E0 seeds sampled again. Chosen after the D014 test results were seen. The D014 results stay the primary comparison. Nothing was tuned on these results.",
   "slurm_job_id": 46837,
   "source_revision": "fd43f11890c410058147f5a76c8e717e7420869f",
   "gpu": "NVIDIA A40",

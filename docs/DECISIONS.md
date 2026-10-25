@@ -182,6 +182,9 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   `cluster/final_rehearsal.sbatch`. That run is a record, not a gate.
 - No further training, checkpoint or setting changes follow from these results.
 - Proposed by Athul on 25 October after the D014 results, for team review on #64.
+- Wording note added after review on #64: "budget-matched" here means the same
+  number of training clips seen (40,000). It does not match updates (40,000 at
+  batch 1 against E0's 20,000 at batch 2) or GPU time.
 
 ## New decision template
 
