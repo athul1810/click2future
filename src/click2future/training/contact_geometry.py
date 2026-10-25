@@ -147,4 +147,15 @@ def contact_objective(model, clean, features, force, sigma, noise, geometry, con
         boundary_loss = (boundary * low_noise).mean()
         loss = loss + config.boundary_weight * boundary_loss
         parts["canvas_excess"] = boundary_loss.detach()
+    if config.risk_penetration_weight > 0:
+        from .contact_risk import penetration_risk
+
+        risk = penetration_risk(
+            predicted_depth,
+            sigma <= config.physics_sigma_max,
+            margin_pixels=config.penetration_margin_pixels,
+            fraction=config.risk_tail_fraction,
+        )
+        loss = loss + config.risk_penetration_weight * risk
+        parts["tail_penetration"] = risk.detach()
     return loss, parts

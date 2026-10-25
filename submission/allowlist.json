@@ -33,6 +33,8 @@
     "submission/check_e4_collision.sbatch",
     "submission/pilot_image_metrics.py",
     "submission/wall_comparison.py",
-    "submission/wall_comparison.sbatch"
+    "submission/wall_comparison.sbatch",
+    "submission/contact_risk_comparison.py",
+    "submission/contact_risk_comparison.sbatch"
   ]
 }
