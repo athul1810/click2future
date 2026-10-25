@@ -1,8 +1,9 @@
 #!/bin/bash -l
-# Train E2/E3 for 40,000 updates, the CVAE's 40,000-clip training budget, with everything else
-# as in the final configs (D015). Checkpoints are kept at 10k, 20k and 40k updates (the cosine
-# schedule runs over 40k, so the first two are mid-schedule) and each is scored on validation
-# with cluster/final_rehearsal.py. C2F_SEEDS lists the training seeds, default 0.
+# Train E2/E3 for 40,000 updates, matching the CVAE's 40,000 training clips (not its updates or
+# GPU time), with everything else as in the final configs (D015). Checkpoints are kept at 10k,
+# 20k and 40k updates (the cosine schedule runs over 40k, so the first two are mid-schedule) and
+# each is scored on validation with cluster/final_rehearsal.py. C2F_SEEDS lists the training
+# seeds, default 0.
 # Usage: sbatch cluster/diffusion_long.sbatch. Finished stages and evaluations are skipped.
 #SBATCH --partition=MGPU-TC2
 #SBATCH --qos=normal

@@ -266,7 +266,7 @@ D014 completes the freeze. E2/E3 use the pilot recipes with training seeds 0-2 a
 
 TC2 job 46716 ran the final held-out evaluation on all five reserved splits from one account. Every suite completed. E0 keeps appearance (SSIM 0.89-0.98) and reverses correctly over the full clip, but fails the 0.5-second window, force-OOD reversal and selected-object control. E2/E3 have no complete sample on any split. See FINAL_EVALUATION.md and results/final-evaluation.json.
 
-After the test, E2/E3 seeds 0-2 were retrained for 40,000 updates, E0's clip budget (jobs 46733 and 46788). On validation the noise goes away (SSIM 0.93), but only 0-8 of 96 clips are complete per run. D015 ran them on the five reserved splits as a secondary result (job 46837), with E0 reproducing job 46716 exactly. SSIM is 0.93-0.94 outside force OOD, but E2/E3 have 0-15 complete samples per split and get no 0.5-second reversal right. The D014 results stay primary. See FINAL_EVALUATION.md, results/diffusion-long-validation.json and results/final-evaluation-d015.json.
+After the test, E2/E3 seeds 0-2 were retrained for 40,000 updates, matching E0's 40,000 training clips but not its updates or GPU time (jobs 46733 and 46788). On validation the noise goes away (SSIM 0.93), but only 0-8 of 96 clips are complete per run. D015 ran them on the five reserved splits as a secondary result (job 46837), with E0 reproducing job 46716 exactly. SSIM is 0.93-0.94 outside force OOD, but E2/E3 have 0-15 complete samples per split and get no 0.5-second reversal right. The D014 results stay primary. See FINAL_EVALUATION.md, results/diffusion-long-validation.json and results/final-evaluation-d015.json.
 
 <a id="t14"></a>
 

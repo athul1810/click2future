@@ -1,6 +1,6 @@
 {
   "status": "measured_validation_follow_up",
-  "scope": "Validation only. E2/E3 training seeds 0-2 retrained for 40,000 updates, E0's 40,000-clip budget. Each seed is checked at 10k, 20k and 40k, then the three E0 seeds and the six 40k runs are scored together on A40 (job 46804). The D015 test result is recorded separately in results/final-evaluation-d015.json.",
+  "scope": "Validation only. E2/E3 training seeds 0-2 retrained for 40,000 updates, matching E0's 40,000 training clips but not its updates or GPU time. Each seed is checked at 10k, 20k and 40k, then the three E0 seeds and the six 40k runs are scored together on A40 (job 46804). The D015 test result is recorded separately in results/final-evaluation-d015.json.",
   "configs": {
     "configs/training/diffusion_long/numeric_seed0.json": "34746b9ee9faa25ebb868e874973d4d82735fa4d69117eecd2a52e7ad77de9b2",
     "configs/training/diffusion_long/numeric_seed1.json": "d6000ba0976e195b5cd29c4ab47fd40d1a78a97a4531cd7c87f0ee6393f7128c",
