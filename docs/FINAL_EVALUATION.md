@@ -10,6 +10,11 @@ diffusion and E3 spatial diffusion, each with training seeds 0-2. The setup:
 
 The full record is [results/final-evaluation.json](results/final-evaluation.json).
 
+To rescore, use source f003882 (D014) or fd43f11 (D015). Both have the same
+`src/click2future/evaluation/` code. Each plan records the SHA-256 of every
+file in that folder, so any later change there makes `read_plan` and
+`action_horizon` refuse these plans by design.
+
 ## Tracking and image scores
 
 Complete samples have every object tracked in every frame. SSIM/LPIPS are
