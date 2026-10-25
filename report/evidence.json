@@ -10,7 +10,7 @@
     "Experiments and analysis",
     "Conclusion"
   ],
-  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages, matched training-only canvas penalty with its control; final held-out evaluation of E0/E2/E3 with three training seeds each (D014) and a secondary budget-matched E2/E3 test result (D015)",
+  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages, matched training-only canvas penalty with its control; final held-out evaluation of E0/E2/E3 with three training seeds each (D014) and a secondary E2/E3 test result at E0's training-clip count, not its updates or GPU time (D015)",
   "dataset": {
     "version": "dataset-0.3",
     "seed": 730000,
@@ -160,7 +160,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "d1bca2ea2e282fdfdf6619ac992c13dafaf1c82a94e190bf3395e10b58ee470e",
+    "main.tex": "709f689c7d7b482d2ae24e74844a25d314eeecca107afd4d4b7a1553816b0331",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -184,10 +184,10 @@
     "figures/final_heldout.png": "8187a7991073497b9a8d22e52b9c0c3cc4592e6824d9a84f56b873e65d901430",
     "../docs/results/diffusion-seeds-validation.json": "57f3f0c9c67523f855e3283a6c2142cfd42f4e96c53ab7bda098d5ae21a6ab37",
     "../docs/results/final-evaluation.json": "61f93d10ea7eea189f732956e55f42941f06a5dc54eb34f466254280058fe5c1",
-    "../docs/results/diffusion-long-validation.json": "8be4958814ae928763e22e8b622e483d51971b4433377662645701018e85fa0c",
-    "../docs/results/final-evaluation-d015.json": "5af3966201ff5488534dfb6e0ab7bf5316bee21ecf7fbac07f59463663346e8f"
+    "../docs/results/diffusion-long-validation.json": "f5986af88466c4539d6a923f243dab19fb9d589bc151a913c5a94a5faff3fa5f",
+    "../docs/results/final-evaluation-d015.json": "bba292ed3114cac81c8ce48f1521c9b653dac7708e9c77f3a50b4b67a09b1a41"
   },
-  "rendered_pdf_sha256": "4785206e014962aafa48624c9010bfcc5be8bbfa493bbcb50ea5589566b8c185",
+  "rendered_pdf_sha256": "e5319bd985d221a132fda3032a6bdf500a0d066b4b94190f939fdb95730d3119",
   "visual_review": "All 23 pages built. Pages 1, 4, 5, 9, 10 and 20-23 rendered and inspected, covering every edited passage, the full-horizon table and the new final held-out sections, figure and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
   "source_package_verification": {
     "status": "passed",
@@ -454,7 +454,7 @@
   "final_evaluation_verification": {
     "status": "built_rendered_and_checked",
     "pages": 23,
-    "pdf_sha256": "4785206e014962aafa48624c9010bfcc5be8bbfa493bbcb50ea5589566b8c185",
+    "pdf_sha256": "e5319bd985d221a132fda3032a6bdf500a0d066b4b94190f939fdb95730d3119",
     "new_sections": [
       "sec:final",
       "sec:d015"

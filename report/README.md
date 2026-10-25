@@ -37,8 +37,8 @@ The bibliography contains no external links. Member-reviewed contributions in `c
 the E0 held-out analysis paragraph and the final submission checks remain open.
 Working deadline: 14 November 2026.
 
-The final held-out evaluation (D014, job 46716) and the secondary budget-matched
-E2/E3 test result (D015, job 46837) are in Sections 3.15 and 3.16, with Tables 10
+The final held-out evaluation (D014, job 46716) and the secondary E2/E3 test
+result at E0's training-clip count (D015, job 46837) are in Sections 3.15 and 3.16, with Tables 10
 and 11 and Figure 4. Every table value is checked against
 `docs/results/final-evaluation.json` and `docs/results/final-evaluation-d015.json`.
 The figure uses the first sorted ID-test forward condition, sample seed 0 and
