@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "tests": {
+    "passed": 614,
+    "subtests": 4,
+    "warnings": 6,
+    "seconds": 255.45,
+    "log_sha256": "8567f7511b208ff6b58c0b2fe0364e4e760cf88a8713f079fe3ddd1795cc847b"
+  },
+  "lint": "passed",
+  "formatting": "changed files pass; four inherited global-format failures remain",
+  "source_zip": {
+    "files": 257,
+    "sha256": "39eaab56c98432730feda2f8a18ef3c91aa13b67dcb432b268ddc4d91db88fae",
+    "clean_extraction_smoke": "passed",
+    "extracted_regression_tests": 14
+  },
+  "real_checkpoint_demo_adapter": {
+    "local": {
+      "pixel_equal_to_offline": true,
+      "clips": 4,
+      "checkpoint_sha256": "79834058c6c23acdfb6ba75ced2374a82c0aca13b45d13599d4a7bf9f2440b98"
+    },
+    "relational": {
+      "pixel_equal_to_offline": true,
+      "clips": 4,
+      "checkpoint_sha256": "296c23a4de8cf573370e118f799013db806fb73bbc5d8ebd35096498650f0a0a"
+    },
+    "conditioned": {
+      "pixel_equal_to_offline": true,
+      "clips": 4,
+      "checkpoint_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041"
+    }
+  },
+  "initial_source_sha256": "6a84399ef1a6c7ce21a8706c537f57c6f2920d4cb7e8a78c0204711a42a2da99",
+  "evaluation_source_sha256": "3ceadf0571c5bbebf555fe9485c6d20e8fe2dd39d1fac2c63d193e477d458fab",
+  "test_splits_evaluated": [],
+  "raw_file_digests_verified": 1503,
+  "native_pose_replay_clips": 384,
+  "windows_audits": {
+    "anchor": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 0,
+      "strict_pixel_replay_clips": 96
+    },
+    "local": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 5.7655526575217664e-08,
+      "strict_pixel_replay_clips": 96
+    },
+    "relational": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 2.540484445034963e-08,
+      "strict_pixel_replay_clips": 96
+    },
+    "conditioned": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 2.784076116313372e-07,
+      "strict_pixel_replay_clips": 96
+    }
+  },
+  "allocated_gpu_seconds": 2183,
+  "training_job": 46889,
+  "evaluation_job": 46910,
+  "checksum_preflight_failure_job": 46909,
+  "tc2_jobs_remaining": 0,
+  "evaluation_source_attestation": {
+    "recorded_revision": "unrecorded",
+    "verified_release_revision": "fb72774450a44a586b24828141353cf5169075ed",
+    "verified_files_during_and_after": 419,
+    "archive_sha256": "3ceadf0571c5bbebf555fe9485c6d20e8fe2dd39d1fac2c63d193e477d458fab",
+    "tree_manifest_sha256": "7135a895765b08df262b593491a600c710626c71a873e8149ee011e7dc0e3e7d",
+    "verification_logs_sha256": {
+      "recovery-tree-check-during.out": "0a8ea57306551905a2204670ee3bef77a5f817f9bd62208e77ecc94e3b57dfe3",
+      "recovery-tree-check-after.out": "0a8ea57306551905a2204670ee3bef77a5f817f9bd62208e77ecc94e3b57dfe3"
+    },
+    "basis": "archive verified before extraction; every committed file verified during and after allocation; launcher names immutable release",
+    "limitation": "launcher misspelled C2F_SOURCE_REVISION; original unrecorded report fields are retained"
+  },
+  "release_assets_downloaded": 7,
+  "asset_digests": {
+    "cpu-verification.zip": "b62d9dac3f6354fd21d273b58a8c4b96844729930bd3641e70fc73d7b4e90bdd",
+    "group_07_code.zip": "39eaab56c98432730feda2f8a18ef3c91aa13b67dcb432b268ddc4d91db88fae",
+    "recovery-source.tar.gz": "3ceadf0571c5bbebf555fe9485c6d20e8fe2dd39d1fac2c63d193e477d458fab",
+    "shared-world-jobs46889-46910.tar.gz": "64c9bcbba66dd4264503af3db322b0a9850231f152b9d3d4f2d55239fc0bea50",
+    "source.tar.gz": "6a84399ef1a6c7ce21a8706c537f57c6f2920d4cb7e8a78c0204711a42a2da99",
+    "wall.pt": "cfc618f637f1afb6ba36cb281e895c096288fbc3cbea962fcfc11830513cbeed",
+    "SHA256SUMS": "8f7548a9cb070a421e16c2598546f887591d6903640587ffc9febcb2ed775bb6"
+  },
+  "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-b8ce5ae0e512de340735",
+  "tc2_ssh_session_closed": true
+}

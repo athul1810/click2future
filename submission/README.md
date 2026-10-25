@@ -554,3 +554,9 @@ Submit `sbatch submission/world_comparison.sbatch` on TC2. The driver prepares
 checked train/validation labels once, trains all three matched arms for 8,000
 updates and evaluates the fixed final checkpoints plus the untouched anchor.
 It preserves partial attempts. No test arrays are evaluated by this driver.
+
+After an evaluation failure, the same driver accepts `--trained-run OLD_OUTPUT`
+with a fresh `--output`. It verifies every completed training record, checkpoint,
+recipe, teacher and cache identity before reusing the three fixed checkpoints.
+It creates fresh evaluation plans and never trains again in this mode. Keep the
+original comparison, failed logs and both source revisions; account for all jobs.

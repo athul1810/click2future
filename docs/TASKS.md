@@ -23,7 +23,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In review |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | In progress |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
@@ -33,12 +33,17 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 The matched canvas-loss follow-up in #49 completes 95/96 validation clips versus
 88/96 for its control. Penetration remains in 15/96 clips and overall quality
 still fails. See [the comparison](WALL_TRAINING.md) for T13-T16 evidence and
-remaining limits. No final-test split is opened.
+remaining limits. Those experiments did not open final-test splits.
 
 The 25 October matched warm-start comparison completes 96/96 clips for both
 recipes. Tail penetration loss reduces penetrating clips from 15/96 to 12/96,
 but contact-event F1 regresses and seven trajectory cases still fail. Neither
 checkpoint is promoted. See [research and results](RESEARCH_2026-10-25.md).
+
+The team has since opened D014 and D015; the results and report are in open
+PRs #63-65. Final tests are no longer reserved. T15 awaits review of those
+records. The separate E7 work in #66 is post-test exploratory, uses only
+training/validation and does not replace the main comparison.
 
 ## Task details
 
@@ -284,14 +289,14 @@ The four-method TC2 pilot and validation sampler study are measured in PR #43. E
 
 Measure which action-conditioned behaviors generalize beyond training.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In review.
 
 - [ ] Evaluate separate OOD suites while controlling the other factors.
 - [ ] Use frozen checkpoints and metrics without test-set tuning.
 - [ ] Compare against ID performance and include tracker failure rates.
 - [ ] Save representative successes/failures and state generalization limits.
 
-Separate dataset-0.3 ID, shape, texture, force and physics suites are implemented and merged. The multi-scene pilot is trained on that corpus, but validation generation and action response fail. All 248 test clips remain reserved; there is no trained ID/OOD result. Improve validation before opening these suites. Extractor failures and candidate tracker version 2 remain explicit in MULTISCENE_PILOT.md.
+D014 job 46716 and secondary D015 job 46837 evaluated all five test suites with three E0/E2/E3 training seeds. PRs #63/#64 retain their separate chronology and tracker failures; #65 updates the report. These records are pending review and have not been independently replayed here. Final tests are no longer reserved. New E7 development uses training/validation only and needs a new independent holdout for a confirmatory claim.
 
 <a id="t16"></a>
 

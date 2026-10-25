@@ -25,9 +25,14 @@ def analyse(root, dataset, anchor):
         if not path.is_relative_to(root) or sha256(path) != digest:
             raise ValueError("Collected file identity differs: " + name)
         verified += 1
-    comparison = read(root / "comparison.json")
+    evaluation = root / "recovery" if (root / "recovery/comparison.json").exists() else root
+    comparison = read(evaluation / "comparison.json")
     if comparison["status"] != "completed" or comparison["test_splits_evaluated"]:
         raise ValueError("Require a complete validation-only comparison")
+    if evaluation != root and (
+        comparison["retained_comparison_sha256"] != sha256(root / "comparison.json")
+    ):
+        raise ValueError("Original failed comparison changed during evaluation recovery")
     arms = ("local", "relational", "conditioned")
     training = {name: read(root / name / "summary.json") for name in arms}
     for name, value in training.items():
@@ -54,10 +59,17 @@ def analyse(root, dataset, anchor):
             "one warm-start seed; four scenes; extra physical supervision; "
             "no external SOTA comparison"
         ),
-        "training_source_revision": comparison["source_revision"],
-        "slurm_job_id": comparison["slurm_job_id"],
+        "training_source_revision": comparison.get(
+            "training_source_revision", comparison["source_revision"]
+        ),
+        "evaluation_source_revision": comparison["source_revision"],
+        "training_slurm_job_id": comparison.get(
+            "training_slurm_job_id", comparison["slurm_job_id"]
+        ),
+        "evaluation_slurm_job_id": comparison["slurm_job_id"],
+        "original_attempt": read(root / "comparison.json")["status"],
         "manifest_files_verified": verified,
-        "comparison_sha256": sha256(root / "comparison.json"),
+        "comparison_sha256": sha256(evaluation / "comparison.json"),
         "analysis_source_sha256": sha256(Path(__file__)),
         "elapsed_seconds": comparison["elapsed_seconds"],
         "phases": comparison["phases"],
@@ -81,8 +93,10 @@ def analyse(root, dataset, anchor):
         "test_splits_evaluated": [],
         "inference_corrections": False,
     }
+    if comparison["source_revision"] == "unrecorded":
+        result["evaluation_source_attestation"] = read(root / "operations/source-attestation.json")
     for name in ("anchor", *arms):
-        folder = root / (name + "-validation")
+        folder = evaluation / (name + "-validation")
         checkpoint = Path(anchor) if name == "anchor" else root / name / "best.pt"
         digest = sha256(checkpoint)
         if digest != comparison["models"][name]["checkpoint_sha256"]:
@@ -164,6 +178,15 @@ def analyse(root, dataset, anchor):
             },
             "collision_audit_sha256": sha256(folder / "collision-audit.json"),
         }
+        original_predictions = root / (name + "-validation/validation-samples/predictions.json")
+        if evaluation != root and original_predictions.exists():
+            before = read(original_predictions)["runs"][0]["video_sha256"]
+            after = read(folder / "validation-samples/predictions.json")["runs"][0]["video_sha256"]
+            row["original_attempt_video_reproduction"] = {
+                "expected_conditions": len(before),
+                "byte_identical_conditions": sum(before[key] == after[key] for key in before),
+                "scope": "unchanged checkpoint/sampler across A40 allocations; no outputs replaced",
+            }
         if name != "anchor":
             row["training"] = {
                 key: value for key, value in training[name].items() if key != "provenance"

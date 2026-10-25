@@ -374,11 +374,11 @@
       "Save representative successes/failures and state generalization limits."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "Not started",
+    "status": "In review",
     "issue_url": "https://github.com/athul1810/click2future/issues/15",
-    "progress": "Separate dataset-0.3 ID, shape, texture, force and physics suites are implemented and merged. The multi-scene pilot is trained on that corpus, but validation generation and action response fail. All 248 test clips remain reserved; there is no trained ID/OOD result. Improve validation before opening these suites. Extractor failures and candidate tracker version 2 remain explicit in MULTISCENE_PILOT.md.",
+    "progress": "D014 job 46716 and secondary D015 job 46837 evaluated all five test suites with three E0/E2/E3 training seeds. PRs #63/#64 retain their separate chronology and tracker failures; #65 updates the report. These records are pending review and have not been independently replayed here. Final tests are no longer reserved. New E7 development uses training/validation only and needs a new independent holdout for a confirmatory claim.",
     "completed_acceptance": [],
-    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
+    "evidence": "PR #63; PR #64; PR #65; no independent full held-out replay in this review."
   },
   {
     "id": "T16",
