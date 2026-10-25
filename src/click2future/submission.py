@@ -64,6 +64,8 @@ def _check(name, payload):
             "submission/wall_comparison.sbatch",
             "submission/contact_risk_comparison.py",
             "submission/contact_risk_comparison.sbatch",
+            "submission/world_comparison.py",
+            "submission/world_comparison.sbatch",
             "submission/evaluate_trajectory.sbatch",
             "submission/audit_trajectory.sbatch",
             "submission/sampler_study.py",

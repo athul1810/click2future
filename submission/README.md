@@ -480,7 +480,7 @@ inference motion, tracking thresholds or the declared physics-quality gate.
 any trained CVAE checkpoint, RGB or flow; `flow_evaluation.py` stays unchanged for
 its recorded results. Inside an allocation, pass the prepared pilot `--root`, a
 trained `--checkpoint`, a new `--output` folder and `--device cuda`. Use the
-β/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
+Î²/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
 `latent_dim` from `cvae_multiscene_pilot.yaml`.
 
 `submission/cvae_force_probe.py` negates the force on nonzero-force validation
@@ -538,3 +538,19 @@ all three checkpoints, including the untouched anchor, are evaluated on validati
 only. original metrics, passive rest, geometric replay, clipping and both action
 horizons remain reported. the one-pixel margin and the public sampler are unchanged.
 use fresh output directories; preserve failed phases. no final tests are opened.
+
+
+## Experimental sampled-world relational refinement
+
+E7 is a separate post-test exploratory comparison with training-only physical
+labels and sampled prior worlds at inference. It does not replace the main
+E0/E2/E3 results. It retains the existing force limit of 1.1.
+
+Set `C2F_PROJECT` to committed source, `C2F_PYTHON` to the validated interpreter,
+`C2F_DATA_DIR` to the frozen original corpus, `C2F_SUPPLEMENT` to the retained
+training action supplement, `C2F_WARM_START` to the wall checkpoint,
+`C2F_WORLD_RESULTS` to a fresh output and `C2F_SOURCE_REVISION` to the commit.
+Submit `sbatch submission/world_comparison.sbatch` on TC2. The driver prepares
+checked train/validation labels once, trains all three matched arms for 8,000
+updates and evaluates the fixed final checkpoints plus the untouched anchor.
+It preserves partial attempts. No test arrays are evaluated by this driver.

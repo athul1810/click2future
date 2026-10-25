@@ -35,6 +35,8 @@
     "submission/wall_comparison.py",
     "submission/wall_comparison.sbatch",
     "submission/contact_risk_comparison.py",
-    "submission/contact_risk_comparison.sbatch"
+    "submission/contact_risk_comparison.sbatch",
+    "submission/world_comparison.py",
+    "submission/world_comparison.sbatch"
   ]
 }
