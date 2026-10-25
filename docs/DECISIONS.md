@@ -124,6 +124,37 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
 - Proposed by Ananya in #52 and her review of #50; confirmed by Athul. Final
   checkpoints, diffusion recipes and the training budget remain open under T13.
 
+## D014: Final E2/E3 runs and opening the test splits: 25 October 2026
+
+- E2/E3 use the 17 October pilot recipes with training seeds 0-2
+  (`configs/training/diffusion_repeats/`). Each config is the pilot's effective
+  config with only the seed changed: 5,000 updates and the final EMA checkpoint.
+  The diffusion training code is unchanged since the pilot. The seed-7 pilot
+  checkpoints stay as pilot records and are not part of the final comparison.
+- TC2 job 46704 trained the six runs and scored them with the three E0 seeds on
+  validation. E2 tracks 176, 140 and 1 of 5,952 observations and E3 5, 546 and 2,
+  with no complete clip in any run. The pilot's seed-7 runs tracked 378 and 269.
+  The failure is consistent across seeds. See results/diffusion-seeds-validation.json.
+- Diffusion sampling uses 32 DDIM steps, the pilot default. The 16/32/64-step study
+  had no complete clip at any setting and selected no sampler, so the declared
+  default is kept rather than chosen on tracking counts.
+- Everything else stays as declared in `configs/evaluation/comparison.yaml` and
+  EXPERIMENT_PROTOCOL.md, and force-OOD runs without the zero-force action plan:
+  - sampling seeds 0-3, tracker version 2 and the pixel config;
+  - SSIM/LPIPS and both action horizons;
+  - the three collision views, the missing-track policy and the scene bootstrap;
+  - the force-0.4 selection probe.
+- The five reserved splits are opened although no method passes the validation
+  gate in `configs/training/multiscene_pilot.json`. The report needs held-out
+  results, and they are reported as measured failures. No checkpoint, setting or
+  method changes after test results are seen.
+- One account (Athul's TC2) prepares the plans and samples and scores all nine
+  runs with `cluster/final_evaluation.sbatch` in one job capped at two hours.
+  This is required because sampled predictions are bound to plan hashes, plans
+  store absolute paths and TC2 home folders are private. Ananya analyses E0;
+  Athul analyses E2/E3.
+- Agreed by Ananya and Athul on 25 October, following Ananya's T13/T14 proposal.
+
 ## New decision template
 
 ```text

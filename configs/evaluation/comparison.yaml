@@ -1,5 +1,5 @@
 # Evaluation choices recorded before comparing trained checkpoints.
-status: evaluation_ready_training_choices_pending
+status: frozen_for_final_evaluation  # D014, 25 October 2026
 core_methods: [E0, E2, E3]
 optional_methods: [E1, E4]
 resolution_hw: [64, 64]
@@ -9,6 +9,11 @@ force_duration: 0.25
 force_scale: 0.5
 sampling_seeds: [0, 1, 2, 3]
 training_seeds: [0, 1, 2]
+final_runs:
+  E0: [configs/training/cvae_flow_pilot.yaml, configs/training/cvae_repeats/flow_seed1.yaml, configs/training/cvae_repeats/flow_seed2.yaml]
+  E2: [configs/training/diffusion_repeats/numeric_seed0.json, configs/training/diffusion_repeats/numeric_seed1.json, configs/training/diffusion_repeats/numeric_seed2.json]
+  E3: [configs/training/diffusion_repeats/spatial_seed0.json, configs/training/diffusion_repeats/spatial_seed1.json, configs/training/diffusion_repeats/spatial_seed2.json]
+diffusion_sampling_steps: 32
 initialization: independent_runs_same_seed_policy_no_inherited_updates
 pixel_metrics_config: configs/evaluation/pixel.yaml
 action_metrics_config: configs/evaluation/actions.yaml
@@ -29,8 +34,4 @@ validation_study:
   max_gpu_hours: 0.5
   selection: quality_and_action_adherence_with_failure_counts_and_latency
 resolution_128: deferred_until_coherent_64px_samples_and_matched_core_runs
-pending:
-  - final_dataset_versions_and_ood_manifests
-  - diffusion_prediction_target_after_successful_tiny_overfit
-  - validation_selected_sampler_and_checkpoint_choices
-  - full_dataset_training_cost_and_main_run_budget
+pending: []
