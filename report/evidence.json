@@ -156,7 +156,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "5943a8ea54774118c8db49fde941f0c5507073b53040eaf8c60229efa3c270c8",
+    "main.tex": "d4662c9c6c1b224febd4d534d7a5a6095bf57c1732c9961ac0ff5cf0f42c6f6f",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -175,7 +175,8 @@
     "../docs/results/collision-validation-checks.json": "7bd7efabbd29d5fe1294712090a80796ec6c4353b619cc8cad5821b320c8c8b3",
     "../docs/results/evaluation-workload.json": "dc8edbb6daf3189bd930bcdd06fd507079a243f47fdcc30d7d53b7da2fa40ceb",
     "../docs/results/collision-label-agreement.json": "03da978697a804a7092ab3b069abb77a2e254a559d6e6ab0bccb292287494b5a",
-    "../docs/results/action-horizon-validation.json": "e8bf7b052d804ee6a8e8e0bdfa9439b05e3dc95bc942c1ca1f49c88335ee3382"
+    "../docs/results/action-horizon-validation.json": "e8bf7b052d804ee6a8e8e0bdfa9439b05e3dc95bc942c1ca1f49c88335ee3382",
+    "../docs/results/cvae-study-checks.json": "fcbdf68616d6cf0168709f1eab2a6732fde2cb8ab3153b8ce89436dcae2e799f"
   },
   "rendered_pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
   "visual_review": "All 17 pages rendered. Pages 1-15 are pixel-identical to the previously reviewed 16-page draft; pages 16-17 inspected. Tables and text are readable with no clipping, overlap, external links, em/en dashes or overfull boxes.",

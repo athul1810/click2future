@@ -184,7 +184,7 @@ TC2 job 46562 repeats the unsupervised flow decoder with training seeds 1 and 2,
 
 \subsection{Full-horizon action scores}
 \label{sec:horizon}
-The unchanged action scorers were rerun on the saved 17 October validation videos at the fixed window and at the final frame. All four validation groups are contact-free for the whole clip in every hidden-physics reference, so both horizons score the same cases. The window results reproduce the recorded reports: every count is identical, and one mean angle differs only in its sixteenth significant digit across platforms. Table~\ref{tab:horizon} gives the action results for one training seed per model.
+The unchanged action scorers were rerun on the saved 17 October validation videos at the fixed window and at the final frame. All four validation groups are contact-free for the whole clip in every hidden-physics reference, so both horizons score the same cases. The window results reproduce the recorded reports: every count is identical, and one mean angle differs only in its sixteenth significant digit across platforms. Table~\ref{tab:horizon} gives the action results for one training seed per model, plus flow CVAE seeds 1 and 2, scored with their original plans and videos in TC2 job 46615.
 
 \begin{table}[!ht]
 \centering
@@ -195,15 +195,17 @@ Source & 0.5 s & Full clip & 0.5 s & Full clip \\
 \hline
 Reference labels & 5/16 / 5/16 & 16/16 / 16/16 & 0.31 & 1.00 \\
 Reference renders & 8/16 / 8/16 & 16/16 / 16/16 & 0.50 & 1.00 \\
-Flow CVAE & 0/16 / 0/16 & 16/16 / 16/16 & 0.00 & 1.00 \\
+Flow CVAE, seed 0 & 0/16 / 0/16 & 16/16 / 16/16 & 0.00 & 1.00 \\
+Flow CVAE, seed 1 & 0/16 / 10/16 & 16/16 / 16/16 & 0.00 & 1.00 \\
+Flow CVAE, seed 2 & 0/16 / 3/16 & 16/16 / 16/16 & 0.00 & 1.00 \\
 Flow CVAE, displacement loss & 15/16 / 1/16 & 16/16 / 16/16 & 0.06 & 1.00 \\
 \hline
 \end{tabular}
-\caption{Validation action controls at native force, four scene groups. Rates are over complete pairs. Zero-force drift is 0/16 for both flow models at both horizons. E0 RGB, E2, E3 and E4 have no complete forward or reverse samples at either horizon, so their scores stay undefined.}
+\caption{Validation action controls at native force, four scene groups. Rates are over complete pairs. Zero-force drift is 0/16 for every flow run at both horizons. E0 RGB, E2, E3 and E4 have no complete forward or reverse samples at either horizon, so their scores stay undefined.}
 \label{tab:horizon}
 \end{table}
 
-The full-clip score therefore separates slow but correct motion from absent motion, while untrackable videos stay unscored. At the final frame only two of the four selected-object groups are contact-free at force 0.4. On those eight pairs, the flow CVAE completes six and the displacement-supervised variant eight, but every complete pair fails because the unselected object moves at least one pixel. Selected-object control therefore remains a failure for both flow models. Following these validation results, E0 is the unsupervised flow CVAE with training seeds 0 to 2. The RGB decoder is kept as a decoder ablation, and the displacement-supervised variant stays separate because it uses future positions during training.
+The full-clip score therefore separates slow but correct motion from absent motion, while untrackable videos stay unscored. At the final frame only two of the four selected-object groups are contact-free at force 0.4. On those eight pairs, flow CVAE seeds 0, 1 and 2 complete six, eight and two, and the displacement-supervised variant eight, but every complete pair fails because the unselected object moves at least one pixel. Selected-object control therefore remains a failure for both flow models. Following these validation results, E0 is the unsupervised flow CVAE with training seeds 0 to 2. The RGB decoder is kept as a decoder ablation, and the displacement-supervised variant stays separate because it uses future positions during training.
 
 \clearpage
 \begin{figure}[!ht]

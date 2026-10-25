@@ -43,6 +43,16 @@ python submission/cvae_motion_timing.py --plan <run>/eval/target-controls/plan.j
 python submission/cvae_selection_drift.py --evaluation <run>/eval --dataset outputs/tc2-ops/pilot-0.3/data --output <run>/selection-drift.json
 ```
 
+Score each finished run at both action horizons with the protocol's full-clip scorer.
+This is CPU work inside an allocation and uses the run's original plans and videos:
+
+```sh
+sbatch cluster/action_horizon.sbatch cvae_flow_pilot flow_seed1 flow_seed2
+```
+
+Job 46615 did this for seeds 0-2; the reports are summarized under
+`official_action_horizon` in `docs/results/cvae-study-checks.json`.
+
 Report all three seeds, including failures, with the mean and range across seeds
 for tracking, complete clips, full-horizon displacement and selection drift. The
 four sampling seeds per condition do not replace these training seeds. No test
