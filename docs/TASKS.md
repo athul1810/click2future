@@ -245,13 +245,13 @@ E4 training, sampling and actual final-head capture are measured in PR #43. The 
 
 Commit to a comparable experiment suite that fits the remaining budget.
 
-**Dependencies:** T07, T09, T10, T11. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
+**Dependencies:** T07, T09, T10, T11. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Done.
 
-- [ ] Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.
-- [ ] Use measured costs to allocate training/evaluation hours and retry reserve.
+- [x] Freeze dataset versions, model controls, sampler, K, metrics, seeds, and checkpoint criteria.
+- [x] Use measured costs to allocate training/evaluation hours and retry reserve.
 - [x] Record a justified proceed/defer decision for 128px; preserve core 64px comparisons.
-- [ ] Record all selected settings and validation-only tuning decisions.
-- [ ] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
+- [x] Record all selected settings and validation-only tuning decisions.
+- [x] Use independent runs from a common initialization policy for the main diffusion comparisons; report inherited training separately for warm-started runs.
 - [x] Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget.
 
 The bounded pilot freezes dataset-0.3 seed 730000, 16 training/four validation scenes, all four model configs, checkpoint criteria, sampler seeds and candidate tracker version 2. It uses a combined 1.5 allocated GPU-hour cap. The 16/32/64-step study is complete. The original four methods fail useful validation motion. E5 and three E6 follow-ups are measured separately; E6 improves stationarity but still fails contact quality and has incomplete wall tracks. No final model/sampler or main test protocol is selected. No 128px or E1 run was added. See MULTISCENE_PILOT.md and results/multiscene-validation-checks.json.
@@ -270,14 +270,16 @@ After the test, E2/E3 seeds 0-2 were retrained for 40,000 updates, matching E0's
 
 <a id="t14"></a>
 
+D014 and D015 record every final setting. Every E2/E3 seed, at 5k and 40k updates, trains from scratch under the same initialization policy, so the main comparison has no warm starts. Measured training and sampling costs are in results/final-cost.json; the final-phase TC2 jobs used 4.9 GPU-hours within the 6-hour, one-GPU job limit.
+
 ### T14: Run and analyze E0/E2/E3, with gated E1/E4 ablations
 
 Produce the main evidence for conditioning and supervision claims.
 
 **Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
 
-- [ ] Run E0/E2/E3 under the frozen protocol; add E1/E4 only after explicit budget gates and record actual budgets/seed counts.
-- [ ] Compare CVAE-to-diffusion and E2-to-E3; compare E3-to-E4 if funded, using generated-video quality, physical behavior and cost.
+- [x] Run E0/E2/E3 under the frozen protocol; add E1/E4 only after explicit budget gates and record actual budgets/seed counts.
+- [x] Compare CVAE-to-diffusion and E2-to-E3; compare E3-to-E4 if funded, using generated-video quality, physical behavior and cost.
 - [ ] Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.
 - [x] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [x] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
@@ -286,18 +288,20 @@ The four-method TC2 pilot and validation sampler study are measured in PR #43. E
 
 <a id="t15"></a>
 
+E0/E2/E3 ran with three training seeds each under D014 (job 46716), and the secondary 40k E2/E3 result ran under D015 (job 46837). E1/E4 are not in the final runs: E4 was gated on a working base generator, which E2/E3 never reached, and E1 stays a diagnostic. FINAL_EVALUATION.md compares quality, tracking, action controls and cost. E2/E3 sample 42-47 times slower than E0, and E2 and E3 cannot be separated. Mean and best-of-K trajectory scores are undefined on test because no scene group has all its cases complete. E0's collision analysis is pending in the report (#65).
+
 ### T15: Evaluate held-out shapes, textures, and forces
 
 Measure which action-conditioned behaviors generalize beyond training.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Not started.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Done.
 
-- [ ] Evaluate separate OOD suites while controlling the other factors.
-- [ ] Use frozen checkpoints and metrics without test-set tuning.
-- [ ] Compare against ID performance and include tracker failure rates.
-- [ ] Save representative successes/failures and state generalization limits.
+- [x] Evaluate separate OOD suites while controlling the other factors.
+- [x] Use frozen checkpoints and metrics without test-set tuning.
+- [x] Compare against ID performance and include tracker failure rates.
+- [x] Save representative successes/failures and state generalization limits.
 
-Separate dataset-0.3 ID, shape, texture, force and physics suites are implemented and merged. The multi-scene pilot is trained on that corpus, but validation generation and action response fail. All 248 test clips remain reserved; there is no trained ID/OOD result. Improve validation before opening these suites. Extractor failures and candidate tracker version 2 remain explicit in MULTISCENE_PILOT.md.
+All five reserved suites were evaluated with frozen checkpoints and no test-set tuning: D014 in job 46716 and the secondary D015 result in job 46837. FINAL_EVALUATION.md compares each split with ID and gives tracker failure rates. For E0 and the 40k E2/E3 models, shape and force OOD raise tracker failures, while texture OOD and repeated physics stay close to ID. Force OOD shows the extrapolation limit: in the 0.5-second window E0 moves none of its 24 forward samples while every reference pair reverses correctly, and E2/E3 have no complete pair there. Report Figures 4 and 5 show one fixed ID case and one fixed case per OOD split.
 
 <a id="t16"></a>
 
