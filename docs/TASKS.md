@@ -276,11 +276,11 @@ D014 and D015 record every final setting. Every E2/E3 seed, at 5k and 40k update
 
 Produce the main evidence for conditioning and supervision claims.
 
-**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** In progress.
+**Dependencies:** T13. **Owner:** BOBAN ATHUL KRISHNA and KAPOOR ANANYA. **Status:** Done.
 
 - [x] Run E0/E2/E3 under the frozen protocol; add E1/E4 only after explicit budget gates and record actual budgets/seed counts.
 - [x] Compare CVAE-to-diffusion and E2-to-E3; compare E3-to-E4 if funded, using generated-video quality, physical behavior and cost.
-- [ ] Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.
+- [x] Report mean and best-of-K trajectory scores separately, plus collision prevalence/F1.
 - [x] Export tables with run IDs, sample counts, group-based uncertainty estimates, and failures.
 - [x] Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs.
 
@@ -288,7 +288,7 @@ The four-method TC2 pilot and validation sampler study are measured in PR #43. E
 
 <a id="t15"></a>
 
-E0/E2/E3 ran with three training seeds each under D014 (job 46716), and the secondary 40k E2/E3 result ran under D015 (job 46837). E1/E4 are not in the final runs: E4 was gated on a working base generator, which E2/E3 never reached, and E1 stays a diagnostic. FINAL_EVALUATION.md compares quality, tracking, action controls and cost. E2/E3 sample 42-47 times slower than E0, and E2 and E3 cannot be separated. Mean and best-of-K trajectory scores are undefined on test because no scene group has all its cases complete. E0's collision analysis is pending in the report (#65).
+E0/E2/E3 ran with three training seeds each under D014 (job 46716), and the secondary 40k E2/E3 result ran under D015 (job 46837). E1/E4 are not in the final runs: E4 was gated on a working base generator, which E2/E3 never reached, and E1 stays a diagnostic. FINAL_EVALUATION.md compares quality, tracking, action controls and cost. E2/E3 sample 42-47 times slower than E0, and E2 and E3 cannot be separated. Scene-level mean and best-of-K trajectory scores are undefined on test because no scene group has all its cases complete. FINAL_EVALUATION.md lists them conditional on complete samples, with collision prevalence and F1, and explains why they cannot rank methods. E0's interpretation is pending in the report (#65).
 
 ### T15: Evaluate held-out shapes, textures, and forces
 
