@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -291,17 +292,42 @@ def prepare_selection_groups(plan, settings):
     return groups
 
 
-def verify_inputs(plan_path, predictions_path, actions_config=None):
+def _relocate(path, relocate):
+    """Swap a recorded prefix at a directory boundary; plans may use / or \\ separators."""
+    for old, new in relocate:
+        prefix = old.rstrip("/\\")
+        if path in (old, prefix):
+            return str(Path(new))
+        if (
+            prefix
+            and path.startswith(prefix)
+            and path[len(prefix) : len(prefix) + 1] in ("/", "\\")
+        ):
+            parts = [part for part in re.split(r"[/\\]", path[len(prefix) + 1 :]) if part]
+            return str(Path(new, *parts))
+    return path
+
+
+def verify_inputs(plan_path, predictions_path, actions_config=None, relocate=()):
     """Check plan, configuration and video identities before scoring anything.
 
     Plans prepared before this module existed keep their original evaluator hashes;
     plans prepared afterwards must still match the current evaluator exactly.
+    Relocation maps recorded path prefixes, such as TC2 folders, to local copies
+    after the plan hash is verified; every relocated file must keep its hash.
     """
     plan_path, predictions_path = Path(plan_path), Path(predictions_path)
     plan = json.loads(plan_path.read_text())
     payload = {key: value for key, value in plan.items() if key != "plan_sha256"}
     if plan["schema_version"] != 1 or _digest(payload) != plan["plan_sha256"]:
         raise ValueError("Evaluation plan changed; prepare a new plan explicitly")
+    if relocate:
+        plan = {
+            **plan,
+            "dataset": _relocate(plan["dataset"], relocate),
+            "config": _relocate(plan["config"], relocate),
+            "files": {key: _relocate(path, relocate) for key, path in plan["files"].items()},
+        }
     sources = plan["evaluator_source_sha256"]
     if Path(__file__).name in sources and sources != _evaluator_sources():
         raise ValueError("Evaluator source changed after preparing the plan")
@@ -411,8 +437,11 @@ def _reference_records(groups, horizon):
     ]
 
 
-def evaluate(plan_path, predictions_path, *, actions_config=None, bootstrap=None):
-    plan, actions_config, runs = verify_inputs(plan_path, predictions_path, actions_config)
+def evaluate(plan_path, predictions_path, *, actions_config=None, bootstrap=None, relocate=()):
+    relocate = [tuple(pair) for pair in relocate]
+    plan, actions_config, runs = verify_inputs(
+        plan_path, predictions_path, actions_config, relocate
+    )
     settings = action_settings(actions_config)
     # Same scene-group bootstrap as the original action report.
     protocol = plan["comparison_protocol"].get("bootstrap", {})
@@ -473,6 +502,7 @@ def evaluate(plan_path, predictions_path, *, actions_config=None, bootstrap=None
         "zero_force": "scored when the split contains it; otherwise omitted, reversal still scored",
         "split": plan["split"],
         "plan_sha256": plan["plan_sha256"],
+        "relocated_path_prefixes": [list(pair) for pair in relocate],
         "predictions_sha256": _sha(predictions_path),
         "actions_config_sha256": _sha(actions_config),
         "motion_threshold": settings["motion_threshold"],
@@ -494,10 +524,22 @@ def main(argv=None):
     parser.add_argument(
         "--actions-config", type=Path, help="Defaults to the plan's frozen action config"
     )
+    parser.add_argument(
+        "--relocate",
+        action="append",
+        default=[],
+        metavar="OLD=NEW",
+        help="Read files recorded under OLD from NEW; hashes are still checked",
+    )
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("Preserve previous reports; use a fresh output")
-    report = evaluate(args.plan, args.predictions, actions_config=args.actions_config)
+    relocate = [item.partition("=")[::2] for item in args.relocate]
+    if any(not old or not new for old, new in relocate):
+        parser.error("Use --relocate OLD=NEW")
+    report = evaluate(
+        args.plan, args.predictions, actions_config=args.actions_config, relocate=relocate
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     _write(args.output, report)
     print(
