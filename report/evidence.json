@@ -156,7 +156,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "e842d5dcf3ac726fcc7bf5606f4a1eb011e723ecd7a599cce928c1e00b3fee00",
+    "main.tex": "5943a8ea54774118c8db49fde941f0c5507073b53040eaf8c60229efa3c270c8",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
