@@ -481,7 +481,7 @@ inference motion, tracking thresholds or the declared physics-quality gate.
 any trained CVAE checkpoint, RGB or flow; `flow_evaluation.py` stays unchanged for
 its recorded results. Inside an allocation, pass the prepared pilot `--root`, a
 trained `--checkpoint`, a new `--output` folder and `--device cuda`. Use the
-ÃŽÂ²/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
+β/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
 `latent_dim` from `cvae_multiscene_pilot.yaml`.
 
 `submission/cvae_force_probe.py` negates the force on nonzero-force validation
