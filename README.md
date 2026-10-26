@@ -166,7 +166,6 @@ records the adopted pixel path.
 ## Next team work
 
 - Review and merge the final evaluation and report changes (#62-#65).
-- Add the E0 held-out analysis to the report (D014 assigns E0 analysis to Ananya).
 - Collect each member's reviewed contribution description (T18).
 - Rehearse the demo on the presentation setup (T17).
 - Export and check the two PDFs and the source ZIP, then submit (T20).

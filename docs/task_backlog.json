@@ -242,15 +242,16 @@
       "Record baseline samples and proposed run budgets."
     ],
     "owner": "MAITI SHRIJEET",
-    "status": "In progress",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/10",
     "completed_acceptance": [
       0,
       1,
+      2,
       3,
       4
     ],
-    "progress": "Trainer, sampler, EMA and full checkpoint implemented. Exact CPU continuation passes with/without auxiliary losses; cross-job A40 continuation matched with zero tensor difference in jobs 42909/42910. Four-clip, 2000-step pilot reduced fixed training-noise MSE from 1.02554 to 0.01965, but generated clips remain noisy and 0/248 future object observations were trackable. Tiny-overfit and held-out action-response gates remain open. Follow-up jobs 42917 (10000-step epsilon) and 42920 (2000-step velocity) completed. Longer epsilon still failed tracking; velocity reduced visible noise but recovered only 1-7/62 observations. Tiny-overfit remains open. Next isolate a deterministic single clip, noise-level reconstruction and precision. Evidence: docs/results/diffusion_debug_2026-10-16.json. A separate 5000-step single-clip FP32 velocity diagnostic completed in job 43168. Best EMA sampling tracked 109/248 future observations at 32 steps and failed the unchanged quality gate. Noise-level reconstruction separates object/background errors and precision; this joint one-clip/FP32 change does not isolate a precision effect. Evidence: results/diffusion-single-clip-checks.json. Candidate tracker-v2 update: the saved #37 boundary-loss EMA/32-step RGB spatial diagnostic tracks 247/248 observations, with all four selected tracks complete and selected ADE 0.00348. This passes the original selected-object training gate under v2. Version 2 is still awaiting Ananya's calibration review; the shared acceptance box stays open until that review. Shrijeet's separate #39/#41 structured v2 rescore and video hashes are now recorded in results/diffusion-tracker-v2-checks.json and were reviewed in PR #45. Preserve all historical v1 scores. The multi-scene E2/E3 validation failures remain separate and unresolved."
+    "progress": "Trainer, DDIM sampler, EMA and checkpoint resume are implemented and checked, including exact cross-job A40 continuation. With tracker version 2 (#42), the saved spatial boundary-loss diagnostic passes the tiny-training gate: 247/248 tracked observations and selected ADE 0.00348. These are training diagnostics, not held-out action success. Implementation acceptance is complete on main; generated-video quality is evaluated in T14-T16. Evidence: results/diffusion-implementation-acceptance.json."
   },
   {
     "id": "T11",
@@ -268,13 +269,15 @@
       "Record added parameter count, ablation switch, and working E3 training/sampling."
     ],
     "owner": "MAITI SHRIJEET",
-    "status": "In progress",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/11",
     "completed_acceptance": [
       0,
-      1
+      1,
+      2,
+      3
     ],
-    "progress": "Numeric/spatial conditioning and selected-object identity are implemented with identical backbone capacity. Forward/backward and zero-force wiring controls pass. The trainer/sampler supports both modes. Trained selected-object and reversed-force controls, coherent E3 videos and the matched E2/E3 comparison remain open."
+    "progress": "The E3 implementation checks are complete. E2 and E3 each have 964,035 parameters, so spatial routing adds no capacity. Both 5,000-update checkpoints respond to changed selection, zero force and reversal under fixed noise, and invalid masks are rejected before inference. Generated-video action quality fails through missing tracks, so no physical action-adherence improvement is claimed. The reviewed changes are on main and #11 is closed. Evidence: results/conditioning-implementation-checks.json."
   },
   {
     "id": "T12",
@@ -293,7 +296,7 @@
       "Report head predictions separately from generated-video tracking metrics."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In review",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/12",
     "completed_acceptance": [
       0,
@@ -302,7 +305,7 @@
       3,
       4
     ],
-    "progress": "E4 training, sampling and actual final-head capture are measured in PR #43. The 5,000-update multi-scene run has head ADE 0.1314 and event F1 0.1324, while RGB tracks 162/5,952 observations. The separate collision overfit check learns the contact (head event F1 1.0 on its single training clip) and tracks 247/248 RGB observations. Its one missing selected observation still fails the strict gate. Implementation is ready for review; generated-video quality remains in T14/T16. Evidence: results/multiscene-validation-checks.json.",
+    "progress": "E4 training, sampling and final-head capture are measured in PR #43. The 5,000-update run has head ADE 0.1314 and event F1 0.1324, while RGB tracks 162/5,952 observations. The collision overfit check learns its single training contact. Implementation was reviewed by Sanjay and merged in #43; generated-video quality remains in T14/T16. Evidence: results/multiscene-validation-checks.json.",
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
@@ -325,11 +328,15 @@
       "Reserve a small validation-only hyperparameter study, such as sampling-step counts, and record the tested values and compute budget."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In progress",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/13",
-    "progress": "The bounded pilot freezes dataset-0.3 seed 730000, 16 training/four validation scenes, all four model configs, checkpoint criteria, sampler seeds and candidate tracker version 2. It uses a combined 1.5 allocated GPU-hour cap. The 16/32/64-step study is complete. All models fail useful validation motion, so no final model/sampler or main test protocol is selected. No 128px or E1 run was added. See MULTISCENE_PILOT.md and results/multiscene-validation-checks.json. separate e5 follow-up: one seed, 6000 training updates with step 5000 selected by validation denoising loss. pose supervision changes the method; final protocol and independent repeats remain open. see docs/TRAJECTORY_PILOT.md.",
+    "progress": "D013-D015 freeze every final setting: E0 as the flow CVAE, E2/E3 pilot recipes, training seeds 0-2, 32 DDIM steps, four sampling seeds, metrics and checkpoint rules. Every E2/E3 seed trains from scratch under one initialization policy. No 128px or E1 run was added. Measured costs are in results/final-cost.json; the final-phase TC2 jobs used 4.9 GPU-hours within the 6-hour, one-GPU job limit. D015's 40k E2/E3 runs are a secondary result declared before their test job.",
     "completed_acceptance": [
+      0,
+      1,
       2,
+      3,
+      4,
       5
     ],
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
@@ -350,11 +357,14 @@
       "Run the planned hyperparameter study and analyze its quality/cost tradeoff; include strengths, limitations, and visual examples from our own runs."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In progress",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/14",
-    "progress": "The four-method TC2 pilot and validation sampler study are measured in PR #43. Each method generates 96 validation videos and 32 selected-object-control videos. Tables retain SSIM/LPIPS, scene bootstrap intervals, null ADE/FDE/coverage, contact prevalence and tracking/action failures. All four original methods fail; static copying has better appearance scores. Flow follow-ups are exploratory and stay separate. Final useful-checkpoint comparisons and independent repeats remain open. Evidence: results/multiscene-validation-checks.json; report/main.tex.",
+    "progress": "E0/E2/E3 ran with three training seeds each under D014 (job 46716), and the secondary 40k E2/E3 result under D015 (job 46837). E1/E4 are not in the final runs. FINAL_EVALUATION.md compares quality, tracking, action controls and cost; E2/E3 sample 42-47 times slower than E0 and cannot be separated from each other. Scene-level trajectory scores are undefined because no scene group is complete; conditional scores are listed with their limits. Report Section 3.15 analyses E0's held-out results.",
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43.",
     "completed_acceptance": [
+      0,
+      1,
+      2,
       3,
       4
     ]
@@ -374,10 +384,15 @@
       "Save representative successes/failures and state generalization limits."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "Not started",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/15",
-    "progress": "Separate dataset-0.3 ID, shape, texture, force and physics suites are implemented and merged. The multi-scene pilot is trained on that corpus, but validation generation and action response fail. All 248 test clips remain reserved; there is no trained ID/OOD result. Improve validation before opening these suites. Extractor failures and candidate tracker version 2 remain explicit in MULTISCENE_PILOT.md.",
-    "completed_acceptance": [],
+    "progress": "All five reserved suites were evaluated with frozen checkpoints and no test-set tuning (D014, job 46716; D015, job 46837). FINAL_EVALUATION.md compares each split with ID and gives tracker failure rates: shape and force OOD raise tracker failures for E0 and the 40k E2/E3 models. On force OOD E0 moves none of its 24 forward samples in the 0.5-second window. Report Figures 4 and 5 show one fixed ID case and one fixed case per OOD split.",
+    "completed_acceptance": [
+      0,
+      1,
+      2,
+      3
+    ],
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
@@ -395,9 +410,9 @@
       "Present quality/adherence alongside diversity and clearly label single-reference metrics."
     ],
     "owner": "BOBAN ATHUL KRISHNA and KAPOOR ANANYA",
-    "status": "In review",
+    "status": "Done",
     "issue_url": "https://github.com/athul1810/click2future/issues/16",
-    "progress": "The validation measurement work is complete and ready for review. E5 is assessed against all 84 hidden-physics references across all 24 conditions. Six action strata retain spread, reference coverage, collision-frequency variation, missing counts and scene intervals. Pixel-exact pose replay finds geometric penetration above one native pixel in 22/96 generated clips versus 0/84 oracle controls. Full-horizon zero-force drift is 16/16 versus 0/16 static copies; the original half-second 0/16 result is retained. Boundary calibration remains limited and candidate tracker v2 still needs independent review. These negative results distinguish model diversity from useful physical uncertainty. Source: CONTACT_UNCERTAINTY_AUDIT.md; results/contact-uncertainty-audit.json. Model improvements and final ID/OOD comparisons remain in T13-T15/T17.",
+    "progress": "The validation measurement work was reviewed by Sanjay and merged in #47. The frozen E5 audit finds penetration in 22/96 clips and full-horizon zero-force drift in 16/16. The paired-action E6 package removes measured zero-force and passive drift but keeps penetration in 12/96 clips. Independent review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. The final E0/E2/E3 runs score the same action controls on all five reserved splits (D014/D015). Source: CONTACT_UNCERTAINTY_AUDIT.md; results/contact-uncertainty-comparison.json.",
     "completed_acceptance": [
       0,
       1,

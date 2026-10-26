@@ -64,8 +64,8 @@ target in the window. Over the full clip:
 
 - The CVAE-versus-diffusion comparison favours E0 on every score defined for all
   three methods (tracking, SSIM and LPIPS), but
-  E0 is not a working physical model. Its motion is slow, it does not scale with
-  force and it does not respect the clicked object.
+  E0 is not a working physical model. Its motion is slow, it does not scale consistently
+  with force and it does not respect the clicked object.
 - The E2-versus-E3 comparison cannot be made on physical behaviour, because
   neither produces a trackable video. Their image scores differ by at most 0.04
   SSIM: E2 is slightly higher on four splits and E3 on force OOD. With two scene groups

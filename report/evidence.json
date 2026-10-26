@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "7c72f8f737bc02de33f0e199c9a9ece51f370ec50be242375161a4c5babfdc8c",
+    "main.tex": "3e7fe58b090c5073da3aa59a313a841c4a441b03e538eed47a9c5de61ff560d0",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -192,8 +192,8 @@
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813"
   },
-  "rendered_pdf_sha256": "2bd01218b050e23b6cc45af47638c5b0adbde0f8e55b71f0e8351688c4185905",
-  "visual_review": "All 24 pages built. Pages 1, 4, 5, 9, 10 and 20-24 rendered and inspected, covering every edited passage, the full-horizon table and the new final held-out sections, figure and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
+  "rendered_pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e",
+  "visual_review": "All 25 pages built. Pages 1, 4, 5, 9, 10 and 20-25 were rendered and inspected across the final-results edits, covering every edited passage, the full-horizon table, the final held-out sections, figures, E0 analysis and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 221,
@@ -213,7 +213,6 @@
     "current_archive_matches_tested_archive_exactly": true
   },
   "remaining": [
-    "E0 held-out analysis paragraph (action controls, selection probe, contact timing)",
     "Contact quality, wall completeness and forward-motion uncertainty",
     "Member-reviewed contribution descriptions",
     "Independent integration review and final course submission checks"
@@ -555,5 +554,30 @@
       21
     ],
     "pdf_sha256": "2bd01218b050e23b6cc45af47638c5b0adbde0f8e55b71f0e8351688c4185905"
+  },
+  "review_followup_2026_10_26": {
+    "scope": "Two wording edits after the #63-#65 reviews; no table, figure or result changes.",
+    "edits": [
+      "Conclusion: E0 does not scale motion consistently with force magnitude (review suggestion on #63; the force-OOD reversed pushes move further than forward pushes).",
+      "Section 3.15 E0 analysis: the zero-force median is stated per split (at most 0.009, below one pixel). Recomputed from the job 46716 full-clip reports: per-split medians 0.0025-0.0092, pooled 0.0058."
+    ],
+    "e0_numbers_rechecked_from_job_46716_reports": [
+      "window reversal 2/24, 0/24, 1/24 and 2/24 on ID, shape, texture and repeated physics; 24/24 over the full clip",
+      "every seed moves 8/8 forward and 8/8 reversed samples over the full clip on those four splits",
+      "zero-force drift above one pixel only in seed 0, scene group 00730029: 2.20 and 1.43 pixels",
+      "force OOD window: reversed median 0.0811 (24/24 moving), forward median 0.0054 (0/24 at the threshold)",
+      "full-clip selection, eight ID pairs: object 0 selected moves 0.1150 with the other object below one pixel in 8/8; object 1 selected moves 0.0092 while object 0 drifts 0.0532, above one pixel in 8/8",
+      "collision event F1 0.088-0.221; encounter F1 0.921, 0.947, 0.945, 0.754 and 0.308"
+    ],
+    "pages": 25,
+    "pages_visually_inspected": [
+      20,
+      25
+    ],
+    "overfull_boxes": 0,
+    "undefined_references": 0,
+    "external_urls": 0,
+    "em_or_en_dashes_in_source": 0,
+    "pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e"
   }
 }
