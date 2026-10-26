@@ -19,11 +19,11 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T08 | [Optional: train and validate a shared frame autoencoder](https://github.com/athul1810/click2future/issues/8) | T03, T06 | MAITI SHRIJEET | Deferred |
 | T09 | [Train the conditional VAE baseline E0](https://github.com/athul1810/click2future/issues/9) | T03, T06 | KAPOOR ANANYA | Done |
 | T10 | [Implement first-frame and numeric-action diffusion E1/E2](https://github.com/athul1810/click2future/issues/10) | T03, T04, T06 | MAITI SHRIJEET | Done |
-| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | In review |
+| T11 | [Implement object-centric spatial conditioning E3](https://github.com/athul1810/click2future/issues/11) | T10, T04 | MAITI SHRIJEET | Done |
 | T12 | [Add trajectory and collision supervision E4](https://github.com/athul1810/click2future/issues/12) | T11, T07 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
-| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | In progress |
-| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Not started |
+| T13 | [Freeze experiment settings and decide the 128px gate](https://github.com/athul1810/click2future/issues/13) | T07, T09, T10, T11 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
+| T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
+| T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | In progress |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
@@ -33,7 +33,8 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 The matched canvas-loss follow-up in #49 completes 95/96 validation clips versus
 88/96 for its control. Penetration remains in 15/96 clips and overall quality
 still fails. See [the comparison](WALL_TRAINING.md) for T13-T16 evidence and
-remaining limits. No final-test split is opened.
+remaining limits. That comparison used no final-test split; the five reserved
+splits were opened later under D014 (see [final evaluation](FINAL_EVALUATION.md)).
 
 The 25 October matched warm-start comparison completes 96/96 clips for both
 recipes. Tail penetration loss reduces penetrating clips from 15/96 to 12/96,
@@ -214,14 +215,14 @@ validation failures remain in T14-T16. See results/diffusion-implementation-acce
 
 Test whether localizing the action improves physical action adherence.
 
-**Dependencies:** T10, T04. **Owner:** MAITI SHRIJEET. **Status:** In review.
+**Dependencies:** T10, T04. **Owner:** MAITI SHRIJEET. **Status:** Done.
 
 - [x] Fuse a selected-object feature, numeric force embedding, and spatial action map into the denoiser.
 - [x] Keep target identification available in E2 so E2-to-E3 isolates the spatial module.
 - [x] Check selected-object changes, zero/reversed action, and empty or invalid masks with fixed sampling seeds.
 - [x] Record added parameter count, ablation switch, and working E3 training/sampling.
 
-The E3 implementation checks are complete and in review. E2 and E3 each have 964,035 parameters; spatial routing adds no capacity. The two actual 5,000-update checkpoints respond to changed selection, zero force and reversal under one fixed-noise input, and empty/nonbinary/wrong-shape masks are rejected before inference. The existing 96-video validation and 16-pair selected-object controls have also run for both methods. Their generated-video action quality fails through missing tracks, so no physical action-adherence improvement is claimed. Model quality and final comparisons remain in T14-T16. Evidence: results/conditioning-implementation-checks.json and results/multiscene-validation-checks.json. This implementation issue closes when its reviewed changes reach main.
+The E3 implementation checks are complete. E2 and E3 each have 964,035 parameters; spatial routing adds no capacity. The two actual 5,000-update checkpoints respond to changed selection, zero force and reversal under one fixed-noise input, and empty/nonbinary/wrong-shape masks are rejected before inference. The existing 96-video validation and 16-pair selected-object controls have also run for both methods. Their generated-video action quality fails through missing tracks, so no physical action-adherence improvement is claimed. Model quality and final comparisons remain in T14-T16. Evidence: results/conditioning-implementation-checks.json and results/multiscene-validation-checks.json. The reviewed changes are on main and #11 is closed.
 
 <a id="t12"></a>
 
@@ -268,9 +269,9 @@ TC2 job 46716 ran the final held-out evaluation on all five reserved splits from
 
 After the test, E2/E3 seeds 0-2 were retrained for 40,000 updates, matching E0's 40,000 training clips but not its updates or GPU time (jobs 46733 and 46788). On validation the noise goes away (SSIM 0.93), but only 0-8 of 96 clips are complete per run. D015 ran them on the five reserved splits as a secondary result (job 46837), with E0 reproducing job 46716 exactly. SSIM is 0.93-0.94 outside force OOD, but E2/E3 have 0-15 complete samples per split and get no 0.5-second reversal right. The D014 results stay primary. See FINAL_EVALUATION.md, results/diffusion-long-validation.json and results/final-evaluation-d015.json.
 
-<a id="t14"></a>
-
 D014 and D015 record every final setting. Every E2/E3 seed, at 5k and 40k updates, trains from scratch under the same initialization policy, so the main comparison has no warm starts. Measured training and sampling costs are in results/final-cost.json; the final-phase TC2 jobs used 4.9 GPU-hours within the 6-hour, one-GPU job limit.
+
+<a id="t14"></a>
 
 ### T14: Run and analyze E0/E2/E3, with gated E1/E4 ablations
 
@@ -286,9 +287,9 @@ Produce the main evidence for conditioning and supervision claims.
 
 The four-method TC2 pilot and validation sampler study are measured in PR #43. Each method generates 96 validation videos and 32 selected-object-control videos. Tables retain SSIM/LPIPS, scene bootstrap intervals, null ADE/FDE/coverage, contact prevalence and tracking/action failures. All four original methods fail; static copying has better appearance scores. Flow follow-ups are exploratory and stay separate. The separate E5/E6 follow-ups now include a reviewed contact/stationarity comparison and independently recomputed action-family uncertainty. These combined training changes do not replace the matched E2/E3 question. Final useful-checkpoint comparisons and independent repeats remain open. Evidence: results/multiscene-validation-checks.json; results/contact-uncertainty-comparison.json; report/main.tex.
 
-<a id="t15"></a>
+E0/E2/E3 ran with three training seeds each under D014 (job 46716), and the secondary 40k E2/E3 result ran under D015 (job 46837). E1/E4 are not in the final runs: E4 was gated on a working base generator, which E2/E3 never reached, and E1 stays a diagnostic. FINAL_EVALUATION.md compares quality, tracking, action controls and cost. E2/E3 sample 42-47 times slower than E0, and E2 and E3 cannot be separated. Scene-level mean and best-of-K trajectory scores are undefined on test because no scene group has all its cases complete. FINAL_EVALUATION.md lists them conditional on complete samples, with collision prevalence and F1, and explains why they cannot rank methods. Report Section 3.15 analyses E0's held-out action, selection and contact results (#65).
 
-E0/E2/E3 ran with three training seeds each under D014 (job 46716), and the secondary 40k E2/E3 result ran under D015 (job 46837). E1/E4 are not in the final runs: E4 was gated on a working base generator, which E2/E3 never reached, and E1 stays a diagnostic. FINAL_EVALUATION.md compares quality, tracking, action controls and cost. E2/E3 sample 42-47 times slower than E0, and E2 and E3 cannot be separated. Scene-level mean and best-of-K trajectory scores are undefined on test because no scene group has all its cases complete. FINAL_EVALUATION.md lists them conditional on complete samples, with collision prevalence and F1, and explains why they cannot rank methods. E0's interpretation is pending in the report (#65).
+<a id="t15"></a>
 
 ### T15: Evaluate held-out shapes, textures, and forces
 
@@ -316,7 +317,7 @@ Distinguish physically meaningful uncertainty from visual noise.
 - [x] Evaluate zero force, reversed force, and selected-object changes using the fixed action-control protocol and report stationary/tracking failures.
 - [x] Present quality/adherence alongside diversity and clearly label single-reference metrics.
 
-The validation measurement work was reviewed by Sanjay and merged in #47; #16 closed automatically. #42 and #43 are also merged. The frozen E5 audit finds penetration in 22/96 clips versus 0/84 oracle controls and full-horizon zero-force drift in 16/16 clips. PR #48 adds three E6 packages. The paired-action package has 0/16 zero-force drift, 0/32 passive drift and penetration in 12/96 clips. All six incomplete clips are wall cases. The reproducible clipping audit traces all 32 missing observations to sprite area lost at the canvas. Independent C review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. Forward spread remains below the finite references and wall coverage is undefined. Version 2 passive scores retain the original reports and count exactly one pixel as drift. Overall physics quality, independent repeats and final ID/OOD results remain open. See CONTACT_UNCERTAINTY_AUDIT.md and results/contact-uncertainty-comparison.json.
+The validation measurement work was reviewed by Sanjay and merged in #47; #16 closed automatically. #42 and #43 are also merged. The frozen E5 audit finds penetration in 22/96 clips versus 0/84 oracle controls and full-horizon zero-force drift in 16/16 clips. PR #48 adds three E6 packages. The paired-action package has 0/16 zero-force drift, 0/32 passive drift and penetration in 12/96 clips. All six incomplete clips are wall cases. The reproducible clipping audit traces all 32 missing observations to sprite area lost at the canvas. Independent C review reproduces all 72 E6 future/uncertainty reports and all 18 action strata. Forward spread remains below the finite references and wall coverage is undefined. Version 2 passive scores retain the original reports and count exactly one pixel as drift. Overall physics quality and independent repeats of these follow-ups remain open. See CONTACT_UNCERTAINTY_AUDIT.md and results/contact-uncertainty-comparison.json. The final E0/E2/E3 runs score the same action controls on all five reserved splits (D014/D015); see FINAL_EVALUATION.md.
 
 
 <a id="t17"></a>
@@ -350,7 +351,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5, all three E6 packages, corrected passive scores, action-family uncertainty and the fixed E5/E6 four-seed figure. It also includes the matched canvas-loss comparison and its remaining failures. report/contributions.md records evidence-supported draft descriptions; member reviews and Ananya's completed-work account remain pending. Final export remains open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
+The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5, all three E6 packages, corrected passive scores, action-family uncertainty and the fixed E5/E6 four-seed figure. It also includes the matched canvas-loss comparison and its remaining failures. report/contributions.md records evidence-supported draft descriptions; member reviews and Ananya's completed-work account remain pending. Sections 3.15-3.17 add the final held-out results, the E0 held-out analysis and the secondary D015 result (#65). Final export remains open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
 
 <a id="t19"></a>
 

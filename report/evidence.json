@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 20,
+  "pages": 25,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -10,7 +10,7 @@
     "Experiments and analysis",
     "Conclusion"
   ],
-  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages; no model test split evaluated; matched training-only canvas penalty with its control",
+  "model_comparison_scope": "Four-method bounded validation pilot, two exploratory CVAE follow-ups, pose-supervised E5 and three E6 contact-aware training packages, matched training-only canvas penalty with its control; final held-out evaluation of E0/E2/E3 with three training seeds each (D014) and a secondary E2/E3 test result at E0's training-clip count, not its updates or GPU time (D015)",
   "dataset": {
     "version": "dataset-0.3",
     "seed": 730000,
@@ -136,7 +136,13 @@
     "wall_clipping": "docs/results/contact-wall-clipping.json",
     "wall_training": "docs/results/wall-training-validation.json",
     "collision_validation": "docs/results/collision-validation-audit.json",
-    "evaluation_inventory": "docs/results/evaluation-workload.json"
+    "evaluation_inventory": "docs/results/evaluation-workload.json",
+    "diffusion_seeds_validation": "docs/results/diffusion-seeds-validation.json",
+    "final_evaluation": "docs/results/final-evaluation.json",
+    "diffusion_long_validation": "docs/results/diffusion-long-validation.json",
+    "final_evaluation_d015": "docs/results/final-evaluation-d015.json",
+    "final_cost": "docs/results/final-cost.json",
+    "final_conditional_scores": "docs/results/final-conditional-scores.json"
   },
   "figure": {
     "sample_id": "g03-scene-00730016-forward-p00",
@@ -156,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "d4662c9c6c1b224febd4d534d7a5a6095bf57c1732c9961ac0ff5cf0f42c6f6f",
+    "main.tex": "3e7fe58b090c5073da3aa59a313a841c4a441b03e538eed47a9c5de61ff560d0",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -176,10 +182,18 @@
     "../docs/results/evaluation-workload.json": "dc8edbb6daf3189bd930bcdd06fd507079a243f47fdcc30d7d53b7da2fa40ceb",
     "../docs/results/collision-label-agreement.json": "03da978697a804a7092ab3b069abb77a2e254a559d6e6ab0bccb292287494b5a",
     "../docs/results/action-horizon-validation.json": "e8bf7b052d804ee6a8e8e0bdfa9439b05e3dc95bc942c1ca1f49c88335ee3382",
-    "../docs/results/cvae-study-checks.json": "fcbdf68616d6cf0168709f1eab2a6732fde2cb8ab3153b8ce89436dcae2e799f"
+    "../docs/results/cvae-study-checks.json": "fcbdf68616d6cf0168709f1eab2a6732fde2cb8ab3153b8ce89436dcae2e799f",
+    "figures/final_heldout.png": "8187a7991073497b9a8d22e52b9c0c3cc4592e6824d9a84f56b873e65d901430",
+    "../docs/results/diffusion-seeds-validation.json": "57f3f0c9c67523f855e3283a6c2142cfd42f4e96c53ab7bda098d5ae21a6ab37",
+    "../docs/results/final-evaluation.json": "61f93d10ea7eea189f732956e55f42941f06a5dc54eb34f466254280058fe5c1",
+    "../docs/results/diffusion-long-validation.json": "f5986af88466c4539d6a923f243dab19fb9d589bc151a913c5a94a5faff3fa5f",
+    "../docs/results/final-evaluation-d015.json": "bba292ed3114cac81c8ce48f1521c9b653dac7708e9c77f3a50b4b67a09b1a41",
+    "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
+    "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
+    "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813"
   },
-  "rendered_pdf_sha256": "903afcd6157d747d421497e10f0aa3ce6d4120fc9bdcdf2b2ce70502848e4b19",
-  "visual_review": "All 17 pages rendered. Pages 1-15 are pixel-identical to the previously reviewed 16-page draft; pages 16-17 inspected. Tables and text are readable with no clipping, overlap, external links, em/en dashes or overfull boxes.",
+  "rendered_pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e",
+  "visual_review": "All 25 pages built. Pages 1, 4, 5, 9, 10 and 20-25 were rendered and inspected across the final-results edits, covering every edited passage, the full-horizon table, the final held-out sections, figures, E0 analysis and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 221,
@@ -200,8 +214,6 @@
   },
   "remaining": [
     "Contact quality, wall completeness and forward-motion uncertainty",
-    "Independent training repeats and frozen final comparisons",
-    "Reserved ID/OOD/physics model evaluations",
     "Member-reviewed contribution descriptions",
     "Independent integration review and final course submission checks"
   ],
@@ -421,5 +433,151 @@
     "overfull_boxes": 0,
     "underfull_boxes": "one pre-existing bibliography entry",
     "note": "No PDF renderer was available, so pages were not visually inspected for this build. Inspect page 9 before export."
+  },
+  "final_heldout_figure": {
+    "sample_id": "g03-scene-00730020-forward-p00",
+    "split": "id_test",
+    "selection": "first sorted ID-test forward condition; sample seed 0; training seed 0",
+    "frames": [
+      0,
+      4,
+      8,
+      16,
+      24,
+      31
+    ],
+    "videos_sha256": {
+      "E0-seed0": "b1995683684906314c3a10a02d81750f8776fca97363858ba6bfca94d7a04774",
+      "E2-seed0": "7174b3a815f80237c3193b902e01078250d655e9800a664cf2bc192db0f38713",
+      "E3-seed0": "a04a0cf8ab8d332d29668a88011ef15162ced0d1b3ceb46532307d0ca92a7456",
+      "E2-seed0-40000": "9e0ef5310ba5773f4c7c7df18dbca80dbcbf4f6cc134feda427cd10f959650f4",
+      "E3-seed0-40000": "8285eb7e2aa9005777706a1763f862fe4e0ffb12b7959ac317661e42fd45204d"
+    },
+    "figure_sha256": "8187a7991073497b9a8d22e52b9c0c3cc4592e6824d9a84f56b873e65d901430"
+  },
+  "final_evaluation_verification": {
+    "status": "built_rendered_and_checked",
+    "pages": 24,
+    "pdf_sha256": "3ffb438f4e6d2f1c5e9783b45efedca591dec67b7faf47dc2c0d532a71811fdc",
+    "new_sections": [
+      "sec:final",
+      "sec:d015",
+      "sec:cost"
+    ],
+    "new_tables": [
+      "tab:final",
+      "tab:d015",
+      "tab:split_tracking",
+      "tab:cost"
+    ],
+    "new_figure": [
+      "fig:final",
+      "fig:ood"
+    ],
+    "table_values_checked_against_measured_records": 109,
+    "records": [
+      "docs/results/diffusion-long-validation.json",
+      "docs/results/diffusion-seeds-validation.json",
+      "docs/results/final-conditional-scores.json",
+      "docs/results/final-cost.json",
+      "docs/results/final-evaluation-d015.json",
+      "docs/results/final-evaluation.json"
+    ],
+    "figure_videos_matched_to_prediction_manifests": 14,
+    "pages_visually_inspected": [
+      1,
+      4,
+      5,
+      9,
+      10,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "em_or_en_dashes_in_source": 0,
+    "external_urls": 0,
+    "overfull_boxes": 0,
+    "underfull_boxes": "one pre-existing bibliography entry",
+    "undefined_references": 0,
+    "note": "Page 10 now holds the full-horizon table that action_horizon_verification asked to inspect; it renders correctly."
+  },
+  "final_ood_figure": {
+    "selection": "first sorted forward condition per OOD split; sample seed 0; training seed 0",
+    "shape_ood": {
+      "sample_id": "g03-scene-00730022-forward-p00",
+      "videos_sha256": {
+        "E0-seed0": "434f863467699fd3e1d140a8b4f0eb5089be1334efa860ee6a6287d2c05fbdb6",
+        "E2-seed0-40000": "ed5b387f23f879a42ba8a896b6c172a7f8d60cc78b42a4ce1fc42a1d3d80389e",
+        "E3-seed0-40000": "7ad1ec497e337d32ba528a20d45695bb08d0fa4420f26bddb6b916129cf6ed41"
+      }
+    },
+    "texture_ood": {
+      "sample_id": "g03-scene-00730024-forward-p00",
+      "videos_sha256": {
+        "E0-seed0": "3a04ed173370fec5d30ed8c45c353d91ac901a44c956362f5a07c237d079540c",
+        "E2-seed0-40000": "add905e2199085ccb79ee5fd4b9d4abe642a598ee01537d83ee93b80ffa14a09",
+        "E3-seed0-40000": "137babecb77c564a50ad3552ade879228af4050bb9aa2a2252ac72067c975334"
+      }
+    },
+    "force_ood": {
+      "sample_id": "g03-scene-00730026-forward-p00",
+      "videos_sha256": {
+        "E0-seed0": "24997a8cf8da4db2d44b836e3603afaff11bbb80b0762f97788ed956b3852f6d",
+        "E2-seed0-40000": "5395632997f61cafe48bdffd9c1bbcdc648f344d14280b2bae3c67a07949c27e",
+        "E3-seed0-40000": "7403fdc7393e9b89f58938b21c3b61b7af08dedf64a82f1daeb7663ac66e39f3"
+      }
+    },
+    "frames": [
+      0,
+      16,
+      31
+    ],
+    "figure_sha256": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119"
+  },
+  "e0_analysis_verification": {
+    "scope": "E0 held-out analysis at the end of Section 3.15, the 3.7 label sec:cvae_study and two abstract sentences.",
+    "sources": [
+      "docs/results/final-evaluation.json (job 46716)",
+      "e0-reports-job46716.tar.gz per-split and per-case reports (761 files, checksums verified)",
+      "dataset-0.3 training-split metadata (force direction and selection by action)"
+    ],
+    "pages": 25,
+    "external_urls": 0,
+    "em_or_en_dashes": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "rendered_pages_inspected": [
+      1,
+      20,
+      21
+    ],
+    "pdf_sha256": "2bd01218b050e23b6cc45af47638c5b0adbde0f8e55b71f0e8351688c4185905"
+  },
+  "review_followup_2026_10_26": {
+    "scope": "Two wording edits after the #63-#65 reviews; no table, figure or result changes.",
+    "edits": [
+      "Conclusion: E0 does not scale motion consistently with force magnitude (review suggestion on #63; the force-OOD reversed pushes move further than forward pushes).",
+      "Section 3.15 E0 analysis: the zero-force median is stated per split (at most 0.009, below one pixel). Recomputed from the job 46716 full-clip reports: per-split medians 0.0025-0.0092, pooled 0.0058."
+    ],
+    "e0_numbers_rechecked_from_job_46716_reports": [
+      "window reversal 2/24, 0/24, 1/24 and 2/24 on ID, shape, texture and repeated physics; 24/24 over the full clip",
+      "every seed moves 8/8 forward and 8/8 reversed samples over the full clip on those four splits",
+      "zero-force drift above one pixel only in seed 0, scene group 00730029: 2.20 and 1.43 pixels",
+      "force OOD window: reversed median 0.0811 (24/24 moving), forward median 0.0054 (0/24 at the threshold)",
+      "full-clip selection, eight ID pairs: object 0 selected moves 0.1150 with the other object below one pixel in 8/8; object 1 selected moves 0.0092 while object 0 drifts 0.0532, above one pixel in 8/8",
+      "collision event F1 0.088-0.221; encounter F1 0.921, 0.947, 0.945, 0.754 and 0.308"
+    ],
+    "pages": 25,
+    "pages_visually_inspected": [
+      20,
+      25
+    ],
+    "overfull_boxes": 0,
+    "undefined_references": 0,
+    "external_urls": 0,
+    "em_or_en_dashes_in_source": 0,
+    "pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e"
   }
 }
