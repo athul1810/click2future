@@ -41,6 +41,9 @@ recipes. Tail penetration loss reduces penetrating clips from 15/96 to 12/96,
 but contact-event F1 regresses and seven trajectory cases still fail. Neither
 checkpoint is promoted. See [research and results](RESEARCH_2026-10-25.md).
 
+The separate E7 work in #66 is post-test exploratory, uses training/validation only,
+and does not replace the reviewed E0/E2/E3 comparison.
+
 ## Task details
 
 <a id="t01"></a>

@@ -30,7 +30,7 @@ class CheckpointModel:
         self.sampling_steps = sampling_steps
         self.future_frames = None
         self.resolution = None
-        if state.get("trajectory_format_version") in (1, 2):
+        if state.get("trajectory_format_version") in (1, 2, 3):
             from click2future.training.sample_trajectory import load_trajectory
 
             self.model, state = load_trajectory(checkpoint, device)
@@ -43,6 +43,8 @@ class CheckpointModel:
             detail = "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA"
             if state["trajectory_format_version"] == 2:
                 detail += "; contact/stationary training; unchanged inference"
+            elif state["trajectory_format_version"] == 3:
+                detail += "; experimental shared-world relational refinement"
         elif state.get("checkpoint_version") == 1:
             config = TrainConfig(**state["config"])
             config.validate()
@@ -140,6 +142,18 @@ class CheckpointModel:
                 self.metadata["sampling_source_sha256"]["training/contact_checkpoint.py"] = sha256(
                     folder / "training/contact_checkpoint.py"
                 )
+            elif state["trajectory_format_version"] == 3:
+                self.metadata.update(
+                    training_variant="shared_world_relational",
+                    world_condition=state["config"]["world_condition"],
+                    relational=state["config"]["relational"],
+                )
+                if state["config"]["world_condition"]:
+                    self.metadata["supervision"] += (
+                        "; physical labels in training, prior at inference"
+                    )
+                for name in ("models/world_motion.py", "training/world_checkpoint.py"):
+                    self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
 
     @torch.inference_mode()
     def predict(self, first_frame, selected_mask, force_xy, *, seeds, future_frames, cancelled):

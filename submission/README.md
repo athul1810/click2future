@@ -540,6 +540,28 @@ only. original metrics, passive rest, geometric replay, clipping and both action
 horizons remain reported. the one-pixel margin and the public sampler are unchanged.
 use fresh output directories; preserve failed phases. no final tests are opened.
 
+
+## Experimental sampled-world relational refinement
+
+E7 is a separate post-test exploratory comparison with training-only physical
+labels and sampled prior worlds at inference. It does not replace the main
+E0/E2/E3 results. It retains the existing force limit of 1.1.
+
+Set `C2F_PROJECT` to committed source, `C2F_PYTHON` to the validated interpreter,
+`C2F_DATA_DIR` to the frozen original corpus, `C2F_SUPPLEMENT` to the retained
+training action supplement, `C2F_WARM_START` to the wall checkpoint,
+`C2F_WORLD_RESULTS` to a fresh output and `C2F_SOURCE_REVISION` to the commit.
+Submit `sbatch submission/world_comparison.sbatch` on TC2. The driver prepares
+checked train/validation labels once, trains all three matched arms for 8,000
+updates and evaluates the fixed final checkpoints plus the untouched anchor.
+It preserves partial attempts. No test arrays are evaluated by this driver.
+
+After an evaluation failure, the same driver accepts `--trained-run OLD_OUTPUT`
+with a fresh `--output`. It verifies every completed training record, checkpoint,
+recipe, teacher and cache identity before reusing the three fixed checkpoints.
+It creates fresh evaluation plans and never trains again in this mode. Keep the
+original comparison, failed logs and both source revisions; account for all jobs.
+
 ## Final TC2 runs (D013-D015)
 
 These scripts produced the final runs and held-out results. Each needs
@@ -568,3 +590,4 @@ refuse an existing output folder, and none overwrites results.
 LPIPS needs the AlexNet weights in the Torch cache. Sampled predictions are bound
 to plan hashes, and plans bind the evaluation source, so prepare, sample and score
 from one account and one source revision.
+
