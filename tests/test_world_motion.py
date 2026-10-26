@@ -34,7 +34,7 @@ def test_world_prior_is_action_independent_reproducible_and_does_not_touch_rng()
             sample_world(bad)
 
 
-def test_warm_start_is_bitwise_identical_in_all_three_arms(tmp_path):
+def test_warm_start_preserves_teacher_and_initializes_bitwise_matched_arms(tmp_path):
     _, data, geometry, _ = setup_trainer()
     original = ContactTrainer(
         data, geometry, ContactConfig(steps=4, width=16, layers=1, batch_size=3)
@@ -56,18 +56,21 @@ def test_warm_start_is_bitwise_identical_in_all_three_arms(tmp_path):
     noisy = torch.randn((2, 31, 2, 4), generator=torch.Generator().manual_seed(6))
     features, force, sigma = row["features"][:2], row["force"][:2], torch.ones(2)
     expected = original.ema(noisy, sigma, features, force)
-    parameters = []
+    outputs, parameters = [], []
     for relational, world_condition in ((False, False), (True, False), (True, True)):
         trainer, _, _, _ = setup_trainer(relational=relational, world_condition=world_condition)
         rng = trainer.generator.get_state().clone()
         trainer.initialize(tmp_path / "wall.pt", identity)
         actual = trainer.model(noisy, sigma, features, force, sample_world(5).expand(2, -1, -1))
-        assert torch.equal(actual, expected)
+        # Tensor layout can change kernel summation order on arm64 (observed 2.9e-11).
+        torch.testing.assert_close(actual, expected, rtol=0, atol=1e-9)
+        outputs.append(actual)
         assert trainer.step == 0 and not trainer.optimizer.state
         assert torch.equal(rng, trainer.generator.get_state())
         parameters.append(copy.deepcopy(trainer.model.state_dict()))
         with pytest.raises(ValueError, match="data differ"):
             trainer.initialize(tmp_path / "wall.pt", {**identity, "geometry_sha256": "wrong"})
+    assert all(torch.equal(output, outputs[0]) for output in outputs[1:])
     for state in parameters[1:]:
         assert all(torch.equal(value, state[key]) for key, value in parameters[0].items())
 

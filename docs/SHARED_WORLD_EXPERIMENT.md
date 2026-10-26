@@ -53,6 +53,11 @@ the old backbone and the zero-output new adapters initially reproduce it exactly
 optimizer, run step and private RNG reset. this is warm-start refinement, not
 an independent scratch repeat.
 
+the migration fixture keeps bitwise equality between the three arms. against
+the original model it uses absolute tolerance 1e-9 and zero relative tolerance:
+reviewers on arm64 found a shared 2.9e-11 layout-dependent difference in one
+output. this changes no model, checkpoint, generated pixel or evaluation margin.
+
 - retain the 336 original training clips plus 2,080 training actions: 19,328
   augmented examples. validate slot/physical-label identity under all square
   rotations/reflections; require the original five warm-start data identities.
