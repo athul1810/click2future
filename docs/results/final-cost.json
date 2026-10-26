@@ -1,0 +1,198 @@
+{
+  "status": "measured_cost_record",
+  "scope": "Training and sampling cost of the final E0/E2/E3 runs, from saved job records. Sampling times come from the test jobs' sampling.json files and include checkpoint loading and video export. All times are wall-clock on TC2.",
+  "parameters": {
+    "E0_flow_cvae": 574226,
+    "E2_E3_diffusion": 964035,
+    "source": "report/main.tex, Methods and Section 3.3"
+  },
+  "training": {
+    "E0_flow_cvae_20000_updates_batch_2": {
+      "gpu": "NVIDIA A40 for job 46562 (TC2N02); not recorded for job 46333",
+      "training_seconds": {
+        "seed0": 745.1,
+        "seed1": 757.1,
+        "seed2": 741.6
+      },
+      "source": "docs/results/cvae-study-checks.json",
+      "slurm_job_ids": {
+        "seed0": 46333,
+        "seed1": 46562,
+        "seed2": 46562
+      },
+      "checkpoint_sha256": {
+        "seed0": "df3c55157e81cd5ca77f560c5e4c4fd9f4110f11c309dbfd9fad0bd8ec0dd23b",
+        "seed1": "9bad6a79a50f2c23d453fffe26e3c9afe6c25c4b519fc511a0a602d90201a3a2",
+        "seed2": "49b393c4d06c7f7260018c6ccf312d6cdbe7b9de6248f295d98a3deec836de2b"
+      },
+      "checkpoint_relation": "Same checkpoint hashes as the E0 runs in the D014 and D015 evaluations."
+    },
+    "E2_E3_5000_updates_batch_1": {
+      "gpu": "NVIDIA A40",
+      "slurm_job_id": 46704,
+      "wall_seconds_per_run_including_startup": [
+        281,
+        247,
+        247,
+        247,
+        249,
+        246
+      ],
+      "run_order": [
+        "E2-seed0",
+        "E2-seed1",
+        "E2-seed2",
+        "E3-seed0",
+        "E3-seed1",
+        "E3-seed2"
+      ],
+      "source": "stage timestamps in diffusion-repeats-46704.out"
+    },
+    "E2_E3_40000_updates_batch_1_A40": {
+      "gpu": "NVIDIA A40",
+      "slurm_job_id": 46733,
+      "wall_seconds_per_run_including_restarts": {
+        "E2-seed0": 1970,
+        "E3-seed0": 1965
+      },
+      "source": "stage timestamps in diffusion-long-46733.out"
+    },
+    "E2_E3_40000_updates_batch_1_L40S": {
+      "gpu": "NVIDIA L40S",
+      "slurm_job_id": 46788,
+      "wall_seconds_per_run_including_restarts": {
+        "E2-seed1": 1156,
+        "E3-seed1": 1133,
+        "E2-seed2": 1130,
+        "E3-seed2": 1135
+      },
+      "source": "stage timestamps in diffusion-long-46788.out"
+    }
+  },
+  "sampling_on_test": {
+    "D014": {
+      "slurm_job_id": 46716,
+      "gpu": "NVIDIA A40",
+      "device": "cuda",
+      "runs": {
+        "E0-seed0": {
+          "seconds_including_load_and_export": 4.56,
+          "videos": 312,
+          "seconds_per_video": 0.0146
+        },
+        "E0-seed1": {
+          "seconds_including_load_and_export": 3.73,
+          "videos": 312,
+          "seconds_per_video": 0.012
+        },
+        "E0-seed2": {
+          "seconds_including_load_and_export": 3.71,
+          "videos": 312,
+          "seconds_per_video": 0.0119
+        },
+        "E2-seed0": {
+          "seconds_including_load_and_export": 167.29,
+          "videos": 312,
+          "seconds_per_video": 0.5362
+        },
+        "E2-seed1": {
+          "seconds_including_load_and_export": 167.3,
+          "videos": 312,
+          "seconds_per_video": 0.5362
+        },
+        "E2-seed2": {
+          "seconds_including_load_and_export": 167.46,
+          "videos": 312,
+          "seconds_per_video": 0.5367
+        },
+        "E3-seed0": {
+          "seconds_including_load_and_export": 167.71,
+          "videos": 312,
+          "seconds_per_video": 0.5375
+        },
+        "E3-seed1": {
+          "seconds_including_load_and_export": 167.74,
+          "videos": 312,
+          "seconds_per_video": 0.5376
+        },
+        "E3-seed2": {
+          "seconds_including_load_and_export": 167.76,
+          "videos": 312,
+          "seconds_per_video": 0.5377
+        }
+      }
+    },
+    "D015": {
+      "slurm_job_id": 46837,
+      "gpu": "NVIDIA A40",
+      "device": "cuda",
+      "runs": {
+        "E0-seed0": {
+          "seconds_including_load_and_export": 4.36,
+          "videos": 312,
+          "seconds_per_video": 0.014
+        },
+        "E0-seed1": {
+          "seconds_including_load_and_export": 3.68,
+          "videos": 312,
+          "seconds_per_video": 0.0118
+        },
+        "E0-seed2": {
+          "seconds_including_load_and_export": 3.69,
+          "videos": 312,
+          "seconds_per_video": 0.0118
+        },
+        "E2-seed0-40000": {
+          "seconds_including_load_and_export": 183.03,
+          "videos": 312,
+          "seconds_per_video": 0.5866
+        },
+        "E2-seed1-40000": {
+          "seconds_including_load_and_export": 182.71,
+          "videos": 312,
+          "seconds_per_video": 0.5856
+        },
+        "E2-seed2-40000": {
+          "seconds_including_load_and_export": 182.78,
+          "videos": 312,
+          "seconds_per_video": 0.5858
+        },
+        "E3-seed0-40000": {
+          "seconds_including_load_and_export": 183.16,
+          "videos": 312,
+          "seconds_per_video": 0.5871
+        },
+        "E3-seed1-40000": {
+          "seconds_including_load_and_export": 182.41,
+          "videos": 312,
+          "seconds_per_video": 0.5846
+        },
+        "E3-seed2-40000": {
+          "seconds_including_load_and_export": 182.28,
+          "videos": 312,
+          "seconds_per_video": 0.5842
+        }
+      }
+    }
+  },
+  "sampling_settings": {
+    "E0": "one conditional-prior decoder pass per future",
+    "E2_E3": "32 DDIM steps per future, EMA weights",
+    "futures_per_condition": 4,
+    "frames_per_video": 32
+  },
+  "gpu_time_athul_account_final_phase": {
+    "jobs": {
+      "46703": 403,
+      "46704": 2305,
+      "46716": 1932,
+      "46733": 4689,
+      "46788": 5431,
+      "46804": 842,
+      "46837": 2045
+    },
+    "total_seconds": 17647,
+    "total_hours": 4.9,
+    "note": "Elapsed allocation per job from sacct. The E0 seed jobs ran on Ananya's account and are not included. TC2 states no total GPU-hour quota; jobs are capped at 6 hours and one GPU."
+  }
+}

@@ -17,7 +17,7 @@ def source_copy(tmp_path):
     root = Path(__file__).resolve().parents[1]
     target = tmp_path / "source"
     target.mkdir()
-    for name in ("src", "configs", "tests", "submission"):
+    for name in ("src", "configs", "tests", "submission", "cluster"):
         shutil.copytree(root / name, target / name, ignore=shutil.ignore_patterns("__pycache__"))
     for name in (".python-version", "pyproject.toml"):
         shutil.copyfile(root / name, target / name)
@@ -77,6 +77,9 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "submission/check_e4_collision.py" in names
         assert "submission/check_e4_collision.sbatch" in names
         assert "submission/pilot_image_metrics.py" in names
+        assert "cluster/final_evaluation.py" in names
+        assert "cluster/diffusion_long.sbatch" in names
+        assert "cluster/README.md" not in names
         assert "src/click2future/models/cvae_flow.py" in names
         assert "src/click2future/evaluation/pilot.py" in names
         assert "src/click2future/training/multiscene_pilot.py" in names

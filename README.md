@@ -159,19 +159,18 @@ tests/               Simulator, data, prototype, and evaluation checks
 See [development setup](docs/SETUP.md) for the locked environment and
 [metric usage](docs/METRICS.md) for RGB evaluation. The [training guide](docs/TRAINING.md) covers the implemented trainer and sampler.
 The [local demo](app/README.md) runs actual checkpoints with click/drag controls,
-four seeded futures and labelled simulator/replay panels. Held-out model quality
-and the final demo rehearsal remain open. The [build plan](docs/BUILD_PLAN.md)
+four seeded futures and labelled simulator/replay panels. The held-out evaluation
+is complete (see Results); the final demo rehearsal remains open. The [build plan](docs/BUILD_PLAN.md)
 records the adopted pixel path.
 
 ## Next team work
 
-- B: improve coherent, action-responsive validation generation before another main run.
-- C: review the measured comparison, E4 heads and action failures with B.
-- Ananya: continue CVAE prior and motion work from the saved follow-ups.
-- Shrijeet: finish demo overlays, image input and presentation checks.
+- Review and merge the final evaluation and report changes (#62-#65).
+- Collect each member's reviewed contribution description (T18).
+- Rehearse the demo on the presentation setup (T17).
+- Export and check the two PDFs and the source ZIP, then submit (T20).
 
-The ID/OOD test splits stay reserved while validation fails. Final report analysis,
-independent repeats and reviewed member contributions remain open.
+The five reserved splits were opened under D014, and every failure is reported.
 
 ## References
 
@@ -197,4 +196,11 @@ collision timing regresses slightly. Overall physics quality still fails.
 The [collision validation handoff](docs/COLLISION_VALIDATION.md) locates sustained
 overlap in the contact cases and checks the scorer on correct reference videos.
 The [evaluation workload](docs/EXPERIMENT_PROTOCOL.md#prepared-workload-and-final-run-packet)
-is prepared from metadata; final checkpoints and test results remain pending.
+was prepared from metadata before the final run.
+
+The [final held-out evaluation](docs/FINAL_EVALUATION.md) runs E0/E2/E3 with three
+training seeds each on all five reserved splits (D014), plus a secondary E2/E3 result
+at E0's training-clip count (D015). E0 keeps appearance and tracks most clips, but
+fails the 0.5-second action window and selected-object control. At 5,000 updates
+E2/E3 produce no fully tracked sample; at 40,000 they produce clean frames but lose
+object identity. No method is a working physical model on held-out scenes.

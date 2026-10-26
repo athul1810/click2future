@@ -2,9 +2,10 @@
 
 This archive contains the simulator, data generator, diffusion and CVAE trainers,
 seeded samplers, auxiliary losses, evaluation, configs and correctness checks.
-It contains no datasets or model weights. The current pilots do not establish
-held-out video quality. Training and checkpoint continuation are verified; final
-experiments and the demo remain unfinished.
+It contains no datasets or model weights. The final E0/E2/E3 runs and their
+held-out evaluation (D014, plus the secondary D015 result) are complete, and no
+method is a working physical model on held-out scenes. The `cluster/` scripts
+described at the end reproduce those TC2 runs. The demo rehearsal remains open.
 This is not the final submission.
 
 The bounded multi-scene pilot has fixed configs in
@@ -480,7 +481,7 @@ inference motion, tracking thresholds or the declared physics-quality gate.
 any trained CVAE checkpoint, RGB or flow; `flow_evaluation.py` stays unchanged for
 its recorded results. Inside an allocation, pass the prepared pilot `--root`, a
 trained `--checkpoint`, a new `--output` folder and `--device cuda`. Use the
-Î²/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
+ÃŽÂ²/latent configs in `configs/training/cvae_sweep/`, which change only `beta` and
 `latent_dim` from `cvae_multiscene_pilot.yaml`.
 
 `submission/cvae_force_probe.py` negates the force on nonzero-force validation
@@ -560,3 +561,33 @@ with a fresh `--output`. It verifies every completed training record, checkpoint
 recipe, teacher and cache identity before reusing the three fixed checkpoints.
 It creates fresh evaluation plans and never trains again in this mode. Keep the
 original comparison, failed logs and both source revisions; account for all jobs.
+
+## Final TC2 runs (D013-D015)
+
+These scripts produced the final runs and held-out results. Each needs
+`C2F_PROJECT` (this source folder), `C2F_PYTHON` (the TC2 interpreter) and, where
+listed, `C2F_DATA` (the dataset-0.3 folder) and `C2F_SOURCE_REVISION`. Use new
+output folders. The training jobs skip finished stages, the evaluation jobs
+refuse an existing output folder, and none overwrites results.
+
+- `cluster/cvae_study.sbatch <config.yaml> ...` trains and validates flow CVAE
+  configs into `C2F_STUDY_DIR`, using the prepared pilot in `C2F_PILOT_ROOT`.
+  `configs/training/cvae_repeats/flow_seed1.yaml` and `flow_seed2.yaml` are the
+  E0 seeds 1 and 2.
+- `cluster/action_horizon.sbatch <run> ...` scores finished CVAE runs in
+  `C2F_STUDY_DIR` at the 0.5-second window and the full clip.
+- `cluster/diffusion_repeats.sbatch` trains E2/E3 seeds 0-2 from
+  `configs/training/diffusion_repeats/` and scores them with E0 on validation.
+  It also needs `C2F_STUDY_DIR` and `C2F_E0_DIR`.
+- `cluster/final_rehearsal.sbatch` scores a run spec (`C2F_RUNS`) on validation
+  from one shared plan into `C2F_OUT`. It never opens a test split.
+- `cluster/final_evaluation.sbatch` freezes all ten test plans, then samples and
+  scores every run in `C2F_RUNS` on the five reserved splits into `C2F_OUT`.
+  `C2F_DECISION` labels the record (default D014).
+- `cluster/diffusion_long.sbatch` trains E2/E3 for 40,000 updates with checkpoints
+  at 10k, 20k and 40k (`C2F_STUDY_DIR`, seeds in `C2F_SEEDS`, default 0).
+
+LPIPS needs the AlexNet weights in the Torch cache. Sampled predictions are bound
+to plan hashes, and plans bind the evaluation source, so prepare, sample and score
+from one account and one source revision.
+

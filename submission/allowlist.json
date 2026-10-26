@@ -36,6 +36,14 @@
     "submission/wall_comparison.sbatch",
     "submission/contact_risk_comparison.py",
     "submission/contact_risk_comparison.sbatch",
+    "cluster/cvae_study.sbatch",
+    "cluster/action_horizon.sbatch",
+    "cluster/diffusion_repeats.sbatch",
+    "cluster/final_rehearsal.py",
+    "cluster/final_rehearsal.sbatch",
+    "cluster/final_evaluation.py",
+    "cluster/final_evaluation.sbatch",
+    "cluster/diffusion_long.sbatch",
     "submission/world_comparison.py",
     "submission/world_comparison.sbatch"
   ]

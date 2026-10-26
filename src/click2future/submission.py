@@ -18,6 +18,17 @@ DEMO_ASSETS = {
     "src/click2future/demo/static/style.css",
     "src/click2future/demo/static/app.js",
 }
+# TC2 jobs behind the final E0/E2/E3 runs and held-out results (D013-D015).
+FINAL_RUN_SCRIPTS = {
+    "cluster/cvae_study.sbatch",
+    "cluster/action_horizon.sbatch",
+    "cluster/diffusion_repeats.sbatch",
+    "cluster/final_rehearsal.py",
+    "cluster/final_rehearsal.sbatch",
+    "cluster/final_evaluation.py",
+    "cluster/final_evaluation.sbatch",
+    "cluster/diffusion_long.sbatch",
+}
 FORBIDDEN_PARTS = {
     ".git",
     ".venv",
@@ -40,6 +51,7 @@ def _check(name, payload):
         in {"README.md", "pyproject.toml", "constraints.txt", ".python-version", "MANIFEST.json"}
         or (name.startswith("src/click2future/") and path.suffix == ".py")
         or name in DEMO_ASSETS
+        or name in FINAL_RUN_SCRIPTS
         or (name.startswith("configs/") and path.suffix in {".yaml", ".toml", ".json"})
         or (
             path.parent == PurePosixPath("tests")
