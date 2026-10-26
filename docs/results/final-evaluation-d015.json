@@ -1,0 +1,2064 @@
+{
+  "status": "measured_secondary_final_evaluation",
+  "decision": "D015",
+  "scope": "Secondary, post-test evaluation: E2/E3 retrained for 40,000 updates (the same 40,000 training clips as E0, not the same updates or GPU time), training seeds 0-2, on all five reserved splits, with the three E0 seeds sampled again. Chosen after the D014 test results were seen. The D014 results stay the primary comparison. Nothing was tuned on these results.",
+  "slurm_job_id": 46837,
+  "source_revision": "fd43f11890c410058147f5a76c8e717e7420869f",
+  "gpu": "NVIDIA A40",
+  "torch_version": "2.11.0+cu128",
+  "runs_spec_sha256": "6989ede0b521f3712cb99eb33ee1a460aa52b94b3af207938cc7cacb8f445eae",
+  "runs": [
+    {
+      "run_id": "E0-seed0",
+      "method": "E0",
+      "training_seed": 0,
+      "training_steps": 20000,
+      "checkpoint_sha256": "df3c55157e81cd5ca77f560c5e4c4fd9f4110f11c309dbfd9fad0bd8ec0dd23b"
+    },
+    {
+      "run_id": "E0-seed1",
+      "method": "E0",
+      "training_seed": 1,
+      "training_steps": 14000,
+      "checkpoint_sha256": "9bad6a79a50f2c23d453fffe26e3c9afe6c25c4b519fc511a0a602d90201a3a2"
+    },
+    {
+      "run_id": "E0-seed2",
+      "method": "E0",
+      "training_seed": 2,
+      "training_steps": 13000,
+      "checkpoint_sha256": "49b393c4d06c7f7260018c6ccf312d6cdbe7b9de6248f295d98a3deec836de2b"
+    },
+    {
+      "run_id": "E2-seed0-40000",
+      "method": "E2",
+      "training_seed": 0,
+      "training_steps": 40000,
+      "checkpoint_sha256": "00fa3ddf9132af6ef751d100b39c0cc23ec509815ee9fa8fe9978adce7e94a84"
+    },
+    {
+      "run_id": "E2-seed1-40000",
+      "method": "E2",
+      "training_seed": 1,
+      "training_steps": 40000,
+      "checkpoint_sha256": "c8e3ce426c7678e141feb35e0c05cdf978f97762af59671d6ed293b60c7d6bee"
+    },
+    {
+      "run_id": "E2-seed2-40000",
+      "method": "E2",
+      "training_seed": 2,
+      "training_steps": 40000,
+      "checkpoint_sha256": "d8cf92de10828197c357b9237a69f40d859896132b84c65c837c1978bc73e77a"
+    },
+    {
+      "run_id": "E3-seed0-40000",
+      "method": "E3",
+      "training_seed": 0,
+      "training_steps": 40000,
+      "checkpoint_sha256": "ea7b4d451645e3e67ede35e13c63971184f0d0ba7ecaf42795e785760d9d2c4d"
+    },
+    {
+      "run_id": "E3-seed1-40000",
+      "method": "E3",
+      "training_seed": 1,
+      "training_steps": 40000,
+      "checkpoint_sha256": "20eb4973231502c710015a86625b542c764123a059ff08dc416187dcca403211"
+    },
+    {
+      "run_id": "E3-seed2-40000",
+      "method": "E3",
+      "training_seed": 2,
+      "training_steps": 40000,
+      "checkpoint_sha256": "0a75bf14b330887a9c577e58f22a54e3df1857c814087a1d84088bcbe4a6decd"
+    }
+  ],
+  "sampling_seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "diffusion_sampling_steps": 32,
+  "seconds": 2039.08,
+  "suites_failed": [],
+  "e0_reproduction": "Every E0 entry in this record equals results/final-evaluation.json (job 46716), and all 522 E0 per-sample report files are byte-identical. Both jobs ran on A40.",
+  "splits": {
+    "id_test": {
+      "plan_sha256": "1c6643cd0213823c499d3a07d5026c9c334379b48544d46048f6d85708e5cdbd",
+      "selection_plan_sha256": "d3805b2a8a16bc448745a0a5ca3f34a2318367d7a3e4fcbf30fc84598e8a78fe",
+      "conditions": 12,
+      "tracking_per_run": {
+        "E0-seed0": {
+          "tracked": 2829,
+          "expected": 2976,
+          "complete_all_object_clips": 40,
+          "clips": 48
+        },
+        "E0-seed1": {
+          "tracked": 2976,
+          "expected": 2976,
+          "complete_all_object_clips": 48,
+          "clips": 48
+        },
+        "E0-seed2": {
+          "tracked": 2976,
+          "expected": 2976,
+          "complete_all_object_clips": 48,
+          "clips": 48
+        },
+        "E2-seed0-40000": {
+          "tracked": 1394,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E2-seed1-40000": {
+          "tracked": 1943,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E2-seed2-40000": {
+          "tracked": 1380,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E3-seed0-40000": {
+          "tracked": 1546,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E3-seed1-40000": {
+          "tracked": 2000,
+          "expected": 2976,
+          "complete_all_object_clips": 10,
+          "clips": 48
+        },
+        "E3-seed2-40000": {
+          "tracked": 1089,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        }
+      },
+      "methods": {
+        "E0": {
+          "runs": [
+            "E0-seed0",
+            "E0-seed1",
+            "E0-seed2"
+          ],
+          "complete_samples": 136,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9799059583135905,
+            "ci": [
+              0.9772738890052052,
+              0.9825380276219758
+            ]
+          },
+          "lpips": {
+            "estimate": 0.014330781385756726,
+            "ci": [
+              0.013756610192840558,
+              0.014904952578672892
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.032930107526881726,
+            "ci": [
+              0.03225806451612904,
+              0.03360215053763441
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": {
+            "estimate": 0.08823529411764706,
+            "ci": [
+              0.04,
+              0.11627906976744186
+            ]
+          },
+          "collision_encounter_f1": {
+            "estimate": 0.9213483146067416,
+            "ci": [
+              0.8837209302325582,
+              0.9565217391304348
+            ]
+          }
+        },
+        "E2": {
+          "runs": [
+            "E2-seed0-40000",
+            "E2-seed1-40000",
+            "E2-seed2-40000"
+          ],
+          "complete_samples": 0,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9328102410337795,
+            "ci": [
+              0.9310785722863031,
+              0.9345419097812561
+            ]
+          },
+          "lpips": {
+            "estimate": 0.05653324310902938,
+            "ci": [
+              0.051027996026085494,
+              0.06203849019197327
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.6041666666666667,
+            "ci": [
+              0.46863799283154123,
+              0.7396953405017922
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        },
+        "E3": {
+          "runs": [
+            "E3-seed0-40000",
+            "E3-seed1-40000",
+            "E3-seed2-40000"
+          ],
+          "complete_samples": 10,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9329824587212638,
+            "ci": [
+              0.9321126242274946,
+              0.933852293215033
+            ]
+          },
+          "lpips": {
+            "estimate": 0.0588745056974074,
+            "ci": [
+              0.04874682047977663,
+              0.06900219091503818
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.6131272401433692,
+            "ci": [
+              0.5089605734767025,
+              0.7172939068100358
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        }
+      },
+      "action_horizons": {
+        "actions": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 3,
+                  "reverse.moving_samples": 7,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.08333333333333333,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 1,
+                  "reverse.moving_samples": 0,
+                  "zero.drifting_samples": 1,
+                  "reversal.complete_pairs": 16
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.5
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 1,
+                  "reverse.moving_samples": 0,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 16
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 24,
+                  "reverse.moving_samples": 24,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 1.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 4,
+                  "reverse.moving_samples": 2,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 2
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.5,
+                  "zero.drift_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 3,
+                  "reverse.moving_samples": 0,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 0
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": null,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              }
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 24
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 5
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 1,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 8
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.5,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 1.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "suite_seconds": {
+        "sample_seconds": 174.34,
+        "score_seconds": 122.8,
+        "horizon_seconds": 19.37
+      },
+      "pooled_action_counts": {
+        "actions": {
+          "window": {
+            "E0": {
+              "zero_complete": 24,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 2
+            },
+            "E2": {
+              "zero_complete": 8,
+              "zero_drifting": 1,
+              "reversal_complete": 16,
+              "reversal_correct": 0
+            },
+            "E3": {
+              "zero_complete": 12,
+              "zero_drifting": 0,
+              "reversal_complete": 16,
+              "reversal_correct": 0
+            }
+          },
+          "full": {
+            "E0": {
+              "zero_complete": 24,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 24
+            },
+            "E2": {
+              "zero_complete": 0,
+              "zero_drifting": 0,
+              "reversal_complete": 2,
+              "reversal_correct": 1
+            },
+            "E3": {
+              "zero_complete": 8,
+              "zero_drifting": 0,
+              "reversal_complete": 0,
+              "reversal_correct": 0
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "E0": {
+              "selection_complete": 24,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E2": {
+              "selection_complete": 5,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            }
+          },
+          "full": {
+            "E0": {
+              "selection_complete": 8,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 8
+            },
+            "E2": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            }
+          }
+        }
+      }
+    },
+    "shape_ood": {
+      "plan_sha256": "309b89f38c0f2af3e8f02bbbada5f4d83238b25deb68caa0250e2034687f2a56",
+      "selection_plan_sha256": "f4e90720de7c80a2f3749ad2eb8a111e8859d57594461c4f85c16ac0411351c7",
+      "conditions": 12,
+      "tracking_per_run": {
+        "E0-seed0": {
+          "tracked": 2692,
+          "expected": 2976,
+          "complete_all_object_clips": 23,
+          "clips": 48
+        },
+        "E0-seed1": {
+          "tracked": 2834,
+          "expected": 2976,
+          "complete_all_object_clips": 31,
+          "clips": 48
+        },
+        "E0-seed2": {
+          "tracked": 2916,
+          "expected": 2976,
+          "complete_all_object_clips": 36,
+          "clips": 48
+        },
+        "E2-seed0-40000": {
+          "tracked": 709,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E2-seed1-40000": {
+          "tracked": 1191,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E2-seed2-40000": {
+          "tracked": 660,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E3-seed0-40000": {
+          "tracked": 966,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E3-seed1-40000": {
+          "tracked": 1754,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E3-seed2-40000": {
+          "tracked": 724,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        }
+      },
+      "methods": {
+        "E0": {
+          "runs": [
+            "E0-seed0",
+            "E0-seed1",
+            "E0-seed2"
+          ],
+          "complete_samples": 90,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9656189383233788,
+            "ci": [
+              0.9655220668131806,
+              0.9657158098335769
+            ]
+          },
+          "lpips": {
+            "estimate": 0.02942463353342499,
+            "ci": [
+              0.02706855679368075,
+              0.031780710273169234
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.07302867383512544,
+            "ci": [
+              0.07078853046594981,
+              0.07526881720430108
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": {
+            "estimate": 0.125,
+            "ci": [
+              0.0,
+              0.16666666666666666
+            ]
+          },
+          "collision_encounter_f1": {
+            "estimate": 0.3076923076923077,
+            "ci": [
+              0.0,
+              0.36363636363636365
+            ]
+          }
+        },
+        "E2": {
+          "runs": [
+            "E2-seed0-40000",
+            "E2-seed1-40000",
+            "E2-seed2-40000"
+          ],
+          "complete_samples": 0,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9378746932550219,
+            "ci": [
+              0.9334585601664543,
+              0.9422908263435894
+            ]
+          },
+          "lpips": {
+            "estimate": 0.09270549557187617,
+            "ci": [
+              0.09001523031858145,
+              0.09539576082517089
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.6574820788530465,
+            "ci": [
+              0.3767921146953405,
+              0.9381720430107526
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        },
+        "E3": {
+          "runs": [
+            "E3-seed0-40000",
+            "E3-seed1-40000",
+            "E3-seed2-40000"
+          ],
+          "complete_samples": 0,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9386127807817954,
+            "ci": [
+              0.9381250837577717,
+              0.9391004778058191
+            ]
+          },
+          "lpips": {
+            "estimate": 0.08847269689556592,
+            "ci": [
+              0.08124760538923777,
+              0.09569778840189407
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.5887096774193548,
+            "ci": [
+              0.303763440860215,
+              0.8736559139784946
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        }
+      },
+      "action_horizons": {
+        "actions": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 2,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 1,
+                  "reverse.moving_samples": 4,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 10
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 3,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 16
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 24,
+                  "reverse.moving_samples": 24,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 1.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 4,
+                  "reverse.moving_samples": 11,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 5
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.8888888888888888,
+                  "zero.drift_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 8,
+                  "reverse.moving_samples": 11,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 9
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.9166666666666666,
+                  "zero.drift_rate_over_complete": null
+                }
+              }
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 24
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 1,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "suite_seconds": {
+        "sample_seconds": 173.17,
+        "score_seconds": 111.43,
+        "horizon_seconds": 16.44
+      },
+      "pooled_action_counts": {
+        "actions": {
+          "window": {
+            "E0": {
+              "zero_complete": 23,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 0
+            },
+            "E2": {
+              "zero_complete": 0,
+              "zero_drifting": 0,
+              "reversal_complete": 10,
+              "reversal_correct": 0
+            },
+            "E3": {
+              "zero_complete": 7,
+              "zero_drifting": 0,
+              "reversal_complete": 16,
+              "reversal_correct": 0
+            }
+          },
+          "full": {
+            "E0": {
+              "zero_complete": 21,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 24
+            },
+            "E2": {
+              "zero_complete": 0,
+              "zero_drifting": 0,
+              "reversal_complete": 5,
+              "reversal_correct": 4
+            },
+            "E3": {
+              "zero_complete": 0,
+              "zero_drifting": 0,
+              "reversal_complete": 9,
+              "reversal_correct": 8
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "E0": {
+              "selection_complete": 24,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E2": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            }
+          },
+          "full": {
+            "E0": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E2": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            }
+          }
+        }
+      }
+    },
+    "texture_ood": {
+      "plan_sha256": "8a7f427f420ed026f8ad628048dba75d007e3d6e48d32b5333f3ba4aa6ba31d4",
+      "selection_plan_sha256": "051765aefce57d235ef3fefa41840fae5b7a9b49ac3027074662fda7aed49b9a",
+      "conditions": 12,
+      "tracking_per_run": {
+        "E0-seed0": {
+          "tracked": 2823,
+          "expected": 2976,
+          "complete_all_object_clips": 39,
+          "clips": 48
+        },
+        "E0-seed1": {
+          "tracked": 2888,
+          "expected": 2976,
+          "complete_all_object_clips": 38,
+          "clips": 48
+        },
+        "E0-seed2": {
+          "tracked": 2972,
+          "expected": 2976,
+          "complete_all_object_clips": 46,
+          "clips": 48
+        },
+        "E2-seed0-40000": {
+          "tracked": 1576,
+          "expected": 2976,
+          "complete_all_object_clips": 5,
+          "clips": 48
+        },
+        "E2-seed1-40000": {
+          "tracked": 1642,
+          "expected": 2976,
+          "complete_all_object_clips": 4,
+          "clips": 48
+        },
+        "E2-seed2-40000": {
+          "tracked": 1436,
+          "expected": 2976,
+          "complete_all_object_clips": 2,
+          "clips": 48
+        },
+        "E3-seed0-40000": {
+          "tracked": 1304,
+          "expected": 2976,
+          "complete_all_object_clips": 3,
+          "clips": 48
+        },
+        "E3-seed1-40000": {
+          "tracked": 1720,
+          "expected": 2976,
+          "complete_all_object_clips": 6,
+          "clips": 48
+        },
+        "E3-seed2-40000": {
+          "tracked": 1632,
+          "expected": 2976,
+          "complete_all_object_clips": 6,
+          "clips": 48
+        }
+      },
+      "methods": {
+        "E0": {
+          "runs": [
+            "E0-seed0",
+            "E0-seed1",
+            "E0-seed2"
+          ],
+          "complete_samples": 123,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9735867107552015,
+            "ci": [
+              0.9717948846274723,
+              0.9753785368829307
+            ]
+          },
+          "lpips": {
+            "estimate": 0.016845143816594844,
+            "ci": [
+              0.011578945942809662,
+              0.022111341690380027
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.03449820788530466,
+            "ci": [
+              0.033154121863799284,
+              0.035842293906810034
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": {
+            "estimate": 0.22058823529411764,
+            "ci": [
+              0.0,
+              0.2912621359223301
+            ]
+          },
+          "collision_encounter_f1": {
+            "estimate": 0.9473684210526315,
+            "ci": [
+              0.896551724137931,
+              0.9787234042553191
+            ]
+          }
+        },
+        "E2": {
+          "runs": [
+            "E2-seed0-40000",
+            "E2-seed1-40000",
+            "E2-seed2-40000"
+          ],
+          "complete_samples": 11,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9369451723067896,
+            "ci": [
+              0.9319817871809741,
+              0.9419085574326053
+            ]
+          },
+          "lpips": {
+            "estimate": 0.049223197114405204,
+            "ci": [
+              0.04249906472706963,
+              0.05594732950174077
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.49574372759856633,
+            "ci": [
+              0.4905913978494623,
+              0.5008960573476703
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        },
+        "E3": {
+          "runs": [
+            "E3-seed0-40000",
+            "E3-seed1-40000",
+            "E3-seed2-40000"
+          ],
+          "complete_samples": 15,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9369480692709087,
+            "ci": [
+              0.9296217146683095,
+              0.9442744238735079
+            ]
+          },
+          "lpips": {
+            "estimate": 0.04776982337149406,
+            "ci": [
+              0.038758326170062245,
+              0.05678132057292587
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.5136648745519714,
+            "ci": [
+              0.4896953405017921,
+              0.5376344086021506
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        }
+      },
+      "action_horizons": {
+        "actions": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 3,
+                  "reverse.moving_samples": 7,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.041666666666666664,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 0,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 0,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 21
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 24,
+                  "reverse.moving_samples": 24,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 1.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 3,
+                  "reverse.moving_samples": 6,
+                  "zero.drifting_samples": 2,
+                  "reversal.complete_pairs": 3
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.6666666666666666,
+                  "zero.drift_rate_over_complete": 0.375
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 5,
+                  "reverse.moving_samples": 5,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 2
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 1.0,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              }
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 24
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 6
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 0,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {},
+                "rates": {}
+              },
+              "E2": {
+                "counts": {},
+                "rates": {}
+              },
+              "E3": {
+                "counts": {},
+                "rates": {}
+              }
+            }
+          }
+        }
+      },
+      "suite_seconds": {
+        "sample_seconds": 173.85,
+        "score_seconds": 121.27,
+        "horizon_seconds": 18.94
+      },
+      "pooled_action_counts": {
+        "actions": {
+          "window": {
+            "E0": {
+              "zero_complete": 24,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 1
+            },
+            "E2": {
+              "zero_complete": 12,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 0
+            },
+            "E3": {
+              "zero_complete": 12,
+              "zero_drifting": 0,
+              "reversal_complete": 21,
+              "reversal_correct": 0
+            }
+          },
+          "full": {
+            "E0": {
+              "zero_complete": 24,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 24
+            },
+            "E2": {
+              "zero_complete": 6,
+              "zero_drifting": 2,
+              "reversal_complete": 3,
+              "reversal_correct": 2
+            },
+            "E3": {
+              "zero_complete": 11,
+              "zero_drifting": 0,
+              "reversal_complete": 2,
+              "reversal_correct": 2
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "E0": {
+              "selection_complete": 24,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E2": {
+              "selection_complete": 6,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            }
+          },
+          "full": {
+            "E0": {},
+            "E2": {},
+            "E3": {}
+          }
+        }
+      }
+    },
+    "force_ood": {
+      "plan_sha256": "74742a83c9d8b26516f2fcc94774ffb729a1574ce842afedddb42cf19d0d3992",
+      "selection_plan_sha256": "cef6cf38a51325f429c16cba1b8e4e926d1375cc2e29ac32e662b7564bb20794",
+      "conditions": 10,
+      "tracking_per_run": {
+        "E0-seed0": {
+          "tracked": 2183,
+          "expected": 2480,
+          "complete_all_object_clips": 23,
+          "clips": 40
+        },
+        "E0-seed1": {
+          "tracked": 2458,
+          "expected": 2480,
+          "complete_all_object_clips": 37,
+          "clips": 40
+        },
+        "E0-seed2": {
+          "tracked": 2376,
+          "expected": 2480,
+          "complete_all_object_clips": 29,
+          "clips": 40
+        },
+        "E2-seed0-40000": {
+          "tracked": 731,
+          "expected": 2480,
+          "complete_all_object_clips": 0,
+          "clips": 40
+        },
+        "E2-seed1-40000": {
+          "tracked": 763,
+          "expected": 2480,
+          "complete_all_object_clips": 0,
+          "clips": 40
+        },
+        "E2-seed2-40000": {
+          "tracked": 512,
+          "expected": 2480,
+          "complete_all_object_clips": 0,
+          "clips": 40
+        },
+        "E3-seed0-40000": {
+          "tracked": 756,
+          "expected": 2480,
+          "complete_all_object_clips": 0,
+          "clips": 40
+        },
+        "E3-seed1-40000": {
+          "tracked": 808,
+          "expected": 2480,
+          "complete_all_object_clips": 0,
+          "clips": 40
+        },
+        "E3-seed2-40000": {
+          "tracked": 740,
+          "expected": 2480,
+          "complete_all_object_clips": 0,
+          "clips": 40
+        }
+      },
+      "methods": {
+        "E0": {
+          "runs": [
+            "E0-seed0",
+            "E0-seed1",
+            "E0-seed2"
+          ],
+          "complete_samples": 89,
+          "total_samples": 120,
+          "ssim": {
+            "estimate": 0.885922018258265,
+            "ci": [
+              0.8727238790826006,
+              0.8991201574339294
+            ]
+          },
+          "lpips": {
+            "estimate": 0.14354689504701823,
+            "ci": [
+              0.11554549180634034,
+              0.1715482982876961
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.10913978494623655,
+            "ci": [
+              0.10698924731182795,
+              0.11129032258064515
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": {
+            "estimate": 0.14285714285714285,
+            "ci": [
+              0.13636363636363635,
+              0.14814814814814814
+            ]
+          },
+          "collision_encounter_f1": {
+            "estimate": 0.7540983606557377,
+            "ci": [
+              0.6666666666666666,
+              0.8387096774193549
+            ]
+          }
+        },
+        "E2": {
+          "runs": [
+            "E2-seed0-40000",
+            "E2-seed1-40000",
+            "E2-seed2-40000"
+          ],
+          "complete_samples": 0,
+          "total_samples": 120,
+          "ssim": {
+            "estimate": 0.7442244420732802,
+            "ci": [
+              0.7206979610291174,
+              0.767750923117443
+            ]
+          },
+          "lpips": {
+            "estimate": 0.18837993198865527,
+            "ci": [
+              0.17235535632728813,
+              0.20440450765002238
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.9720430107526882,
+            "ci": [
+              0.953763440860215,
+              0.9903225806451613
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        },
+        "E3": {
+          "runs": [
+            "E3-seed0-40000",
+            "E3-seed1-40000",
+            "E3-seed2-40000"
+          ],
+          "complete_samples": 0,
+          "total_samples": 120,
+          "ssim": {
+            "estimate": 0.7877469368261099,
+            "ci": [
+              0.7570696195563427,
+              0.8184242540958769
+            ]
+          },
+          "lpips": {
+            "estimate": 0.1548510960708823,
+            "ci": [
+              0.13922682864371166,
+              0.17047536349805292
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.9924731182795699,
+            "ci": [
+              0.989247311827957,
+              0.9956989247311828
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        }
+      },
+      "action_horizons": {
+        "actions": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 24,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 3,
+                  "reverse.moving_samples": 0,
+                  "reversal.complete_pairs": 0
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": null
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 0,
+                  "reversal.complete_pairs": 0
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": null
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 0,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {},
+                "rates": {}
+              },
+              "E2": {
+                "counts": {},
+                "rates": {}
+              },
+              "E3": {
+                "counts": {},
+                "rates": {}
+              }
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 24
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 12
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 11
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.27777777777777773,
+                  "selection.correct_target_rate_over_complete": 0.1111111111111111,
+                  "selection.drift_rate_over_complete": 0.041666666666666664
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 0,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {},
+                "rates": {}
+              },
+              "E2": {
+                "counts": {},
+                "rates": {}
+              },
+              "E3": {
+                "counts": {},
+                "rates": {}
+              }
+            }
+          }
+        }
+      },
+      "suite_seconds": {
+        "sample_seconds": 135.79,
+        "score_seconds": 96.36,
+        "horizon_seconds": 3.15
+      },
+      "pooled_action_counts": {
+        "actions": {
+          "window": {
+            "E0": {
+              "reversal_complete": 24,
+              "reversal_correct": 0
+            },
+            "E2": {
+              "reversal_complete": 0,
+              "reversal_correct": 0
+            },
+            "E3": {
+              "reversal_complete": 0,
+              "reversal_correct": 0
+            }
+          },
+          "full": {
+            "E0": {},
+            "E2": {},
+            "E3": {}
+          }
+        },
+        "selection": {
+          "window": {
+            "E0": {
+              "selection_complete": 24,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E2": {
+              "selection_complete": 12,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 11,
+              "selection_correct_target": 2,
+              "selection_nonselected_drift": 1
+            }
+          },
+          "full": {
+            "E0": {},
+            "E2": {},
+            "E3": {}
+          }
+        }
+      }
+    },
+    "physics_test": {
+      "plan_sha256": "bcade2abd14d4dbab792a238816dc0bae920037e7e21e040ad4984855814f3e8",
+      "selection_plan_sha256": "17c65e8bd38cb0b0dbad26ed409122c2c3a9c0cc3b5b9f32fe13092c6a75095a",
+      "conditions": 12,
+      "tracking_per_run": {
+        "E0-seed0": {
+          "tracked": 2830,
+          "expected": 2976,
+          "complete_all_object_clips": 40,
+          "clips": 48
+        },
+        "E0-seed1": {
+          "tracked": 2974,
+          "expected": 2976,
+          "complete_all_object_clips": 47,
+          "clips": 48
+        },
+        "E0-seed2": {
+          "tracked": 2973,
+          "expected": 2976,
+          "complete_all_object_clips": 45,
+          "clips": 48
+        },
+        "E2-seed0-40000": {
+          "tracked": 1693,
+          "expected": 2976,
+          "complete_all_object_clips": 3,
+          "clips": 48
+        },
+        "E2-seed1-40000": {
+          "tracked": 1680,
+          "expected": 2976,
+          "complete_all_object_clips": 4,
+          "clips": 48
+        },
+        "E2-seed2-40000": {
+          "tracked": 1441,
+          "expected": 2976,
+          "complete_all_object_clips": 0,
+          "clips": 48
+        },
+        "E3-seed0-40000": {
+          "tracked": 1653,
+          "expected": 2976,
+          "complete_all_object_clips": 5,
+          "clips": 48
+        },
+        "E3-seed1-40000": {
+          "tracked": 1583,
+          "expected": 2976,
+          "complete_all_object_clips": 2,
+          "clips": 48
+        },
+        "E3-seed2-40000": {
+          "tracked": 1573,
+          "expected": 2976,
+          "complete_all_object_clips": 3,
+          "clips": 48
+        }
+      },
+      "methods": {
+        "E0": {
+          "runs": [
+            "E0-seed0",
+            "E0-seed1",
+            "E0-seed2"
+          ],
+          "complete_samples": 132,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9732797925675424,
+            "ci": [
+              0.9663695215525939,
+              0.9801900635824908
+            ]
+          },
+          "lpips": {
+            "estimate": 0.011828103510741646,
+            "ci": [
+              0.009227777766952832,
+              0.014428429254530459
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.03337813620071685,
+            "ci": [
+              0.03270609318996416,
+              0.034050179211469536
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": {
+            "estimate": 0.11428571428571428,
+            "ci": [
+              0.07407407407407407,
+              0.1568627450980392
+            ]
+          },
+          "collision_encounter_f1": {
+            "estimate": 0.945054945054945,
+            "ci": [
+              0.9333333333333333,
+              0.9565217391304348
+            ]
+          }
+        },
+        "E2": {
+          "runs": [
+            "E2-seed0-40000",
+            "E2-seed1-40000",
+            "E2-seed2-40000"
+          ],
+          "complete_samples": 7,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9342593704020199,
+            "ci": [
+              0.917746311225686,
+              0.950772429578354
+            ]
+          },
+          "lpips": {
+            "estimate": 0.03420551545133749,
+            "ci": [
+              0.02863456327837431,
+              0.03977646762430067
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.7488799283154122,
+            "ci": [
+              0.581989247311828,
+              0.9157706093189963
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        },
+        "E3": {
+          "runs": [
+            "E3-seed0-40000",
+            "E3-seed1-40000",
+            "E3-seed2-40000"
+          ],
+          "complete_samples": 10,
+          "total_samples": 144,
+          "ssim": {
+            "estimate": 0.9321415030564746,
+            "ci": [
+              0.9202717363152351,
+              0.9440112697977141
+            ]
+          },
+          "lpips": {
+            "estimate": 0.03616669319910548,
+            "ci": [
+              0.035148944306407644,
+              0.03718444209180332
+            ]
+          },
+          "selected_missing_track_rate": {
+            "estimate": 0.7594086021505376,
+            "ci": [
+              0.5837813620071685,
+              0.9350358422939068
+            ]
+          },
+          "selected_mean_ade": null,
+          "collision_event_f1": null,
+          "collision_encounter_f1": null
+        }
+      },
+      "action_horizons": {
+        "actions": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 3,
+                  "reverse.moving_samples": 5,
+                  "zero.drifting_samples": 0,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.08333333333333333,
+                  "zero.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 1,
+                  "reverse.moving_samples": 9,
+                  "zero.drifting_samples": 2,
+                  "reversal.complete_pairs": 9
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.4166666666666667
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 12,
+                  "zero.drifting_samples": 4,
+                  "reversal.complete_pairs": 12
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 0.0,
+                  "zero.drift_rate_over_complete": 0.3333333333333333
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "forward.moving_samples": 24,
+                  "reverse.moving_samples": 24,
+                  "zero.drifting_samples": 2,
+                  "reversal.complete_pairs": 24
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": 1.0,
+                  "zero.drift_rate_over_complete": 0.08333333333333333
+                }
+              },
+              "E2": {
+                "counts": {
+                  "forward.moving_samples": 1,
+                  "reverse.moving_samples": 0,
+                  "zero.drifting_samples": 6,
+                  "reversal.complete_pairs": 0
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": null,
+                  "zero.drift_rate_over_complete": 1.0
+                }
+              },
+              "E3": {
+                "counts": {
+                  "forward.moving_samples": 0,
+                  "reverse.moving_samples": 2,
+                  "zero.drifting_samples": 7,
+                  "reversal.complete_pairs": 0
+                },
+                "rates": {
+                  "reversal.correct_force_sign_rate_over_complete": null,
+                  "zero.drift_rate_over_complete": 0.9166666666666666
+                }
+              }
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "eligible_scene_groups": 2,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {
+                  "selection.complete_pairs": 24
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E2": {
+                "counts": {
+                  "selection.complete_pairs": 5
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": 0.0,
+                  "selection.correct_target_rate_over_complete": 0.0,
+                  "selection.drift_rate_over_complete": 0.0
+                }
+              },
+              "E3": {
+                "counts": {
+                  "selection.complete_pairs": 0
+                },
+                "rates": {
+                  "selection.correct_contrast_rate_over_complete": null,
+                  "selection.correct_target_rate_over_complete": null,
+                  "selection.drift_rate_over_complete": null
+                }
+              }
+            }
+          },
+          "full": {
+            "eligible_scene_groups": 0,
+            "scene_groups": 2,
+            "methods": {
+              "E0": {
+                "counts": {},
+                "rates": {}
+              },
+              "E2": {
+                "counts": {},
+                "rates": {}
+              },
+              "E3": {
+                "counts": {},
+                "rates": {}
+              }
+            }
+          }
+        }
+      },
+      "suite_seconds": {
+        "sample_seconds": 172.58,
+        "score_seconds": 122.62,
+        "horizon_seconds": 20.81
+      },
+      "pooled_action_counts": {
+        "actions": {
+          "window": {
+            "E0": {
+              "zero_complete": 24,
+              "zero_drifting": 0,
+              "reversal_complete": 24,
+              "reversal_correct": 2
+            },
+            "E2": {
+              "zero_complete": 9,
+              "zero_drifting": 2,
+              "reversal_complete": 9,
+              "reversal_correct": 0
+            },
+            "E3": {
+              "zero_complete": 12,
+              "zero_drifting": 4,
+              "reversal_complete": 12,
+              "reversal_correct": 0
+            }
+          },
+          "full": {
+            "E0": {
+              "zero_complete": 24,
+              "zero_drifting": 2,
+              "reversal_complete": 24,
+              "reversal_correct": 24
+            },
+            "E2": {
+              "zero_complete": 6,
+              "zero_drifting": 6,
+              "reversal_complete": 0,
+              "reversal_correct": 0
+            },
+            "E3": {
+              "zero_complete": 8,
+              "zero_drifting": 7,
+              "reversal_complete": 0,
+              "reversal_correct": 0
+            }
+          }
+        },
+        "selection": {
+          "window": {
+            "E0": {
+              "selection_complete": 24,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E2": {
+              "selection_complete": 5,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            },
+            "E3": {
+              "selection_complete": 0,
+              "selection_correct_target": 0,
+              "selection_nonselected_drift": 0
+            }
+          },
+          "full": {
+            "E0": {},
+            "E2": {},
+            "E3": {}
+          }
+        }
+      }
+    }
+  },
+  "notes": [
+    "Selected-object ADE/FDE and coverage are undefined for every method: no scene group has all its cases complete. Missing values stay missing.",
+    "Collision F1 is undefined for E2 and E3 on every split.",
+    "Action rates in action_horizons average within scene groups, then across groups. pooled_action_counts gives plain counts over all runs and eligible groups.",
+    "Force-OOD has no zero-force condition and was prepared without the action plan, as in D014. Its full-clip horizon is not scored because every group reaches contact first."
+  ],
+  "test_splits_evaluated": [
+    "id_test",
+    "shape_ood",
+    "texture_ood",
+    "force_ood",
+    "physics_test"
+  ]
+}

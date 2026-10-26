@@ -3,8 +3,8 @@
 This implements the evaluation workflow for T13-T16. The core comparison is
 E0/E2/E3 at 64px, 32 total frames and 8 FPS. The bounded validation pilot, E4,
 CVAE follow-ups, E5 and three E6 packages have measured results. Every package
-still fails strict physical-video quality. Final checkpoints, independent repeats
-and the main test budget remain open; this protocol is not a final test freeze.
+still fails strict physical-video quality. D014 freezes the final runs and D015 adds
+a secondary result; both test runs are reported in FINAL_EVALUATION.md.
 
 Before opening the 248 reserved ID/OOD/physics clips, record the chosen checkpoint
 hashes, exact source/tracker versions, sampling seeds and steps, action-control
@@ -261,8 +261,9 @@ complete trajectory extraction; the flow decoder improves appearance but remains
 stationary under the action controls without displacement labels. With those
 labels, only 1/16 reversal pairs and 0/16 selected-object pairs pass.
 
-T14 still needs useful-checkpoint comparisons and independent repeats. T15 keeps
-all 248 ID/OOD/physics test clips reserved while validation fails. T16 still needs
+D014 later opened the 248 ID/OOD/physics test clips with three training seeds per
+method, and every method still fails these checks on held-out scenes; see
+FINAL_EVALUATION.md. T16 still needs
 an ensemble that supports physical uncertainty measurements. Completing a batch
 workflow or observing RGB variation does not satisfy these quality checks.
 
@@ -314,12 +315,13 @@ type, so force-OOD pushes are 8.7-10 times, collisions 5.2-6 times and wall case
 1.2-1.4 times their training force. See the
 [collision handoff](COLLISION_VALIDATION.md) for the per-family figures.
 
-Before releasing the final run, fill the remaining checkpoint/source hashes,
-chosen training recipes and repeat count, validation selection record and total
-training/evaluation budget. The four-sample seeds remain 0-3; they do not replace
+D014 recorded these fields before the final run: checkpoint and source hashes in
+results/diffusion-seeds-validation.json and results/final-evaluation.json, the
+training recipes with three training seeds per method, the validation selection
+record, and the measured budget in results/final-cost.json. The four-sample seeds remain 0-3; they do not replace
 independent training seeds. The pixel tracker/config, SSIM/LPIPS, collision
 encounter/interval/event views, missing-track policy and scene bootstrap remain
-as declared above. The inventory is ready; the final checkpoint freeze is pending.
+as declared above.
 
 TC2 job 46703 rehearsed this run on validation from current main with
 `cluster/final_rehearsal.sbatch`. One job prepared the validation and force-0.4
