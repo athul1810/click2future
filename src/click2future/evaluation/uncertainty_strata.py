@@ -78,7 +78,7 @@ def stratify(comparison_path, *, bootstrap=2000):
         manifest["suite"] != "validation"
         or manifest["source"] != "video_tracking"
         or len(manifest["runs"]) != 1
-        or manifest["runs"][0]["method"] not in {"E5", "E6", "E7"}
+        or manifest["runs"][0]["method"] not in {"E5", "E6", "E7", "E8"}
     ):
         raise ValueError("This diagnostic is for saved validation RGB reports only")
     # Validate the entire historical comparison first. Strata retain all cases,

@@ -193,7 +193,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
         seen.add(name)
         if set(run["videos"]) != expected:
             raise ValueError("Every run must cover every frozen case exactly once")
-        model_method = run["method"] in {"E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7"}
+        model_method = run["method"] in {"E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8"}
         if model_method != (source == "generated_video"):
             raise ValueError("Use E0-E7 only for model-generated video")
         record = {"method": run["method"], "run_id": name, "reports": []}

@@ -105,7 +105,7 @@ def comparison(reference, tmp_path):
     return path
 
 
-@pytest.mark.parametrize("method", ["E5", "E6", "E7"])
+@pytest.mark.parametrize("method", ["E5", "E6", "E7", "E8"])
 def test_strata_keep_failed_family_and_undefined_reference_spread(comparison, method):
     manifest = json.loads(comparison.read_text())
     manifest["runs"][0]["method"] = method

@@ -10,8 +10,8 @@ import torch
 from click2future.data import load_rollout
 from click2future.models.object_motion import TrajectoryDiffusion, observe
 from click2future.models.world_motion import BoundWorld
+from click2future.training.sample_trajectory import load_trajectory
 from click2future.training.train_cvae import sha256
-from click2future.training.world_checkpoint import load_world
 
 from .passive_stationarity import stationary_reference
 from .trajectory_audit import verify_inputs
@@ -52,7 +52,9 @@ def mass_effects(light, heavy, force, selected):
 
 def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
     plan, _, _, hashes = verify_inputs(plan_path, predictions, dataset, checkpoint)
-    model, state = load_world(checkpoint, device)
+    model, state = load_trajectory(checkpoint, device)
+    if state["trajectory_format_version"] not in (3, 4):
+        raise ValueError("Use a sampled-world checkpoint")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     records = []
