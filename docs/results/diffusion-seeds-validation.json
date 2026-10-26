@@ -1,0 +1,285 @@
+{
+  "status": "measured_validation_run",
+  "scope": "E2/E3 training seeds 0-2 with the 17 October pilot recipes, only the seed changed, scored with the three E0 flow seeds on validation from one shared plan. No test split was opened.",
+  "slurm_job_id": 46704,
+  "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+  "gpu": "NVIDIA A40",
+  "torch_version": "2.11.0+cu128",
+  "configs": {
+    "configs/training/diffusion_repeats/numeric_seed0.json": "c6d56f518b544187160efacb57cb65bd7d5d62fb092693c77534bfcc8f5240bd",
+    "configs/training/diffusion_repeats/numeric_seed1.json": "9a9e8155b557730f8b1a863702fe963ae980c6934875975bb52c5f9d97fad0fa",
+    "configs/training/diffusion_repeats/numeric_seed2.json": "efbf388d84febe79d0eae8073bca247ddc5b53e11fe881570c8e09e4666cd44f",
+    "configs/training/diffusion_repeats/spatial_seed0.json": "cc441b4e5b7b19209f03b119d5b26b4284ce1ad2c53eb0652fb3bcebae8e2ea9",
+    "configs/training/diffusion_repeats/spatial_seed1.json": "97ba5bb66567bd844b6376694dabde3567cecdba409cfbd2855e6cdc8c6bf098",
+    "configs/training/diffusion_repeats/spatial_seed2.json": "402b14f69eeb1f35e9cc73e5c0e178b9d244261d4b6589c6c5c5046f28be4ca0"
+  },
+  "config_relation": "Each config equals the pilot's effective E2/E3 config (pilot.json effective_config_sha256) except for the seed. Diffusion training code is unchanged since pilot source 2ac7710.",
+  "training": {
+    "E2-seed0": {
+      "step": 5000,
+      "mean_step_seconds": 0.0471,
+      "probe_mse_after": 0.01757,
+      "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+      "slurm_job_id": "46704"
+    },
+    "E2-seed1": {
+      "step": 5000,
+      "mean_step_seconds": 0.0469,
+      "probe_mse_after": 0.01689,
+      "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+      "slurm_job_id": "46704"
+    },
+    "E2-seed2": {
+      "step": 5000,
+      "mean_step_seconds": 0.047,
+      "probe_mse_after": 0.01745,
+      "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+      "slurm_job_id": "46704"
+    },
+    "E3-seed0": {
+      "step": 5000,
+      "mean_step_seconds": 0.0469,
+      "probe_mse_after": 0.01728,
+      "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+      "slurm_job_id": "46704"
+    },
+    "E3-seed1": {
+      "step": 5000,
+      "mean_step_seconds": 0.0471,
+      "probe_mse_after": 0.01669,
+      "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+      "slurm_job_id": "46704"
+    },
+    "E3-seed2": {
+      "step": 5000,
+      "mean_step_seconds": 0.0468,
+      "probe_mse_after": 0.01706,
+      "source_revision": "7330904ac7784cf95ae73bd71c2fff5a6bbfc1e8",
+      "slurm_job_id": "46704"
+    }
+  },
+  "runs": [
+    {
+      "run_id": "E0-seed0",
+      "method": "E0",
+      "training_seed": 0,
+      "checkpoint_sha256": "df3c55157e81cd5ca77f560c5e4c4fd9f4110f11c309dbfd9fad0bd8ec0dd23b"
+    },
+    {
+      "run_id": "E0-seed1",
+      "method": "E0",
+      "training_seed": 1,
+      "checkpoint_sha256": "9bad6a79a50f2c23d453fffe26e3c9afe6c25c4b519fc511a0a602d90201a3a2"
+    },
+    {
+      "run_id": "E0-seed2",
+      "method": "E0",
+      "training_seed": 2,
+      "checkpoint_sha256": "49b393c4d06c7f7260018c6ccf312d6cdbe7b9de6248f295d98a3deec836de2b"
+    },
+    {
+      "run_id": "E2-seed0",
+      "method": "E2",
+      "training_seed": 0,
+      "checkpoint_sha256": "bdbbf2b61ad8d22e0bf43695fb4c36f7622d5154f50c5a304ec066fc027d5e00"
+    },
+    {
+      "run_id": "E2-seed1",
+      "method": "E2",
+      "training_seed": 1,
+      "checkpoint_sha256": "5300976ee86f80c89b5a396bd60d30c55dfae88a552ee186b09a1f42932637bb"
+    },
+    {
+      "run_id": "E2-seed2",
+      "method": "E2",
+      "training_seed": 2,
+      "checkpoint_sha256": "1707b12354cbecdbb904188c3d319724676ede35d079d519e3296d745874aa9c"
+    },
+    {
+      "run_id": "E3-seed0",
+      "method": "E3",
+      "training_seed": 0,
+      "checkpoint_sha256": "f47659c4fa66fc66ffc742a0bf51db0f37a07674ce6dfe078b761181eecc2895"
+    },
+    {
+      "run_id": "E3-seed1",
+      "method": "E3",
+      "training_seed": 1,
+      "checkpoint_sha256": "903c82a55fb95a9873615602f4a3e068dfe3ac48585c3e0e4d42b34fee1ebf68"
+    },
+    {
+      "run_id": "E3-seed2",
+      "method": "E3",
+      "training_seed": 2,
+      "checkpoint_sha256": "09142db7ae943b62277c4213885f1bd7154a70d48a2c0242e1fc40dcc049cb0c"
+    }
+  ],
+  "sampling_steps": 32,
+  "plans": {
+    "validation": "b646f9de90fe26dd78f03c91f39560a89a4b8dcf9d82c22b8f858e7cf78e9d14",
+    "selection": "d299a70c2093b168b6c2c77cc715dd7084cc19d40ac5f70c10f12f0da67dc362"
+  },
+  "validation_tracking_of_5952": {
+    "E0-seed0": {
+      "tracked_observations": 5654,
+      "complete_all_object_clips": 80,
+      "complete_selected_clips": 80
+    },
+    "E0-seed1": {
+      "tracked_observations": 5916,
+      "complete_all_object_clips": 92,
+      "complete_selected_clips": 96
+    },
+    "E0-seed2": {
+      "tracked_observations": 5947,
+      "complete_all_object_clips": 91,
+      "complete_selected_clips": 91
+    },
+    "E2-seed0": {
+      "tracked_observations": 176,
+      "complete_all_object_clips": 0,
+      "complete_selected_clips": 0
+    },
+    "E2-seed1": {
+      "tracked_observations": 140,
+      "complete_all_object_clips": 0,
+      "complete_selected_clips": 0
+    },
+    "E2-seed2": {
+      "tracked_observations": 1,
+      "complete_all_object_clips": 0,
+      "complete_selected_clips": 0
+    },
+    "E3-seed0": {
+      "tracked_observations": 5,
+      "complete_all_object_clips": 0,
+      "complete_selected_clips": 0
+    },
+    "E3-seed1": {
+      "tracked_observations": 546,
+      "complete_all_object_clips": 0,
+      "complete_selected_clips": 0
+    },
+    "E3-seed2": {
+      "tracked_observations": 2,
+      "complete_all_object_clips": 0,
+      "complete_selected_clips": 0
+    }
+  },
+  "pilot_seed7_tracking_of_5952": {
+    "E2": 378,
+    "E3": 269
+  },
+  "image_scores": {
+    "E0": {
+      "image.ssim": {
+        "estimate": 0.9721991687241547,
+        "ci": [
+          0.9659883734654284,
+          0.9784099639828809
+        ]
+      },
+      "image.lpips": {
+        "estimate": 0.01796119474160457,
+        "ci": [
+          0.011462804541572601,
+          0.0259564884037882
+        ]
+      }
+    },
+    "E2": {
+      "image.ssim": {
+        "estimate": 0.4558815821325771,
+        "ci": [
+          0.4469848601705837,
+          0.46838129629089564
+        ]
+      },
+      "image.lpips": {
+        "estimate": 0.1673789428877494,
+        "ci": [
+          0.15912544098682702,
+          0.17800451328979613
+        ]
+      }
+    },
+    "E3": {
+      "image.ssim": {
+        "estimate": 0.4507583056221724,
+        "ci": [
+          0.44355190216605406,
+          0.4633070243932772
+        ]
+      },
+      "image.lpips": {
+        "estimate": 0.16697761664621025,
+        "ci": [
+          0.15373292576361408,
+          0.1802223075288064
+        ]
+      }
+    }
+  },
+  "action_complete_counts_E2_E3": {
+    "validation": {
+      "window": {
+        "E2": {
+          "forward.complete_samples": 0,
+          "reverse.complete_samples": 0,
+          "zero.complete_samples": 0,
+          "reversal.complete_pairs": 0
+        },
+        "E3": {
+          "forward.complete_samples": 0,
+          "reverse.complete_samples": 0,
+          "zero.complete_samples": 0,
+          "reversal.complete_pairs": 0
+        }
+      },
+      "full": {
+        "E2": {
+          "forward.complete_samples": 0,
+          "reverse.complete_samples": 0,
+          "zero.complete_samples": 0,
+          "reversal.complete_pairs": 0
+        },
+        "E3": {
+          "forward.complete_samples": 0,
+          "reverse.complete_samples": 0,
+          "zero.complete_samples": 0,
+          "reversal.complete_pairs": 0
+        }
+      }
+    },
+    "selection": {
+      "window": {
+        "E2": {
+          "selection.complete_pairs": 0
+        },
+        "E3": {
+          "selection.complete_pairs": 0
+        }
+      },
+      "full": {
+        "E2": {
+          "selection.complete_pairs": 0
+        },
+        "E3": {
+          "selection.complete_pairs": 0
+        }
+      }
+    }
+  },
+  "E0_action_counts_equal_job_46615": true,
+  "seconds": {
+    "prepare_validation": 1.38,
+    "prepare_selection": 1.48,
+    "sample_validation": 316.0,
+    "score_validation": 225.98,
+    "horizons_validation": 34.88,
+    "sample_selection": 106.12,
+    "score_selection": 81.69,
+    "horizons_selection": 13.7
+  },
+  "test_splits_evaluated": []
+}
