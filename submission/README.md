@@ -603,3 +603,20 @@ replacement. Submit `submission/memory_comparison.sbatch` with immutable
 Each arm uses the fixed final update 4,000; partial runs and failed evaluations
 are retained. `--trained-run OLD` uses completed checkpoints for fresh evaluation
 without retraining. Do not overwrite original results or relax scoring margins.
+
+## Paired visible-coverage comparison
+
+The E7 architecture is unchanged. Two refinement arms append equally sized,
+paired training data: old visible scenes with fresh physics, or independent
+visible geometry/layouts with the same forces and physical draws. The common
+contact sampling stratum uses only the union of paired training outcomes.
+Original validation remains unchanged; this is an exploratory data intervention.
+
+Submit `submission/coverage_comparison.sbatch` with `C2F_PROJECT`, `C2F_PYTHON`,
+`C2F_DATA_DIR`, `C2F_CACHE`, `C2F_WARM_START`, fresh `C2F_COVERAGE_RESULTS` and
+`C2F_SOURCE_REVISION`. Optional `C2F_PREPARED_COVERAGE` identifies a retained,
+checked training-only generation; otherwise generation runs in the allocation.
+The recipe is `configs/training/coverage_recipe.json`; both arms use
+`configs/training/coverage_world.json` and fixed final update 8,000. The Python
+driver supports `--trained-run OLD` with the same `--coverage` path for fresh
+evaluation without retraining. Keep failed attempts and every declared seed.
