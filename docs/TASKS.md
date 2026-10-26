@@ -44,6 +44,11 @@ checkpoint is promoted. See [research and results](RESEARCH_2026-10-25.md).
 The separate E7 work in #66 is post-test exploratory, uses training/validation only,
 and does not replace the reviewed E0/E2/E3 comparison.
 
+The matched E8 residual comparison in #67 completes 96/96 validation clips in
+both arms but leaves penetration in 11/96 and ten trajectory conditions failing.
+Carried memory does not improve contact timing and extends worst overlap from
+19 to 20 frames. Neither arm is promoted. See [the measured experiment](TEMPORAL_CONTACT_EXPERIMENT.md).
+
 ## Task details
 
 <a id="t01"></a>

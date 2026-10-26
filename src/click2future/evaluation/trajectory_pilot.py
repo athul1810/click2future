@@ -28,7 +28,7 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
     if plan["split"] not in {"validation", "validation-selected-object"}:
         raise ValueError("This bounded pilot may not evaluate final-test splits")
     model, state = load_trajectory(checkpoint, device)
-    if method != {1: "E5", 2: "E6", 3: "E7"}[state["trajectory_format_version"]]:
+    if method != {1: "E5", 2: "E6", 3: "E7", 4: "E8"}[state["trajectory_format_version"]]:
         raise ValueError("Checkpoint training variant and requested method disagree")
     provenance = state["provenance"]
     if (
@@ -75,11 +75,11 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
             "video_sha256": hashes,
             "supervision": (
                 "future positions, angles and physical world labels; training only"
-                if method == "E7" and state["config"]["world_condition"]
+                if method in {"E7", "E8"} and state["config"]["world_condition"]
                 else "future positions and checked replay angles; training only"
             ),
         }
-        if method == "E7":
+        if method in {"E7", "E8"}:
             from click2future.models.world_motion import WORLD_CONTRACT, sample_world
 
             run["world_prior"] = {
@@ -130,7 +130,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--steps", type=int, default=16)
-    parser.add_argument("--method", choices=("E5", "E6", "E7"), default="E5")
+    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8"), default="E5")
     args = parser.parse_args(argv)
     if args.device == "cuda":
         require_tc2()
@@ -201,7 +201,7 @@ def main(argv=None):
             ),
         }
         _write(args.output / "trajectory-results.json", result)
-        if args.method in {"E6", "E7"}:
+        if args.method in {"E6", "E7", "E8"}:
             extended_audit(args.output, args.dataset, args.checkpoint, args.device)
         print(json.dumps(result["quality"]), flush=True)
     except Exception as error:

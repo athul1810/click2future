@@ -45,6 +45,8 @@
     "cluster/final_evaluation.sbatch",
     "cluster/diffusion_long.sbatch",
     "submission/world_comparison.py",
-    "submission/world_comparison.sbatch"
+    "submission/world_comparison.sbatch",
+    "submission/memory_comparison.py",
+    "submission/memory_comparison.sbatch"
   ]
 }

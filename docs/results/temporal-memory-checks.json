@@ -1,0 +1,147 @@
+{
+  "status": "passed",
+  "full_tests": 622,
+  "subtests": 4,
+  "test_seconds": 272.77,
+  "test_log_sha256": "9a6025dd7e65a42fcf6b4f489f2c8e5bc3a285a19c05fb0e4f149041f7bc693d",
+  "lint": "passed",
+  "source_zip_files": 285,
+  "source_zip_sha256": "127ff72a8f14bf537b47b15e2aa1f2712b9296511ae9f49f1d24a494c93141b2",
+  "source_zip_clean_extraction_smoke": "passed",
+  "source_zip_extracted_regression_tests": 16,
+  "real_checkpoint_adapter_checks": {
+    "legacy_E7_four_seed_pixels_unchanged": true,
+    "adapters": {
+      "reset": {
+        "pixel_equal_to_offline": true,
+        "clips": 4,
+        "metadata": {
+          "id": "reset",
+          "kind": "trajectory_diffusion",
+          "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA; experimental temporal residual on frozen E7",
+          "checkpoint_sha256": "ee434ee3cc65b825caa12c711e40e8d247ac29735a091e1834e570bf18ce7cd6",
+          "training_steps": 4000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 16,
+          "sampling_source_sha256": {
+            "demo\\models.py": "3bd03fa3f4580771e0d952502c598f578401137af4accdcd86fe394e9b79ff0b",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9515aafdf70f2a5d0a3e491629a5540c4757692bc8e06fce1c9a80d87d5b2305",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4",
+            "models/contact_memory.py": "a92a9902eb73362f45a9c8df548f76eef4a6b18a048fda13553e3ed7bd746273",
+            "training/memory_checkpoint.py": "66341297aa2cc39da0fb7392d19f4c8c695211f92be8fada63b841f17410545f"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cpu",
+            "gpu": null,
+            "precision": "float32"
+          },
+          "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+          "network_evaluations_per_sample": 31,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "temporal_residual",
+          "world_condition": true,
+          "relational": true,
+          "temporal_memory": false,
+          "frozen_backbone_sha256": "08b824125c493083ff16a9e5fdacfaef507fa08b6011d8c1f7b1c101dc7b11ad"
+        }
+      },
+      "carried": {
+        "pixel_equal_to_offline": true,
+        "clips": 4,
+        "metadata": {
+          "id": "carried",
+          "kind": "trajectory_diffusion",
+          "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA; experimental temporal residual on frozen E7",
+          "checkpoint_sha256": "e405806867c2bff1b1cf5005585032459ac57e9390dc28bedfc3d664a878de5b",
+          "training_steps": 4000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 16,
+          "sampling_source_sha256": {
+            "demo\\models.py": "3bd03fa3f4580771e0d952502c598f578401137af4accdcd86fe394e9b79ff0b",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9515aafdf70f2a5d0a3e491629a5540c4757692bc8e06fce1c9a80d87d5b2305",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4",
+            "models/contact_memory.py": "a92a9902eb73362f45a9c8df548f76eef4a6b18a048fda13553e3ed7bd746273",
+            "training/memory_checkpoint.py": "66341297aa2cc39da0fb7392d19f4c8c695211f92be8fada63b841f17410545f"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cpu",
+            "gpu": null,
+            "precision": "float32"
+          },
+          "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+          "network_evaluations_per_sample": 31,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "temporal_residual",
+          "world_condition": true,
+          "relational": true,
+          "temporal_memory": true,
+          "frozen_backbone_sha256": "08b824125c493083ff16a9e5fdacfaef507fa08b6011d8c1f7b1c101dc7b11ad"
+        }
+      }
+    }
+  },
+  "test_splits_evaluated": [],
+  "model_quality_gate": "failed; no default-demo promotion",
+  "source_zip_source_revision": "0f948d1",
+  "formatting": "changed files pass; four inherited global-format failures remain",
+  "raw_file_digests_verified": 773,
+  "raw_archive_sha256": "e4be4a50fd2502b845c40bd5bebbf749d76084bc4a4a984191d1a05bfe3184a6",
+  "native_pose_replay_clips": 288,
+  "windows_audits": {
+    "anchor": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 2.784076116313372e-07,
+      "strict_pixel_replay_clips": 96
+    },
+    "reset": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 1.636055912968004e-08,
+      "strict_pixel_replay_clips": 96
+    },
+    "carried": {
+      "counts_and_events_equal_native": true,
+      "max_depth_difference_pixels": 2.0276363699167632e-07,
+      "strict_pixel_replay_clips": 96
+    }
+  },
+  "allocated_gpu_seconds": 801,
+  "tc2_jobs_remaining": 0,
+  "slurm_job_id": 47088,
+  "immutable_source_revision": "e19e7fadeb4dd136bfdde0c92361c650ca256e68",
+  "immutable_source_files_verified_before_and_after": 458,
+  "source_archive_sha256": "98910d110f02480474710c3ea60dc5936387e2c487a4217a0769e89e7b006b4a",
+  "analysis_source_sha256": "8551520d57c66f159abf9bd18b2758c909b670f0f23e0eeca147d903aab4e6ef",
+  "analysis_json_sha256": "e58440f6a911b92153c5667bbf6c8d5fe636f91168339f2b3aae24d82d1d7eec",
+  "post_training_merge": "README encoding fix only; model/trainer/evaluator/config sources unchanged",
+  "visual_checks": {
+    "saved_push": "all 4 seeds, 3 models, 4 physical references",
+    "worst_contact": "fixed worst condition, all 4 seeds, 3 models, 4 references",
+    "finding": "no useful visual change"
+  },
+  "release_assets_downloaded": 5,
+  "asset_digests": {
+    "cpu-verification.zip": "c63d6104c339eb0125bc46d418a80b07c3f737dc4e3e88cf7c317984dd9bcd8d",
+    "group_07_code.zip": "127ff72a8f14bf537b47b15e2aa1f2712b9296511ae9f49f1d24a494c93141b2",
+    "SHA256SUMS": "c0eac0723b70e469ee9dfcf0a786b5f020661a26e286025a3dd5d4a3b6723d99",
+    "source.tar.gz": "98910d110f02480474710c3ea60dc5936387e2c487a4217a0769e89e7b006b4a",
+    "temporal-memory-job47088.tar.gz": "e4be4a50fd2502b845c40bd5bebbf749d76084bc4a4a984191d1a05bfe3184a6"
+  },
+  "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-8edb44afd2ce55d79e71",
+  "release_is_private_draft": true
+}

@@ -591,3 +591,15 @@ LPIPS needs the AlexNet weights in the Torch cache. Sampled predictions are boun
 to plan hashes, and plans bind the evaluation source, so prepare, sample and score
 from one account and one source revision.
 
+
+## Temporal residual comparison
+
+E8 freezes the conditioned E7 EMA and trains identical residual GRUs with state
+reset at every frame or carried through time. Physical labels remain extra
+training supervision. This is exploratory post-test work, not a main-method
+replacement. Submit `submission/memory_comparison.sbatch` with immutable
+`C2F_PROJECT`, validated `C2F_PYTHON`, verified `C2F_CACHE`, frozen `C2F_DATA_DIR`,
+`C2F_WARM_START`, fresh `C2F_MEMORY_RESULTS`, and `C2F_SOURCE_REVISION`.
+Each arm uses the fixed final update 4,000; partial runs and failed evaluations
+are retained. `--trained-run OLD` uses completed checkpoints for fresh evaluation
+without retraining. Do not overwrite original results or relax scoring margins.
