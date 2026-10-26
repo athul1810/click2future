@@ -5,7 +5,7 @@ E0/E2/E3/E4 validation comparison, SSIM/LPIPS, auxiliary head-versus-RGB scores,
 the measured 16/32/64-step sampler study and the CVAE decoder follow-ups.
 It now also includes the separate E5 trajectory model, its contact/uncertainty
 audit, the full-horizon zero-force failure and an embedded contact example from
-all four seeds. The seventeen-page draft also includes all three E6 contact-aware attempts, the
+all four seeds. The draft also includes all three E6 contact-aware attempts, the
 version 2 passive rescore, E6 uncertainty by action family and a fixed E5/E6
 four-seed comparison, and the matched canvas-loss study. It keeps conditional metrics, failed controls and
 oracle-calibration limits explicit.
@@ -33,13 +33,21 @@ resample scenes; they do not cover training-seed uncertainty. Tracker version 2
 was reviewed by Sanjay and merged in #42. Its results remain separate from
 historical version-1 scores.
 
-The bibliography contains no external links. Member-reviewed contributions in `contributions.md`,
-useful model quality, independent repeats, reserved ID/OOD tests and the final
-submission checks remain open. Working deadline: 14 November 2026.
+The bibliography contains no external links. Member-reviewed contributions in `contributions.md`
+and the final submission checks remain open.
+Working deadline: 14 November 2026.
+
+The final held-out evaluation (D014, job 46716) and the secondary E2/E3 test
+result at E0's training-clip count (D015, job 46837) are in Sections 3.15-3.17, with Tables 10-13
+and Figures 4-5. Section 3.15 ends with the E0 held-out analysis. Every table value is checked against
+`docs/results/final-evaluation.json` and `docs/results/final-evaluation-d015.json`.
+Figure 4 uses the first sorted ID-test forward condition and Figure 5 the first
+sorted forward condition of each OOD split, with sample seed 0 and training seed
+0. All 14 videos match the job prediction manifests.
 
 The E6 uncertainty evidence is independently recomputed from all 72 saved RGB
 ensembles and all 18 action strata. The compact comparison is
-`docs/results/contact-uncertainty-comparison.json`. No final test split is opened.
+`docs/results/contact-uncertainty-comparison.json`. That audit opened no final test split.
 
 The reproducible wall-clipping diagnostic explains all 32 missing E6-grid wall
 observations while preserving their failed video scores. Results are in
