@@ -267,6 +267,8 @@ The metadata-only workload is prepared: 248 reserved references form 58 primary 
 
 D013 freezes E0 as the unsupervised flow CVAE with training seeds 0-2 (#54), adds the supplementary full-horizon action score (#53) and treats force-OOD as labelled extrapolation. Rescoring the saved pilot videos reproduces every recorded window count; both flow CVAEs pass reversal over the full clip, while E0 RGB, E2, E3 and E4 still have no complete tracks. See results/action-horizon-validation.json. Final E2/E3 checkpoints and their training seeds remain open, so the test freeze is not complete.
 
+D014 completes the freeze. E2/E3 use the pilot recipes with training seeds 0-2 and 32 DDIM steps. On validation (job 46704) they track 1-546 of 5,952 observations with no complete clip, as the seed-7 pilots did. The five reserved splits are opened anyway and reported as measured failures, from one account with `cluster/final_evaluation.sbatch`. See results/diffusion-seeds-validation.json.
+
 <a id="t14"></a>
 
 ### T14: Run and analyze E0/E2/E3, with gated E1/E4 ablations

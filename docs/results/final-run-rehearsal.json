@@ -1,0 +1,237 @@
+{
+  "status": "passed",
+  "scope": "Validation-only rehearsal of the final E0/E2/E3 run from one shared plan. No test split was opened. E2/E3 are the 17 October pilot checkpoints, not final choices.",
+  "slurm_job_id": 46703,
+  "source_revision": "3c0199321b5b516d00dfb90c82ee8188621ae5ca",
+  "gpu": "NVIDIA A40",
+  "torch_version": "2.11.0+cu128",
+  "scripts": {
+    "ran_python_sha256": "9557c79ca28ddbf57d3413a84831dae2da6183a2d288b420353c372b1d7a1ae2",
+    "committed_python_sha256": "d69186325348f0c35a665c1cbf363a56745d6d3f4952bc9062eaaebd4276f84e",
+    "note": "Job 46703 ran the Python from its run folder. The committed cluster/final_rehearsal.py differs only by ruff line wrapping; both parse to the same syntax tree. The committed sbatch keeps the same job flags and calls cluster/final_rehearsal.py.",
+    "runs_spec_sha256": "0332828cbadc142f6ef22f925bb5e9140f7125eaff64873c983dc2414bb482f3",
+    "sampling_steps": 32
+  },
+  "dataset": {
+    "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "splits_sha256": "2f734e8518b77810525f18f74566ae65e4af4f09a1058c38eaf8942646011c51"
+  },
+  "plans": {
+    "validation": {
+      "plan_sha256": "a82eae9f4ce0e3281f8af73e4d24a36cb8c2f80c99515bf9a77b8c32ba7365db",
+      "cases": 24,
+      "image_metrics": [
+        "ssim",
+        "lpips"
+      ],
+      "actions_config": "configs/evaluation/actions.yaml"
+    },
+    "selection": {
+      "plan_sha256": "dc2403a14465a162bdd58e0dcb399c9f4ed3c6b605f4a745926d8b91e91586e6",
+      "force_magnitude": 0.4
+    }
+  },
+  "runs": [
+    {
+      "run_id": "E0-seed0",
+      "method": "E0",
+      "training_seed": 0,
+      "checkpoint_sha256": "df3c55157e81cd5ca77f560c5e4c4fd9f4110f11c309dbfd9fad0bd8ec0dd23b"
+    },
+    {
+      "run_id": "E0-seed1",
+      "method": "E0",
+      "training_seed": 1,
+      "checkpoint_sha256": "9bad6a79a50f2c23d453fffe26e3c9afe6c25c4b519fc511a0a602d90201a3a2"
+    },
+    {
+      "run_id": "E0-seed2",
+      "method": "E0",
+      "training_seed": 2,
+      "checkpoint_sha256": "49b393c4d06c7f7260018c6ccf312d6cdbe7b9de6248f295d98a3deec836de2b"
+    },
+    {
+      "run_id": "E2-pilot-seed0",
+      "method": "E2",
+      "training_seed": 7,
+      "checkpoint_sha256": "c4ee3203ede87063ed4bf7423b54708dbe43f78846f99da67d21fde5109c6ed2"
+    },
+    {
+      "run_id": "E3-pilot-seed0",
+      "method": "E3",
+      "training_seed": 7,
+      "checkpoint_sha256": "ba6fe942f8e5d407aa33a14f730a9d3ddbd1003f0a3770d456eb314750b7043f"
+    }
+  ],
+  "validation_tracking": {
+    "E0-seed0": {
+      "tracked_observations": 5654,
+      "expected_observations": 5952,
+      "complete_all_object_clips": 80,
+      "expected_clips": 96
+    },
+    "E0-seed1": {
+      "tracked_observations": 5916,
+      "expected_observations": 5952,
+      "complete_all_object_clips": 92,
+      "expected_clips": 96
+    },
+    "E0-seed2": {
+      "tracked_observations": 5947,
+      "expected_observations": 5952,
+      "complete_all_object_clips": 91,
+      "expected_clips": 96
+    },
+    "E2-pilot-seed0": {
+      "tracked_observations": 378,
+      "expected_observations": 5952,
+      "complete_all_object_clips": 0,
+      "expected_clips": 96
+    },
+    "E3-pilot-seed0": {
+      "tracked_observations": 269,
+      "expected_observations": 5952,
+      "complete_all_object_clips": 0,
+      "expected_clips": 96
+    }
+  },
+  "validation_tracking_equals_recorded": {
+    "E0": "Ananya's E0 release MANIFEST.json and report 3.7",
+    "E2_E3": "docs/MULTISCENE_PILOT.md pilot table"
+  },
+  "action_horizons": {
+    "validation": {
+      "plan_sha256": "a82eae9f4ce0e3281f8af73e4d24a36cb8c2f80c99515bf9a77b8c32ba7365db",
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 4
+      },
+      "scene_groups": 4,
+      "window": {
+        "E0_counts_equal_sum_of_job_46615_seed_reports": true,
+        "E0_rates": {
+          "reversal.correct_force_sign_rate_over_complete": 0.0,
+          "zero.drift_rate_over_complete": 0.0
+        },
+        "E2_E3_complete": {
+          "E2": {
+            "forward.complete_samples": 0,
+            "reverse.complete_samples": 0,
+            "zero.complete_samples": 0,
+            "reversal.complete_pairs": 0
+          },
+          "E3": {
+            "forward.complete_samples": 0,
+            "reverse.complete_samples": 0,
+            "zero.complete_samples": 0,
+            "reversal.complete_pairs": 0
+          }
+        }
+      },
+      "full": {
+        "E0_counts_equal_sum_of_job_46615_seed_reports": true,
+        "E0_rates": {
+          "reversal.correct_force_sign_rate_over_complete": 1.0,
+          "zero.drift_rate_over_complete": 0.0
+        },
+        "E2_E3_complete": {
+          "E2": {
+            "forward.complete_samples": 0,
+            "reverse.complete_samples": 0,
+            "zero.complete_samples": 0,
+            "reversal.complete_pairs": 0
+          },
+          "E3": {
+            "forward.complete_samples": 0,
+            "reverse.complete_samples": 0,
+            "zero.complete_samples": 0,
+            "reversal.complete_pairs": 0
+          }
+        }
+      }
+    },
+    "selection": {
+      "plan_sha256": "dc2403a14465a162bdd58e0dcb399c9f4ed3c6b605f4a745926d8b91e91586e6",
+      "eligible_scene_groups": {
+        "window": 4,
+        "full": 2
+      },
+      "scene_groups": 4,
+      "window": {
+        "E0_counts_equal_sum_of_job_46615_seed_reports": true,
+        "E0_rates": {
+          "selection.correct_contrast_rate_over_complete": 0.0,
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0
+        },
+        "E2_E3_complete": {
+          "E2": {
+            "selection.complete_pairs": 0
+          },
+          "E3": {
+            "selection.complete_pairs": 0
+          }
+        }
+      },
+      "full": {
+        "E0_counts_equal_sum_of_job_46615_seed_reports": true,
+        "E0_rates": {
+          "selection.correct_contrast_rate_over_complete": 0.7083333333333334,
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 1.0
+        },
+        "E2_E3_complete": {
+          "E2": {
+            "selection.complete_pairs": 0
+          },
+          "E3": {
+            "selection.complete_pairs": 0
+          }
+        }
+      }
+    }
+  },
+  "suite_status": {
+    "validation": "passed",
+    "selection": "passed"
+  },
+  "seconds": {
+    "phases": {
+      "prepare_validation": 1.33,
+      "prepare_selection": 1.45,
+      "sample_validation": 120.33,
+      "score_validation": 135.81,
+      "horizons_validation": 21.57,
+      "sample_selection": 36.45,
+      "score_selection": 50.78,
+      "horizons_selection": 8.52
+    },
+    "total": 376.3,
+    "sampling_per_run_including_load": {
+      "validation": {
+        "E0-seed0": 11.63,
+        "E0-seed1": 1.03,
+        "E0-seed2": 1.01,
+        "E2-pilot-seed0": 52.66,
+        "E3-pilot-seed0": 51.83
+      },
+      "selection": {
+        "E0-seed0": 0.36,
+        "E0-seed1": 0.36,
+        "E0-seed2": 0.36,
+        "E2-pilot-seed0": 17.24,
+        "E3-pilot-seed0": 17.27
+      }
+    },
+    "videos_per_run": {
+      "validation": 96,
+      "selection": 32
+    }
+  },
+  "findings": [
+    "Sampling records the plan hash and plans store absolute paths, while TC2 home folders are private (drwx------). Every final run must therefore be sampled and scored from one account against one plan.",
+    "The LPIPS AlexNet backbone was not cached on this TC2 account. The official file (checksum prefix 7be5be79) was copied into ~/.cache/torch/hub/checkpoints before the job; other accounts need the same.",
+    "The E2/E3 pilot checkpoints were trained with seed 7, outside the declared training seeds 0-2 in configs/evaluation/comparison.yaml. Final E2/E3 runs need seeds 0-2 or a recorded protocol change."
+  ],
+  "test_splits_evaluated": []
+}
