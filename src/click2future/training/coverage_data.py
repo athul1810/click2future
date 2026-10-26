@@ -25,6 +25,41 @@ from .world_data import load_cache, world_geometry
 ARMS = ("narrow", "broad")
 
 
+def derived_vector_equal(actual, expected):
+    """Bound platform trig roundoff in recipe reconstruction, never scoring.
+
+    Stored bytes remain checksum-exact. Eight float64 ULPs allow only rounding
+    in derived force/position vectors; physical labels and all other fields
+    remain exact. The force actually used by training must also match in float32.
+    """
+    return (
+        isinstance(actual, list)
+        and len(actual) == len(expected) == 2
+        and all(
+            not isinstance(a, bool)
+            and isinstance(a, (float, int))
+            and math.isfinite(a)
+            and math.isfinite(b)
+            and abs(a - b) <= 8 * max(math.ulp(a), math.ulp(b))
+            for a, b in zip(actual, expected, strict=True)
+        )
+    )
+
+
+def scene_recipe_equal(actual, expected):
+    expected = copy.deepcopy(expected)
+    if not derived_vector_equal(actual["action"]["force_xy"], expected["action"]["force_xy"]):
+        return False
+    expected["action"]["force_xy"] = actual["action"]["force_xy"]
+    if len(actual["objects"]) != len(expected["objects"]):
+        return False
+    for obj, reference in zip(actual["objects"], expected["objects"], strict=True):
+        if not derived_vector_equal(obj["position"], reference["position"]):
+            return False
+        reference["position"] = obj["position"]
+    return actual == expected
+
+
 def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -231,11 +266,11 @@ def validate(parent, output):
                     "pair": pair,
                     "profile": profile,
                     "selected_object_id": selected,
-                    "force_xy": force,
                     "parent_sample_id": source["sample_id"],
                     "split": "train",
                 }.items()
             )
+            or not derived_vector_equal(row["force_xy"], force)
             or set(row["cohorts"]) != set(ARMS)
             or row["sampling_contact"] != any(c["contact"] for c in row["cohorts"].values())
         ):
@@ -251,7 +286,9 @@ def validate(parent, output):
             clip = load_rollout(folder, name)
             scene = paired_scene(bases[pair], recipe, arm, pair, profile, selected, force, name)
             if (
-                clip["scene_spec"] != scene
+                not scene_recipe_equal(clip["scene_spec"], scene)
+                or clip["scene_spec"]["action"]["force_xy"] != row["force_xy"]
+                or not np.array_equal(clip["force_xy"], np.asarray(force, dtype=np.float32))
                 or row["cohorts"][arm]["contact"] != bool(clip["collision_onset"].any())
                 or row["cohorts"][arm]["first_frame_sha256"]
                 != hashlib.sha256(clip["frames"][0].tobytes()).hexdigest()

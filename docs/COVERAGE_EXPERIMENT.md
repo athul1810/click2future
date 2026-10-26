@@ -41,6 +41,17 @@ the sampling weights and paired index draws identical while the actual contacts
 can differ. the actual outcomes remain recorded separately. neither evaluation
 contacts nor inference physics are used for this sampling rule.
 
+the frozen generation has 1,376 actual contact clips in narrow and 1,134 in
+broad; their common sampling-contact union contains 2,129 clips. equal sampling
+weights do not make actual contact prevalence equal. this remains part of the
+data intervention rather than an isolated test of geometry count.
+
+stored arrays and metadata remain checksum-exact. native recipe reconstruction
+allows at most eight float64 ULPs only in derived force/position vectors because
+Windows and Linux trigonometry differed by one ULP in a diagonal force. the
+training force must still match exactly in float32; physical labels and all
+other scene fields remain exact. no scoring tolerance changes.
+
 ## training and evaluation
 
 - both start from conditioned E7 EMA final update 8,000, checksum

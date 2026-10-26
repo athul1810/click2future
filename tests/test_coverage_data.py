@@ -134,3 +134,21 @@ def test_overlapping_visible_seed_is_rejected(paired, tmp_path):
     recipe = {**record["recipe"], "seed": module.read(parent / "dataset_manifest.json")["seed"]}
     with pytest.raises(ValueError, match="overlap"):
         module.generate(parent, tmp_path / "leak", recipe)
+
+
+def test_recipe_roundoff_is_limited_to_derived_vectors_and_does_not_relax_labels():
+    actual = {
+        "action": {"force_xy": [0.1767766952966369, 0.0]},
+        "objects": [{"position": [0.5, 0.45], "hidden_physics": {"mass": 1.0}}],
+    }
+    expected = copy.deepcopy(actual)
+    expected["action"]["force_xy"][0] = float(np.nextafter(actual["action"]["force_xy"][0], 0))
+    expected["objects"][0]["position"][0] = float(np.nextafter(0.5, 1))
+    assert module.scene_recipe_equal(actual, expected)
+    for value in (0.5 + 1e-12, float("nan"), True):
+        changed = copy.deepcopy(actual)
+        changed["objects"][0]["position"][0] = value
+        assert not module.scene_recipe_equal(changed, actual)
+    changed = copy.deepcopy(actual)
+    changed["objects"][0]["hidden_physics"]["mass"] = float(np.nextafter(1.0, 2))
+    assert not module.scene_recipe_equal(changed, actual)
