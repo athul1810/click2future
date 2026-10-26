@@ -49,6 +49,11 @@ both arms but leaves penetration in 11/96 and ten trajectory conditions failing.
 Carried memory does not improve contact timing and extends worst overlap from
 19 to 20 frames. Neither arm is promoted. See [the measured experiment](TEMPORAL_CONTACT_EXPERIMENT.md).
 
+The paired coverage screen in #68 keeps the E7 model and compares equal amounts
+of new training data on old versus independent visible scenes. Preflight passes;
+job 47305 is queued behind the existing AI6102 allocation. No learned-quality
+result is available. See [the protocol and queue snapshot](COVERAGE_EXPERIMENT.md).
+
 ## Task details
 
 <a id="t01"></a>

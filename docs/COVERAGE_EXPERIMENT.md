@@ -89,4 +89,38 @@ driver supports `--trained-run` for evaluation-only recovery; supply the same
 
 ## status
 
-implementation and data verification in progress. no trained-quality result yet.
+26 october submission snapshot: job **47305** is pending with dependency
+`afterany:47288`, the existing AI6102 allocation. that job was left unchanged.
+the coverage allocation has a one-hour cap and starts after the dependency ends.
+training source is `205456f`; generation source remains `b4604d5`. all 470
+training-source files verify on TC2, and the original teacher/cache and prepared
+generation match their expected checksums.
+
+634 tests and four subtests pass, with six inherited torchvision warnings.
+lint and changed-source formatting pass; four inherited global-format failures
+remain. the 293-file source ZIP passes inventory/link inspection,
+clean-extraction smoke and 12 extracted regression tests. the real teacher and
+base cache match all eight refinement bindings.
+
+the local preflight replays labels and encodes all 66,560 augmented examples,
+then verifies their observed features, hulls and object/physics identities.
+initial-mask IoU is 1.0 across all 8,320 original clips. all 32 training pairs
+were visually inspected. a native metadata-only probe reconstructs every scene
+recipe, and full native file/label checks run again during scheduled cache
+preparation. no seed was removed.
+
+two setup failures are retained: the first upload wrapper used CRLF and failed
+before extraction; the first native probe demanded exact float64 trigonometry
+and found a one-ULP force difference. both occurred before optimization. the
+corrected recipe guard changes no stored data or evaluation source.
+
+[preflight evidence](results/coverage-preflight.json) records identities, label
+digests and the pending-job receipt. the
+[private draft backup](https://github.com/athul1810/click2future/releases/tag/untagged-81f5375e01fa3f8e2117)
+contains all frozen inputs, both source archives, test logs and visual checks.
+all six release assets were downloaded and their digests verified.
+
+the queued wrapper retains full states, caches, native reports and an archive
+when the allocation exits. collecting final accounting/results, independent
+Windows replay and all-seed output inspection remain open. **no trained-quality
+result or checkpoint promotion is recorded.**
