@@ -62,6 +62,7 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "submission/memory_comparison.sbatch" in names
         assert "submission/coverage_comparison.py" in names
         assert "submission/coverage_comparison.sbatch" in names
+        assert "submission/trajectory_response.py" in names
         assert "src/click2future/models/contact_memory.py" in names
         assert "src/click2future/training/contact_geometry.py" in names
         assert "src/click2future/training/train_contact.py" in names
