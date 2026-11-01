@@ -66,6 +66,20 @@ guaranteeing valid physics. a failure remains possible and must be measured.
   four threads on this machine. this is an initial compatibility/cost check,
   **not a trained-quality result or a GPU latency claim**.
 
+the complete stack passes 644 tests plus four subtests, with six inherited
+torchvision warnings. lint and changed-source formatting pass; four inherited
+global-format failures remain. the 299-file source ZIP passes inspection,
+clean-extraction smoke and ten extracted regression tests. source `9b63e0f`
+contains the tested prototype; later changes only record this evidence.
+
+[verification record](results/surface-prototype-checks.json) retains identities,
+runtime and the current TC2 access limitation. the
+[private draft backup](https://github.com/athul1810/click2future/releases/tag/untagged-60da86aad5f716d7aa68)
+contains both immutable sources, raw action-probe videos and references,
+all-seed failure sheets, initial compatibility output and full test logs. all
+five release assets were downloaded and verified. this backs up implementation
+and development diagnostics, not a trained surface-model result.
+
 ## training gate
 
 retrieve #68 job 47305 before freezing a new cache/teacher and matched training

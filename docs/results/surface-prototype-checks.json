@@ -1,0 +1,185 @@
+{
+  "status": "implementation_and_local_verification_passed",
+  "surface_source_revision": "9b63e0f755a7c6464254b3ad7504ae46a4bf8107",
+  "response_source_revision": "07595fcc80debe5c6b933de7bc019e918dde48dc",
+  "tests": {
+    "passed": 644,
+    "subtests": 4,
+    "warnings": 6,
+    "seconds": 311.03,
+    "log_sha256": "2ba21cd4b26f1f2d659a3d889c13e472e5537885c8d9a5c54ff4bee0ec57b38f"
+  },
+  "lint": "passed",
+  "formatting": "changed sources pass; inherited four global-format failures remain",
+  "source_zip": {
+    "file_count": 299,
+    "sha256": "1c84ac28a0f7f6ed3d2dd4299831de7b43193912637e64ae72d83a0181112e3f",
+    "inspection": "passed",
+    "clean_extraction_smoke": "passed",
+    "extracted_tests": 10
+  },
+  "surface_initial_teacher_parity": {
+    "pooled": {
+      "initial_teacher_pixels_equal": true,
+      "clips": 4,
+      "parameters": 1079944,
+      "trainable_parameters": 1079944,
+      "cpu_seconds_four_clips": 0.8556022000266239,
+      "scope": "untrained zero-output adapter compatibility and cost; not model quality",
+      "training_device": "not trained"
+    },
+    "local": {
+      "initial_teacher_pixels_equal": true,
+      "clips": 4,
+      "parameters": 1079944,
+      "trainable_parameters": 1079944,
+      "cpu_seconds_four_clips": 0.813765799975954,
+      "scope": "untrained zero-output adapter compatibility and cost; not model quality",
+      "training_device": "not trained"
+    }
+  },
+  "prototype_source_checks": {
+    "no_inference_simulator_imports": true,
+    "historical_model_loader_and_evaluator_sources_unchanged": true,
+    "source_sha256": {
+      "src/click2future/models/surface_motion.py": "858bf291a72dd99a3233e039c6b09a188147fc4a1ac02c7243c607b50fd98e82",
+      "src/click2future/training/train_surface.py": "24cfa402c5a62c90ccc2b9a95cf83f62ca7af04a105f0b5893cacdfc684d2b20",
+      "src/click2future/training/surface_checkpoint.py": "4f0b9f663df8c86d0ba914be9f1f57acc707fd871e2c022d1782c37ac239638f",
+      "tests/test_surface_motion.py": "3238ff09d3786aaa7882907acd098b5044e28146f4b1943ec74b0b5555294e6c"
+    }
+  },
+  "e7_response": {
+    "checkpoint_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+    "source_sha256": "315b480b660d31af2db2d3ab6fd6278976cef9cef8da8e8862eab051b08790df",
+    "result_sha256": "9a87ec8f6668e6790ad510bb0aa9dc42797b4ca60821bc5612a66736f17d15f7",
+    "archives_verified": 48,
+    "generated_clips": 192,
+    "summary": {
+      "window": {
+        "selection_conditions": 24,
+        "eligible_selection_conditions": 24,
+        "excluded_selection_conditions": 0,
+        "force_conditions": 32,
+        "eligible_force_conditions": 32,
+        "selection": {
+          "model": {
+            "expected_eligible_samples": 96,
+            "complete_samples": 96,
+            "missing_samples": 0,
+            "correct_targets": 88,
+            "nonselected_drift": 0
+          },
+          "rendered_references": {
+            "expected_eligible_samples": 96,
+            "complete_samples": 96,
+            "missing_samples": 0,
+            "correct_targets": 66,
+            "nonselected_drift": 0
+          }
+        },
+        "force": {
+          "model": {
+            "expected_eligible_samples": 128,
+            "complete_samples": 128,
+            "missing_samples": 0,
+            "increases": 90,
+            "decreases": 0
+          },
+          "rendered_references": {
+            "expected_eligible_samples": 128,
+            "complete_samples": 128,
+            "missing_samples": 0,
+            "increases": 78,
+            "decreases": 0
+          }
+        }
+      },
+      "full": {
+        "selection_conditions": 24,
+        "eligible_selection_conditions": 16,
+        "excluded_selection_conditions": 8,
+        "force_conditions": 32,
+        "eligible_force_conditions": 19,
+        "selection": {
+          "model": {
+            "expected_eligible_samples": 64,
+            "complete_samples": 64,
+            "missing_samples": 0,
+            "correct_targets": 62,
+            "nonselected_drift": 2
+          },
+          "rendered_references": {
+            "expected_eligible_samples": 64,
+            "complete_samples": 64,
+            "missing_samples": 0,
+            "correct_targets": 64,
+            "nonselected_drift": 0
+          }
+        },
+        "force": {
+          "model": {
+            "expected_eligible_samples": 76,
+            "complete_samples": 75,
+            "missing_samples": 1,
+            "increases": 75,
+            "decreases": 0
+          },
+          "rendered_references": {
+            "expected_eligible_samples": 76,
+            "complete_samples": 76,
+            "missing_samples": 0,
+            "increases": 76,
+            "decreases": 0
+          }
+        }
+      }
+    },
+    "failure_visuals_inspected": 3,
+    "all_seeds_and_references_in_visuals": true
+  },
+  "runtime": {
+    "python": "3.12.15",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "versions": {
+      "torch": "2.11.0+cu128",
+      "numpy": "2.5.4",
+      "pillow": "12.3.0",
+      "pymunk": "7.3.1",
+      "pytest": "9.1.1",
+      "ruff": "0.17.0"
+    },
+    "response_device": "cpu",
+    "prototype_device": "cpu",
+    "optimizer_steps": "synthetic unit fixtures only; no learned project training on local CPU"
+  },
+  "tc2": {
+    "date": "2026-11-01",
+    "vpn_route_present": true,
+    "tc2_ssh_port_reachable": false,
+    "ssh_login_completed": false,
+    "failure_stage": "TCP connection timeout before authentication",
+    "job_47305_state": "unknown; 26 October pending snapshot not treated as current",
+    "existing_job_modified": false,
+    "new_gpu_jobs_submitted": [],
+    "notes": "Repeated TCP22 probes timed out after VPN route covered 10.96.189.12. No remote state was changed."
+  },
+  "new_learned_quality_result": null,
+  "checkpoint_promoted": false,
+  "test_splits_evaluated": [],
+  "limits": [
+    "one existing development corpus and one E7 checkpoint in response probe",
+    "finite four-profile references do not cover the entire prior",
+    "surface prototype has not been GPU trained or registered for official evaluation",
+    "job 47305 outcome cannot be retrieved while SSH times out"
+  ],
+  "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-60da86aad5f716d7aa68",
+  "release_is_private_draft": true,
+  "release_assets_downloaded": 5,
+  "asset_digests": {
+    "cpu-evidence.zip": "ed6afe44adc315af7d9b4ba59b4588916ac3558d3fb2e62a61cd24b5f014ae27",
+    "group_07_code.zip": "1c84ac28a0f7f6ed3d2dd4299831de7b43193912637e64ae72d83a0181112e3f",
+    "response-source.tar.gz": "25174335161c4d34d6d69ea29e7dac09abc1779b345877f6be37d69838b13293",
+    "SHA256SUMS": "ccc731d0831cd4fdde59b494f651b9f827422de105339c8593414bf9902cd25c",
+    "surface-source.tar.gz": "1f34d87e45a851b565781398f9c0ff0d20268d751ea501785e829c0d01454dea"
+  }
+}
