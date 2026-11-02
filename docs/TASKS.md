@@ -50,9 +50,10 @@ Carried memory does not improve contact timing and extends worst overlap from
 19 to 20 frames. Neither arm is promoted. See [the measured experiment](TEMPORAL_CONTACT_EXPERIMENT.md).
 
 The paired coverage screen in #68 keeps the E7 model and compares equal amounts
-of new training data on old versus independent visible scenes. Preflight passes;
-job 47305 is queued behind the existing AI6102 allocation. No learned-quality
-result is available. See [the protocol and queue snapshot](COVERAGE_EXPERIMENT.md).
+of new training data on old versus independent visible scenes. Job 47305 completed
+and its results were collected on 2 November. Narrow completes 96/96 clips with
+penetration in 9/96; broad completes 95/96 with penetration in 15/96. Both still
+fail overall quality and neither is promoted. See [the result](COVERAGE_EXPERIMENT.md).
 
 ## Task details
 
