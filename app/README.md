@@ -6,6 +6,17 @@ model comparison, cancellation and explicit cached replay. A separate simulator
 rollout uses the preset's hidden physical world. Those properties never enter
 the neural model.
 
+The 2 November interface adds a pinned action comparison. Generate, pin, then
+change the push or selected object and generate again. Both complete four-seed
+ensembles stay on the same timeline. A different seed list is labelled unpaired;
+equal seeds do not identify the same physical world in the CVAE/E5/E6 models.
+Changing scenes clears the pin.
+
+The separate reference selector switches among existing hidden-physics variants
+with exactly the same first image. It changes only the simulator panel, never
+model inputs, generated clips or their cache identity. Reference properties are
+displayed in that panel. A dataset containing only one reference has one choice.
+
 Checkpoint quality is still experimental. Running the app is not evidence of
 held-out action control, calibrated uncertainty or a state-of-the-art result.
 Pixel-derived trajectory overlays and a small warm browser timing study are now
@@ -28,6 +39,35 @@ not downloaded automatically. Use `--device cpu` on a machine without CUDA.
 CPU sampling can be slow; start with one checkpoint. The server only listens on
 the local machine. On TC2, inference requires a compute allocation; use the
 presentation laptop for the normal interface.
+
+## combined presentation bundle
+
+The verified local bundle at `outputs/demo-20261102/bundle` contains the ordinary
+flow CVAE, E5 and the E6 token checkpoint. It includes the four validation images
+and their four hidden-physics references. It is an experimental comparison, not
+a promoted physical-quality result. In particular the E6 token checkpoint is not
+the later paired-action package and still has passive-motion/contact failures.
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/demo-20261102/bundle `
+  --models E6-contact E0-flow E5-trajectory --device cuda
+```
+
+`scripts/build_demo_bundle.py --recipe local-recipe.json --output new-folder`
+builds a new verified bundle from local artifacts. The recipe declares `dataset`,
+`samples` and one to four `models`. Each model needs `name`, `checkpoint`,
+`checkpoint_sha256`, `quality` and `notes`. The builder checks real model/source
+compatibility, preserves checkpoint bytes, records training steps and inventories
+all members. Include every matching reference variant in `samples` to enable the
+reference-world selector. The output folder must be new.
+
+On the RTX 3060 laptop, all three models together have warm end-to-end median
+2.226s and empirical p95 2.249s across ten uncached requests after one warm-up.
+This includes tracking, reference rendering, transport and first painted canvas;
+it excludes server startup/checkpoint loading and is a small-sample timing result.
+The final interface passes 33 real-browser checks. See
+[the rehearsal record](../docs/results/demo-rehearsal.json).
 
 Python sources use LF line endings on Windows and Linux so the CVAE's exact
 source-hash check works across both machines. If an older checkout reports a

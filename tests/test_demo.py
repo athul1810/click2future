@@ -174,6 +174,34 @@ def test_hidden_reference_physics_does_not_change_model_cache(service):
     assert first["reference"]["strip"] != changed["reference"]["strip"]
 
 
+def test_reference_switch_never_invokes_model_or_changes_generated_clips(service):
+    data = request(service)
+    first = finish(service, service.submit(data))["result"]
+    other = copy.deepcopy(service.presets[data["scene"]])
+    other["scene_spec"]["objects"][data["object"]]["hidden_physics"]["mass"] *= 5
+    service.reference_worlds[data["scene"]]["other"] = other
+    reference = service.reference(
+        {key: data[key] for key in ("scene", "object", "force")} | {"world": "other"}
+    )
+    assert reference["strip"] != first["reference"]["strip"]
+    np.testing.assert_array_equal(
+        decode(reference["strip"])[:16, :16], service.presets[data["scene"]]["frames"][0]
+    )
+    assert len(service.models["fixture"].calls) == 1
+    again = finish(service, service.submit(data))["result"]
+    assert again["models"][0]["strip"] == first["models"][0]["strip"]
+    assert again["models"][0]["source"] == "cached replay"
+    assert len(service.models["fixture"].calls) == 1
+
+
+def test_reference_rejects_undeclared_world_and_hidden_properties(service):
+    data = {key: request(service)[key] for key in ("scene", "object", "force")}
+    for extra in ({"world": "missing"}, {"world": data["scene"], "mass": 2}):
+        with pytest.raises(ValueError):
+            service.reference(data | extra)
+    assert not service.models["fixture"].calls
+
+
 def test_tampered_cache_fails_without_serving_it(service):
     finish(service, service.submit(request(service)))
     archive = next(service.cache.glob("*.npz"))

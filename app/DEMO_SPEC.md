@@ -1,10 +1,13 @@
 # Click2Future demo specification
 
-Specification updated 17 October 2026. The local app and checkpoint adapters are
+Specification updated 2 November 2026. The local app and checkpoint adapters are
 implemented; [launch instructions](README.md) cover the current interface.
 Trained diagnostic checkpoints exist, but held-out quality and final demo acceptance
 remain open. Pixel-track overlays and a small warm latency study are implemented.
 Uncertainty overlays and the final presentation rehearsal remain open.
+Pinned full-ensemble action comparison, an isolated reference-world selector,
+the combined CVAE/E5/E6 bundle and a recorded replay are now implemented and
+checked locally. A team rehearsal on the presentation setup is still required.
 The confirmed PPT date is 14 November. Read the
 [execution plan](../docs/EXECUTION_PLAN_2026-10-16.md) for delivery gates and pending ownership.
 

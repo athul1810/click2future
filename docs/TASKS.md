@@ -365,7 +365,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5, all three E6 packages, corrected passive scores, action-family uncertainty and the fixed E5/E6 four-seed figure. It also includes the matched canvas-loss comparison and its remaining failures. report/contributions.md records evidence-supported draft descriptions; member reviews and Ananya's completed-work account remain pending. Sections 3.15-3.17 add the final held-out results, the E0 held-out analysis and the secondary D015 result (#65). Final export remains open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.
+The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5/E6, corrected passive scores, action-family uncertainty and the matched canvas-loss comparison. Sections 3.15-3.17 contain the final held-out results and secondary D015 result. Section 4 adds the post-D014 E7/E8 and completed coverage study, with all regressions retained. The 2 November review export is 26 pages; the contribution review draft is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable presentation draft and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
 
 <a id="t19"></a>
 
