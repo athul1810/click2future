@@ -1,4 +1,4 @@
-"""Run the predeclared E9 numeric-versus-spatial routing comparison (D016) on TC2."""
+"""Run the predeclared E10 numeric-versus-spatial routing comparison (D016) on TC2."""
 
 import argparse
 import json
@@ -17,7 +17,8 @@ ARMS = ("spatial", "numeric")
 
 def routing_configs(project):
     """Arms differ only in force routing, seeds only in seed, and both only
-    in force_limit from the E6 canvas recipe (an input contract, not a loss)."""
+    in force_limit and the max_seconds stop from the E6 canvas recipe; neither
+    changes the training updates."""
     project = Path(project)
     base = json.loads((project / "configs/training/contact_wall_pilot.json").read_text())
     paths = {
@@ -33,6 +34,7 @@ def routing_configs(project):
             **base,
             "seed": int(seed),
             "force_limit": 1.5,
+            "max_seconds": 2400,
             "broadcast_force": arm == "numeric",
         }
         if values != expected:
@@ -55,7 +57,7 @@ def main(argv=None):
     report = {
         "status": "running",
         "decision": "D016",
-        "scope": "E9 numeric versus spatial force routing; three training seeds; validation",
+        "scope": "E10 numeric versus spatial force routing; three training seeds; validation",
         "source_revision": os.environ.get("C2F_SOURCE_REVISION", "unrecorded"),
         "slurm_job_id": os.environ["SLURM_JOB_ID"],
         "dataset_manifest_sha256": sha256(args.dataset / "dataset_manifest.json"),
@@ -126,7 +128,7 @@ def main(argv=None):
                 "--steps",
                 "16",
                 "--method",
-                "E9",
+                "E10",
             )
             run(
                 "passive_" + name,

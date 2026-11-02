@@ -1,4 +1,4 @@
-"""E9: the E6 pose denoiser with a numeric or object-routed force input."""
+"""E10: the E6 pose denoiser with a numeric or object-routed force input."""
 
 import torch
 

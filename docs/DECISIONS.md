@@ -186,21 +186,25 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   number of training clips seen (40,000). It does not match updates (40,000 at
   batch 1 against E0's 20,000 at batch 2) or GPU time.
 
-## D016: Numeric versus spatial force routing in the pose model (E9): 2 November 2026
+## D016: Numeric versus spatial force routing in the pose model (E10): 2 November 2026
 
 - Reason: the E2-versus-E3 question cannot be answered in pixel space, because
   neither model keeps object identity (D014, D015). The pose model keeps objects
   intact, so the same question can be measured there.
-- E9 has two arms on the E6 canvas-loss recipe (`contact_wall_pilot.json`):
+- E10 has two arms on the E6 canvas-loss recipe (`contact_wall_pilot.json`):
   - spatial: the force reaches only the clicked object's token, as in E5/E6;
   - numeric: both object tokens get the same force. The selected-object flag stays
     in the features, so the model must learn which object to move.
 - Both arms have the same 845,828 parameters. For each training seed they start
   from identical weights and draw identical batches, noise levels and noise. A
   test checks that the spatial arm trains exactly like E6.
-- The only other change from E6 is `force_limit` 1.5 instead of 1.1, in both arms.
-  It is an input check, not a training change (training forces stay at most 1.1).
-  It allows force-OOD (1.3/1.5) to be scored as extrapolation.
+- The only other changes from E6, in both arms, do not change training updates:
+  - `force_limit` 1.5 instead of 1.1. It is an input check (training forces stay
+    at most 1.1) and allows force-OOD (1.3/1.5) to be scored as extrapolation;
+  - `max_seconds` 2400 instead of 1200. On an A40 the 16,000 updates take about
+    1,210 seconds, so the old stop would end runs early. Job 50249 was cancelled
+    for this reason during the first training run, before any evaluation.
+- Named E10 because #69 registers its surface model as E9.
 - Training seeds 19, 20 and 21; 16,000 updates; `best.pt` is chosen by the unchanged
   fixed-seed validation denoising loss. Nothing else is chosen on scores.
 - Validation uses the existing 24 conditions, the force-0.4 selection probe, the
@@ -210,8 +214,8 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   A difference is called consistent only if it has the same sign in all three
   seeds. Every run and failure is reported.
 - Held-out results come only from the separate D017 corpus. The dataset-0.3
-  reserved splits are not used for E9.
-- Scope: E9 uses future poses in training. It answers the routing question for a
+  reserved splits are not used for E10.
+- Scope: E10 uses future poses in training. It answers the routing question for a
   pose-space generator, not for E2/E3 pixel diffusion.
 - Proposed by Athul on 2 November, after a review that found the central comparison
   unresolved. Run with `submission/routing_comparison.sbatch`.
@@ -227,10 +231,10 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   build if any evaluated clip shares a frame zero or visible seed with any
   dataset-0.3 clip.
 - Frozen runs, with no training, selection or tuning: E0 seeds 0-2 (D014), E2/E3
-  5k seeds 0-2 (D014), E2/E3 40k seeds 0-2 (D015) and the six E9 runs (D016).
-- Same scorer, sampling seeds 0-3, samplers (32 DDIM steps; 16 Heun steps for E9),
+  5k seeds 0-2 (D014), E2/E3 40k seeds 0-2 (D015) and the six E10 runs (D016).
+- Same scorer, sampling seeds 0-3, samplers (32 DDIM steps; 16 Heun steps for E10),
   force-0.4 selection probe and force-OOD handling as D014.
-- Two jobs on the A40 nodes: E0 with E2/E3 40k, then E2/E3 5k with E9. Both
+- Two jobs on the A40 nodes: E0 with E2/E3 40k, then E2/E3 5k with E10. Both
   prepare the same plans; their plan hashes must match.
 - D014 and D015 stay as recorded. These results are reported as a replication
   beside them, labelled as such, whatever they show.

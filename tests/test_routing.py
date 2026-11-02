@@ -1,4 +1,4 @@
-"""E9 force routing and separately generated held-out corpus plans (D016/D017)."""
+"""E10 force routing and separately generated held-out corpus plans (D016/D017)."""
 
 from dataclasses import asdict
 from pathlib import Path
@@ -136,6 +136,6 @@ def test_pose_sampler_opens_test_splits_only_on_a_separate_corpus(corpora, tmp_p
     read_plan(separate)
     missing = tmp_path / "missing.pt"
     with pytest.raises(ValueError, match="final-test splits"):
-        sample_plan(reserved, missing, tmp_path / "a", method="E9")
+        sample_plan(reserved, missing, tmp_path / "a", method="E10")
     with pytest.raises(FileNotFoundError):
-        sample_plan(separate, missing, tmp_path / "b", method="E9")
+        sample_plan(separate, missing, tmp_path / "b", method="E10")

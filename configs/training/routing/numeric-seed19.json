@@ -13,7 +13,7 @@
   "sigma_max": 20.0,
   "temporal_weight": 0.1,
   "checkpoint_every": 500,
-  "max_seconds": 1200,
+  "max_seconds": 2400,
   "augment": true,
   "force_limit": 1.5,
   "penetration_weight": 256.0,

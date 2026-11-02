@@ -1,4 +1,4 @@
-"""Strict loading for the E9 force-routing checkpoints."""
+"""Strict loading for the E10 force-routing checkpoints."""
 
 from pathlib import Path
 

@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
 #SBATCH --mem=24G
-#SBATCH --time=03:00:00
+#SBATCH --time=04:00:00
 #SBATCH --job-name=c2f-routing
 #SBATCH --output=routing-%j.out
 #SBATCH --error=routing-%j.err

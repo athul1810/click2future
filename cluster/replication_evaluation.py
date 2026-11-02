@@ -3,7 +3,7 @@
 Frozen checkpoints only: nothing is trained, selected or tuned here. The corpus uses
 a new seed and ten scene groups per reserved split. Every plan binds the checkpoints'
 training corpus and rejects shared visible scenes, and all plans are frozen before
-any video is generated. E0/E2/E3 runs use the D014 sampler and scorer; E9 pose runs
+any video is generated. E0/E2/E3 runs use the D014 sampler and scorer; E10 pose runs
 use their validated 16-step Heun sampler and the same scorer.
 """
 
@@ -177,7 +177,7 @@ def main():
                     samples,
                     device=args.device,
                     steps=16,
-                    method="E9",
+                    method="E10",
                     run_id=run["run_id"],
                 ),
             )

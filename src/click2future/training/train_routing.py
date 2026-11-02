@@ -1,4 +1,4 @@
-"""E9: matched numeric versus spatial force routing on the E6 contact recipe."""
+"""E10: matched numeric versus spatial force routing on the E6 contact recipe."""
 
 import argparse
 import copy
@@ -198,7 +198,7 @@ def main(argv=None):
     if config.boundary_weight > 0 and excess > config.boundary_margin_pixels + 1e-5:
         raise ValueError("Training-label canvas excess exceeds the declared raster margin")
     summary = {
-        "scope": "E9 force-routing arm on the E6 canvas recipe; one seed; validation only",
+        "scope": "E10 force-routing arm on the E6 canvas recipe; one seed; validation only",
         "config": asdict(config),
         "provenance": provenance,
         "gpu": torch.cuda.get_device_name(),

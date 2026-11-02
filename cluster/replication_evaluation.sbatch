@@ -1,6 +1,6 @@
 #!/bin/bash -l
 # D017 held-out replication: generate (or re-check) the separate corpus, freeze every plan,
-# then sample and score the frozen runs. C2F_RUNS (E0/E2/E3 spec) and/or C2F_POSE_RUNS (E9)
+# then sample and score the frozen runs. C2F_RUNS (E0/E2/E3 spec) and/or C2F_POSE_RUNS (E10)
 # name the checkpoints. C2F_OUT must not exist. LPIPS needs the cached AlexNet weights.
 #SBATCH --partition=MGPU-TC2
 #SBATCH --qos=normal

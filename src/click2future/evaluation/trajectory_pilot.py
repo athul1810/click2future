@@ -34,7 +34,7 @@ def sample_plan(
     ):
         raise ValueError("This bounded pilot may not evaluate final-test splits")
     model, state = load_trajectory(checkpoint, device)
-    methods = {1: "E5", 2: "E6", 3: "E7", 4: "E8", 6: "E9"}
+    methods = {1: "E5", 2: "E6", 3: "E7", 4: "E8", 6: "E10"}
     if method != methods.get(state["trajectory_format_version"]):
         raise ValueError("Checkpoint training variant and requested method disagree")
     provenance = state["provenance"]
@@ -138,7 +138,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--steps", type=int, default=16)
-    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8", "E9"), default="E5")
+    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8", "E10"), default="E5")
     args = parser.parse_args(argv)
     if args.device == "cuda":
         require_tc2()
@@ -209,7 +209,7 @@ def main(argv=None):
             ),
         }
         _write(args.output / "trajectory-results.json", result)
-        if args.method in {"E6", "E7", "E8", "E9"}:
+        if args.method in {"E6", "E7", "E8", "E10"}:
             extended_audit(args.output, args.dataset, args.checkpoint, args.device)
         print(json.dumps(result["quality"]), flush=True)
     except Exception as error:
