@@ -1,6 +1,6 @@
 # prior-only decoder comparison
 
-status: implemented, not trained. E11 / checkpoint format 7; format 6 belongs
+status: native job 50455 submitted; no learned-quality result yet. E11 / checkpoint format 7; format 6 belongs
 to the team's separate E10 routing replication. This study does not open D017.
 
 ## question

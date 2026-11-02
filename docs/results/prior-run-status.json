@@ -1,0 +1,21 @@
+{
+  "source_revision": "633669dff6744b7ccc40166c4e8daad37a5af102",
+  "source_archive_sha256": "c90590d62c76ef9dddec3ccbe56e984a748e46bc2e4ecd4480846eab467d5ca0",
+  "immutable_source_files": 503,
+  "native_source_directory": "/home/msai/shrijeet001/click2future/releases/633669dff6744b7ccc40166c4e8daad37a5af102",
+  "ops": "/home/msai/shrijeet001/click2future/ops-prior-20261103",
+  "results": "/home/msai/shrijeet001/click2future/experiments/prior-20261103",
+  "verification": {
+    "full_suite_passed": 655,
+    "subtests": 4,
+    "additional_focused_passed": 8,
+    "clean_extracted_tests_passed": 8,
+    "archive_files": 313,
+    "lint": "passed",
+    "scope": "source and implementation checks; no trained-quality evidence"
+  },
+  "status": "submitted_no_learned_result",
+  "slurm_job_id": "50455",
+  "test_splits_evaluated": [],
+  "scope": "paired E11 exploratory direct versus conditional diffusion; final 8000 updates per arm; original cache; reused validation"
+}
