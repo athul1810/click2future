@@ -30,7 +30,7 @@ class CheckpointModel:
         self.sampling_steps = sampling_steps
         self.future_frames = None
         self.resolution = None
-        if state.get("trajectory_format_version") in (1, 2, 3, 4):
+        if state.get("trajectory_format_version") in (1, 2, 3, 4, 5):
             from click2future.training.sample_trajectory import load_trajectory
 
             self.model, state = load_trajectory(checkpoint, device)
@@ -47,6 +47,8 @@ class CheckpointModel:
                 detail += "; experimental shared-world relational refinement"
             elif state["trajectory_format_version"] == 4:
                 detail += "; experimental temporal residual on frozen E7"
+            elif state["trajectory_format_version"] == 5:
+                detail += "; experimental observed-surface refinement"
         elif state.get("checkpoint_version") == 1:
             config = TrainConfig(**state["config"])
             config.validate()
@@ -144,7 +146,7 @@ class CheckpointModel:
                 self.metadata["sampling_source_sha256"]["training/contact_checkpoint.py"] = sha256(
                     folder / "training/contact_checkpoint.py"
                 )
-            elif state["trajectory_format_version"] in (3, 4):
+            elif state["trajectory_format_version"] in (3, 4, 5):
                 self.metadata.update(
                     training_variant="shared_world_relational",
                     world_condition=state["config"]["world_condition"],
@@ -163,6 +165,18 @@ class CheckpointModel:
                         frozen_backbone_sha256=state["frozen_backbone_sha256"],
                     )
                     for name in ("models/contact_memory.py", "training/memory_checkpoint.py"):
+                        self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
+                elif state["trajectory_format_version"] == 5:
+                    self.metadata.update(
+                        training_variant="surface_messages",
+                        local_surfaces=state["config"]["local_surfaces"],
+                        surface_contract=state["surface_contract"],
+                    )
+                    for name in (
+                        "models/surface_motion.py",
+                        "training/surface_checkpoint.py",
+                        "training/contact_geometry.py",
+                    ):
                         self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
 
     @torch.inference_mode()

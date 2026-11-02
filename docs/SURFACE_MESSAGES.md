@@ -53,9 +53,8 @@ guaranteeing valid physics. a failure remains possible and must be measured.
   optimizer/private RNG. format 5 checkpoints retain full model, EMA, optimizer,
   RNG, configuration, source hashes and data provenance.
 - `training/surface_checkpoint.py` provides strict isolated loading and observable
-  RGB sampling. historical E5-E8 model files, public loaders and evaluation
-  sources are untouched. format 5 is intentionally not registered as an official
-  evaluated method yet; it must not be labelled E7 or inherit E7 scores.
+  RGB sampling. the initial prototype left public dispatch unchanged. the
+  2 november registration below adds a distinct E9 path; it cannot inherit E7 scores.
 - unit checks cover analytic segment distance/gradient, object permutation,
   padding isolation, degenerate rotations, matched initial tensors/parameters,
   exact teacher migration, full backbone/head gradients, strict load/resume and
@@ -82,10 +81,10 @@ and development diagnostics, not a trained surface-model result.
 
 ## training gate
 
-retrieve #68 job 47305 before freezing a new cache/teacher and matched training
-recipes. the outcome may change whether broader data is useful. the current
-prototype does not contain a selected learned checkpoint and is not a default
-demo replacement.
+job 47305 has been collected and reviewed in #68. neither coverage arm is
+promoted. the new comparison therefore uses the original 19,328-example training
+cache and original conditioned E7 teacher, rather than either expanded cache.
+the prototype still has no trained-quality result or default-demo promotion.
 
 before any new run: freeze equal batches, losses, initial tensors, private RNG,
 sampling weights, seed 19, update count and final-update selection. exercise exact
@@ -99,3 +98,31 @@ rest, action horizons, full selection drift, force scaling and multireference
 coverage together. independent training repeats and a newly frozen holdout are
 still necessary for a confirmatory improvement. the single-image hidden-world
 ambiguity and limitations of the 64px rigid decoder remain.
+
+## 2 november run freeze
+
+`surface_local.json` and `surface_pooled.json` differ only in `local_surfaces`.
+both use seed 19, 8,000 updates, batch 64, the same existing contact objective,
+AdamW learning rate 1e-4, all 1,079,944 parameters trainable, and the fixed final
+checkpoint. each arm has a 1,200-second training cap. a partial run is retained
+and fails the comparison instead of being presented as a completed budget.
+
+the real-cache initialization check verifies identical initial tensors, private
+RNG and sampling weights. both zero-output heads preserve all four teacher clips
+pixel-for-pixel on the first sorted validation push. this remains an initialization
+check, not a training result.
+
+the public sampler and fresh evaluation plans now register format 5 as **E9**.
+observable hulls enter only that sampler path. the generic suite, geometry audit,
+stratification and world probes accept the distinct method without changing metric
+formulas, thresholds or historic plans/reports. new plans bind this evaluator
+revision; old official plans must still be replayed with their pinned source.
+the isolated historical audit verifies their saved source identities as before.
+the checkpoint adapter exposes the surface variant and its inference source hashes.
+
+the integration test samples, scores and pixel-replays a tiny format-5 fixture,
+and rejects an attempted E7 alias. legacy E5-E8 tests remain in the full suite.
+`submission/surface_comparison.sbatch` runs both arms, exact CUDA continuation
+fixtures, all validation/selection samples, geometry/contact/rest/uncertainty
+audits, shared-world interventions and the complete force/selection response
+diagnostic. no old test split is opened.

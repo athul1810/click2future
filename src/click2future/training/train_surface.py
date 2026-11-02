@@ -137,6 +137,12 @@ class SurfaceTrainer(WorldTrainer):
             "source_step": state["step"],
             "teacher_tensors_sha256": tensor_digest(base.state_dict()),
             "initial_tensors_sha256": tensor_digest(self.model.state_dict()),
+            "initial_private_rng_sha256": hashlib.sha256(
+                self.generator.get_state().cpu().numpy().tobytes()
+            ).hexdigest(),
+            "sampling_weights_sha256": hashlib.sha256(
+                self.weights.detach().cpu().numpy().tobytes()
+            ).hexdigest(),
         }
 
     def train_step(self):

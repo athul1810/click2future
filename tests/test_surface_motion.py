@@ -9,8 +9,10 @@ import torch
 from test_contact_training import fixture_data, tensor_geometry
 from test_world_motion import setup_trainer
 
+from click2future.demo.models import CheckpointModel
 from click2future.models.surface_motion import SurfaceTrajectoryDiffusion, surface_features
 from click2future.models.world_motion import sample_world
+from click2future.training.sample_trajectory import load_trajectory, sample_trajectory_videos
 from click2future.training.surface_checkpoint import load_surface, sample_surface_videos
 from click2future.training.train_surface import SurfaceConfig, SurfaceTrainer, surface_sources
 
@@ -189,6 +191,30 @@ def test_strict_loading_and_observable_sampler_preserve_global_rng(tmp_path):
     )
     assert videos.shape == (2, 32, 64, 64, 3) and videos.dtype == np.uint8
     assert np.array_equal(videos[:, 0], np.stack([obs.first] * 2))
+    assert torch.equal(original, torch.get_rng_state())
+    public, public_state = load_trajectory(path)
+    assert public_state["trajectory_format_version"] == 5
+    public_videos = sample_trajectory_videos(
+        public,
+        obs.first,
+        obs.masks[obs.selected_index],
+        np.array([0.2, 0], np.float32),
+        seeds=(0, 1),
+        sampling_steps=2,
+    )
+    assert np.array_equal(public_videos, videos)
+    adapter = CheckpointModel("E9-fixture", path, trajectory_steps=2)
+    assert adapter.metadata["training_variant"] == "surface_messages"
+    assert adapter.metadata["local_surfaces"] is True
+    actual = adapter.predict(
+        obs.first,
+        obs.masks[obs.selected_index],
+        np.array([0.2, 0], np.float32),
+        seeds=[0, 1],
+        future_frames=31,
+        cancelled=None,
+    )
+    assert np.array_equal(actual, videos)
     assert torch.equal(original, torch.get_rng_state())
     state["surface_contract"] = "other"
     torch.save(state, path)
