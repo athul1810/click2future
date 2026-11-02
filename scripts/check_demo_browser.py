@@ -222,6 +222,39 @@ def main():
         assert page.evaluate("playback.models[0].strip") == first
         assert "cancelled" in page.locator("#status").inner_text()
         checks.append("cancelled generation cannot replace the previous output")
+        page.locator("#pin").click()
+        assert page.evaluate("pinned.models[0].strip") == first
+        assert page.locator("#pinned .future-card").count() == 4 * len(
+            page.evaluate("playback.models")
+        )
+        page.locator("#seed").fill(str(args.seed))
+        generate()
+        assert page.evaluate("pinned.models[0].strip") == first
+        assert page.evaluate("pinned.force") != page.evaluate("playback.force")
+        assert "same four seeds" in page.locator("#pairing").inner_text()
+        page.locator("#timeline").focus()
+        page.keyboard.press("End")
+        assert page.evaluate("frame") == 31
+        checks.append("pinned action preserves every sample across a changed push and timeline")
+        page.screenshot(path=str(args.output / "04-paired-actions.png"), full_page=True)
+        page.locator("#reference-details summary").click()
+        worlds = page.locator("#reference-world option").count()
+        if worlds > 1:
+            videos = page.evaluate("playback.models.map(m=>m.strip)")
+            before_reference = page.evaluate("referenceStrip.src")
+            page.locator("#reference-world").select_option(index=1)
+            wait("!document.getElementById('reference-world').disabled")
+            assert page.evaluate("playback.models.map(m=>m.strip)") == videos
+            assert page.evaluate("referenceStrip.src") != before_reference
+            assert (
+                "model inputs and generated videos are unchanged"
+                in page.locator("#reference-note").inner_text()
+            )
+            checks.append("switching a hidden reference world changes no model video")
+        page.locator("#clear-pin").click()
+        assert page.locator("#pinned").is_hidden()
+        assert page.locator("#pinned .future-card").count() == 0
+        checks.append("clearing a pinned action releases its display")
         options = page.locator("#scene option")
         if options.count() > 1:
             page.locator("#scene").select_option(index=1)
