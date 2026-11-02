@@ -17,7 +17,9 @@ One group makes one submission through **NTULearn > course site > Assignments > 
 **Internal completion deadline: 14 November 2026.** All three deliverables and the
 presentation must be ready then. Page 5 of the
 brief lists 16 November for upload. Confirm the exact NTULearn cutoff; this does
-not change the internal completion date.
+not change the internal completion date. On 3 November the user reported no
+changes to the current submission page; its exact cutoff was not independently
+verified in a signed-in browser.
 
 ## Report
 
@@ -80,9 +82,11 @@ check replay, load a batch, and verify all project imports come from the extract
 source. No existing data or model files are needed. The correctness tests include
 archive corruption, excluded working files, external links, and clean-folder replay.
 
-The current archive is a development snapshot. CVAE training/sampling and its TC2 job
-script are included. Diffusion training/sampling, executed GPU checkpoint checks,
-demo integration, and final run instructions still need completion before submission.
+The source archive includes CVAE and diffusion training/sampling, structured-motion
+follow-ups, evaluation, demo integration and the final-run job scripts. Clean
+extraction and smoke checks have passed. Final submission still needs the reviewed
+contribution statement, presentation rehearsal and a coordinated upload of the
+three named files; a review draft is not a submitted deliverable.
 
 ## Final check
 
