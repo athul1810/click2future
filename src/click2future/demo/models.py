@@ -53,7 +53,11 @@ class CheckpointModel:
             elif state["trajectory_format_version"] == 4:
                 detail += "; experimental temporal residual on frozen E7"
             elif state["trajectory_format_version"] == 7:
-                detail += "; experimental prior-only comparison"
+                detail = (
+                    "one-pass prior-conditioned pose decoder, rigid observed-pixel decoder, EMA"
+                    if self.model.world_prior_only
+                    else "conditional diffusion control for the prior-only comparison, EMA"
+                )
             elif state["trajectory_format_version"] == 5:
                 detail += "; experimental observed-surface refinement"
         elif state.get("checkpoint_version") == 1:
