@@ -252,6 +252,15 @@ def main():
         assert page.evaluate("pinned.models[0].strip") == first
         assert page.evaluate("pinned.force") != page.evaluate("playback.force")
         assert "same four seeds" in page.locator("#pairing").inner_text()
+        worlds = page.evaluate("""() => playback.models
+          .filter(m=>m.details.world_condition).map(m=>({
+          current:m.details.sampled_world_prior,
+          pinned:pinned.models.find(p=>p.name===m.name).details.sampled_world_prior
+        }))""")
+        if worlds:
+            assert all(row["current"] == row["pinned"] for row in worlds)
+            assert all(len(row["current"]["draws"]) == 4 for row in worlds)
+            checks.append("world-conditioned models retain every sampled prior draw across actions")
         page.locator("#timeline").focus()
         page.keyboard.press("End")
         assert page.evaluate("frame") == 31

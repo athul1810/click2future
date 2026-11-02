@@ -211,6 +211,31 @@ the uploaded archive was downloaded again and matched byte-for-byte; all 22
 inventoried member hashes pass. the bundled launch passes 25 browser checks.
 see [handoff checks](../docs/results/trajectory-handoff-checks.json).
 
+## optional shared-world preview
+
+The 3 November profile adds the existing E7 conditioned checkpoint alongside
+E6 token, E0 flow and E5. It samples mass/friction/restitution from the declared
+prior and reuses each seed's draw when the push changes. Result metadata retains
+all four draws in canonical observed-object order. They are not estimated or
+read from the supplied scene. Reference-world switching stays separate.
+
+The profile passed 35 functional browser checks and verified 37 bundle files.
+Ten fresh four-model requests after one warm-up took median 3.14 seconds and
+empirical p95 3.17 seconds on the RTX 3060 laptop, including the browser display.
+Startup and loading are excluded. The earlier three-model measurements remain
+in the rehearsal record. These are small local timing samples, not throughput
+comparisons with general video models.
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/demo-20261103/world-bundle `
+  --models E7-prior-preview E6-contact E0-flow E5-trajectory --device cuda
+```
+
+E7 still has 11 penetrating clips out of 96 validation samples and fails overall
+quality. This optional inspection profile does not promote it. Bundle recipes,
+weights and caches remain separate from the source-only submission archive.
+
 ## contact candidate comparison
 
 the 18 october paired-action candidate fixes passive drift on the saved push,

@@ -1,7 +1,7 @@
 {
   "status": "passed_functional_rehearsal",
-  "date": "2026-11-02",
-  "scope": "local RTX 3060 laptop; real checkpoints; not learned physical quality or team rehearsal",
+  "date": "2026-11-03",
+  "scope": "optional four-model prior preview; warm RTX 3060 laptop; real checkpoints; functional checks do not establish learned quality",
   "browser_checks": {
     "checks": [
       "page and checkpoint metadata load",
@@ -32,6 +32,7 @@
       "explicit comparison includes every selected model",
       "changed push cannot relabel old videos as new output",
       "cancelled generation cannot replace the previous output",
+      "world-conditioned models retain every sampled prior draw across actions",
       "pinned action preserves every sample across a changed push and timeline",
       "switching a hidden reference world changes no model video",
       "clearing a pinned action releases its display",
@@ -39,60 +40,68 @@
       "mobile layout has no horizontal overflow",
       "no browser javascript exceptions"
     ],
-    "count": 34,
+    "count": 35,
     "browser_errors": [],
     "ui_seconds": [
-      2.8467657999135554,
-      0.34945540002081543,
-      0.3502131999703124,
-      1.8920241999439895,
-      2.5151150999590755
+      1.9766497999662533,
+      0.344121600035578,
+      0.4436100999591872,
+      2.5847831000573933,
+      3.212355399969965
     ],
     "model_sources": [
       [
         {
           "source": "live model",
-          "seconds": 2.225701199960895
+          "seconds": 1.4513155999593437
         }
       ],
       [
         {
           "source": "cached replay",
-          "seconds": 0.014520799973979592
+          "seconds": 0.011121699935756624
         }
       ],
       [
         {
           "source": "cached replay",
-          "seconds": 0.0035874999593943357
+          "seconds": 0.003417600062675774
         }
       ],
       [
         {
           "source": "cached replay",
-          "seconds": 0.0036952000809833407
+          "seconds": 0.003028900013305247
         },
         {
           "source": "live model",
-          "seconds": 0.7079300000332296
+          "seconds": 0.5744690999854356
         },
         {
           "source": "live model",
-          "seconds": 0.6050547999329865
+          "seconds": 0.5076057999394834
+        },
+        {
+          "source": "live model",
+          "seconds": 0.5670350999571383
         }
       ],
       [
         {
           "source": "live model",
-          "seconds": 0.6704187999712303
+          "seconds": 0.9467383999144658
         },
         {
           "source": "live model",
-          "seconds": 0.2012837000656873
+          "seconds": 0.5719348000129685
         },
         {
           "source": "live model",
-          "seconds": 0.851066599949263
+          "seconds": 0.11408179998397827
+        },
+        {
+          "source": "live model",
+          "seconds": 0.5723256000783294
         }
       ]
     ],
@@ -111,6 +120,41 @@
       ]
     },
     "models": [
+      {
+        "id": "E7-prior-preview",
+        "kind": "trajectory_diffusion",
+        "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA; experimental shared-world relational refinement",
+        "checkpoint_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+        "training_steps": 8000,
+        "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+        "sampling_steps": 16,
+        "sampling_source_sha256": {
+          "demo\\models.py": "3bd03fa3f4580771e0d952502c598f578401137af4accdcd86fe394e9b79ff0b",
+          "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+          "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+          "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+          "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+          "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+          "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+          "training/sample_trajectory.py": "9515aafdf70f2a5d0a3e491629a5540c4757692bc8e06fce1c9a80d87d5b2305",
+          "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+          "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4"
+        },
+        "runtime": {
+          "torch": "2.11.0+cu128",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+          "precision": "float32"
+        },
+        "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+        "network_evaluations_per_sample": 31,
+        "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+        "training_variant": "shared_world_relational",
+        "world_condition": true,
+        "relational": true,
+        "validation_quality": "exploratory reused validation: 96/96 complete clips; penetration in 11/96, maximum depth 2.448 pixels. not a held-out promotion or calibrated uncertainty.",
+        "variant_notes": "future poses, contact and physical-property labels during training; samples the declared simulator prior at inference, never the true input physics. fixed prior draws across changed actions under the same seeds."
+      },
       {
         "id": "E6-contact",
         "kind": "trajectory_diffusion",
@@ -203,305 +247,360 @@
     "runs": [
       {
         "warmup": true,
-        "seconds": 1.9990668999962509,
+        "seconds": 3.218059999984689,
         "seeds": [
-          118200,
-          118201,
-          118202,
-          118203
+          118900,
+          118901,
+          118902,
+          118903
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 1.0830784999998286
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.5537586999125779
+            "seconds": 0.665280899964273
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.07085180003196001
+            "seconds": 0.0675097000785172
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5429615000030026
+            "seconds": 0.5847714000847191
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.9186685000313446,
+        "seconds": 3.1275102000217885,
         "seeds": [
-          118204,
-          118205,
-          118206,
-          118207
+          118904,
+          118905,
+          118906,
+          118907
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8589947000145912
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.6178437999915332
+            "seconds": 0.5884027000283822
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.11111459997482598
+            "seconds": 0.11384990008082241
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5912283998914063
+            "seconds": 0.6052770999958739
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.919087899965234,
+        "seconds": 3.135344900074415,
         "seeds": [
-          118208,
-          118209,
-          118210,
-          118211
+          118908,
+          118909,
+          118910,
+          118911
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.9493597999680787
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.6131796999834478
+            "seconds": 0.5818096000002697
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.10589539993088692
+            "seconds": 0.10036839998792857
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5725825000554323
+            "seconds": 0.6228647000389174
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.919074699981138,
+        "seconds": 3.1684468000894412,
         "seeds": [
-          118212,
-          118213,
-          118214,
-          118215
+          118912,
+          118913,
+          118914,
+          118915
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8624180000042543
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.5868189999600872
+            "seconds": 0.6137030000099912
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.10573589999694377
+            "seconds": 0.11952259996905923
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5812378000700846
+            "seconds": 0.5751075999578461
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.9098685999633744,
+        "seconds": 3.1356614999240264,
         "seeds": [
-          118216,
-          118217,
-          118218,
-          118219
+          118916,
+          118917,
+          118918,
+          118919
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8426906999666244
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.6114117000252008
+            "seconds": 0.5673094000667334
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.10276389995124191
+            "seconds": 0.10856550000607967
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5683803000720218
+            "seconds": 0.750773899955675
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 2.2358484999276698,
+        "seconds": 3.1468111999565735,
         "seeds": [
-          118220,
-          118221,
-          118222,
-          118223
+          118920,
+          118921,
+          118922,
+          118923
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.9158579999348149
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.5917712000664324
+            "seconds": 0.787549200002104
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.10562940000090748
+            "seconds": 0.06576559995301068
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.7775840000249445
+            "seconds": 0.5825663000578061
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 2.1935508999740705,
+        "seconds": 3.169065099908039,
         "seeds": [
-          118224,
-          118225,
-          118226,
-          118227
+          118924,
+          118925,
+          118926,
+          118927
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.937411000020802
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.6879124999977648
+            "seconds": 0.5800408000359312
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.06874379992950708
+            "seconds": 0.10396169999148697
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.7224584999494255
+            "seconds": 0.5655748000135645
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.9195515000028536,
+        "seconds": 3.153934499947354,
         "seeds": [
-          118228,
-          118229,
-          118230,
-          118231
+          118928,
+          118929,
+          118930,
+          118931
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8865153000224382
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.635399500024505
+            "seconds": 0.5564529000548646
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.09886779997032136
+            "seconds": 0.10336589999496937
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5959770999616012
+            "seconds": 0.6133768999716267
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.9102898000273854,
+        "seconds": 2.85936290002428,
         "seeds": [
-          118232,
-          118233,
-          118234,
-          118235
+          118932,
+          118933,
+          118934,
+          118935
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8132887000683695
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.5692603000206873
+            "seconds": 0.5821236999472603
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.11616790003608912
+            "seconds": 0.06525009998586029
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.6079472000710666
+            "seconds": 0.5646135999122635
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 2.228331100079231,
+        "seconds": 3.1692250000778586,
         "seeds": [
-          118236,
-          118237,
-          118238,
-          118239
+          118936,
+          118937,
+          118938,
+          118939
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8839052999392152
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.6471504999790341
+            "seconds": 0.6153351999819279
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.11215780000202358
+            "seconds": 0.10921080003026873
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.6006739999866113
+            "seconds": 0.5860499999253079
           }
         ]
       },
       {
         "warmup": false,
-        "seconds": 1.9106443000491709,
+        "seconds": 2.8530954000307247,
         "seeds": [
-          118240,
-          118241,
-          118242,
-          118243
+          118940,
+          118941,
+          118942,
+          118943
         ],
         "models": [
           {
+            "name": "E7-prior-preview",
+            "source": "live model",
+            "seconds": 0.8226076000137255
+          },
+          {
             "name": "E6-contact",
             "source": "live model",
-            "seconds": 0.5698174999561161
+            "seconds": 0.58255759999156
           },
           {
             "name": "E0-flow",
             "source": "live model",
-            "seconds": 0.10438330005854368
+            "seconds": 0.10552749992348254
           },
           {
             "name": "E5-trajectory",
             "source": "live model",
-            "seconds": 0.5858792000217363
+            "seconds": 0.5617136999499053
           }
         ]
       }
     ],
     "n": 10,
-    "median_seconds": 1.919081299973186,
-    "empirical_p95_seconds": 2.2324656699958725,
+    "median_seconds": 3.1412363499403,
+    "empirical_p95_seconds": 3.1691530450014396,
     "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
     "browser_errors": []
   },
@@ -956,5 +1055,529 @@
       "browser_errors": []
     }
   },
-  "native_pixel_motion_readouts": "signed selected-object displacement along the recorded force; Euclidean displacement for zero force; missing tracking remains unavailable"
+  "native_pixel_motion_readouts": "signed selected-object displacement along the recorded force; Euclidean displacement for zero force; missing tracking remains unavailable",
+  "previous_profiles": [
+    {
+      "date": "2026-11-02",
+      "browser_checks": {
+        "checks": [
+          "page and checkpoint metadata load",
+          "one primary model is selected by default",
+          "visible object selectors",
+          "background click cannot select an object",
+          "object buttons update selection",
+          "right drag gives positive x",
+          "down drag gives positive y",
+          "drag outside canvas clamps physical force",
+          "reverse keeps magnitude and negates both coordinates",
+          "zero push",
+          "keyboard direction matches image coordinates",
+          "shift fine adjustment",
+          "invalid seed fails without model execution",
+          "real checkpoint finishes four seeded futures",
+          "controls locked during generation",
+          "native-fps playback advances without an extra click",
+          "four videos retain ordered paired seeds and 32 frames",
+          "shared timeline scrubs all samples and pauses",
+          "pixel-track overlay and missing-count labels",
+          "timeline returns to supplied frame zero",
+          "motion readouts retain native pixels, force sign, zero force and missing tracks",
+          "simulator reference is separate and labelled",
+          "all four primary futures fit common desktop viewport heights",
+          "exact repeated request is identical labelled replay",
+          "reduced-motion preference keeps playback paused",
+          "explicit comparison includes every selected model",
+          "changed push cannot relabel old videos as new output",
+          "cancelled generation cannot replace the previous output",
+          "pinned action preserves every sample across a changed push and timeline",
+          "switching a hidden reference world changes no model video",
+          "clearing a pinned action releases its display",
+          "scene change resets playback and output",
+          "mobile layout has no horizontal overflow",
+          "no browser javascript exceptions"
+        ],
+        "count": 34,
+        "browser_errors": [],
+        "ui_seconds": [
+          2.8467657999135554,
+          0.34945540002081543,
+          0.3502131999703124,
+          1.8920241999439895,
+          2.5151150999590755
+        ],
+        "model_sources": [
+          [
+            {
+              "source": "live model",
+              "seconds": 2.225701199960895
+            }
+          ],
+          [
+            {
+              "source": "cached replay",
+              "seconds": 0.014520799973979592
+            }
+          ],
+          [
+            {
+              "source": "cached replay",
+              "seconds": 0.0035874999593943357
+            }
+          ],
+          [
+            {
+              "source": "cached replay",
+              "seconds": 0.0036952000809833407
+            },
+            {
+              "source": "live model",
+              "seconds": 0.7079300000332296
+            },
+            {
+              "source": "live model",
+              "seconds": 0.6050547999329865
+            }
+          ],
+          [
+            {
+              "source": "live model",
+              "seconds": 0.6704187999712303
+            },
+            {
+              "source": "live model",
+              "seconds": 0.2012837000656873
+            },
+            {
+              "source": "live model",
+              "seconds": 0.851066599949263
+            }
+          ]
+        ],
+        "note": "functional rehearsal, not model quality or a latency benchmark"
+      },
+      "timing": {
+        "scope": "warm browser request through first painted canvas; headless Chrome/Edge",
+        "included": "queue, neural sampling, conversion, pixel tracking, reference, PNG transfer and browser display",
+        "excluded": "server startup and checkpoint loading",
+        "condition": {
+          "scene": "g03-scene-00730016-forward-p00",
+          "object": 0,
+          "force": [
+            0.15000000596046448,
+            0
+          ]
+        },
+        "models": [
+          {
+            "id": "E6-contact",
+            "kind": "trajectory_diffusion",
+            "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA; contact/stationary training; unchanged inference",
+            "checkpoint_sha256": "dd590805854ff6c35b3836db084baf53eea860fe352f1dc8ec5b7eaa821eafa7",
+            "training_steps": 6000,
+            "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+            "sampling_steps": 16,
+            "sampling_source_sha256": {
+              "demo\\models.py": "3bd03fa3f4580771e0d952502c598f578401137af4accdcd86fe394e9b79ff0b",
+              "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+              "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+              "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+              "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+              "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+              "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+              "training/sample_trajectory.py": "9515aafdf70f2a5d0a3e491629a5540c4757692bc8e06fce1c9a80d87d5b2305",
+              "training/contact_checkpoint.py": "451a8bd24ed9d2c2ce52d0df390d531e0b5a72b08fd4ffb507de0625fa297cb4"
+            },
+            "runtime": {
+              "torch": "2.11.0+cu128",
+              "device": "cuda",
+              "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+              "precision": "float32"
+            },
+            "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+            "network_evaluations_per_sample": 31,
+            "supervision": "future positions and checked angular replay; training only",
+            "training_variant": "contact_regularized",
+            "validation_quality": "Overall validation quality fails. Demonstration only; not a calibrated distribution or promoted held-out result.",
+            "variant_notes": "future pose/contact/stationarity supervision; native rigid observed-pixel decoder; experimental contact model"
+          },
+          {
+            "id": "E0-flow",
+            "kind": "cvae",
+            "detail": "conditional VAE, learned prior",
+            "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
+            "training_steps": 20000,
+            "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+            "sampling_steps": null,
+            "sampling_source_sha256": {
+              "demo\\models.py": "3bd03fa3f4580771e0d952502c598f578401137af4accdcd86fe394e9b79ff0b",
+              "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+              "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+              "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+              "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+              "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+              "models/cvae_flow.py": "9f80061d2d0b5e946258beb8e8ad261dc0e464878184a028db242e74b033e2d5"
+            },
+            "runtime": {
+              "torch": "2.11.0+cu128",
+              "device": "cuda",
+              "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+              "precision": "float32"
+            },
+            "validation_quality": "Overall validation quality fails. Demonstration only; not a calibrated distribution or promoted held-out result.",
+            "variant_notes": "learned-prior flow CVAE; no future displacement labels; slower early response and selection/force-scaling failures"
+          },
+          {
+            "id": "E5-trajectory",
+            "kind": "trajectory_diffusion",
+            "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA",
+            "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
+            "training_steps": 5000,
+            "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+            "sampling_steps": 16,
+            "sampling_source_sha256": {
+              "demo\\models.py": "3bd03fa3f4580771e0d952502c598f578401137af4accdcd86fe394e9b79ff0b",
+              "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+              "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+              "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+              "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+              "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+              "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+              "training/sample_trajectory.py": "9515aafdf70f2a5d0a3e491629a5540c4757692bc8e06fce1c9a80d87d5b2305"
+            },
+            "runtime": {
+              "torch": "2.11.0+cu128",
+              "device": "cuda",
+              "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+              "precision": "float32"
+            },
+            "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+            "network_evaluations_per_sample": 31,
+            "supervision": "future positions and checked angular replay; training only",
+            "validation_quality": "Overall validation quality fails. Demonstration only; not a calibrated distribution or promoted held-out result.",
+            "variant_notes": "future pose supervision; rigid observed-pixel decoder; contact penetration and passive drift remain"
+          }
+        ],
+        "runs": [
+          {
+            "warmup": true,
+            "seconds": 1.9990668999962509,
+            "seeds": [
+              118200,
+              118201,
+              118202,
+              118203
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.5537586999125779
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.07085180003196001
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5429615000030026
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.9186685000313446,
+            "seeds": [
+              118204,
+              118205,
+              118206,
+              118207
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.6178437999915332
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.11111459997482598
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5912283998914063
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.919087899965234,
+            "seeds": [
+              118208,
+              118209,
+              118210,
+              118211
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.6131796999834478
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.10589539993088692
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5725825000554323
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.919074699981138,
+            "seeds": [
+              118212,
+              118213,
+              118214,
+              118215
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.5868189999600872
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.10573589999694377
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5812378000700846
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.9098685999633744,
+            "seeds": [
+              118216,
+              118217,
+              118218,
+              118219
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.6114117000252008
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.10276389995124191
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5683803000720218
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 2.2358484999276698,
+            "seeds": [
+              118220,
+              118221,
+              118222,
+              118223
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.5917712000664324
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.10562940000090748
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.7775840000249445
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 2.1935508999740705,
+            "seeds": [
+              118224,
+              118225,
+              118226,
+              118227
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.6879124999977648
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.06874379992950708
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.7224584999494255
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.9195515000028536,
+            "seeds": [
+              118228,
+              118229,
+              118230,
+              118231
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.635399500024505
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.09886779997032136
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5959770999616012
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.9102898000273854,
+            "seeds": [
+              118232,
+              118233,
+              118234,
+              118235
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.5692603000206873
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.11616790003608912
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.6079472000710666
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 2.228331100079231,
+            "seeds": [
+              118236,
+              118237,
+              118238,
+              118239
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.6471504999790341
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.11215780000202358
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.6006739999866113
+              }
+            ]
+          },
+          {
+            "warmup": false,
+            "seconds": 1.9106443000491709,
+            "seeds": [
+              118240,
+              118241,
+              118242,
+              118243
+            ],
+            "models": [
+              {
+                "name": "E6-contact",
+                "source": "live model",
+                "seconds": 0.5698174999561161
+              },
+              {
+                "name": "E0-flow",
+                "source": "live model",
+                "seconds": 0.10438330005854368
+              },
+              {
+                "name": "E5-trajectory",
+                "source": "live model",
+                "seconds": 0.5858792000217363
+              }
+            ]
+          }
+        ],
+        "n": 10,
+        "median_seconds": 1.919081299973186,
+        "empirical_p95_seconds": 2.2324656699958725,
+        "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
+        "browser_errors": []
+      }
+    }
+  ],
+  "requirements_update": {
+    "date": "2026-11-03",
+    "source": "user reports no change to current submission page",
+    "independently_verified": false,
+    "working_completion": "2026-11-14"
+  },
+  "bundle": {
+    "models": [
+      "E7-prior-preview",
+      "E6-contact",
+      "E0-flow",
+      "E5-trajectory"
+    ],
+    "verified_files": 37,
+    "scope": "existing E7 prior only; not a new trained checkpoint; same fixed seeds retain prior draws across pushes"
+  }
 }

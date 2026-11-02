@@ -286,7 +286,7 @@ function clearPin() {
 function updatePairing() {
   const paired = pinned && playback && JSON.stringify(pinned.seeds) === JSON.stringify(playback.seeds);
   $("pairing").textContent = pinned
-    ? paired ? "same four seeds; physical worlds are not identified by seed" : "different seeds; comparison is unpaired"
+    ? paired ? "same four seeds; world-conditioned models reuse their sampled prior draws" : "different seeds; comparison is unpaired"
     : "four samples; no seed selection";
 }
 function pinAction() {
