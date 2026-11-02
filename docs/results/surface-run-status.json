@@ -1,13 +1,12 @@
 {
-  "status": "running",
+  "status": "completed_and_collected",
   "job_id": 50260,
   "source_revision": "e00e4d7b711e9ff805c2614c1a97900396bbefcf",
   "date": "2026-11-02",
   "last_observation": {
-    "node": "TC2N02",
-    "elapsed": "00:02:40",
-    "phase": "train_local",
-    "last_observed_update": 2300
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "allocated_gpu_seconds": 1819
   },
   "immutable_source_files_verified_before_job": 490,
   "teacher_and_cache_hashes_verified": true,
@@ -51,5 +50,8 @@
   },
   "checkpoint_promoted": false,
   "test_splits_evaluated": [],
-  "trained_quality_result_collected": false
+  "trained_quality_result_collected": true,
+  "raw_files_verified": 926,
+  "independent_windows_pose_replays": 288,
+  "raw_archive_sha256": "ec32b3eb39f9fc7b02a96bc0752698e415ba44439624cb2ced4af04950a6578b"
 }

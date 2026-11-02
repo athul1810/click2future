@@ -84,7 +84,7 @@ and development diagnostics, not a trained surface-model result.
 job 47305 has been collected and reviewed in #68. neither coverage arm is
 promoted. the new comparison therefore uses the original 19,328-example training
 cache and original conditioned E7 teacher, rather than either expanded cache.
-the prototype still has no trained-quality result or default-demo promotion.
+the trained comparison is now collected below. neither arm is promoted.
 
 before any new run: freeze equal batches, losses, initial tensors, private RNG,
 sampling weights, seed 19, update count and final-update selection. exercise exact
@@ -126,3 +126,46 @@ and rejects an attempted E7 alias. legacy E5-E8 tests remain in the full suite.
 fixtures, all validation/selection samples, geometry/contact/rest/uncertainty
 audits, shared-world interventions and the complete force/selection response
 diagnostic. no old test split is opened.
+
+## completed screen, collected 3 november
+
+job **50260** completed `0:0` on an A40 in 1,819 allocated GPU seconds. both
+arms finish all 8,000 updates and both CUDA continuation fixtures are exact.
+all 926 retained file hashes pass; all 490 frozen source files verify before
+and after the job. independent Windows pose replay is pixel-exact for all 288
+clips and reproduces native event counts. raw failed transport attempts remain
+recorded; no optimization ran during those attempts.
+
+| measure | E7 teacher | local | pooled |
+|---|---:|---:|---:|
+| complete all-object clips /96 | 96 | 96 | 96 |
+| penetrating clips /96 | 11 | 12 | 11 |
+| penetrating future frames | 105 | 105 | 108 |
+| maximum depth, pixels | 2.4480 | 2.5035 | 2.5176 |
+| longest penetration, frames | 19 | 19 | 19 |
+| timed contact F1 | 0.3366 | 0.3600 | 0.3673 |
+| failed trajectory conditions /24 | 10 | 10 | 10 |
+| native full-horizon correct targets /64 | 63 | 64 | 64 |
+| native full-horizon passive drifts /64 | 1 | 0 | 0 |
+| native full-horizon force comparisons complete /76 | 76 | 75 | 76 |
+| native completed force comparisons increasing | 76 | 75 | 76 |
+
+local correspondence does not outperform pooled interaction information overall.
+both refinements slightly improve some response measures and timed contact F1,
+but worsen maximum depth; local adds a penetrating clip and loses one complete
+force comparison. neither passes overall quality. the small ADE differences
+do not resolve the ten failing trajectory conditions. one seed and four reused
+validation scenes cannot establish a general result about local contact models.
+
+all response rows here come from the same A40 allocation. eight selection
+conditions and thirteen force conditions are excluded at full horizon because
+their references contact first. missing predictions remain in the denominators.
+the teacher's 96 primary clips are byte-identical to job 47305, but its
+supplementary native response is 63/64 selection and 76/76 force completeness,
+versus 62/64 and 75/76 in the earlier Windows CPU probe. this is a platform and
+threshold boundary, not a learned improvement. historical CPU records are kept.
+
+the [complete result](results/surface-validation.json) retains every action
+family, failed case, depth/duration, stationarity, uncertainty, response and
+mass-intervention result. E9 remains an experimental comparison; the E7 teacher
+is not replaced on this evidence.
