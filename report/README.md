@@ -62,3 +62,12 @@ The collision audit adds reference-video calibration and all sustained-overlap
 failures. Its timing scores retain the original estimator, including its errors
 on correct simulator videos. The current E6 force-range mismatch is recorded
 before opening force-OOD tests. See docs/COLLISION_VALIDATION.md.
+
+The 2 November review export has 26 pages. Section 4 records E7 shared-world
+refinement, E8 temporal memory and the completed paired coverage study. These
+are post-D014 experiments on reused validation scenes, with one training seed;
+none is promoted. All new table values come from the retained result records.
+The export has no external URLs, link annotations, undefined references or
+overfull boxes. The one-page contribution export keeps Ananya's reviewed status
+and the other three pending confirmations. The editable presentation and replay
+are review artifacts, separate from the three required upload files.
