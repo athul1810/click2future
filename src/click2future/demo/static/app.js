@@ -215,8 +215,11 @@ function buildCards(result, loaded, target, destination) {
         ? tracks.samples[row].future_tracked + "/" + tracks.samples[row].future_expected + " future object observations tracked"
         : "pixel tracking unavailable";
       card.append(count);
+      const response = document.createElement("p");
+      response.className = "motion-response";
+      card.append(response);
       grid.append(card);
-      destination.push({canvas, image: loaded[index], row, tracks, result});
+      destination.push({canvas, image: loaded[index], row, tracks, result, response});
     });
     section.append(grid);
     target.append(section);
@@ -225,19 +228,29 @@ function buildCards(result, loaded, target, destination) {
 function drawFrame() {
   if (!playback) return;
   const [height, width] = playback.size;
-  [...strips, ...pinnedStrips].forEach(({canvas, image, row, tracks, result}) => {
+  [...strips, ...pinnedStrips].forEach(({canvas, image, row, tracks, result, response}) => {
     const ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(image, frame * width, row * height, width, height, 0, 0, canvas.width, canvas.height);
     if ($("tracks").checked && tracks?.status === "available") {
       drawTracks(ctx, canvas, tracks.samples[row], tracks.object_ids, result.object);
     }
+    response.textContent = motionResponse(tracks?.samples[row], result.object, result.force, result.size, frame);
   });
   const canvas = $("reference"), ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(referenceStrip, frame * width, 0, width, height, 0, 0, canvas.width, canvas.height);
   $("timeline").value = frame;
   $("time").textContent = (frame / playback.fps).toFixed(2) + "s";
+}
+function motionResponse(sample, object, push, size, at) {
+  if (!sample?.tracked[0]?.[object] || !sample.tracked[at]?.[object]) return "selected motion: untracked";
+  const start = sample.positions[0][object], end = sample.positions[at][object];
+  const dx = (end[0] - start[0]) * size[1], dy = (end[1] - start[1]) * size[0];
+  const magnitude = Math.hypot(...push);
+  if (!magnitude) return "selected motion: " + Math.hypot(dx, dy).toFixed(2) + " px from start";
+  const along = (dx * push[0] + dy * push[1]) / magnitude;
+  return "selected motion: " + (along >= 0 ? "+" : "") + along.toFixed(2) + " px along push";
 }
 function drawTracks(ctx, canvas, sample, ids, selectedObject) {
   for (const object of ids) {

@@ -10,7 +10,10 @@ The 2 November interface adds a pinned action comparison. Generate, pin, then
 change the push or selected object and generate again. Both complete four-seed
 ensembles stay on the same timeline. A different seed list is labelled unpaired;
 equal seeds do not identify the same physical world in the CVAE/E5/E6 models.
-Changing scenes clears the pin.
+Changing scenes clears the pin. Each tile also shows its selected-object
+displacement in native pixels at the current frame, projected along the recorded
+push. Zero-force clips show distance from the start. Missing tracking stays
+unavailable; these readouts do not certify physical validity.
 
 The separate reference selector switches among existing hidden-physics variants
 with exactly the same first image. It changes only the simulator panel, never
@@ -63,10 +66,10 @@ all members. Include every matching reference variant in `samples` to enable the
 reference-world selector. The output folder must be new.
 
 On the RTX 3060 laptop, all three models together have warm end-to-end median
-2.226s and empirical p95 2.249s across ten uncached requests after one warm-up.
+1.919s and empirical p95 2.232s across ten uncached requests after one warm-up.
 This includes tracking, reference rendering, transport and first painted canvas;
 it excludes server startup/checkpoint loading and is a small-sample timing result.
-The final interface passes 33 real-browser checks. See
+The final interface passes 34 real-browser checks. See
 [the rehearsal record](../docs/results/demo-rehearsal.json).
 
 Python sources use LF line endings on Windows and Linux so the CVAE's exact
