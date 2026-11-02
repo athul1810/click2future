@@ -52,6 +52,8 @@
     "submission/coverage_comparison.sbatch",
     "submission/trajectory_response.py",
     "submission/surface_comparison.py",
-    "submission/surface_comparison.sbatch"
+    "submission/surface_comparison.sbatch",
+    "submission/prior_comparison.py",
+    "submission/prior_comparison.sbatch"
   ]
 }
