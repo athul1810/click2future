@@ -165,7 +165,6 @@ records the adopted pixel path.
 
 ## Next team work
 
-- Review and merge the final evaluation and report changes (#62-#65).
 - Collect each member's reviewed contribution description (T18).
 - Rehearse the demo on the presentation setup (T17).
 - Export and check the two PDFs and the source ZIP, then submit (T20).

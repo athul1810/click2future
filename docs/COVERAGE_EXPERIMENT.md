@@ -89,6 +89,47 @@ driver supports `--trained-run` for evaluation-only recovery; supply the same
 
 ## status
 
+2 november: job **47305 completed**, exit `0:0`, using 1,708 allocated A40
+seconds. its archive verifies and all 780 retained file digests match. both arms
+finished the fixed 8,000 updates. initial tensors, private RNG and sampling-weight
+digests agree. all 470 source files verify before and after the allocation.
+
+| measure | teacher | narrow | broad |
+|---|---:|---:|---:|
+| complete all-object clips /96 | 96 | 96 | 95 |
+| penetrating clips /96 | 11 | 9 | 15 |
+| penetrating future frames | 105 | 99 | 176 |
+| maximum depth, pixels | 2.4480 | 2.4895 | 2.7101 |
+| longest penetration, frames | 19 | 18 | 19 |
+| timed contact-event F1 | 0.3366 | 0.3366 | 0.3529 |
+| failed trajectory conditions /24 | 10 | 10 | 10 |
+| correct early reversal pairs /16 | 12 | 13 | 12 |
+| forward selected-object spread | 0.02243 | 0.02303 | 0.02263 |
+
+neither arm is promoted. narrow reduces the number of penetrating clips but
+increases worst depth. broad increases penetration and loses one complete clip.
+the additional visible distribution did not solve the existing validation task.
+this does not isolate geometry count, prove broader data is harmful in general,
+or establish behavior on a new holdout. physical profiles, layouts and actual
+contact prevalence differ as described above.
+
+native and independent Windows replay are pixel-exact for all 288 clips.
+collision counts/events match; the largest geometric-depth difference is
+2.79e-7 pixels. both CUDA continuation fixtures have equal losses and zero
+model/EMA differences. full action/selection diagnostics remain supplementary to
+the original scores; all exclusions and missing tracks retain their denominators.
+
+supplementary full-horizon selection is 61/64 correct targets with 3 passive
+drifts for narrow, versus 58/64 and 6 for broad (teacher: 62/64 and 2).
+force scaling retains 75/76 complete comparisons in both arms: narrow increases
+in all 75, broad in 74. eight selection conditions and thirteen force conditions
+are excluded from full-horizon comparison because their references contact first.
+these exclusions remain explicit, rather than counting them as successes.
+
+the [complete result](results/coverage-validation.json) preserves failed cases,
+all action strata, source identities and the paired response diagnostics.
+the dated submission snapshot below remains historical rather than current state.
+
 26 october submission snapshot: job **47305** is pending with dependency
 `afterany:47288`, the existing AI6102 allocation. that job was left unchanged.
 the coverage allocation has a one-hour cap and starts after the dependency ends.
@@ -120,7 +161,6 @@ digests and the pending-job receipt. the
 contains all frozen inputs, both source archives, test logs and visual checks.
 all six release assets were downloaded and their digests verified.
 
-the queued wrapper retains full states, caches, native reports and an archive
-when the allocation exits. collecting final accounting/results, independent
-Windows replay and all-seed output inspection remain open. **no trained-quality
-result or checkpoint promotion is recorded.**
+at submission, collecting final accounting/results, independent Windows replay
+and all-seed output inspection were pending. the 2 november section supersedes
+that status. no checkpoint is promoted.
