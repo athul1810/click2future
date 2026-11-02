@@ -1,6 +1,6 @@
 # prior-only decoder comparison
 
-status: native job 50455 submitted; no learned-quality result yet. E11 / checkpoint format 7; format 6 belongs
+status: job 50455 completed and independently replayed. Neither arm is promoted. E11 / checkpoint format 7; format 6 belongs
 to the team's separate E10 routing replication. This study does not open D017.
 
 ## question
@@ -61,3 +61,36 @@ input hashes before and after, and rejects incomplete training. Both arms must
 pass exact two-update CUDA continuation. Source, cache and teacher are frozen
 before submission. A time-limited run is retained and cannot masquerade as an
 8,000-update result.
+
+
+## result, 3 november
+
+Both arms finish 8,000 updates and complete all 96 primary clips. The direct
+arm reduces penetrating clips from 11 to 1, penetrating frames from 105 to 4,
+worst depth from 2.504 to 1.056 pixels and longest penetration from 19 to four
+frames. Its 96-video sampling/export batch takes 2.31 seconds versus 31.06,
+excluding checkpoint loading; this is not browser end-to-end latency.
+
+Regressions remain: direct has two drifting zero-force clips out of 16, versus
+none for diffusion, and timed-contact F1 falls from 0.3711 to 0.3107. Mean
+selected-object ADE rises from 0.02466 to 0.02514. Seven trajectory cases fail,
+versus ten for diffusion. Forward spread is 0.02498 versus 0.02346 and finite
+reference spread 0.02580; that is descriptive, not probability calibration.
+Both select the correct object in 64/64 eligible full-horizon pairs. Force
+response completes 76/76 direct comparisons and 75/76 diffusion comparisons;
+every complete comparison increases displacement. The missing comparison stays
+missing. Eight selection and thirteen force conditions are excluded by the
+same reference-contact eligibility rule.
+
+All 926 collected file digests and 503 immutable source files verify. All 288
+primary clips replay pixel-exactly in an independent Windows audit, with native
+contact/event counts unchanged. The largest geometry-depth difference is below
+2.79e-7 pixels. Both CUDA continuation fixtures are exact. The E7 anchor's 96
+primary clips are identical to job 50260. Its native response counts keep their
+platform-qualified boundary; they do not replace the earlier Windows counts.
+
+This is a useful contact/cost tradeoff on four reused scenes, with one training
+seed. It fails the rest and overall trajectory gates and is not an overall
+quality win, independent replication, external comparison or promotion. The
+complete record is `docs/results/prior-validation.json`; all attempts, model
+states, samples and independent checks are retained in the private raw backup.

@@ -14,8 +14,13 @@
     "lint": "passed",
     "scope": "source and implementation checks; no trained-quality evidence"
   },
-  "status": "submitted_no_learned_result",
+  "status": "completed_collected_and_independently_replayed",
   "slurm_job_id": "50455",
   "test_splits_evaluated": [],
-  "scope": "paired E11 exploratory direct versus conditional diffusion; final 8000 updates per arm; original cache; reused validation"
+  "scope": "paired E11 exploratory direct versus conditional diffusion; final 8000 updates per arm; original cache; reused validation",
+  "allocated_gpu_seconds": 1497,
+  "exit_code": "0:0",
+  "raw_file_digests_verified": 926,
+  "independent_pixel_replay_clips": 288,
+  "promoted": false
 }
