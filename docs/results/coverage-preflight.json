@@ -1,0 +1,153 @@
+{
+  "status": "preflight_passed_training_pending",
+  "source": {
+    "revision": "205456fcfd1f3b437c0c83e952a80d736201b1e9",
+    "sha256": "e82616befc7ff1f2bc38a831ae31829d785baa44dd4b728a2b7f6c111f5882c0",
+    "files": 470
+  },
+  "generation_source": {
+    "revision": "b4604d567a68909e8854deb6c5f36fd5229d5a92",
+    "sha256": "5f5ae3ddb822e72c37f5c1bcbfd67eaaf6c7269cc9d617b13187c84928a49284",
+    "files": 470
+  },
+  "data_audit": {
+    "scope": "training-data audit; no trained-quality result",
+    "recipe": {
+      "seed": 810000,
+      "pairs": 32,
+      "directions": 8,
+      "magnitudes": [
+        0.25,
+        0.5
+      ]
+    },
+    "source_revision": "b4604d567a68909e8854deb6c5f36fd5229d5a92",
+    "source_matches_immutable_archive": true,
+    "samples_per_arm": 4160,
+    "unique_initial_images": {
+      "narrow": 16,
+      "broad": 32
+    },
+    "actual_contact_clips": {
+      "narrow": 1376,
+      "broad": 1134
+    },
+    "common_sampling_contact_clips": 2129,
+    "zero_force_clips_per_arm": 64,
+    "coverage_manifest_sha256": "75123f938c52ce1fa9c2c5d8cdc7e34e6fd9ece15d25e7d5f7cfd3d552f604cf",
+    "generation_environment": {
+      "python": "3.12.15",
+      "platform": "Windows-11-10.0.26300-SP0",
+      "versions": {
+        "numpy": "2.5.4",
+        "pillow": "12.3.0",
+        "pymunk": "7.3.1"
+      }
+    },
+    "dropped_seeds": []
+  },
+  "label_preflight": {
+    "narrow": {
+      "labels": {
+        "calibration": {
+          "train": {
+            "original_clips": 4160,
+            "training_examples": 33280,
+            "minimum_frame0_mask_iou": 1.0
+          }
+        },
+        "angular_labels_sha256": "f781792e58148c7d61ad87c786b643a5a430dea66cd649577693ca7b89c86a7c",
+        "angular_label_policy": "training-only checked replay; original rollout files unchanged",
+        "augmentation": "train-only square rotations/reflections"
+      },
+      "examples": 33280,
+      "hulls_sha256": "020d8d612b088447d0570b6a804d835d8fb3cc81ced0b1b11aefee7b20c0dcff",
+      "world_labels_sha256": "75618c1eeccaffe0a571a52f6a14e15ea3001982a4575366a740960227e62f5d"
+    },
+    "broad": {
+      "labels": {
+        "calibration": {
+          "train": {
+            "original_clips": 4160,
+            "training_examples": 33280,
+            "minimum_frame0_mask_iou": 1.0
+          }
+        },
+        "angular_labels_sha256": "4b054cf114f4fb6edd87a154d5f206de60f832cc9cf951bb2f3d625c87de1b8c",
+        "angular_label_policy": "training-only checked replay; original rollout files unchanged",
+        "augmentation": "train-only square rotations/reflections"
+      },
+      "examples": 33280,
+      "hulls_sha256": "2580fe6c475717e2a344b0a8275801277608b817bed1b2589d255f513d3dd5f4",
+      "world_labels_sha256": "1041d7c5b791c70d7ce91715ed0b1de2a5b090330b9afadbcc45680f0c0a0596"
+    }
+  },
+  "native_metadata_probe": {
+    "status": "passed",
+    "scene_records_checked": 8320,
+    "recipe_reconstruction": "bounded float64 derived vectors; all other fields exact",
+    "scope": "metadata only; no optimization or held-out arrays"
+  },
+  "tests": {
+    "passed": 634,
+    "subtests": 4,
+    "warnings": 6,
+    "seconds": 286.86,
+    "log_sha256": "446c55af44c41d5ca6fbcd28fd61fb878fa3dc53e088c3b95f342033cc521f32"
+  },
+  "lint": "passed",
+  "formatting": "changed sources pass; inherited global-format failures remain",
+  "source_zip": {
+    "files": 293,
+    "sha256": "be45ab813ed74397e1577d077503e7603c0cffb873e996ccee8b50c868644c58",
+    "clean_extraction_smoke": "passed",
+    "extracted_tests": 12
+  },
+  "refinement_bindings_verified": 8,
+  "evaluation_source_changes": false,
+  "visual_training_pairs_inspected": 32,
+  "source_files_verified_before_submission": 470,
+  "training_job_id": 47305,
+  "scheduler_state": "PENDING",
+  "scheduler_reason": "Dependency",
+  "dependency_job_id": 47288,
+  "dependency_project": "AI6102",
+  "existing_job_modified": false,
+  "training_source_revision": "205456fcfd1f3b437c0c83e952a80d736201b1e9",
+  "submission_receipt_sha256": "d46dedb816b182d393879b978d5f86d1c82a64925885db881e9bd71ef23cbe5b",
+  "setup_attempts_retained": [
+    {
+      "stage": "initial installer",
+      "outcome": "CRLF wrapper rejected before extraction or optimization"
+    },
+    {
+      "stage": "initial native recipe probe",
+      "outcome": "exact float64 trig comparison differed by 1 ULP; no optimization"
+    },
+    {
+      "stage": "corrected native metadata probe",
+      "outcome": "8320 scene records pass; hashes and scoring margins unchanged"
+    }
+  ],
+  "gpu_quality_result": null,
+  "checkpoint_promoted": false,
+  "test_splits_evaluated": [],
+  "remaining": [
+    "scheduled native cache preparation and matched training/evaluation",
+    "collect complete states and final scheduler accounting",
+    "independent Windows replay and all-seed visual comparison",
+    "record all quality failures before any follow-up claim"
+  ],
+  "release_assets_downloaded": 6,
+  "asset_digests": {
+    "cpu-verification.zip": "15a4364cf8f6a5fee67148aef3faec24264be56ebf4c389cdcf55a1dc1c8cd1c",
+    "generation-source.tar.gz": "5f5ae3ddb822e72c37f5c1bcbfd67eaaf6c7269cc9d617b13187c84928a49284",
+    "generation.tar.gz": "fbc25649550c6d88ea4f238d63ee643886471dd393c0ec5ac99e6e91d26fd47b",
+    "group_07_code.zip": "be45ab813ed74397e1577d077503e7603c0cffb873e996ccee8b50c868644c58",
+    "SHA256SUMS": "13afa7e71dd9428b5ea19c83b6d6d772d6ec1a60da6cb40f9c987c92c0e901c0",
+    "training-source.tar.gz": "e82616befc7ff1f2bc38a831ae31829d785baa44dd4b728a2b7f6c111f5882c0"
+  },
+  "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-81f5375e01fa3f8e2117",
+  "release_private_draft": true,
+  "scheduler_snapshot_date": "2026-10-26"
+}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "job_id": 47305,
+  "source_revision": "205456fcfd1f3b437c0c83e952a80d736201b1e9",
+  "raw_manifest_verified_files": 780,
+  "windows_pixel_exact_replays": 288,
+  "same_counts_and_events": true,
+  "files_sha256": {
+    "coverage-job47305.tar.gz": "1c179472ca9926374dba0dc634e72be6aebe1fa4b3e80c9353437cd725818c85",
+    "independent-audits-and-response.tar.gz": "f6545180cb1a22f5f6d46e5680e56a52b30b17d1a2333813bb91f5e860e010a6",
+    "generation.tar.gz": "fbc25649550c6d88ea4f238d63ee643886471dd393c0ec5ac99e6e91d26fd47b",
+    "source.tar.gz": "e82616befc7ff1f2bc38a831ae31829d785baa44dd4b728a2b7f6c111f5882c0",
+    "generation-source.tar.gz": "5f5ae3ddb822e72c37f5c1bcbfd67eaaf6c7269cc9d617b13187c84928a49284"
+  },
+  "test_splits_evaluated": [],
+  "checkpoint_promoted": false,
+  "private_raw_backup": "https://github.com/athul1810/click2future/releases/tag/untagged-41dc9b1788ee138f812d"
+}

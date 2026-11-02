@@ -1,0 +1,6 @@
+{
+  "seed": 810000,
+  "pairs": 32,
+  "directions": 8,
+  "magnitudes": [0.25, 0.5]
+}
