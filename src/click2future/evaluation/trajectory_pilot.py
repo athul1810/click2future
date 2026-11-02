@@ -22,18 +22,26 @@ from .tracking import TRACKER_VERSION
 PROJECT = Path(__file__).parents[3]
 
 
-def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method="E5"):
+def sample_plan(
+    plan_path, checkpoint, output, *, device="cpu", steps=16, method="E5", run_id=None
+):
     plan = read_plan(plan_path)
     checkpoint, output = Path(checkpoint).resolve(), Path(output)
-    if plan["split"] not in {"validation", "validation-selected-object"}:
+    # Reserved splits of the training corpus stay closed; a separately generated
+    # held-out corpus (D017) is the only test data these pose models may sample.
+    if plan["split"] not in {"validation", "validation-selected-object"} and (
+        "training_corpus" not in plan
+    ):
         raise ValueError("This bounded pilot may not evaluate final-test splits")
     model, state = load_trajectory(checkpoint, device)
-    if method != {1: "E5", 2: "E6", 3: "E7", 4: "E8"}[state["trajectory_format_version"]]:
+    methods = {1: "E5", 2: "E6", 3: "E7", 4: "E8", 6: "E9"}
+    if method != methods.get(state["trajectory_format_version"]):
         raise ValueError("Checkpoint training variant and requested method disagree")
     provenance = state["provenance"]
+    corpus = plan.get("training_corpus", plan["input_sha256"])
     if (
-        provenance["dataset_manifest_sha256"] != plan["input_sha256"]["dataset_manifest"]
-        or provenance["split_manifest_sha256"] != plan["input_sha256"]["splits"]
+        provenance["dataset_manifest_sha256"] != corpus["dataset_manifest"]
+        or provenance["split_manifest_sha256"] != corpus["splits"]
     ):
         raise ValueError("Checkpoint and plan identify different frozen data")
     checksum = sha256(checkpoint)
@@ -65,7 +73,7 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
             raise ValueError("Checkpoint changed during sampling")
         run = {
             "method": method,
-            "run_id": "trajectory-" + method,
+            "run_id": run_id or "trajectory-" + method,
             "training_seed": state["config"]["seed"],
             "training_steps": state["step"],
             "untrained_fixture": False,
@@ -130,7 +138,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--steps", type=int, default=16)
-    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8"), default="E5")
+    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8", "E9"), default="E5")
     args = parser.parse_args(argv)
     if args.device == "cuda":
         require_tc2()
@@ -201,7 +209,7 @@ def main(argv=None):
             ),
         }
         _write(args.output / "trajectory-results.json", result)
-        if args.method in {"E6", "E7", "E8"}:
+        if args.method in {"E6", "E7", "E8", "E9"}:
             extended_audit(args.output, args.dataset, args.checkpoint, args.device)
         print(json.dumps(result["quality"]), flush=True)
     except Exception as error:

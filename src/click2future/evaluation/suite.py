@@ -60,13 +60,59 @@ def _seeds(values):
     return values
 
 
+def _frame_zero(dataset, name):
+    with np.load(Path(dataset) / f"{name}.npz", allow_pickle=False) as arrays:
+        return hashlib.sha256(np.ascontiguousarray(arrays["frames"][0]).tobytes()).hexdigest()
+
+
+def _training_corpus(training, dataset, cases):
+    """Bind checkpoints' training corpus to a separately generated held-out corpus.
+
+    Every frame zero and visible seed of the evaluated clips must be absent from
+    the whole training corpus, including its validation and reserved splits.
+    """
+    training = Path(training).resolve()
+    if training == dataset:
+        raise ValueError("A separate held-out corpus must differ from the training corpus")
+    manifest = json.loads((training / "dataset_manifest.json").read_text())
+    payload = {key: value for key, value in manifest.items() if key != "manifest_hash"}
+    if _digest(payload) != manifest["manifest_hash"]:
+        raise ValueError("Training corpus manifest hash mismatch")
+    frames = {_frame_zero(training, row["sample_id"]) for row in manifest["samples"]}
+    seeds = {row["visible_seed"] for row in manifest["samples"]}
+    held_out = json.loads((dataset / "dataset_manifest.json").read_text())["samples"]
+    held_out = {row["sample_id"]: row for row in held_out}
+    names = [name for case in cases for name in case["reference_ids"]]
+    if any(_frame_zero(dataset, name) in frames for name in names) or any(
+        held_out[name]["visible_seed"] in seeds for name in names
+    ):
+        raise ValueError("A held-out visible scene also appears in the training corpus")
+    return {
+        "dataset": str(training),
+        "dataset_manifest": _sha(training / "dataset_manifest.json"),
+        "splits": _sha(training / "splits.json"),
+        "checked_training_clips": len(manifest["samples"]),
+        "checked_held_out_clips": len(names),
+        "shared_frame_zero_or_visible_seed": 0,
+    }
+
+
 def prepare_plan(
-    dataset, config, *, split="test", metrics=("ssim", "lpips"), protocol=None, actions_config=None
+    dataset,
+    config,
+    *,
+    split="test",
+    metrics=("ssim", "lpips"),
+    protocol=None,
+    actions_config=None,
+    training_corpus=None,
 ):
     """Include every condition and hidden-physics reference in the chosen split.
 
     Preparing a test plan does not choose a checkpoint or tune any metric.
     Store plans outside the source submission, alongside the generated dataset.
+    ``training_corpus`` names the checkpoints' corpus when ``dataset`` is a
+    separately generated held-out corpus; samplers then check that corpus instead.
     """
     dataset, config = Path(dataset).resolve(), Path(config).resolve()
     if split == "train":
@@ -123,6 +169,10 @@ def prepare_plan(
         files["comparison_protocol"] = str(Path(protocol).resolve())
     if actions_config is not None:
         files["actions_config"] = str(Path(actions_config).resolve())
+    corpus = None if training_corpus is None else _training_corpus(training_corpus, dataset, cases)
+    if corpus is not None:
+        files["training_dataset_manifest"] = str(Path(corpus["dataset"]) / "dataset_manifest.json")
+        files["training_splits"] = str(Path(corpus["dataset"]) / "splits.json")
     for case in cases:
         for name in case["reference_ids"]:
             for suffix in (".json", ".npz"):
@@ -140,6 +190,8 @@ def prepare_plan(
         "files": files,
         "input_sha256": {key: _sha(path) for key, path in files.items()},
     }
+    if corpus is not None:
+        plan["training_corpus"] = corpus
     if actions_config is not None:
         plan["action_groups"] = prepare_action_groups(plan, actions_config)
     plan["plan_sha256"] = _digest(plan)
@@ -193,7 +245,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
         seen.add(name)
         if set(run["videos"]) != expected:
             raise ValueError("Every run must cover every frozen case exactly once")
-        model_method = run["method"] in {"E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8"}
+        model_method = run["method"] in {"E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9"}
         if model_method != (source == "generated_video"):
             raise ValueError("Use E0-E7 only for model-generated video")
         record = {"method": run["method"], "run_id": name, "reports": []}

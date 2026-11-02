@@ -77,10 +77,8 @@ def _describe_run(run, spec_path, plan, sampling_steps, allow_untrained):
         raise ValueError("Checkpoint training seed and step must be nonnegative integers")
     if step == 0 and not allow_untrained:
         raise ValueError("Untrained checkpoints require --allow-untrained-fixtures")
-    if (
-        data_hash != plan["input_sha256"]["dataset_manifest"]
-        or split_hash != plan["input_sha256"]["splits"]
-    ):
+    corpus = plan.get("training_corpus", plan["input_sha256"])
+    if data_hash != corpus["dataset_manifest"] or split_hash != corpus["splits"]:
         raise ValueError("Checkpoint training dataset/splits differ from the evaluation corpus")
     return {
         "method": method,
