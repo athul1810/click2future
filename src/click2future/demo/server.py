@@ -83,6 +83,8 @@ def make_server(service, *, port=8765):
                 path = urlsplit(self.path).path
                 if path == "/api/generate":
                     self.send(202, {"id": service.submit(data)})
+                elif path == "/api/reference":
+                    self.send(200, service.reference(data))
                 elif path.startswith("/api/jobs/") and path.endswith("/cancel"):
                     service.cancel(path[len("/api/jobs/") : -len("/cancel")])
                     self.send(200, {"status": "cancelled"})

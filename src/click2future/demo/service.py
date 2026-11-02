@@ -56,12 +56,12 @@ class DemoService:
             raise ValueError("Choose one to sixteen distinct development presets")
         manifest = Path(dataset) / "dataset_manifest.json"
         self.splits = {}
+        rows = []
         if manifest.is_file():
-            self.splits = {
-                row["sample_id"]: row["split"]
-                for row in json.loads(manifest.read_text())["samples"]
-            }
+            rows = json.loads(manifest.read_text())["samples"]
+            self.splits = {row["sample_id"]: row["split"] for row in rows}
         self.presets = {}
+        self.reference_worlds = {}
         for sample_id in sample_ids:
             if self.splits and self.splits.get(sample_id) not in {"train", "validation"}:
                 raise ValueError("Final-test or unsupported splits cannot be demo presets")
@@ -75,6 +75,22 @@ class DemoService:
             ):
                 raise ValueError("Demo scenes require 8 FPS and a fixed 0.25-second push")
             self.presets[sample_id] = ref
+            condition = next(
+                (row.get("condition_id") for row in rows if row["sample_id"] == sample_id), None
+            )
+            worlds = {sample_id: ref}
+            if condition is not None:
+                for row in rows:
+                    if (
+                        row.get("condition_id") == condition
+                        and row["split"] == self.splits[sample_id]
+                        and row["sample_id"] != sample_id
+                    ):
+                        other = load_rollout(dataset, row["sample_id"])
+                        if not np.array_equal(other["frames"][0], ref["frames"][0]):
+                            raise ValueError("Reference worlds must share the exact input image")
+                        worlds[row["sample_id"]] = other
+            self.reference_worlds[sample_id] = worlds
         if not self.presets:
             raise ValueError("Provide at least one preset")
         self.cache = Path(cache)
@@ -108,6 +124,7 @@ class DemoService:
                     "default_object": ref["selected_object_id"],
                     "default_force": ref["force_xy"].tolist(),
                     "split": self.splits.get(name, "operator-selected example; split unverified"),
+                    "reference_worlds": list(self.reference_worlds[name]),
                 }
             )
         return {
@@ -166,6 +183,37 @@ class DemoService:
         ):
             raise ValueError("Choose distinct loaded models")
         return ref, obj, force, seeds, names
+
+    def reference(self, data):
+        """Change only the labelled simulator panel, without invoking a model/cache."""
+        if not isinstance(data, dict) or set(data) != {"scene", "object", "force", "world"}:
+            raise ValueError("Provide scene, object, force and reference world only")
+        _, obj, force, _, _ = self.request(
+            {key: data[key] for key in ("scene", "object", "force")}
+            | {"seeds": [0, 1, 2, 3], "models": [next(iter(self.models))]}
+        )
+        worlds = self.reference_worlds[data["scene"]]
+        if not isinstance(data["world"], str) or data["world"] not in worlds:
+            raise ValueError("Unknown reference world")
+        ref = worlds[data["world"]]
+        scene = copy.deepcopy(ref["scene_spec"])
+        scene["action"].update(selected_object_id=obj, force_xy=force.tolist())
+        rollout = run_rollout(
+            scene,
+            **{
+                key: ref["metadata"][key]
+                for key in ("frame_count", "fps", "physics_hz", "resolution")
+            },
+        )
+        if not np.array_equal(rollout["frames"][0], ref["frames"][0]):
+            raise ValueError("Simulator reference changed the supplied image")
+        return {
+            "source": "simulator reference, one hidden-physics world",
+            "world": data["world"],
+            "strip": filmstrip(rollout["frames"][None]),
+            "physical_properties": [o["hidden_physics"] for o in scene["objects"]],
+            "notice": "reference only; model inputs and generated videos are unchanged",
+        }
 
     def submit(self, data):
         self.request(data)
@@ -286,17 +334,14 @@ class DemoService:
                 )
             if event.is_set():
                 return
-            scene = copy.deepcopy(ref["scene_spec"])
-            scene["action"].update(selected_object_id=obj, force_xy=force.tolist())
-            reference = run_rollout(
-                scene,
-                **{
-                    key: ref["metadata"][key]
-                    for key in ("frame_count", "fps", "physics_hz", "resolution")
-                },
+            reference = self.reference(
+                {
+                    "scene": data["scene"],
+                    "object": obj,
+                    "force": force.tolist(),
+                    "world": data["scene"],
+                }
             )
-            if not np.array_equal(reference["frames"][0], first):
-                raise ValueError("Simulator reference changed the supplied image")
             result = {
                 "models": results,
                 "seeds": seeds,
@@ -305,10 +350,7 @@ class DemoService:
                 "frames": len(ref["frames"]),
                 "fps": 8,
                 "size": list(first.shape[:2]),
-                "reference": {
-                    "source": "simulator reference, one hidden-physics world",
-                    "strip": filmstrip(reference["frames"][None]),
-                },
+                "reference": reference,
                 "notice": "Different hidden physical properties can give different valid outcomes.",
                 "scene": data["scene"],
                 "split": self.splits.get(data["scene"], "split unverified"),
