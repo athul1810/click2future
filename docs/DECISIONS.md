@@ -258,8 +258,9 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
     and E3 in 0 to 50%; E0 selects 0%. This repeats the D014/D015 finding on 50 new
     scene groups.
   - E10 (pose model, 3 seeds per arm): both arms select the right object in 86 to
-    100% of pairs on every split with no drift. All tracks complete except in
-    force_ood.
+    100% of pairs on every split with no drift. Missing-track rates are at most 0.002
+    on id_test, texture_ood and physics_test, 0.017-0.020 on shape_ood and 0.04-0.25
+    on force_ood.
   - Spatial versus numeric: spatial has the lower selected-object ADE in all three
     seeds on id_test, shape_ood, texture_ood and physics_test (for example id_test
     0.026-0.027 versus 0.028-0.030), so numeric routing is not better there. ADE
