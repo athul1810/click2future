@@ -21,6 +21,8 @@ def source_copy(tmp_path):
         shutil.copytree(root / name, target / name, ignore=shutil.ignore_patterns("__pycache__"))
     for name in (".python-version", "pyproject.toml"):
         shutil.copyfile(root / name, target / name)
+    (target / "scripts").mkdir()
+    shutil.copyfile(root / "scripts/build_demo_bundle.py", target / "scripts/build_demo_bundle.py")
     if (root / "uv.lock").is_file():
         shutil.copyfile(root / "uv.lock", target / "uv.lock")
     return target

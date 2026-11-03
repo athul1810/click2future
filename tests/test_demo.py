@@ -202,6 +202,20 @@ def test_reference_rejects_undeclared_world_and_hidden_properties(service):
     assert not service.models["fixture"].calls
 
 
+def test_displayed_world_prior_is_seed_bound_and_never_supplied_as_input(service):
+    service.models["fixture"].metadata["world_condition"] = True
+    before = torch.get_rng_state().clone()
+    data = request(service)
+    first = finish(service, service.submit(data))["result"]["models"][0]
+    data["force"] = [0, -0.25]
+    changed = finish(service, service.submit(data))["result"]["models"][0]
+    assert first["details"]["sampled_world_prior"] == changed["details"]["sampled_world_prior"]
+    assert len(first["details"]["sampled_world_prior"]["draws"]) == 4
+    assert "sampled_world_prior" not in service.models["fixture"].metadata
+    assert len(service.models["fixture"].calls) == 2
+    assert torch.equal(before, torch.get_rng_state())
+
+
 def test_tampered_cache_fails_without_serving_it(service):
     finish(service, service.submit(request(service)))
     archive = next(service.cache.glob("*.npz"))

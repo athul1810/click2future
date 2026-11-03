@@ -379,6 +379,12 @@ canvas {
   line-height: 1.5;
   font-size: 9px;
 }
+.future-card .motion-response {
+  font-size:10px;
+  line-height:1.4;
+  color:var(--accent);
+  border-top:1px solid var(--edge);
+}
 .timeline button {
   height:30px;
   min-width:54px;

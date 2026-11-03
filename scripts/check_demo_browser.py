@@ -177,6 +177,26 @@ def main():
         page.keyboard.press("Home")
         assert page.locator("#time").inner_text() == "0.00s"
         checks.append("timeline returns to supplied frame zero")
+        assert all(
+            "+0.00 px along push" in value
+            for value in page.locator("#results .motion-response").all_text_contents()
+        )
+        answers = page.evaluate("""() => {
+          const sample = {tracked:[[true],[true]], positions:[[[.25,.25]],[[.5,.25]]]};
+          return [motionResponse(sample,0,[1,0],[16,32],1),
+            motionResponse(sample,0,[-1,0],[16,32],1),
+            motionResponse(sample,0,[0,0],[16,32],1),
+            motionResponse({...sample,tracked:[[true],[false]]},0,[1,0],[16,32],1)];
+        }""")
+        assert answers == [
+            "selected motion: +8.00 px along push",
+            "selected motion: -8.00 px along push",
+            "selected motion: 8.00 px from start",
+            "selected motion: untracked",
+        ]
+        checks.append(
+            "motion readouts retain native pixels, force sign, zero force and missing tracks"
+        )
         page.locator("#reference-details summary").click()
         assert page.locator("#reference").is_visible()
         assert "simulator reference" in page.evaluate("playback.reference.source")
@@ -232,6 +252,15 @@ def main():
         assert page.evaluate("pinned.models[0].strip") == first
         assert page.evaluate("pinned.force") != page.evaluate("playback.force")
         assert "same four seeds" in page.locator("#pairing").inner_text()
+        worlds = page.evaluate("""() => playback.models
+          .filter(m=>m.details.world_condition).map(m=>({
+          current:m.details.sampled_world_prior,
+          pinned:pinned.models.find(p=>p.name===m.name).details.sampled_world_prior
+        }))""")
+        if worlds:
+            assert all(row["current"] == row["pinned"] for row in worlds)
+            assert all(len(row["current"]["draws"]) == 4 for row in worlds)
+            checks.append("world-conditioned models retain every sampled prior draw across actions")
         page.locator("#timeline").focus()
         page.keyboard.press("End")
         assert page.evaluate("frame") == 31
