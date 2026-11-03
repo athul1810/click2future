@@ -67,7 +67,13 @@ def build(recipe, output):
             if Path(name).name != name or "\\" in name:
                 raise ValueError("Preset names must be simple filenames")
             shutil.copyfile(dataset / name, output / "presets" / name)
-    preset_manifest = {**original, "samples": rows}
+    # A subset is a new inventory, not the source dataset's logical manifest.
+    # Retaining its full-dataset manifest_hash or counts would mislabel this bundle.
+    preset_manifest = {
+        "kind": "demo_preset_subset",
+        "source_dataset_manifest_sha256": manifest["source_dataset_manifest_sha256"],
+        "samples": rows,
+    }
     (output / "presets/dataset_manifest.json").write_text(
         json.dumps(preset_manifest, indent=2) + "\n", encoding="utf-8"
     )
