@@ -650,3 +650,32 @@ This is a single-seed, reused-validation screen with extra physical supervision,
 not a new held-out comparison. A deterministic fixed-world probe repeats the
 same trajectory and labels those repetitions as dependent. Keep failed samples,
 missing coverage, raw checkpoints and provenance; do not tune on reserved splits.
+
+## Fixed-teacher repeat seeds
+
+`submission/prior_repeats.sbatch` trains the two arms at refinement seeds 20/21
+without opening any evaluation split. It checks completed seed-19 configuration,
+training source and teacher identity. Provide `C2F_PROJECT`, `C2F_PYTHON`,
+`C2F_CACHE`, `C2F_WARM_START`, `C2F_SOURCE_REVISION`, `C2F_SCREEN_SUMMARY` (the
+completed direct screen summary) and a new `C2F_REPEAT_RESULTS`. Final update
+8,000 is fixed. These are refinement repeats conditional on one E7 teacher,
+not independent end-to-end training. Keep every state, summary and failed run.
+
+The D018 inference driver is `submission/prior_holdout.py`. It requires all six
+registered final-update checkpoint paths in `--runs`, the original corpus in
+`--training-data`, and fresh `--dataset`/`--output` locations. Keep every attempt.
+It scores only its registered ten-group ID corpus; it never opens D017.
+
+From a Git checkout, commit the source before the run. From the source-only ZIP,
+keep `MANIFEST.json` and all inventoried files unchanged. Run
+`python -m click2future.submission verify-tree --root .` to verify the extraction.
+The driver records the archive-manifest digest instead of inventing a Git commit,
+and rechecks that identity at completion. Dependencies and generated outputs are
+outside this source identity. Use the fixed training recipes to reproduce the
+six checkpoints; the code ZIP contains no supplied weights or datasets.
+
+After all six runs finish, `python scripts/analyse_prior_replication.py --root RESULTS
+--output NEW_JSON` rechecks the frozen inputs, checkpoint identities, pixel
+replays and per-scene counts, and reproduces the declared decision. Generate
+the fixed first-condition, all-seed montage with
+`python scripts/plot_prior_replication.py --root RESULTS --output NEW_PNG`.

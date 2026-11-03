@@ -137,7 +137,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint):
         "plan_sha256": plan["plan_sha256"],
         "checkpoint_sha256": sha256(checkpoint),
         "source_sha256": sha256(Path(__file__)),
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if plan.get("study_id") == "D018" else [],
     }
 
 

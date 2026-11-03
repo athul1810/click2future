@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 28,
+  "pages": 29,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "c8a41938b5cbc33eb8e410b5667c28fbdd2a61b3670be10f70949931fcda8946",
+    "main.tex": "3b6c2aaaaad3b80f627a86d3481069f0edee0989bf72189716b83513c9c253f5",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,28 +191,30 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "68d71fd8abe521657051ee8db4e8e17196b83bd878f71f66adbe25cf17d0863c",
+    "contributions.md": "7c2820c52f4f04b435ba1b65ea20f49008632bc61d76d6cf765c30389c236996",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
     "../docs/results/demo-rehearsal.json": "59ec1fd0c77dcc0bc61bd53dd6d1370e408eabe0ef97810da6fa1c27eacbb56b",
     "../docs/results/surface-validation.json": "439f866415fb744533bd4e69e11eb5b11295c32dde63f34fb796a6547b5b07c8",
-    "../docs/results/prior-validation.json": "d6b18681fe5672a2b5deabdfd2b9947eb6f630d1c75ab8b475cfb9c7072cd8fd"
+    "../docs/results/prior-validation.json": "d6b18681fe5672a2b5deabdfd2b9947eb6f630d1c75ab8b475cfb9c7072cd8fd",
+    "figures/prior_replication.png": "7c0b96ed5b6e879af719a6a158fbd20d6b55d110e9d71f394fdc8809767cd5d5",
+    "../docs/results/prior-replication.json": "a28004d5e5b92386bd217592eb5030c457ed12f1542aa14a938de46abf5828f1"
   },
-  "rendered_pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568",
-  "visual_review": "28 pages rendered; pages 1-24 retain the previously inspected pixel content. Pages 25-28 inspected at full size across the exploratory edits. No clipping, overfull boxes, undefined references, external links, URLs, em/en dashes or replacement glyphs.",
+  "rendered_pdf_sha256": "ed78de72dc97de433604629904165a426adaf0a15d9bc5445741feb825011d11",
+  "visual_review": "pages 1-25 pixel-identical to prior reviewed export; pages 26-29 inspected at full size; contribution page inspected after layout and latest-work updates",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 315,
-    "bytes": 574469,
-    "archive_sha256": "82e554d9d86b97256d2d16431d36caf9ec84da44afc5bcdf0955abd6cfdcf693",
+    "file_count": 343,
+    "bytes": 614872,
+    "archive_sha256": "1533bfc19afe3985755b45361456e6d60055dde6c327f0fe1e863546f074f79d",
     "checks": [
-      "allowed text files",
-      "no external links",
-      "source inventory hashes",
-      "no datasets, weights, environments, or Git history"
+      "source-only inventory and hashes",
+      "no data, weights, URLs, Git or environments",
+      "clean extraction smoke",
+      "manifest identity without Git; tamper/missing/unlisted cases rejected"
     ],
-    "archive": "outputs/presentation-review-20261103/group_07_code.zip"
+    "archive": "outputs/presentation-review-20261103-r2/group_07_code.zip"
   },
   "remaining": [
     "Contact quality, wall completeness and forward-motion uncertainty",
@@ -275,8 +277,8 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "review export; Ananya reviewed; other accounts pending",
-    "sha256": "68d71fd8abe521657051ee8db4e8e17196b83bd878f71f66adbe25cf17d0863c",
+    "status": "one-page review export; Ananya reviewed; other accounts pending; latest E10/D017 and D018 work recorded",
+    "sha256": "7c2820c52f4f04b435ba1b65ea20f49008632bc61d76d6cf765c30389c236996",
     "pdf_sha256": "6da10ceae28194897b67013ebecf9663cf711ba1cd9c21c2c8941a1830bc9cb6"
   },
   "wall_clipping": {
@@ -766,10 +768,10 @@
     "pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568"
   },
   "delivery_review_2026_11_03": {
-    "scope": "28-page report plus contribution review; E9/E11 screen only; D018 evaluation excluded while running",
+    "scope": "29-page report plus contribution review; D018 complete with retained regressions; D017 evidence review still open",
     "slides": 15,
     "functional_browser_checks_per_profile": 35,
-    "source_files": 315,
+    "source_files": 343,
     "contribution_confirmations_pending": [
       "Sanjay",
       "Shrijeet",
@@ -781,5 +783,55 @@
       "final export after outstanding studies",
       "one coordinated NTULearn upload"
     ]
+  },
+  "pre_D018_export_snapshot": {
+    "pages": 28,
+    "rendered_pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 315,
+      "bytes": 574469,
+      "archive_sha256": "82e554d9d86b97256d2d16431d36caf9ec84da44afc5bcdf0955abd6cfdcf693",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "archive": "outputs/presentation-review-20261103/group_07_code.zip"
+    }
+  },
+  "prior_replication_2026_11_03": {
+    "evaluation_source": "16f2b3e85423d6790a74693cfbf13c8910fc2e06",
+    "result": "docs/results/prior-replication.json",
+    "refinement_seeds": [
+      19,
+      20,
+      21
+    ],
+    "teacher_count": 1,
+    "ID_scene_groups": 10,
+    "raw_files_verified": 3435,
+    "pixel_exact_primary_pose_replays": 1440,
+    "primary_and_selection_videos": 1920,
+    "overall_gates_passed": false,
+    "report_pages": 29,
+    "pages_inspected": [
+      26,
+      27,
+      28,
+      29
+    ],
+    "source_tests": 685,
+    "subtests": 4,
+    "packaging_followup_tests": 13,
+    "independent_artifact_roundtrip": true,
+    "native_repeat_job": 50537,
+    "allocated_A40_seconds": 1144,
+    "new_inference_device": "RTX 3060 laptop",
+    "raw_backup": "https://github.com/athul1810/click2future/releases/tag/untagged-37e4140b9569f42dd85a",
+    "current_browser_checks": 35,
+    "browser_checks_sha256": "ae9fc7a010936e5cbbc8472f01236028492b250a86e2d71f9ebd8181eaaf8fdd",
+    "current_browser_scope": "integrated E11/E0/E7 profile, real checkpoints; functionality only"
   }
 }

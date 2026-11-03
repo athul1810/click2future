@@ -119,7 +119,9 @@ def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
         for key in ("samples", "lighter_further", "equal", "lighter_shorter")
     }
     result = {
-        "scope": "post-test exploratory validation diagnostic; not checkpoint selection",
+        "scope": "D018 held-out diagnostic; no checkpoint selection"
+        if plan.get("study_id") == "D018"
+        else "post-test exploratory validation diagnostic; not checkpoint selection",
         "world_condition": state["config"]["world_condition"],
         "checkpoint_sha256": sha256(checkpoint),
         "source_sha256": sha256(Path(__file__)),
@@ -137,7 +139,7 @@ def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
         "eligibility": "all references satisfy the existing stationary-passive contact-free rule",
         "records": records,
         "summary": summary,
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if plan.get("study_id") == "D018" else [],
     }
     (output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

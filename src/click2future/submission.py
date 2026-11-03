@@ -54,7 +54,12 @@ def _check(name, payload):
         or (name.startswith("src/click2future/") and path.suffix == ".py")
         or name in DEMO_ASSETS
         or name in FINAL_RUN_SCRIPTS
-        or name == "scripts/build_demo_bundle.py"
+        or name
+        in {
+            "scripts/build_demo_bundle.py",
+            "scripts/analyse_prior_replication.py",
+            "scripts/plot_prior_replication.py",
+        }
         or (name.startswith("configs/") and path.suffix in {".yaml", ".toml", ".json"})
         or (
             path.parent == PurePosixPath("tests")
@@ -81,6 +86,9 @@ def _check(name, payload):
             "submission/contact_risk_comparison.sbatch",
             "submission/world_comparison.py",
             "submission/world_comparison.sbatch",
+            "submission/prior_holdout.py",
+            "submission/prior_repeats.py",
+            "submission/prior_repeats.sbatch",
             "submission/prior_comparison.py",
             "submission/prior_comparison.sbatch",
             "submission/surface_comparison.py",
@@ -290,6 +298,56 @@ def inspect_archive(path: Path):
     }
 
 
+def verify_extracted_tree(root: Path):
+    """Verify a source-only extraction without requiring Git history or a ZIP copy."""
+    root = Path(root).resolve()
+    manifest_path = root / "MANIFEST.json"
+    payload = manifest_path.read_bytes()
+    manifest = json.loads(payload)
+    inventory = manifest.get("sha256")
+    if (
+        manifest.get("format_version") != 1
+        or manifest.get("group") != 7
+        or not isinstance(inventory, dict)
+        or not inventory
+        or "MANIFEST.json" in inventory
+    ):
+        raise ValueError("Unsupported extracted source inventory")
+    for name, expected in inventory.items():
+        path = root / name
+        # Check the archive name before reading a manifest-supplied path.
+        _check(name, b"")
+        if path.is_symlink() or not path.resolve().is_relative_to(root) or not path.is_file():
+            raise ValueError("Missing or nonlocal extracted source: " + name)
+        data = path.read_bytes()
+        _check(name, data)
+        if hashlib.sha256(data).hexdigest() != expected:
+            raise ValueError("Extracted source changed: " + name)
+    for directory in ("src", "configs", "tests", "submission", "cluster", "scripts"):
+        for path in (root / directory).rglob("*"):
+            if path.is_file() and "__pycache__" not in path.parts:
+                if path.relative_to(root).as_posix() not in inventory:
+                    raise ValueError(
+                        "Uninventoried extracted source: " + str(path.relative_to(root))
+                    )
+    required = {
+        "README.md",
+        "pyproject.toml",
+        "constraints.txt",
+        "src/click2future/cli.py",
+        "src/click2future/evaluation/aggregate.py",
+        "submission/smoke.py",
+    }
+    if not required <= inventory.keys():
+        raise ValueError("Extracted source inventory is incomplete")
+    return {
+        "status": "passed",
+        "file_count": len(inventory) + 1,
+        "manifest_sha256": hashlib.sha256(payload).hexdigest(),
+        "scope": "inventoried source files; generated outputs and installed dependencies excluded",
+    }
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -298,13 +356,16 @@ def main(argv=None):
     build.add_argument("--output", type=Path, default=Path("dist/group_07_code.zip"))
     inspect = sub.add_parser("inspect")
     inspect.add_argument("--archive", type=Path, required=True)
+    tree = sub.add_parser("verify-tree")
+    tree.add_argument("--root", type=Path, default=Path.cwd())
     args = parser.parse_args(argv)
     try:
-        result = (
-            build_archive(args.root, args.output)
-            if args.command == "build"
-            else inspect_archive(args.archive)
-        )
+        if args.command == "build":
+            result = build_archive(args.root, args.output)
+        elif args.command == "inspect":
+            result = inspect_archive(args.archive)
+        else:
+            result = verify_extracted_tree(args.root)
     except (ValueError, KeyError, OSError) as error:
         parser.exit(1, f"Submission package failed: {error}\n")
     print(json.dumps(result, indent=2))

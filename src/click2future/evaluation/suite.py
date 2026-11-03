@@ -260,7 +260,7 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
             "E11",
         }
         if model_method != (source == "generated_video"):
-            raise ValueError("Use registered E0-E9 or E11 only for model-generated video")
+            raise ValueError("Use registered E0-E11 only for model-generated video")
         record = {"method": run["method"], "run_id": name, "reports": []}
         if source == "generated_video":
             seed = run["training_seed"]
@@ -419,6 +419,8 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
                     }
                 )
             manifest["runs"].append(record)
+        if "study_id" in plan:
+            manifest["study_id"] = plan["study_id"]
         _write(output_dir / "comparison.json", manifest)
         settings = plan["comparison_protocol"].get("bootstrap", {})
         report = aggregate(

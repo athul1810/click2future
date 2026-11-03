@@ -30,7 +30,7 @@ class CheckpointModel:
         self.sampling_steps = sampling_steps
         self.future_frames = None
         self.resolution = None
-        if state.get("trajectory_format_version") in (1, 2, 3, 4, 5, 7):
+        if state.get("trajectory_format_version") in (1, 2, 3, 4, 5, 6, 7):
             from click2future.training.sample_trajectory import load_trajectory
 
             self.model, state = load_trajectory(checkpoint, device)
@@ -52,6 +52,8 @@ class CheckpointModel:
                 detail += "; experimental shared-world relational refinement"
             elif state["trajectory_format_version"] == 4:
                 detail += "; experimental temporal residual on frozen E7"
+            elif state["trajectory_format_version"] == 6:
+                detail += "; force routing: " + self.model.force_routing
             elif state["trajectory_format_version"] == 7:
                 detail = (
                     "one-pass prior-conditioned pose decoder, rigid observed-pixel decoder, EMA"
@@ -159,6 +161,12 @@ class CheckpointModel:
                 self.metadata["sampling_source_sha256"]["training/contact_checkpoint.py"] = sha256(
                     folder / "training/contact_checkpoint.py"
                 )
+            elif state["trajectory_format_version"] == 6:
+                self.metadata.update(
+                    training_variant="force_routing", force_routing=self.model.force_routing
+                )
+                for name in ("models/routed_motion.py", "training/routing_checkpoint.py"):
+                    self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
             elif state["trajectory_format_version"] in (3, 4, 5, 7):
                 self.metadata.update(
                     training_variant="shared_world_relational",

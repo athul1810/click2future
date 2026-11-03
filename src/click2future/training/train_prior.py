@@ -103,7 +103,8 @@ class PriorTrainer(WorldTrainer):
         self.ema.load_state_dict(self.model.state_dict(), strict=True)
         return {
             "kind": (
-                "E7 EMA, fresh optimizer/private RNG; fixed-sigma zero-motion input in direct arm"
+                "E7 EMA, fresh optimizer/private RNG; "
+                "fixed-sigma zero-motion input in direct arm"
             ),
             "checkpoint_sha256": sha256(checkpoint),
             "source_step": state["step"],

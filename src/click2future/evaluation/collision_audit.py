@@ -238,7 +238,9 @@ def audit(plan_path, predictions_path, dataset, checkpoint, poses_dir, config_pa
         if sha256(path) != digest:
             raise ValueError("Audit input changed: " + path.name)
     return {
-        "status": "measured_validation_collision_audit",
+        "status": "measured_D018_collision_audit"
+        if plan.get("study_id") == "D018"
+        else "measured_validation_collision_audit",
         "method": run["method"],
         "checkpoint_sha256": run["checkpoint_sha256"],
         "historical_plan_sha256": plan["plan_sha256"],
@@ -271,7 +273,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint, poses_dir, config_pa
             "Pixel-centre hull penetration uses the existing approximate one-pixel tolerance.",
             "No thresholds, video bytes, model weights or original scores are changed.",
         ],
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if plan.get("study_id") == "D018" else [],
     }
 
 

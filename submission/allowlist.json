@@ -1,6 +1,8 @@
 {
   "include": [
     "scripts/build_demo_bundle.py",
+    "scripts/analyse_prior_replication.py",
+    "scripts/plot_prior_replication.py",
     "src/click2future/**/*.py",
     "src/click2future/demo/static/index.html",
     "src/click2future/demo/static/style.css",
@@ -58,7 +60,10 @@
     "submission/surface_comparison.sbatch",
     "submission/prior_comparison.py",
     "submission/prior_comparison.sbatch",
+    "submission/prior_repeats.py",
+    "submission/prior_repeats.sbatch",
     "submission/routing_comparison.py",
-    "submission/routing_comparison.sbatch"
+    "submission/routing_comparison.sbatch",
+    "submission/prior_holdout.py"
   ]
 }

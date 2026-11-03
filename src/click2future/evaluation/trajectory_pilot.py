@@ -15,6 +15,7 @@ from click2future.training.sample_trajectory import load_trajectory, sample_traj
 from click2future.training.train_cvae import require_tc2, sha256
 
 from .pilot import summarize_quality
+from .prior_protocol import registered_holdout
 from .suite import _write, prepare_plan, read_plan, run_suite
 from .targets import prepare_target_plan
 from .tracking import TRACKER_VERSION
@@ -31,6 +32,9 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
         "training_corpus" not in plan
     ):
         raise ValueError("This bounded pilot may not evaluate final-test splits")
+    if method == "E11" and plan["split"] not in {"validation", "validation-selected-object"}:
+        if not registered_holdout(plan):
+            raise ValueError("E11 held-out sampling requires its registered D018 corpus")
     model, state = load_trajectory(checkpoint, device)
     methods = {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 6: "E10", 7: "E11"}
     if method != methods.get(state["trajectory_format_version"]):
@@ -260,11 +264,15 @@ def extended_audit(output, dataset, checkpoint, device):
                 ),
             }
         )
-    if len(rows) != 4:
+    heldout = registered_holdout(plan)
+    expected_zero = 10 if heldout else 4
+    if len(rows) != expected_zero:
         raise ValueError("Retain all four frozen zero-force validation conditions")
     _write(output / "uncertainty-strata.json", strata)
     result = {
-        "scope": "supervised trajectory full-horizon and geometry follow-up; validation only",
+        "scope": "D018 held-out full-horizon and geometry check"
+        if heldout
+        else "supervised trajectory full-horizon and geometry follow-up; validation only",
         "geometry": geometry["summary"],
         "zero_force_full_horizon": {
             "cases": rows,
@@ -281,7 +289,7 @@ def extended_audit(output, dataset, checkpoint, device):
                 for family in ("model", "static_control")
             },
         },
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if heldout else [],
         "no_sampling_correction": True,
     }
     _write(output / "contact-results.json", result)

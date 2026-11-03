@@ -16,6 +16,7 @@ from click2future.training.sample_trajectory import load_trajectory, sampling_ge
 from click2future.training.train_cvae import require_tc2, sha256
 from click2future.training.trajectory_data import canonical_ids, replay_angles
 
+from .prior_protocol import registered_holdout
 from .rigid_geometry import GEOMETRY_VERSION, geometry_diagnostics
 from .suite import _digest, _seeds, _write
 
@@ -34,7 +35,10 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
     if (
         plan["schema_version"] != 1
         or _digest({k: v for k, v in plan.items() if k != "plan_sha256"}) != plan["plan_sha256"]
-        or plan["split"] != "validation"
+        or not (
+            plan["split"] == "validation"
+            or (plan["split"] == "id_test" and registered_holdout(plan))
+        )
     ):
         raise ValueError("Provide an unchanged validation plan; final tests stay reserved")
     predictions = json.loads(predictions_path.read_text())
@@ -46,6 +50,8 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
     ):
         raise ValueError("Predictions must identify the original frozen ensemble")
     run = predictions["runs"][0]
+    if plan["split"] != "validation" and run["method"] != "E11":
+        raise ValueError("D018 geometry audits are registered for E11 only")
     sampling_path = predictions_path.with_name("sampling.json")
     sampling = json.loads(sampling_path.read_text())
     direct = run["method"] == "E11" and run.get("world_prior_only") is True
@@ -71,14 +77,17 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
     hashes, paths = {}, {}
     for key, filename in (("dataset_manifest", "dataset_manifest.json"), ("splits", "splits.json")):
         hashes[dataset / filename] = plan["input_sha256"][key]
+    for key in ("training_dataset_manifest", "training_splits"):
+        if key in plan["input_sha256"]:
+            hashes[Path(plan["files"][key])] = plan["input_sha256"][key]
     manifest = json.loads((dataset / "dataset_manifest.json").read_text())
-    validation = {row["sample_id"] for row in manifest["samples"] if row["split"] == "validation"}
+    validation = {row["sample_id"] for row in manifest["samples"] if row["split"] == plan["split"]}
     references = {name for case in plan["cases"] for name in case["reference_ids"]}
     if references != validation or not expected or len(expected) != len(plan["cases"]):
         raise ValueError("The audit must retain every frozen validation reference and condition")
     groups = defaultdict(list)
     for row in manifest["samples"]:
-        if row["split"] == "validation":
+        if row["split"] == plan["split"]:
             groups[(row["scene_group_id"], row["condition_id"])].append(row["sample_id"])
     if len(plan["cases"]) != len(groups) or any(
         case["reference_ids"] != sorted(groups[(case["scene_group_id"], case["condition_id"])])
@@ -153,12 +162,12 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
     if run["method"] == "E11" and run.get("world_prior_only") != model.world_prior_only:
         raise ValueError("Checkpoint prior-only arm and saved sampler disagree")
     replay_steps = 1 if getattr(model, "world_prior_only", False) else 16
+    corpus = plan.get("training_corpus", plan["input_sha256"])
     if (
         state["step"] != run["training_steps"]
         or state["config"]["seed"] != run["training_seed"]
-        or state["provenance"]["dataset_manifest_sha256"]
-        != plan["input_sha256"]["dataset_manifest"]
-        or state["provenance"]["split_manifest_sha256"] != plan["input_sha256"]["splits"]
+        or state["provenance"]["dataset_manifest_sha256"] != corpus["dataset_manifest"]
+        or state["provenance"]["split_manifest_sha256"] != corpus["splits"]
     ):
         raise ValueError("Checkpoint metadata and frozen data disagree")
     output.mkdir(parents=True)
@@ -213,7 +222,9 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
             "status": "measured_geometry_audit",
             "version": GEOMETRY_VERSION,
             "method": run["method"],
-            "scope": "validation-only pose/silhouette diagnostics; not generated-RGB tracking",
+            "scope": "D018 held-out pose/silhouette diagnostics"
+            if plan.get("study_id") == "D018"
+            else "validation-only pose/silhouette diagnostics; not generated-RGB tracking",
             "sampling_steps": replay_steps,
             "sampling_seeds": plan["sampling_seeds"],
             "checkpoint_sha256": sha256(checkpoint),
@@ -232,7 +243,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
                 for family in ("learned", "oracle_control", "static_control")
             },
             "cases": records,
-            "test_splits_evaluated": [],
+            "test_splits_evaluated": ["D018:id_test"] if plan.get("study_id") == "D018" else [],
             "pixel_exact_pose_replay": True,
             "interpretation": (
                 "Oracle motion calibrates raster bias only. Static copying is a geometry control, "
