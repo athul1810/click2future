@@ -53,7 +53,7 @@ def mass_effects(light, heavy, force, selected):
 def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
     plan, _, _, hashes = verify_inputs(plan_path, predictions, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
-    if state["trajectory_format_version"] not in (3, 4, 5):
+    if state["trajectory_format_version"] not in (3, 4, 5, 7):
         raise ValueError("Use a sampled-world checkpoint")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
@@ -81,14 +81,20 @@ def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
             else:
                 bound = BoundWorld(model, world)
             samples[kind] = (
-                TrajectoryDiffusion.sample(
-                    bound,
-                    features,
-                    force,
-                    seeds=plan["sampling_seeds"],
-                    steps=16,
-                    sigma_min=model.sigma_min,
-                    sigma_max=model.sigma_max,
+                (
+                    model.decode_world(features, force, world)
+                    .expand(len(plan["sampling_seeds"]), -1, -1, -1)
+                    .clone()
+                    if getattr(model, "world_prior_only", False)
+                    else TrajectoryDiffusion.sample(
+                        bound,
+                        features,
+                        force,
+                        seeds=plan["sampling_seeds"],
+                        steps=16,
+                        sigma_min=model.sigma_min,
+                        sigma_max=model.sigma_max,
+                    )
                 )
                 .cpu()
                 .numpy()
@@ -117,7 +123,11 @@ def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
         "world_condition": state["config"]["world_condition"],
         "checkpoint_sha256": sha256(checkpoint),
         "source_sha256": sha256(Path(__file__)),
-        "seed_pairing": "identical diffusion noise; only selected prior mass changes",
+        "seed_pairing": (
+            "identical deterministic repetitions under each fixed world; not independent samples"
+            if getattr(model, "world_prior_only", False)
+            else "identical diffusion noise; only selected prior mass changes"
+        ),
         "prior_worlds": {
             "selected_mass": [0.65, 1.85],
             "other_mass": 1.25,

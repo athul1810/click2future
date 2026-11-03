@@ -28,8 +28,15 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
     if plan["split"] not in {"validation", "validation-selected-object"}:
         raise ValueError("This bounded pilot may not evaluate final-test splits")
     model, state = load_trajectory(checkpoint, device)
-    if method != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9"}[state["trajectory_format_version"]]:
+    if (
+        method
+        != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 7: "E11"}[
+            state["trajectory_format_version"]
+        ]
+    ):
         raise ValueError("Checkpoint training variant and requested method disagree")
+    if getattr(model, "world_prior_only", False) and steps != 1:
+        raise ValueError("The prior-only arm requires exactly one sampling step")
     provenance = state["provenance"]
     if (
         provenance["dataset_manifest_sha256"] != plan["input_sha256"]["dataset_manifest"]
@@ -75,11 +82,11 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
             "video_sha256": hashes,
             "supervision": (
                 "future positions, angles and physical world labels; training only"
-                if method in {"E7", "E8", "E9"} and state["config"]["world_condition"]
+                if method in {"E7", "E8", "E9", "E11"} and state["config"]["world_condition"]
                 else "future positions and checked replay angles; training only"
             ),
         }
-        if method in {"E7", "E8", "E9"}:
+        if method in {"E7", "E8", "E9", "E11"}:
             from click2future.models.world_motion import WORLD_CONTRACT, sample_world
 
             run["world_prior"] = {
@@ -90,6 +97,10 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
                 },
                 "scope": "sampled prior, never the input scene's hidden properties",
             }
+        if method == "E11":
+            run["prior_contract"] = state["prior_contract"]
+            run["world_prior_only"] = state["config"]["world_prior_only"]
+            run["model_source_sha256"] = provenance["source_sha256"]
         if method == "E9":
             run["surface_contract"] = state["surface_contract"]
             run["model_source_sha256"] = provenance["source_sha256"]
@@ -107,7 +118,9 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
                 "device": device,
                 "sampling_steps": steps,
                 "network_evaluations_per_sample": 2 * steps - 1,
-                "sampler": "EDM Heun rho=7, no churn, float32",
+                "sampler": "direct world-conditioned decode"
+                if getattr(model, "world_prior_only", False)
+                else "EDM Heun rho=7, no churn, float32",
                 "seconds": time.perf_counter() - started,
                 "source_sha256": {
                     "sample_trajectory.py": sha256(
@@ -133,7 +146,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--steps", type=int, default=16)
-    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8", "E9"), default="E5")
+    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8", "E9", "E11"), default="E5")
     args = parser.parse_args(argv)
     if args.device == "cuda":
         require_tc2()
@@ -204,7 +217,7 @@ def main(argv=None):
             ),
         }
         _write(args.output / "trajectory-results.json", result)
-        if args.method in {"E6", "E7", "E8", "E9"}:
+        if args.method in {"E6", "E7", "E8", "E9", "E11"}:
             extended_audit(args.output, args.dataset, args.checkpoint, args.device)
         print(json.dumps(result["quality"]), flush=True)
     except Exception as error:

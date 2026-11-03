@@ -562,11 +562,62 @@ complete comparisons increasing displacement. The missing local pair remains
 missing. The native E7 anchor itself records 63/64 target pairs and 76/76 force
 pairs, whereas the earlier Windows CPU response probe records 62/64 and 75/76.
 That platform-sensitive boundary is not a learned improvement. All 288 saved
-pose ensembles replay pixel-exactly in an independent Windows audit, and the
+clips replay pixel-exactly in an independent Windows audit, and the
 96 primary anchor clips are identical to the earlier coverage anchor. The run
 uses 1,819 allocated A40 seconds, exits successfully and verifies all 926 collected
 file digests. These results favour neither a new contact-quality claim nor a
 state-of-the-art claim.
+
+\subsection{Noise after conditioning on a sampled world}
+E11 compares a one-pass pose decoder with conditional diffusion after sampling
+the same physical prior. Both refine the same E7 tensors on the original cache
+for 8,000 updates at seed 19, with identical batches, random draws, loss weights,
+optimizer and nominal 1,064,580 parameters. The direct arm replaces noisy motion
+with zero and fixes the decoder noise level to one. Its motion-input weights
+have zero gradient, so active capacity differs; the transferred function is
+preserved only in the diffusion control. Hidden subpixel geometry remains
+unknown even after conditioning on mass, friction and restitution.
+
+\begin{table}[!ht]
+\centering
+\small
+\begin{tabular}{lrr}
+\hline
+Measure & One pass & Conditional diffusion \\
+\hline
+Network evaluations per video & 1 & 31 \\
+Complete all-object clips /96 & 96 & 96 \\
+Penetrating clips /96 & 1 & 11 \\
+Penetrating future frames & 4 & 105 \\
+Maximum depth (pixels) & 1.0557 & 2.5040 \\
+Longest penetration (frames) & 4 & 19 \\
+Timed contact F1 & 0.3107 & 0.3711 \\
+Zero-force drifting clips /16 & 2 & 0 \\
+Mean selected-object ADE & 0.02514 & 0.02466 \\
+Failed trajectory conditions /24 & 7 & 10 \\
+Forward trajectory spread & 0.02498 & 0.02346 \\
+96-video sampling/export (seconds) & 2.31 & 31.06 \\
+\hline
+\end{tabular}
+\caption{Exploratory E11, job 50455, one training seed and four reused validation
+scenes. ADE and spread use normalized image coordinates. Sampling includes
+native rendering/export but excludes checkpoint loading; it is not browser
+latency. The finite reference forward spread is 0.02580.}
+\label{tab:prior}
+\end{table}
+
+The direct arm improves geometric contact and sampling cost, but regresses
+rest, contact timing and mean selected-object error (Table~\ref{tab:prior}).
+Neither passes overall quality. Both select the correct object in 64/64 eligible
+full-horizon pairs without passive drift. The force-response probe completes 76/76 direct
+and 75/76 diffusion comparisons, every complete comparison increasing motion;
+the missing comparison is retained. Eight selection and thirteen force
+conditions are excluded by the unchanged reference-contact eligibility rule.
+The run uses 1,497 allocated A40 seconds, exits successfully, and verifies 926
+raw file digests and 503 source files. Independent Windows replay reproduces all
+288 primary clips and native contact counts. This remains a one-seed,
+reused-validation tradeoff: it does not establish calibrated uncertainty, a
+held-out improvement or a reason to promote the decoder.
 
 The presentation demo keeps these experimental limits visible. It compares the ordinary flow CVAE, E5 and E6 on common validation images and four fixed samples. An action can be pinned while a changed push is generated on the same timeline. Switching among four simulator reference worlds changes only the separately labelled reference: generated model videos and their observable inputs remain unchanged. Equal seeds are paired random draws, not identified physical worlds for these models. An optional E7 profile also displays its four independent prior draws and reuses them across pushes; they are not inferred scene properties. The interface is an inspection tool, not evidence of calibrated probabilities. Force prompting already supports physical interaction with images~\cite{forceprompting}; shared-mechanism counterfactual generation is also established~\cite{oneworld}. We claim neither feature as a novel general capability.
 

@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 27,
+  "pages": 28,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "97ff3c20b8dd347010af3e9fa0a626edb7b0b841b331a512ca15aac28c7172f9",
+    "main.tex": "c8a41938b5cbc33eb8e410b5667c28fbdd2a61b3670be10f70949931fcda8946",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,15 +191,16 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "b1f052fc9bfad514b116c50c01b4876d15b30de0598345e424cbafb474dff1e7",
+    "contributions.md": "68d71fd8abe521657051ee8db4e8e17196b83bd878f71f66adbe25cf17d0863c",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
     "../docs/results/demo-rehearsal.json": "606518e60d7ad08f83cc9cd1e5d74bde56a91524a94ba13a15d453db7bd7fe00",
-    "../docs/results/surface-validation.json": "439f866415fb744533bd4e69e11eb5b11295c32dde63f34fb796a6547b5b07c8"
+    "../docs/results/surface-validation.json": "439f866415fb744533bd4e69e11eb5b11295c32dde63f34fb796a6547b5b07c8",
+    "../docs/results/prior-validation.json": "d6b18681fe5672a2b5deabdfd2b9947eb6f630d1c75ab8b475cfb9c7072cd8fd"
   },
-  "rendered_pdf_sha256": "ed868f29b39793c410565f4eac41bbb4ca010e92dc0329ab1ef582d5d5176637",
-  "visual_review": "27 pages rendered. Pages 1-24 match the previously inspected 2 November export pixel-for-pixel. Pages 25-27 were inspected at full size; no clipping, overfull boxes, undefined references, external links, URLs, em/en dashes or replacement glyphs.",
+  "rendered_pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568",
+  "visual_review": "28 pages rendered; pages 1-24 retain the previously inspected pixel content. Pages 25-28 inspected at full size across the exploratory edits. No clipping, overfull boxes, undefined references, external links, URLs, em/en dashes or replacement glyphs.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 295,
@@ -274,8 +275,9 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "one-page review export; Ananya reviewed; other accounts pending",
-    "sha256": "b1f052fc9bfad514b116c50c01b4876d15b30de0598345e424cbafb474dff1e7"
+    "status": "review export; Ananya reviewed; other accounts pending",
+    "sha256": "68d71fd8abe521657051ee8db4e8e17196b83bd878f71f66adbe25cf17d0863c",
+    "pdf_sha256": "6da10ceae28194897b67013ebecf9663cf711ba1cd9c21c2c8941a1830bc9cb6"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -730,5 +732,37 @@
     "source": "user reports no change to current submission page",
     "independently_verified": false,
     "internal_completion": "2026-11-14"
+  },
+  "pre_prior_export_snapshot": {
+    "pages": 27,
+    "rendered_pdf_sha256": "ed868f29b39793c410565f4eac41bbb4ca010e92dc0329ab1ef582d5d5176637",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 295,
+      "bytes": 537562,
+      "archive_sha256": "8bfbc1b8187ebf55221182d5cc4319b3f4fa39444e7c8c345ca33cb0b85c7c0c",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "archive": "outputs\\finalization-20261102\\group_07_code.zip"
+    }
+  },
+  "prior_extension_2026_11_03": {
+    "native_job": "50455",
+    "scope": "one-pass contact/cost tradeoff with rest/timing regressions; one seed and four reused scenes; neither promoted",
+    "independent_pixel_replay_clips": 288,
+    "raw_digests_verified": 926,
+    "source_files_verified": 503,
+    "pages": 28,
+    "new_pages_inspected_at_full_size": [
+      25,
+      26,
+      27,
+      28
+    ],
+    "pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568"
   }
 }

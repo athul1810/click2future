@@ -108,7 +108,7 @@ def diagnose(plan_path, predictions_path, dataset, checkpoint, output, *, device
                         base["instance_masks"][0, selected],
                         force,
                         seeds=plan["sampling_seeds"],
-                        sampling_steps=16,
+                        sampling_steps=1 if getattr(model, "world_prior_only", False) else 16,
                     )
                     generated[key] = videos
                     tracked[key] = tracks(refs[0], videos)

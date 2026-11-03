@@ -23,6 +23,10 @@ def load_trajectory(checkpoint, device="cpu"):
     checkpoint = Path(checkpoint)
     checksum = sha256(checkpoint)
     state = torch.load(checkpoint, map_location="cpu", weights_only=True)
+    if state.get("trajectory_format_version") == 7:
+        from .prior_checkpoint import load_prior
+
+        return load_prior(checkpoint, device)
     if state.get("trajectory_format_version") == 5:
         from .surface_checkpoint import load_surface
 
@@ -96,7 +100,10 @@ def sample_trajectory_videos(
         or any(isinstance(seed, bool) or not isinstance(seed, int) or seed < 0 for seed in seeds)
         or isinstance(sampling_steps, bool)
         or not isinstance(sampling_steps, int)
-        or not 2 <= sampling_steps <= 128
+        or not (
+            (getattr(model, "world_prior_only", False) and sampling_steps == 1)
+            or (not getattr(model, "world_prior_only", False) and 2 <= sampling_steps <= 128)
+        )
     ):
         raise ValueError("Use distinct nonnegative integer seeds and 2-128 sampling steps")
     first_frame = np.asarray(first_frame)
@@ -156,7 +163,9 @@ def main(argv=None):
                 "step": state["step"],
                 "seeds": args.seeds,
                 "sampling_steps": args.sampling_steps,
-                "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+                "sampler": "direct world-conditioned decode"
+                if getattr(model, "world_prior_only", False)
+                else "EDM rho-7 Heun, no churn, float32 integration",
                 "network_evaluations_per_sample": 2 * args.sampling_steps - 1,
                 "scope": (
                     "supervised trajectory diffusion and rigid RGB decoding; quality unverified"
