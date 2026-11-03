@@ -151,3 +151,11 @@ check whether generated videos follow predicted trajectories.
 Preset scenes with compatible metadata support exact simulator replay. Uploaded
 images without scene metadata support generation but not simulator-ground-truth
 comparison.
+
+The native PNG endpoint accepts pixels only (64 x 64, opaque, at most 64 KiB).
+The existing observable-component parser derives two masks in centroid order;
+neither a scene recipe nor hidden properties can be supplied. The in-memory input
+contains one observed frame and an explicit 32-frame output length, without fake
+future arrays. Reference generation is disabled for these inputs. The same model
+adapter, four ordered sampling seeds and observable replay-cache identity are
+used for uploaded and preset images. At most eight unique uploads remain open.

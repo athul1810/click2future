@@ -342,13 +342,13 @@ Make the model and simulator comparison understandable and repeatable.
 
 **Dependencies:** T04, T05, T10. **Owner:** MAITI SHRIJEET. **Status:** In progress.
 
-- [x] Support declared development/validation presets with frame-0 selected-object masks; image upload is deferred.
+- [x] Support declared development/validation presets and native 64px two-object synthetic PNG input with pixel-derived masks.
 - [x] Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.
 - [x] Keep the labelled simulator reference and hidden physics outside neural inference.
 - [x] Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.
 - [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
 
-The app now supports E6 with the shared offline sampler, generated-pixel overlays and missing counts. PR #48 is reviewed and merged into #47. The source ZIP with the clipping diagnostic passes 550 tests plus four subtests; the unchanged E6-grid/E5 interface passed all 30 browser checks during PR #48 review. Four primary futures fit laptop screens, comparison is explicit and reduced-motion playback stays paused. The earlier five-request E5/E3 latency estimate of 5.31s median and 5.36s empirical p95 belongs to the RTX 3060 laptop; it does not benchmark the new E6/E5 setup. Final physical quality, fresh final-model timing and an offline presentation rehearsal remain open. Tracker v2 was reviewed by Sanjay and merged in #42. See app/README.md and CONTACT_TRAINING.md.
+The original synthetic-image path now accepts native 64px two-object PNGs, derives masks from pixels and preserves the supplied frame zero in all four futures. Uploads have no simulator ground truth. The integrated E11/E0/E7 real-checkpoint run passes 46 browser checks, including both object selections, paired actions, rejected uploads and common laptop layouts. The source suite passes 700 tests and four subtests. Final physical quality and an offline rehearsal on the presentation setup remain open. See app/README.md and results/demo-image-input.json. Earlier model-specific timings remain historical and are not a benchmark of the new upload flow.
 
 
 <a id="t18"></a>
@@ -365,7 +365,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5/E6, corrected passive scores, action-family uncertainty and the matched canvas-loss comparison. Sections 3.15-3.17 contain the final held-out results and secondary D015 result. Section 4 adds the post-D014 E7/E8 and completed coverage study, with all regressions retained. The 3 November review export is 29 pages, including the E9/E11 screens and fresh D018 replication; the contribution review draft is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable presentation draft and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
+The 3 November review export is 30 pages. It retains D014/D015, adds the separately trained E10 routing study and D017 results, and includes the E9/E11 screens and D018 replication. Conditional ADE is labelled with its missing-track caveat; D017 primary complete-sample counts and independent raw-video replay remain open. The contribution review is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable 16-slide presentation and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
 
 <a id="t19"></a>
 
@@ -402,4 +402,4 @@ Complete one group submission through NTULearn using the exact required filename
 - [ ] Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.
 - [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.
 
-3 November: the review PDFs, editable 15-slide presentation, source archive and recorded fallback are prepared. Both optional demo profiles passed 35 browser checks. The user reports no submission-page changes; the cutoff is not independently verified. Three member contribution confirmations, the team rehearsal and the actual upload remain pending. D018 completed all six frozen-model runs on ten fresh ID scenes. The contact gain repeats, but every seed fails the overall gate; no model is promoted. PR #76 remains under denominator/provenance review for D017.
+3 November: the review PDFs, editable 16-slide presentation, source archive and recorded fallback are prepared. The original synthetic-image upload path now passes 46 browser checks with real checkpoints; the source suite passes 700 tests and four subtests. The user reports no submission-page changes; the cutoff is not independently verified. Three member contribution confirmations, the team rehearsal and the actual upload remain pending. D018 completed all six frozen-model runs on ten fresh ID scenes. The contact gain repeats, but every seed fails the overall gate; no model is promoted. PR #76 is reviewed and merged. D017 primary complete-sample counts and independent raw-video replay remain open.

@@ -515,6 +515,65 @@ E2/E3, 40k & 964,035 & 40,000 at batch one & 1,965-1,970 s & 0.58-0.59 s \\
 \end{figure}
 
 \clearpage
+
+\subsection{Independent routing study and a separate held-out replication}
+D016 trains six pose-space E10 models from fresh random initializations: spatial
+and numeric force routing at seeds 19, 20 and 21, each for 16,000 updates in TC2 job
+50264. The paired arms of each seed share initial tensors, batches, optimizer
+and contact-training recipe; routing is the declared difference. These are
+independent initializations, unlike E11's refinements of one E7 teacher. Both
+arms use future-pose/contact supervision, so this experiment addresses routing
+within the pose model, not the unresolved E2/E3 pixel comparison.
+
+D017 uses a separate generator seed (790000) with ten scene groups in each of
+five reserved splits. Frozen E0, E2/E3 at both budgets, and all six E10 models
+are scored without training or checkpoint selection. The plans reject shared
+frame-zero pixels or visible seeds against the original corpus. Jobs 50265,
+50321 and 50527 produce the records; a quota failure stops 50321 and its final
+two splits are rerun. The incomplete attempt remains recorded. This is a
+replication beside D014/D015, not a replacement for those results.
+
+\begin{table}[!ht]
+\centering
+\small
+\begin{tabular}{rrrrr}
+\hline
+Seed & ID ADE spatial & ID ADE numeric & Force missing spatial & Force missing numeric \\
+\hline
+19 & 0.02604 & 0.02950 & 17.39 & 3.77 \\
+20 & 0.02691 & 0.02832 & 12.19 & 12.68 \\
+21 & 0.02635 & 0.02992 & 24.47 & 5.31 \\
+\hline
+\end{tabular}
+\caption{E10 on D017. ADE is normalized selected-object error conditional on
+complete trajectories within each case. Force columns are percentages of missing
+selected-object observations, not percentages of failed videos. All columns
+represent ten scene groups per arm and seed; represented groups do not establish
+complete tracking of every clip.}
+\label{tab:routing-replication}
+\end{table}
+
+The spatial arm has lower conditional ID ADE in all three seeds
+(Table~\ref{tab:routing-replication}); the same ordering appears on texture and
+repeated-physics splits with ten represented groups. Shape-OOD scores represent
+nine of ten groups per arm: their conditional means are descriptive, without a
+verified common surviving cohort. Force-OOD ADE represents only zero to five groups and
+is not ranked. Observation-loss rates cover all ten groups: numeric is lower
+in seeds 19/21, while seed 20 reverses the order. Selection also varies across
+seeds; for shape OOD the spatial target rates are 0.94/0.86/0.86 and numeric
+0.86/0.92/0.86, conditional on complete pairs. Pair counts and missingness are
+retained in the export rather than interpreting a rate alone as success.
+E2/E3 at the original budget still lose almost all tracks on this new corpus;
+the larger-budget models still have selection failures. E10 and pixel models
+differ in representation and supervision, so their gap is not a routing ablation.
+
+These aggregates are bound to plan, checkpoint and source-summary hashes.
+The collector and exported denominators were checked, but this extension does
+not independently replay the large raw-video collection. Primary complete-sample
+counts have been requested from the underlying summaries. Defined ADE averages
+surviving complete trajectories and is not proof that all samples are valid.
+No overall physical-quality or external state-of-the-art claim follows.
+
 \section{Exploratory extensions after the held-out evaluation}
 \label{sec:exploratory}
 The following studies were designed after D014 opened the test splits. They use the original training corpus and four reused validation scenes only. They do not update the historical test scores or provide a new confirmatory comparison. All use one training seed and retain failed clips. Their pose, contact and physical-property supervision exceeds that of the main E0/E2/E3 comparison.
@@ -688,7 +747,7 @@ use the earlier controlled screen. No model is promoted. This narrower
 contact improvement does not resolve the original E2/E3 pixel-conditioning
 question or establish an external state-of-the-art advantage.
 
-The presentation demo keeps these experimental limits visible. It compares the ordinary flow CVAE, E5 and E6 on common validation images and four fixed samples. An action can be pinned while a changed push is generated on the same timeline. Switching among four simulator reference worlds changes only the separately labelled reference: generated model videos and their observable inputs remain unchanged. Equal seeds are paired random draws, not identified physical worlds for these models. An optional E7 profile also displays its four independent prior draws and reuses them across pushes; they are not inferred scene properties. The interface is an inspection tool, not evidence of calibrated probabilities. Force prompting already supports physical interaction with images~\cite{forceprompting}; shared-mechanism counterfactual generation is also established~\cite{oneworld}. We claim neither feature as a novel general capability.
+The presentation demo keeps these experimental limits visible. It compares the ordinary flow CVAE, E5 and E6 on common validation images and four fixed samples. An action can be pinned while a changed push is generated on the same timeline. Switching among four simulator reference worlds changes only the separately labelled reference: generated model videos and their observable inputs remain unchanged. Equal seeds are paired random draws, not identified physical worlds for these models. An optional E7 profile also displays its four independent prior draws and reuses them across pushes; they are not inferred scene properties. Native synthetic PNG input now derives two object masks from the supplied 64px pixels, supports object click and force drag, and returns four 32-frame futures preserving frame zero. Image-only input has no simulator reference or known physical properties. The interface is an inspection tool, not evidence of calibrated probabilities. Force prompting already supports physical interaction with images~\cite{forceprompting}; shared-mechanism counterfactual generation is also established~\cite{oneworld}. We claim neither feature as a novel general capability.
 
 \section{Conclusion}
 The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow-decoder CVAE fails the fixed 0.5-second window, yet over the full clip it moves the selected object along the force and reverses it in all three training seeds. It does not scale motion consistently with force magnitude, and the unselected object drifts in the selection probe. It is the final E0. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. The E6 follow-ups remove measured unforced drift and reduce penetration, while introducing a tradeoff with forward-motion spread and wall completeness. Their combined changes do not isolate a single loss effect. The later matched canvas-loss comparison improves visibility from 88 to 95 complete clips, while leaving penetration and overall strict quality unresolved. Rendered-reference calibration also shows that timed contact scores depend on estimator errors and hidden-physics variation. The final held-out evaluation repeats these patterns on unseen scenes (Section~\ref{sec:final}). With the pilot's 5,000 training clips, E2 and E3 produce no trackable video. Trained on as many clips as E0, they produce clean frames but lose object identity, so the numeric-versus-spatial question remains unanswered. Contact quality also remains open. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.

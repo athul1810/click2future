@@ -16,14 +16,16 @@
       <aside class="input-panel">
         <div class="section-title"><span class="step">01</span><h2>set the scene</h2></div>
         <label for="scene">starting image</label><select id="scene" disabled></select>
-        <div class="scene-wrap"><canvas id="input" width="512" height="512" aria-label="starting scene: click an object and drag to push" tabindex="0"></canvas></div>
+        <div class="image-actions"><button id="open-image" type="button" disabled>open png</button><button id="save-image" type="button" disabled>save input</button><input id="upload-image" type="file" accept="image/png" aria-label="open a synthetic tabletop PNG" hidden></div>
+        <p class="hint">64px tabletop png, two separated objects. uploads have no simulator reference.</p>
+        <div class="scene-wrap"><canvas id="input" width="512" height="512" aria-label="starting scene: click an object and drag to push" aria-describedby="keyboard-help" title="click an object and drag to push; arrow keys adjust, shift gives smaller steps" tabindex="0"></canvas></div>
         <p class="hint" id="selection">click a coloured object, then drag to set its push.</p>
         <div id="objects" class="object-buttons" aria-label="select an object"></div>
         <div class="force-line"><span>push strength <b id="strength">0%</b></span><div class="small-actions"><button id="reverse" type="button">reverse</button><button id="zero" type="button">zero</button></div></div>
-        <p class="hint">arrow keys adjust the push; shift makes smaller changes. push duration is always 0.25 seconds.</p>
+        <p class="hint" id="keyboard-help">arrow keys adjust the push; shift makes smaller changes. push duration is always 0.25 seconds.</p>
         <label for="model">compare models</label><select id="model"></select>
-        <div class="seed-line"><label for="seed">starting seed</label><input id="seed" type="number" min="0" max="2147483644" value="0"></div>
-        <p class="hint">keep the seed fixed when changing the object or push.</p>
+        <div class="seed-line"><label for="seed">starting seed</label><input id="seed" type="number" min="0" max="2147483644" value="0" aria-describedby="seed-help" title="keep the same seed when changing the object or push"></div>
+        <p class="hint" id="seed-help">keep the seed fixed when changing the object or push.</p>
         <button id="generate" class="primary" disabled>generate four futures <span>↗</span></button>
         <button id="cancel" class="cancel" hidden>cancel generation</button>
         <div id="status" class="status" role="status" aria-live="polite">loading the local model…</div>

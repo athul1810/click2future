@@ -20,6 +20,7 @@ from click2future.data import load_rollout
 from click2future.sim import run_rollout
 
 from .diagnostics import pixel_diagnostics
+from .images import uploaded_scene
 
 
 def png(array):
@@ -31,6 +32,10 @@ def png(array):
 def filmstrip(videos):
     # [K,T,H,W,3] -> [K*H,T*W,3], lossless pixels for synchronized canvas playback.
     return png(np.concatenate([np.concatenate(clip, axis=1) for clip in videos], axis=0))
+
+
+def frame_count(scene):
+    return scene.get("frame_count", len(scene["frames"]))
 
 
 def validate_videos(videos, first, seeds, frames):
@@ -100,7 +105,12 @@ class DemoService:
 
     def state(self):
         scenes = []
-        for name, ref in self.presets.items():
+        with self.lock:
+            inputs = [
+                (name, ref, self.splits.get(name), list(self.reference_worlds[name]))
+                for name, ref in self.presets.items()
+            ]
+        for name, ref, split, worlds in inputs:
             masks = ref["instance_masks"][0]
             ids = np.flatnonzero(ref["object_valid"])
             hit_map = np.full(masks.shape[1:], -1, dtype=int)
@@ -120,11 +130,12 @@ class DemoService:
                     "hit_map": hit_map.tolist(),
                     "objects": objects,
                     "size": list(ref["frames"].shape[1:3]),
-                    "frames": len(ref["frames"]),
+                    "frames": frame_count(ref),
                     "default_object": ref["selected_object_id"],
                     "default_force": ref["force_xy"].tolist(),
-                    "split": self.splits.get(name, "operator-selected example; split unverified"),
-                    "reference_worlds": list(self.reference_worlds[name]),
+                    "split": split or "operator-selected example; split unverified",
+                    "input_source": ref.get("input_source", "simulator preset"),
+                    "reference_worlds": worlds,
                 }
             )
         return {
@@ -134,6 +145,24 @@ class DemoService:
             "fps": 8,
             "notice": "research preview · checkpoint quality still needs validation",
         }
+
+    def add_image(self, data):
+        if not isinstance(data, dict) or set(data) != {"image"}:
+            raise ValueError(
+                "Supply PNG pixels only; no masks, scene recipes or physical properties"
+            )
+        ref = uploaded_scene(data["image"])
+        identifier = "upload-" + hashlib.sha256(ref["frames"][0].tobytes()).hexdigest()
+        with self.lock:
+            if any(job["status"] in {"queued", "running"} for job in self.jobs.values()):
+                raise ValueError("Wait for generation or cancel it before opening an image")
+            if identifier not in self.presets:
+                if sum(name.startswith("upload-") for name in self.presets) >= 8:
+                    raise ValueError("Eight images are open; restart the local demo to clear them")
+                self.reference_worlds[identifier] = {}
+                self.splits[identifier] = "user upload; not benchmark-scored"
+                self.presets[identifier] = ref
+        return {"scene": next(row for row in self.state()["scenes"] if row["id"] == identifier)}
 
     def request(self, data):
         if not isinstance(data, dict) or set(data) != {
@@ -193,6 +222,8 @@ class DemoService:
             | {"seeds": [0, 1, 2, 3], "models": [next(iter(self.models))]}
         )
         worlds = self.reference_worlds[data["scene"]]
+        if not worlds:
+            raise ValueError("An uploaded image has no simulator ground truth or known physics")
         if not isinstance(data["world"], str) or data["world"] not in worlds:
             raise ValueError("Unknown reference world")
         ref = worlds[data["world"]]
@@ -274,7 +305,7 @@ class DemoService:
                     "mask": hashlib.sha256(mask.tobytes()).hexdigest(),
                     "force": force.tolist(),
                     "seeds": seeds,
-                    "frames": len(ref["frames"]),
+                    "frames": frame_count(ref),
                     "shape": list(first.shape),
                 }
                 key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
@@ -299,10 +330,10 @@ class DemoService:
                         mask,
                         force,
                         seeds=seeds,
-                        future_frames=len(ref["frames"]) - 1,
+                        future_frames=frame_count(ref) - 1,
                         cancelled=event,
                     )
-                    videos = validate_videos(videos, first, seeds, len(ref["frames"]))
+                    videos = validate_videos(videos, first, seeds, frame_count(ref))
                     if event.is_set():
                         return
                     temporary = archive.with_suffix(".tmp")
@@ -319,7 +350,7 @@ class DemoService:
                         )
                     )
                     temporary_meta.replace(meta)
-                validate_videos(videos, first, seeds, len(ref["frames"]))
+                validate_videos(videos, first, seeds, frame_count(ref))
                 details = dict(model.metadata)
                 if details.get("world_condition") is True:
                     from click2future.models.world_motion import WORLD_CONTRACT, sample_world
@@ -345,26 +376,31 @@ class DemoService:
                 )
             if event.is_set():
                 return
-            reference = self.reference(
-                {
-                    "scene": data["scene"],
-                    "object": obj,
-                    "force": force.tolist(),
-                    "world": data["scene"],
-                }
+            reference = (
+                self.reference(
+                    {
+                        "scene": data["scene"],
+                        "object": obj,
+                        "force": force.tolist(),
+                        "world": data["scene"],
+                    }
+                )
+                if self.reference_worlds[data["scene"]]
+                else None
             )
             result = {
                 "models": results,
                 "seeds": seeds,
                 "force": force.tolist(),
                 "object": obj,
-                "frames": len(ref["frames"]),
+                "frames": frame_count(ref),
                 "fps": 8,
                 "size": list(first.shape[:2]),
                 "reference": reference,
                 "notice": "Different hidden physical properties can give different valid outcomes.",
                 "scene": data["scene"],
                 "split": self.splits.get(data["scene"], "split unverified"),
+                "input_source": ref.get("input_source", "simulator preset"),
             }
             with self.lock:
                 if not event.is_set():

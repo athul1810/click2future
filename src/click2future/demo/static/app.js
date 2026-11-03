@@ -31,14 +31,14 @@ function loadImage(source) {
 }
 function setBusy(value) {
   busy = value;
-  for (const id of ["generate", "scene", "model", "seed", "reverse", "zero"]) {
+  for (const id of ["generate", "scene", "model", "seed", "reverse", "zero", "open-image", "save-image", "upload-image"]) {
     $(id).disabled = value;
   }
   document.querySelectorAll("#objects button").forEach(button => {button.disabled = value;});
   $("input").setAttribute("aria-disabled", String(value));
   $("cancel").hidden = !value;
   $("pin").disabled = value || !playback;
-  $("reference-world").disabled = value || !playback;
+  $("reference-world").disabled = value || !playback?.reference;
 }
 function changed() {
   if (!playback) return;
@@ -126,6 +126,7 @@ async function chooseScene() {
       $("objects").append(button);
     });
     playback = null;
+    referenceStrip = null;
     clearPin();
     ++referenceOperation;
     setPlaying(false);
@@ -138,6 +139,7 @@ async function chooseScene() {
     $("mode").textContent = "awaiting a push";
     $("details").textContent = "generate a future to see its record.";
     $("reference-details").hidden = true;
+    $("reference-properties").textContent = "";
     message(scene.split + " · " + state.notice);
     drawInput();
   } finally {
@@ -146,7 +148,7 @@ async function chooseScene() {
 }
 async function showResult(result, current) {
   const loaded = await Promise.all(result.models.map(model => loadImage(model.strip)));
-  const reference = await loadImage(result.reference.strip);
+  const reference = result.reference ? await loadImage(result.reference.strip) : null;
   if (current !== operation) return;
   referenceStrip = reference;
   playback = result;
@@ -162,8 +164,10 @@ async function showResult(result, current) {
     option.textContent = "world " + (index + 1);
     $("reference-world").append(option);
   });
-  $("reference-world").value = result.reference.world;
-  referenceProperties(result.reference);
+  if (result.reference) {
+    $("reference-world").value = result.reference.world;
+    referenceProperties(result.reference);
+  }
   $("pin").disabled = false;
   updatePairing();
   $("timeline").max = result.frames - 1;
@@ -171,10 +175,10 @@ async function showResult(result, current) {
   $("timeline").disabled = false;
   $("play").disabled = false;
   setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  $("reference-details").hidden = false;
+  $("reference-details").hidden = !result.reference;
   const cached = result.models.filter(model => model.source === "cached replay").length;
   $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : "live model output";
-  $("details").textContent = JSON.stringify({scene: result.scene, split: result.split,
+  $("details").textContent = JSON.stringify({scene: result.scene, split: result.split, input_source: result.input_source,
     selected_object: result.object, force: result.force, seeds: result.seeds,
     models: result.models.map(model => ({name: model.name, source: model.source, ...model.details,
       pixel_tracker: model.pixel_tracks?.extractor_version,
@@ -237,9 +241,11 @@ function drawFrame() {
     }
     response.textContent = motionResponse(tracks?.samples[row], result.object, result.force, result.size, frame);
   });
-  const canvas = $("reference"), ctx = canvas.getContext("2d");
-  ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(referenceStrip, frame * width, 0, width, height, 0, 0, canvas.width, canvas.height);
+  if (referenceStrip) {
+    const canvas = $("reference"), ctx = canvas.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(referenceStrip, frame * width, 0, width, height, 0, 0, canvas.width, canvas.height);
+  }
   $("timeline").value = frame;
   $("time").textContent = (frame / playback.fps).toFixed(2) + "s";
 }
@@ -306,7 +312,7 @@ function referenceProperties(reference) {
     "object " + (i + 1) + ": mass " + p.mass.toFixed(2) + ", friction " + p.friction.toFixed(2) + ", restitution " + p.restitution.toFixed(2)).join("\n");
 }
 async function changeReference() {
-  if (!playback || busy) return;
+  if (!playback?.reference || busy) return;
   const current = ++referenceOperation, result = playback;
   $("reference-world").disabled = true;
   try {
@@ -400,6 +406,47 @@ $("input").addEventListener("keydown", event => {
 });
 $("reverse").onclick = () => clampForce(-force[0], -force[1]);
 $("zero").onclick = () => clampForce(0, 0);
+$("open-image").onclick = () => $("upload-image").click();
+$("save-image").onclick = () => {
+  if (!scene || busy) return;
+  const link = document.createElement("a");
+  link.href = scene.image;
+  link.download = "click2future-input.png";
+  link.click();
+};
+$("upload-image").onchange = async () => {
+  const file = $("upload-image").files[0];
+  if (!file || busy) return;
+  const current = ++operation;
+  setBusy(true);
+  $("cancel").hidden = true;
+  try {
+    if (file.size > 65536) throw new Error("use a 64 x 64 tabletop png, at most 64 KiB");
+    const pixels = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error("could not read the image"));
+      reader.readAsDataURL(file);
+    });
+    const opened = await api("/api/images", {image: pixels});
+    if (current !== operation) return;
+    if (!state.scenes.some(item => item.id === opened.scene.id)) {
+      state.scenes.push(opened.scene);
+      const option = document.createElement("option");
+      option.value = opened.scene.id;
+      option.textContent = "uploaded image " + state.scenes.filter(item => item.id.startsWith("upload-")).length;
+      $("scene").append(option);
+    }
+    $("scene").value = opened.scene.id;
+    await chooseScene();
+    message("image opened. click an object and drag a push; no simulator reference is available.");
+  } catch (error) {
+    message(error.message, true);
+  } finally {
+    $("upload-image").value = "";
+    if (!jobId) setBusy(false);
+  }
+};
 $("scene").onchange = () => chooseScene().catch(error => message(error.message, true));
 $("model").onchange = changed;
 $("seed").oninput = changed;

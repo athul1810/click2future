@@ -57,6 +57,7 @@ def _check(name, payload):
         or name
         in {
             "scripts/build_demo_bundle.py",
+            "scripts/analyse_replication.py",
             "scripts/analyse_prior_replication.py",
             "scripts/plot_prior_replication.py",
         }
