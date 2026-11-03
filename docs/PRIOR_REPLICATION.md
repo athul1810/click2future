@@ -49,3 +49,20 @@ projection, rest override, reranking, seed removal or threshold change is allowe
 Sampling cost is measured on the same device and code path; NFE is not wall-clock
 speed. Even a successful replication is a local result under extra physical
 supervision, not an external state-of-the-art comparison or calibrated posterior.
+
+
+Inference can run on the presentation laptop or in an allocated TC2 job; the
+repeat training remains on TC2. Record the exact device, software and source.
+The six final checkpoint hashes are resolved before any new-corpus generation.
+The ID and selection plans are frozen before sampling. The inherited diagnostic
+folder names include `validation-*`; their authoritative plan split is
+`id_test`, with study ID D018 and explicit held-out scope in the result metadata.
+No D017 data is generated, opened or scored by the D018 driver.
+
+Gate details: selected ADE is the existing all-complete mean over conditions;
+contact F1 is the existing micro score against the first declared reference.
+Full-horizon zero-force/passive drift and action/force response retain the
+existing one-pixel and reference-contact rules. Reference-to-sample distance is
+checked separately for each action family's selected-object trajectories, with
+all ten scene groups required. Undefined values fail the gate. No aggregate gain
+can offset a regression in one of these predeclared checks.

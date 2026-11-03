@@ -252,8 +252,12 @@ def diagnose(plan_path, predictions_path, dataset, checkpoint, output, *, device
     record = {
         "status": "measured_development_diagnostic",
         "scope": (
-            "paired force/selection response on existing validation images; "
-            "not historical official scores or calibrated probabilities"
+            (
+                "paired force/selection response on D018 held-out images; "
+                if plan.get("study_id") == "D018"
+                else "paired force/selection response on existing validation images; "
+            )
+            + "not historical official scores or calibrated probabilities"
         ),
         "checkpoint_sha256": sha256(checkpoint),
         "plan_sha256": plan["plan_sha256"],
@@ -265,7 +269,7 @@ def diagnose(plan_path, predictions_path, dataset, checkpoint, output, *, device
         "summary": summary,
         "generated_files_sha256": generated_files,
         "source_sha256": sha256(Path(__file__)),
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if plan.get("study_id") == "D018" else [],
         "inference_corrections": False,
     }
     (output / "response.json").write_text(

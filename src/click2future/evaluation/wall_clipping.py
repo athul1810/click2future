@@ -33,8 +33,7 @@ def _extended_mask(mask, affine, padding):
         ix = np.floor(c + a * 0.5 + a * x).astype(np.int64)
         iy = np.floor(f + e * 0.5 + e * y).astype(np.int64)
     else:
-        matrix = np.array([[a, b, c + a * 0.5 + b * 0.5],
-                           [d, e, f + d * 0.5 + e * 0.5]])
+        matrix = np.array([[a, b, c + a * 0.5 + b * 0.5], [d, e, f + d * 0.5 + e * 0.5]])
         fixed = np.floor(matrix * 65536 + 0.5).astype(np.int64)
         ix = (fixed[0, 0] * x + fixed[0, 1] * y + fixed[0, 2]) >> 16
         iy = (fixed[1, 0] * x + fixed[1, 1] * y + fixed[1, 2]) >> 16
@@ -83,11 +82,14 @@ def sprite_areas(observation, value, object_index, *, padding=128):
         cy + sine * (cx + dx) - cosine * (cy + dy),
     ]
     sprite = Image.fromarray(mask.astype(np.uint8) * 255)
-    native = np.asarray(
-        sprite.transform(
-            (width, height), Image.Transform.AFFINE, affine, resample=Image.Resampling.NEAREST
+    native = (
+        np.asarray(
+            sprite.transform(
+                (width, height), Image.Transform.AFFINE, affine, resample=Image.Resampling.NEAREST
+            )
         )
-    ) > 0
+        > 0
+    )
     full = _extended_mask(mask, affine, padding)
     if not full.any() or full[[0, -1]].any() or full[:, [0, -1]].any():
         raise ValueError("Padded measurement canvas cannot contain the whole sprite")
@@ -160,12 +162,14 @@ def audit(plan_path, predictions_path, dataset, checkpoint, poses_dir):
         if sha256(path) != digest:
             raise ValueError("Audit input changed during the measurement: " + path.name)
     return {
-        "status": "measured_saved_validation_raster_clipping",
+        "status": "measured_D018_raster_clipping"
+        if plan.get("study_id") == "D018"
+        else "measured_saved_validation_raster_clipping",
         "raster_metric_version": "native-grid-extension-2",
         "method": run["method"],
         "checkpoint_sha256": run["checkpoint_sha256"],
         "scope": (
-            "All frozen validation wall conditions and seeds; every missing future object "
+            "All frozen wall conditions and seeds; every missing future object "
             "observation. Padded masks never replace generated videos or failed tracks."
         ),
         "summary": {
@@ -196,7 +200,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint, poses_dir):
             "Clipping does not validate physical wall contact or authorize tracker relaxation. "
             "Original video scores and every missing observation remain unchanged."
         ),
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if plan.get("study_id") == "D018" else [],
     }
 
 

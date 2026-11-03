@@ -80,6 +80,7 @@ def _check(name, payload):
             "submission/contact_risk_comparison.sbatch",
             "submission/world_comparison.py",
             "submission/world_comparison.sbatch",
+            "submission/prior_holdout.py",
             "submission/prior_repeats.py",
             "submission/prior_repeats.sbatch",
             "submission/prior_comparison.py",

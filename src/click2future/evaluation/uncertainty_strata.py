@@ -75,7 +75,10 @@ def stratify(comparison_path, *, bootstrap=2000):
     comparison_path = Path(comparison_path)
     manifest = json.loads(comparison_path.read_text())
     if (
-        manifest["suite"] != "validation"
+        not (
+            manifest["suite"] == "validation"
+            or (manifest["suite"] == "id_test" and manifest.get("study_id") == "D018")
+        )
         or manifest["source"] != "video_tracking"
         or len(manifest["runs"]) != 1
         or manifest["runs"][0]["method"] not in {"E5", "E6", "E7", "E8", "E9", "E10", "E11"}
@@ -149,7 +152,9 @@ def stratify(comparison_path, *, bootstrap=2000):
     if sum(row["case_count"] for row in strata.values()) != len(manifest["cases"]):
         raise ValueError("Every case must appear in exactly one action stratum")
     return {
-        "status": "measured_validation_uncertainty_strata",
+        "status": "measured_D018_uncertainty_strata"
+        if manifest.get("study_id") == "D018"
+        else "measured_validation_uncertainty_strata",
         "source": "saved generated-RGB reports; candidate tracker version remains unchanged",
         "comparison_sha256": sha256(comparison_path),
         "source_sha256": {
@@ -164,7 +169,7 @@ def stratify(comparison_path, *, bootstrap=2000):
             "requires all K trajectories. Nulls are retained. Zero-force reference spread can "
             "be undefined when only one reference exists. This is not calibrated uncertainty."
         ),
-        "test_splits_evaluated": [],
+        "test_splits_evaluated": ["D018:id_test"] if manifest.get("study_id") == "D018" else [],
     }
 
 

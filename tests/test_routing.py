@@ -1,18 +1,21 @@
 """E10 force routing and separately generated held-out corpus plans (D016/D017)."""
 
+import threading
 from dataclasses import asdict
 from pathlib import Path
 
+import numpy as np
 import pytest
 import torch
 from test_contact_training import fixture_data
 
 from click2future.data.generalization import generate_generalization_dataset
+from click2future.demo.models import CheckpointModel
 from click2future.evaluation.suite import _write, prepare_plan, read_plan
 from click2future.evaluation.trajectory_pilot import sample_plan
 from click2future.models.object_motion import TrajectoryDiffusion
 from click2future.models.routed_motion import RoutedTrajectoryDiffusion
-from click2future.training.sample_trajectory import load_trajectory
+from click2future.training.sample_trajectory import load_trajectory, sample_trajectory_videos
 from click2future.training.train_contact import ContactConfig, ContactTrainer
 from click2future.training.train_routing import (
     RoutingConfig,
@@ -95,6 +98,28 @@ def test_routing_checkpoints_resume_exactly_and_refuse_changed_model_source(tmp_
         load_trajectory(tmp_path / "changed.pt")
 
 
+def test_routing_demo_adapter_matches_the_public_sampler(tmp_path):
+    data, geometry, obs = fixture_data()
+    trainer = RoutingTrainer(
+        data, geometry, RoutingConfig(steps=4, width=16, layers=1, batch_size=3)
+    )
+    trainer.train_step()
+    checkpoint = tmp_path / "routing.pt"
+    trainer.save(checkpoint, {"source_sha256": source_identity()})
+    model, _ = load_trajectory(checkpoint)
+    force = np.array([0.15, 0.0], dtype=np.float32)
+    mask = obs.masks[obs.selected_index]
+    expected = sample_trajectory_videos(
+        model, obs.first, mask, force, seeds=[0, 1, 2, 3], sampling_steps=2
+    )
+    adapter = CheckpointModel("routing", checkpoint, trajectory_steps=2)
+    actual = adapter.predict(
+        obs.first, mask, force, seeds=[0, 1, 2, 3], future_frames=31, cancelled=threading.Event()
+    )
+    assert np.array_equal(expected, actual)
+    assert adapter.metadata["force_routing"] == "selected"
+
+
 @pytest.fixture(scope="module")
 def corpora(tmp_path_factory):
     roots = {name: tmp_path_factory.mktemp(name) for name in ("training", "held_out", "copy")}
@@ -139,3 +164,5 @@ def test_pose_sampler_opens_test_splits_only_on_a_separate_corpus(corpora, tmp_p
         sample_plan(reserved, missing, tmp_path / "a", method="E10")
     with pytest.raises(FileNotFoundError):
         sample_plan(separate, missing, tmp_path / "b", method="E10")
+    with pytest.raises(ValueError, match="registered D018"):
+        sample_plan(separate, missing, tmp_path / "c", method="E11", steps=1)
