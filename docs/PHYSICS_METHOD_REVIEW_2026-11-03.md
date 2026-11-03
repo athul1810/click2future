@@ -20,9 +20,9 @@ better match. No paper establishes which method wins on our exact protocol.
 | [PhysRepair, October 2026](https://arxiv.org/html/2610.23677v1) | Generate-diagnose-repair method and explicit local simulator step. | Reinforces evidence-driven diagnosis. Its agent/perception/regeneration stack adds complexity; our exact synthetic labels make direct mechanics checks more appropriate than a VLM verdict. |
 
 These are mechanism and feasibility comparisons, not reproduced external model
-rankings. The running D020 experiment remains a candidate; its altered training
-margins do not have a literature-backed optimality guarantee. Its validation
-rest failure is fixed, but penetration and generalization must still be measured.
+rankings. D020's altered training margins do not have a literature-backed
+optimality guarantee. Its exact-rest response worked, but penetration remained
+in validation and on fresh scenes. It is not promoted as a successful repair.
 
 ## Physics that can actually be checked
 

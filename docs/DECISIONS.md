@@ -295,7 +295,9 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   software test or lower training loss cannot promote a physical model.
 - Full checkpoints, detached Slurm submission receipts and resumable checked
   transfers protect the run against intermittent VPN access.
-- See [the investigation](PHYSICAL_QUALITY_REPAIR.md). Training outcome is pending.
+- See [the investigation](PHYSICAL_QUALITY_REPAIR.md). The candidate increased
+  penetrating clips from 1 to 7 out of 96. Both arms drifted in 2 of 16 rest
+  samples. Reject it as a physical-quality repair.
 
 ## D020: Rest-anchored physical-response repair
 
@@ -307,7 +309,8 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
 - This is a combined candidate, not a single-component causal comparison.
   Keep the scorer, sample seeds, quality gates and historical results unchanged.
 - Record two backbone evaluations per direct video. Validate every action and
-  contact metric; fresh-scene generalization remains unverified.
+  contact metric. Final validation has exact rest but 4 of 96 penetrating clips;
+  fresh D021 has 23 of 240. Reject it as a complete physical-quality repair.
 
 ## New decision template
 
@@ -339,3 +342,14 @@ Owner / reviewers:
 - Bind the original corpus and reject shared initial images/visible seeds. Keep
   every condition, missing track, contact error and failure. No tuning, filtering
   or checkpoint selection on this fresh corpus. Historical gates remain intact.
+- D021 tracked all 240 clips from each generator. The physics baseline had zero
+  penetrating clips; D020 had 23. Both had zero rest/passive drift. Both failed
+  the original strict single-reference trajectory gate. First-reference RGB
+  contact F1 favored the neural model, 0.319 versus 0.253.
+- A separately labelled, post-result matched-world analysis kept every saved
+  output unchanged. Relative displacement ADE favored physics, 0.00348 versus
+  0.00711 world units. Post-pulse momentum error on the same 200 wall-free clips
+  was 1.58e-8 versus 0.00818. This is supplementary, not a new primary result.
+  The rendered-reference RGB contact control scored only 0.529 F1, so contact
+  scoring needs further validation before a timing-success claim. No gate was
+  relaxed and no learned-model success is claimed.

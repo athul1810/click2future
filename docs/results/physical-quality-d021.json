@@ -1,0 +1,223 @@
+{
+  "study_id": "D021",
+  "source_revision_frozen_before_generation": "cb3aa2e3721d6c7c93cedec5707b1e6d8d488d67",
+  "freeze": {
+    "study_id": "D021",
+    "source_revision": "cb3aa2e3721d6c7c93cedec5707b1e6d8d488d67",
+    "checkpoint_sha256": "60e01fd60e6934e644653662d701a8aa8419d57d3d4d58a65d8b6ca87a3a45e4",
+    "generator_seed": 910000,
+    "group_counts": {
+      "train": 1,
+      "validation": 1,
+      "id_test": 10,
+      "shape_ood": 1,
+      "texture_ood": 1,
+      "force_ood": 1,
+      "physics_test": 1
+    },
+    "scored_splits": [
+      "id_test"
+    ],
+    "sampling_seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "training_corpus_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388"
+  },
+  "plan_sha256": "839c76e12a9d1ab884f2dadeec94e078bf73e119e96cd089fe5254277bb2436f",
+  "primary_screen_source_sha256": "58f4c09317428b04e84d0be3ee4dec1edfd4b0f5741c8d4e59d2f59dc9d49622",
+  "physics_source_sha256": {
+    "models/physics_baseline.py": "1687ac5d26d8f04119355c3c330cfe7b583fe4571d2f1846930c2ef4311c5a11",
+    "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+    "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+    "evaluation/rigid_geometry.py": "69756ff26bc375920017e178d1c99a0ebbc7222ccdfc4bffd124328bfcfeca00"
+  },
+  "scope": "Ten fresh ID scene groups, 60 conditions, seeds 0-3, no tuning or missing clips excluded.",
+  "primary": {
+    "physics_assisted": {
+      "source": "explicit physics from inferred silhouettes and sampled prior",
+      "quality": {
+        "case_count": 60,
+        "expected_observations": 14880,
+        "tracked_observations": 14880,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 240,
+        "expected_selected_clips": 240,
+        "complete_all_object_clips": 240,
+        "expected_all_object_clips": 240,
+        "selected_ade_mean_cases_if_all_complete": 0.02757219274589053,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "penetrating_clips": 0,
+      "penetrating_frames": 0,
+      "max_depth_pixels": 0.0,
+      "zero_force": {
+        "total_samples": 40,
+        "complete_samples": 40,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "passive": {
+        "total_samples": 80,
+        "complete_samples": 80,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "rgb_contact_against_first_reference": {
+        "true_positive": 24,
+        "false_positive": 58,
+        "false_negative": 84,
+        "complete_pair_timelines": 240,
+        "expected_pair_timelines": 240,
+        "f1": 0.25263157894736843,
+        "scope": "approximate RGB estimator against one realized hidden world; not physical-validity proof"
+      }
+    },
+    "neural": {
+      "source": "trained neural poses; unchanged sampler",
+      "quality": {
+        "case_count": 60,
+        "expected_observations": 14880,
+        "tracked_observations": 14880,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 240,
+        "expected_selected_clips": 240,
+        "complete_all_object_clips": 240,
+        "expected_all_object_clips": 240,
+        "selected_ade_mean_cases_if_all_complete": 0.0285331534161676,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "penetrating_clips": 23,
+      "penetrating_frames": 256,
+      "max_depth_pixels": 2.1702673379631605,
+      "zero_force": {
+        "total_samples": 40,
+        "complete_samples": 40,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "passive": {
+        "total_samples": 80,
+        "complete_samples": 80,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "rgb_contact_against_first_reference": {
+        "true_positive": 33,
+        "false_positive": 66,
+        "false_negative": 75,
+        "complete_pair_timelines": 240,
+        "expected_pair_timelines": 240,
+        "f1": 0.3188405797101449,
+        "scope": "approximate RGB estimator against one realized hidden world; not physical-validity proof"
+      }
+    }
+  },
+  "supplementary": {
+    "scope": "post-D021 exploratory same-world reference analysis; saved predictions are unchanged",
+    "reference_world": "the exact sampled prior draw, with original geometry used only for evaluation",
+    "primary_scores_replaced": false,
+    "limitation": "This supplementary analysis was specified after the primary D021 results. It does not remove inferred-geometry error or calibrate a posterior. The RGB oracle control exposes contact-estimator error.",
+    "source_sha256": "dfbef59ac78c2f1fb04e67cc20f1c008a773be766576a38dd819944651b6489c",
+    "summary": {
+      "physics_assisted": {
+        "clips": 240,
+        "matched_world_displacement_ade": 0.0034815718517097563,
+        "contact_event_f1": 0.25555555555555554,
+        "contact_tp_fp_fn": [
+          23,
+          59,
+          75
+        ],
+        "wall_free_momentum_clips": 200,
+        "post_pulse_momentum_error": 1.5804407768375725e-08
+      },
+      "neural": {
+        "clips": 240,
+        "matched_world_displacement_ade": 0.0071136538278854765,
+        "contact_event_f1": 0.4467005076142132,
+        "contact_tp_fp_fn": [
+          44,
+          55,
+          54
+        ],
+        "wall_free_momentum_clips": 200,
+        "post_pulse_momentum_error": 0.008179008136051274
+      },
+      "rendered_oracle": {
+        "clips": 240,
+        "matched_world_displacement_ade": 0.0,
+        "contact_event_f1": 0.5288461538461539,
+        "contact_tp_fp_fn": [
+          55,
+          55,
+          43
+        ],
+        "wall_free_momentum_clips": 200,
+        "post_pulse_momentum_error": 1.8913018329471273e-07
+      }
+    }
+  },
+  "browser": {
+    "count": 9,
+    "checks": [
+      "two neural models and labelled physics baseline load",
+      "live solver generation is explicitly labelled",
+      "all four ordered futures are displayed",
+      "output mode identifies inference solver",
+      "zero force preserves all pixels across all four full clips",
+      "image-only generation uses inferred physics without invented ground truth",
+      "explicit comparison retains both learned models and solver outputs",
+      "mobile layout has no horizontal overflow",
+      "no JavaScript errors"
+    ],
+    "errors": [],
+    "scope": "functional browser verification, not physical-quality proof"
+  },
+  "decision": "Retain optional, explicitly labelled physics-assisted baseline. Reject D020 as a complete neural repair. Both original strict trajectory gates still fail; contact timing and uncertainty remain unresolved.",
+  "software_verification": {
+    "date": "2026-11-04",
+    "status": "passed",
+    "distinct_tests_passed": 723,
+    "subtests_passed": 4,
+    "initial_full_run": {
+      "passed": 721,
+      "sandbox_localhost_bind_denials": 2,
+      "other_failures": 0
+    },
+    "localhost_rerun_with_network_permission": {
+      "passed": 2,
+      "failed": 0
+    },
+    "lint": "passed",
+    "browser_checks_passed": 9,
+    "source_archive": {
+      "status": "passed",
+      "file_count": 360,
+      "bytes": 650220,
+      "archive_sha256": "a9c701781e6db9eb83f19efa881c828515d0f052e5d772189c35a06254704768",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ]
+    },
+    "extracted_source_smoke": {
+      "status": "passed",
+      "generated_rollouts": 2,
+      "replay": "passed",
+      "batch_shape": [
+        2,
+        4,
+        3,
+        64,
+        64
+      ]
+    }
+  }
+}

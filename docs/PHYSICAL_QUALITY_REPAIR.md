@@ -99,3 +99,55 @@ Keep all D019 results, including its failed format-8 audit attempt and the
 separately recorded evaluation-only recovery. Validation and software checks
 cannot establish fresh-scene generalization; any candidate claim requires a
 separately frozen, untouched holdout after checkpoint selection is complete.
+
+## Measured outcome
+
+D019 trained both final 8,000-update arms on TC2 job 50745. Evaluation stopped
+because the new checkpoint format was missing from the audit registry. Keep
+that failed attempt. Job 50747 recovered evaluation from the retained final
+checkpoints without retraining. The control had 1/96 penetrating validation
+clips; the expected-objective candidate had 7/96. Both had 2/16 drifting rest
+samples. Lower selected ADE did not make this a successful repair.
+
+D020 job 50749 completed 8,000 updates. Rest anchoring removed all 16 rest and
+32 passive drift failures, but 4/96 validation clips still penetrated. All three
+training runs passed exact CUDA continuation checks for model and EMA tensors.
+Total allocated time across the two training jobs and evaluation recovery was
+24 minutes 2 seconds. No training was run on this computer.
+
+The research-backed alternative and its limits are explained in
+[the method review](PHYSICS_METHOD_REVIEW_2026-11-03.md). Its implementation and
+D020 checkpoint were frozen before generating D021: ten fresh ID geometries,
+60 action conditions, four sampled worlds per condition. No other new split
+was scored. Every clip and failure was retained.
+
+| Fresh D021 result | Physics-assisted | D020 neural |
+|---|---:|---:|
+| Complete RGB tracks | 240/240 | 240/240 |
+| Penetrating clips, original >1px threshold | 0/240 | 23/240 |
+| Drifting rest clips | 0/40 | 0/40 |
+| Drifting passive clips | 0/80 | 0/80 |
+| Selected ADE against first realized world | 0.02757 | 0.02853 |
+| Original strict trajectory gate | Fail | Fail |
+| RGB contact F1 against first realized world | 0.253 | 0.319 |
+
+This supports physical constraint reliability in the measured ID domain. It
+does not establish exact contact timing, calibrated uncertainty, OOD reliability
+or a successful neural dynamics repair. Hidden physical properties are not
+identified from a resting image. The physics baseline remains an explicit
+optional demo method; existing learned methods and historical scores stay intact.
+
+An exploratory analysis specified after those results reran only evaluation
+references with each saved prediction's sampled hidden world. Predictions and
+primary scores were unchanged. Same-world relative displacement ADE was 0.00348
+for physics and 0.00711 for neural. On 200 shared wall-free clips, post-pulse
+momentum error was 1.58e-8 and 0.00818 respectively. RGB contact F1 still favored
+neural, 0.447 versus 0.256. Even the rendered-reference control scored only
+0.529, exposing contact-estimator error. Do not reinterpret this as a timing
+pass or replace the primary evaluation with this post-result analysis.
+
+Reproduce the supplementary analysis with `PYTHONPATH=src python
+scripts/analyse_matched_world.py --screen LOCAL_D021_SCREEN --output
+FRESH_ANALYSIS.json`. The frozen plan and every input hash are verified before
+scoring. Working analysis scripts and research links are excluded from the
+submission ZIP. See the compact [result record](results/physical-quality-d021.json).
