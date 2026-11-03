@@ -219,6 +219,11 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   pose-space generator, not for E2/E3 pixel diffusion.
 - Proposed by Athul on 2 November, after a review that found the central comparison
   unresolved. Run with `submission/routing_comparison.sbatch`.
+- Results (job 50264, `docs/results/routing-validation.json`): all six runs completed
+  16,000 updates. On validation both arms select the right object in every pair with
+  no drift. Penetrating clips (over 1 px): spatial 14/11/11, numeric 17/16/14 for
+  seeds 19/20/21, so numeric is worse in all three seeds. Complete clips are mixed
+  (spatial 94/96/96, numeric 96/92/95).
 
 ## D017: Held-out replication on a separate, larger corpus: 2 November 2026
 
@@ -242,6 +247,36 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   sampler may open test splits only on such a corpus. Earlier plans replay at
   their own source revisions, as already documented for D014/D015.
 - Proposed by Athul on 2 November. Run with `cluster/replication_evaluation.sbatch`.
+- Results (2-3 November; scores in `docs/results/replication-d017.json`, from
+  `scripts/analyse_replication.py`). The run took three jobs: 50265 (E0, E2/E3 40k),
+  50321 (E2/E3 5k and E10 on the first three splits; a disk quota error stopped it
+  in force_ood) and 50527 (the same for force_ood and physics_test, with output kept
+  on the node and compressed afterwards). Main plan hashes match across jobs. The
+  selection plan hashes differ only because each embeds its output path.
+  - Pixel models: E2 and E3 at 5k lose almost every object track (missing rate 0.998
+    to 1.0 on every split). At 40k E2 selects the right object in 0 to 8% of pairs
+    and E3 in 0 to 50%; E0 selects 0%. This repeats the D014/D015 finding on 50 new
+    scene groups.
+  - E10 (pose model, 3 seeds per arm): both arms select the right object in 86 to
+    100% of pairs on every split with no drift. Missing-track rates are at most 0.002
+    on id_test, texture_ood and physics_test, 0.017-0.020 on shape_ood and 0.04-0.25
+    on force_ood.
+  - Spatial versus numeric: spatial has the lower selected-object ADE in all three
+    seeds on id_test, shape_ood, texture_ood and physics_test (for example id_test
+    0.026-0.027 versus 0.028-0.030), so numeric routing is not better there. ADE
+    needs every track complete, so it rests on 10 of 10 scene groups in id_test,
+    texture_ood and physics_test and 9 of 10 in shape_ood. In force_ood only 0-5 of
+    10 groups are scored (numeric 3/1/3, spatial 1/5/0 for seeds 19/20/21), so its
+    ADE is not compared. The track-loss rate covers all groups: numeric 0.04-0.13,
+    spatial 0.12-0.25, which favors numeric there.
+    Selection is not consistent: shape_ood has spatial 0.94/0.86/0.86 and numeric
+    0.86/0.92/0.86. Validation (D016) already showed more penetration for numeric.
+  - All six E10 runs train from fresh initial weights (no E7 teacher), one per seed;
+    the two arms of a seed share weights and batches. The seeds are independent
+    initializations, not refinements of one model.
+  - Scope: one corpus, 10 scene groups per split, 3 seeds. The pixel and pose models
+    differ in more than routing, so E10 does not answer the E2-versus-E3 question
+    for pixel diffusion.
 
 ## New decision template
 
