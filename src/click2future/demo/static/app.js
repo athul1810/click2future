@@ -177,7 +177,8 @@ async function showResult(result, current) {
   setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   $("reference-details").hidden = !result.reference;
   const cached = result.models.filter(model => model.source === "cached replay").length;
-  $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : "live model output";
+  const assisted = result.models.some(model => model.details.kind === "physics_assisted_baseline");
+  $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : assisted ? "live generation · includes physics solver" : "live model output";
   $("details").textContent = JSON.stringify({scene: result.scene, split: result.split, input_source: result.input_source,
     selected_object: result.object, force: result.force, seeds: result.seeds,
     models: result.models.map(model => ({name: model.name, source: model.source, ...model.details,

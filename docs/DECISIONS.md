@@ -320,3 +320,22 @@ Tradeoffs:
 Effect on interfaces, experiments, and deadline:
 Owner / reviewers:
 ```
+
+## D021: Research-backed observable-physics baseline and fresh ID comparison
+
+- Review primary methods, released code and compute before further model changes;
+  see PHYSICS_METHOD_REVIEW_2026-11-03.md. No general video leaderboard proves a
+  winner on our two-object task.
+- Adapt the explicit physical-state/observed-sprite mechanism supported by PhysGen
+  and recent IMPACT, with sampled hidden properties. Label it physics-assisted,
+  not a neural model, full paper reproduction or exact simulator reference.
+- Analytical checks cover rest, force impulse, mass scaling, contact momentum,
+  dissipative energy and integration convergence. Original validation retains
+  the existing RGB tracker and one-pixel geometry threshold.
+- Before new data generation, freeze the physics implementation and D020 final
+  8,000-update checkpoint. Generate seed 910000 with ten ID-test scene groups and
+  one group in each other required split. Score ID only, all 60 conditions and
+  four seeds 0-3 for each generator. Required remaining splits stay unscored.
+- Bind the original corpus and reject shared initial images/visible seeds. Keep
+  every condition, missing track, contact error and failure. No tuning, filtering
+  or checkpoint selection on this fresh corpus. Historical gates remain intact.

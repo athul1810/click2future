@@ -705,3 +705,12 @@ resumes interrupted arms from the same inputs, reuses hash-checked completed
 arms and keeps each evaluation attempt separate. Retain failed logs. Transfer
 with `rsync --partial --checksum`, then verify the recorded SHA-256 values.
 Never turn an interrupted test or incomplete run into a passing result.
+
+## Physics-assisted baseline
+
+Use `python -m click2future.demo.server --dataset <local-generated-data>
+--physics-baseline` on one line to inspect the explicit solver baseline.
+Geometry comes from observed masks and hidden properties are sampled from the
+declared prior. This is not a learned neural model or simulator ground truth.
+It requires no trained checkpoint. The existing neural checkpoints remain
+separate comparison methods; inferred subpixel geometry remains approximate.

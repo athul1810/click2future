@@ -310,7 +310,8 @@ class DemoService:
                 }
                 key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
                 archive, meta = self.cache / (key + ".npz"), self.cache / (key + ".json")
-                started, source = time.perf_counter(), "live model"
+                started = time.perf_counter()
+                source = model.metadata.get("generation_source", "live model")
                 with self.lock:
                     job["progress"] = f"generating with {name}"
                 if archive.exists() and meta.exists():
