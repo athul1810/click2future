@@ -27,12 +27,33 @@ from click2future.evaluation.suite import _digest, _write, prepare_plan, read_pl
 from click2future.evaluation.targets import prepare_target_plan
 from click2future.evaluation.trajectory_pilot import extended_audit, sample_plan
 from click2future.evaluation.world_interventions import audit as world_audit
+from click2future.submission import verify_extracted_tree
 from click2future.training.sample_trajectory import load_trajectory
 from click2future.training.train_cvae import sha256
 from click2future.training.train_prior import prior_sources
 
 PROJECT = Path(__file__).resolve().parents[1]
 NAMES = {f"{arm}-seed{seed}" for seed in (19, 20, 21) for arm in ("direct", "diffusion")}
+
+
+def source_identity(project):
+    """Use the checkout itself, never a parent repository containing an extraction."""
+    project = Path(project).resolve()
+    if (project / ".git").exists():
+        revision = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=project, text=True
+        ).strip()
+        if subprocess.check_output(
+            ["git", "status", "--porcelain"], cwd=project, text=True
+        ).strip():
+            raise ValueError("Commit the source before freezing or opening D018")
+        return {"kind": "git", "revision": revision}
+    receipt = verify_extracted_tree(project)
+    return {
+        "kind": "source_archive",
+        "revision": "archive-manifest-sha256:" + receipt["manifest_sha256"],
+        **receipt,
+    }
 
 
 def freeze_runs(path):
@@ -113,9 +134,8 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Retain attempts and use a fresh output directory")
-    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=PROJECT, text=True).strip()
-    if subprocess.check_output(["git", "status", "--porcelain"], cwd=PROJECT, text=True).strip():
-        raise ValueError("Commit the source before freezing or opening D018")
+    identity = source_identity(PROJECT)
+    revision = identity["revision"]
     os.environ["C2F_SOURCE_REVISION"] = revision
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     torch.set_num_threads(4)
@@ -131,6 +151,7 @@ def main():
         "decision": STUDY,
         "status": "preparing",
         "source_revision": revision,
+        "source_identity": identity,
         "device": args.device,
         "gpu": torch.cuda.get_device_name() if args.device == "cuda" else None,
         "torch": str(torch.__version__),
@@ -250,10 +271,7 @@ def main():
             save()
         if sha256(args.runs) != record["runs_spec_sha256"]:
             raise ValueError("Frozen run registry changed")
-        if (
-            subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=PROJECT, text=True).strip()
-            != revision
-        ):
+        if source_identity(PROJECT) != identity:
             raise ValueError("Evaluation source revision changed")
         record["status"] = "completed"
         save()

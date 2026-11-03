@@ -1,6 +1,7 @@
 """Submission restrictions must hold even when a working tree contains artifacts."""
 
 import json
+import runpy
 import shutil
 import subprocess
 import sys
@@ -9,7 +10,7 @@ from zipfile import ZipFile
 
 import pytest
 
-from click2future.submission import build_archive, inspect_archive
+from click2future.submission import build_archive, inspect_archive, verify_extracted_tree
 
 
 @pytest.fixture
@@ -26,6 +27,38 @@ def source_copy(tmp_path):
     if (root / "uv.lock").is_file():
         shutil.copyfile(root / "uv.lock", target / "uv.lock")
     return target
+
+
+@pytest.mark.parametrize("change", [None, "modified", "missing", "unlisted"])
+def test_extracted_inventory_binds_d018_without_git(source_copy, tmp_path, monkeypatch, change):
+    archive = tmp_path / "group_07_code.zip"
+    build_archive(source_copy, archive)
+    extracted = tmp_path / "unpacked"
+    with ZipFile(archive) as bundle:
+        bundle.extractall(extracted)
+    identity = runpy.run_path(str(source_copy / "submission/prior_holdout.py"))["source_identity"]
+
+    def no_git(*args, **kwargs):
+        raise AssertionError("An extraction must not inherit a parent repository's identity")
+
+    monkeypatch.setattr(subprocess, "check_output", no_git)
+    if change == "modified":
+        with (extracted / "src/click2future/cli.py").open("a") as stream:
+            stream.write("\n# changed after export\n")
+    elif change == "missing":
+        (extracted / "submission/smoke.py").unlink()
+    elif change == "unlisted":
+        (extracted / "src/click2future/extra.py").write_text("# unlisted source\n")
+    if change is not None:
+        with pytest.raises(ValueError):
+            identity(extracted)
+    else:
+        receipt = verify_extracted_tree(extracted)
+        assert (
+            identity(extracted)["revision"]
+            == "archive-manifest-sha256:" + receipt["manifest_sha256"]
+        )
+        assert identity(extracted)["kind"] == "source_archive"
 
 
 def test_deterministic_source_archive_extracts_and_replays_without_working_data(

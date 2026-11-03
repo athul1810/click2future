@@ -660,3 +660,16 @@ training source and teacher identity. Provide `C2F_PROJECT`, `C2F_PYTHON`,
 completed direct screen summary) and a new `C2F_REPEAT_RESULTS`. Final update
 8,000 is fixed. These are refinement repeats conditional on one E7 teacher,
 not independent end-to-end training. Keep every state, summary and failed run.
+
+The D018 inference driver is `submission/prior_holdout.py`. It requires all six
+registered final-update checkpoint paths in `--runs`, the original corpus in
+`--training-data`, and fresh `--dataset`/`--output` locations. Keep every attempt.
+It scores only its registered ten-group ID corpus; it never opens D017.
+
+From a Git checkout, commit the source before the run. From the source-only ZIP,
+keep `MANIFEST.json` and all inventoried files unchanged. Run
+`python -m click2future.submission verify-tree --root .` to verify the extraction.
+The driver records the archive-manifest digest instead of inventing a Git commit,
+and rechecks that identity at completion. Dependencies and generated outputs are
+outside this source identity. Use the fixed training recipes to reproduce the
+six checkpoints; the code ZIP contains no supplied weights or datasets.
