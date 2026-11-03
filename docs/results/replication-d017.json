@@ -6,7 +6,7 @@
     "job2": "50321: E2/E3 5k and six E10 runs for id_test, shape_ood and texture_ood; stopped by a disk quota error in force_ood, its replication.json is truncated",
     "job2b": "50527: the same for force_ood and physics_test, node-local output"
   },
-  "note": "job2 main plan hashes equal job1's. The selection plan hashes differ between jobs only because each embeds its own output path; the cases are identical. A null ADE or FDE means some clip had a missing track for that scene group.",
+  "note": "Main plan hashes agree across overlapping jobs. Selection plans embed different output paths; the author reports identical cases. ADE/FDE average complete trajectories within each case, so a defined score does not mean every clip is tracked. Group aggregates require defined case/run values and retain the scored/expected group counts. This export has observation loss and selection-pair counts, but primary complete-trajectory counts still need the underlying summaries; do not infer them from group counts.",
   "splits": {
     "id_test": {
       "primary": {

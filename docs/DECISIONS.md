@@ -264,11 +264,14 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   - Spatial versus numeric: spatial has the lower selected-object ADE in all three
     seeds on id_test, shape_ood, texture_ood and physics_test (for example id_test
     0.026-0.027 versus 0.028-0.030), so numeric routing is not better there. ADE
-    needs every track complete, so it rests on 10 of 10 scene groups in id_test,
+    averages complete trajectories within each case, so a defined value does not
+    establish complete tracking of every clip. It rests on 10 of 10 scene groups in id_test,
     texture_ood and physics_test and 9 of 10 in shape_ood. In force_ood only 0-5 of
     10 groups are scored (numeric 3/1/3, spatial 1/5/0 for seeds 19/20/21), so its
     ADE is not compared. The track-loss rate covers all groups: numeric 0.04-0.13,
-    spatial 0.12-0.25, which favors numeric there.
+    spatial 0.12-0.25. Numeric loses fewer observations in seeds 19/21; seed 20
+    reverses that order (numeric 0.1268, spatial 0.1219). These are descriptive
+    per-seed rates, not a consistent advantage across every seed.
     Selection is not consistent: shape_ood has spatial 0.94/0.86/0.86 and numeric
     0.86/0.92/0.86. Validation (D016) already showed more penetration for numeric.
   - All six E10 runs train from fresh initial weights (no E7 teacher), one per seed;

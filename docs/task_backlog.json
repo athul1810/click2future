@@ -432,7 +432,7 @@
     ],
     "outcome": "Make the model and simulator comparison understandable and repeatable.",
     "acceptance": [
-      "Support declared development/validation presets with frame-0 selected-object masks; image upload is deferred.",
+      "Support declared development/validation presets and native 64px two-object synthetic PNG input with pixel-derived masks.",
       "Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.",
       "Keep the labelled simulator reference and hidden physics outside neural inference.",
       "Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.",
@@ -441,7 +441,7 @@
     "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/17",
-    "progress": "The local app supports verified pilot bundles and generated-pixel trajectory overlays, with missing observations retained. All six handoff checkpoints load; a two-model browser rehearsal passes 25 checks. Five fresh warm requests give a 4.69s median and 4.74s empirical p95 on the RTX 3060 laptop, including tracking/reference/display. Small-n latency and interface checks do not establish held-out quality. Stronger checkpoints and final offline presentation acceptance remain open. Candidate tracker v2 awaits independent calibration review. the new e5 adapter shares the offline sampler and retains source, force-bound and private-seed checks. e5/e3 passes 25 browser checks; five fresh warm requests have 5.31s median and 5.36s empirical p95 on the laptop. final motion quality and presentation acceptance remain open. see docs/TRAJECTORY_PILOT.md.",
+    "progress": "Native synthetic PNG upload derives masks from the supplied pixels, preserves exact frame zero and generates four ordered seeded futures without simulator metadata. The integrated real-checkpoint browser run passes 46 checks, including both object selections, paired actions and upload rejection. The source suite passes 700 tests and four subtests. Physical-quality gates and the offline presentation rehearsal remain open. See docs/results/demo-image-input.json.",
     "completed_acceptance": [
       0,
       1,
@@ -473,7 +473,7 @@
       1,
       2
     ],
-    "progress": "The twelve-page working draft adds E5 methods, contact/uncertainty tables, full-horizon zero-force failure and a fixed four-seed contact figure to the earlier four-method comparison, LPIPS intervals, E4 heads, sampler study and CVAE follow-ups. Every page is rendered and checked, with no external URLs or hyperlink annotations. Member-reviewed contribution descriptions and final export remain open. Source: report/main.tex; report/evidence.json. This is not the final submission PDF.",
+    "progress": "The 30-page review report retains the frozen D014/D015 results, adds the separate E10/D017 routing study with conditional-score caveats, and includes E9/E11 and D018. The one-page contribution draft has Ananya reviewed; Sanjay, Shrijeet and Athul remain pending. The editable deck has 16 slides. Final member approval and submission export remain open.",
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {
@@ -532,6 +532,7 @@
     ],
     "owner": null,
     "status": "In progress",
-    "issue_url": "https://github.com/athul1810/click2future/issues/20"
+    "issue_url": "https://github.com/athul1810/click2future/issues/20",
+    "progress": "Review PDFs, a 16-slide editable presentation, source-only archive and recorded fallback are prepared. Synthetic PNG input passes 46 real-checkpoint browser checks. The user reports no submission-page changes; the exact cutoff is not independently verified. Member contribution confirmations, presentation rehearsal and coordinated upload remain open. D017 primary complete-sample counts and independent raw-video replay remain open; D018 improves penetration in all three seeds but no model passes the overall gate."
   }
 ]

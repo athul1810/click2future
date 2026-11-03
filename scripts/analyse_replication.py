@@ -73,6 +73,7 @@ def collect(root, label, split):
                     row["pair_counts"] = method["counts"]
                 else:
                     row["checkpoint_sha256"] = checkpoints
+                    row["sample_counts"] = method["counts"]
                 out.setdefault(kind, {})[key] = row
     return out
 
@@ -90,7 +91,9 @@ def main(argv):
         },
         "note": "job2 main plan hashes equal job1's. The selection plan hashes differ between "
         "jobs only because each embeds its own output path; the cases are identical. "
-        "A null ADE or FDE means some clip had a missing track for that scene group.",
+        "ADE/FDE average complete trajectories within each case. A defined estimate "
+        "does not imply all clips are complete. Scene-group aggregation requires a "
+        "defined case/run value; report both sample counts and scored scene groups.",
         "splits": {},
     }
     for split in SPLITS:

@@ -74,10 +74,16 @@ are review artifacts, separate from the three required upload files.
 
 ## fresh ID replication, 3 november
 
-The current review export is 29 pages. D018 retains all six frozen models,
+The current review export is 30 pages. D018 retains all six frozen models,
 ten new ID scene groups and every failed gate. The contact improvement repeats
 across three refinement seeds conditional on one teacher; it is not an overall
 quality or external SOTA win. See `docs/results/prior-replication.json` and
 `docs/PRIOR_REPLICATION.md`. The figure shows the first sorted condition with
 every sample/reference row, and the contribution draft includes the latest work
 while keeping three member confirmations pending.
+
+Section 3.18 records the separate E10/D017 routing study. Its ADE values are
+conditional on surviving complete trajectories; represented scene groups are
+not complete-clip counts. The primary sample-count export and independent raw
+video replay remain pending. Native synthetic PNG input is now included in the
+demo, with masks derived from pixels and no invented reference for uploads.
