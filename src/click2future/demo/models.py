@@ -61,7 +61,7 @@ class CheckpointModel:
                     else "conditional diffusion control for the prior-only comparison, EMA"
                 )
                 if state["trajectory_format_version"] == 8:
-                    detail += "; D019 training-loss candidate; not quality-promoted"
+                    detail += "; training-loss/response candidate; not quality-promoted"
             elif state["trajectory_format_version"] == 5:
                 detail += "; experimental observed-surface refinement"
         elif state.get("checkpoint_version") == 1:
@@ -155,7 +155,8 @@ class CheckpointModel:
                 sampler="direct world-conditioned decode"
                 if getattr(self.model, "world_prior_only", False)
                 else "EDM rho-7 Heun, no churn, float32 integration",
-                network_evaluations_per_sample=2 * self.sampling_steps - 1,
+                network_evaluations_per_sample=getattr(self.model, "backbone_evaluations", 1)
+                * (2 * self.sampling_steps - 1),
                 supervision="future positions and checked angular replay; training only",
             )
             if state["trajectory_format_version"] == 2:
@@ -192,9 +193,10 @@ class CheckpointModel:
                     if state["trajectory_format_version"] == 8:
                         self.metadata.update(
                             training_variant="expected_direct_objective",
-                            study_id="D019",
+                            study_id="D020" if state["config"].get("rest_anchored") else "D019",
                             objective_contract=state["objective_contract"],
                             expected_objective=state["config"]["expected_objective"],
+                            rest_anchored=bool(state["config"].get("rest_anchored")),
                         )
                 elif state["trajectory_format_version"] == 4:
                     self.metadata.update(

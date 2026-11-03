@@ -22,6 +22,7 @@ export CUBLAS_WORKSPACE_CONFIG=:4096:8
 args=()
 [[ ! -f "$C2F_EXPECTED_RESULTS/comparison.json" ]] || args+=(--resume)
 [[ -z "${C2F_TRAINED_RUN:-}" ]] || args+=(--trained-run "$C2F_TRAINED_RUN")
+[[ "${C2F_REST_ANCHORED:-0}" != 1 ]] || args+=(--rest-anchored)
 exec "$C2F_PYTHON" submission/expected_prior_comparison.py --cache "$C2F_CACHE" \
   --dataset "$C2F_DATA_DIR" --warm-start "$C2F_WARM_START" \
   --output "$C2F_EXPECTED_RESULTS" "${args[@]}"

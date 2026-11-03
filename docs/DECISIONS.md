@@ -297,6 +297,18 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   transfers protect the run against intermittent VPN access.
 - See [the investigation](PHYSICAL_QUALITY_REPAIR.md). Training outcome is pending.
 
+## D020: Rest-anchored physical-response repair
+
+- D019 still has two drifting zero-force validation samples out of sixteen.
+- Train and sample a shared neural force response minus its zero-force response.
+  This guarantees rest without a simulator or a test-only output override.
+- One seed, the same E7 teacher/cache and 8,000 final updates; expected loss,
+  half-pixel training margins and fourfold penetration/canvas loss weights.
+- This is a combined candidate, not a single-component causal comparison.
+  Keep the scorer, sample seeds, quality gates and historical results unchanged.
+- Record two backbone evaluations per direct video. Validate every action and
+  contact metric; fresh-scene generalization remains unverified.
+
 ## New decision template
 
 ```text

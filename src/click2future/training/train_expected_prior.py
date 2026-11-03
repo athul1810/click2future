@@ -1,6 +1,7 @@
 """D019: paired direct refinements with original or expected loss, on TC2."""
 
 import argparse
+import copy
 import json
 import math
 import os
@@ -13,6 +14,7 @@ import torch
 
 from click2future.models.object_motion import MOTION_CONTRACT
 from click2future.models.prior_motion import PRIOR_CONTRACT, PriorTrajectoryModel
+from click2future.models.rest_anchored_prior import REST_ANCHOR_CONTRACT, RestAnchoredPriorModel
 from click2future.models.world_motion import WORLD_CONTRACT, BoundWorld
 
 from .direct_objective import DIRECT_OBJECTIVE, expected_coefficients, expected_direct_objective
@@ -24,6 +26,7 @@ from .world_data import load_cache
 @dataclass(frozen=True)
 class ExpectedPriorConfig(PriorConfig):
     expected_objective: bool = True
+    rest_anchored: bool = False
 
     def validate(self):
         super().validate()
@@ -31,11 +34,16 @@ class ExpectedPriorConfig(PriorConfig):
             raise ValueError("The expected-loss comparison requires two direct-decoder arms")
         if self.risk_penetration_weight != 0:
             raise ValueError("Nonlinear tail risk is not part of the expected-loss comparison")
+        if not isinstance(self.rest_anchored, bool):
+            raise ValueError("rest_anchored must be boolean")
 
 
 def sources():
     return {
         **prior_sources(),
+        "models/rest_anchored_prior.py": sha256(
+            Path(__file__).parents[1] / "models/rest_anchored_prior.py"
+        ),
         **{
             "training/" + name: sha256(Path(__file__).with_name(name))
             for name in ("direct_objective.py", "train_expected_prior.py")
@@ -44,6 +52,18 @@ def sources():
 
 
 class ExpectedPriorTrainer(PriorTrainer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.config.rest_anchored:
+            with torch.random.fork_rng(devices=[]):
+                anchored = RestAnchoredPriorModel(**prior_config(self.config)).to(self.device)
+            anchored.load_state_dict(self.model.state_dict(), strict=True)
+            self.model = anchored
+            self.ema = copy.deepcopy(anchored).eval().requires_grad_(False)
+            self.optimizer = torch.optim.AdamW(
+                self.model.parameters(), lr=self.config.learning_rate, weight_decay=0.01
+            )
+
     def train_step(self):
         if not self.config.expected_objective:
             return super().train_step()
@@ -96,6 +116,7 @@ class ExpectedPriorTrainer(PriorTrainer):
             "prior_contract": PRIOR_CONTRACT,
             "objective_contract": DIRECT_OBJECTIVE,
             "expected_coefficients": expected_coefficients(self.config),
+            "rest_anchor_contract": REST_ANCHOR_CONTRACT if self.config.rest_anchored else None,
             "config": asdict(self.config),
             "model_config": prior_config(self.config),
             "step": self.step,
@@ -117,6 +138,10 @@ class ExpectedPriorTrainer(PriorTrainer):
             or state["training_variant"] != "expected_direct_objective"
             or state["objective_contract"] != DIRECT_OBJECTIVE
             or state["expected_coefficients"] != expected_coefficients(self.config)
+            or (
+                self.config.rest_anchored
+                and state.get("rest_anchor_contract") != REST_ANCHOR_CONTRACT
+            )
             or state["motion_contract"] != MOTION_CONTRACT
             or state["world_contract"] != WORLD_CONTRACT
             or state["prior_contract"] != PRIOR_CONTRACT
@@ -146,6 +171,7 @@ def load_expected_prior(checkpoint, device="cpu"):
         or state["training_variant"] != "expected_direct_objective"
         or state["objective_contract"] != DIRECT_OBJECTIVE
         or state["expected_coefficients"] != expected_coefficients(config)
+        or (config.rest_anchored and state.get("rest_anchor_contract") != REST_ANCHOR_CONTRACT)
         or state["motion_contract"] != MOTION_CONTRACT
         or state["world_contract"] != WORLD_CONTRACT
         or state["prior_contract"] != PRIOR_CONTRACT
@@ -159,8 +185,15 @@ def load_expected_prior(checkpoint, device="cpu"):
     for name in ("models/object_motion.py", "models/world_motion.py", "models/prior_motion.py"):
         if state["provenance"]["source_sha256"].get(name) != current[name]:
             raise ValueError("Expected-objective model source differs: " + name)
+    if (
+        config.rest_anchored
+        and state["provenance"]["source_sha256"].get("models/rest_anchored_prior.py")
+        != current["models/rest_anchored_prior.py"]
+    ):
+        raise ValueError("Rest-anchored model source differs")
     with torch.random.fork_rng(devices=[]):
-        model = PriorTrajectoryModel(**state["model_config"])
+        factory = RestAnchoredPriorModel if config.rest_anchored else PriorTrajectoryModel
+        model = factory(**state["model_config"])
     model.load_state_dict(state["ema"], strict=True)
     model.to(device).eval()
     model.force_limit, model.sigma_min, model.sigma_max = (

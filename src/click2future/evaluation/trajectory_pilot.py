@@ -115,9 +115,10 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
             run["model_source_sha256"] = provenance["source_sha256"]
             if state["trajectory_format_version"] == 8:
                 run.update(
-                    study_id="D019",
+                    study_id="D020" if state["config"].get("rest_anchored") else "D019",
                     objective_contract=state["objective_contract"],
                     expected_objective=state["config"]["expected_objective"],
+                    rest_anchor_contract=state.get("rest_anchor_contract"),
                 )
         if method == "E9":
             run["surface_contract"] = state["surface_contract"]
@@ -135,7 +136,8 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
                 **predictions,
                 "device": device,
                 "sampling_steps": steps,
-                "network_evaluations_per_sample": 2 * steps - 1,
+                "network_evaluations_per_sample": getattr(model, "backbone_evaluations", 1)
+                * (2 * steps - 1),
                 "sampler": "direct world-conditioned decode"
                 if getattr(model, "world_prior_only", False)
                 else "EDM Heun rho=7, no churn, float32",

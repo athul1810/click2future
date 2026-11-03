@@ -78,3 +78,24 @@ The scheduled comparison uses one TC2 GPU, four CPUs, 24 GB system RAM and a
 one-hour allocation. Each training arm has a twenty-minute safety bound; a
 time-limited arm retains its checkpoint and requires explicit resume. Actual
 cost and outcome will be added after the job. No additional task deadline is set.
+
+## D020: rest-anchored response candidate
+
+The D019 expected-loss candidate still drifts in two of sixteen zero-force
+validation samples. D020 therefore represents motion as the shared neural
+backbone's force response minus its zero-force response. This architecture is
+used in both training and inference and gives exact zero action response for
+every sampled world. It needs two backbone evaluations per video, which the
+sampler and demo metadata record. It does not use a simulator or edit generated
+videos. Nonzero action gradients remain active.
+
+Train one seed-19 candidate for 8,000 updates from the same E7 teacher and cache.
+Use the expected objective, reduce training-only penetration/canvas margins
+from one to half a pixel and increase their weights from 256 to 1,024. This is
+a combined repair candidate, not an isolated attribution to one change. Scoring
+retains its original one-pixel margins, all samples and every action family.
+Run with `C2F_REST_ANCHORED=1` and the existing batch script in a fresh output.
+Keep all D019 results, including its failed format-8 audit attempt and the
+separately recorded evaluation-only recovery. Validation and software checks
+cannot establish fresh-scene generalization; any candidate claim requires a
+separately frozen, untouched holdout after checkpoint selection is complete.

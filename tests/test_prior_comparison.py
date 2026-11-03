@@ -35,7 +35,7 @@ def test_prior_recipes_cannot_silently_change_the_control(tmp_path, changed):
         assert set(namespace["matched_configs"](tmp_path)) == {"direct", "diffusion"}
 
 
-@pytest.mark.parametrize("expected", [None, False, True])
+@pytest.mark.parametrize("expected", [None, False, True, "anchored"])
 def test_prior_evaluation_replays_all_pixels_and_refuses_e7_alias(tmp_path, expected):
     dataset = tmp_path / "data"
     generate_dataset(
@@ -50,7 +50,10 @@ def test_prior_evaluation_replays_all_pixels_and_refuses_e7_alias(tmp_path, expe
     )
     plan_path = tmp_path / "plan.json"
     _write(plan_path, plan)
-    trainer, *_ = fixture() if expected is None else expected_fixture(expected)
+    if expected == "anchored":
+        trainer, *_ = expected_fixture(True, True)
+    else:
+        trainer, *_ = fixture() if expected is None else expected_fixture(expected)
     trainer.train_step()
     checkpoint = tmp_path / "fixture.pt"
     trainer.save(

@@ -56,6 +56,12 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
     sampling = json.loads(sampling_path.read_text())
     direct = run["method"] == "E11" and run.get("world_prior_only") is True
     expected_steps, expected_nfe = (1, 1) if direct else (16, 31)
+    if run.get("rest_anchor_contract"):
+        from click2future.models.rest_anchored_prior import REST_ANCHOR_CONTRACT
+
+        if run["rest_anchor_contract"] != REST_ANCHOR_CONTRACT or not direct:
+            raise ValueError("Unsupported rest-anchor sampler contract")
+        expected_nfe *= 2
     if (
         sampling["sampling_steps"] != expected_steps
         or sampling["network_evaluations_per_sample"] != expected_nfe
@@ -170,6 +176,8 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
         raise ValueError("D019 candidates cannot reopen historical held-out geometry audits")
     if run["method"] == "E11" and run.get("world_prior_only") != model.world_prior_only:
         raise ValueError("Checkpoint prior-only arm and saved sampler disagree")
+    if bool(run.get("rest_anchor_contract")) != bool(state["config"].get("rest_anchored")):
+        raise ValueError("Checkpoint and sampled rest-anchor architecture disagree")
     replay_steps = 1 if getattr(model, "world_prior_only", False) else 16
     corpus = plan.get("training_corpus", plan["input_sha256"])
     if (

@@ -39,12 +39,27 @@ def main(argv=None):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
+        "--rest-anchored", action="store_true", help="Run the single D020 repair candidate"
+    )
+    parser.add_argument(
         "--trained-run", type=Path, help="Evaluate retained final weights without training"
     )
     args = parser.parse_args(argv)
     require_tc2()
     project = Path(__file__).resolve().parents[1]
     configs = matched_configs(project)
+    if args.rest_anchored:
+        configs = {"rest-anchored": project / "configs/training/prior_rest_anchored.json"}
+        candidate = ExpectedPriorConfig(**json.loads(configs["rest-anchored"].read_text()))
+        candidate.validate()
+        if (
+            not candidate.rest_anchored
+            or not candidate.expected_objective
+            or candidate.steps != 8000
+        ):
+            raise ValueError(
+                "D020 requires its declared anchored, expected-loss final-update recipe"
+            )
     identity = {
         "source_revision": os.environ["C2F_SOURCE_REVISION"],
         "teacher_sha256": sha256(args.warm_start),
@@ -82,8 +97,10 @@ def main(argv=None):
         args.output.mkdir(parents=True)
         report = {
             **identity,
-            "study_id": "D019",
-            "scope": "paired seed-19 training-loss screen; original training/validation only",
+            "study_id": "D020" if args.rest_anchored else "D019",
+            "scope": "single rest-anchored repair candidate; validation only"
+            if args.rest_anchored
+            else "paired seed-19 training-loss screen; original training/validation only",
             "models": {},
             "attempts": [],
             "test_splits_evaluated": [],
@@ -177,10 +194,11 @@ def main(argv=None):
                 "checkpoint_sha256": sha256(folder / "final.pt"),
             }
             save()
-        a, b = (report["models"][name]["training"] for name in configs)
-        for key in ("provenance", "parameter_count", "trainable_parameter_count"):
-            if a[key] != b[key]:
-                raise ValueError("Unmatched paired refinement: " + key)
+        if not args.rest_anchored:
+            a, b = (report["models"][name]["training"] for name in configs)
+            for key in ("provenance", "parameter_count", "trainable_parameter_count"):
+                if a[key] != b[key]:
+                    raise ValueError("Unmatched paired refinement: " + key)
         # Every evaluation attempt uses a fresh directory. Completed earlier
         # reports stay available even if a later metric fails or a node stops.
         evaluation = args.output / f"evaluation-{len(report['attempts']):03d}"

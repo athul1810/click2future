@@ -18,7 +18,7 @@ from click2future.training.train_expected_prior import (
 )
 
 
-def fixture(expected=True):
+def fixture(expected=True, anchored=False):
     data, geometry, obs = fixture_data()
     worlds = {split: sample_world(1).numpy().repeat(6, axis=0) for split in data}
     config = ExpectedPriorConfig(
@@ -27,6 +27,7 @@ def fixture(expected=True):
         layers=1,
         batch_size=3,
         expected_objective=expected,
+        rest_anchored=anchored,
         physics_sigma_max=1.0,
     )
     return ExpectedPriorTrainer(data, geometry, worlds, config), obs
@@ -90,14 +91,16 @@ def test_expected_loss_matches_weighted_deterministic_terms_and_has_real_gradien
     assert all(p.grad is None or torch.isfinite(p.grad).all() for p in trainer.model.parameters())
 
 
-@pytest.mark.parametrize("expected", [True, False])
-def test_exact_restart_and_public_sampler_preserve_new_objective_identity(tmp_path, expected):
-    trainer, obs = fixture(expected)
+@pytest.mark.parametrize("expected,anchored", [(True, False), (False, False), (True, True)])
+def test_exact_restart_and_public_sampler_preserve_new_objective_identity(
+    tmp_path, expected, anchored
+):
+    trainer, obs = fixture(expected, anchored)
     trainer.train_step()
     checkpoint = tmp_path / "checkpoint.pt"
     provenance = {"source_sha256": sources()}
     trainer.save(checkpoint, provenance)
-    restored, _ = fixture(expected)
+    restored, _ = fixture(expected, anchored)
     restored.resume(checkpoint, provenance)
     assert trainer.train_step() == restored.train_step()
     for kind in ("model", "ema"):
@@ -116,7 +119,8 @@ def test_exact_restart_and_public_sampler_preserve_new_objective_identity(tmp_pa
     assert torch.equal(rng, torch.get_rng_state())
     adapter = CheckpointModel("candidate", checkpoint, trajectory_steps=1)
     assert adapter.metadata["expected_objective"] is expected
-    assert adapter.metadata["study_id"] == "D019"
+    assert adapter.metadata["study_id"] == ("D020" if anchored else "D019")
+    assert adapter.metadata["network_evaluations_per_sample"] == (2 if anchored else 1)
     wrong, _ = fixture(not expected)
     with pytest.raises(ValueError, match="identical objective"):
         wrong.resume(checkpoint, provenance)
@@ -125,6 +129,22 @@ def test_exact_restart_and_public_sampler_preserve_new_objective_identity(tmp_pa
     torch.save(corrupted, tmp_path / "bad.pt")
     with pytest.raises(ValueError, match="Unsupported"):
         load_trajectory(tmp_path / "bad.pt")
+
+
+def test_rest_anchor_is_exact_for_every_world_without_suppressing_action_gradients():
+    trainer, obs = fixture(True, True)
+    with torch.no_grad():
+        trainer.model.output.weight.normal_(std=0.1, generator=torch.Generator().manual_seed(23020))
+    features = torch.from_numpy(obs.features[None])
+    zeros, sigma = torch.zeros(1, 31, 2, 4), torch.ones(1)
+    for seed in (0, 1, 2, 3):
+        world = sample_world(seed)
+        rest = trainer.model(zeros, sigma, features, torch.zeros(1, 2), world)
+        assert torch.equal(rest, torch.zeros_like(rest))
+        response = trainer.model(zeros, sigma, features, torch.tensor([[0.25, 0.0]]), world)
+        assert response.abs().sum() > 0
+        response.square().mean().backward()
+    assert trainer.model.condition[0].weight.grad.abs().sum() > 0
 
 
 def test_paired_arms_start_identically_and_keep_exact_batch_rng_draws():
