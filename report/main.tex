@@ -619,10 +619,81 @@ raw file digests and 503 source files. Independent Windows replay reproduces all
 reused-validation tradeoff: it does not establish calibrated uncertainty, a
 held-out improvement or a reason to promote the decoder.
 
+
+\subsection{Fresh-scene replication of the prior decoder}
+D018 fixes the six final-update checkpoints before generating a separate corpus
+(seed 830000). Seeds 20 and 21 repeat the two 8,000-update refinements in TC2
+job 50537; seed 19 is retained from job 50455. These are refinement seeds
+conditional on one fixed E7 teacher, not independently trained end-to-end
+systems. All arms use the original cache and losses. The leakage check rejects
+shared visible seeds or frame-zero pixels against all 668 original clips.
+Only ten new ID scene groups are scored: 60 conditions and four samples per
+condition for each model, plus 80 selection-control videos per model.
+The generator's other required splits are contract-validated but never model-scored.
+D017 and the original D014/D015 results remain separate.
+
+\begin{table}[!ht]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rlrrrrrr}
+\hline
+Seed & Decoder & Complete & Pen. & Max. px/frames & Rest drift & F1 & ADE \\
+\hline
+19 & One pass & 240/240 & 5 & 1.578/6 & 5/40 & 0.2745 & 0.03076 \\
+19 & Diffusion & 240/240 & 26 & 2.791/24 & 0/40 & 0.3053 & 0.02918 \\
+20 & One pass & 240/240 & 10 & 1.553/12 & 5/40 & 0.3015 & 0.03021 \\
+20 & Diffusion & 240/240 & 24 & 2.635/23 & 0/40 & 0.3191 & 0.02926 \\
+21 & One pass & 240/240 & 2 & 1.100/6 & 0/40 & 0.3005 & 0.02980 \\
+21 & Diffusion & 240/240 & 22 & 2.584/23 & 0/40 & 0.3118 & 0.02947 \\
+\hline
+\end{tabular}
+\caption{D018 on ten fresh ID scenes. Penetration counts use the unchanged
+one-pixel threshold. Max. px/frames gives worst depth and longest consecutive
+penetration. Rest drift is zero-force full-horizon drift; every zero-force
+sample is tracked. F1 uses timed contacts against the first declared reference;
+ADE is normalized selected-object error, defined for all 60 conditions here.}
+\label{tab:prior-replication}
+\end{table}
+
+All six models track every primary clip. One-pass reduces penetration, worst
+depth and duration in each refinement seed, but every seed fails the frozen
+overall improvement rule. All three regress selected ADE, timed contact F1,
+early force-scaling success, wall coverage and object-1-to-0 collision-family
+coverage. Seeds 19 and 20 also introduce five zero-force drifts out of 40;
+seed 21 introduces none. Coverage is checked separately for all six action
+families, with all ten scene groups required; a pooled gain cannot offset a
+regression. The 0.5-second response/reversal checks were also present in the
+committed decision code before the new data was generated.
+
+\begin{figure}[!ht]
+\centering
+\pdfximage width\linewidth{report/figures/prior_replication.png}\pdfrefximage\pdflastximage
+\caption{First sorted D018 ID condition, refinement seed 19. Every sampling seed
+and all four reference variants are shown at the same four times. Reference
+row indices do not identify the models' sampled physical worlds. This is a
+fixed-case visualization, not a selected best sample or a calibrated posterior.}
+\label{fig:prior-replication}
+\end{figure}
+
+Inference runs on the RTX 3060 laptop with deterministic algorithms and TF32
+disabled. All 1,440 primary pose replays reproduce the saved pixels; per-scene
+penetration and event totals reproduce the aggregate, and 3,435 result-file
+hashes verify. The initial preparation attempt failed before scoring because
+248 original-corpus NPZ files were absent locally. Those files were restored
+from TC2 with matching hashes; the retry reused the same new corpus,
+checkpoints, source and gates. The failure is retained. D018 timing records are
+observational because separate CPU checks ran concurrently; cost comparisons
+use the earlier controlled screen. No model is promoted. This narrower
+contact improvement does not resolve the original E2/E3 pixel-conditioning
+question or establish an external state-of-the-art advantage.
+
 The presentation demo keeps these experimental limits visible. It compares the ordinary flow CVAE, E5 and E6 on common validation images and four fixed samples. An action can be pinned while a changed push is generated on the same timeline. Switching among four simulator reference worlds changes only the separately labelled reference: generated model videos and their observable inputs remain unchanged. Equal seeds are paired random draws, not identified physical worlds for these models. An optional E7 profile also displays its four independent prior draws and reuses them across pushes; they are not inferred scene properties. The interface is an inspection tool, not evidence of calibrated probabilities. Force prompting already supports physical interaction with images~\cite{forceprompting}; shared-mechanism counterfactual generation is also established~\cite{oneworld}. We claim neither feature as a novel general capability.
 
 \section{Conclusion}
 The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow-decoder CVAE fails the fixed 0.5-second window, yet over the full clip it moves the selected object along the force and reverses it in all three training seeds. It does not scale motion consistently with force magnitude, and the unselected object drifts in the selection probe. It is the final E0. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. The E6 follow-ups remove measured unforced drift and reduce penetration, while introducing a tradeoff with forward-motion spread and wall completeness. Their combined changes do not isolate a single loss effect. The later matched canvas-loss comparison improves visibility from 88 to 95 complete clips, while leaving penetration and overall strict quality unresolved. Rendered-reference calibration also shows that timed contact scores depend on estimator errors and hidden-physics variation. The final held-out evaluation repeats these patterns on unseen scenes (Section~\ref{sec:final}). With the pilot's 5,000 training clips, E2 and E3 produce no trackable video. Trained on as many clips as E0, they produce clean frames but lose object identity, so the numeric-versus-spatial question remains unanswered. Contact quality also remains open. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
+
+The separately registered prior-decoder replication reduces penetrating clips in all three refinements on fresh ID scenes, while every seed regresses in contact timing, selected trajectory error, early force scaling and two coverage families. This is a reproducible tradeoff rather than an overall improvement.
 
 \clearpage
 \begin{thebibliography}{9}

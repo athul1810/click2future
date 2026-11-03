@@ -45,9 +45,9 @@ def font(size):
     return ImageFont.load_default(size=size)
 
 
-large = font(24)
-small = font(21)
-image = Image.new("RGB", (1680, 660), "white")
+large = font(32)
+small = font(30)
+image = Image.new("RGB", (1680, 720), "white")
 draw = ImageDraw.Draw(image)
 frames = [0, 8, 16, 31]
 tile = 112
@@ -55,7 +55,7 @@ for panel_index, (title, videos, prefix) in enumerate(panels):
     x0 = panel_index * 560
     draw.text((x0 + 20, 14), title, font=large, fill="#152115")
     for j, frame in enumerate(frames):
-        draw.text((x0 + 84 + j * 116, 53), f"t={frame / 8:g}s", font=small, fill="#425249")
+        draw.text((x0 + 84 + j * 116, 53), f"{frame / 8:g}s", font=small, fill="#425249")
     for row, video in enumerate(videos):
         y = 92 + row * 128
         draw.text((x0 + 5, y + 40), prefix + "\n" + str(row), font=small, fill="#26332f")
@@ -67,7 +67,7 @@ for panel_index, (title, videos, prefix) in enumerate(panels):
             draw.rectangle((x, y, x + tile, y + tile), outline="#778179", width=1)
 draw.text(
     (20, 614),
-    "reference variants and sampling seeds are separate; "
+    "reference variants and sampling seeds are separate.\n"
     "row numbers do not identify a shared physical world.",
     font=small,
     fill="#26332f",

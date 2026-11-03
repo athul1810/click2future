@@ -21,7 +21,8 @@ all attempted runs are retained. Training performs no held-out evaluation.
 
 Generate a new corpus with generator seed 830000: ten ID-test scene groups and
 one group in each other split required by the generator. Only the ID-test split
-is opened for this study. Other splits remain unused. Compare all six fixed
+is model-scored for this study. Other required splits are generated and contract-validated,
+but remain unscored. Compare all six fixed
 checkpoints on every ID condition and all four existing sample seeds (0-3).
 The generator, physics, scorer, tracking/contact thresholds, native resolution,
 frame rate, samplers and force eligibility rules remain unchanged. Bind the old
@@ -66,3 +67,33 @@ existing one-pixel and reference-contact rules. Reference-to-sample distance is
 checked separately for each action family's selected-object trajectories, with
 all ten scene groups required. Undefined values fail the gate. No aggregate gain
 can offset a regression in one of these predeclared checks.
+
+## completed, 3 november
+
+All six frozen models completed on ten new ID scenes using evaluation source
+`16f2b3e85423d6790a74693cfbf13c8910fc2e06`. Training repeats used job 50537
+(1,144 allocated A40 seconds, exit 0:0); inference used the RTX 3060 laptop.
+The original preparation failure is retained: no plan/model score completed
+before restoring 248 missing original-corpus NPZ files with native hashes.
+The same new corpus, six checkpoints and gates were used on retry.
+
+| seed | arm | complete | penetrating | max depth/duration | zero drift | F1 | ADE |
+|---|---|---|---|---|---|---|---|
+| 19 | One pass | 240/240 | 5 | 1.578/6 | 5/40 | 0.2745 | 0.03076 |
+| 19 | Diffusion | 240/240 | 26 | 2.791/24 | 0/40 | 0.3053 | 0.02918 |
+| 20 | One pass | 240/240 | 10 | 1.553/12 | 5/40 | 0.3015 | 0.03021 |
+| 20 | Diffusion | 240/240 | 24 | 2.635/23 | 0/40 | 0.3191 | 0.02926 |
+| 21 | One pass | 240/240 | 2 | 1.100/6 | 0/40 | 0.3005 | 0.02980 |
+| 21 | Diffusion | 240/240 | 22 | 2.584/23 | 0/40 | 0.3118 | 0.02947 |
+
+Penetration improves in all three refinement seeds, but every seed fails the
+registered overall gate. ADE, contact F1, early force scaling and two coverage
+families regress in all three seeds; rest also regresses in seeds 19/20. No
+model is promoted. The frozen code also checks window response/reversal, as
+committed before data generation; no threshold or gate changed after scoring.
+All 1,440 primary pose replays, per-scene totals and 3,435 raw file digests
+verify. D018 timing is observational with concurrent CPU checks; use the
+separate quiet browser comparison for responsiveness.
+
+See [full result](results/prior-replication.json). The later extracted-source
+identity and reporting fixes do not change the actual evaluation revision.

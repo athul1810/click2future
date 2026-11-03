@@ -71,3 +71,13 @@ The export has no external URLs, link annotations, undefined references or
 overfull boxes. The one-page contribution export keeps Ananya's reviewed status
 and the other three pending confirmations. The editable presentation and replay
 are review artifacts, separate from the three required upload files.
+
+## fresh ID replication, 3 november
+
+The current review export is 29 pages. D018 retains all six frozen models,
+ten new ID scene groups and every failed gate. The contact improvement repeats
+across three refinement seeds conditional on one teacher; it is not an overall
+quality or external SOTA win. See `docs/results/prior-replication.json` and
+`docs/PRIOR_REPLICATION.md`. The figure shows the first sorted condition with
+every sample/reference row, and the contribution draft includes the latest work
+while keeping three member confirmations pending.
