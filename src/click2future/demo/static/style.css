@@ -304,7 +304,7 @@ canvas {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
-  max-width:clamp(260px,calc(100vh - 500px),640px);
+  max-width:clamp(240px,calc(100vh - 570px),570px);
   margin-inline:auto
 }
 .future-card {
@@ -335,6 +335,35 @@ canvas {
   align-items:center;
   gap:12px;
   padding:0 0 12px
+}
+.comparison-tools {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin:0 0 14px;
+}
+.comparison-tools button {
+  padding:7px 10px;
+  font-size:11px;
+}
+.comparison-tools span {
+  font-size:10px;
+  color:var(--muted);
+}
+#pinned {
+  margin-top:24px;
+  padding:18px;
+  border:1px solid #78915e;
+  border-radius:10px;
+}
+#pinned>h3 {
+  margin:0;
+  color:var(--accent);
+  font-size:14px;
+}
+#reference-properties {
+  font-size:10px;
 }
 .track-toggle {
   display: flex;
@@ -412,6 +441,12 @@ footer {
 }
 [hidden] {
   display:none!important
+}
+@media(min-width:1050px) {
+  .future-grid {
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    max-width:none;
+  }
 }
 @media(max-width:800px) {
   .future-grid {

@@ -27,6 +27,14 @@ def load_trajectory(checkpoint, device="cpu"):
         from .routing_checkpoint import load_routing
 
         return load_routing(checkpoint, device)
+    if state.get("trajectory_format_version") == 7:
+        from .prior_checkpoint import load_prior
+
+        return load_prior(checkpoint, device)
+    if state.get("trajectory_format_version") == 5:
+        from .surface_checkpoint import load_surface
+
+        return load_surface(checkpoint, device)
     if state.get("trajectory_format_version") == 4:
         from .memory_checkpoint import load_memory
 
@@ -64,6 +72,20 @@ def load_trajectory(checkpoint, device="cpu"):
     return model, state
 
 
+def sampling_geometry(model, observation, device):
+    """Only the surface model needs hulls; derive them from the observed pixels."""
+    if not hasattr(model, "local_surfaces"):
+        return {}
+    from .contact_geometry import observed_hulls
+
+    return {
+        "geometry": {
+            key: torch.from_numpy(value[None]).to(device)
+            for key, value in observed_hulls(observation).items()
+        }
+    }
+
+
 @torch.inference_mode()
 def sample_trajectory_videos(
     model,
@@ -82,7 +104,10 @@ def sample_trajectory_videos(
         or any(isinstance(seed, bool) or not isinstance(seed, int) or seed < 0 for seed in seeds)
         or isinstance(sampling_steps, bool)
         or not isinstance(sampling_steps, int)
-        or not 2 <= sampling_steps <= 128
+        or not (
+            (getattr(model, "world_prior_only", False) and sampling_steps == 1)
+            or (not getattr(model, "world_prior_only", False) and 2 <= sampling_steps <= 128)
+        )
     ):
         raise ValueError("Use distinct nonnegative integer seeds and 2-128 sampling steps")
     first_frame = np.asarray(first_frame)
@@ -98,6 +123,7 @@ def sample_trajectory_videos(
         raise ValueError("The requested force bound exceeds the checkpoint's range")
     observable_condition(frame, mask, force, force_limit=force_limit)
     features = torch.from_numpy(obs.features[None]).to(device)
+    geometry = sampling_geometry(model, obs, device)
     videos = []
     for seed in seeds:
         if cancelled is not None and cancelled.is_set():
@@ -109,6 +135,7 @@ def sample_trajectory_videos(
             steps=sampling_steps,
             sigma_min=model.sigma_min,
             sigma_max=model.sigma_max,
+            **geometry,
         )[0]
         videos.append(render_motion(obs, motion.cpu().numpy()))
     return np.stack(videos)
@@ -140,7 +167,9 @@ def main(argv=None):
                 "step": state["step"],
                 "seeds": args.seeds,
                 "sampling_steps": args.sampling_steps,
-                "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+                "sampler": "direct world-conditioned decode"
+                if getattr(model, "world_prior_only", False)
+                else "EDM rho-7 Heun, no churn, float32 integration",
                 "network_evaluations_per_sample": 2 * args.sampling_steps - 1,
                 "scope": (
                     "supervised trajectory diffusion and rigid RGB decoding; quality unverified"

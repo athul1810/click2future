@@ -255,10 +255,12 @@ def run_suite(plan_path, predictions_path, output_dir, *, bootstrap=None):
             "E6",
             "E7",
             "E8",
+            "E9",
             "E10",
+            "E11",
         }
         if model_method != (source == "generated_video"):
-            raise ValueError("Use E0-E7 only for model-generated video")
+            raise ValueError("Use registered E0-E9 or E11 only for model-generated video")
         record = {"method": run["method"], "run_id": name, "reports": []}
         if source == "generated_video":
             seed = run["training_seed"]

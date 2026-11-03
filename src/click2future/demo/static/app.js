@@ -3,6 +3,7 @@ const $ = id => document.getElementById(id);
 let state, scene, image, selected, force = [0, 0], drag = false, jobId = null;
 let playback = null, frame = 0, playing = false, previous = 0, strips = [], referenceStrip;
 let operation = 0, busy = false;
+let pinned = null, pinnedStrips = [], referenceOperation = 0;
 const emptyState = $("results").firstElementChild.cloneNode(true);
 
 async function api(path, body) {
@@ -36,6 +37,8 @@ function setBusy(value) {
   document.querySelectorAll("#objects button").forEach(button => {button.disabled = value;});
   $("input").setAttribute("aria-disabled", String(value));
   $("cancel").hidden = !value;
+  $("pin").disabled = value || !playback;
+  $("reference-world").disabled = value || !playback;
 }
 function changed() {
   if (!playback) return;
@@ -123,6 +126,8 @@ async function chooseScene() {
       $("objects").append(button);
     });
     playback = null;
+    clearPin();
+    ++referenceOperation;
     setPlaying(false);
     strips = [];
     $("results").replaceChildren(emptyState.cloneNode(true));
@@ -149,6 +154,37 @@ async function showResult(result, current) {
   frame = 0;
   previous = 0;
   $("results").replaceChildren();
+  buildCards(result, loaded, $("results"), strips);
+  $("reference-world").replaceChildren();
+  scene.reference_worlds.forEach((world, index) => {
+    const option = document.createElement("option");
+    option.value = world;
+    option.textContent = "world " + (index + 1);
+    $("reference-world").append(option);
+  });
+  $("reference-world").value = result.reference.world;
+  referenceProperties(result.reference);
+  $("pin").disabled = false;
+  updatePairing();
+  $("timeline").max = result.frames - 1;
+  $("timeline").value = 0;
+  $("timeline").disabled = false;
+  $("play").disabled = false;
+  setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  $("reference-details").hidden = false;
+  const cached = result.models.filter(model => model.source === "cached replay").length;
+  $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : "live model output";
+  $("details").textContent = JSON.stringify({scene: result.scene, split: result.split,
+    selected_object: result.object, force: result.force, seeds: result.seeds,
+    models: result.models.map(model => ({name: model.name, source: model.source, ...model.details,
+      pixel_tracker: model.pixel_tracks?.extractor_version,
+      tracker_status: model.pixel_tracks?.status,
+      tracker_adoption: model.pixel_tracks?.adoption,
+      track_failures: model.pixel_tracks?.samples?.map(sample => sample.reasons)})),
+    note: result.notice}, null, 2);
+  drawFrame();
+}
+function buildCards(result, loaded, target, destination) {
   result.models.forEach((model, index) => {
     const section = document.createElement("section");
     section.className = "model-result";
@@ -180,38 +216,21 @@ async function showResult(result, current) {
         : "pixel tracking unavailable";
       card.append(count);
       grid.append(card);
-      strips.push({canvas, image: loaded[index], row, tracks});
+      destination.push({canvas, image: loaded[index], row, tracks, result});
     });
     section.append(grid);
-    $("results").append(section);
+    target.append(section);
   });
-  $("timeline").max = result.frames - 1;
-  $("timeline").value = 0;
-  $("timeline").disabled = false;
-  $("play").disabled = false;
-  setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  $("reference-details").hidden = false;
-  const cached = result.models.filter(model => model.source === "cached replay").length;
-  $("mode").textContent = cached === result.models.length ? "cached replay" : cached ? "live + cached outputs" : "live model output";
-  $("details").textContent = JSON.stringify({scene: result.scene, split: result.split,
-    selected_object: result.object, force: result.force, seeds: result.seeds,
-    models: result.models.map(model => ({name: model.name, source: model.source, ...model.details,
-      pixel_tracker: model.pixel_tracks?.extractor_version,
-      tracker_status: model.pixel_tracks?.status,
-      tracker_adoption: model.pixel_tracks?.adoption,
-      track_failures: model.pixel_tracks?.samples?.map(sample => sample.reasons)})),
-    note: result.notice}, null, 2);
-  drawFrame();
 }
 function drawFrame() {
   if (!playback) return;
   const [height, width] = playback.size;
-  strips.forEach(({canvas, image, row, tracks}) => {
+  [...strips, ...pinnedStrips].forEach(({canvas, image, row, tracks, result}) => {
     const ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(image, frame * width, row * height, width, height, 0, 0, canvas.width, canvas.height);
     if ($("tracks").checked && tracks?.status === "available") {
-      drawTracks(ctx, canvas, tracks.samples[row], tracks.object_ids);
+      drawTracks(ctx, canvas, tracks.samples[row], tracks.object_ids, result.object);
     }
   });
   const canvas = $("reference"), ctx = canvas.getContext("2d");
@@ -220,9 +239,9 @@ function drawFrame() {
   $("timeline").value = frame;
   $("time").textContent = (frame / playback.fps).toFixed(2) + "s";
 }
-function drawTracks(ctx, canvas, sample, ids) {
+function drawTracks(ctx, canvas, sample, ids, selectedObject) {
   for (const object of ids) {
-    ctx.strokeStyle = object === playback.object ? "#ffffff" : "#0c719c";
+    ctx.strokeStyle = object === selectedObject ? "#ffffff" : "#0c719c";
     ctx.fillStyle = ctx.strokeStyle;
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -243,6 +262,55 @@ function drawTracks(ctx, canvas, sample, ids) {
     }
   }
 }
+function clearPin() {
+  pinned = null;
+  pinnedStrips = [];
+  $("pinned-results").replaceChildren();
+  $("pinned").hidden = true;
+  $("clear-pin").hidden = true;
+  updatePairing();
+}
+function updatePairing() {
+  const paired = pinned && playback && JSON.stringify(pinned.seeds) === JSON.stringify(playback.seeds);
+  $("pairing").textContent = pinned
+    ? paired ? "same four seeds; physical worlds are not identified by seed" : "different seeds; comparison is unpaired"
+    : "four samples; no seed selection";
+}
+function pinAction() {
+  if (!playback || busy) return;
+  clearPin();
+  pinned = playback;
+  const images = playback.models.map((model, index) => strips[index * playback.seeds.length].image);
+  buildCards(pinned, images, $("pinned-results"), pinnedStrips);
+  $("pinned-description").textContent = "object " + (pinned.object + 1) + "; force [" + pinned.force.map(v => v.toFixed(3)).join(", ") + "]; seeds " + pinned.seeds.join(", ");
+  $("pinned").hidden = false;
+  $("clear-pin").hidden = false;
+  updatePairing();
+  drawFrame();
+}
+function referenceProperties(reference) {
+  $("reference-properties").textContent = reference.physical_properties.map((p, i) =>
+    "object " + (i + 1) + ": mass " + p.mass.toFixed(2) + ", friction " + p.friction.toFixed(2) + ", restitution " + p.restitution.toFixed(2)).join("\n");
+}
+async function changeReference() {
+  if (!playback || busy) return;
+  const current = ++referenceOperation, result = playback;
+  $("reference-world").disabled = true;
+  try {
+    const reference = await api("/api/reference", {scene: result.scene, object: result.object,
+      force: result.force, world: $("reference-world").value});
+    const loaded = await loadImage(reference.strip);
+    if (current !== referenceOperation || result !== playback) return;
+    referenceStrip = loaded;
+    referenceProperties(reference);
+    $("reference-note").textContent = reference.notice;
+    drawFrame();
+  } catch (error) {
+    if (current === referenceOperation) message(error.message, true);
+  } finally {
+    if (current === referenceOperation) $("reference-world").disabled = busy;
+  }
+}
 async function generate() {
   if (busy) return;
   const seed = Number($("seed").value);
@@ -251,6 +319,7 @@ async function generate() {
     return;
   }
   const current = ++operation;
+  ++referenceOperation;
   setBusy(true);
   drag = false;
   message("queuing your futures…");
@@ -336,6 +405,9 @@ $("timeline").oninput = () => {
   drawFrame();
 };
 $("tracks").onchange = drawFrame;
+$("pin").onclick = pinAction;
+$("clear-pin").onclick = clearPin;
+$("reference-world").onchange = changeReference;
 function tick(now) {
   if (playing && playback && now - previous >= 1000 / playback.fps) {
     frame = (frame + 1) % playback.frames;

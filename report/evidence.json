@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 25,
+  "pages": 28,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "3e7fe58b090c5073da3aa59a313a841c4a441b03e538eed47a9c5de61ff560d0",
+    "main.tex": "c8a41938b5cbc33eb8e410b5667c28fbdd2a61b3670be10f70949931fcda8946",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -190,27 +190,29 @@
     "../docs/results/final-evaluation-d015.json": "bba292ed3114cac81c8ce48f1521c9b653dac7708e9c77f3a50b4b67a09b1a41",
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
-    "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813"
+    "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
+    "contributions.md": "68d71fd8abe521657051ee8db4e8e17196b83bd878f71f66adbe25cf17d0863c",
+    "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
+    "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
+    "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
+    "../docs/results/demo-rehearsal.json": "606518e60d7ad08f83cc9cd1e5d74bde56a91524a94ba13a15d453db7bd7fe00",
+    "../docs/results/surface-validation.json": "439f866415fb744533bd4e69e11eb5b11295c32dde63f34fb796a6547b5b07c8",
+    "../docs/results/prior-validation.json": "d6b18681fe5672a2b5deabdfd2b9947eb6f630d1c75ab8b475cfb9c7072cd8fd"
   },
-  "rendered_pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e",
-  "visual_review": "All 25 pages built. Pages 1, 4, 5, 9, 10 and 20-25 were rendered and inspected across the final-results edits, covering every edited passage, the full-horizon table, the final held-out sections, figures, E0 analysis and conclusion. Tables and figures are readable with no clipping, overlap, external links, em/en dashes or overfull boxes. Other pages change only by page-number shifts.",
+  "rendered_pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568",
+  "visual_review": "28 pages rendered; pages 1-24 retain the previously inspected pixel content. Pages 25-28 inspected at full size across the exploratory edits. No clipping, overfull boxes, undefined references, external links, URLs, em/en dashes or replacement glyphs.",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 221,
-    "bytes": 421136,
-    "archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+    "file_count": 295,
+    "bytes": 537562,
+    "archive_sha256": "8bfbc1b8187ebf55221182d5cc4319b3f4fa39444e7c8c345ca33cb0b85c7c0c",
     "checks": [
       "allowed text files",
       "no external links",
       "source inventory hashes",
       "no datasets, weights, environments, or Git history"
     ],
-    "extracted_source_tests": 576,
-    "subtests": 4,
-    "skips": 0,
-    "extracted_source_test_seconds": 88.7,
-    "tested_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
-    "current_archive_matches_tested_archive_exactly": true
+    "archive": "outputs\\finalization-20261102\\group_07_code.zip"
   },
   "remaining": [
     "Contact quality, wall completeness and forward-motion uncertainty",
@@ -273,8 +275,9 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "member review required; completed-work account for Ananya still pending",
-    "sha256": "a7fade431340e3a4fbf18f3d443d674f01bbb491d617f8b8ab5291f6ab586655"
+    "status": "review export; Ananya reviewed; other accounts pending",
+    "sha256": "68d71fd8abe521657051ee8db4e8e17196b83bd878f71f66adbe25cf17d0863c",
+    "pdf_sha256": "6da10ceae28194897b67013ebecf9663cf711ba1cd9c21c2c8941a1830bc9cb6"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -579,5 +582,187 @@
     "external_urls": 0,
     "em_or_en_dashes_in_source": 0,
     "pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e"
+  },
+  "pre_exploratory_export_snapshot": {
+    "pages": 25,
+    "rendered_pdf_sha256": "a69a0568690cbd86ce6163a5d52e8ed82a43d03a823b49a689d824050581245e",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 221,
+      "bytes": 421136,
+      "archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "extracted_source_tests": 576,
+      "subtests": 4,
+      "skips": 0,
+      "extracted_source_test_seconds": 88.7,
+      "tested_archive_sha256": "9e6a493b69cf287bc380962f9cc1d3abc2b8ae88506f49e5deef1119587d7aeb",
+      "current_archive_matches_tested_archive_exactly": true
+    }
+  },
+  "exploratory_extension_2026_11_02": {
+    "scope": "post-D014 E7/E8 and coverage; one seed and four reused validation scenes; no new test evaluation or promoted checkpoint",
+    "pages": 26,
+    "pages_rendered": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+    ],
+    "new_pages_inspected_at_full_size": [
+      25,
+      26
+    ],
+    "remaining_pages_inspected_in_contact_sheets": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "overfull_boxes": 0,
+    "undefined_references": 0,
+    "external_urls": 0,
+    "hyperlinks": 0,
+    "unicode_dashes": 0
+  },
+  "pre_surface_export_snapshot": {
+    "pages": 26,
+    "rendered_pdf_sha256": "6225dfb3a8c5d46c01454eebf3a72a8c84b3b19e2fece0dbd8cfd24fa50e5b20",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 295,
+      "bytes": 537562,
+      "archive_sha256": "8bfbc1b8187ebf55221182d5cc4319b3f4fa39444e7c8c345ca33cb0b85c7c0c",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "archive": "outputs\\finalization-20261102\\group_07_code.zip"
+    }
+  },
+  "surface_extension_2026_11_03": {
+    "native_job": "50260",
+    "scope": "negative local-over-pooled exploratory result; original cache; one seed; four reused scenes; no new test result",
+    "pages": 27,
+    "new_pages_inspected_at_full_size": [
+      25,
+      26,
+      27
+    ],
+    "prior_pages_pixel_identical": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "independent_windows_pixel_replays": 288,
+    "raw_file_hashes_verified": 926,
+    "promoted": false
+  },
+  "requirements_update_2026_11_03": {
+    "source": "user reports no change to current submission page",
+    "independently_verified": false,
+    "internal_completion": "2026-11-14"
+  },
+  "pre_prior_export_snapshot": {
+    "pages": 27,
+    "rendered_pdf_sha256": "ed868f29b39793c410565f4eac41bbb4ca010e92dc0329ab1ef582d5d5176637",
+    "source_package_verification": {
+      "status": "passed",
+      "file_count": 295,
+      "bytes": 537562,
+      "archive_sha256": "8bfbc1b8187ebf55221182d5cc4319b3f4fa39444e7c8c345ca33cb0b85c7c0c",
+      "checks": [
+        "allowed text files",
+        "no external links",
+        "source inventory hashes",
+        "no datasets, weights, environments, or Git history"
+      ],
+      "archive": "outputs\\finalization-20261102\\group_07_code.zip"
+    }
+  },
+  "prior_extension_2026_11_03": {
+    "native_job": "50455",
+    "scope": "one-pass contact/cost tradeoff with rest/timing regressions; one seed and four reused scenes; neither promoted",
+    "independent_pixel_replay_clips": 288,
+    "raw_digests_verified": 926,
+    "source_files_verified": 503,
+    "pages": 28,
+    "new_pages_inspected_at_full_size": [
+      25,
+      26,
+      27,
+      28
+    ],
+    "pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568"
   }
 }

@@ -12,7 +12,7 @@ import torch
 
 from click2future.data import load_rollout
 from click2future.models.object_motion import encode_motion, observe, render_motion
-from click2future.training.sample_trajectory import load_trajectory
+from click2future.training.sample_trajectory import load_trajectory, sampling_geometry
 from click2future.training.train_cvae import require_tc2, sha256
 from click2future.training.trajectory_data import canonical_ids, replay_angles
 
@@ -48,9 +48,11 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
     run = predictions["runs"][0]
     sampling_path = predictions_path.with_name("sampling.json")
     sampling = json.loads(sampling_path.read_text())
+    direct = run["method"] == "E11" and run.get("world_prior_only") is True
+    expected_steps, expected_nfe = (1, 1) if direct else (16, 31)
     if (
-        sampling["sampling_steps"] != 16
-        or sampling["network_evaluations_per_sample"] != 31
+        sampling["sampling_steps"] != expected_steps
+        or sampling["network_evaluations_per_sample"] != expected_nfe
         or any(
             sampling[key] != predictions[key]
             for key in ("source", "runs", "sampling_seeds", "evaluation_plan_sha256")
@@ -59,7 +61,7 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
         raise ValueError("Audit replay requires the recorded 16-step E5 sampler")
     expected = {case["sample_id"] for case in plan["cases"]}
     if (
-        run["method"] not in {"E5", "E6", "E7", "E8", "E10"}
+        run["method"] not in {"E5", "E6", "E7", "E8", "E9", "E10", "E11"}
         or run["checkpoint_sha256"] != sha256(checkpoint)
         or run.get("untrained_fixture") is not False
         or set(run["videos"]) != expected
@@ -144,10 +146,13 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
         raise ValueError("Use a fresh audit directory; preserve earlier attempts")
     plan, run, paths, hashes = verify_inputs(plan_path, predictions_path, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
-    if run["method"] != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 6: "E10"}.get(
+    if run["method"] != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 6: "E10", 7: "E11"}.get(
         state["trajectory_format_version"]
     ):
         raise ValueError("Checkpoint training variant and audit method disagree")
+    if run["method"] == "E11" and run.get("world_prior_only") != model.world_prior_only:
+        raise ValueError("Checkpoint prior-only arm and saved sampler disagree")
+    replay_steps = 1 if getattr(model, "world_prior_only", False) else 16
     if (
         state["step"] != run["training_steps"]
         or state["config"]["seed"] != run["training_seed"]
@@ -167,9 +172,10 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
                     torch.from_numpy(observation.features[None]).to(device),
                     torch.from_numpy(reference["force_xy"][None].copy()).to(device),
                     seeds=plan["sampling_seeds"],
-                    steps=16,
+                    steps=replay_steps,
                     sigma_min=model.sigma_min,
                     sigma_max=model.sigma_max,
+                    **sampling_geometry(model, observation, device),
                 )
                 .cpu()
                 .numpy()
@@ -208,7 +214,7 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
             "version": GEOMETRY_VERSION,
             "method": run["method"],
             "scope": "validation-only pose/silhouette diagnostics; not generated-RGB tracking",
-            "sampling_steps": 16,
+            "sampling_steps": replay_steps,
             "sampling_seeds": plan["sampling_seeds"],
             "checkpoint_sha256": sha256(checkpoint),
             "historical_plan_sha256": plan["plan_sha256"],

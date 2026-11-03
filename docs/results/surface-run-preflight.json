@@ -1,0 +1,83 @@
+{
+  "scope": "initialization and sampler compatibility; no trained-quality result",
+  "arms": {
+    "local": {
+      "initialization": {
+        "kind": "E7 EMA; zero-output surface head; all parameters trainable; fresh optimizer/private RNG",
+        "checkpoint_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+        "source_step": 8000,
+        "teacher_tensors_sha256": "08b824125c493083ff16a9e5fdacfaef507fa08b6011d8c1f7b1c101dc7b11ad",
+        "initial_tensors_sha256": "207b3c81cec2dfc21ae56b495582410fd9617f9173669cfbaa13a1cb5cc07754",
+        "initial_private_rng_sha256": "0e408d51578694322d1e4aa8e4fbdce886257a5f34454eccc58d54ec1c538ce4",
+        "sampling_weights_sha256": "be272a4c95b52f04e096130a5828448574a5a31d4ea278d3fbb193431dd1d2eb"
+      },
+      "parameters": 1079944,
+      "initial_teacher_pixel_exact_clips": 4
+    },
+    "pooled": {
+      "initialization": {
+        "kind": "E7 EMA; zero-output surface head; all parameters trainable; fresh optimizer/private RNG",
+        "checkpoint_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+        "source_step": 8000,
+        "teacher_tensors_sha256": "08b824125c493083ff16a9e5fdacfaef507fa08b6011d8c1f7b1c101dc7b11ad",
+        "initial_tensors_sha256": "207b3c81cec2dfc21ae56b495582410fd9617f9173669cfbaa13a1cb5cc07754",
+        "initial_private_rng_sha256": "0e408d51578694322d1e4aa8e4fbdce886257a5f34454eccc58d54ec1c538ce4",
+        "sampling_weights_sha256": "be272a4c95b52f04e096130a5828448574a5a31d4ea278d3fbb193431dd1d2eb"
+      },
+      "parameters": 1079944,
+      "initial_teacher_pixel_exact_clips": 4
+    }
+  },
+  "teacher_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+  "cache_manifest_sha256": "2c695895d5caed7be0369b28827739aab677a127c00b3d85b6e9f2488f9b9290",
+  "cache_arrays_sha256": "079af4237a58b9c9e06f906d85251ecc9731a5d81c3079970a3399ec05a7c0bd",
+  "test_splits_evaluated": [],
+  "status": "passed_run_preflight_not_quality",
+  "tests": {
+    "full_suite_passed": 648,
+    "subtests_passed": 4,
+    "warnings": 6,
+    "later_surface_and_adapter_checks_passed": 12,
+    "clean_extraction_checks_passed": 29,
+    "smoke": "passed",
+    "lint": "passed",
+    "changed_python_formatting": "passed"
+  },
+  "source_archive": {
+    "status": "passed",
+    "file_count": 304,
+    "bytes": 554558,
+    "archive_sha256": "3a25ca808748e850e614ea8784425a1104c8b6c69b88f1b859caf02bc5d2b719",
+    "checks": [
+      "allowed text files",
+      "no external links",
+      "source inventory hashes",
+      "no datasets, weights, environments, or Git history"
+    ],
+    "archive": "outputs\\surface-20261102\\group_07_code.zip"
+  },
+  "protocol": {
+    "arms": [
+      "local",
+      "pooled"
+    ],
+    "training_seed": 19,
+    "steps_per_arm": 8000,
+    "cache": "original E7 training cache, no coverage expansion",
+    "checkpoint_selection": "fixed final update only",
+    "test_splits_evaluated": [],
+    "scope": "post-D014 exploratory, four reused validation scenes; not confirmatory"
+  },
+  "files_sha256": {
+    "preflight.json": "9bc722cced3b8f69c2b4e1e6ee4d7a88d4cc30989a3fd8f0609e05a56e74309e",
+    "local-initial.npz": "a16d2ac0713ce7a35792f5b3f24bbe76f0e4d1fa1c1da8df914c9d56706627dc",
+    "pooled-initial.npz": "a16d2ac0713ce7a35792f5b3f24bbe76f0e4d1fa1c1da8df914c9d56706627dc",
+    "pytest-full.txt": "097cdfdbdc88084e0efaf8bf6f1ecc46590c627c5da596c2bf4e66ce5dfc9814",
+    "clean-tests.txt": "71312b54a818f7c31b6d402123c9ef5edb0350cf5c5347911cfbe5e2f0eaf653",
+    "clean-smoke.txt": "6c25d1a357b7a70f320bfaee2ee6a777a868fe61301b9a1b527119e20fdb2f55"
+  },
+  "config_sha256": {
+    "local": "a015c7721e57c13a7db5622329b8fef584468fc02e0291bb91fc3d4fc1755acd",
+    "pooled": "44c1c07d23abddb34d228f1d3bd228e4b93744d71dcc86ec8e648d30e3dc5e16"
+  }
+}

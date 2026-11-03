@@ -14,5 +14,6 @@
   },
   "test_splits_evaluated": [],
   "checkpoint_promoted": false,
-  "private_raw_backup": "https://github.com/athul1810/click2future/releases/tag/untagged-41dc9b1788ee138f812d"
+  "private_raw_backup": "https://github.com/athul1810/click2future/releases/tag/untagged-41dc9b1788ee138f812d",
+  "release_assets_downloaded_and_sha256_verified": 6
 }

@@ -70,7 +70,7 @@ def diagnose(plan_path, predictions_path, dataset, checkpoint, output, *, device
     output.mkdir(parents=True, exist_ok=False)
     model, _ = load_trajectory(checkpoint, device)
     if getattr(model, "world_condition", False) is not True:
-        raise ValueError("This paired-world probe requires conditioned E7/E8")
+        raise ValueError("This paired-world probe requires conditioned E7/E8/E9")
     groups = {}
     for case in plan["cases"]:
         if "-forward-" in case["sample_id"]:
@@ -108,7 +108,7 @@ def diagnose(plan_path, predictions_path, dataset, checkpoint, output, *, device
                         base["instance_masks"][0, selected],
                         force,
                         seeds=plan["sampling_seeds"],
-                        sampling_steps=16,
+                        sampling_steps=1 if getattr(model, "world_prior_only", False) else 16,
                     )
                     generated[key] = videos
                     tracked[key] = tracks(refs[0], videos)

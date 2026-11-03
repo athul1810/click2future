@@ -620,3 +620,33 @@ The recipe is `configs/training/coverage_recipe.json`; both arms use
 `configs/training/coverage_world.json` and fixed final update 8,000. The Python
 driver supports `--trained-run OLD` with the same `--coverage` path for fresh
 evaluation without retraining. Keep failed attempts and every declared seed.
+
+## Matched surface messages
+
+`submission/surface_comparison.sbatch` compares local vertex-to-segment messages
+with pooled correspondence at the same parameter count. Both fully refine the
+same conditioned E7 teacher on its original cache. Use `C2F_PROJECT`,
+`C2F_PYTHON`, `C2F_DATA_DIR`, `C2F_CACHE`, `C2F_WARM_START`, a new
+`C2F_SURFACE_RESULTS` and the immutable `C2F_SOURCE_REVISION`.
+The two `configs/training/surface_*.json` recipes differ only in the local switch.
+They use fixed final update 8,000, not validation-selected checkpoints.
+The separately labelled E9 format-5 evaluation retains all four sample seeds,
+geometry, contact, stationarity, action horizons, world interventions and
+force/selection response. `--trained-run OLD` re-evaluates completed states in a
+new output directory without retraining. This is exploratory reused validation,
+not a fresh held-out improvement claim or a replacement for D014/D015.
+
+## Prior-only decoder screen
+
+`submission/prior_comparison.sbatch` compares a one-evaluation world-conditioned
+pose decoder with the same E7 backbone retaining conditional diffusion. The
+`configs/training/prior_*.json` recipes differ only in `world_prior_only`.
+Use the same checked original world cache and teacher with `C2F_PROJECT`,
+`C2F_PYTHON`, `C2F_DATA_DIR`, `C2F_CACHE`, `C2F_WARM_START`, a new
+`C2F_PRIOR_RESULTS` and immutable `C2F_SOURCE_REVISION`. Final update 8,000 is
+fixed. Direct inference uses one step; diffusion uses 16 Heun steps (31 calls).
+Format 7 / E11 keeps this distinct from historical E7 and the team's E10.
+This is a single-seed, reused-validation screen with extra physical supervision,
+not a new held-out comparison. A deterministic fixed-world probe repeats the
+same trajectory and labels those repetitions as dependent. Keep failed samples,
+missing coverage, raw checkpoints and provenance; do not tune on reserved splits.
