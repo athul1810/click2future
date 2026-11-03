@@ -11,6 +11,7 @@ from pathlib import Path
 
 from click2future.training.train_cvae import require_tc2, sha256
 from click2future.training.train_expected_prior import ExpectedPriorConfig
+from click2future.training.train_expected_prior import sources as training_sources
 
 
 def matched_configs(project):
@@ -37,6 +38,9 @@ def main(argv=None):
     for name in ("cache", "dataset", "warm-start", "output"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--trained-run", type=Path, help="Evaluate retained final weights without training"
+    )
     args = parser.parse_args(argv)
     require_tc2()
     project = Path(__file__).resolve().parents[1]
@@ -49,6 +53,20 @@ def main(argv=None):
         "config_sha256": {name: sha256(path) for name, path in configs.items()},
     }
     record_path = args.output / "comparison.json"
+    training_root = args.trained_run or args.output
+    retained = None
+    if args.trained_run:
+        retained = json.loads((args.trained_run / "comparison.json").read_text())
+        if (
+            args.resume
+            or args.output.exists()
+            or any(
+                retained.get(key) != value
+                for key, value in identity.items()
+                if key != "source_revision"
+            )
+        ):
+            raise ValueError("Recovery requires fresh output and identical training inputs/recipes")
     if args.output.exists():
         if not args.resume or not record_path.is_file():
             parser.error("Use a fresh directory, or --resume with the original experiment record")
@@ -70,6 +88,11 @@ def main(argv=None):
             "attempts": [],
             "test_splits_evaluated": [],
         }
+        if retained is not None:
+            report.update(
+                retained_comparison_sha256=sha256(args.trained_run / "comparison.json"),
+                training_source_revision=retained["source_revision"],
+            )
     attempt = {"slurm_job_id": os.environ["SLURM_JOB_ID"], "phases": []}
     report["attempts"].append(attempt)
     report["status"] = "running"
@@ -111,7 +134,7 @@ def main(argv=None):
     save()
     try:
         for name, recipe in configs.items():
-            folder = args.output / name
+            folder = training_root / name
             summary = folder / "summary.json"
             completed = (
                 summary.is_file() and json.loads(summary.read_text())["status"] == "completed"
@@ -120,6 +143,8 @@ def main(argv=None):
                 if sha256(folder / "final.pt") != report["models"][name]["checkpoint_sha256"]:
                     raise ValueError("Retained completed checkpoint changed: " + name)
             if not completed:
+                if retained is not None:
+                    raise ValueError("Evaluation recovery cannot train an incomplete arm")
                 run(
                     "train_" + name,
                     "-m",
@@ -135,6 +160,12 @@ def main(argv=None):
                     *(["--resume"] if (folder / "latest.pt").is_file() else []),
                 )
             training = json.loads(summary.read_text())
+            if retained is not None and (
+                training["provenance"]["source_sha256"] != training_sources()
+                or training != retained["models"][name]["training"]
+                or sha256(folder / "final.pt") != retained["models"][name]["checkpoint_sha256"]
+            ):
+                raise ValueError("Retained training source, summary or checkpoint changed")
             if (
                 training["status"] != "completed"
                 or training["steps_completed"] != 8000
@@ -156,7 +187,7 @@ def main(argv=None):
         evaluation.mkdir()
         report["evaluation_directory"] = str(evaluation)
         for name in configs:
-            checkpoint = args.output / name / "final.pt"
+            checkpoint = training_root / name / "final.pt"
             output = evaluation / name
             run(
                 "evaluate_" + name,

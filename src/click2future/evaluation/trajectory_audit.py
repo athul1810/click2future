@@ -155,10 +155,19 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
         raise ValueError("Use a fresh audit directory; preserve earlier attempts")
     plan, run, paths, hashes = verify_inputs(plan_path, predictions_path, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
-    if run["method"] != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 6: "E10", 7: "E11"}.get(
-        state["trajectory_format_version"]
-    ):
+    if run["method"] != {
+        1: "E5",
+        2: "E6",
+        3: "E7",
+        4: "E8",
+        5: "E9",
+        6: "E10",
+        7: "E11",
+        8: "E11",
+    }.get(state["trajectory_format_version"]):
         raise ValueError("Checkpoint training variant and audit method disagree")
+    if state["trajectory_format_version"] == 8 and plan["split"] != "validation":
+        raise ValueError("D019 candidates cannot reopen historical held-out geometry audits")
     if run["method"] == "E11" and run.get("world_prior_only") != model.world_prior_only:
         raise ValueError("Checkpoint prior-only arm and saved sampler disagree")
     replay_steps = 1 if getattr(model, "world_prior_only", False) else 16

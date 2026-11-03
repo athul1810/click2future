@@ -53,7 +53,7 @@ def mass_effects(light, heavy, force, selected):
 def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
     plan, _, _, hashes = verify_inputs(plan_path, predictions, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
-    if state["trajectory_format_version"] not in (3, 4, 5, 7):
+    if state["trajectory_format_version"] not in (3, 4, 5, 7, 8):
         raise ValueError("Use a sampled-world checkpoint")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)

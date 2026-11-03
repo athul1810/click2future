@@ -5,12 +5,14 @@ import runpy
 from pathlib import Path
 
 import pytest
+from test_direct_objective import fixture as expected_fixture
 from test_prior_motion import fixture
 
 from click2future.data import generate_dataset
 from click2future.evaluation.suite import _write, prepare_plan, run_suite
 from click2future.evaluation.trajectory_audit import audit
 from click2future.evaluation.trajectory_pilot import sample_plan
+from click2future.training.train_expected_prior import sources as expected_sources
 from click2future.training.train_prior import prior_sources
 
 ROOT = Path(__file__).parents[1]
@@ -33,7 +35,8 @@ def test_prior_recipes_cannot_silently_change_the_control(tmp_path, changed):
         assert set(namespace["matched_configs"](tmp_path)) == {"direct", "diffusion"}
 
 
-def test_prior_evaluation_replays_all_pixels_and_refuses_e7_alias(tmp_path):
+@pytest.mark.parametrize("expected", [None, False, True])
+def test_prior_evaluation_replays_all_pixels_and_refuses_e7_alias(tmp_path, expected):
     dataset = tmp_path / "data"
     generate_dataset(
         dataset,
@@ -47,13 +50,13 @@ def test_prior_evaluation_replays_all_pixels_and_refuses_e7_alias(tmp_path):
     )
     plan_path = tmp_path / "plan.json"
     _write(plan_path, plan)
-    trainer, *_ = fixture()
+    trainer, *_ = fixture() if expected is None else expected_fixture(expected)
     trainer.train_step()
     checkpoint = tmp_path / "fixture.pt"
     trainer.save(
         checkpoint,
         {
-            "source_sha256": prior_sources(),
+            "source_sha256": prior_sources() if expected is None else expected_sources(),
             "dataset_manifest_sha256": plan["input_sha256"]["dataset_manifest"],
             "split_manifest_sha256": plan["input_sha256"]["splits"],
         },
