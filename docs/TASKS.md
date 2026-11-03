@@ -28,7 +28,7 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | In progress |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | Done |
-| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | Not started |
+| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | In progress |
 
 The matched canvas-loss follow-up in #49 completes 95/96 validation clips versus
 88/96 for its control. Penetration remains in 15/96 clips and overall quality
@@ -365,7 +365,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
-The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5/E6, corrected passive scores, action-family uncertainty and the matched canvas-loss comparison. Sections 3.15-3.17 contain the final held-out results and secondary D015 result. Section 4 adds the post-D014 E7/E8 and completed coverage study, with all regressions retained. The 2 November review export is 26 pages; the contribution review draft is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable presentation draft and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
+The working draft retains the earlier method comparison, sampler study and CVAE follow-ups, E5/E6, corrected passive scores, action-family uncertainty and the matched canvas-loss comparison. Sections 3.15-3.17 contain the final held-out results and secondary D015 result. Section 4 adds the post-D014 E7/E8 and completed coverage study, with all regressions retained. The 3 November review export is 28 pages, including the completed E9/E11 screens; the contribution review draft is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable presentation draft and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
 
 <a id="t19"></a>
 
@@ -390,7 +390,7 @@ Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174
 
 Complete one group submission through NTULearn using the exact required filenames and content restrictions.
 
-**Dependencies:** T14, T15, T16, T17, T18, T19. **Owner:** Unassigned. **Status:** Not started.
+**Dependencies:** T14, T15, T16, T17, T18, T19. **Owner:** Unassigned. **Status:** In progress.
 
 - [ ] Confirm the live NTULearn upload cutoff while preserving 14 November 2026 as the working deadline; do not assume the PDF resolves the discrepancy.
 - [ ] Check NTULearn for any updated submission instructions before exporting and uploading the final artifacts.
@@ -401,3 +401,5 @@ Complete one group submission through NTULearn using the exact required filename
 - [ ] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
 - [ ] Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.
 - [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.
+
+3 November: the review PDFs, editable 15-slide presentation, source archive and recorded fallback are prepared. Both optional demo profiles passed 35 browser checks. The user reports no submission-page changes; the cutoff is not independently verified. Three member contribution confirmations, the team rehearsal and the actual upload remain pending. D018 is a separate frozen-model replication, not completed evidence in this export.

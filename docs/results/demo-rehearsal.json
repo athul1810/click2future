@@ -1579,5 +1579,1131 @@
     ],
     "verified_files": 37,
     "scope": "existing E7 prior only; not a new trained checkpoint; same fixed seeds retain prior draws across pushes"
+  },
+  "optional_prior_profile": {
+    "scope": "seed-19 E11 inspection only; neither checkpoint promoted",
+    "models": [
+      "E11-one-pass",
+      "E11-diffusion",
+      "E0-flow",
+      "E7-prior-preview"
+    ],
+    "verified_bundle_files": 37,
+    "browser_checks": {
+      "checks": [
+        "page and checkpoint metadata load",
+        "one primary model is selected by default",
+        "visible object selectors",
+        "background click cannot select an object",
+        "object buttons update selection",
+        "right drag gives positive x",
+        "down drag gives positive y",
+        "drag outside canvas clamps physical force",
+        "reverse keeps magnitude and negates both coordinates",
+        "zero push",
+        "keyboard direction matches image coordinates",
+        "shift fine adjustment",
+        "invalid seed fails without model execution",
+        "real checkpoint finishes four seeded futures",
+        "controls locked during generation",
+        "native-fps playback advances without an extra click",
+        "four videos retain ordered paired seeds and 32 frames",
+        "shared timeline scrubs all samples and pauses",
+        "pixel-track overlay and missing-count labels",
+        "timeline returns to supplied frame zero",
+        "motion readouts retain native pixels, force sign, zero force and missing tracks",
+        "simulator reference is separate and labelled",
+        "all four primary futures fit common desktop viewport heights",
+        "exact repeated request is identical labelled replay",
+        "reduced-motion preference keeps playback paused",
+        "explicit comparison includes every selected model",
+        "changed push cannot relabel old videos as new output",
+        "cancelled generation cannot replace the previous output",
+        "world-conditioned models retain every sampled prior draw across actions",
+        "pinned action preserves every sample across a changed push and timeline",
+        "switching a hidden reference world changes no model video",
+        "clearing a pinned action releases its display",
+        "scene change resets playback and output",
+        "mobile layout has no horizontal overflow",
+        "no browser javascript exceptions"
+      ],
+      "count": 35,
+      "browser_errors": [],
+      "ui_seconds": [
+        0.9584923000074923,
+        0.34716510004363954,
+        0.3399595000082627,
+        3.741592100006528,
+        2.8342042999574915
+      ],
+      "model_sources": [
+        [
+          {
+            "source": "live model",
+            "seconds": 0.672125400044024
+          }
+        ],
+        [
+          {
+            "source": "cached replay",
+            "seconds": 0.012694200035184622
+          }
+        ],
+        [
+          {
+            "source": "cached replay",
+            "seconds": 0.0031567999394610524
+          }
+        ],
+        [
+          {
+            "source": "cached replay",
+            "seconds": 0.003977300017140806
+          },
+          {
+            "source": "live model",
+            "seconds": 1.1955095999874175
+          },
+          {
+            "source": "live model",
+            "seconds": 0.5176698000868782
+          },
+          {
+            "source": "live model",
+            "seconds": 1.139933199970983
+          }
+        ],
+        [
+          {
+            "source": "live model",
+            "seconds": 0.11748240003362298
+          },
+          {
+            "source": "live model",
+            "seconds": 0.912706800037995
+          },
+          {
+            "source": "live model",
+            "seconds": 0.10001189995091408
+          },
+          {
+            "source": "live model",
+            "seconds": 0.9364751999964938
+          }
+        ]
+      ],
+      "note": "functional rehearsal, not model quality or a latency benchmark"
+    },
+    "timing_four_models": {
+      "scope": "warm browser request through first painted canvas; headless Chrome/Edge",
+      "included": "queue, neural sampling, conversion, pixel tracking, reference, PNG transfer and browser display",
+      "excluded": "server startup and checkpoint loading",
+      "condition": {
+        "scene": "g03-scene-00730016-forward-p00",
+        "object": 0,
+        "force": [
+          0.15000000596046448,
+          0
+        ]
+      },
+      "models": [
+        {
+          "id": "E11-one-pass",
+          "kind": "trajectory_diffusion",
+          "detail": "one-pass prior-conditioned pose decoder, rigid observed-pixel decoder, EMA",
+          "checkpoint_sha256": "88aa9d1f1a27174a859f147b30c3f29f88c546b28deac154cf14314ff059fe9d",
+          "training_steps": 8000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 1,
+          "sampling_source_sha256": {
+            "demo\\models.py": "9a3ecef7cc858ec8b173a238ba008df2ab3b67a9e9d840e11c48e25c95eedfd7",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9c97fadb7631d44dd6391e5e8d5d1da1d5aed46d6ba13f7914c7246eb9c71aec",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4",
+            "models/prior_motion.py": "9c5e97cd11f3c150637909de046174979bfe9f93c4e417274a1eac4ddee2e34a",
+            "training/prior_checkpoint.py": "2e4f9960219a5a77d776aecb80f1f7ef385e2533ce9717083492354a12d5b861"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "precision": "float32"
+          },
+          "sampler": "direct world-conditioned decode",
+          "network_evaluations_per_sample": 1,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "prior_only_comparison",
+          "world_condition": true,
+          "relational": true,
+          "world_prior_only": true,
+          "prior_contract": "world-prior-only-versus-conditional-edm-1",
+          "validation_quality": "exploratory reused validation; overall quality fails; not promoted",
+          "variant_notes": "one seed, 96/96 complete; 1/96 penetration but 2/16 zero-force drift; contact f1 0.3107; one network evaluation; actual scene physics never supplied"
+        },
+        {
+          "id": "E11-diffusion",
+          "kind": "trajectory_diffusion",
+          "detail": "conditional diffusion control for the prior-only comparison, EMA",
+          "checkpoint_sha256": "946568fec10ccb7bd9ae92ab35ca0d9151bf30fa43090a31d3bf917d8118f7fd",
+          "training_steps": 8000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 16,
+          "sampling_source_sha256": {
+            "demo\\models.py": "9a3ecef7cc858ec8b173a238ba008df2ab3b67a9e9d840e11c48e25c95eedfd7",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9c97fadb7631d44dd6391e5e8d5d1da1d5aed46d6ba13f7914c7246eb9c71aec",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4",
+            "models/prior_motion.py": "9c5e97cd11f3c150637909de046174979bfe9f93c4e417274a1eac4ddee2e34a",
+            "training/prior_checkpoint.py": "2e4f9960219a5a77d776aecb80f1f7ef385e2533ce9717083492354a12d5b861"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "precision": "float32"
+          },
+          "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+          "network_evaluations_per_sample": 31,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "prior_only_comparison",
+          "world_condition": true,
+          "relational": true,
+          "world_prior_only": false,
+          "prior_contract": "world-prior-only-versus-conditional-edm-1",
+          "validation_quality": "exploratory reused validation; overall quality fails; not promoted",
+          "variant_notes": "matched 8000-update control; 96/96 complete, 11/96 penetration, 0/16 zero drift; contact f1 0.3711; 16 Heun steps / 31 evaluations"
+        },
+        {
+          "id": "E0-flow",
+          "kind": "cvae",
+          "detail": "conditional VAE, learned prior",
+          "checkpoint_sha256": "9871e4e91ca2b07c84b187f223ccf55b13dee447863707c4040d55a6eb2289d5",
+          "training_steps": 20000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": null,
+          "sampling_source_sha256": {
+            "demo\\models.py": "9a3ecef7cc858ec8b173a238ba008df2ab3b67a9e9d840e11c48e25c95eedfd7",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/cvae_flow.py": "9f80061d2d0b5e946258beb8e8ad261dc0e464878184a028db242e74b033e2d5"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "precision": "float32"
+          },
+          "validation_quality": "Overall validation quality fails. Demonstration only; not a calibrated distribution or promoted held-out result.",
+          "variant_notes": "learned-prior flow CVAE; no future displacement labels; slower early response and selection/force-scaling failures"
+        },
+        {
+          "id": "E7-prior-preview",
+          "kind": "trajectory_diffusion",
+          "detail": "supervised object-trajectory diffusion, rigid observed-pixel decoder, EMA; experimental shared-world relational refinement",
+          "checkpoint_sha256": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+          "training_steps": 8000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 16,
+          "sampling_source_sha256": {
+            "demo\\models.py": "9a3ecef7cc858ec8b173a238ba008df2ab3b67a9e9d840e11c48e25c95eedfd7",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9c97fadb7631d44dd6391e5e8d5d1da1d5aed46d6ba13f7914c7246eb9c71aec",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "precision": "float32"
+          },
+          "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+          "network_evaluations_per_sample": 31,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "shared_world_relational",
+          "world_condition": true,
+          "relational": true,
+          "validation_quality": "exploratory reused validation: 96/96 complete clips; penetration in 11/96, maximum depth 2.448 pixels. not a held-out promotion or calibrated uncertainty.",
+          "variant_notes": "future poses, contact and physical-property labels during training; samples the declared simulator prior at inference, never the true input physics. fixed prior draws across changed actions under the same seeds."
+        }
+      ],
+      "runs": [
+        {
+          "warmup": true,
+          "seconds": 3.5483537999680266,
+          "seeds": [
+            410300,
+            410301,
+            410302,
+            410303
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.09630999993532896
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.1540071000345051
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.1039963000221178
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.1938809000421315
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.442943700007163,
+          "seeds": [
+            410304,
+            410305,
+            410306,
+            410307
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.09294959995895624
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.1374295999994501
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.07468349998816848
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.07726819999516
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.126940399990417,
+          "seeds": [
+            410308,
+            410309,
+            410310,
+            410311
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.07605330005753785
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.966489200014621
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.07637060002889484
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 0.9888516999781132
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 2.8525832999730483,
+          "seeds": [
+            410312,
+            410313,
+            410314,
+            410315
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08545689994934946
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8989538999740034
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.11954179999884218
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 0.9026752000208944
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.125641099992208,
+          "seeds": [
+            410316,
+            410317,
+            410318,
+            410319
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.09194169996771961
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.0445374000119045
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.11409869999624789
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 0.9053186000091955
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.135999200050719,
+          "seeds": [
+            410320,
+            410321,
+            410322,
+            410323
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08211149997077882
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8887364999391139
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.12021459999959916
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.0556356000015512
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.4352013000752777,
+          "seeds": [
+            410324,
+            410325,
+            410326,
+            410327
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.0806631000014022
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.1210300999227911
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.07553929998539388
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.1785063999705017
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.442708200076595,
+          "seeds": [
+            410328,
+            410329,
+            410330,
+            410331
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08130469999741763
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.1995058000320569
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.06804130005184561
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.1252460000105202
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.43594600004144,
+          "seeds": [
+            410332,
+            410333,
+            410334,
+            410335
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.0999244999838993
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.189874600037001
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.09775680000893772
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.1343055999604985
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.441198999993503,
+          "seeds": [
+            410336,
+            410337,
+            410338,
+            410339
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.10075099999085069
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.1504622999345884
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.09098540002014488
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 1.120918900007382
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 3.135403399937786,
+          "seeds": [
+            410340,
+            410341,
+            410342,
+            410343
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.09022240003105253
+            },
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.9968907999573275
+            },
+            {
+              "name": "E0-flow",
+              "source": "live model",
+              "seconds": 0.07623569993302226
+            },
+            {
+              "name": "E7-prior-preview",
+              "source": "live model",
+              "seconds": 0.9473739999812096
+            }
+          ]
+        }
+      ],
+      "n": 10,
+      "median_seconds": 3.2856002500629984,
+      "empirical_p95_seconds": 3.4428377250384075,
+      "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
+      "browser_errors": []
+    },
+    "timing_one_pass_quiet": {
+      "scope": "warm browser request through first painted canvas; headless Chrome/Edge",
+      "included": "queue, neural sampling, conversion, pixel tracking, reference, PNG transfer and browser display",
+      "excluded": "server startup and checkpoint loading",
+      "condition": {
+        "scene": "g03-scene-00730016-forward-p00",
+        "object": 0,
+        "force": [
+          0.15000000596046448,
+          0
+        ]
+      },
+      "models": [
+        {
+          "id": "E11-one-pass",
+          "kind": "trajectory_diffusion",
+          "detail": "one-pass prior-conditioned pose decoder, rigid observed-pixel decoder, EMA",
+          "checkpoint_sha256": "88aa9d1f1a27174a859f147b30c3f29f88c546b28deac154cf14314ff059fe9d",
+          "training_steps": 8000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 1,
+          "sampling_source_sha256": {
+            "demo\\models.py": "9a3ecef7cc858ec8b173a238ba008df2ab3b67a9e9d840e11c48e25c95eedfd7",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9c97fadb7631d44dd6391e5e8d5d1da1d5aed46d6ba13f7914c7246eb9c71aec",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4",
+            "models/prior_motion.py": "9c5e97cd11f3c150637909de046174979bfe9f93c4e417274a1eac4ddee2e34a",
+            "training/prior_checkpoint.py": "2e4f9960219a5a77d776aecb80f1f7ef385e2533ce9717083492354a12d5b861"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "precision": "float32"
+          },
+          "sampler": "direct world-conditioned decode",
+          "network_evaluations_per_sample": 1,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "prior_only_comparison",
+          "world_condition": true,
+          "relational": true,
+          "world_prior_only": true,
+          "prior_contract": "world-prior-only-versus-conditional-edm-1",
+          "validation_quality": "exploratory reused validation; overall quality fails; not promoted",
+          "variant_notes": "one seed, 96/96 complete; 1/96 penetration but 2/16 zero-force drift; contact f1 0.3107; one network evaluation; actual scene physics never supplied"
+        }
+      ],
+      "runs": [
+        {
+          "warmup": true,
+          "seconds": 0.44052950001787394,
+          "seeds": [
+            430300,
+            430301,
+            430302,
+            430303
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.07458539993967861
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.39286459994036704,
+          "seeds": [
+            430304,
+            430305,
+            430306,
+            430307
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08821239997632802
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.3527124000247568,
+          "seeds": [
+            430308,
+            430309,
+            430310,
+            430311
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08101590001024306
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.400967700057663,
+          "seeds": [
+            430312,
+            430313,
+            430314,
+            430315
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.07863670005463064
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.40226609993260354,
+          "seeds": [
+            430316,
+            430317,
+            430318,
+            430319
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.0734543000580743
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.34997119999025017,
+          "seeds": [
+            430320,
+            430321,
+            430322,
+            430323
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08023820002563298
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.35264219995588064,
+          "seeds": [
+            430324,
+            430325,
+            430326,
+            430327
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.07516020000912249
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.39375150005798787,
+          "seeds": [
+            430328,
+            430329,
+            430330,
+            430331
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.07265769992955029
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.39383890002500266,
+          "seeds": [
+            430332,
+            430333,
+            430334,
+            430335
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.0775290000019595
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.39410299994051456,
+          "seeds": [
+            430336,
+            430337,
+            430338,
+            430339
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.08245930005796254
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 0.39427940000314265,
+          "seeds": [
+            430340,
+            430341,
+            430342,
+            430343
+          ],
+          "models": [
+            {
+              "name": "E11-one-pass",
+              "source": "live model",
+              "seconds": 0.07590589998289943
+            }
+          ]
+        }
+      ],
+      "n": 10,
+      "median_seconds": 0.39379520004149526,
+      "empirical_p95_seconds": 0.4016818199888803,
+      "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
+      "browser_errors": []
+    },
+    "timing_diffusion_control_quiet": {
+      "scope": "warm browser request through first painted canvas; headless Chrome/Edge",
+      "included": "queue, neural sampling, conversion, pixel tracking, reference, PNG transfer and browser display",
+      "excluded": "server startup and checkpoint loading",
+      "condition": {
+        "scene": "g03-scene-00730016-forward-p00",
+        "object": 0,
+        "force": [
+          0.15000000596046448,
+          0
+        ]
+      },
+      "models": [
+        {
+          "id": "E11-diffusion",
+          "kind": "trajectory_diffusion",
+          "detail": "conditional diffusion control for the prior-only comparison, EMA",
+          "checkpoint_sha256": "946568fec10ccb7bd9ae92ab35ca0d9151bf30fa43090a31d3bf917d8118f7fd",
+          "training_steps": 8000,
+          "quality": "experimental checkpoint; held-out quality is not certified by this demo",
+          "sampling_steps": 16,
+          "sampling_source_sha256": {
+            "demo\\models.py": "9a3ecef7cc858ec8b173a238ba008df2ab3b67a9e9d840e11c48e25c95eedfd7",
+            "training\\diffusion.py": "224caee4782f1e201d96a2189839ce68e4795ed2906aaa79b830c51f8d947bd4",
+            "training\\sample_diffusion.py": "99ca654e616768b9effc7856fc16fb987f966415129f19ef01c3892b0abf76ef",
+            "training\\conditioning.py": "624596cbd62bfc515202160fd0720dca62ce561bb34d0a562179825f76766ad0",
+            "models\\cvae.py": "9a9b189961df3e4098cffbf0f0bb792d417131a36543fadeacbab207675e0852",
+            "models\\pilot_denoiser.py": "a79c199ff87c95dc90e7d5a951154628aafb3cde7f114a3a7ca57bd4397c04ad",
+            "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+            "training/sample_trajectory.py": "9c97fadb7631d44dd6391e5e8d5d1da1d5aed46d6ba13f7914c7246eb9c71aec",
+            "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+            "training/world_checkpoint.py": "590b831f83a17e41ffb41c5f09ec8b8009dc4f3ded378d0fcb76853cc23240d4",
+            "models/prior_motion.py": "9c5e97cd11f3c150637909de046174979bfe9f93c4e417274a1eac4ddee2e34a",
+            "training/prior_checkpoint.py": "2e4f9960219a5a77d776aecb80f1f7ef385e2533ce9717083492354a12d5b861"
+          },
+          "runtime": {
+            "torch": "2.11.0+cu128",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "precision": "float32"
+          },
+          "sampler": "EDM rho-7 Heun, no churn, float32 integration",
+          "network_evaluations_per_sample": 31,
+          "supervision": "future positions and checked angular replay; training only; physical labels in training, prior at inference",
+          "training_variant": "prior_only_comparison",
+          "world_condition": true,
+          "relational": true,
+          "world_prior_only": false,
+          "prior_contract": "world-prior-only-versus-conditional-edm-1",
+          "validation_quality": "exploratory reused validation; overall quality fails; not promoted",
+          "variant_notes": "matched 8000-update control; 96/96 complete, 11/96 penetration, 0/16 zero drift; contact f1 0.3711; 16 Heun steps / 31 evaluations"
+        }
+      ],
+      "runs": [
+        {
+          "warmup": true,
+          "seconds": 1.3732859999872744,
+          "seeds": [
+            430300,
+            430301,
+            430302,
+            430303
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.7969632999738678
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.292919100029394,
+          "seeds": [
+            430304,
+            430305,
+            430306,
+            430307
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 1.0066139999544248
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.2855102000758052,
+          "seeds": [
+            430308,
+            430309,
+            430310,
+            430311
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.9285424998961389
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.2861759000224993,
+          "seeds": [
+            430312,
+            430313,
+            430314,
+            430315
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8049217000370845
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.2862973000155762,
+          "seeds": [
+            430316,
+            430317,
+            430318,
+            430319
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8531886999262497
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.285503500024788,
+          "seeds": [
+            430320,
+            430321,
+            430322,
+            430323
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8145566000603139
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.285950000048615,
+          "seeds": [
+            430324,
+            430325,
+            430326,
+            430327
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8125500000314787
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.2863128000171855,
+          "seeds": [
+            430328,
+            430329,
+            430330,
+            430331
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8179665999487042
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.2781751999864355,
+          "seeds": [
+            430332,
+            430333,
+            430334,
+            430335
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8065751000540331
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.2862133000744507,
+          "seeds": [
+            430336,
+            430337,
+            430338,
+            430339
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.8574374000309035
+            }
+          ]
+        },
+        {
+          "warmup": false,
+          "seconds": 1.278112699976191,
+          "seeds": [
+            430340,
+            430341,
+            430342,
+            430343
+          ],
+          "models": [
+            {
+              "name": "E11-diffusion",
+              "source": "live model",
+              "seconds": 0.823677200009115
+            }
+          ]
+        }
+      ],
+      "n": 10,
+      "median_seconds": 1.2860629500355572,
+      "empirical_p95_seconds": 1.2899462650239002,
+      "quantile_method": "linear interpolation of measured samples; small-n estimate, not a confidence bound",
+      "browser_errors": []
+    },
+    "timing_pair": "same input and seed range; one warm-up each; no concurrent test suite; startup/loading excluded",
+    "prior_measurements": "earlier per-model timing files retained locally; ran alongside CPU tests"
   }
 }
