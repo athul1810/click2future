@@ -236,6 +236,36 @@ E7 still has 11 penetrating clips out of 96 validation samples and fails overall
 quality. This optional inspection profile does not promote it. Bundle recipes,
 weights and caches remain separate from the source-only submission archive.
 
+## optional one-pass comparison
+
+The separate prior bundle loads `E11-one-pass`, its matched `E11-diffusion`
+control, `E0-flow` and `E7-prior-preview`. Both E11 checkpoints are final-update
+seed-19 models; the screen reused four validation scenes. One-pass decoding
+reduces penetrating clips from 11/96 to 1/96, but adds zero-force drift in 2/16
+clips and reduces timed-contact F1. Neither model passes the quality gate.
+See [the complete screen](../docs/PRIOR_ONLY_EXPERIMENT.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/demo-20261103/prior-bundle `
+  --models E11-one-pass E11-diffusion E0-flow E7-prior-preview --device cuda
+```
+
+This profile passed 35 browser checks. Ten fresh requests per model, after one
+warm-up and with the same input/seed range, took median/p95 0.394/0.402 seconds
+for one-pass and 1.286/1.290 seconds for its diffusion control on the RTX 3060
+laptop. The four-model profile took 3.286/3.443 seconds. These measurements
+include browser display and exclude startup/loading; they measure responsiveness,
+not physical quality. The benchmark refuses cache hits:
+
+```powershell
+python scripts/benchmark_demo_browser.py --model E11-one-pass --repeats 10 --seed 430300 --output outputs/timing-direct.json
+```
+
+Use a fresh output file and restart the server or change the seed range for a
+new measurement. Keep the control's seed range matched. The three-seed D018
+study is separate and does not change these seed-19 demo checkpoints.
+
 ## contact candidate comparison
 
 the 18 october paired-action candidate fixes passive drift on the saved push,
