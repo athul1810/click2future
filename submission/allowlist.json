@@ -1,6 +1,8 @@
 {
   "include": [
     "scripts/build_demo_bundle.py",
+    "scripts/analyse_prior_replication.py",
+    "scripts/plot_prior_replication.py",
     "src/click2future/**/*.py",
     "src/click2future/demo/static/index.html",
     "src/click2future/demo/static/style.css",

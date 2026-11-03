@@ -23,7 +23,12 @@ def source_copy(tmp_path):
     for name in (".python-version", "pyproject.toml"):
         shutil.copyfile(root / name, target / name)
     (target / "scripts").mkdir()
-    shutil.copyfile(root / "scripts/build_demo_bundle.py", target / "scripts/build_demo_bundle.py")
+    for name in (
+        "build_demo_bundle.py",
+        "analyse_prior_replication.py",
+        "plot_prior_replication.py",
+    ):
+        shutil.copyfile(root / "scripts" / name, target / "scripts" / name)
     if (root / "uv.lock").is_file():
         shutil.copyfile(root / "uv.lock", target / "uv.lock")
     return target

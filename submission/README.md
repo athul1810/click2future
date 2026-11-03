@@ -673,3 +673,9 @@ The driver records the archive-manifest digest instead of inventing a Git commit
 and rechecks that identity at completion. Dependencies and generated outputs are
 outside this source identity. Use the fixed training recipes to reproduce the
 six checkpoints; the code ZIP contains no supplied weights or datasets.
+
+After all six runs finish, `python scripts/analyse_prior_replication.py --root RESULTS
+--output NEW_JSON` rechecks the frozen inputs, checkpoint identities, pixel
+replays and per-scene counts, and reproduces the declared decision. Generate
+the fixed first-condition, all-seed montage with
+`python scripts/plot_prior_replication.py --root RESULTS --output NEW_PNG`.

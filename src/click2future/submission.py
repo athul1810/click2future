@@ -54,7 +54,12 @@ def _check(name, payload):
         or (name.startswith("src/click2future/") and path.suffix == ".py")
         or name in DEMO_ASSETS
         or name in FINAL_RUN_SCRIPTS
-        or name == "scripts/build_demo_bundle.py"
+        or name
+        in {
+            "scripts/build_demo_bundle.py",
+            "scripts/analyse_prior_replication.py",
+            "scripts/plot_prior_replication.py",
+        }
         or (name.startswith("configs/") and path.suffix in {".yaml", ".toml", ".json"})
         or (
             path.parent == PurePosixPath("tests")

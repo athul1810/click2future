@@ -158,7 +158,8 @@ def main():
         "driver_sha256": sha256(Path(__file__)),
         "runs_spec_sha256": sha256(args.runs),
         "scope": "inference only; fixed-teacher ID scene replication",
-        "test_splits_evaluated": ["D018:id_test"],
+        "declared_test_splits": ["D018:id_test"],
+        "test_splits_evaluated": [],
         "runs": {},
         "phases": [],
     }
@@ -217,6 +218,9 @@ def main():
                     samples / "predictions.json",
                     folder / (split + "-metrics"),
                 )
+                if split == "validation":
+                    record["test_splits_evaluated"] = ["D018:id_test"]
+                    save()
             phase(
                 name + "/geometry-rest-strata",
                 extended_audit,
