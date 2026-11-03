@@ -28,6 +28,8 @@ FINAL_RUN_SCRIPTS = {
     "cluster/final_evaluation.py",
     "cluster/final_evaluation.sbatch",
     "cluster/diffusion_long.sbatch",
+    "cluster/replication_evaluation.py",
+    "cluster/replication_evaluation.sbatch",
 }
 FORBIDDEN_PARTS = {
     ".git",
@@ -88,6 +90,8 @@ def _check(name, payload):
             "submission/memory_comparison.sbatch",
             "submission/coverage_comparison.py",
             "submission/coverage_comparison.sbatch",
+            "submission/routing_comparison.py",
+            "submission/routing_comparison.sbatch",
             "submission/trajectory_response.py",
             "submission/evaluate_trajectory.sbatch",
             "submission/audit_trajectory.sbatch",

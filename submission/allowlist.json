@@ -44,6 +44,8 @@
     "cluster/final_evaluation.py",
     "cluster/final_evaluation.sbatch",
     "cluster/diffusion_long.sbatch",
+    "cluster/replication_evaluation.sbatch",
+    "cluster/replication_evaluation.py",
     "submission/world_comparison.py",
     "submission/world_comparison.sbatch",
     "submission/memory_comparison.py",
@@ -56,6 +58,8 @@
     "submission/prior_comparison.py",
     "submission/prior_comparison.sbatch",
     "submission/prior_repeats.py",
-    "submission/prior_repeats.sbatch"
+    "submission/prior_repeats.sbatch",
+    "submission/routing_comparison.py",
+    "submission/routing_comparison.sbatch"
   ]
 }

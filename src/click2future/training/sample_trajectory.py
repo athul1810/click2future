@@ -31,6 +31,10 @@ def load_trajectory(checkpoint, device="cpu"):
         from .surface_checkpoint import load_surface
 
         return load_surface(checkpoint, device)
+    if state.get("trajectory_format_version") == 6:
+        from .routing_checkpoint import load_routing
+
+        return load_routing(checkpoint, device)
     if state.get("trajectory_format_version") == 4:
         from .memory_checkpoint import load_memory
 
