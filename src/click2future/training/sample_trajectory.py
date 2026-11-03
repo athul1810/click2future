@@ -23,6 +23,10 @@ def load_trajectory(checkpoint, device="cpu"):
     checkpoint = Path(checkpoint)
     checksum = sha256(checkpoint)
     state = torch.load(checkpoint, map_location="cpu", weights_only=True)
+    if state.get("trajectory_format_version") == 5:
+        from .surface_checkpoint import load_surface
+
+        return load_surface(checkpoint, device)
     if state.get("trajectory_format_version") == 4:
         from .memory_checkpoint import load_memory
 
@@ -60,6 +64,20 @@ def load_trajectory(checkpoint, device="cpu"):
     return model, state
 
 
+def sampling_geometry(model, observation, device):
+    """Only the surface model needs hulls; derive them from the observed pixels."""
+    if not hasattr(model, "local_surfaces"):
+        return {}
+    from .contact_geometry import observed_hulls
+
+    return {
+        "geometry": {
+            key: torch.from_numpy(value[None]).to(device)
+            for key, value in observed_hulls(observation).items()
+        }
+    }
+
+
 @torch.inference_mode()
 def sample_trajectory_videos(
     model,
@@ -94,6 +112,7 @@ def sample_trajectory_videos(
         raise ValueError("The requested force bound exceeds the checkpoint's range")
     observable_condition(frame, mask, force, force_limit=force_limit)
     features = torch.from_numpy(obs.features[None]).to(device)
+    geometry = sampling_geometry(model, obs, device)
     videos = []
     for seed in seeds:
         if cancelled is not None and cancelled.is_set():
@@ -105,6 +124,7 @@ def sample_trajectory_videos(
             steps=sampling_steps,
             sigma_min=model.sigma_min,
             sigma_max=model.sigma_max,
+            **geometry,
         )[0]
         videos.append(render_motion(obs, motion.cpu().numpy()))
     return np.stack(videos)

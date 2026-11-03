@@ -1,0 +1,57 @@
+{
+  "status": "completed_and_collected",
+  "job_id": 50260,
+  "source_revision": "e00e4d7b711e9ff805c2614c1a97900396bbefcf",
+  "date": "2026-11-02",
+  "last_observation": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "allocated_gpu_seconds": 1819
+  },
+  "immutable_source_files_verified_before_job": 490,
+  "teacher_and_cache_hashes_verified": true,
+  "storage_headroom_allocated_and_released_bytes": 536870912,
+  "dependency_check_packages_compatible": 75,
+  "cuda_continuation_local": {
+    "losses_equal": true,
+    "model_max_abs_difference": 0.0,
+    "ema_max_abs_difference": 0.0
+  },
+  "transport_attempts_before_optimization": [
+    {
+      "stage": "before submission",
+      "error": "CRLF checksum-manifest filenames; first verification refused extraction",
+      "optimization_started": false,
+      "correction": "three transport checksum files re-encoded with LF; archive bytes unchanged"
+    },
+    {
+      "stage": "before submission",
+      "error": "TC2 account disk quota exceeded during source extraction",
+      "optimization_started": false,
+      "source_archive_sha256_verified": true
+    }
+  ],
+  "cache_recovery": {
+    "reason": "account quota exceeded before GPU submission",
+    "uv_cache_clean": {
+      "removed_entries": 25392,
+      "reported_freed": "5.3MiB",
+      "installed_torch_library_was_regular_hardlinked_file": true
+    },
+    "conda_clean_flags": [
+      "--tarballs",
+      "--index-cache",
+      "--yes"
+    ],
+    "conda_package_cache_before_du": "1.3G",
+    "conda_package_cache_after_du": "282M",
+    "datasets_checkpoints_and_experiment_archives_removed": false,
+    "installed_environment_dependency_check": "75 packages compatible"
+  },
+  "checkpoint_promoted": false,
+  "test_splits_evaluated": [],
+  "trained_quality_result_collected": true,
+  "raw_files_verified": 926,
+  "independent_windows_pose_replays": 288,
+  "raw_archive_sha256": "ec32b3eb39f9fc7b02a96bc0752698e415ba44439624cb2ced4af04950a6578b"
+}

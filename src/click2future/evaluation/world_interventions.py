@@ -10,7 +10,7 @@ import torch
 from click2future.data import load_rollout
 from click2future.models.object_motion import TrajectoryDiffusion, observe
 from click2future.models.world_motion import BoundWorld
-from click2future.training.sample_trajectory import load_trajectory
+from click2future.training.sample_trajectory import load_trajectory, sampling_geometry
 from click2future.training.train_cvae import sha256
 
 from .passive_stationarity import stationary_reference
@@ -53,7 +53,7 @@ def mass_effects(light, heavy, force, selected):
 def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
     plan, _, _, hashes = verify_inputs(plan_path, predictions, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
-    if state["trajectory_format_version"] not in (3, 4):
+    if state["trajectory_format_version"] not in (3, 4, 5):
         raise ValueError("Use a sampled-world checkpoint")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
@@ -69,13 +69,20 @@ def audit(plan_path, predictions, dataset, checkpoint, output, device="cpu"):
         obs = observe(reference["frames"][0], reference["selected_mask"])
         features = torch.from_numpy(obs.features[None]).to(device)
         force = torch.from_numpy(reference["force_xy"][None].copy()).to(device)
+        geometry = sampling_geometry(model, obs, device)
         samples = {}
         for kind, mass in (("light", 0.65), ("heavy", 1.85)):
             world = torch.tensor([[[1.25, 0.45, 0.2], [1.25, 0.45, 0.2]]], device=device)
             world[:, obs.selected_index, 0] = mass
+            if geometry:
+                from click2future.models.surface_motion import BoundSurface
+
+                bound = BoundSurface(model, world, geometry["geometry"])
+            else:
+                bound = BoundWorld(model, world)
             samples[kind] = (
                 TrajectoryDiffusion.sample(
-                    BoundWorld(model, world),
+                    bound,
                     features,
                     force,
                     seeds=plan["sampling_seeds"],

@@ -70,7 +70,7 @@ def diagnose(plan_path, predictions_path, dataset, checkpoint, output, *, device
     output.mkdir(parents=True, exist_ok=False)
     model, _ = load_trajectory(checkpoint, device)
     if getattr(model, "world_condition", False) is not True:
-        raise ValueError("This paired-world probe requires conditioned E7/E8")
+        raise ValueError("This paired-world probe requires conditioned E7/E8/E9")
     groups = {}
     for case in plan["cases"]:
         if "-forward-" in case["sample_id"]:

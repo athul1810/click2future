@@ -28,7 +28,7 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
     if plan["split"] not in {"validation", "validation-selected-object"}:
         raise ValueError("This bounded pilot may not evaluate final-test splits")
     model, state = load_trajectory(checkpoint, device)
-    if method != {1: "E5", 2: "E6", 3: "E7", 4: "E8"}[state["trajectory_format_version"]]:
+    if method != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9"}[state["trajectory_format_version"]]:
         raise ValueError("Checkpoint training variant and requested method disagree")
     provenance = state["provenance"]
     if (
@@ -75,11 +75,11 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
             "video_sha256": hashes,
             "supervision": (
                 "future positions, angles and physical world labels; training only"
-                if method in {"E7", "E8"} and state["config"]["world_condition"]
+                if method in {"E7", "E8", "E9"} and state["config"]["world_condition"]
                 else "future positions and checked replay angles; training only"
             ),
         }
-        if method in {"E7", "E8"}:
+        if method in {"E7", "E8", "E9"}:
             from click2future.models.world_motion import WORLD_CONTRACT, sample_world
 
             run["world_prior"] = {
@@ -90,6 +90,9 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
                 },
                 "scope": "sampled prior, never the input scene's hidden properties",
             }
+        if method == "E9":
+            run["surface_contract"] = state["surface_contract"]
+            run["model_source_sha256"] = provenance["source_sha256"]
         predictions = {
             "source": "generated_video",
             "evaluation_plan_sha256": plan["plan_sha256"],
@@ -130,7 +133,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--steps", type=int, default=16)
-    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8"), default="E5")
+    parser.add_argument("--method", choices=("E5", "E6", "E7", "E8", "E9"), default="E5")
     args = parser.parse_args(argv)
     if args.device == "cuda":
         require_tc2()
@@ -201,7 +204,7 @@ def main(argv=None):
             ),
         }
         _write(args.output / "trajectory-results.json", result)
-        if args.method in {"E6", "E7", "E8"}:
+        if args.method in {"E6", "E7", "E8", "E9"}:
             extended_audit(args.output, args.dataset, args.checkpoint, args.device)
         print(json.dumps(result["quality"]), flush=True)
     except Exception as error:
@@ -245,7 +248,7 @@ def extended_audit(output, dataset, checkpoint, device):
         raise ValueError("Retain all four frozen zero-force validation conditions")
     _write(output / "uncertainty-strata.json", strata)
     result = {
-        "scope": "E6 full-horizon and geometry follow-up; validation only",
+        "scope": "supervised trajectory full-horizon and geometry follow-up; validation only",
         "geometry": geometry["summary"],
         "zero_force_full_horizon": {
             "cases": rows,
