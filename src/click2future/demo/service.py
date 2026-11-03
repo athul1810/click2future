@@ -320,13 +320,24 @@ class DemoService:
                     )
                     temporary_meta.replace(meta)
                 validate_videos(videos, first, seeds, len(ref["frames"]))
+                details = dict(model.metadata)
+                if details.get("world_condition") is True:
+                    from click2future.models.world_motion import WORLD_CONTRACT, sample_world
+
+                    details["sampled_world_prior"] = {
+                        "contract": WORLD_CONTRACT,
+                        "properties": ["mass", "friction", "restitution"],
+                        "object_order": "sampler canonical observed slots",
+                        "draws": {str(seed): sample_world(seed)[0].tolist() for seed in seeds},
+                        "scope": "sampled prior used by this model; not the scene's true physics",
+                    }
                 results.append(
                     {
                         "name": name,
                         "source": source,
                         "seconds": time.perf_counter() - started,
                         "strip": filmstrip(videos),
-                        "details": model.metadata,
+                        "details": details,
                         "pixel_tracks": pixel_diagnostics(
                             videos, ref["instance_masks"][0], ref["object_valid"]
                         ),

@@ -1,5 +1,6 @@
 {
   "include": [
+    "scripts/build_demo_bundle.py",
     "src/click2future/**/*.py",
     "src/click2future/demo/static/index.html",
     "src/click2future/demo/static/style.css",

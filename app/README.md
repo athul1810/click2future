@@ -10,7 +10,10 @@ The 2 November interface adds a pinned action comparison. Generate, pin, then
 change the push or selected object and generate again. Both complete four-seed
 ensembles stay on the same timeline. A different seed list is labelled unpaired;
 equal seeds do not identify the same physical world in the CVAE/E5/E6 models.
-Changing scenes clears the pin.
+Changing scenes clears the pin. Each tile also shows its selected-object
+displacement in native pixels at the current frame, projected along the recorded
+push. Zero-force clips show distance from the start. Missing tracking stays
+unavailable; these readouts do not certify physical validity.
 
 The separate reference selector switches among existing hidden-physics variants
 with exactly the same first image. It changes only the simulator panel, never
@@ -63,10 +66,10 @@ all members. Include every matching reference variant in `samples` to enable the
 reference-world selector. The output folder must be new.
 
 On the RTX 3060 laptop, all three models together have warm end-to-end median
-2.226s and empirical p95 2.249s across ten uncached requests after one warm-up.
+1.919s and empirical p95 2.232s across ten uncached requests after one warm-up.
 This includes tracking, reference rendering, transport and first painted canvas;
 it excludes server startup/checkpoint loading and is a small-sample timing result.
-The final interface passes 33 real-browser checks. See
+The final interface passes 34 real-browser checks. See
 [the rehearsal record](../docs/results/demo-rehearsal.json).
 
 Python sources use LF line endings on Windows and Linux so the CVAE's exact
@@ -207,6 +210,61 @@ archive sha-256: `93d1c7129a82cdc8bf96abdd43dd0fbb2e8eac794d1a2e89a2ef2db72467fd
 the uploaded archive was downloaded again and matched byte-for-byte; all 22
 inventoried member hashes pass. the bundled launch passes 25 browser checks.
 see [handoff checks](../docs/results/trajectory-handoff-checks.json).
+
+## optional shared-world preview
+
+The 3 November profile adds the existing E7 conditioned checkpoint alongside
+E6 token, E0 flow and E5. It samples mass/friction/restitution from the declared
+prior and reuses each seed's draw when the push changes. Result metadata retains
+all four draws in canonical observed-object order. They are not estimated or
+read from the supplied scene. Reference-world switching stays separate.
+
+The profile passed 35 functional browser checks and verified 37 bundle files.
+Ten fresh four-model requests after one warm-up took median 3.14 seconds and
+empirical p95 3.17 seconds on the RTX 3060 laptop, including the browser display.
+Startup and loading are excluded. The earlier three-model measurements remain
+in the rehearsal record. These are small local timing samples, not throughput
+comparisons with general video models.
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/demo-20261103/world-bundle `
+  --models E7-prior-preview E6-contact E0-flow E5-trajectory --device cuda
+```
+
+E7 still has 11 penetrating clips out of 96 validation samples and fails overall
+quality. This optional inspection profile does not promote it. Bundle recipes,
+weights and caches remain separate from the source-only submission archive.
+
+## optional one-pass comparison
+
+The separate prior bundle loads `E11-one-pass`, its matched `E11-diffusion`
+control, `E0-flow` and `E7-prior-preview`. Both E11 checkpoints are final-update
+seed-19 models; the screen reused four validation scenes. One-pass decoding
+reduces penetrating clips from 11/96 to 1/96, but adds zero-force drift in 2/16
+clips and reduces timed-contact F1. Neither model passes the quality gate.
+See [the complete screen](../docs/PRIOR_ONLY_EXPERIMENT.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m click2future.demo.server `
+  --bundle outputs/demo-20261103/prior-bundle `
+  --models E11-one-pass E11-diffusion E0-flow E7-prior-preview --device cuda
+```
+
+This profile passed 35 browser checks. Ten fresh requests per model, after one
+warm-up and with the same input/seed range, took median/p95 0.394/0.402 seconds
+for one-pass and 1.286/1.290 seconds for its diffusion control on the RTX 3060
+laptop. The four-model profile took 3.286/3.443 seconds. These measurements
+include browser display and exclude startup/loading; they measure responsiveness,
+not physical quality. The benchmark refuses cache hits:
+
+```powershell
+python scripts/benchmark_demo_browser.py --model E11-one-pass --repeats 10 --seed 430300 --output outputs/timing-direct.json
+```
+
+Use a fresh output file and restart the server or change the seed range for a
+new measurement. Keep the control's seed range matched. The three-seed D018
+study is separate and does not change these seed-19 demo checkpoints.
 
 ## contact candidate comparison
 

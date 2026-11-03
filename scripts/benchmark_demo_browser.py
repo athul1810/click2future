@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--seed", type=int, default=61017000)
+    parser.add_argument("--model", default="__all", help="One model ID, or all loaded models")
     parser.add_argument("--browser-executable", type=Path)
     args = parser.parse_args()
     if (
@@ -66,7 +67,12 @@ def main():
                 raise RuntimeError("Local demo did not initialize")
             time.sleep(0.1)
         metadata = page.evaluate("state.models")
-        if len(metadata) > 1:
+        if args.model != "__all":
+            metadata = [row for row in metadata if row["id"] == args.model]
+            if len(metadata) != 1:
+                raise ValueError("The requested model is not loaded")
+            page.locator("#model").select_option(args.model)
+        elif len(metadata) > 1:
             page.locator("#model").select_option("__all")
         condition = page.evaluate("({scene:scene.id,object:selected,force:force.slice()})")
         runs = []

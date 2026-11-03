@@ -195,7 +195,7 @@
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
-    "../docs/results/demo-rehearsal.json": "606518e60d7ad08f83cc9cd1e5d74bde56a91524a94ba13a15d453db7bd7fe00",
+    "../docs/results/demo-rehearsal.json": "59ec1fd0c77dcc0bc61bd53dd6d1370e408eabe0ef97810da6fa1c27eacbb56b",
     "../docs/results/surface-validation.json": "439f866415fb744533bd4e69e11eb5b11295c32dde63f34fb796a6547b5b07c8",
     "../docs/results/prior-validation.json": "d6b18681fe5672a2b5deabdfd2b9947eb6f630d1c75ab8b475cfb9c7072cd8fd"
   },
@@ -203,16 +203,16 @@
   "visual_review": "28 pages rendered; pages 1-24 retain the previously inspected pixel content. Pages 25-28 inspected at full size across the exploratory edits. No clipping, overfull boxes, undefined references, external links, URLs, em/en dashes or replacement glyphs.",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 295,
-    "bytes": 537562,
-    "archive_sha256": "8bfbc1b8187ebf55221182d5cc4319b3f4fa39444e7c8c345ca33cb0b85c7c0c",
+    "file_count": 315,
+    "bytes": 574469,
+    "archive_sha256": "82e554d9d86b97256d2d16431d36caf9ec84da44afc5bcdf0955abd6cfdcf693",
     "checks": [
       "allowed text files",
       "no external links",
       "source inventory hashes",
       "no datasets, weights, environments, or Git history"
     ],
-    "archive": "outputs\\finalization-20261102\\group_07_code.zip"
+    "archive": "outputs/presentation-review-20261103/group_07_code.zip"
   },
   "remaining": [
     "Contact quality, wall completeness and forward-motion uncertainty",
@@ -764,5 +764,22 @@
       28
     ],
     "pdf_sha256": "da57bf7beedd8bec35b6f89f610abb118f25dc008cba1b223d5d1beef4ad8568"
+  },
+  "delivery_review_2026_11_03": {
+    "scope": "28-page report plus contribution review; E9/E11 screen only; D018 evaluation excluded while running",
+    "slides": 15,
+    "functional_browser_checks_per_profile": 35,
+    "source_files": 315,
+    "contribution_confirmations_pending": [
+      "Sanjay",
+      "Shrijeet",
+      "Athul"
+    ],
+    "remaining": [
+      "team review",
+      "presentation rehearsal",
+      "final export after outstanding studies",
+      "one coordinated NTULearn upload"
+    ]
   }
 }
