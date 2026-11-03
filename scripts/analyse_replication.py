@@ -1,5 +1,6 @@
 """Collect the D017 held-out replication scores from the three saved job directories."""
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -22,19 +23,20 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
-def estimates(methods, names, scope):
-    rows = {}
-    for method in methods:
-        rows[method["method"]] = {
-            name: method["metrics"][name]["estimate"] for name in names if name in method["metrics"]
-        }
-        rows[method["method"]]["runs"] = method["runs"]
-        rows[method["method"]]["scene_groups"] = method.get("scene_groups")
-    return {"scope": scope, "methods": rows}
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def score(metric):
+    return {
+        "estimate": metric["estimate"],
+        "scored_scene_groups": metric["scored_scene_groups"],
+        "expected_scene_groups": metric["expected_scene_groups"],
+    }
 
 
 def collect(root, label, split):
-    """Return score rows for one job directory and split, keyed by model group."""
+    """Return score rows, plan hashes and checkpoint hashes for one job and split."""
     base = Path(root) / split
     if not base.is_dir():
         return {}
@@ -43,6 +45,7 @@ def collect(root, label, split):
         ("primary", base, MEASURES, "summary.json"),
         ("selection", base / "target-controls", SELECTION, "targets.json"),
     ):
+        out.setdefault("plan_sha256", {})[kind] = read(folder / "plan.json")["plan_sha256"]
         for directory in sorted(folder.glob("*metrics")):
             path = directory / file
             if not path.is_file():
@@ -50,14 +53,27 @@ def collect(root, label, split):
             data = read(path)
             methods = data["methods"] if "methods" in data else data["summary"]["methods"]
             prefix = directory.name.removesuffix("metrics").rstrip("-")
+            checkpoints = {}
+            if kind == "primary":
+                comparison = read(directory / "comparison.json")
+                checkpoints = {
+                    run["method"] + ":" + str(run["training_seed"]): run["checkpoint_sha256"]
+                    for run in comparison["runs"]
+                }
             for method in methods:
-                group = label if not prefix else prefix
-                key = method["method"] if not prefix else prefix
-                out.setdefault(kind, {})[key if prefix else f"{key}-{label}"] = {
-                    name: method["metrics"][name]["estimate"]
+                key = prefix or f"{method['method']}-{label}"
+                row = {
+                    name: score(method["metrics"][name])
                     for name in names
                     if name in method["metrics"]
-                } | {"runs": method["runs"], "group": group}
+                }
+                row["runs"] = method["runs"]
+                row["source_sha256"] = sha256(path)
+                if kind == "selection":
+                    row["pair_counts"] = method["counts"]
+                else:
+                    row["checkpoint_sha256"] = checkpoints
+                out.setdefault(kind, {})[key] = row
     return out
 
 
@@ -78,10 +94,13 @@ def main(argv):
         "splits": {},
     }
     for split in SPLITS:
-        merged = {}
+        merged, plans = {}, {}
         for label, root in jobs.items():
-            for kind, rows in collect(root, label, split).items():
+            found = collect(root, label, split)
+            plans[label] = found.pop("plan_sha256", None)
+            for kind, rows in found.items():
                 merged.setdefault(kind, {}).update(rows)
+        merged["plan_sha256_by_job"] = plans
         result["splits"][split] = merged
     Path(argv[4]).write_text(json.dumps(result, indent=2) + "\n")
 
