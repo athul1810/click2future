@@ -20,6 +20,7 @@ DEMO_ASSETS = {
 }
 # TC2 jobs behind the final E0/E2/E3 runs and held-out results (D013-D015).
 FINAL_RUN_SCRIPTS = {
+    "cluster/contact_dynamics.sbatch",
     "cluster/submit_once.py",
     "cluster/cvae_study.sbatch",
     "cluster/action_horizon.sbatch",

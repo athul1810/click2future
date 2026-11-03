@@ -1,5 +1,6 @@
 {
   "include": [
+    "cluster/contact_dynamics.sbatch",
     "cluster/submit_once.py",
     "submission/expected_prior_comparison.py",
     "submission/expected_prior_comparison.sbatch",
