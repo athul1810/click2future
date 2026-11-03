@@ -1,4 +1,4 @@
-"""Loopback-only local demo. No uploads, external services or remote model execution."""
+"""Loopback-only local inference with bounded synthetic PNG input."""
 
 import argparse
 import json
@@ -76,12 +76,14 @@ def make_server(service, *, port=8765):
                 self.send(403, {"error": "Local demo session required"})
                 return
             try:
+                path = urlsplit(self.path).path
                 length = int(self.headers.get("Content-Length", "0"))
-                if not 0 < length <= 4096:
+                if not 0 < length <= (90000 if path == "/api/images" else 4096):
                     raise ValueError("Invalid request size")
                 data = json.loads(self.rfile.read(length))
-                path = urlsplit(self.path).path
-                if path == "/api/generate":
+                if path == "/api/images":
+                    self.send(200, service.add_image(data))
+                elif path == "/api/generate":
                     self.send(202, {"id": service.submit(data)})
                 elif path == "/api/reference":
                     self.send(200, service.reference(data))

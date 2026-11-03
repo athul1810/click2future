@@ -88,7 +88,10 @@ For the core hidden-physics model, friction is **not an input**. Changing the fr
 The course requires at least two methods, one evaluation dataset, and a report of at least four pages. E1/E4 and advanced demo features are gated additions to the core comparison. Checkpoints and any demo recordings stay in the team's working files.
 
 No real robot, photorealistic 512px video, or general-purpose physics. The current
-demo uses preset simulator images and selected-object masks. Image uploads are deferred.
+demo supports presets and native 64px synthetic PNG input with exactly two
+separated visible objects. Upload masks come from the pixels; no scene recipe,
+hidden properties or future labels are supplied. Image-only input has no
+simulator-ground-truth panel. Real photographs remain outside this model's scope.
 
 ## System overview
 

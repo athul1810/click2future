@@ -15,12 +15,104 @@ from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright
 
 
+def check_image_input(page, output, seed, checks, wait, generate):
+    """Use a saved development image, never a reserved benchmark example."""
+    import base64
+    import io
+
+    from PIL import Image
+
+    page.set_viewport_size({"width": 1440, "height": 1080})
+    page.locator("#scene").select_option(index=0)
+    wait("!busy && scene && !playback")
+    original = page.evaluate("scene.image")
+    with page.expect_download() as pending:
+        page.locator("#save-image").click()
+    path = output / "input.png"
+    pending.value.save_as(path)
+    expected = Image.open(io.BytesIO(base64.b64decode(original.split(",", 1)[1]))).convert("RGB")
+    assert Image.open(path).convert("RGB").tobytes() == expected.tobytes()
+    checks.append("saved input PNG preserves the supplied pixels")
+    page.locator("#upload-image").set_input_files(str(path))
+    wait("!busy && scene.id.startsWith('upload-') && !playback")
+    assert page.evaluate("scene.reference_worlds") == []
+    assert "user upload" in page.evaluate("scene.split")
+    assert "not benchmark-scored" in page.evaluate("scene.split")
+    checks.append("PNG import derives object masks without simulator metadata")
+    selected_scene = page.evaluate("scene.id")
+    assert len(page.evaluate("scene.objects")) == 2
+    page.locator("#objects button").first.click()
+    selected = page.evaluate("selected")
+    center = page.evaluate("scene.objects.find(obj=>obj.id===selected).center")
+    box = page.locator("#input").bounding_box()
+    x = box["x"] + center[0] * box["width"] / 64
+    y = box["y"] + center[1] * box["height"] / 64
+    page.mouse.move(x, y)
+    page.mouse.down()
+    page.mouse.move(x + 60, y, steps=5)
+    page.mouse.up()
+    assert page.evaluate("force[0] > 0 && Math.abs(force[1]) < 1e-6")
+    checks.append("uploaded image supports object click and force drag")
+    page.locator("#model").select_option(page.evaluate("state.models[0].id"))
+    page.locator("#seed").fill(str(seed + 500))
+    generate()
+    assert page.evaluate("playback.seeds") == list(range(seed + 500, seed + 504))
+    assert page.evaluate("playback.frames") == 32 and page.evaluate("playback.fps") == 8
+    assert page.locator("#results .future-card").count() == 4
+    assert page.evaluate("playback.models[0].source") == "live model"
+    checks.append("uploaded image produces four fresh ordered real-model videos")
+    strip = page.evaluate("playback.models[0].strip")
+    image = Image.open(io.BytesIO(base64.b64decode(strip.split(",", 1)[1]))).convert("RGB")
+    assert image.size == (64 * 32, 64 * 4)
+    for row in range(4):
+        assert image.crop((0, row * 64, 64, (row + 1) * 64)).tobytes() == expected.tobytes()
+    checks.append("every uploaded-image future preserves exact frame zero")
+    assert page.evaluate("playback.reference") is None
+    assert page.locator("#reference-details").is_hidden()
+    checks.append("image-only results have no invented simulator ground truth")
+    page.locator("#pin").click()
+    previous_force = page.evaluate("playback.force")
+    page.locator("#reverse").click()
+    generate()
+    assert all(
+        abs(a + b) < 1e-6
+        for a, b in zip(previous_force, page.evaluate("playback.force"), strict=True)
+    )
+    assert page.evaluate("pinned.models[0].strip") == strip
+    assert page.locator("#pinned .future-card").count() == 4
+    page.locator("#timeline").focus()
+    page.keyboard.press("End")
+    assert page.evaluate("frame") == 31
+    checks.append("uploaded images retain all paired futures under reversal and timeline scrubbing")
+    page.locator("#objects button").last.click()
+    assert page.evaluate("selected") != selected
+    generate()
+    assert page.evaluate("playback.object") != selected
+    checks.append("uploaded images support selecting the other object")
+    page.screenshot(path=str(output / "05-uploaded-futures.png"), full_page=True)
+    previous = page.evaluate("playback.models[0].strip")
+    wrong = output / "wrong-size.png"
+    expected.resize((128, 128)).save(wrong)
+    page.locator("#upload-image").set_input_files(str(wrong))
+    wait("!busy && document.getElementById('status').classList.contains('error')")
+    assert page.evaluate("scene.id") == selected_scene
+    assert page.evaluate("playback.models[0].strip") == previous
+    assert not page.locator("#generate").is_disabled()
+    checks.append("unsupported uploads preserve the previous image and videos")
+    page.locator("#scene").select_option(index=0)
+    wait("!busy && !playback && !scene.id.startsWith('upload-')")
+    generate()
+    assert page.evaluate("playback.reference") is not None
+    checks.append("returning to presets restores the separate simulator reference")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8765")
     parser.add_argument("--output", type=Path, default=Path("outputs/demo-browser"))
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--require-live", action="store_true")
+    parser.add_argument("--check-images", action="store_true", help="Also test native PNG import")
     parser.add_argument("--browser-executable", type=Path)
     args = parser.parse_args()
     if urlsplit(args.url).hostname not in {"localhost", "127.0.0.1"}:
@@ -209,7 +301,18 @@ def main():
                 "cards => cards.map(card => card.getBoundingClientRect().bottom)"
             )
             assert max(bottoms) <= height, (width, height, bottoms)
+            assert (
+                page.locator("#generate").bounding_box()["y"]
+                + page.locator("#generate").bounding_box()["height"]
+                <= height
+            )
+            assert (
+                page.locator("#status").bounding_box()["y"]
+                + page.locator("#status").bounding_box()["height"]
+                <= height
+            )
         checks.append("all four primary futures fit common desktop viewport heights")
+        checks.append("generation controls and feedback fit common laptop viewport heights")
         page.set_viewport_size({"width": 1440, "height": 1080})
         page.screenshot(path=str(args.output / "02-futures.png"), full_page=True)
         first = page.evaluate("playback.models[0].strip")
@@ -291,6 +394,8 @@ def main():
             assert page.locator(".future-card").count() == 0
             assert page.locator("#timeline").is_disabled()
             checks.append("scene change resets playback and output")
+        if args.check_images:
+            check_image_input(page, args.output, args.seed, checks, wait, generate)
         page.set_viewport_size({"width": 390, "height": 844})
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         page.screenshot(path=str(args.output / "03-mobile.png"), full_page=True)

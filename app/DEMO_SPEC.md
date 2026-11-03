@@ -1,6 +1,6 @@
 # Click2Future demo specification
 
-Specification updated 2 November 2026. The local app and checkpoint adapters are
+Specification updated 3 November 2026. The local app and checkpoint adapters are
 implemented; [launch instructions](README.md) cover the current interface.
 Trained diagnostic checkpoints exist, but held-out quality and final demo acceptance
 remain open. Pixel-track overlays and a small warm latency study are implemented.
@@ -48,7 +48,7 @@ integration. Ananya confirmed the CVAE lead on 17 October; Athul and Ananya stil
 
 ## Exact behaviour
 
-- Selection uses the preset's frame-0 mask. A click selects an object; it does not set
+- Selection uses the preset's frame-0 mask or an image-derived upload mask. A click selects an object; it does not set
   an off-centre force or torque. The arrow snaps to the object's centre.
 - Map display coordinates back to the 64px scene. Positive x is right and positive y
   is down. Clamp to the declared force range and display the actual applied strength.
@@ -64,7 +64,9 @@ integration. Ananya confirmed the CVAE lead on 17 October; Athul and Ananya stil
 - The current simulator has contact friction without tabletop drag. Do not expose a
   slider promising free-sliding slowing unless the simulator contract is changed and tested.
 - Default demo controls stay inside the trained distribution. Mark deliberate OOD
-  requests. Real-photo uploads are outside the core demo; synthetic uploads are deferred.
+  requests. Native 64px synthetic PNG input supports two separated visible objects.
+  Masks are derived from the pixels with the existing observation parser. Uploads
+  without scene metadata have no simulator reference. Real photos remain outside scope.
 - Trace overlays come from the shared pixel tracker. Missing tracks remain visible as
   failures. Auxiliary-head trajectories, if shown, have a separate explicit label.
 

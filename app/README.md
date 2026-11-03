@@ -1,10 +1,21 @@
 # local demo
 
 The browser app runs real local diffusion/CVAE checkpoints. It supports preset
-simulator images, click/drag selection, four paired seeds, synchronized playback,
+simulator images and native synthetic PNG input, click/drag selection, four paired seeds, synchronized playback,
 model comparison, cancellation and explicit cached replay. A separate simulator
 rollout uses the preset's hidden physical world. Those properties never enter
 the neural model.
+
+Use **save input** to export a preset's exact first image, or **open png** to load
+a native 64 x 64 opaque RGB, RGBA or palette PNG. The supported input has a flat
+tabletop, uniform border and exactly two separated visible sprites. Files are
+limited to 64 KiB. Images are never resized or substituted. Real photographs,
+touching/occluded objects and other resolutions are rejected by this input path.
+Image-derived masks define the click targets; the model receives only the image,
+selected mask and force. All four 32-frame futures preserve the input pixels at
+frame zero. Uploaded inputs are marked unscored and have no simulator reference
+or invented physical parameters. This input support does not improve the measured
+physics quality of the existing checkpoints.
 
 The 2 November interface adds a pinned action comparison. Generate, pin, then
 change the push or selected object and generate again. Both complete four-seed

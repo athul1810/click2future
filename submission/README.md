@@ -311,8 +311,12 @@ python -m click2future.demo.server --dataset data/one-clip --checkpoint "e3=runs
 
 Open the loopback address `127.0.0.1:8765` in a browser. `--device cuda` enables
 local GPU inference. TC2 requires a scheduled compute allocation. The app uses
-development/validation presets, never final-test presets; arbitrary image uploads
-are deferred. Four paired seeds and the offline sampler produce the videos.
+development/validation presets, never final-test presets. **Open png** accepts
+native 64 x 64 synthetic tabletop images with a flat background, uniform border
+and two separated objects (opaque RGB/RGBA/palette PNG, at most 64 KiB). Masks
+come from the pixels. Images are not resized. Real photos and unsupported scenes
+are rejected. Image-only input has no simulator reference or known physical
+properties, and its split is unverified. Four paired seeds and the unchanged offline sampler produce the videos.
 Simulator references and cached model replays have separate labels. Checkpoints
 and generated replay files are excluded from this archive. The demo currently
 establishes interface functionality, not held-out quality or a final model ranking.
