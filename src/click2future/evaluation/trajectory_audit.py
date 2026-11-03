@@ -61,7 +61,7 @@ def verify_inputs(plan_path, predictions_path, dataset, checkpoint):
         raise ValueError("Audit replay requires the recorded 16-step E5 sampler")
     expected = {case["sample_id"] for case in plan["cases"]}
     if (
-        run["method"] not in {"E5", "E6", "E7", "E8", "E9", "E11"}
+        run["method"] not in {"E5", "E6", "E7", "E8", "E9", "E10", "E11"}
         or run["checkpoint_sha256"] != sha256(checkpoint)
         or run.get("untrained_fixture") is not False
         or set(run["videos"]) != expected
@@ -146,11 +146,8 @@ def audit(plan_path, predictions_path, dataset, checkpoint, output, *, device="c
         raise ValueError("Use a fresh audit directory; preserve earlier attempts")
     plan, run, paths, hashes = verify_inputs(plan_path, predictions_path, dataset, checkpoint)
     model, state = load_trajectory(checkpoint, device)
-    if (
-        run["method"]
-        != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 7: "E11"}[
-            state["trajectory_format_version"]
-        ]
+    if run["method"] != {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 6: "E10", 7: "E11"}.get(
+        state["trajectory_format_version"]
     ):
         raise ValueError("Checkpoint training variant and audit method disagree")
     if run["method"] == "E11" and run.get("world_prior_only") != model.world_prior_only:
