@@ -34,6 +34,7 @@ Those artifact references are for team work. The course submission must contain 
 Follow [development setup](docs/SETUP.md) for the dependency lock, environment check,
 and development checks. The TC2 A40 environment and cross-job diffusion resume
 checks passed. Simulation, grouped data generation/replay, evaluation, diffusion
-training/sampling and the CVAE baseline code are available. Diffusion pilots failed
-video-quality checks; CVAE TC2 training and the demo remain to be completed.
+training/sampling and the CVAE baseline code are available. CVAE and diffusion training, measured follow-ups and the interactive demo are
+implemented. Overall physical quality, final member review, the presentation
+rehearsal and the coordinated submission remain open.
 See [the build plan](docs/BUILD_PLAN.md) for the prototype checks and remaining evidence gates.
