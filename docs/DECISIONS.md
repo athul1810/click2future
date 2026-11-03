@@ -281,6 +281,22 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
     differ in more than routing, so E10 does not answer the E2-versus-E3 question
     for pixel diffusion.
 
+## D019: Expected direct-decoder loss investigation
+
+- Keep D014-D018 and all negative results unchanged.
+- Diagnose the unnecessary random EDM weighting of deterministic E11 predictions.
+- Compare original and analytically expected direct losses using the same E7
+  teacher, frozen cache, seed, batches and 8,000-update budget. The expected
+  coefficients include both clipped distribution tails and the original
+  geometry activation probability. This changes gradient variance, not inference.
+- Use original validation only. A result on the opened D017/D018 sets cannot
+  support a new confirmatory claim or select this candidate.
+- Preserve the original physical gates and report every regression. A successful
+  software test or lower training loss cannot promote a physical model.
+- Full checkpoints, detached Slurm submission receipts and resumable checked
+  transfers protect the run against intermittent VPN access.
+- See [the investigation](PHYSICAL_QUALITY_REPAIR.md). Training outcome is pending.
+
 ## New decision template
 
 ```text

@@ -1,5 +1,8 @@
 {
   "include": [
+    "cluster/submit_once.py",
+    "submission/expected_prior_comparison.py",
+    "submission/expected_prior_comparison.sbatch",
     "scripts/build_demo_bundle.py",
     "scripts/analyse_replication.py",
     "scripts/analyse_prior_replication.py",
