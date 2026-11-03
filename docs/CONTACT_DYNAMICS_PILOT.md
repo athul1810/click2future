@@ -74,3 +74,21 @@ original strict gate stays unchanged. A one-seed validation pass would justify
 further experiments, not a final learned-physics success claim. Compare multiple
 training seeds and a separately frozen fresh corpus before any confirmatory or
 OOD claim. Do not score or tune this candidate on D021 or historical test sets.
+
+## Independent reference control
+
+Score all 84 original-validation simulator clips as generated RGB, without a
+model or threshold change. All 84 pair timelines are complete. Collision
+encounter counts are TP 32, FP 0, FN 0. Precise onset counts are TP 22, FP 24,
+FN 22, F1 0.48889. Ten clips contain repeated native onsets; five consecutive
+onset pairs fall within the detector's five-interval suppression window.
+This exposes a metric limitation, not a model repair. It does not erase the
+23 genuine pose-penetration failures of D020 on D021. Native onset labels,
+pixel observations and the detector's event definition need separate validation
+before precise onset F1 can be interpreted as a physical timing verdict.
+
+Reproduce with `PYTHONPATH=src python scripts/audit_reference_contacts.py
+--dataset ORIGINAL_DATA --output FRESH_AUDIT.json`. Only original validation
+references are read. The machine-readable result is
+`docs/results/contact-reference-control.json`. No historical scorer or score
+was changed. This analysis and its research links stay outside the source ZIP.
