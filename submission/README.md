@@ -650,3 +650,13 @@ This is a single-seed, reused-validation screen with extra physical supervision,
 not a new held-out comparison. A deterministic fixed-world probe repeats the
 same trajectory and labels those repetitions as dependent. Keep failed samples,
 missing coverage, raw checkpoints and provenance; do not tune on reserved splits.
+
+## Fixed-teacher repeat seeds
+
+`submission/prior_repeats.sbatch` trains the two arms at refinement seeds 20/21
+without opening any evaluation split. It checks completed seed-19 configuration,
+training source and teacher identity. Provide `C2F_PROJECT`, `C2F_PYTHON`,
+`C2F_CACHE`, `C2F_WARM_START`, `C2F_SOURCE_REVISION`, `C2F_SCREEN_SUMMARY` (the
+completed direct screen summary) and a new `C2F_REPEAT_RESULTS`. Final update
+8,000 is fixed. These are refinement repeats conditional on one E7 teacher,
+not independent end-to-end training. Keep every state, summary and failed run.

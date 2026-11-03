@@ -54,6 +54,8 @@
     "submission/surface_comparison.py",
     "submission/surface_comparison.sbatch",
     "submission/prior_comparison.py",
-    "submission/prior_comparison.sbatch"
+    "submission/prior_comparison.sbatch",
+    "submission/prior_repeats.py",
+    "submission/prior_repeats.sbatch"
   ]
 }
