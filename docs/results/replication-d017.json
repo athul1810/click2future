@@ -1,0 +1,867 @@
+{
+  "scope": "D017 held-out replication; scores only",
+  "source_revision": "ce4132fb48adc66c37583fd30ccc9a49d73b7197",
+  "jobs": {
+    "job1": "50265: E0 seeds 0-2 and E2/E3 40k, all five splits",
+    "job2": "50321: E2/E3 5k and six E10 runs for id_test, shape_ood and texture_ood; stopped by a disk quota error in force_ood, its replication.json is truncated",
+    "job2b": "50527: the same for force_ood and physics_test, node-local output"
+  },
+  "note": "job2 main plan hashes equal job1's. The selection plan hashes differ between jobs only because each embeds its own output path; the cases are identical. A null ADE or FDE means some clip had a missing track for that scene group.",
+  "splits": {
+    "id_test": {
+      "primary": {
+        "E0-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.033154121863799284,
+          "image.ssim": 0.9661909652379588,
+          "image.lpips": 0.01636617881050748,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.6297939068100358,
+          "image.ssim": 0.9266332171438755,
+          "image.lpips": 0.04587646644257049,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.6376792114695341,
+          "image.ssim": 0.9278049436197584,
+          "image.lpips": 0.044806538375853314,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selected_object.mean_ade": 0.029496134007869722,
+          "selected_object.mean_fde": 0.04390316923110307,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9600238482037986,
+          "image.lpips": 0.01805684870235636,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selected_object.mean_ade": 0.028319814132435672,
+          "selected_object.mean_fde": 0.040911939408526055,
+          "selected_object.missing_track_rate": 0.0014784946236559141,
+          "image.ssim": 0.9618684611378547,
+          "image.lpips": 0.016786641253343174,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selected_object.mean_ade": 0.029917710230668255,
+          "selected_object.mean_fde": 0.04564583137249809,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9598768646669893,
+          "image.lpips": 0.017920632056953885,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selected_object.mean_ade": 0.026042054390168302,
+          "selected_object.mean_fde": 0.0358724395099872,
+          "selected_object.missing_track_rate": 0.001747311827956989,
+          "image.ssim": 0.9645134396764823,
+          "image.lpips": 0.015623668310204952,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selected_object.mean_ade": 0.02690514742971408,
+          "selected_object.mean_fde": 0.038535367094816524,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9640063595711098,
+          "image.lpips": 0.01577797049902719,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selected_object.mean_ade": 0.026350061030882825,
+          "selected_object.mean_fde": 0.03562845131447341,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9647532098412832,
+          "image.lpips": 0.01540352307299624,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9998655913978494,
+          "image.ssim": 0.45889721840601994,
+          "image.lpips": 0.17474441082937822,
+          "runs": 3,
+          "group": "job2"
+        },
+        "E3-job2": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9994623655913978,
+          "image.ssim": 0.4548686237584466,
+          "image.lpips": 0.1703863504968624,
+          "runs": 3,
+          "group": "job2"
+        }
+      },
+      "selection": {
+        "E0-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selection.correct_target_rate_over_complete": 0.08333333333333333,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selection.correct_target_rate_over_complete": 0.3611111111111111,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2"
+        },
+        "E3-job2": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2"
+        }
+      }
+    },
+    "shape_ood": {
+      "primary": {
+        "E0-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.06971326164874553,
+          "image.ssim": 0.9639168081318052,
+          "image.lpips": 0.02802488414902436,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.766084229390681,
+          "image.ssim": 0.9346189384639967,
+          "image.lpips": 0.07382880692708424,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.7261200716845878,
+          "image.ssim": 0.9344482393655014,
+          "image.lpips": 0.07131452002568006,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selected_object.mean_ade": 0.03706242376469546,
+          "selected_object.mean_fde": 0.05617570148482325,
+          "selected_object.missing_track_rate": 0.016666666666666666,
+          "image.ssim": 0.9651681289463365,
+          "image.lpips": 0.02249818743430687,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selected_object.mean_ade": 0.036890176060631545,
+          "selected_object.mean_fde": 0.05695599046406722,
+          "selected_object.missing_track_rate": 0.017607526881720428,
+          "image.ssim": 0.9662541347806772,
+          "image.lpips": 0.021052529167023278,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selected_object.mean_ade": 0.03836910334175807,
+          "selected_object.mean_fde": 0.058562737386455156,
+          "selected_object.missing_track_rate": 0.017204301075268817,
+          "image.ssim": 0.965233317106944,
+          "image.lpips": 0.02238587234912781,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selected_object.mean_ade": 0.03499608878512914,
+          "selected_object.mean_fde": 0.051062392229665986,
+          "selected_object.missing_track_rate": 0.01962365591397849,
+          "image.ssim": 0.9690053739728475,
+          "image.lpips": 0.01947541607105841,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selected_object.mean_ade": 0.03570050912520681,
+          "selected_object.mean_fde": 0.0545508467110383,
+          "selected_object.missing_track_rate": 0.016801075268817203,
+          "image.ssim": 0.9685909095810444,
+          "image.lpips": 0.01968406487260656,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selected_object.mean_ade": 0.03545246175868165,
+          "selected_object.mean_fde": 0.052205496811943905,
+          "selected_object.missing_track_rate": 0.016666666666666666,
+          "image.ssim": 0.9689978712963876,
+          "image.lpips": 0.019692006573385237,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9988351254480288,
+          "image.ssim": 0.4761236130422155,
+          "image.lpips": 0.24040296712629897,
+          "runs": 3,
+          "group": "job2"
+        },
+        "E3-job2": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9978046594982078,
+          "image.ssim": 0.4695847311493478,
+          "image.lpips": 0.24000794128030808,
+          "runs": 3,
+          "group": "job2"
+        }
+      },
+      "selection": {
+        "E0-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selection.correct_target_rate_over_complete": 0.14583333333333334,
+          "selection.drift_rate_over_complete": 0.08333333333333333,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selection.correct_target_rate_over_complete": 0.8611111111111112,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selection.correct_target_rate_over_complete": 0.9166666666666666,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selection.correct_target_rate_over_complete": 0.8611111111111112,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selection.correct_target_rate_over_complete": 0.9444444444444444,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selection.correct_target_rate_over_complete": 0.8611111111111112,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selection.correct_target_rate_over_complete": 0.8611111111111112,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2"
+        },
+        "E3-job2": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2"
+        }
+      }
+    },
+    "texture_ood": {
+      "primary": {
+        "E0-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.0375,
+          "image.ssim": 0.9654826533733093,
+          "image.lpips": 0.019238536927917278,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.624910394265233,
+          "image.ssim": 0.9195771773991579,
+          "image.lpips": 0.054323253802754656,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.6228494623655914,
+          "image.ssim": 0.9229295342651656,
+          "image.lpips": 0.05072932115467649,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selected_object.mean_ade": 0.027886197641519606,
+          "selected_object.mean_fde": 0.046469198222933175,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9614167739399273,
+          "image.lpips": 0.02000379292276633,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selected_object.mean_ade": 0.026467673960494452,
+          "selected_object.mean_fde": 0.043556892137410146,
+          "selected_object.missing_track_rate": 0.002150537634408602,
+          "image.ssim": 0.9628531737040754,
+          "image.lpips": 0.01869027985881369,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selected_object.mean_ade": 0.02874729434346655,
+          "selected_object.mean_fde": 0.04729035266690273,
+          "selected_object.missing_track_rate": 0.00026881720430107527,
+          "image.ssim": 0.9609578778307661,
+          "image.lpips": 0.02031567928621537,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selected_object.mean_ade": 0.024702527339453762,
+          "selected_object.mean_fde": 0.0387613884783025,
+          "selected_object.missing_track_rate": 0.0005376344086021505,
+          "image.ssim": 0.964784426704848,
+          "image.lpips": 0.017495873254220914,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selected_object.mean_ade": 0.02583899742972584,
+          "selected_object.mean_fde": 0.04125121803358979,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.96368607914478,
+          "image.lpips": 0.018079985098972764,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selected_object.mean_ade": 0.024926653447720805,
+          "selected_object.mean_fde": 0.038985813607736744,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9645720854033876,
+          "image.lpips": 0.01736115172413608,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9998655913978494,
+          "image.ssim": 0.4429659085846883,
+          "image.lpips": 0.18363083353446374,
+          "runs": 3,
+          "group": "job2"
+        },
+        "E3-job2": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9995967741935484,
+          "image.ssim": 0.43958603796844303,
+          "image.lpips": 0.1843077000080337,
+          "runs": 3,
+          "group": "job2"
+        }
+      },
+      "selection": {
+        "E0-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.041666666666666664,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2"
+        },
+        "E3-job2": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2"
+        }
+      }
+    },
+    "force_ood": {
+      "primary": {
+        "E0-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.10064516129032257,
+          "image.ssim": 0.8956907306792635,
+          "image.lpips": 0.11319815091346656,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9559139784946236,
+          "image.ssim": 0.7522049170662409,
+          "image.lpips": 0.19094355777496855,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9833870967741936,
+          "image.ssim": 0.80147261148605,
+          "image.lpips": 0.15233024136603918,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selected_object.mean_ade": 0.06842622560979446,
+          "selected_object.mean_fde": 0.07075926180594189,
+          "selected_object.missing_track_rate": 0.037741935483870975,
+          "image.ssim": 0.9147833900179393,
+          "image.lpips": 0.07423561623896545,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selected_object.mean_ade": 0.06576044801636993,
+          "selected_object.mean_fde": 0.07354747013002438,
+          "selected_object.missing_track_rate": 0.1267741935483871,
+          "image.ssim": 0.9139686249485213,
+          "image.lpips": 0.0784568206383964,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selected_object.mean_ade": 0.07006558246702098,
+          "selected_object.mean_fde": 0.07211830557120215,
+          "selected_object.missing_track_rate": 0.05306451612903225,
+          "image.ssim": 0.9185757073876587,
+          "image.lpips": 0.0742828735713157,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selected_object.mean_ade": 0.10768815700670915,
+          "selected_object.mean_fde": 0.12620647707899252,
+          "selected_object.missing_track_rate": 0.1738709677419355,
+          "image.ssim": 0.9247629037958791,
+          "image.lpips": 0.06922986370430775,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selected_object.mean_ade": 0.06501105703159946,
+          "selected_object.mean_fde": 0.06315823405729014,
+          "selected_object.missing_track_rate": 0.12193548387096773,
+          "image.ssim": 0.9247230199217782,
+          "image.lpips": 0.06770745710808349,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.24467741935483872,
+          "image.ssim": 0.9229709537082001,
+          "image.lpips": 0.07705732177341243,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2b": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 1.0,
+          "image.ssim": 0.21634965122869804,
+          "image.lpips": 0.42922571520931935,
+          "runs": 3,
+          "group": "job2b"
+        },
+        "E3-job2b": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 1.0,
+          "image.ssim": 0.2561597565982175,
+          "image.lpips": 0.3583540658648777,
+          "runs": 3,
+          "group": "job2b"
+        }
+      },
+      "selection": {
+        "E0-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selection.correct_target_rate_over_complete": 0.03125,
+          "selection.drift_rate_over_complete": 0.125,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selection.correct_target_rate_over_complete": 0.5,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2b": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2b"
+        },
+        "E3-job2b": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2b"
+        }
+      }
+    },
+    "physics_test": {
+      "primary": {
+        "E0-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.03445340501792115,
+          "image.ssim": 0.9672888134126343,
+          "image.lpips": 0.018927094252996938,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.6562724014336917,
+          "image.ssim": 0.9257756881186593,
+          "image.lpips": 0.053649505524259046,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.6818548387096774,
+          "image.ssim": 0.9278806701285699,
+          "image.lpips": 0.05125801890753009,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selected_object.mean_ade": 0.029057781065251448,
+          "selected_object.mean_fde": 0.045114622009616696,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9603556426515875,
+          "image.lpips": 0.020927485681210774,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selected_object.mean_ade": 0.027794598033999918,
+          "selected_object.mean_fde": 0.04247493545167569,
+          "selected_object.missing_track_rate": 0.0016129032258064516,
+          "image.ssim": 0.9624979258794497,
+          "image.lpips": 0.01927430857017205,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selected_object.mean_ade": 0.029567560004878018,
+          "selected_object.mean_fde": 0.0468817311844092,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9601449691594309,
+          "image.lpips": 0.021048739222943192,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selected_object.mean_ade": 0.025618520513366293,
+          "selected_object.mean_fde": 0.03688874910134552,
+          "selected_object.missing_track_rate": 0.0012096774193548385,
+          "image.ssim": 0.9652554048485463,
+          "image.lpips": 0.01791998052854949,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selected_object.mean_ade": 0.02636500641977107,
+          "selected_object.mean_fde": 0.039502022237396336,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9645507029055922,
+          "image.lpips": 0.018522914214521714,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selected_object.mean_ade": 0.025684840009629024,
+          "selected_object.mean_fde": 0.036457034353994514,
+          "selected_object.missing_track_rate": 0.0,
+          "image.ssim": 0.9655522621510328,
+          "image.lpips": 0.017750197581400704,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2b": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9997759856630826,
+          "image.ssim": 0.4559947840585769,
+          "image.lpips": 0.18744783122676645,
+          "runs": 3,
+          "group": "job2b"
+        },
+        "E3-job2b": {
+          "selected_object.mean_ade": null,
+          "selected_object.mean_fde": null,
+          "selected_object.missing_track_rate": 0.9996415770609319,
+          "image.ssim": 0.45195179349506676,
+          "image.lpips": 0.18690013883745557,
+          "runs": 3,
+          "group": "job2b"
+        }
+      },
+      "selection": {
+        "E0-job1": {
+          "selection.correct_target_rate_over_complete": 0.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E2-job1": {
+          "selection.correct_target_rate_over_complete": 0.03571428571428571,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E3-job1": {
+          "selection.correct_target_rate_over_complete": 0.4375,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 3,
+          "group": "job1"
+        },
+        "E10-numeric-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed19"
+        },
+        "E10-numeric-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed20"
+        },
+        "E10-numeric-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-numeric-seed21"
+        },
+        "E10-spatial-seed19": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed19"
+        },
+        "E10-spatial-seed20": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed20"
+        },
+        "E10-spatial-seed21": {
+          "selection.correct_target_rate_over_complete": 1.0,
+          "selection.drift_rate_over_complete": 0.0,
+          "runs": 1,
+          "group": "E10-spatial-seed21"
+        },
+        "E2-job2b": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2b"
+        },
+        "E3-job2b": {
+          "selection.correct_target_rate_over_complete": null,
+          "selection.drift_rate_over_complete": null,
+          "runs": 3,
+          "group": "job2b"
+        }
+      }
+    }
+  }
+}
