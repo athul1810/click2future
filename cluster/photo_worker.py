@@ -252,6 +252,17 @@ class PhotoWorker:
                                 "gpu_peak_bytes": torch.cuda.max_memory_allocated(),
                             }
                         )
+                        write_json(
+                            self.active / "attempt.json",
+                            {
+                                "request": request,
+                                "videos": rows,
+                                **self.service.layout,
+                                "model": model,
+                                "complete": False,
+                                "scope": "completed samples from an unfinished request",
+                            },
+                        )
                     result = {
                         "request": request,
                         "videos": rows,

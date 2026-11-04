@@ -39,11 +39,13 @@ university VPN first. Leave the transport process running. Disconnecting it
 does not cancel an allocated generation job; reconnect to the same spool.
 
 The 20-step profile is `force-prompting-20`. It has a separate cache identity
-and needs a separate spool. Selection depends on PHOTO-P02; do not relabel its
+and needs a separate spool. PHOTO-P02 selects this profile on one development photo after an exact replay
+and inspection of all samples. Do not relabel its
 outputs as the published 50-step reference. PHOTO-P01's smaller-resolution
 candidate failed at the released model's positional embedding and is not an
-available interface option. No latency or quality gain is assumed from fewer
-steps. The first native 50-step smoke took about 7.8 minutes per sample on A40.
+available interface option. The measured median is 192.84 seconds per sample versus 466.42 at 50 steps
+on that photo. Motion is weak in both. This engineering choice does not establish
+a quality gain or reliable force control. The first native 50-step smoke took about 7.8 minutes per sample on A40.
 
 ## Allocated worker
 
@@ -75,6 +77,11 @@ home-directory quota is independent of filesystem free space.
 Each immutable request binds input pixels, crop, caption, point/vector, four
 seeds, checkpoint/runtime identity and video contract. Completed output needs
 four matching, hash-checked MP4s. Failed/cancelled attempts remain on disk.
+After each finished sample, the worker publishes a separate incomplete attempt
+manifest. The transport mirrors those videos/raw arrays even if a later sample
+fails or the request is cancelled. It never treats partial output as four ready
+futures. A hard allocation failure can still interrupt a transfer, so preserve
+the node workspace and recover missing artifacts before releasing that node.
 The transport backs up raw arrays through the existing Slurm allocation when
 `--archive-raw` is enabled. Finish this backup before the allocation expires;
 node-local storage is not durable. Back up the complete local spool separately.

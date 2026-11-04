@@ -100,10 +100,12 @@ def sync(sftp, local, remote, *, archive_raw=False, client=None):
             put(sftp, request, folder / "request.json")
         if (request.parent / "cancel.json").is_file() and not exists(sftp, folder / "cancel.json"):
             put(sftp, request.parent / "cancel.json", folder / "cancel.json")
-        for name in ["status.json", "failure.json", "result.json"]:
+        for name in ["status.json", "failure.json", "attempt.json", "result.json"]:
             if exists(sftp, folder / name):
                 get(sftp, folder / name, request.parent / name)
-        result = read_json(request.parent / "result.json")
+        result = read_json(request.parent / "result.json") or read_json(
+            request.parent / "attempt.json"
+        )
         if result:
             for row in result["videos"]:
                 copies = [(row["file"], row["sha256"])]
