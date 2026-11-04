@@ -110,5 +110,31 @@
     "PHOTO-P03 full fresh paired-action path",
     "original physical-quality gate",
     "final presentation rehearsal"
-  ]
+  ],
+  "layout_followup": {
+    "source_revision": "5e1ccddfe788f61c069b4087cf45f198cdc61ca4",
+    "python_source_unchanged_from_full_tested_archive": true,
+    "browser_checks": [
+      "latest complete recorded run restores its image and action at startup without live inference",
+      "all four hash-verified native clips decode at 720x480 with 49-frame duration; explicitly cached and worker offline",
+      "reduced-motion preference prevents autoplay",
+      "four native futures and the generation button fit at 1366x768 without image distortion",
+      "all eight pinned/current videos fit in the 1440x900 desktop viewport",
+      "shared timeline seeks all clips; pin retains four samples; unavailable fresh action preserves old output and reports failure",
+      "drag maps equal screen distances to equal horizontal and vertical control components",
+      "keyboard, strength and minimum controls obey the normalized action contract",
+      "invalid image preserves the input and existing videos",
+      "390-pixel viewport has no horizontal overflow",
+      "all-video playback and pause operate under the shared controls"
+    ],
+    "errors": [],
+    "archive_sha256": "162cbd7332b966712c44ec70c20f392e0b4dade222b3cddd1a5aee4d87f078d9",
+    "packaging_tests_passed": 13
+  },
+  "backup": {
+    "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-0100ef5ed6a7bc2f5c80",
+    "raw_bundle_sha256": "769449fe7557c907f0c613bd822fe110ddb88690f1b87e6a75d01840bde5c88f",
+    "download_hash_verified": true,
+    "small_video_bundle": "photo-native-videos-50957.zip"
+  }
 }
