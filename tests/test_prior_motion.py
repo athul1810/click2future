@@ -90,6 +90,28 @@ def test_control_is_exact_e7_and_direct_removes_only_corruption_inputs():
             direct.model(noisy, bad, features, force, world)
 
 
+def test_contact_dynamics_loss_is_an_optional_prior_training_term():
+    control, data, geometry, _ = fixture()
+    worlds = {split: sample_world(1).numpy().repeat(6, axis=0) for split in data}
+    config = PriorConfig(
+        steps=4,
+        width=16,
+        layers=1,
+        batch_size=3,
+        contact_transition_weight=8,
+        normal_velocity_weight=4,
+    )
+    candidate = PriorTrainer(data, geometry, worlds, config)
+    control_record = control.train_step()
+    candidate_record = candidate.train_step()
+    assert "contact_transition" not in control_record
+    assert "normal_velocity" not in control_record
+    assert candidate_record["contact_transition"] >= 0
+    assert candidate_record["normal_velocity"] >= 0
+    with pytest.raises(ValueError):
+        PriorConfig(contact_transition_weight=-1).validate()
+
+
 @pytest.mark.parametrize("direct", [True, False])
 def test_checkpoint_resume_sampler_and_demo_keep_all_seeded_samples(tmp_path, direct):
     trainer, _, _, obs = fixture(direct)
@@ -101,6 +123,11 @@ def test_checkpoint_resume_sampler_and_demo_keep_all_seeded_samples(tmp_path, di
     checkpoint = tmp_path / "fixture.pt"
     provenance = {"source_sha256": prior_sources()}
     trainer.save(checkpoint, provenance)
+    if direct:
+        legacy = torch.load(checkpoint, weights_only=True)
+        legacy["config"].pop("contact_transition_weight")
+        legacy["config"].pop("normal_velocity_weight")
+        torch.save(legacy, checkpoint)
     restored, *_ = fixture(direct)
     restored.resume(checkpoint, provenance)
     assert trainer.train_step() == restored.train_step()

@@ -100,6 +100,26 @@ def signed_penetration(motion, features, geometry):
     return distance.amin(-1)
 
 
+def contact_dynamics(predicted_depth, true_depth, window_pixels):
+    """Per-sample contact-transition and signed-normal-speed errors."""
+    with torch.no_grad():
+        near_contact = true_depth.abs() <= window_pixels / 64
+        transition = near_contact[:, 1:] != near_contact[:, :-1]
+        contact_neighborhood = near_contact[:, 1:] | near_contact[:, :-1]
+
+    depth_error = (predicted_depth - true_depth).square()
+    transition_error = (depth_error[:, 1:] + depth_error[:, :-1]) / 2
+    transition_error = (transition_error * transition).sum(1) / transition.sum(1).clamp_min(1)
+
+    predicted_speed = predicted_depth[:, 1:] - predicted_depth[:, :-1]
+    true_speed = true_depth[:, 1:] - true_depth[:, :-1]
+    normal_velocity_error = (
+        (predicted_speed - true_speed).square() * contact_neighborhood
+    ).sum(1)
+    normal_velocity_error = normal_velocity_error / contact_neighborhood.sum(1).clamp_min(1)
+    return transition_error, normal_velocity_error
+
+
 def contact_objective(model, clean, features, force, sigma, noise, geometry, config):
     prediction = model(clean + sigma[:, None, None, None] * noise, sigma, features, force)
     error = prediction - clean
@@ -158,4 +178,18 @@ def contact_objective(model, clean, features, force, sigma, noise, geometry, con
         )
         loss = loss + config.risk_penetration_weight * risk
         parts["tail_penetration"] = risk.detach()
+    transition_weight = getattr(config, "contact_transition_weight", 0.0)
+    velocity_weight = getattr(config, "normal_velocity_weight", 0.0)
+    if transition_weight > 0 or velocity_weight > 0:
+        transition, normal_velocity = contact_dynamics(
+            predicted_depth, true_depth, config.contact_window_pixels
+        )
+        if transition_weight > 0:
+            transition_loss = (transition * low_noise).mean()
+            loss = loss + transition_weight * transition_loss
+            parts["contact_transition"] = transition_loss.detach()
+        if velocity_weight > 0:
+            velocity_loss = (normal_velocity * low_noise).mean()
+            loss = loss + velocity_weight * velocity_loss
+            parts["normal_velocity"] = velocity_loss.detach()
     return loss, parts
