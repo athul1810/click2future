@@ -47,6 +47,7 @@ def main():
             output=str(checkpoint),
             quiet=False,
             resume=True,
+            use_cookies=False,
         )
         if downloaded is None:
             raise RuntimeError("The published student checkpoint could not be downloaded")
