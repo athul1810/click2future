@@ -41,7 +41,7 @@ function draw() {
 }
 function stop() {playing=false;for(const v of document.querySelectorAll("video"))v.pause();$("play").textContent="play";}
 function clearResults() {
-  stop();output=null;pinned=null;$("pinned").hidden=true;$("pinned-results").replaceChildren();
+  stop();output=null;pinned=null;document.body.classList.remove("has-pinned");$("pinned").hidden=true;$("pinned-results").replaceChildren();
   $("results").replaceChildren();$("results").classList.add("empty-futures");
   for(let i=0;i<4;i++){const d=document.createElement("div");d.className="future-empty";
     const s=document.createElement("span");s.textContent=String(i+1).padStart(2,"0");
@@ -189,10 +189,10 @@ function animate() {
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
-$("pin").onclick=()=>{if(!output)return;stop();pinned=output;cards($("pinned-results"),pinned);$("pinned").hidden=false;
+$("pin").onclick=()=>{if(!output)return;stop();pinned=output;cards($("pinned-results"),pinned);$("pinned").hidden=false;document.body.classList.add("has-pinned");
   $("pinned-action").textContent="push ["+pinned.result.request.force.map(v=>v.toFixed(2)).join(", ")+"] / seeds "+pinned.result.request.seeds.join(", ");
   pairMessage();};
-$("clear-pin").onclick=()=>{stop();pinned=null;$("pinned").hidden=true;$("pinned-results").replaceChildren();pairMessage();};
+$("clear-pin").onclick=()=>{stop();pinned=null;document.body.classList.remove("has-pinned");$("pinned").hidden=true;$("pinned-results").replaceChildren();pairMessage();};
 $("generate").onclick=async()=>{
   const mine=++operation;let receipt;
   try{

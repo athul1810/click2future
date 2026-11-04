@@ -8,3 +8,8 @@ body.backend-cogvideo .input-image,body.backend-cogvideo .future video{aspect-ra
 body.backend-cogvideo .future-empty{aspect-ratio:720/560}
 
 #recordings{display:block;width:100%;margin:0 0 12px;padding:8px;min-width:0;text-overflow:ellipsis}#recordings[hidden]{display:none}
+
+@media(min-width:1051px){body.has-pinned .futures,body.has-pinned .pinned-futures{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}body.has-pinned .pinned{border-width:1px 0 0;border-radius:0;padding:14px 0 0;background:transparent;margin-top:18px}body.has-pinned .future .video-footer{gap:4px;padding:7px 6px;font-size:10px}body.has-pinned .future button{padding:3px 4px}}
+@media(min-width:601px) and (max-width:1050px){#recordings{grid-column:1/-1}.input-image{grid-row:auto;grid-column:1}}
+
+@media(max-height:850px) and (min-width:1051px){body.backend-cogvideo .input-image{width:min(100%,max(225px,calc((100vh - 600px)*1.5)));margin:0 auto}.future video{max-height:calc((100vh - 360px)/2)}}

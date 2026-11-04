@@ -28,9 +28,9 @@
         <div class="review-controls"><button id="play" type="button" disabled>play</button><input id="timeline" type="range" min="0" max="80" value="0" disabled aria-label="shared video timeline"><span id="time">0.00s</span><button id="pin" type="button" disabled>pin action</button></div>
         <div id="results" class="futures empty-futures"><div class="future-empty"><span>01</span><p>future one</p></div><div class="future-empty"><span>02</span><p>future two</p></div><div class="future-empty"><span>03</span><p>future three</p></div><div class="future-empty"><span>04</span><p>future four</p></div></div>
         <p id="pair-note" class="hint">four declared seeds. every output stays visible.</p>
+        <section id="pinned" class="pinned" hidden><div class="panel-heading"><h2>pinned action</h2><p id="pinned-action"></p><button id="clear-pin" type="button">clear</button></div><div id="pinned-results" class="pinned-futures"></div></section>
       </section>
     </div>
-    <section id="pinned" class="pinned" hidden><div class="panel-heading"><h2>pinned action</h2><p id="pinned-action"></p><button id="clear-pin" type="button">clear</button></div><div id="pinned-results" class="pinned-futures"></div></section>
     <details class="inspection"><summary>inspect the model and request</summary><p>force strength is the external model's control scale. reused noise seeds do not identify a shared physical world.</p><pre id="details">no request yet.</pre></details>
     <footer><span>click2future &middot; ai6132</span><span id="attribution">external pretrained backend &middot; physical reliability requires evaluation</span></footer>
   </main>
