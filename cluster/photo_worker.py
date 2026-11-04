@@ -2,6 +2,7 @@
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import os
 import signal
@@ -27,6 +28,28 @@ from click2future.demo.photo_service import (  # noqa: E402 - external environme
 
 class Cancelled(Exception):
     pass
+
+
+def runtime_versions():
+    versions = {}
+    for name in (
+        "torch",
+        "numpy",
+        "pillow",
+        "diffusers",
+        "transformers",
+        "accelerate",
+        "safetensors",
+        "peft",
+        "einops",
+        "imageio",
+        "imageio-ffmpeg",
+    ):
+        try:
+            versions[name] = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            versions[name] = None
+    return versions
 
 
 def verify_worker_artifacts(repo):
@@ -144,6 +167,8 @@ class PhotoWorker:
             identity = {
                 "checkpoint_sha256": sha256(checkpoint),
                 "runtime_sha256": sha256(runtime),
+                "loader_sha256": sha256(runtime.with_name("streamforce_runtime.py")),
+                "software": runtime_versions(),
                 "worker_sha256": sha256(Path(__file__)),
                 "request_contract_sha256": sha256(
                     Path(__file__).resolve().parents[1] / "src/click2future/demo/photo_service.py"

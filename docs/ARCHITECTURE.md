@@ -167,8 +167,9 @@ durable request queue. `scripts/photo_remote.py` synchronizes that queue over
 verified SSH to an allocated `cluster/photo_worker.py` process. The released
 external Force Prompting/CogVideoX model produces four ordered RGB videos;
 no simulator metadata or ground-truth masks are supplied. Model identity binds
-checkpoint, source/runtime, sampler profile and video contract. Input, requests,
-all raw samples and presentation MP4 hashes are retained. Cached replay is
+checkpoint, runtime and shared loader source, installed inference-library
+versions, sampler profile and video contract. The queue retains input,
+requests, all raw samples and presentation MP4 hashes. Cached replay is
 explicit and available offline; fresh inference needs a live allocated worker.
 This extension is separate from the original models and evaluation evidence.
 See [photo setup and limitations](PHOTO_DEMO.md).
