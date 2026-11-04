@@ -130,9 +130,39 @@ def test_cancelled_request_backs_up_its_finished_sample_without_claiming_complet
         def get(self, source, target):
             shutil.copyfile(self.path(source), target)
 
+        def open(self, source, mode):
+            return self.path(source).open(mode)
+
     remote.sync(SFTP(), service.root, PurePosixPath("/spool"), archive_raw=True, client=Client(raw))
     assert (folder / "0.mp4").read_bytes() == video
     assert (folder / "0.npy").read_bytes() == raw
     assert not read_json(folder / "attempt.json")["complete"]
     assert service.job(job_id)["status"] == "cancelled"
     assert service.job(job_id)["result"] is None
+
+
+def test_mutable_json_retries_a_stale_handle_and_preserves_last_good_state(tmp_path, monkeypatch):
+    target = tmp_path / "WORKER.json"
+    target.write_text('{"stage":"last good"}')
+    monkeypatch.setattr(remote.time, "sleep", lambda *_: None)
+
+    class SFTP:
+        calls = 0
+
+        def get(self, *_):
+            raise AssertionError("Mutable JSON must not use stat/prefetch")
+
+        def open(self, source, mode):
+            self.calls += 1
+            if self.calls == 1:
+                raise OSError("stale remote handle")
+            return io.BytesIO(b'{"stage":"fresh"}')
+
+    sftp = SFTP()
+    remote.get(sftp, PurePosixPath("/spool/WORKER.json"), target)
+    assert sftp.calls == 2
+    assert target.read_text() == '{"stage":"fresh"}'
+    sftp.open = lambda *_: io.BytesIO(b"invalid JSON")
+    with pytest.raises(ValueError):
+        remote.get(sftp, PurePosixPath("/spool/WORKER.json"), target)
+    assert target.read_text() == '{"stage":"fresh"}'

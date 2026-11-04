@@ -2,6 +2,7 @@
 
 import argparse
 import getpass
+import json
 import logging
 import re
 import shlex
@@ -32,8 +33,23 @@ def put(sftp, source, target):
 def get(sftp, source, target):
     temporary = target.with_suffix(target.suffix + ".part")
     target.parent.mkdir(parents=True, exist_ok=True)
-    sftp.get(str(source), str(temporary))
-    temporary.replace(target)
+    for attempt in range(3):
+        try:
+            if str(source).endswith(".json"):
+                # Read mutable metadata through one handle. stat/prefetch can race
+                # the worker's atomic rename on the shared cluster filesystem.
+                with sftp.open(str(source), "rb") as handle:
+                    payload = handle.read()
+                json.loads(payload)
+                temporary.write_bytes(payload)
+            else:
+                sftp.get(str(source), str(temporary))
+            temporary.replace(target)
+            return
+        except OSError:
+            if attempt == 2:
+                raise
+            time.sleep(0.25 * (attempt + 1))
 
 
 def archive_raw_file(client, model, job_id, row, target):
@@ -163,13 +179,29 @@ def main():
         finally:
             password = None
         client.get_transport().set_keepalive(20)
-        with client.open_sftp() as sftp:
-            if not exists(sftp, remote):
-                raise ValueError("Start the allocated worker before connecting its spool")
-            print("photo transport connected; leave this process running", flush=True)
-            while True:
-                sync(sftp, service.root, remote, archive_raw=args.archive_raw, client=client)
-                time.sleep(1)
+        print("photo transport connected; leave this process running", flush=True)
+        failures = 0
+        while True:
+            try:
+                with client.open_sftp() as sftp:
+                    if not exists(sftp, remote):
+                        raise ValueError("Start the allocated worker before connecting its spool")
+                    while True:
+                        sync(
+                            sftp, service.root, remote, archive_raw=args.archive_raw, client=client
+                        )
+                        failures = 0
+                        time.sleep(1)
+            except (OSError, EOFError, paramiko.SSHException):
+                failures += 1
+                transport = client.get_transport()
+                if not transport or not transport.is_active() or failures >= 5:
+                    raise
+                print(
+                    "file transfer interrupted; reopening the channel; remote jobs continue",
+                    flush=True,
+                )
+                time.sleep(min(2 ** (failures - 1), 8))
     finally:
         client.close()
 
