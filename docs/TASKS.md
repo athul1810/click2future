@@ -347,8 +347,11 @@ Make the model and simulator comparison understandable and repeatable.
 - [x] Keep the labelled simulator reference and hidden physics outside neural inference.
 - [x] Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.
 - [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
+- [ ] Add a separately attributed real-photo extension with four retained samples, live/recorded states and paired-action replay; verify the complete allocated-worker path and retain pretrained-model limitations.
 
 The original synthetic-image path now accepts native 64px two-object PNGs, derives masks from pixels and preserves the supplied frame zero in all four futures. Uploads have no simulator ground truth. The integrated E11/E0/E7 real-checkpoint run passes 46 browser checks, including both object selections, paired actions, rejected uploads and common laptop layouts. The source suite passes 700 tests and four subtests. Final physical quality and an offline rehearsal on the presentation setup remain open. See app/README.md and results/demo-image-input.json. Earlier model-specific timings remain historical and are not a benchmark of the new upload flow.
+
+4 November: the separate photograph interface, durable four-seed queue and external Force Prompting worker are implemented. A40 job 50957 completes all four native 720x480 clips; every raw/MP4 hash matches the local backup. Nine browser checks pass using those explicitly recorded smoke clips. The smaller-resolution candidate fails at the released positional embedding (PHOTO-P01); the supported-resolution step comparison is PHOTO-P02. Fresh paired-action transport/worker verification is registered as PHOTO-P03. These studies do not close the original physical-quality gate. Setup and attribution: [photo demo](PHOTO_DEMO.md).
 
 
 <a id="t18"></a>
