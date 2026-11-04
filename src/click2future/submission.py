@@ -17,9 +17,14 @@ DEMO_ASSETS = {
     "src/click2future/demo/static/index.html",
     "src/click2future/demo/static/style.css",
     "src/click2future/demo/static/app.js",
+    "src/click2future/demo/static/photo.html",
+    "src/click2future/demo/static/photo.css",
+    "src/click2future/demo/static/photo.js",
 }
 # TC2 jobs behind the final E0/E2/E3 runs and held-out results (D013-D015).
 FINAL_RUN_SCRIPTS = {
+    "cluster/streamforce_runtime.py",
+    "cluster/force_prompting_runtime.py",
     "cluster/cvae_study.sbatch",
     "cluster/action_horizon.sbatch",
     "cluster/diffusion_repeats.sbatch",
