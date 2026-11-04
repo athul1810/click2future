@@ -36,13 +36,6 @@ BACKENDS = {
         "minimum_label": "minimum",
         "steps": 20,
     },
-    "force-prompting-preview": {
-        "size": [432, 288],
-        "frames": 49,
-        "fps": 8,
-        "minimum_label": "minimum",
-        "steps": 20,
-    },
 }
 IMAGE_LIMIT = 12 * 1024 * 1024
 JOB_ID = re.compile(r"[a-f0-9]{32}\Z")

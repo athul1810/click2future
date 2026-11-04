@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>click2future · photo lab</title>
+  <title>click2future &middot; photo lab</title>
   <link rel="stylesheet" href="/assets/photo.css"><script src="/assets/photo.js" defer></script>
 </head>
 <body>
   <header><a class="brand" href="/">click<span>2</span>future.</a><span class="context">photo lab</span><span id="worker" class="worker">connecting to worker</span></header>
   <main>
-    <div class="heading"><div><p class="eyebrow">IMAGE → ACTION → POSSIBLE FUTURES</p><h1>explore what a push changes.</h1></div><p class="lede">choose a point. aim a push.<br>compare all four sampled futures.</p></div>
+    <div class="heading"><div><p class="eyebrow">IMAGE &rarr; ACTION &rarr; POSSIBLE FUTURES</p><h1>explore what a push changes.</h1></div><p class="lede">choose a point. aim a push.<br>compare all four sampled futures.</p></div>
     <div class="workspace">
       <section class="input-panel" aria-labelledby="input-title">
-        <div class="panel-heading"><h2 id="input-title">starting photograph</h2><button id="open-photo" type="button">open photo <span>↗</span></button><input id="upload" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
+        <div class="panel-heading"><h2 id="input-title">starting photograph</h2><button id="open-photo" type="button">open photo <span>&nearr;</span></button><input id="upload" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
         <select id="photos" aria-label="choose an uploaded photograph" hidden></select>
-        <div class="input-image"><canvas id="input" width="832" height="480" tabindex="0" aria-label="click a point and drag to apply a push; arrow keys adjust direction" hidden></canvas><div id="input-empty"><span class="crosshair">＋</span><h3>bring a photograph</h3><p>jpeg, png or webp<br>the preview shows the model's crop.</p><button id="empty-open" type="button">choose a photo</button></div></div>
+        <div class="input-image"><canvas id="input" width="832" height="480" tabindex="0" aria-label="click a point and drag to apply a push; arrow keys adjust direction" hidden></canvas><div id="input-empty"><span class="crosshair">+</span><h3>bring a photograph</h3><p>jpeg, png or webp<br>the preview shows the model's crop.</p><button id="empty-open" type="button">choose a photo</button></div></div>
         <p id="point-help" class="hint">click where to apply the push, then drag to aim it.</p>
-        <div class="force-controls"><label for="strength">push strength <b id="strength-value">30%</b></label><input id="strength" type="range" min="0" max="100" value="30"><button id="reverse" type="button">reverse ↔</button><button id="zero" type="button">zero</button></div>
+        <div class="force-controls"><label for="strength">push strength <b id="strength-value">30%</b></label><input id="strength" type="range" min="0" max="100" value="30"><button id="reverse" type="button">reverse &harr;</button><button id="zero" type="button">zero</button></div>
         <label class="caption-label" for="caption">describe the scene</label><textarea id="caption" rows="4" maxlength="2000" placeholder="a ceramic vase on a wooden table in a still room. the camera is fixed."></textarea>
         <p class="hint">keep this caption fixed when comparing pushes.</p>
         <div class="seed-line"><label for="seed">starting seed</label><input id="seed" type="number" min="0" max="2147483644" value="0"></div>
-        <button id="generate" class="primary" type="button" disabled>generate four futures <span>↗</span></button><button id="cancel" class="cancel" type="button" hidden>cancel request</button>
+        <button id="generate" class="primary" type="button" disabled>generate four futures <span>&nearr;</span></button><button id="cancel" class="cancel" type="button" hidden>cancel request</button>
         <p id="status" class="status" role="status" aria-live="polite">open a photo to begin.</p>
       </section>
       <section class="output-panel" aria-labelledby="output-title">
@@ -31,7 +31,7 @@
     </div>
     <section id="pinned" class="pinned" hidden><div class="panel-heading"><h2>pinned action</h2><p id="pinned-action"></p><button id="clear-pin" type="button">clear</button></div><div id="pinned-results" class="pinned-futures"></div></section>
     <details class="inspection"><summary>inspect the model and request</summary><p>force strength is the external model's control scale. reused noise seeds do not identify a shared physical world.</p><pre id="details">no request yet.</pre></details>
-    <footer><span>click2future · ai6132</span><span id="attribution">external pretrained backend · physical reliability requires evaluation</span></footer>
+    <footer><span>click2future &middot; ai6132</span><span id="attribution">external pretrained backend &middot; physical reliability requires evaluation</span></footer>
   </main>
 </body>
 </html>

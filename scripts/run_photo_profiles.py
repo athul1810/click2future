@@ -26,6 +26,7 @@ def main():
     from PIL import Image, ImageOps
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("--study", choices=["PHOTO-P01", "PHOTO-P02"], default="PHOTO-P01")
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--gallery", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -63,7 +64,7 @@ def main():
     }
     record = {
         "status": "running",
-        "study": "PHOTO-P01",
+        "study": args.study,
         "scope": "development profile comparison; no physical-quality promotion",
         "job_id": os.environ["SLURM_JOB_ID"],
         "input": row,
@@ -92,8 +93,11 @@ def main():
             ("native50", (720, 480), 50),
             ("native20", (720, 480), 20),
         ]
+        if args.study == "PHOTO-P02":
+            profiles = [("native20", (720, 480), 20), ("native50", (720, 480), 50)]
         first_preview = None
-        for name, size, steps in profiles + [("preview20-repeat", (432, 288), 20)]:
+        first_name, first_size, first_steps = profiles[0]
+        for name, size, steps in profiles + [(first_name + "-repeat", first_size, first_steps)]:
             backend.set_profile(size, steps)
             prepared = np.array(ImageOps.fit(original, size, method=Image.Resampling.LANCZOS))
             Image.fromarray(prepared).save(out / (name + "-input.png"))
@@ -144,7 +148,7 @@ def main():
                         repeat_pixel_mean=float(delta.mean()),
                         repeat_pixel_exact=bool(np.array_equal(frames, first_preview)),
                     )
-                    record["preview_replay_gate_passed"] = result["repeat_pixel_exact"]
+                    record["replay_gate_passed"] = result["repeat_pixel_exact"]
                 record["runs"].append(result)
                 progress(f"{name}_seed{seed}_complete")
         record["status"] = "completed_profile_study"

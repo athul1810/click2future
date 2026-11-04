@@ -19,7 +19,7 @@ function controls() {
   $("generate").disabled=busy || !photo || !$("caption").value.trim() || !state?.model?.identity;
   $("cancel").hidden=!busy;
 }
-function dirty() {if(output) $("source").textContent="previous action Ãƒâ€šÃ‚Â· generate to update"; controls();}
+function dirty() {if(output) $("source").textContent="previous action - generate to update"; controls();}
 function draw() {
   const canvas=$("input"),ctx=canvas.getContext("2d");
   ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -68,7 +68,7 @@ async function refresh() {
   $("input").width=state.size[0];$("input").height=state.size[1];draw();
   document.body.classList.toggle("backend-cogvideo",state.backend.startsWith("force-prompting"));
   $("zero").textContent=state.minimum_label;
-  $("attribution").textContent=(state.backend.startsWith("force-prompting") ? "force prompting ? external pretrained model ? " : "streamforce ? external pretrained model ? ")+state.size.join(" ? ");
+  $("attribution").textContent=(state.backend.startsWith("force-prompting") ? "force prompting / external pretrained model / " : "streamforce / external pretrained model / ")+state.size.join(" x ")+" / "+state.steps+" steps";
   $("worker").textContent=state.ready ? "gpu worker ready" : state.stage;
   $("worker").classList.toggle("ready",state.ready);photoOptions();controls();
 }
@@ -119,6 +119,7 @@ function cards(target,item) {
     const seed=document.createElement("span");seed.textContent="seed "+row.seed;
     const expand=document.createElement("button");expand.textContent="expand";
     expand.onclick=()=>{if(video.requestFullscreen)video.requestFullscreen().catch(()=>{});};
+    video.addEventListener("fullscreenchange",()=>{video.controls=document.fullscreenElement===video;});
     footer.append(title,seed,expand);card.append(video,footer);target.append(card);
   });
 }
@@ -146,14 +147,14 @@ function animate() {
 }
 requestAnimationFrame(animate);
 $("pin").onclick=()=>{if(!output)return;stop();pinned=output;cards($("pinned-results"),pinned);$("pinned").hidden=false;
-  $("pinned-action").textContent="push ["+pinned.result.request.force.map(v=>v.toFixed(2)).join(", ")+"] Ãƒâ€šÃ‚Â· same four seeds";
+  $("pinned-action").textContent="push ["+pinned.result.request.force.map(v=>v.toFixed(2)).join(", ")+"] / same four seeds";
   $("pair-note").textContent="change the push and generate again to compare it with the pinned action.";};
 $("clear-pin").onclick=()=>{stop();pinned=null;$("pinned").hidden=true;$("pinned-results").replaceChildren();};
 $("generate").onclick=async()=>{
   const mine=++operation;let receipt;
   try{
     const seed=Number($("seed").value);if(!Number.isInteger(seed)||seed<0||seed>2147483644)throw Error("use an integer seed between 0 and 2147483644");
-    busy=true;controls();message("sending the four-seed requestÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦");
+    busy=true;controls();message("sending the four-seed request...");
     receipt=await api("/api/generate",{photo:photo.id,prompt:$("caption").value.trim(),anchor:anchor.slice(),force:force.slice(),seeds:[seed,seed+1,seed+2,seed+3]});
     if(mine!==operation){await api("/api/jobs/"+receipt.id+"/cancel",{});return;}
     active=receipt.id;

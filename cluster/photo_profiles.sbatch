@@ -20,7 +20,7 @@ export HF_HUB_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1
 "$node_root/.venv/bin/python" "$C2F_PHOTO_PROJECT/scripts/run_photo_profiles.py" \
-    --repo "$node_root/repo" --gallery "$C2F_PHOTO_ROOT/streamforce" \
+    --study "${C2F_PHOTO_STUDY:-PHOTO-P01}" --repo "$node_root/repo" --gallery "$C2F_PHOTO_ROOT/streamforce" \
     --output "$node_root/profiles-$SLURM_JOB_ID"
 mkdir -p "$C2F_PHOTO_ROOT/profiles-$SLURM_JOB_ID"
 cp "$node_root/profiles-$SLURM_JOB_ID/"*.json "$C2F_PHOTO_ROOT/profiles-$SLURM_JOB_ID/"
