@@ -127,6 +127,7 @@ def model_force(request):
 class PhotoService:
     def __init__(self, root, *, backend=None):
         self.root = Path(root).resolve()
+        self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
         for name in ("images", "jobs"):
             (self.root / name).mkdir(parents=True, exist_ok=True)
         config = read_json(self.root / "CONFIG.json")
@@ -238,7 +239,11 @@ class PhotoService:
             raise ValueError("Open this photo again for the selected backend")
         request["input_sha256"] = photo["input_sha256"]
         key = hashlib.sha256(
-            json.dumps(request, sort_keys=True, separators=(",", ":")).encode()
+            json.dumps(
+                {**request, "model": worker["model"].get("identity")},
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode()
         ).hexdigest()
         with self.lock:
             pending = 0

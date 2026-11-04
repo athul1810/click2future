@@ -25,6 +25,7 @@ DEMO_ASSETS = {
 FINAL_RUN_SCRIPTS = {
     "cluster/streamforce_runtime.py",
     "cluster/force_prompting_runtime.py",
+    "cluster/photo_worker.py",
     "cluster/cvae_study.sbatch",
     "cluster/action_horizon.sbatch",
     "cluster/diffusion_repeats.sbatch",
@@ -62,6 +63,7 @@ def _check(name, payload):
         or name
         in {
             "scripts/build_demo_bundle.py",
+            "scripts/photo_remote.py",
             "scripts/analyse_replication.py",
             "scripts/analyse_prior_replication.py",
             "scripts/plot_prior_replication.py",

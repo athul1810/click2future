@@ -25,6 +25,7 @@ def source_copy(tmp_path):
     (target / "scripts").mkdir()
     for name in (
         "build_demo_bundle.py",
+        "photo_remote.py",
         "analyse_replication.py",
         "analyse_prior_replication.py",
         "plot_prior_replication.py",

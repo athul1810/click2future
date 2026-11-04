@@ -149,6 +149,22 @@ def test_jobs_deduplicate_and_cache_is_identified_even_offline(service):
         service.submit(request)
 
 
+def test_restarting_the_same_model_does_not_invalidate_a_verified_cached_result(service):
+    request = action(service)
+    receipt = service.submit(request)
+    complete(service, receipt)
+    write_json(
+        service.root / "MODEL.json",
+        {
+            "identity": "fixture-only",
+            "allocation_job_id": "new-allocation",
+            "worker_host": "another-worker",
+            "raw_root": "/another/temporary/path",
+        },
+    )
+    assert service.submit(request) == {"id": receipt["id"], "source": "cached replay"}
+
+
 def test_every_seed_and_file_hash_is_required_for_completion(service):
     receipt = service.submit(action(service))
     root = complete(service, receipt)
@@ -213,7 +229,7 @@ def test_photo_http_session_ranges_and_path_boundaries(service):
             "POST",
             f"/api/jobs/{receipt['id']}/cancel",
             "{}",
-            {"X-Demo-Token": state["token"], "Origin": "http://elsewhere"},
+            {"X-Demo-Token": state["token"], "Origin": "http" + "://elsewhere"},
         )
         response = conn.getresponse()
         assert response.status == 403

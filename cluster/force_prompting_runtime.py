@@ -167,7 +167,10 @@ class ForcePromptingBackend:
             output_type="np",
             callback_on_step_end=step,
         ).frames[0]
-        return (np.asarray(generated) * 255).clip(0, 255).astype(np.uint8)
+        generated = np.asarray(generated)
+        if not np.isfinite(generated).all():
+            raise FloatingPointError("The video generator produced non-finite pixels")
+        return (generated * 255).clip(0, 255).astype(np.uint8)
 
     @staticmethod
     def signal(force):

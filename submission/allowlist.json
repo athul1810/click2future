@@ -2,6 +2,8 @@
   "include": [
     "cluster/streamforce_runtime.py",
     "cluster/force_prompting_runtime.py",
+    "cluster/photo_worker.py",
+    "scripts/photo_remote.py",
     "scripts/build_demo_bundle.py",
     "scripts/analyse_replication.py",
     "scripts/analyse_prior_replication.py",
