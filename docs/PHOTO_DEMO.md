@@ -92,3 +92,7 @@ The original simulator/CVAE/diffusion comparison and this external photo
 extension need separate labels in slides and recordings. PHOTO-P01/P02 are
 engineering development studies, not untouched evaluation or SOTA evidence.
 The photo panel and rating rules must be frozen before any claimed evaluation.
+
+The completed native smoke and recorded-browser checks are recorded in
+[the evidence summary](results/photo-native-probe.json). Its official caption
+already requests swinging; these four clips are not a force-only control test.
