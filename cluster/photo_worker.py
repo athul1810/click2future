@@ -29,6 +29,45 @@ class Cancelled(Exception):
     pass
 
 
+def verify_worker_artifacts(repo):
+    """Reject stale success receipts before loading any external model code."""
+    repo = Path(repo).resolve()
+    manifest = read_json(repo / "ARTIFACTS.json", {})
+    source = read_json(repo / "SOURCE.json", {})
+    expected_source = "ef3d0f847f787552b5ce004906c4944292e58996"
+    revisions = {
+        "THUDM/CogVideoX-5b-I2V": "a6f0f4858a8395e7429d82493864ce92bf73af11",
+        "brown-palm/force-prompting": "bc1a3faa381a8c935ebce980a18afb597d4a15c4",
+    }
+    if (
+        manifest.get("status") != "passed"
+        or manifest.get("revisions") != revisions
+        or manifest.get("source_revision") != expected_source
+        or source.get("revision") != expected_source
+    ):
+        raise ValueError("Verify the pinned official photo artifacts before starting a worker")
+    files = manifest.get("files", {})
+    required = {
+        "weights/CogVideoX-5b-I2V/model_index.json",
+        "checkpoints/step-5000-checkpoint-point-force.pt",
+    }
+    if not required <= files.keys() or not source.get("files_sha256"):
+        raise ValueError("Incomplete photo artifact/source inventory")
+    for name, expected in files.items():
+        path = (repo / name).resolve()
+        if (
+            not path.is_relative_to(repo)
+            or not path.is_file()
+            or sha256(path) != expected["sha256"]
+        ):
+            raise ValueError(f"Prepared photo artifact changed: {name}")
+    for name, expected in source["files_sha256"].items():
+        path = (repo / name).resolve()
+        if not path.is_relative_to(repo) or not path.is_file() or sha256(path) != expected:
+            raise ValueError(f"Prepared photo source changed: {name}")
+    return manifest
+
+
 class PhotoWorker:
     def __init__(self, repo, spool, *, idle_seconds=1800, raw_root=None, backend="force-prompting"):
         self.repo = Path(repo).resolve()
@@ -92,6 +131,8 @@ class PhotoWorker:
         thread = threading.Thread(target=heartbeat_loop, daemon=True)
         thread.start()
         try:
+            self.update("checking_prepared_artifacts")
+            verify_worker_artifacts(self.repo)
             backend = ForcePromptingBackend(
                 self.repo,
                 progress=self.update,

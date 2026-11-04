@@ -50,12 +50,15 @@ function clearResults() {
   $("source").textContent="awaiting a push";$("timeline").value=0;$("time").textContent="0.00s";
 }
 async function selectPhoto(value) {
+  busy=true;controls();
+  try {
   stop();const next=await api("/api/photos/"+value);const nextImage=new Image();
   nextImage.src=next.image;await nextImage.decode();photo=next;image=nextImage;
   clearResults();anchor=next.anchor || [.5,.5];force=next.force || [.3,0];
   $("caption").value=next.caption || "";$("input").hidden=false;$("input-empty").hidden=true;
   $("point-help").textContent="click where to apply the push, then drag to aim it.";
-  draw();controls();message("set the push and describe the scene.");
+  draw();message("set the push and describe the scene.");
+  } finally {busy=false;controls();}
 }
 function photoOptions() {
   const selected=photo?.id;$("photos").replaceChildren();
@@ -101,11 +104,12 @@ $("open-photo").onclick=$("empty-open").onclick=()=>$("upload").click();
 $("photos").onchange=()=>selectPhoto($("photos").value).catch(e=>message(e.message,true));
 $("upload").onchange=async()=>{
   const file=$("upload").files[0];if(!file)return;
+  busy=true;controls();
   try {
     if(file.size>12*1024*1024)throw Error("choose a photograph up to 12 MiB");
     const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(Error("could not read the photo"));r.readAsDataURL(file);});
     const value=await api("/api/photos",{image:data});await refresh();await selectPhoto(value.id);$("photos").value=value.id;
-  }catch(error){message(error.message,true);}finally{$("upload").value="";}
+  }catch(error){message(error.message,true);}finally{$("upload").value="";busy=false;controls();}
 };
 function cards(target,item) {
   target.replaceChildren();target.classList.remove("empty-futures");

@@ -113,7 +113,8 @@ def validate_action(data):
             or any(type(v) not in {int, float} or not math.isfinite(v) for v in values)
         ):
             raise ValueError("The push point and vector must contain two finite numbers")
-        result[name] = [float(v) for v in values]
+        # JavaScript JSON normalizes -0 to 0; both encode the same action.
+        result[name] = [0.0 if v == 0 else float(v) for v in values]
     if any(not 0 <= v <= 1 for v in result["anchor"]):
         raise ValueError("Choose a push point inside the photograph")
     if math.hypot(*result["force"]) > 1 + 1e-12:

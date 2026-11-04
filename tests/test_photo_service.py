@@ -149,6 +149,15 @@ def test_jobs_deduplicate_and_cache_is_identified_even_offline(service):
         service.submit(request)
 
 
+def test_signed_zero_survives_the_browser_json_round_trip(service):
+    request = action(service)
+    request["force"] = [0.3, -0.0]
+    receipt = service.submit(request)
+    complete(service, receipt)
+    request["force"] = [0.3, 0]
+    assert service.submit(request) == {"id": receipt["id"], "source": "cached replay"}
+
+
 def test_restarting_the_same_model_does_not_invalidate_a_verified_cached_result(service):
     request = action(service)
     receipt = service.submit(request)
