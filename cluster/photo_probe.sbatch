@@ -33,7 +33,7 @@ if [[ ! -x "$C2F_PHOTO_ROOT/.venv/bin/python" ]]; then
 fi
 python_path="$C2F_PHOTO_ROOT/.venv/bin/python"
 "$uv_path" pip install --python "$python_path" -r "$repo/requirements.txt" \
-    --extra-index-url https://download.pytorch.org/whl/cu128
+    --extra-index-url https://download.pytorch.org/whl/cu128 --index-strategy unsafe-best-match
 "$uv_path" pip install --python "$python_path" gdown==5.2.0 psutil==7.2.2 \
     ninja==1.11.1.4 packaging==25.0 setuptools wheel
 "$python_path" "$C2F_PHOTO_ROOT/source/cluster/fetch_streamforce.py" --repo "$repo" \
