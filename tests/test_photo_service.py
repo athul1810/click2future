@@ -79,6 +79,28 @@ def test_normal_jpeg_is_oriented_cropped_and_recorded_without_physics(service):
     assert len(service.state()["photos"]) == 1
 
 
+def test_incomplete_photo_publication_is_hidden_and_can_be_repaired(service):
+    photo = service.add_image({"image": image_data()})
+    path = service.root / "images" / (photo["id"] + ".png")
+    expected = path.read_bytes()
+    path.unlink()
+    assert service.state()["photos"] == []
+    with pytest.raises(KeyError):
+        service.image(photo["id"])
+    service.add_image({"image": image_data()})
+    assert path.read_bytes() == expected
+
+
+def test_stale_heartbeat_cannot_still_say_that_the_worker_is_ready(service):
+    write_json(
+        service.root / "WORKER.json",
+        {"ready": True, "updated_at": time.time() - 100, "stage": "gpu worker ready"},
+    )
+    state = service.state()
+    assert not state["ready"]
+    assert "expired" in state["stage"]
+
+
 @pytest.mark.parametrize(
     "value",
     ["not an image", "data:image/png;base64,??", image_data((32, 32)), image_data(format="GIF")],
@@ -158,6 +180,17 @@ def test_signed_zero_survives_the_browser_json_round_trip(service):
     assert service.submit(request) == {"id": receipt["id"], "source": "cached replay"}
 
 
+def test_recorded_run_picker_excludes_pending_and_incomplete_results(service):
+    receipt = service.submit(action(service))
+    assert service.state()["recordings"] == []
+    root = complete(service, receipt)
+    assert [row["id"] for row in service.state()["recordings"]] == [receipt["id"]]
+    result = read_json(root / "result.json")
+    result["videos"].pop()
+    write_json(root / "result.json", result)
+    assert service.state()["recordings"] == []
+
+
 def test_restarting_the_same_model_does_not_invalidate_a_verified_cached_result(service):
     request = action(service)
     receipt = service.submit(request)
@@ -186,6 +219,20 @@ def test_every_seed_and_file_hash_is_required_for_completion(service):
     assert service.job(receipt["id"])["status"] == "error"
     with pytest.raises(KeyError):
         service.media(receipt["id"], "0.mp4")
+
+
+def test_output_cannot_relabel_its_action_or_sampler(service):
+    receipt = service.submit(action(service))
+    root = complete(service, receipt)
+    result = read_json(root / "result.json")
+    result["request"]["force"] = [-0.3, 0.0]
+    write_json(root / "result.json", result)
+    assert service.job(receipt["id"])["status"] == "error"
+    complete(service, receipt)
+    result = read_json(root / "result.json")
+    result["steps"] += 1
+    write_json(root / "result.json", result)
+    assert service.job(receipt["id"])["status"] == "error"
 
 
 def test_cancelled_and_failed_attempts_are_preserved(service):

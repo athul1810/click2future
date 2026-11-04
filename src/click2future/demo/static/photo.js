@@ -14,7 +14,7 @@ async function api(path, data) {
 }
 function message(text, error=false) {$("status").textContent=text; $("status").classList.toggle("error",error);}
 function controls() {
-  for (const id of ["open-photo","empty-open","photos","strength","reverse","zero","caption","seed"])
+  for (const id of ["open-photo","empty-open","photos","recordings","strength","reverse","zero","caption","seed"])
     $(id).disabled=busy;
   $("generate").disabled=busy || !photo || !$("caption").value.trim() || !state?.model?.identity;
   $("cancel").hidden=!busy;
@@ -66,6 +66,13 @@ function photoOptions() {
     option.textContent=p.label || "photo "+(i+1);$("photos").append(option);});
   $("photos").hidden=state.photos.length<2;if(selected)$("photos").value=selected;
 }
+function recordingOptions() {
+  const selected=$("recordings").value;$("recordings").replaceChildren();
+  const empty=document.createElement("option");empty.value="";empty.textContent="open a recorded run...";$("recordings").append(empty);
+  for(const row of state.recordings){const option=document.createElement("option");option.value=row.id;
+    option.textContent="["+row.force.map(v=>v.toFixed(2)).join(", ")+"] "+row.prompt.slice(0,60);$("recordings").append(option);}
+  $("recordings").hidden=!state.recordings.length;if(selected)$("recordings").value=selected;
+}
 async function refresh() {
   state=await api("/api/state");
   $("input").width=state.size[0];$("input").height=state.size[1];draw();
@@ -73,7 +80,7 @@ async function refresh() {
   $("zero").textContent=state.minimum_label;
   $("attribution").textContent=(state.backend.startsWith("force-prompting") ? "force prompting / external pretrained model / " : "streamforce / external pretrained model / ")+state.size.join(" x ")+" / "+state.steps+" steps";
   $("worker").textContent=state.ready ? "gpu worker ready" : state.stage;
-  $("worker").classList.toggle("ready",state.ready);photoOptions();controls();
+  $("worker").classList.toggle("ready",state.ready);photoOptions();recordingOptions();controls();
 }
 function point(event) {
   const box=$("input").getBoundingClientRect();
@@ -127,6 +134,38 @@ function cards(target,item) {
     footer.append(title,seed,expand);card.append(video,footer);target.append(card);
   });
 }
+function showResult(job,source) {
+  if(job.result.videos.length!==4||!job.result.videos.every((v,i)=>v.seed===job.result.request.seeds[i]))throw Error("the worker did not return the declared four samples");
+  stop();output={id:job.id,result:job.result};cards($("results"),output);
+  $("source").textContent=source;
+  for(const id of ["play","timeline","pin"])$(id).disabled=false;
+  $("timeline").max=job.result.frames-1;$("timeline").value=0;$("time").textContent="0.00s";
+  $("details").textContent=JSON.stringify(job.result,null,2);
+  message("four futures ready. pin this action, then change the push to compare.");
+  pairMessage();
+  if(!reduced.matches){const video=$("results").querySelector("video");if(video)video.addEventListener("canplay",()=>{if(output?.id===job.id&&!playing)play();},{once:true});}
+}
+function pairMessage() {
+  let note="four declared seeds. every output stays visible.";
+  if(pinned&&output){
+    const a=pinned.result.request,b=output.result.request;
+    note=a.prompt!==b.prompt ? "the caption changed; this pair changes more than the push." :
+      JSON.stringify(a.seeds)!==JSON.stringify(b.seeds) ? "the noise seeds changed between these actions." :
+      "same caption and noise seeds; compare the actions without assuming a shared hidden world.";
+  }
+  $("pair-note").textContent=note;
+}
+async function openRecording(id) {
+  busy=true;controls();
+  try {
+    const job=await api("/api/jobs/"+id);if(job.status!=="complete")throw Error(job.stage || "recording is incomplete");
+    const request=job.result.request;
+    if(!photo||photo.id!==request.photo)await selectPhoto(request.photo);
+    anchor=request.anchor.slice();force=request.force.slice();$("caption").value=request.prompt;$("seed").value=request.seeds[0];
+    draw();showResult(job,"recorded replay");$("recordings").value=id;$("photos").value=request.photo;
+  } finally {busy=false;controls();}
+}
+$("recordings").onchange=()=>{if($("recordings").value)openRecording($("recordings").value).catch(e=>message(e.message,true));};
 function seek(seconds) {
   stop();for(const video of document.querySelectorAll("video")){
     if(video.readyState>=1)video.currentTime=Math.min(seconds,Math.max(0,video.duration-.001));
@@ -151,9 +190,9 @@ function animate() {
 }
 requestAnimationFrame(animate);
 $("pin").onclick=()=>{if(!output)return;stop();pinned=output;cards($("pinned-results"),pinned);$("pinned").hidden=false;
-  $("pinned-action").textContent="push ["+pinned.result.request.force.map(v=>v.toFixed(2)).join(", ")+"] / same four seeds";
-  $("pair-note").textContent="change the push and generate again to compare it with the pinned action.";};
-$("clear-pin").onclick=()=>{stop();pinned=null;$("pinned").hidden=true;$("pinned-results").replaceChildren();};
+  $("pinned-action").textContent="push ["+pinned.result.request.force.map(v=>v.toFixed(2)).join(", ")+"] / seeds "+pinned.result.request.seeds.join(", ");
+  pairMessage();};
+$("clear-pin").onclick=()=>{stop();pinned=null;$("pinned").hidden=true;$("pinned-results").replaceChildren();pairMessage();};
 $("generate").onclick=async()=>{
   const mine=++operation;let receipt;
   try{
@@ -165,14 +204,7 @@ $("generate").onclick=async()=>{
     while(mine===operation){
       const job=await api("/api/jobs/"+receipt.id);message(job.stage || job.status);
       if(job.status==="complete"){
-        if(job.result.videos.length!==4||!job.result.videos.every((v,i)=>v.seed===job.result.request.seeds[i]))throw Error("the worker did not return the declared four samples");
-        stop();output={id:receipt.id,result:job.result};cards($("results"),output);
-        $("source").textContent=receipt.source==="cached replay" ? "cached replay" : "live model output";
-        for(const id of ["play","timeline","pin"])$(id).disabled=false;
-        $("timeline").max=job.result.frames-1;$("timeline").value=0;$("time").textContent="0.00s";
-        $("details").textContent=JSON.stringify(job.result,null,2);
-        message("four futures ready. pin this action, then change the push to compare.");
-        if(!reduced.matches){const video=$("results").querySelector("video");if(video)video.addEventListener("canplay",()=>{if(output?.id===receipt.id&&!playing)play();},{once:true});}
+        showResult(job,receipt.source==="cached replay" ? "cached replay" : "live model output");
         break;
       }
       if(job.status==="error")throw Error(job.error || job.stage || "generation failed");
@@ -186,6 +218,7 @@ $("cancel").onclick=async()=>{++operation;const id=active;active=null;busy=false
   try{if(id)await api("/api/jobs/"+id+"/cancel",{});message("cancellation requested; the worker keeps any completed records.");}
   catch(error){message(error.message,true);}};
 reduced.addEventListener("change",()=>{if(reduced.matches)stop();});
-(async()=>{try{await refresh();if(state.photos.length){await selectPhoto(state.photos[0].id);$("photos").value=state.photos[0].id;}
+(async()=>{try{await refresh();if(state.recordings.length){await openRecording(state.recordings[0].id);}
+  else if(state.photos.length){await selectPhoto(state.photos[0].id);$("photos").value=state.photos[0].id;}
   setInterval(()=>refresh().catch(()=>{$("worker").textContent="worker connection unavailable";}),5000);
 }catch(error){message(error.message,true);}})();

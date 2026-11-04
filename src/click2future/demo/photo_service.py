@@ -168,19 +168,42 @@ class PhotoService:
         heartbeat = read_json(self.root / "WORKER.json", {})
         ready = bool(model.get("identity") and heartbeat.get("ready"))
         ready = ready and model.get("backend_id", self.backend) == self.backend
-        ready = ready and 0 <= time.time() - heartbeat.get("updated_at", 0) < 90
+        fresh = 0 <= time.time() - heartbeat.get("updated_at", 0) < 90
+        ready = ready and fresh
+        stage = heartbeat.get("stage", "waiting for GPU worker")
+        if heartbeat and not fresh:
+            stage = "worker heartbeat expired; recorded runs remain available"
         return {
             "model": model,
             "ready": ready,
-            "stage": heartbeat.get("stage", "waiting for GPU worker"),
+            "stage": stage,
         }
 
     def state(self):
+        recordings = []
+        for path in (self.root / "jobs").glob("*/result.json"):
+            status = read_json(path.parent / "status.json", {})
+            result = read_json(path)
+            request = result.get("request", {})
+            if status.get("status") == "complete" and len(result.get("videos", [])) == 4:
+                recordings.append(
+                    {
+                        "id": path.parent.name,
+                        "prompt": request.get("prompt", ""),
+                        "force": request.get("force", []),
+                        "created_at": request.get("created_at", 0),
+                    }
+                )
         return {
             **self.worker(),
             **self.layout,
             "backend": self.backend,
-            "photos": [read_json(p) for p in sorted((self.root / "images").glob("*.json"))],
+            "photos": [
+                read_json(p)
+                for p in sorted((self.root / "images").glob("*.json"))
+                if p.with_suffix(".png").is_file()
+            ],
+            "recordings": sorted(recordings, key=lambda r: r["created_at"], reverse=True)[:20],
         }
 
     def add_image(self, data):
@@ -189,11 +212,16 @@ class PhotoService:
         metadata, content = prepare_photo(data["image"], tuple(self.layout["size"]))
         with self.lock:
             path = self.root / "images" / metadata["id"]
-            if not path.with_suffix(".json").exists():
-                if len(list((self.root / "images").glob("*.json"))) >= 12:
+            if not path.with_suffix(".json").exists() or not path.with_suffix(".png").exists():
+                if (
+                    not path.with_suffix(".json").exists()
+                    and len(list((self.root / "images").glob("*.json"))) >= 12
+                ):
                     raise ValueError("This session already contains twelve photos")
-                path.with_suffix(".png").write_bytes(content)
+                temporary = path.with_suffix(".png.tmp")
+                temporary.write_bytes(content)
                 write_json(path.with_suffix(".json"), metadata)
+                temporary.replace(path.with_suffix(".png"))
         return {**metadata, "image": "data:image/png;base64," + base64.b64encode(content).decode()}
 
     def image(self, photo_id):
@@ -201,7 +229,7 @@ class PhotoService:
             raise KeyError(photo_id)
         path = self.root / "images" / photo_id
         metadata = read_json(path.with_suffix(".json"))
-        if metadata is None:
+        if metadata is None or not path.with_suffix(".png").is_file():
             raise KeyError(photo_id)
         return {
             **metadata,
@@ -231,9 +259,10 @@ class PhotoService:
             valid = (
                 len(videos) == 4
                 and all(
-                    result.get(key) == request["layout"][key] for key in ("size", "frames", "fps")
+                    result.get(key) == request["layout"][key]
+                    for key in ("size", "frames", "fps", "steps")
                 )
-                and result.get("request", {}).get("cache_key") == request["cache_key"]
+                and result.get("request") == request
                 and all(
                     row.get("file") == f"{i}.mp4"
                     and row.get("seed") == request["seeds"][i]

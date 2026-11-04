@@ -13,6 +13,7 @@
       <section class="input-panel" aria-labelledby="input-title">
         <div class="panel-heading"><h2 id="input-title">starting photograph</h2><button id="open-photo" type="button">open photo <span>&nearr;</span></button><input id="upload" type="file" accept="image/jpeg,image/png,image/webp" hidden></div>
         <select id="photos" aria-label="choose an uploaded photograph" hidden></select>
+        <select id="recordings" aria-label="open a recorded four-future request" hidden><option value="">open a recorded run...</option></select>
         <div class="input-image"><canvas id="input" width="832" height="480" tabindex="0" aria-label="click a point and drag to apply a push; arrow keys adjust direction" hidden></canvas><div id="input-empty"><span class="crosshair">+</span><h3>bring a photograph</h3><p>jpeg, png or webp<br>the preview shows the model's crop.</p><button id="empty-open" type="button">choose a photo</button></div></div>
         <p id="point-help" class="hint">click where to apply the push, then drag to aim it.</p>
         <div class="force-controls"><label for="strength">push strength <b id="strength-value">30%</b></label><input id="strength" type="range" min="0" max="100" value="30"><button id="reverse" type="button">reverse &harr;</button><button id="zero" type="button">zero</button></div>

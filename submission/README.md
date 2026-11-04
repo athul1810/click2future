@@ -680,8 +680,13 @@ six checkpoints; the code ZIP contains no supplied weights or datasets.
 
 ## Separate real-photo interface
 
-`python -m click2future.demo.photo_server --spool outputs/photo --backend
-force-prompting --port 8770` starts the photograph interface. The external
+Start the photograph interface with:
+
+```text
+python -m click2future.demo.photo_server --spool outputs/photo --backend force-prompting --port 8770
+```
+
+The external
 pretrained Force Prompting/CogVideoX backend is separate from our trained
 64-pixel models and their reported evaluations. This archive contains the
 interface, queue, SSH transport and allocated-worker source, but no external

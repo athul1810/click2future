@@ -83,6 +83,10 @@ An exact prior request returns **cached replay**, including while the worker
 is offline. New requests require a ready worker. Cached output, live output,
 generation failure and unavailable transport are separate states. Retain and
 show all four declared samples; do not select the best-looking seed.
+The recorded-run selector restores the saved image, caption, point, vector and
+four samples without pretending to submit fresh inference. The latest complete
+recording opens on startup. Reopening a recording for the same photograph keeps
+the pinned comparison. Integrity is checked when the recording is opened.
 
 The original simulator/CVAE/diffusion comparison and this external photo
 extension need separate labels in slides and recordings. PHOTO-P01/P02 are

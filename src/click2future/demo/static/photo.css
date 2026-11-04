@@ -6,3 +6,5 @@
 
 body.backend-cogvideo .input-image,body.backend-cogvideo .future video{aspect-ratio:3/2}
 body.backend-cogvideo .future-empty{aspect-ratio:720/560}
+
+#recordings{display:block;width:100%;margin:0 0 12px;padding:8px;min-width:0;text-overflow:ellipsis}#recordings[hidden]{display:none}
