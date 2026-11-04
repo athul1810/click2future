@@ -234,8 +234,13 @@ def test_wall_regularization_preserves_legacy_objective_when_disabled():
             return prediction
 
     arguments = (
-        FixedPrediction(), clean, features, torch.tensor([[0.25, 0]]),
-        torch.tensor([0.1]), torch.zeros_like(clean), geometry,
+        FixedPrediction(),
+        clean,
+        features,
+        torch.tensor([[0.25, 0]]),
+        torch.tensor([0.1]),
+        torch.zeros_like(clean),
+        geometry,
     )
     original, original_parts = contact_objective(*arguments, ContactConfig())
     enabled, enabled_parts = contact_objective(*arguments, ContactConfig(boundary_weight=256))
