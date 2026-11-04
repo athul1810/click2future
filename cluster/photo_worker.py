@@ -30,9 +30,11 @@ class Cancelled(Exception):
 
 
 class PhotoWorker:
-    def __init__(self, repo, spool, *, idle_seconds=1800, raw_root=None):
+    def __init__(self, repo, spool, *, idle_seconds=1800, raw_root=None, backend="force-prompting"):
         self.repo = Path(repo).resolve()
-        self.service = PhotoService(spool, backend="force-prompting")
+        if not backend.startswith("force-prompting"):
+            raise ValueError("This worker supports the verified Force Prompting adapter")
+        self.service = PhotoService(spool, backend=backend)
         self.root = self.service.root
         self.idle_seconds = idle_seconds
         self.raw_root = Path(raw_root or self.repo.parent / "raw").resolve()
@@ -90,7 +92,12 @@ class PhotoWorker:
         thread = threading.Thread(target=heartbeat_loop, daemon=True)
         thread.start()
         try:
-            backend = ForcePromptingBackend(self.repo, progress=self.update)
+            backend = ForcePromptingBackend(
+                self.repo,
+                progress=self.update,
+                size=tuple(self.service.layout["size"]),
+                steps=self.service.layout["steps"],
+            )
             checkpoint = self.repo / "checkpoints/step-5000-checkpoint-point-force.pt"
             runtime = Path(__file__).with_name("force_prompting_runtime.py")
             identity = {
@@ -104,14 +111,15 @@ class PhotoWorker:
                 "source_revision": backend.metadata["source_revision"],
                 "torch": torch.__version__,
                 "cuda": torch.version.cuda,
-                "size": [720, 480],
+                "size": self.service.layout["size"],
+                "steps": self.service.layout["steps"],
                 "frames": 49,
                 "fps": 8,
             }
             model = {
                 **backend.metadata,
                 **identity,
-                "backend_id": "force-prompting",
+                "backend_id": self.service.backend,
                 "identity": hashlib.sha256(
                     json.dumps(identity, sort_keys=True).encode()
                 ).hexdigest(),
@@ -159,11 +167,12 @@ class PhotoWorker:
                     if sha256(photo_path) != request["input_sha256"]:
                         raise ValueError("Input photograph hash mismatch")
                     image = np.array(Image.open(photo_path).convert("RGB"))
-                    if image.shape != (480, 720, 3):
+                    width, height = self.service.layout["size"]
+                    if image.shape != (height, width, 3):
                         raise ValueError("The prepared photo has the wrong size")
                     self.update("preparing_caption")
                     backend.prepare_prompt(request["prompt"])
-                    control = backend.signal(model_force(request))
+                    control = backend.signal(model_force(request), size=(width, height))
                     rows = []
                     for index, seed in enumerate(request["seeds"]):
                         since = time.monotonic()
@@ -177,7 +186,7 @@ class PhotoWorker:
                             image, request["prompt"], control, seed, on_step=step
                         )
                         torch.cuda.synchronize()
-                        if frames.shape != (49, 480, 720, 3) or frames.dtype != np.uint8:
+                        if frames.shape != (49, height, width, 3) or frames.dtype != np.uint8:
                             raise ValueError("Unexpected generated frame contract")
                         raw_folder = self.raw_root / self.active.name
                         raw_folder.mkdir(exist_ok=True)
@@ -252,11 +261,16 @@ def main():
     parser.add_argument("--spool", type=Path, required=True)
     parser.add_argument("--idle-seconds", type=int, default=1800)
     parser.add_argument("--raw-root", type=Path)
+    parser.add_argument("--backend", default="force-prompting")
     args = parser.parse_args()
     if not os.environ.get("SLURM_JOB_ID"):
         raise RuntimeError("Start the worker in a Slurm allocation")
     worker = PhotoWorker(
-        args.repo, args.spool, idle_seconds=args.idle_seconds, raw_root=args.raw_root
+        args.repo,
+        args.spool,
+        idle_seconds=args.idle_seconds,
+        raw_root=args.raw_root,
+        backend=args.backend,
     )
     with (worker.root / "worker.lock").open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)

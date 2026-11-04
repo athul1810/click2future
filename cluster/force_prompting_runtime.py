@@ -11,13 +11,24 @@ from streamforce_runtime import assign_state
 
 
 class ForcePromptingBackend:
-    def __init__(self, repo, *, progress=lambda *_: None):
+    def set_profile(self, size, steps):
+        if tuple(size) not in {(720, 480), (432, 288)} or steps not in {20, 50}:
+            raise ValueError("Use a registered photo profile")
+        self.width, self.height = size
+        self.steps = steps
+        self.metadata.update(size=list(size), steps=steps)
+
+    def __init__(self, repo, *, progress=lambda *_: None, size=(720, 480), steps=50):
         import torch
         from accelerate import init_empty_weights
 
         self.repo = Path(repo).resolve()
         self.base = self.repo / "weights/CogVideoX-5b-I2V"
         self.progress = progress
+        if tuple(size) not in {(720, 480), (432, 288)} or steps not in {20, 50}:
+            raise ValueError("Use a registered photo profile")
+        self.width, self.height = size
+        self.steps = steps
         self.embeddings = {}
         os.chdir(self.repo)
         sys.path.insert(0, str(self.repo / "src/force-prompting"))
@@ -87,15 +98,15 @@ class ForcePromptingBackend:
             "source_revision": json.loads((self.repo / "SOURCE.json").read_text())["revision"],
             "control_tensors": control_tensors,
             "dtype": "bfloat16",
-            "steps": 50,
+            "steps": self.steps,
             "guidance_scale": 6.0,
             "frames": 49,
             "fps": 8,
-            "size": [720, 480],
+            "size": [self.width, self.height],
             "sampler": "upstream custom pipeline and CogVideoX DPM scheduler",
             "captioner": False,
             "low_memory_layer_truncation": False,
-            "zero_semantics": "minimum native control; not zero physical force",
+            "zero_semantics": "minimum native encoding; physical rest has not been established",
         }
         gc.collect()
         torch.cuda.empty_cache()
@@ -148,7 +159,7 @@ class ForcePromptingBackend:
         image_tensor = torch.from_numpy(image.copy()).permute(2, 0, 1)[None].float() / 127.5 - 1
 
         def step(pipe, index, timestep, values):
-            on_step(index + 1, 50)
+            on_step(index + 1, self.steps)
             return values
 
         generated = self.pipeline(
@@ -156,10 +167,10 @@ class ForcePromptingBackend:
             controlnet_frames=signal[None].to("cuda"),
             prompt_embeds=self.embeddings[prompt].to("cuda"),
             negative_prompt_embeds=self.embeddings[""].to("cuda"),
-            height=480,
-            width=720,
+            height=self.height,
+            width=self.width,
             num_frames=49,
-            num_inference_steps=50,
+            num_inference_steps=self.steps,
             guidance_scale=6.0,
             use_dynamic_cfg=False,
             controlnet_weights=1.0,
@@ -173,7 +184,7 @@ class ForcePromptingBackend:
         return (generated * 255).clip(0, 255).astype(np.uint8)
 
     @staticmethod
-    def signal(force):
+    def signal(force, size=(720, 480)):
         from data.controlnet_datasets import ForcePromptingDataset_PointForce
 
         # Retain the exact published signal builder, including its nonzero
@@ -182,7 +193,7 @@ class ForcePromptingBackend:
         context.min_force = 0.0
         context.max_force = 1.0
         values = SimpleNamespace(**force["model"])
-        return context.load_controlnet_signal(
+        signal = context.load_controlnet_signal(
             values.force,
             values.angle,
             values.x_pos,
@@ -191,3 +202,14 @@ class ForcePromptingBackend:
             height=480,
             width=720,
         )
+        if tuple(size) != (720, 480):
+            import torch.nn.functional as functional
+
+            signal = functional.interpolate(
+                signal,
+                size=(size[1], size[0]),
+                mode="bilinear",
+                align_corners=False,
+                antialias=True,
+            )
+        return signal

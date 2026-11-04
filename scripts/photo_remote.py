@@ -137,9 +137,10 @@ def main():
     parser.add_argument("--remote", required=True)
     parser.add_argument("--spool", type=Path, required=True)
     parser.add_argument("--archive-raw", action="store_true")
+    parser.add_argument("--backend", default="force-prompting")
     args = parser.parse_args()
     logging.getLogger("paramiko").setLevel(logging.CRITICAL)
-    service = PhotoService(args.spool, backend="force-prompting")
+    service = PhotoService(args.spool, backend=args.backend)
     remote = PurePosixPath(args.remote)
     if not remote.is_absolute() or ".." in remote.parts:
         raise ValueError("Use the allocated worker's absolute spool directory")

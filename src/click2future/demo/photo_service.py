@@ -15,8 +15,34 @@ from PIL import Image, ImageOps
 
 SIZE = (832, 480)
 BACKENDS = {
-    "streamforce": {"size": [832, 480], "frames": 81, "fps": 16, "minimum_label": "zero"},
-    "force-prompting": {"size": [720, 480], "frames": 49, "fps": 8, "minimum_label": "minimum"},
+    "streamforce": {
+        "size": [832, 480],
+        "frames": 81,
+        "fps": 16,
+        "minimum_label": "zero",
+        "steps": 4,
+    },
+    "force-prompting": {
+        "size": [720, 480],
+        "frames": 49,
+        "fps": 8,
+        "minimum_label": "minimum",
+        "steps": 50,
+    },
+    "force-prompting-20": {
+        "size": [720, 480],
+        "frames": 49,
+        "fps": 8,
+        "minimum_label": "minimum",
+        "steps": 20,
+    },
+    "force-prompting-preview": {
+        "size": [432, 288],
+        "frames": 49,
+        "fps": 8,
+        "minimum_label": "minimum",
+        "steps": 20,
+    },
 }
 IMAGE_LIMIT = 12 * 1024 * 1024
 JOB_ID = re.compile(r"[a-f0-9]{32}\Z")

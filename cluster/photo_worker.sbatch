@@ -24,4 +24,5 @@ test -s "$C2F_PHOTO_NODE_ROOT/repo/ARTIFACTS.json"
 test -x "$C2F_PHOTO_NODE_ROOT/.venv/bin/python"
 "$C2F_PHOTO_NODE_ROOT/.venv/bin/python" "$C2F_PHOTO_PROJECT/cluster/photo_worker.py" \
     --repo "$C2F_PHOTO_NODE_ROOT/repo" --spool "$C2F_PHOTO_SPOOL" \
-    --raw-root "$C2F_PHOTO_NODE_ROOT/raw" --idle-seconds 1800
+    --raw-root "$C2F_PHOTO_NODE_ROOT/raw" --idle-seconds 1800 \
+    --backend "${C2F_PHOTO_BACKEND:-force-prompting}"
