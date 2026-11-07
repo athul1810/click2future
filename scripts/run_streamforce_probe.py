@@ -3,6 +3,7 @@
 import argparse
 import csv
 import hashlib
+import importlib.metadata
 import json
 import os
 import resource
@@ -67,6 +68,34 @@ def main():
         print(json.dumps(row), flush=True)
 
     try:
+        artifacts = json.loads((repo / "ARTIFACTS.json").read_text())
+        if artifacts["status"] != "passed":
+            raise ValueError("Verify external artifacts before inference")
+        for name, expected in artifacts["files"].items():
+            path = repo / name
+            if path.stat().st_size != expected["bytes"] or digest(path) != expected["sha256"]:
+                raise ValueError(f"External artifact changed: {name}")
+        record["artifacts_manifest_sha256"] = digest(repo / "ARTIFACTS.json")
+        record["checkpoint_packaging"] = artifacts["checkpoint_packaging"]
+        record["loader_sha256"] = digest(
+            Path(__file__).resolve().parents[1] / "cluster/streamforce_runtime.py"
+        )
+        record["probe_sha256"] = digest(Path(__file__))
+        record["project_revision"] = os.environ.get("C2F_SOURCE_REVISION")
+        record["versions"] = {
+            name: importlib.metadata.version(name)
+            for name in [
+                "torch",
+                "flash-attn",
+                "numpy",
+                "pillow",
+                "transformers",
+                "diffusers",
+                "accelerate",
+                "imageio",
+            ]
+        }
+        progress("artifacts_verified")
         sample = next(csv.DictReader((repo / "assets/samples/point_force.csv").open()))
         (out / "input-record.json").write_text(json.dumps(sample, indent=2) + "\n")
         prompt = sample["caption"]

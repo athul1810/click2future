@@ -24,6 +24,7 @@ DEMO_ASSETS = {
 # TC2 jobs behind the final E0/E2/E3 runs and held-out results (D013-D015).
 FINAL_RUN_SCRIPTS = {
     "cluster/streamforce_runtime.py",
+    "cluster/verify_streamforce_artifacts.py",
     "cluster/force_prompting_runtime.py",
     "cluster/photo_worker.py",
     "cluster/cvae_study.sbatch",
@@ -64,6 +65,8 @@ def _check(name, payload):
         in {
             "scripts/build_demo_bundle.py",
             "scripts/photo_remote.py",
+            "scripts/prepare_streamforce_checkpoint.py",
+            "scripts/run_streamforce_probe.py",
             "scripts/analyse_replication.py",
             "scripts/analyse_prior_replication.py",
             "scripts/plot_prior_replication.py",
