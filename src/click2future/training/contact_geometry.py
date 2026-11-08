@@ -113,9 +113,7 @@ def contact_dynamics(predicted_depth, true_depth, window_pixels):
 
     predicted_speed = predicted_depth[:, 1:] - predicted_depth[:, :-1]
     true_speed = true_depth[:, 1:] - true_depth[:, :-1]
-    normal_velocity_error = (
-        (predicted_speed - true_speed).square() * contact_neighborhood
-    ).sum(1)
+    normal_velocity_error = ((predicted_speed - true_speed).square() * contact_neighborhood).sum(1)
     normal_velocity_error = normal_velocity_error / contact_neighborhood.sum(1).clamp_min(1)
     return transition_error, normal_velocity_error
 
