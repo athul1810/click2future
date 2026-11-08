@@ -1,0 +1,1785 @@
+{
+  "scope": "all original-validation simulator references scored as RGB; no model or threshold changes",
+  "clips": 84,
+  "complete_clips": 84,
+  "event_counts": {
+    "true_positive": 22,
+    "false_positive": 24,
+    "false_negative": 22
+  },
+  "event_f1": 0.4888888888888889,
+  "encounter_counts": {
+    "tp": 32,
+    "fp": 0,
+    "fn": 0
+  },
+  "encounter_f1": 1.0,
+  "native_events": 44,
+  "close_native_onset_pairs": 5,
+  "source_sha256": "99f399e6372c6d6b752fa644814f7c0dd80c802ca631da81b045ae1f6c47402d",
+  "validation_plan_sha256": "fcbe3adf0832defeedc7ca7342438a50dd65a4d25a9f43c150b5cd894159a7a9",
+  "settings": {
+    "resolution_hw": [
+      64,
+      64
+    ],
+    "fps": 8,
+    "tracker": {
+      "color_tolerance": 24.0,
+      "color_margin": 4.0,
+      "min_area_ratio": 0.55,
+      "max_area_ratio": 1.8,
+      "dominant_fraction": 0.85,
+      "min_pixels": 4
+    },
+    "max_gap_pixels": 0.0,
+    "event_tolerance_intervals": 1,
+    "motion_window": 5,
+    "motion_threshold": 0.08,
+    "motion_rule": "normal"
+  },
+  "cases": [
+    {
+      "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+      "complete": true,
+      "truth": [
+        5,
+        12
+      ],
+      "estimate": [
+        5
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0,
+        -7
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_0_to_1-p01",
+      "complete": true,
+      "truth": [
+        8
+      ],
+      "estimate": [
+        8
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_0_to_1-p02",
+      "complete": true,
+      "truth": [
+        10
+      ],
+      "estimate": [
+        10
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_0_to_1-p03",
+      "complete": true,
+      "truth": [
+        9,
+        18
+      ],
+      "estimate": [
+        6,
+        24
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -3,
+        6
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 2,
+        "false_negative": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+      "complete": true,
+      "truth": [
+        7,
+        19
+      ],
+      "estimate": [
+        7
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0,
+        -12
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_1_to_0-p01",
+      "complete": true,
+      "truth": [
+        8
+      ],
+      "estimate": [
+        7
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_1_to_0-p02",
+      "complete": true,
+      "truth": [
+        8
+      ],
+      "estimate": [
+        7
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-collision_1_to_0-p03",
+      "complete": true,
+      "truth": [
+        10,
+        21
+      ],
+      "estimate": [
+        29
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        19,
+        8
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 1,
+        "false_negative": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-forward-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-forward-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-forward-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-forward-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-reverse-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-reverse-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-reverse-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-reverse-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-wall-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-wall-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-wall-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-wall-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730016-zero-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+      "complete": true,
+      "truth": [
+        9,
+        24
+      ],
+      "estimate": [
+        9
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0,
+        -15
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_0_to_1-p01",
+      "complete": true,
+      "truth": [
+        7
+      ],
+      "estimate": [
+        7,
+        18
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 1,
+        "false_negative": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_0_to_1-p02",
+      "complete": true,
+      "truth": [
+        6
+      ],
+      "estimate": [
+        6,
+        17
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 1,
+        "false_negative": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_0_to_1-p03",
+      "complete": true,
+      "truth": [
+        3
+      ],
+      "estimate": [
+        5
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        2
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 1,
+        "false_negative": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+      "complete": true,
+      "truth": [
+        4,
+        8
+      ],
+      "estimate": [
+        3,
+        10
+      ],
+      "close_native_onset_pairs": 1,
+      "nearest_interval_offsets": [
+        -1,
+        2
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 1,
+        "false_negative": 1,
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_1_to_0-p01",
+      "complete": true,
+      "truth": [
+        9
+      ],
+      "estimate": [
+        8
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_1_to_0-p02",
+      "complete": true,
+      "truth": [
+        6
+      ],
+      "estimate": [
+        4,
+        15,
+        27
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -2
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 3,
+        "false_negative": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-collision_1_to_0-p03",
+      "complete": true,
+      "truth": [
+        8
+      ],
+      "estimate": [
+        6
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -2
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 1,
+        "false_negative": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-forward-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-forward-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-forward-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-forward-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-reverse-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-reverse-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-reverse-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-reverse-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-wall-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-wall-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-wall-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-wall-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730017-zero-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+      "complete": true,
+      "truth": [
+        7,
+        17,
+        18
+      ],
+      "estimate": [
+        7
+      ],
+      "close_native_onset_pairs": 1,
+      "nearest_interval_offsets": [
+        0,
+        -10,
+        -11
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 2,
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_0_to_1-p01",
+      "complete": true,
+      "truth": [
+        10
+      ],
+      "estimate": [
+        24
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        14
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 1,
+        "false_negative": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_0_to_1-p02",
+      "complete": true,
+      "truth": [
+        8
+      ],
+      "estimate": [
+        12,
+        20
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        4
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 2,
+        "false_negative": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_0_to_1-p03",
+      "complete": true,
+      "truth": [
+        6
+      ],
+      "estimate": [
+        7,
+        15,
+        28
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 2,
+        "false_negative": 0,
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+      "complete": true,
+      "truth": [
+        6,
+        14,
+        15
+      ],
+      "estimate": [
+        7
+      ],
+      "close_native_onset_pairs": 1,
+      "nearest_interval_offsets": [
+        1,
+        -7,
+        -8
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 2,
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_1_to_0-p01",
+      "complete": true,
+      "truth": [
+        9,
+        10
+      ],
+      "estimate": [
+        20,
+        27
+      ],
+      "close_native_onset_pairs": 1,
+      "nearest_interval_offsets": [
+        11,
+        10
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 2,
+        "false_negative": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_1_to_0-p02",
+      "complete": true,
+      "truth": [
+        9,
+        10
+      ],
+      "estimate": [
+        12,
+        19
+      ],
+      "close_native_onset_pairs": 1,
+      "nearest_interval_offsets": [
+        3,
+        2
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 2,
+        "false_negative": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-collision_1_to_0-p03",
+      "complete": true,
+      "truth": [
+        10
+      ],
+      "estimate": [
+        8,
+        24
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -2
+      ],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 2,
+        "false_negative": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-forward-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-forward-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-forward-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-forward-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-reverse-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-reverse-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-reverse-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-reverse-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-wall-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-wall-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-wall-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-wall-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730018-zero-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+      "complete": true,
+      "truth": [
+        4
+      ],
+      "estimate": [
+        3
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_0_to_1-p01",
+      "complete": true,
+      "truth": [
+        6
+      ],
+      "estimate": [
+        5,
+        17
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 1,
+        "false_negative": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_0_to_1-p02",
+      "complete": true,
+      "truth": [
+        4
+      ],
+      "estimate": [
+        3
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_0_to_1-p03",
+      "complete": true,
+      "truth": [
+        4
+      ],
+      "estimate": [
+        3
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        -1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+      "complete": true,
+      "truth": [
+        9
+      ],
+      "estimate": [
+        10
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_1_to_0-p01",
+      "complete": true,
+      "truth": [
+        4
+      ],
+      "estimate": [
+        5,
+        13
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        1
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 1,
+        "false_negative": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_1_to_0-p02",
+      "complete": true,
+      "truth": [
+        6
+      ],
+      "estimate": [
+        6
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-collision_1_to_0-p03",
+      "complete": true,
+      "truth": [
+        9
+      ],
+      "estimate": [
+        9
+      ],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [
+        0
+      ],
+      "event": {
+        "true_positive": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-forward-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-forward-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-forward-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-forward-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-reverse-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-reverse-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-reverse-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-reverse-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-wall-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-wall-p01",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-wall-p02",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-wall-p03",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    },
+    {
+      "sample_id": "g03-scene-00730019-zero-p00",
+      "complete": true,
+      "truth": [],
+      "estimate": [],
+      "close_native_onset_pairs": 0,
+      "nearest_interval_offsets": [],
+      "event": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "complete_pair_timelines": 1,
+        "expected_pair_timelines": 1
+      }
+    }
+  ]
+}

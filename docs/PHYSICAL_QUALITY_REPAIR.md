@@ -1,0 +1,153 @@
+# D019: investigate and stabilize direct-decoder training
+
+The demo software runs, but physical quality is a separate question. D018 tracks
+all primary clips while the one-pass model penetrates in 5, 10 and 2 of 240 clips
+and adds zero-force drift in 5 of 40 samples for two refinement seeds. Every seed
+regresses in contact timing, selected trajectory error, early force scaling and
+two coverage families. Those results remain unchanged.
+
+## Reproduced training issue
+
+The E11 direct decoder ignores corruption and sigma in its forward pass. The
+inherited loss still multiplies regression, stationary and acceleration errors
+by `16 + 1/sigma^2` and randomly enables geometry losses when `sigma <= 1`.
+For an identical real checkpoint prediction and zero-force validation example,
+the output-weight gradient norm changes from 0.353 at sigma 1 to 4,998 at sigma
+0.002. In 100,000 reproducible draws, the highest-weight one percent carry 49.8%
+of the total weight. This establishes unnecessary objective variance. It does
+not establish that variance is the only cause of the video failures.
+
+Other limits remain: training uses sixteen independent visible geometries, the
+pose decoder has no hard conservation/contact constraints, and 64px observations
+hide subpixel geometry. Reference contact timing also varies with hidden physics.
+Increasing the count of actions on existing scenes does not add new geometries.
+
+## Fixed paired experiment
+
+Use the original frozen cache (19,328 augmented examples) and E7 teacher, with
+seed 19, batch 64 and 8,000 final updates. Both arms are direct decoders with
+identical initial tensors, batches, optimizer, schedule, loss weights, renderer
+and inference. Recipes differ only in `expected_objective`. Both save every
+250 updates. No model output is projected, filtered or overwritten.
+
+The control uses the original stochastic direct loss. The candidate computes
+its exact expectation over the clipped lognormal sigma distribution. Point,
+temporal, acceleration and rest terms retain their expected EDM coefficient;
+geometry terms retain their original activation probability. Neither the
+average objective nor physical scoring thresholds are intentionally changed.
+The candidate still consumes the same private RNG draws to keep later batches
+paired. Nonlinear tail-risk losses are excluded because that reduction does
+not apply to them.
+
+Checkpoint format 8 distinguishes this experiment from frozen E11 format 7.
+Its architecture and inference are unchanged. Format-8 candidates may be
+evaluated only on original validation and derived selection controls. D017,
+D018 and the old test splits cannot be reused to tune or promote this change.
+
+Evaluate both final checkpoints with the existing full validation suite,
+amodal geometry, zero/passive drift, contact audit, both action horizons,
+selected-object controls and action-family coverage. Retain every sample and
+failed phase. A lower training loss is insufficient: report all physical
+regressions. A validation improvement requires independent repeats and a
+separately frozen new holdout before a general quality claim. No model has yet
+been promoted by D019.
+
+## VPN and interruption recovery
+
+Run `cluster/submit_once.py` detached on TC2 with a unique experiment job name.
+It locks submission, atomically saves a job receipt, returns the same receipt
+on retry and can recover an active allocation after a lost acknowledgement.
+Do not delete a receipt or resubmit because a local SSH connection timed out.
+Read the receipt and query Slurm first. For a terminal failed job, inspect its
+logs before starting an explicit new attempt with the same immutable inputs.
+
+Slurm training runs independently of the VPN. The trainer atomically saves a
+full model/EMA/optimizer/private-RNG checkpoint, including at initialization.
+The driver forwards allocation stop signals so training can checkpoint. Resume
+requires exactly matching source, cache, teacher and configuration. Completed
+arms are hash-checked and reused; evaluation retries use new directories and
+retain incomplete reports. Interrupted phases exit unsuccessfully and cannot
+be mistaken for completed quality checks.
+
+Use resumable `rsync --partial --checksum` transfers. Validate SHA-256 after
+every completed upload/download before extraction or analysis. Keep copies of
+the source, input identities, job receipt, logs and results outside TC2 because
+the course cluster provides no backups.
+
+The scheduled comparison uses one TC2 GPU, four CPUs, 24 GB system RAM and a
+one-hour allocation. Each training arm has a twenty-minute safety bound; a
+time-limited arm retains its checkpoint and requires explicit resume. Actual
+cost and outcome will be added after the job. No additional task deadline is set.
+
+## D020: rest-anchored response candidate
+
+The D019 expected-loss candidate still drifts in two of sixteen zero-force
+validation samples. D020 therefore represents motion as the shared neural
+backbone's force response minus its zero-force response. This architecture is
+used in both training and inference and gives exact zero action response for
+every sampled world. It needs two backbone evaluations per video, which the
+sampler and demo metadata record. It does not use a simulator or edit generated
+videos. Nonzero action gradients remain active.
+
+Train one seed-19 candidate for 8,000 updates from the same E7 teacher and cache.
+Use the expected objective, reduce training-only penetration/canvas margins
+from one to half a pixel and increase their weights from 256 to 1,024. This is
+a combined repair candidate, not an isolated attribution to one change. Scoring
+retains its original one-pixel margins, all samples and every action family.
+Run with `C2F_REST_ANCHORED=1` and the existing batch script in a fresh output.
+Keep all D019 results, including its failed format-8 audit attempt and the
+separately recorded evaluation-only recovery. Validation and software checks
+cannot establish fresh-scene generalization; any candidate claim requires a
+separately frozen, untouched holdout after checkpoint selection is complete.
+
+## Measured outcome
+
+D019 trained both final 8,000-update arms on TC2 job 50745. Evaluation stopped
+because the new checkpoint format was missing from the audit registry. Keep
+that failed attempt. Job 50747 recovered evaluation from the retained final
+checkpoints without retraining. The control had 1/96 penetrating validation
+clips; the expected-objective candidate had 7/96. Both had 2/16 drifting rest
+samples. Lower selected ADE did not make this a successful repair.
+
+D020 job 50749 completed 8,000 updates. Rest anchoring removed all 16 rest and
+32 passive drift failures, but 4/96 validation clips still penetrated. All three
+training runs passed exact CUDA continuation checks for model and EMA tensors.
+Total allocated time across the two training jobs and evaluation recovery was
+24 minutes 2 seconds. No training was run on this computer.
+
+The research-backed alternative and its limits are explained in
+[the method review](PHYSICS_METHOD_REVIEW_2026-11-03.md). Its implementation and
+D020 checkpoint were frozen before generating D021: ten fresh ID geometries,
+60 action conditions, four sampled worlds per condition. No other new split
+was scored. Every clip and failure was retained.
+
+| Fresh D021 result | Physics-assisted | D020 neural |
+|---|---:|---:|
+| Complete RGB tracks | 240/240 | 240/240 |
+| Penetrating clips, original >1px threshold | 0/240 | 23/240 |
+| Drifting rest clips | 0/40 | 0/40 |
+| Drifting passive clips | 0/80 | 0/80 |
+| Selected ADE against first realized world | 0.02757 | 0.02853 |
+| Original strict trajectory gate | Fail | Fail |
+| RGB contact F1 against first realized world | 0.253 | 0.319 |
+
+This supports physical constraint reliability in the measured ID domain. It
+does not establish exact contact timing, calibrated uncertainty, OOD reliability
+or a successful neural dynamics repair. Hidden physical properties are not
+identified from a resting image. The physics baseline remains an explicit
+optional demo method; existing learned methods and historical scores stay intact.
+
+An exploratory analysis specified after those results reran only evaluation
+references with each saved prediction's sampled hidden world. Predictions and
+primary scores were unchanged. Same-world relative displacement ADE was 0.00348
+for physics and 0.00711 for neural. On 200 shared wall-free clips, post-pulse
+momentum error was 1.58e-8 and 0.00818 respectively. RGB contact F1 still favored
+neural, 0.447 versus 0.256. Even the rendered-reference control scored only
+0.529, exposing contact-estimator error. Do not reinterpret this as a timing
+pass or replace the primary evaluation with this post-result analysis.
+
+Reproduce the supplementary analysis with `PYTHONPATH=src python
+scripts/analyse_matched_world.py --screen LOCAL_D021_SCREEN --output
+FRESH_ANALYSIS.json`. The frozen plan and every input hash are verified before
+scoring. Working analysis scripts and research links are excluded from the
+submission ZIP. See the compact [result record](results/physical-quality-d021.json).

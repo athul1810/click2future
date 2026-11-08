@@ -30,7 +30,7 @@ class CheckpointModel:
         self.sampling_steps = sampling_steps
         self.future_frames = None
         self.resolution = None
-        if state.get("trajectory_format_version") in (1, 2, 3, 4, 5, 6, 7):
+        if state.get("trajectory_format_version") in (1, 2, 3, 4, 5, 6, 7, 8):
             from click2future.training.sample_trajectory import load_trajectory
 
             self.model, state = load_trajectory(checkpoint, device)
@@ -54,12 +54,14 @@ class CheckpointModel:
                 detail += "; experimental temporal residual on frozen E7"
             elif state["trajectory_format_version"] == 6:
                 detail += "; force routing: " + self.model.force_routing
-            elif state["trajectory_format_version"] == 7:
+            elif state["trajectory_format_version"] in (7, 8):
                 detail = (
                     "one-pass prior-conditioned pose decoder, rigid observed-pixel decoder, EMA"
                     if self.model.world_prior_only
                     else "conditional diffusion control for the prior-only comparison, EMA"
                 )
+                if state["trajectory_format_version"] == 8:
+                    detail += "; training-loss/response candidate; not quality-promoted"
             elif state["trajectory_format_version"] == 5:
                 detail += "; experimental observed-surface refinement"
         elif state.get("checkpoint_version") == 1:
@@ -153,7 +155,8 @@ class CheckpointModel:
                 sampler="direct world-conditioned decode"
                 if getattr(self.model, "world_prior_only", False)
                 else "EDM rho-7 Heun, no churn, float32 integration",
-                network_evaluations_per_sample=2 * self.sampling_steps - 1,
+                network_evaluations_per_sample=getattr(self.model, "backbone_evaluations", 1)
+                * (2 * self.sampling_steps - 1),
                 supervision="future positions and checked angular replay; training only",
             )
             if state["trajectory_format_version"] == 2:
@@ -167,7 +170,7 @@ class CheckpointModel:
                 )
                 for name in ("models/routed_motion.py", "training/routing_checkpoint.py"):
                     self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
-            elif state["trajectory_format_version"] in (3, 4, 5, 7):
+            elif state["trajectory_format_version"] in (3, 4, 5, 7, 8):
                 self.metadata.update(
                     training_variant="shared_world_relational",
                     world_condition=state["config"]["world_condition"],
@@ -179,7 +182,7 @@ class CheckpointModel:
                     )
                 for name in ("models/world_motion.py", "training/world_checkpoint.py"):
                     self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
-                if state["trajectory_format_version"] == 7:
+                if state["trajectory_format_version"] in (7, 8):
                     self.metadata.update(
                         training_variant="prior_only_comparison",
                         world_prior_only=state["config"]["world_prior_only"],
@@ -187,6 +190,14 @@ class CheckpointModel:
                     )
                     for name in ("models/prior_motion.py", "training/prior_checkpoint.py"):
                         self.metadata["sampling_source_sha256"][name] = sha256(folder / name)
+                    if state["trajectory_format_version"] == 8:
+                        self.metadata.update(
+                            training_variant="expected_direct_objective",
+                            study_id="D020" if state["config"].get("rest_anchored") else "D019",
+                            objective_contract=state["objective_contract"],
+                            expected_objective=state["config"]["expected_objective"],
+                            rest_anchored=bool(state["config"].get("rest_anchored")),
+                        )
                 elif state["trajectory_format_version"] == 4:
                     self.metadata.update(
                         training_variant="temporal_residual",

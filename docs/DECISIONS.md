@@ -281,6 +281,177 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
     differ in more than routing, so E10 does not answer the E2-versus-E3 question
     for pixel diffusion.
 
+## D019: Expected direct-decoder loss investigation
+
+- Keep D014-D018 and all negative results unchanged.
+- Diagnose the unnecessary random EDM weighting of deterministic E11 predictions.
+- Compare original and analytically expected direct losses using the same E7
+  teacher, frozen cache, seed, batches and 8,000-update budget. The expected
+  coefficients include both clipped distribution tails and the original
+  geometry activation probability. This changes gradient variance, not inference.
+- Use original validation only. A result on the opened D017/D018 sets cannot
+  support a new confirmatory claim or select this candidate.
+- Preserve the original physical gates and report every regression. A successful
+  software test or lower training loss cannot promote a physical model.
+- Full checkpoints, detached Slurm submission receipts and resumable checked
+  transfers protect the run against intermittent VPN access.
+- See [the investigation](PHYSICAL_QUALITY_REPAIR.md). The candidate increased
+  penetrating clips from 1 to 7 out of 96. Both arms drifted in 2 of 16 rest
+  samples. Reject it as a physical-quality repair.
+
+## D020: Rest-anchored physical-response repair
+
+- D019 still has two drifting zero-force validation samples out of sixteen.
+- Train and sample a shared neural force response minus its zero-force response.
+  This guarantees rest without a simulator or a test-only output override.
+- One seed, the same E7 teacher/cache and 8,000 final updates; expected loss,
+  half-pixel training margins and fourfold penetration/canvas loss weights.
+- This is a combined candidate, not a single-component causal comparison.
+  Keep the scorer, sample seeds, quality gates and historical results unchanged.
+- Record two backbone evaluations per direct video. Validate every action and
+  contact metric. Final validation has exact rest but 4 of 96 penetrating clips;
+  fresh D021 has 23 of 240. Reject it as a complete physical-quality repair.
+
+## D021: Research-backed observable-physics baseline and fresh ID comparison
+
+- Review primary methods, released code and compute before further model changes;
+  see PHYSICS_METHOD_REVIEW_2026-11-03.md. No general video leaderboard proves a
+  winner on our two-object task.
+- Adapt the explicit physical-state/observed-sprite mechanism supported by PhysGen
+  and recent IMPACT, with sampled hidden properties. Label it physics-assisted,
+  not a neural model, full paper reproduction or exact simulator reference.
+- Analytical checks cover rest, force impulse, mass scaling, contact momentum,
+  dissipative energy and integration convergence. Original validation retains
+  the existing RGB tracker and one-pixel geometry threshold.
+- Before new data generation, freeze the physics implementation and D020 final
+  8,000-update checkpoint. Generate seed 910000 with ten ID-test scene groups and
+  one group in each other required split. Score ID only, all 60 conditions and
+  four seeds 0-3 for each generator. Required remaining splits stay unscored.
+- Bind the original corpus and reject shared initial images/visible seeds. Keep
+  every condition, missing track, contact error and failure. No tuning, filtering
+  or checkpoint selection on this fresh corpus. Historical gates remain intact.
+- D021 tracked all 240 clips from each generator. The physics baseline had zero
+  penetrating clips; D020 had 23. Both had zero rest/passive drift. Both failed
+  the original strict single-reference trajectory gate. First-reference RGB
+  contact F1 favored the neural model, 0.319 versus 0.253.
+- A separately labelled, post-result matched-world analysis kept every saved
+  output unchanged. Relative displacement ADE favored physics, 0.00348 versus
+  0.00711 world units. Post-pulse momentum error on the same 200 wall-free clips
+  was 1.58e-8 versus 0.00818. This is supplementary, not a new primary result.
+  The rendered-reference RGB contact control scored only 0.529 F1, so contact
+  scoring needs further validation before a timing-success claim. No gate was
+  relaxed and no learned-model success is claimed.
+
+## D022: Local contact-dynamics pilot: 4 November 2026
+
+- All 23 D021 neural penetration failures were in the two directed collision
+  families. Test a small contact-aware state-transition model: shared pair and
+  wall networks predict response increments, integrated over 31 recurrent steps.
+- Fresh weights, seed 19, 8,000 updates, the same training cache and original
+  validation only. Promote only if it beats D020's 4/96 penetrating clips with
+  no rest drift and no worse selected ADE.
+- Result: 22/96 penetrating clips and selected ADE 0.02633 versus 0.02502 for
+  D020. Rejected. It stays out of the demo. See CONTACT_DYNAMICS_PILOT.md.
+- The rendered simulator references score only 0.489 precise-onset F1 under the
+  same detector, so onset F1 is a weak timing measure until it is validated.
+
+## D023: Observed circle geometry in the physics-assisted baseline: 4 November 2026
+
+- Treat a mask as a circle only when it exactly matches a rendered ellipse with
+  near-equal extents. Other masks keep the convex hull. No true geometry or
+  hidden labels enter generation.
+- Original validation, 96 samples: both physics variants have complete tracks,
+  zero penetration and no rest drift. Circle/hull selected ADE 0.02383 versus
+  0.02393; RGB contact F1 0.295 versus 0.258. These opened results do not
+  establish superiority.
+- The fresh seed-920000 comparison in PRIMITIVE_PHYSICS_COMPARISON.md ran
+  unchanged in TC2 job 52275 at source 0442df2: 240 clips per method, all
+  complete, zero penetration and no rest/passive drift for both.
+- Circle/hull was better on matched-world ADE (0.00318 versus 0.00395), contact
+  F1 (0.274 versus 0.257) and selected ADE (0.02629 versus 0.02638). It failed
+  two prespecified rules: 12 boundary-clipped clips versus 0, and a paired
+  bootstrap 95% upper bound of 0.0, not below zero. Only 3 of 10 scene groups
+  contain a recognised circle; the other 7 give identical predictions.
+- Rejected. The hull baseline stays the default and the demo does not use the
+  circle variant. See docs/results/primitive-physics-d023.json.
+
+## D024: Prior-sampling control for the strict gate: 8 November 2026
+
+- Re-simulate each fresh D023 case with its true geometry and the four sampled
+  prior worlds, then score it with the unchanged tracker and strict gate.
+- TC2 job 52279: 18/60 cases over the 0.03125 limit (mean selected ADE 0.02561),
+  so even an exact simulator fails without the hidden physics. With the true
+  hidden physics it is 0/60 (0.00424), which checks the tracker.
+- The hull baseline's 19 failing cases include all 18; one collision case is its
+  own error. For prior-sampling methods the remaining strict-gate failure is
+  mostly hidden-physics uncertainty, not generator error. This is a control, not a
+  bound for every method: an inferred posterior or a different point estimate
+  could score differently. Descriptive only; no gate or result changed.
+  See PRIMITIVE_PHYSICS_COMPARISON.md and docs/results/prior-simulator-ceiling-d024.json.
+
+## D025: Rerun of D021 with saved motions: 8 November 2026
+
+- TC2 job 52290 reproduced the D021 corpus and checkpoint hashes and saved every
+  sampled motion. Same-world travel matched the true simulator exactly in free
+  motion but was about 7% short in collisions and 1.4% short at walls.
+- Its rank test reused the same four draws in every case and is not a valid
+  calibration check; D027 replaces it. See HULL_BEVEL_CALIBRATION.md.
+
+## D026: Calibrated hull bevel: 8 November 2026
+
+- Fit on original train/validation only: a 0.15 px bevel halves same-world
+  selected ADE (0.116 versus 0.214 px). Collision slop has no effect.
+- Fresh seed-930000 test under the unchanged D023 rules (job 52293): same-world
+  ADE 0.00177 versus 0.00332, lower in all ten groups, interval [-0.00182,
+  -0.00128]; contact F1 0.208 versus 0.147; zero penetration, clipping and drift.
+- First-reference selected ADE was 0.00007 higher, which fails one prespecified
+  rule. Rejected; 0.5 px stays the default. The rule is not changed after the result.
+
+## D027: Calibration with independent draws: 8 November 2026
+
+- 24 independent prior draws per case on the fresh D026 corpus. No generator
+  rejects uniform ranks (p 0.29-0.49), with low power from 50 correlated cases.
+- The reference falls outside all samples in 4% of cases for the exact simulator
+  and the neural model, and in 20% for both hulls, all wall pushes where sub-pixel
+  shape error dominates. The neural spread is well matched; its penetration
+  failures remain. Descriptive only. See HULL_BEVEL_CALIBRATION.md.
+
+## D028: Position-based contact projection for the neural sampler: 8 November 2026
+
+- Apply a PhysDiff-style projection, using position-based dynamics, to each D020
+  sample: separate overlapping observed hulls by inverse sampled mass and keep
+  them on the canvas. Only violations change; the network is unchanged.
+- Mode chosen on original validation only (per frame, mass-weighted). Rules and
+  non-inferiority margins frozen at 314fa0c before generating seed 940000.
+- Fresh result, TC2 job 52299: penetrating clips 19 to 0, boundary clips 25 to 0,
+  no drift, contact F1 0.169 to 0.176, selected ADE 0.02495 to 0.02476,
+  same-world ADE 0.00706 to 0.00712 (interval [-0.00014, 0.00028]). Accepted as
+  the neural sampler's contact layer. The other object's same-world error rose
+  11%. See CONTACT_PROJECTION.md.
+
+## D029: Contact-transition and normal-velocity losses (#80): 8 November 2026
+
+- Pramod's recipe adds two contact losses to the direct prior decoder. Train it
+  and the unchanged control from the same E7 teacher, cache, seed 19 and 8,000
+  updates (TC2 job 52304, source c455945); score both on original validation.
+- Control: 1/96 penetrating clips (4 frames), 2/16 rest drift, selected ADE
+  0.02515, contact F1 0.305. Candidate: 1/96 (7 frames), 2/16, 0.02516, 0.305.
+  The control reproduces the D019 control counts.
+- No measurable improvement; not promoted. One seed and validation only. D028's
+  projection already removes penetration for sampled outputs.
+  Record: docs/results/contact-dynamics-loss-d029.json.
+
+## D030: Simulator reference controls on the fresh corpora: 8 November 2026
+
+- Score simulator renders of the D026 and D028 corpora with the unchanged
+  scorers (TC2 job 52309): true hidden physics and the four prior draws.
+- Sampled physics gives selected ADE 0.02189 and 0.02457 (1.4-1.6 px); every
+  prior-sampling method is within 1-2% of that. True physics gives 0.004 (0.27-
+  0.29 px). The simulator's own contact F1 is 0.590 and 0.250, so contact F1 is
+  a weak proxy. These are reference and prior-sampling controls, not bounds for
+  every method; similar ADEs support, but do not isolate, a hidden-physics
+  explanation. Descriptive only. See CONTACT_PROJECTION.md.
+
 ## New decision template
 
 ```text

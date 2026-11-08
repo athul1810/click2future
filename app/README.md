@@ -316,3 +316,21 @@ files before loading. Its ZIP SHA-256 is
 Complete clips improve from 88/96 to 95/96; penetration remains in 15/96 and
 overall quality still fails. See [the full comparison](../docs/WALL_TRAINING.md).
 The bundle is separate from the source-only course ZIP.
+
+## Explicit physics-assisted comparison
+
+The optional `Physics-assisted` generator derives convex geometry from the
+observed image, samples the declared hidden-property prior, and advances an
+explicit rigid-body solver. It is a PhysGen-inspired physics-stage adaptation,
+not a trained neural checkpoint or the complete PhysGen pipeline. Inputs remain
+pixels, the selected mask, force and seeds. Uploaded images supply no simulator
+truth. The UI labels the solver source explicitly.
+
+```sh
+python -m click2future.demo.server --dataset <local-native-preset-dataset> --physics-baseline
+```
+
+Add `--physics-baseline` to a checkpoint/bundle launch to compare it with up to
+three learned models. The default force cap remains 0.5. Keep the sampled world
+paired by seed when changing the push. Research justification, exact mechanics
+checks and comparison limits are in `docs/PHYSICS_METHOD_REVIEW_2026-11-03.md`.

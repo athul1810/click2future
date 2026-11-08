@@ -1,0 +1,289 @@
+{
+  "study_id": "D026-fit",
+  "splits": [
+    "train",
+    "validation"
+  ],
+  "bevels": {
+    "0.00": {
+      "selected_ade_pixels": 0.13396778956445515,
+      "other_ade_pixels": 0.09040980814033345,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.2907264164561868,
+          "other_ade_pixels": 0.23048672312504892
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.24780756712278232,
+          "other_ade_pixels": 0.2215623175766183
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.13130356173533728,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.10": {
+      "selected_ade_pixels": 0.11678814631789124,
+      "other_ade_pixels": 0.07707282213401381,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.23943754017706614,
+          "other_ade_pixels": 0.19587486144711724
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.21894377696573075,
+          "other_ade_pixels": 0.1894892492229518
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.1255580119386898,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.15": {
+      "selected_ade_pixels": 0.1161187754259305,
+      "other_ade_pixels": 0.07714232284795228,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.23942679781933224,
+          "other_ade_pixels": 0.19680072897908474
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.21846411754985154,
+          "other_ade_pixels": 0.18891088526067662
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.12270155925249933,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.20": {
+      "selected_ade_pixels": 0.12017280927405917,
+      "other_ade_pixels": 0.08012696945849683,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.24702813550229702,
+          "other_ade_pixels": 0.2044697019559946
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.22535736873560816,
+          "other_ade_pixels": 0.1961651453364895
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.12847713962442117,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.25": {
+      "selected_ade_pixels": 0.12858020557934463,
+      "other_ade_pixels": 0.08825626703745777,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.2666168664957757,
+          "other_ade_pixels": 0.2249439751258948
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.24439441798101194,
+          "other_ade_pixels": 0.21633736006139412
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.13188834091196616,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.30": {
+      "selected_ade_pixels": 0.14365301733092145,
+      "other_ade_pixels": 0.10070054627337875,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.29762342159089394,
+          "other_ade_pixels": 0.25632271324357764
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.2751295532319317,
+          "other_ade_pixels": 0.24718001812331605
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.1455107093238122,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.35": {
+      "selected_ade_pixels": 0.16025112430598948,
+      "other_ade_pixels": 0.1142489442848279,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.3318353247592415,
+          "other_ade_pixels": 0.2903217244407323
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.3092244725782014,
+          "other_ade_pixels": 0.2809229969834072
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.16019442168453515,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.40": {
+      "selected_ade_pixels": 0.1767239994826685,
+      "other_ade_pixels": 0.12830739603567592,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.36765365076248246,
+          "other_ade_pixels": 0.32572031300144266
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.3444987615374074,
+          "other_ade_pixels": 0.31581666717693707
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.17146618260548324,
+          "other_ade_pixels": 0.0
+        }
+      }
+    },
+    "0.50": {
+      "selected_ade_pixels": 0.2138682767872841,
+      "other_ade_pixels": 0.15792493658196663,
+      "families": {
+        "collision_0_to_1": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.44211203859839926,
+          "other_ade_pixels": 0.40009005523588675
+        },
+        "collision_1_to_0": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.41838995894750364,
+          "other_ade_pixels": 0.38953462767394637
+        },
+        "forward": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 9.510466372567117e-07,
+          "other_ade_pixels": 0.0
+        },
+        "reverse": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 4.514613321605238e-07,
+          "other_ade_pixels": 0.0
+        },
+        "wall": {
+          "clips_times_draws": 320,
+          "selected_ade_pixels": 0.20883798388254818,
+          "other_ade_pixels": 0.0
+        }
+      }
+    }
+  },
+  "lowest_selected_ade_bevel": "0.15"
+}

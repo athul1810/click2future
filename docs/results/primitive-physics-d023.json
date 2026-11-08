@@ -1,0 +1,1592 @@
+{
+  "study_id": "D023",
+  "tc2_job": 52275,
+  "source_revision": "0442df27a881e541199c7094177ef7def53031b3",
+  "dataset_manifest_sha256": {
+    "d023_fresh_seed_920000": "f79d140e4667424a27bcc6c60655b598c1b166c03143adcdf9d355ec1ff777b9",
+    "d021_regenerated_seed_910000": "990f823955fb0e6a72240a061e11b959dd5b21c118fed05431f2ec8bd1c42c04",
+    "training_corpus_seed_730000": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388"
+  },
+  "results_json_sha256": "8ab7bad4a03783544180c605a16944daa730ad00493d338352bb98c1e8cd3a9e",
+  "plan_json_sha256": "6665425d4aeee215a1b7a88cc83c66447bef06457f0389fbe489855e4204a673",
+  "note": "Scene groups without a recognised circle give identical hull and circle/hull predictions, so their paired difference is exactly zero. 3 of 10 groups differ. Raw per-clip outputs stay on TC2 and outside Git.",
+  "result": {
+    "study_id": "D023",
+    "split": "fresh_id_test",
+    "plan_sha256": "c592d1d9cf9b32c112d0ae5b9f391544b83a60e3ed5ab5dbecc575e265b41a46",
+    "models": {
+      "hull": {
+        "quality": {
+          "case_count": 60,
+          "expected_observations": 14880,
+          "tracked_observations": 14880,
+          "tracking_fraction": 1.0,
+          "complete_selected_clips": 240,
+          "expected_selected_clips": 240,
+          "complete_all_object_clips": 240,
+          "expected_all_object_clips": 240,
+          "selected_ade_mean_cases_if_all_complete": 0.026378013930353106,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "matched_world_ade": 0.003953152067842133,
+        "penetrating_clips": 0,
+        "boundary_clips": 0,
+        "zero_force": {
+          "total_samples": 40,
+          "complete_samples": 40,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "passive": {
+          "total_samples": 80,
+          "complete_samples": 80,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "contact_counts": {
+          "tp": 27,
+          "fp": 63,
+          "fn": 93
+        },
+        "contact_f1": 0.2571428571428571,
+        "cases": [
+          {
+            "sample_id": "g03-scene-00920002-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.006908581592142582,
+              0.00804329477250576,
+              0.002662946470081806,
+              0.004963204264640808
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.014116015285253525,
+              0.004562658723443747,
+              0.011120704934000969,
+              0.007254224736243486
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-forward-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-reverse-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-wall-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.006995947100222111,
+              0.006329493131488562,
+              0.003175257006660104,
+              0.0071984510868787766
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-zero-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.012903757393360138,
+              0.007795668672770262,
+              0.024284599348902702,
+              0.011776137165725231
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.008429378271102905,
+              0.011720705777406693,
+              0.005014549475163221,
+              0.009220825508236885
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-forward-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-reverse-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-wall-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.005382147617638111,
+              0.001964355120435357,
+              0.005252616945654154,
+              0.005615255795419216
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-zero-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.008532787673175335,
+              0.011622796766459942,
+              0.004512538202106953,
+              0.009346605278551579
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.013408894650638103,
+              0.007609520107507706,
+              0.017970601096749306,
+              0.013251043856143951
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-forward-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-reverse-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-wall-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.0070266397669911385,
+              0.006107990629971027,
+              0.0024002937134355307,
+              0.007166310679167509
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-zero-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.013643619604408741,
+              0.007446266245096922,
+              0.018785350024700165,
+              0.012178991921246052
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.008509239181876183,
+              0.011930206790566444,
+              0.004634874407202005,
+              0.00867915153503418
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-forward-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-reverse-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-wall-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.007643444929271936,
+              0.0028382197488099337,
+              0.008343439549207687,
+              0.007735676597803831
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-zero-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.003116837702691555,
+              0.004198667127639055,
+              0.0015010982751846313,
+              0.0033467786852270365
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.005029062274843454,
+              0.0026456802152097225,
+              0.006769969128072262,
+              0.0047930022701621056
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-forward-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-reverse-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-wall-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.004497053101658821,
+              0.0042562466114759445,
+              0.0018143963534384966,
+              0.005051139742136002
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-zero-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.00711043132469058,
+              0.0032471271697431803,
+              0.018447192385792732,
+              0.006473846267908812
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.0035338078159838915,
+              0.004799223970621824,
+              0.0024446267634630203,
+              0.004508234094828367
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-forward-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-reverse-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-wall-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.008970115333795547,
+              0.0031870570965111256,
+              0.010415073484182358,
+              0.00962604396045208
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-zero-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.00884295254945755,
+              0.012371373362839222,
+              0.005339658819139004,
+              0.00959708634763956
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.013050710782408714,
+              0.008114589378237724,
+              0.025000471621751785,
+              0.012548105791211128
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-forward-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-reverse-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-wall-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.004564371891319752,
+              0.004054800141602755,
+              0.0019926372915506363,
+              0.004741776268929243
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-zero-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.012136590667068958,
+              0.008293294347822666,
+              0.019197523593902588,
+              0.013909946195781231
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.00867557991296053,
+              0.011762918904423714,
+              0.004965479485690594,
+              0.010480009950697422
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-forward-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-reverse-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-wall-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.007643444929271936,
+              0.002677871845662594,
+              0.008343439549207687,
+              0.006891290657222271
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-zero-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.0030829207971692085,
+              0.003874068381264806,
+              0.0023378573823720217,
+              0.0041596670635044575
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.007044035475701094,
+              0.002870827214792371,
+              0.01718106120824814,
+              0.005654503125697374
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-forward-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-reverse-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-wall-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.007116282358765602,
+              0.006295837927609682,
+              0.0026232795789837837,
+              0.007228598464280367
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-zero-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.013776186853647232,
+              0.008261289447546005,
+              0.03424559906125069,
+              0.014077125117182732
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.007969825528562069,
+              0.011608595959842205,
+              0.005835814867168665,
+              0.010365567170083523
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-forward-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-reverse-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-wall-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.0008970124181360006,
+              0.00036080091376788914,
+              0.0012906186748296022,
+              0.0016043372452259064
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-zero-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          }
+        ]
+      },
+      "primitive": {
+        "quality": {
+          "case_count": 60,
+          "expected_observations": 14880,
+          "tracked_observations": 14880,
+          "tracking_fraction": 1.0,
+          "complete_selected_clips": 240,
+          "expected_selected_clips": 240,
+          "complete_all_object_clips": 240,
+          "expected_all_object_clips": 240,
+          "selected_ade_mean_cases_if_all_complete": 0.026287579231088612,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "matched_world_ade": 0.003183566402390925,
+        "penetrating_clips": 0,
+        "boundary_clips": 12,
+        "zero_force": {
+          "total_samples": 40,
+          "complete_samples": 40,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "passive": {
+          "total_samples": 80,
+          "complete_samples": 80,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "contact_counts": {
+          "tp": 29,
+          "fp": 63,
+          "fn": 91
+        },
+        "contact_f1": 0.27358490566037735,
+        "cases": [
+          {
+            "sample_id": "g03-scene-00920002-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.0007342791650444269,
+              0.0009436433902010322,
+              0.0003500483580864966,
+              0.0006883620517328382
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.0011100380215793848,
+              0.0005928962491452694,
+              0.0013903914950788021,
+              0.0009568171808496118
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-forward-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-reverse-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920002-wall-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.0009993452113121748,
+              0.0007738757412880659,
+              0.0005292049027048051,
+              0.001010236912406981
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 4
+          },
+          {
+            "sample_id": "g03-scene-00920002-zero-p00",
+            "scene_group_id": "g03-scene-00920002",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.012903757393360138,
+              0.007795668672770262,
+              0.024284599348902702,
+              0.011776137165725231
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.008429378271102905,
+              0.011720705777406693,
+              0.005014549475163221,
+              0.009220825508236885
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-forward-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-reverse-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-wall-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.005382147617638111,
+              0.001964355120435357,
+              0.005252616945654154,
+              0.005615255795419216
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920003-zero-p00",
+            "scene_group_id": "g03-scene-00920003",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.008532787673175335,
+              0.011622796766459942,
+              0.004512538202106953,
+              0.009346605278551579
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.013408894650638103,
+              0.007609520107507706,
+              0.017970601096749306,
+              0.013251043856143951
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-forward-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-reverse-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-wall-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.0070266397669911385,
+              0.006107990629971027,
+              0.0024002937134355307,
+              0.007166310679167509
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920004-zero-p00",
+            "scene_group_id": "g03-scene-00920004",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.008273010142147541,
+              0.0043370891362428665,
+              0.00905876699835062,
+              0.006924167275428772
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.0049340673722326756,
+              0.006972540635615587,
+              0.0025027976371347904,
+              0.004964831750839949
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-forward-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-reverse-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920005-wall-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.001838874421082437,
+              0.000801777234300971,
+              0.0013493051519617438,
+              0.00253316224552691
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 4
+          },
+          {
+            "sample_id": "g03-scene-00920005-zero-p00",
+            "scene_group_id": "g03-scene-00920005",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.003116837702691555,
+              0.004198667127639055,
+              0.0015010982751846313,
+              0.0033467786852270365
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.005029062274843454,
+              0.0026456802152097225,
+              0.006769969128072262,
+              0.0047930022701621056
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-forward-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-reverse-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-wall-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.004497053101658821,
+              0.0042562466114759445,
+              0.0018143963534384966,
+              0.005051139742136002
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920006-zero-p00",
+            "scene_group_id": "g03-scene-00920006",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.00711043132469058,
+              0.0032471271697431803,
+              0.018447192385792732,
+              0.006473846267908812
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.0035338078159838915,
+              0.004799223970621824,
+              0.0024446267634630203,
+              0.004508234094828367
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-forward-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-reverse-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-wall-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.008970115333795547,
+              0.0031870570965111256,
+              0.010415073484182358,
+              0.00962604396045208
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920007-zero-p00",
+            "scene_group_id": "g03-scene-00920007",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.00884295254945755,
+              0.012371373362839222,
+              0.005339658819139004,
+              0.00959708634763956
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.013050710782408714,
+              0.008114589378237724,
+              0.025000471621751785,
+              0.012548105791211128
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-forward-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-reverse-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-wall-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.004564371891319752,
+              0.004054800141602755,
+              0.0019926372915506363,
+              0.004741776268929243
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920008-zero-p00",
+            "scene_group_id": "g03-scene-00920008",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.009257189929485321,
+              0.004982780199497938,
+              0.01136099360883236,
+              0.008066747337579727
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.005715219769626856,
+              0.008036782033741474,
+              0.002718868898227811,
+              0.005749594885855913
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-forward-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-reverse-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920009-wall-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.001838874421082437,
+              0.0006414292147383094,
+              0.0013493051519617438,
+              0.0016887758392840624
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 4
+          },
+          {
+            "sample_id": "g03-scene-00920009-zero-p00",
+            "scene_group_id": "g03-scene-00920009",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.0030829207971692085,
+              0.003874068381264806,
+              0.0023378573823720217,
+              0.0041596670635044575
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.007044035475701094,
+              0.002870827214792371,
+              0.01718106120824814,
+              0.005654503125697374
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-forward-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              1.4649553570222906e-08,
+              1.4024291061787153e-08,
+              1.4210179699603032e-08,
+              1.4779113044482983e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-reverse-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              7.927507539307044e-09,
+              7.53507567452516e-09,
+              5.167338112954667e-09,
+              7.722841921520285e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-wall-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.007116282358765602,
+              0.006295837927609682,
+              0.0026232795789837837,
+              0.007228598464280367
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920010-zero-p00",
+            "scene_group_id": "g03-scene-00920010",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.013776186853647232,
+              0.008261289447546005,
+              0.03424559906125069,
+              0.014077125117182732
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.007969825528562069,
+              0.011608595959842205,
+              0.005835814867168665,
+              0.010365567170083523
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-forward-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              1.5115215745709065e-08,
+              1.52560399868662e-08,
+              1.5633451866392534e-08,
+              1.5171545797443287e-08
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-reverse-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              6.695758614227998e-09,
+              7.306000249229783e-09,
+              5.9371814131736755e-09,
+              6.759599546768413e-09
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-wall-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.0008970124181360006,
+              0.00036080091376788914,
+              0.0012906186748296022,
+              0.0016043372452259064
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          },
+          {
+            "sample_id": "g03-scene-00920011-zero-p00",
+            "scene_group_id": "g03-scene-00920011",
+            "matched_world_ade": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "penetrating_clips": 0,
+            "boundary_clips": 0
+          }
+        ]
+      }
+    },
+    "paired_scene_group_ade_differences": [
+      -0.003052151684338848,
+      0.0,
+      0.0,
+      -0.0024115871055983003,
+      0.0,
+      0.0,
+      0.0,
+      -0.0022321178645749265,
+      0.0,
+      0.0
+    ],
+    "paired_scene_bootstrap_95_interval": [
+      -0.0015571182550047523,
+      0.0
+    ],
+    "accept_primitive_as_demo_baseline": false,
+    "sources": {
+      "hull": {
+        "id": "Physics-assisted",
+        "kind": "physics_assisted_baseline",
+        "detail": "inferred convex sprites, sampled physical prior, explicit rigid-body solver",
+        "checkpoint_sha256": "source:869f24b314ed8798799dd74529608ddf84ef25fc354715d08e50c8b2df55b673",
+        "sampling_source_sha256": {
+          "models/physics_baseline.py": "74b4c58f339b1da5a36b031c877690e0df93bedc07a91bc870cca6eeb5a84aec",
+          "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+          "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+          "evaluation/rigid_geometry.py": "69756ff26bc375920017e178d1c99a0ebbc7222ccdfc4bffd124328bfcfeca00"
+        },
+        "generation_source": "live physics-assisted baseline",
+        "physics_contract": "observed-hull-sampled-world-pymunk-1",
+        "world_contract": "shared-independent-uniform-mass-friction-restitution-1",
+        "world_condition": true,
+        "quality": "physics-assisted baseline; appearance geometry and hidden-world inference remain approximate"
+      },
+      "primitive": {
+        "id": "Physics-assisted",
+        "kind": "physics_assisted_baseline",
+        "detail": "image-fitted solid circles, hull fallback, sampled prior, explicit solver",
+        "checkpoint_sha256": "source:73b26fb4835ee3a14f348e9517d52d7ffd89a4da2ea4e8a39dc45a76dea371ab",
+        "sampling_source_sha256": {
+          "models/physics_baseline.py": "74b4c58f339b1da5a36b031c877690e0df93bedc07a91bc870cca6eeb5a84aec",
+          "models/object_motion.py": "dbff815ccde70fd396ae02a2fad3dc21e791b133a027998a5c9cf6bf9433c452",
+          "models/world_motion.py": "8213161c309f9086905cd0122fb3767358cd26ccdcef03b72c6fc75f0c520359",
+          "evaluation/rigid_geometry.py": "69756ff26bc375920017e178d1c99a0ebbc7222ccdfc4bffd124328bfcfeca00",
+          "models/primitive_physics.py": "58717400c4fadcb6240310a42beeebd14283d580810615029a27297fe32b628c"
+        },
+        "generation_source": "live physics-assisted baseline",
+        "physics_contract": "observed-circle-or-convex-hull-physics-1",
+        "world_contract": "shared-independent-uniform-mass-friction-restitution-1",
+        "world_condition": true,
+        "quality": "physics-assisted; circle recognition and subpixel geometry remain approximate"
+      }
+    },
+    "scorer_sha256": "40598bf33047918da5d54cbd45981143e801373bd4368cf74184f5825e414aca",
+    "limitation": "Ten fresh ID groups and four fixed prior worlds. No neural success, OOD or uncertainty-calibration claim. Contact F1 remains a limited RGB proxy. Historical gates and results remain unchanged."
+  }
+}

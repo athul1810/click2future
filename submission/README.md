@@ -704,3 +704,34 @@ After all six runs finish, `python scripts/analyse_prior_replication.py --root R
 replays and per-scene counts, and reproduces the declared decision. Generate
 the fixed first-condition, all-seed montage with
 `python scripts/plot_prior_replication.py --root RESULTS --output NEW_PNG`.
+
+## Expected direct-objective comparison
+
+D019 compares the original direct-decoder training loss with its analytic
+expectation over nuisance corruption draws. Both final-update refinements use
+the frozen original cache, E7 teacher and one training seed. This is a
+validation-only training-variance experiment, not a model-quality promotion.
+Checkpoint format 8 records the objective separately from historical E11.
+
+Set the immutable `C2F_PROJECT`, `C2F_PYTHON`, `C2F_CACHE`, `C2F_DATA_DIR`,
+`C2F_WARM_START`, `C2F_EXPECTED_RESULTS` and `C2F_SOURCE_REVISION` variables.
+Submit `submission/expected_prior_comparison.sbatch` on TC2. For unreliable SSH,
+run `cluster/submit_once.py` detached with a unique `--name`, a persistent
+`--run-dir` for its receipt and `--script` pointing to that batch script.
+A retry returns the existing job receipt. Query that job before resubmitting.
+
+A dropped VPN does not stop a scheduled job. Training checkpoints include EMA,
+optimizer and private RNG and are saved atomically every 250 updates. The driver
+resumes interrupted arms from the same inputs, reuses hash-checked completed
+arms and keeps each evaluation attempt separate. Retain failed logs. Transfer
+with `rsync --partial --checksum`, then verify the recorded SHA-256 values.
+Never turn an interrupted test or incomplete run into a passing result.
+
+## Physics-assisted baseline
+
+Use `python -m click2future.demo.server --dataset <local-generated-data>
+--physics-baseline` on one line to inspect the explicit solver baseline.
+Geometry comes from observed masks and hidden properties are sampled from the
+declared prior. This is not a learned neural model or simulator ground truth.
+It requires no trained checkpoint. The existing neural checkpoints remain
+separate comparison methods; inferred subpixel geometry remains approximate.

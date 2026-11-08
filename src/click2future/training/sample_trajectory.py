@@ -23,6 +23,10 @@ def load_trajectory(checkpoint, device="cpu"):
     checkpoint = Path(checkpoint)
     checksum = sha256(checkpoint)
     state = torch.load(checkpoint, map_location="cpu", weights_only=True)
+    if state.get("trajectory_format_version") == 8:
+        from .train_expected_prior import load_expected_prior
+
+        return load_expected_prior(checkpoint, device)
     if state.get("trajectory_format_version") == 7:
         from .prior_checkpoint import load_prior
 

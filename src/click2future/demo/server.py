@@ -108,6 +108,11 @@ def main(argv=None):
     parser.add_argument("--samples", nargs="+", help="Explicit development/validation sample IDs")
     parser.add_argument("--split", default="validation", choices=("train", "validation"))
     parser.add_argument("--checkpoint", action="append", help="DisplayName=local_checkpoint.pt")
+    parser.add_argument(
+        "--physics-baseline",
+        action="store_true",
+        help="Include the explicit physics-assisted baseline",
+    )
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--sampling-steps", type=int, default=32)
     parser.add_argument(
@@ -127,8 +132,10 @@ def main(argv=None):
         args.dataset, rows = load_bundle(args.bundle, args.models)
         args.checkpoint = [row["name"] + "=" + str(row["path"]) for row in rows]
         bundled = {row["name"]: row for row in rows}
-    elif not args.dataset or not args.checkpoint or args.models:
-        parser.error("Provide --dataset and --checkpoint, or --bundle and --models")
+    elif not args.dataset or (not args.checkpoint and not args.physics_baseline) or args.models:
+        parser.error(
+            "Provide --dataset with checkpoints/physics baseline, or --bundle and --models"
+        )
     if not 0 <= args.port <= 65535:
         parser.error("Invalid local port")
     import os
@@ -148,7 +155,7 @@ def main(argv=None):
                 groups.setdefault(row["scene_group_id"], row["sample_id"])
         samples = list(groups.values())
     models = {}
-    for item in args.checkpoint:
+    for item in args.checkpoint or []:
         name, separator, path = item.partition("=")
         if not separator or not name or len(name) > 40 or name in models:
             parser.error("Use distinct DisplayName=checkpoint.pt arguments")
@@ -167,6 +174,12 @@ def main(argv=None):
             models[name].metadata.update(
                 validation_quality=row["quality"], variant_notes=row["notes"]
             )
+    if args.physics_baseline:
+        from click2future.models.physics_baseline import PhysicsBaseline
+
+        if "Physics-assisted" in models or len(models) >= 4:
+            parser.error("Reserve one of the four comparison slots for Physics-assisted")
+        models["Physics-assisted"] = PhysicsBaseline()
     service = DemoService(
         args.dataset, samples, models, cache=args.cache, force_limit=args.force_limit
     )

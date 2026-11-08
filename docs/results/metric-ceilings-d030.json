@@ -1,0 +1,118 @@
+{
+  "study_id": "D030",
+  "tc2_job": 52309,
+  "source_revision": "3f841d907c022e20ee05c9e8247bcd528a76dd7c",
+  "dataset_manifest_sha256": {
+    "d026_seed_930000": "c5c2f132e9a87f737ca44af03704d85869c1398b82036095600a4a49a8adbbe8",
+    "d028_seed_940000": "4c65ceb111c2dff38fc62441e18b1ca2819080d246577ebbe34284f5b4e2403e"
+  },
+  "note": "Simulator renders scored with the unchanged scorers. true_world is a reference control for an imperfect scorer, not a mathematical ceiling; sampled_world is a prior-sampling control, not the best any method could reach. Descriptive only.",
+  "corpora": {
+    "d026": {
+      "result_sha256": "b906c4d91e0d3844190ca789aa5344c4ce8f03d918450fa18f74d14e1e37f3e3",
+      "result": {
+        "study_id": "D030",
+        "plan_sha256": "c90166570e5c5ab6973b8e0cee1449e4a2d705c563a7f1b890bedceedfff8de0",
+        "controls": {
+          "true_world": {
+            "quality": {
+              "case_count": 60,
+              "expected_observations": 14880,
+              "tracked_observations": 14880,
+              "tracking_fraction": 1.0,
+              "complete_selected_clips": 240,
+              "expected_selected_clips": 240,
+              "complete_all_object_clips": 240,
+              "expected_all_object_clips": 240,
+              "selected_ade_mean_cases_if_all_complete": 0.004471935190678431,
+              "passes_tracking_and_selected_trajectory_gate": true,
+              "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+            },
+            "selected_ade_native_pixels": 0.2862038522034196,
+            "contact_counts": {
+              "tp": 72,
+              "fp": 52,
+              "fn": 48
+            },
+            "contact_f1": 0.5901639344262295
+          },
+          "sampled_world": {
+            "quality": {
+              "case_count": 60,
+              "expected_observations": 14880,
+              "tracked_observations": 14880,
+              "tracking_fraction": 1.0,
+              "complete_selected_clips": 240,
+              "expected_selected_clips": 240,
+              "complete_all_object_clips": 240,
+              "expected_all_object_clips": 240,
+              "selected_ade_mean_cases_if_all_complete": 0.02188617614806135,
+              "passes_tracking_and_selected_trajectory_gate": false,
+              "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+            },
+            "selected_ade_native_pixels": 1.4007152734759265,
+            "contact_counts": {
+              "tp": 23,
+              "fp": 107,
+              "fn": 97
+            },
+            "contact_f1": 0.184
+          }
+        }
+      }
+    },
+    "d028": {
+      "result_sha256": "2e9f889c59a7c3b618fcc4bbf4f32263325581c242a09c508b5b25a15df3885b",
+      "result": {
+        "study_id": "D030",
+        "plan_sha256": "35511b56dd7933de163eab768878d68e59a84bdefe483313b85e5433c2114a30",
+        "controls": {
+          "true_world": {
+            "quality": {
+              "case_count": 60,
+              "expected_observations": 14880,
+              "tracked_observations": 14880,
+              "tracking_fraction": 1.0,
+              "complete_selected_clips": 240,
+              "expected_selected_clips": 240,
+              "complete_all_object_clips": 240,
+              "expected_all_object_clips": 240,
+              "selected_ade_mean_cases_if_all_complete": 0.004178308359199098,
+              "passes_tracking_and_selected_trajectory_gate": true,
+              "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+            },
+            "selected_ade_native_pixels": 0.26741173498874227,
+            "contact_counts": {
+              "tp": 36,
+              "fp": 128,
+              "fn": 88
+            },
+            "contact_f1": 0.25
+          },
+          "sampled_world": {
+            "quality": {
+              "case_count": 60,
+              "expected_observations": 14880,
+              "tracked_observations": 14880,
+              "tracking_fraction": 1.0,
+              "complete_selected_clips": 240,
+              "expected_selected_clips": 240,
+              "complete_all_object_clips": 240,
+              "expected_all_object_clips": 240,
+              "selected_ade_mean_cases_if_all_complete": 0.024573665988277763,
+              "passes_tracking_and_selected_trajectory_gate": false,
+              "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+            },
+            "selected_ade_native_pixels": 1.5727146232497768,
+            "contact_counts": {
+              "tp": 22,
+              "fp": 110,
+              "fn": 102
+            },
+            "contact_f1": 0.171875
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1126 @@
+{
+  "study_id": "D027",
+  "tc2_job": 52293,
+  "source_revision": "4ed863687f23d49aa8abc85816c2d1cc878c9958",
+  "dataset_manifest_sha256": "c5c2f132e9a87f737ca44af03704d85869c1398b82036095600a4a49a8adbbe8",
+  "neural_checkpoint_sha256": "60e01fd60e6934e644653662d701a8aa8419d57d3d4d58a65d8b6ca87a3a45e4",
+  "note": "24 independent prior draws per case on the fresh D026 corpus. 50 correlated cases give low power; descriptive only.",
+  "result_sha256": "ae35d9d08d3050c8df1451b49330969efa656102f6a6c3a7e48693d7fda02412",
+  "result": {
+    "study_id": "D027",
+    "plan_sha256": "70c9972d2b5ab6eb4ed558504b99f7cddb6591d1475fe316abb47190106b1128",
+    "draws_per_case": 24,
+    "seed_base": 10000000,
+    "quantity": "selected-object final travel distance, simulator position units",
+    "generators": {
+      "true_simulator_sampled_world": {
+        "cases": 50,
+        "bin_counts": [
+          14,
+          12,
+          9,
+          9,
+          6
+        ],
+        "chi_square_4df": 3.8000000000000003,
+        "p_value_uniform": 0.43374899574564163,
+        "outside_all_samples": 0.04,
+        "mean_rank_over_draws": 0.4075
+      },
+      "hull_0.5px": {
+        "cases": 50,
+        "bin_counts": [
+          10,
+          8,
+          8,
+          9,
+          15
+        ],
+        "chi_square_4df": 3.4,
+        "p_value_uniform": 0.4932455149423836,
+        "outside_all_samples": 0.2,
+        "mean_rank_over_draws": 0.5758333333333333
+      },
+      "hull_calibrated": {
+        "cases": 50,
+        "bin_counts": [
+          15,
+          8,
+          6,
+          9,
+          12
+        ],
+        "chi_square_4df": 5.0,
+        "p_value_uniform": 0.2872974951836458,
+        "outside_all_samples": 0.2,
+        "mean_rank_over_draws": 0.48333333333333334
+      },
+      "neural": {
+        "cases": 50,
+        "bin_counts": [
+          14,
+          9,
+          9,
+          12,
+          6
+        ],
+        "chi_square_4df": 3.8000000000000003,
+        "p_value_uniform": 0.43374899574564163,
+        "outside_all_samples": 0.04,
+        "mean_rank_over_draws": 0.45249999999999996
+      }
+    },
+    "cases": [
+      {
+        "sample_id": "g03-scene-00930002-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930002",
+        "reference": 0.1324935257434845,
+        "true_simulator_sampled_world": {
+          "rank": 12,
+          "median_sample": 0.1323525682091713
+        },
+        "hull_0.5px": {
+          "rank": 19,
+          "median_sample": 0.11226065829396248
+        },
+        "hull_calibrated": {
+          "rank": 16,
+          "median_sample": 0.11759433150291443
+        },
+        "neural": {
+          "rank": 15,
+          "median_sample": 0.12289095669984818
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930002-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930002",
+        "reference": 0.1403542160987854,
+        "true_simulator_sampled_world": {
+          "rank": 18,
+          "median_sample": 0.10909829288721085
+        },
+        "hull_0.5px": {
+          "rank": 19,
+          "median_sample": 0.09485254809260368
+        },
+        "hull_calibrated": {
+          "rank": 19,
+          "median_sample": 0.10238103941082954
+        },
+        "neural": {
+          "rank": 19,
+          "median_sample": 0.10350612923502922
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930002-forward-p00",
+        "scene_group_id": "g03-scene-00930002",
+        "reference": 0.11403399705886841,
+        "true_simulator_sampled_world": {
+          "rank": 11,
+          "median_sample": 0.11488470435142517
+        },
+        "hull_0.5px": {
+          "rank": 11,
+          "median_sample": 0.11488470807671547
+        },
+        "hull_calibrated": {
+          "rank": 11,
+          "median_sample": 0.11488470807671547
+        },
+        "neural": {
+          "rank": 13,
+          "median_sample": 0.1126985065639019
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930002-reverse-p00",
+        "scene_group_id": "g03-scene-00930002",
+        "reference": 0.11403399705886841,
+        "true_simulator_sampled_world": {
+          "rank": 11,
+          "median_sample": 0.1180492490530014
+        },
+        "hull_0.5px": {
+          "rank": 11,
+          "median_sample": 0.118049256503582
+        },
+        "hull_calibrated": {
+          "rank": 11,
+          "median_sample": 0.118049256503582
+        },
+        "neural": {
+          "rank": 13,
+          "median_sample": 0.11172818019986153
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930002-wall-p00",
+        "scene_group_id": "g03-scene-00930002",
+        "reference": 0.4151031970977783,
+        "true_simulator_sampled_world": {
+          "rank": 7,
+          "median_sample": 0.41530951857566833
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.40665557980537415
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.41191332042217255
+        },
+        "neural": {
+          "rank": 16,
+          "median_sample": 0.4123414158821106
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930003-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930003",
+        "reference": 0.09342630207538605,
+        "true_simulator_sampled_world": {
+          "rank": 1,
+          "median_sample": 0.12856009975075722
+        },
+        "hull_0.5px": {
+          "rank": 6,
+          "median_sample": 0.12291841581463814
+        },
+        "hull_calibrated": {
+          "rank": 3,
+          "median_sample": 0.1279584839940071
+        },
+        "neural": {
+          "rank": 4,
+          "median_sample": 0.12472475692629814
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930003-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930003",
+        "reference": 0.09954136610031128,
+        "true_simulator_sampled_world": {
+          "rank": 5,
+          "median_sample": 0.12443359941244125
+        },
+        "hull_0.5px": {
+          "rank": 7,
+          "median_sample": 0.11608376353979111
+        },
+        "hull_calibrated": {
+          "rank": 7,
+          "median_sample": 0.12199214473366737
+        },
+        "neural": {
+          "rank": 7,
+          "median_sample": 0.12034464254975319
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930003-forward-p00",
+        "scene_group_id": "g03-scene-00930003",
+        "reference": 0.07505941390991211,
+        "true_simulator_sampled_world": {
+          "rank": 1,
+          "median_sample": 0.10761266946792603
+        },
+        "hull_0.5px": {
+          "rank": 1,
+          "median_sample": 0.10761266201734543
+        },
+        "hull_calibrated": {
+          "rank": 1,
+          "median_sample": 0.10761266201734543
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.1053711362183094
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930003-reverse-p00",
+        "scene_group_id": "g03-scene-00930003",
+        "reference": 0.07505941390991211,
+        "true_simulator_sampled_world": {
+          "rank": 2,
+          "median_sample": 0.10624285042285919
+        },
+        "hull_0.5px": {
+          "rank": 2,
+          "median_sample": 0.10624285042285919
+        },
+        "hull_calibrated": {
+          "rank": 2,
+          "median_sample": 0.10624285042285919
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.10734548419713974
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930003-wall-p00",
+        "scene_group_id": "g03-scene-00930003",
+        "reference": 0.41764575242996216,
+        "true_simulator_sampled_world": {
+          "rank": 0,
+          "median_sample": 0.4179864972829819
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.4066685885190964
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.411945104598999
+        },
+        "neural": {
+          "rank": 2,
+          "median_sample": 0.44632141292095184
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930004-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930004",
+        "reference": 0.09548892080783844,
+        "true_simulator_sampled_world": {
+          "rank": 1,
+          "median_sample": 0.1275906339287758
+        },
+        "hull_0.5px": {
+          "rank": 3,
+          "median_sample": 0.11910871416330338
+        },
+        "hull_calibrated": {
+          "rank": 1,
+          "median_sample": 0.12782851606607437
+        },
+        "neural": {
+          "rank": 3,
+          "median_sample": 0.11847659945487976
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930004-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930004",
+        "reference": 0.10089710354804993,
+        "true_simulator_sampled_world": {
+          "rank": 3,
+          "median_sample": 0.1341356784105301
+        },
+        "hull_0.5px": {
+          "rank": 3,
+          "median_sample": 0.126435786485672
+        },
+        "hull_calibrated": {
+          "rank": 3,
+          "median_sample": 0.1327497586607933
+        },
+        "neural": {
+          "rank": 3,
+          "median_sample": 0.13523824512958527
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930004-forward-p00",
+        "scene_group_id": "g03-scene-00930004",
+        "reference": 0.07845574617385864,
+        "true_simulator_sampled_world": {
+          "rank": 4,
+          "median_sample": 0.11972653865814209
+        },
+        "hull_0.5px": {
+          "rank": 4,
+          "median_sample": 0.11972654983401299
+        },
+        "hull_calibrated": {
+          "rank": 4,
+          "median_sample": 0.11972654983401299
+        },
+        "neural": {
+          "rank": 3,
+          "median_sample": 0.11190206930041313
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930004-reverse-p00",
+        "scene_group_id": "g03-scene-00930004",
+        "reference": 0.07845574617385864,
+        "true_simulator_sampled_world": {
+          "rank": 2,
+          "median_sample": 0.13646000623703003
+        },
+        "hull_0.5px": {
+          "rank": 2,
+          "median_sample": 0.13645999878644943
+        },
+        "hull_calibrated": {
+          "rank": 2,
+          "median_sample": 0.13645999878644943
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.1372290998697281
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930004-wall-p00",
+        "scene_group_id": "g03-scene-00930004",
+        "reference": 0.43398517370224,
+        "true_simulator_sampled_world": {
+          "rank": 10,
+          "median_sample": 0.43407340347766876
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.4221513271331787
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.4277254641056061
+        },
+        "neural": {
+          "rank": 24,
+          "median_sample": 0.4090644121170044
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930005-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930005",
+        "reference": 0.13825321197509766,
+        "true_simulator_sampled_world": {
+          "rank": 17,
+          "median_sample": 0.12845465540885925
+        },
+        "hull_0.5px": {
+          "rank": 18,
+          "median_sample": 0.11757675558328629
+        },
+        "hull_calibrated": {
+          "rank": 18,
+          "median_sample": 0.12327130511403084
+        },
+        "neural": {
+          "rank": 9,
+          "median_sample": 0.14198040962219238
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930005-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930005",
+        "reference": 0.11729265749454498,
+        "true_simulator_sampled_world": {
+          "rank": 15,
+          "median_sample": 0.10927232354879379
+        },
+        "hull_0.5px": {
+          "rank": 18,
+          "median_sample": 0.099553182721138
+        },
+        "hull_calibrated": {
+          "rank": 16,
+          "median_sample": 0.10285802558064461
+        },
+        "neural": {
+          "rank": 14,
+          "median_sample": 0.11376788839697838
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930005-forward-p00",
+        "scene_group_id": "g03-scene-00930005",
+        "reference": 0.2145330309867859,
+        "true_simulator_sampled_world": {
+          "rank": 22,
+          "median_sample": 0.11232095956802368
+        },
+        "hull_0.5px": {
+          "rank": 22,
+          "median_sample": 0.11232095584273338
+        },
+        "hull_calibrated": {
+          "rank": 22,
+          "median_sample": 0.11232095584273338
+        },
+        "neural": {
+          "rank": 22,
+          "median_sample": 0.11076590418815613
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930005-reverse-p00",
+        "scene_group_id": "g03-scene-00930005",
+        "reference": 0.21453306078910828,
+        "true_simulator_sampled_world": {
+          "rank": 22,
+          "median_sample": 0.11544869840145111
+        },
+        "hull_0.5px": {
+          "rank": 22,
+          "median_sample": 0.11544869840145111
+        },
+        "hull_calibrated": {
+          "rank": 22,
+          "median_sample": 0.11544869840145111
+        },
+        "neural": {
+          "rank": 22,
+          "median_sample": 0.10299932211637497
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930005-wall-p00",
+        "scene_group_id": "g03-scene-00930005",
+        "reference": 0.43113312125205994,
+        "true_simulator_sampled_world": {
+          "rank": 17,
+          "median_sample": 0.43072134256362915
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.4223298579454422
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.4278157204389572
+        },
+        "neural": {
+          "rank": 7,
+          "median_sample": 0.44073522090911865
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930006-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930006",
+        "reference": 0.11965562403202057,
+        "true_simulator_sampled_world": {
+          "rank": 9,
+          "median_sample": 0.1246231347322464
+        },
+        "hull_0.5px": {
+          "rank": 13,
+          "median_sample": 0.11870182305574417
+        },
+        "hull_calibrated": {
+          "rank": 10,
+          "median_sample": 0.12422448396682739
+        },
+        "neural": {
+          "rank": 13,
+          "median_sample": 0.11571186408400536
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930006-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930006",
+        "reference": 0.11691147089004517,
+        "true_simulator_sampled_world": {
+          "rank": 6,
+          "median_sample": 0.13209359347820282
+        },
+        "hull_0.5px": {
+          "rank": 10,
+          "median_sample": 0.12228592857718468
+        },
+        "hull_calibrated": {
+          "rank": 6,
+          "median_sample": 0.12774605304002762
+        },
+        "neural": {
+          "rank": 9,
+          "median_sample": 0.12203403189778328
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930006-forward-p00",
+        "scene_group_id": "g03-scene-00930006",
+        "reference": 0.12084871530532837,
+        "true_simulator_sampled_world": {
+          "rank": 15,
+          "median_sample": 0.11078795790672302
+        },
+        "hull_0.5px": {
+          "rank": 15,
+          "median_sample": 0.11078797280788422
+        },
+        "hull_calibrated": {
+          "rank": 15,
+          "median_sample": 0.11078797280788422
+        },
+        "neural": {
+          "rank": 15,
+          "median_sample": 0.10429726541042328
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930006-reverse-p00",
+        "scene_group_id": "g03-scene-00930006",
+        "reference": 0.12084871530532837,
+        "true_simulator_sampled_world": {
+          "rank": 13,
+          "median_sample": 0.11565466225147247
+        },
+        "hull_0.5px": {
+          "rank": 13,
+          "median_sample": 0.11565465852618217
+        },
+        "hull_calibrated": {
+          "rank": 13,
+          "median_sample": 0.11565465852618217
+        },
+        "neural": {
+          "rank": 12,
+          "median_sample": 0.12140355259180069
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930006-wall-p00",
+        "scene_group_id": "g03-scene-00930006",
+        "reference": 0.42020511627197266,
+        "true_simulator_sampled_world": {
+          "rank": 1,
+          "median_sample": 0.420657753944397
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.4069131761789322
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.412325382232666
+        },
+        "neural": {
+          "rank": 18,
+          "median_sample": 0.41370856761932373
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930007-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930007",
+        "reference": 0.10008493810892105,
+        "true_simulator_sampled_world": {
+          "rank": 6,
+          "median_sample": 0.11390017345547676
+        },
+        "hull_0.5px": {
+          "rank": 10,
+          "median_sample": 0.10393017157912254
+        },
+        "hull_calibrated": {
+          "rank": 7,
+          "median_sample": 0.10958940908312798
+        },
+        "neural": {
+          "rank": 8,
+          "median_sample": 0.10856666043400764
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930007-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930007",
+        "reference": 0.09445232897996902,
+        "true_simulator_sampled_world": {
+          "rank": 2,
+          "median_sample": 0.1339309811592102
+        },
+        "hull_0.5px": {
+          "rank": 5,
+          "median_sample": 0.11476774513721466
+        },
+        "hull_calibrated": {
+          "rank": 3,
+          "median_sample": 0.12275977060198784
+        },
+        "neural": {
+          "rank": 4,
+          "median_sample": 0.11812174320220947
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930007-forward-p00",
+        "scene_group_id": "g03-scene-00930007",
+        "reference": 0.0899883508682251,
+        "true_simulator_sampled_world": {
+          "rank": 9,
+          "median_sample": 0.09848958253860474
+        },
+        "hull_0.5px": {
+          "rank": 9,
+          "median_sample": 0.09848957881331444
+        },
+        "hull_calibrated": {
+          "rank": 9,
+          "median_sample": 0.09848957881331444
+        },
+        "neural": {
+          "rank": 7,
+          "median_sample": 0.09945482760667801
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930007-reverse-p00",
+        "scene_group_id": "g03-scene-00930007",
+        "reference": 0.0899883508682251,
+        "true_simulator_sampled_world": {
+          "rank": 4,
+          "median_sample": 0.128368079662323
+        },
+        "hull_0.5px": {
+          "rank": 4,
+          "median_sample": 0.128368079662323
+        },
+        "hull_calibrated": {
+          "rank": 4,
+          "median_sample": 0.128368079662323
+        },
+        "neural": {
+          "rank": 4,
+          "median_sample": 0.12847917899489403
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930007-wall-p00",
+        "scene_group_id": "g03-scene-00930007",
+        "reference": 0.4390870928764343,
+        "true_simulator_sampled_world": {
+          "rank": 15,
+          "median_sample": 0.43900860846042633
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.43749113380908966
+        },
+        "hull_calibrated": {
+          "rank": 0,
+          "median_sample": 0.44322989881038666
+        },
+        "neural": {
+          "rank": 10,
+          "median_sample": 0.44187918305397034
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930008-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930008",
+        "reference": 0.10517600923776627,
+        "true_simulator_sampled_world": {
+          "rank": 6,
+          "median_sample": 0.11747650057077408
+        },
+        "hull_0.5px": {
+          "rank": 8,
+          "median_sample": 0.1136230006814003
+        },
+        "hull_calibrated": {
+          "rank": 6,
+          "median_sample": 0.11881164088845253
+        },
+        "neural": {
+          "rank": 5,
+          "median_sample": 0.1210777759552002
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930008-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930008",
+        "reference": 0.09989387542009354,
+        "true_simulator_sampled_world": {
+          "rank": 7,
+          "median_sample": 0.11080406978726387
+        },
+        "hull_0.5px": {
+          "rank": 9,
+          "median_sample": 0.10747961327433586
+        },
+        "hull_calibrated": {
+          "rank": 6,
+          "median_sample": 0.11204539239406586
+        },
+        "neural": {
+          "rank": 8,
+          "median_sample": 0.10648972541093826
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930008-forward-p00",
+        "scene_group_id": "g03-scene-00930008",
+        "reference": 0.1002689003944397,
+        "true_simulator_sampled_world": {
+          "rank": 14,
+          "median_sample": 0.08970829844474792
+        },
+        "hull_0.5px": {
+          "rank": 14,
+          "median_sample": 0.08970830217003822
+        },
+        "hull_calibrated": {
+          "rank": 14,
+          "median_sample": 0.08970830217003822
+        },
+        "neural": {
+          "rank": 13,
+          "median_sample": 0.09417326003313065
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930008-reverse-p00",
+        "scene_group_id": "g03-scene-00930008",
+        "reference": 0.1002689003944397,
+        "true_simulator_sampled_world": {
+          "rank": 9,
+          "median_sample": 0.10898920893669128
+        },
+        "hull_0.5px": {
+          "rank": 9,
+          "median_sample": 0.10898921638727188
+        },
+        "hull_calibrated": {
+          "rank": 9,
+          "median_sample": 0.10898921638727188
+        },
+        "neural": {
+          "rank": 10,
+          "median_sample": 0.10580644756555557
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930008-wall-p00",
+        "scene_group_id": "g03-scene-00930008",
+        "reference": 0.42630535364151,
+        "true_simulator_sampled_world": {
+          "rank": 13,
+          "median_sample": 0.42622987926006317
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.42226462066173553
+        },
+        "hull_calibrated": {
+          "rank": 0,
+          "median_sample": 0.4278446137905121
+        },
+        "neural": {
+          "rank": 23,
+          "median_sample": 0.4119909405708313
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930009-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930009",
+        "reference": 0.15832673013210297,
+        "true_simulator_sampled_world": {
+          "rank": 20,
+          "median_sample": 0.12675295025110245
+        },
+        "hull_0.5px": {
+          "rank": 23,
+          "median_sample": 0.11666084080934525
+        },
+        "hull_calibrated": {
+          "rank": 21,
+          "median_sample": 0.12401173263788223
+        },
+        "neural": {
+          "rank": 18,
+          "median_sample": 0.1159660592675209
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930009-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930009",
+        "reference": 0.143240824341774,
+        "true_simulator_sampled_world": {
+          "rank": 12,
+          "median_sample": 0.14140153676271439
+        },
+        "hull_0.5px": {
+          "rank": 19,
+          "median_sample": 0.1272599771618843
+        },
+        "hull_calibrated": {
+          "rank": 15,
+          "median_sample": 0.13508521765470505
+        },
+        "neural": {
+          "rank": 16,
+          "median_sample": 0.13305732607841492
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930009-forward-p00",
+        "scene_group_id": "g03-scene-00930009",
+        "reference": 0.15867626667022705,
+        "true_simulator_sampled_world": {
+          "rank": 16,
+          "median_sample": 0.1401331126689911
+        },
+        "hull_0.5px": {
+          "rank": 16,
+          "median_sample": 0.1401331052184105
+        },
+        "hull_calibrated": {
+          "rank": 16,
+          "median_sample": 0.1401331052184105
+        },
+        "neural": {
+          "rank": 16,
+          "median_sample": 0.1348617747426033
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930009-reverse-p00",
+        "scene_group_id": "g03-scene-00930009",
+        "reference": 0.15867629647254944,
+        "true_simulator_sampled_world": {
+          "rank": 18,
+          "median_sample": 0.11765499413013458
+        },
+        "hull_0.5px": {
+          "rank": 18,
+          "median_sample": 0.11765498295426369
+        },
+        "hull_calibrated": {
+          "rank": 18,
+          "median_sample": 0.11765498295426369
+        },
+        "neural": {
+          "rank": 17,
+          "median_sample": 0.11976824328303337
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930009-wall-p00",
+        "scene_group_id": "g03-scene-00930009",
+        "reference": 0.44177690148353577,
+        "true_simulator_sampled_world": {
+          "rank": 6,
+          "median_sample": 0.4419330358505249
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.4379523992538452
+        },
+        "hull_calibrated": {
+          "rank": 0,
+          "median_sample": 0.443257674574852
+        },
+        "neural": {
+          "rank": 11,
+          "median_sample": 0.44389618933200836
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930010-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930010",
+        "reference": 0.16821229457855225,
+        "true_simulator_sampled_world": {
+          "rank": 22,
+          "median_sample": 0.1144237257540226
+        },
+        "hull_0.5px": {
+          "rank": 23,
+          "median_sample": 0.1098211407661438
+        },
+        "hull_calibrated": {
+          "rank": 22,
+          "median_sample": 0.11579792201519012
+        },
+        "neural": {
+          "rank": 19,
+          "median_sample": 0.11459436267614365
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930010-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930010",
+        "reference": 0.1765257716178894,
+        "true_simulator_sampled_world": {
+          "rank": 21,
+          "median_sample": 0.12803873419761658
+        },
+        "hull_0.5px": {
+          "rank": 23,
+          "median_sample": 0.12394927814602852
+        },
+        "hull_calibrated": {
+          "rank": 21,
+          "median_sample": 0.12924861907958984
+        },
+        "neural": {
+          "rank": 23,
+          "median_sample": 0.1151261255145073
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930010-forward-p00",
+        "scene_group_id": "g03-scene-00930010",
+        "reference": 0.14161419868469238,
+        "true_simulator_sampled_world": {
+          "rank": 13,
+          "median_sample": 0.13903295993804932
+        },
+        "hull_0.5px": {
+          "rank": 13,
+          "median_sample": 0.1390329673886299
+        },
+        "hull_calibrated": {
+          "rank": 13,
+          "median_sample": 0.1390329673886299
+        },
+        "neural": {
+          "rank": 15,
+          "median_sample": 0.12872590124607086
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930010-reverse-p00",
+        "scene_group_id": "g03-scene-00930010",
+        "reference": 0.14161422848701477,
+        "true_simulator_sampled_world": {
+          "rank": 15,
+          "median_sample": 0.10565336048603058
+        },
+        "hull_0.5px": {
+          "rank": 15,
+          "median_sample": 0.10565337166190147
+        },
+        "hull_calibrated": {
+          "rank": 15,
+          "median_sample": 0.10565337166190147
+        },
+        "neural": {
+          "rank": 16,
+          "median_sample": 0.10430198535323143
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930010-wall-p00",
+        "scene_group_id": "g03-scene-00930010",
+        "reference": 0.4462277889251709,
+        "true_simulator_sampled_world": {
+          "rank": 20,
+          "median_sample": 0.4460698366165161
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.43801793456077576
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.4432514160871506
+        },
+        "neural": {
+          "rank": 24,
+          "median_sample": 0.41157281398773193
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930011-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00930011",
+        "reference": 0.09485462307929993,
+        "true_simulator_sampled_world": {
+          "rank": 0,
+          "median_sample": 0.13012326508760452
+        },
+        "hull_0.5px": {
+          "rank": 3,
+          "median_sample": 0.11334915086627007
+        },
+        "hull_calibrated": {
+          "rank": 2,
+          "median_sample": 0.11974706128239632
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.12531346455216408
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930011-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00930011",
+        "reference": 0.09403836727142334,
+        "true_simulator_sampled_world": {
+          "rank": 1,
+          "median_sample": 0.14002715796232224
+        },
+        "hull_0.5px": {
+          "rank": 4,
+          "median_sample": 0.1157940924167633
+        },
+        "hull_calibrated": {
+          "rank": 2,
+          "median_sample": 0.12478290498256683
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.14071331918239594
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930011-forward-p00",
+        "scene_group_id": "g03-scene-00930011",
+        "reference": 0.08130615949630737,
+        "true_simulator_sampled_world": {
+          "rank": 1,
+          "median_sample": 0.11009639501571655
+        },
+        "hull_0.5px": {
+          "rank": 1,
+          "median_sample": 0.11009638756513596
+        },
+        "hull_calibrated": {
+          "rank": 1,
+          "median_sample": 0.11009638756513596
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.10866744816303253
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930011-reverse-p00",
+        "scene_group_id": "g03-scene-00930011",
+        "reference": 0.08130615949630737,
+        "true_simulator_sampled_world": {
+          "rank": 6,
+          "median_sample": 0.1209888905286789
+        },
+        "hull_0.5px": {
+          "rank": 6,
+          "median_sample": 0.12098889797925949
+        },
+        "hull_calibrated": {
+          "rank": 6,
+          "median_sample": 0.12098889797925949
+        },
+        "neural": {
+          "rank": 6,
+          "median_sample": 0.11452481523156166
+        }
+      },
+      {
+        "sample_id": "g03-scene-00930011-wall-p00",
+        "scene_group_id": "g03-scene-00930011",
+        "reference": 0.42986661195755005,
+        "true_simulator_sampled_world": {
+          "rank": 8,
+          "median_sample": 0.4300485998392105
+        },
+        "hull_0.5px": {
+          "rank": 24,
+          "median_sample": 0.4222317636013031
+        },
+        "hull_calibrated": {
+          "rank": 24,
+          "median_sample": 0.42787572741508484
+        },
+        "neural": {
+          "rank": 1,
+          "median_sample": 0.45108868181705475
+        }
+      }
+    ]
+  }
+}

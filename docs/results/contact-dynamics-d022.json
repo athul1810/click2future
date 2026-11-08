@@ -1,0 +1,213 @@
+{
+  "study_id": "D022",
+  "tc2_job": 50876,
+  "source_revision": "dc11b0726c8162feb0abb2ff0d0d9d71146d9783",
+  "contract": "local-impulse-finite-difference-dynamics-1",
+  "training_cache_manifest_sha256": "2c695895d5caed7be0369b28827739aab677a127c00b3d85b6e9f2488f9b9290",
+  "final_checkpoint_sha256": "774ce717571e6b5f1accf66cf3d9e16fc2f35c392c7b72d226ccf95960ea534b",
+  "validation_results_sha256": "eb3607e98a2b870776e39947f095307f85d93db530ef493ae23b119642f4216c",
+  "validation_plan_sha256": "4233202c2999b848dd61e5ba655ad5d719289ae6b8c26bcd0005a60649cb7ea0",
+  "training": {
+    "updates": 8000,
+    "status": "complete",
+    "parameter_count": 41735,
+    "elapsed_seconds": 378.3,
+    "peak_cuda_allocated_bytes": 170858496,
+    "cuda_continuation_check": {
+      "model_max_error": 0.0,
+      "ema_max_error": 0.0,
+      "loss_error": 0.0
+    }
+  },
+  "acceptance": {
+    "rule": "fewer than D020's 4/96 penetrating validation clips, 96/96 complete tracks, no rest/passive drift, selected ADE no worse than 0.0250208912",
+    "d020_penetrating_clips": 4,
+    "d020_selected_ade": 0.0250208912,
+    "accepted": false
+  },
+  "note": "Original validation only. No fresh or historical test split was scored. Checkpoints and per-clip outputs stay on TC2 and outside Git.",
+  "validation": {
+    "study_id": "D022",
+    "scope": "original validation only; no fresh or historical test scoring",
+    "quality": {
+      "case_count": 24,
+      "expected_observations": 5952,
+      "tracked_observations": 5952,
+      "tracking_fraction": 1.0,
+      "complete_selected_clips": 96,
+      "expected_selected_clips": 96,
+      "complete_all_object_clips": 96,
+      "expected_all_object_clips": 96,
+      "selected_ade_mean_cases_if_all_complete": 0.026328561514314522,
+      "passes_tracking_and_selected_trajectory_gate": false,
+      "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+    },
+    "zero_force": {
+      "total_samples": 16,
+      "complete_samples": 16,
+      "missing_samples": 0,
+      "drifting_samples": 0
+    },
+    "passive": {
+      "total_samples": 32,
+      "complete_samples": 32,
+      "missing_samples": 0,
+      "drifting_samples": 0
+    },
+    "penetrating_clips": 22,
+    "penetrating_frames": 99,
+    "contact_counts": {
+      "tp": 17,
+      "fp": 47,
+      "fn": 47
+    },
+    "contact_f1": 0.265625,
+    "cases": [
+      {
+        "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+        "penetrating_clips": 2,
+        "penetrating_frames": 2,
+        "max_depth_pixels": 1.0151452711975182
+      },
+      {
+        "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+        "penetrating_clips": 3,
+        "penetrating_frames": 11,
+        "max_depth_pixels": 1.2037098405949642
+      },
+      {
+        "sample_id": "g03-scene-00730016-forward-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730016-reverse-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730016-wall-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730016-zero-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+        "penetrating_clips": 3,
+        "penetrating_frames": 15,
+        "max_depth_pixels": 1.3449606301933557
+      },
+      {
+        "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+        "penetrating_clips": 2,
+        "penetrating_frames": 6,
+        "max_depth_pixels": 1.0905114299798022
+      },
+      {
+        "sample_id": "g03-scene-00730017-forward-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730017-reverse-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730017-wall-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730017-zero-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+        "penetrating_clips": 3,
+        "penetrating_frames": 15,
+        "max_depth_pixels": 1.2532389142857525
+      },
+      {
+        "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+        "penetrating_clips": 3,
+        "penetrating_frames": 17,
+        "max_depth_pixels": 1.4359605488390628
+      },
+      {
+        "sample_id": "g03-scene-00730018-forward-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730018-reverse-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730018-wall-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730018-zero-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+        "penetrating_clips": 3,
+        "penetrating_frames": 18,
+        "max_depth_pixels": 1.500774960196786
+      },
+      {
+        "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+        "penetrating_clips": 3,
+        "penetrating_frames": 15,
+        "max_depth_pixels": 1.2647452201211955
+      },
+      {
+        "sample_id": "g03-scene-00730019-forward-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730019-reverse-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730019-wall-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      },
+      {
+        "sample_id": "g03-scene-00730019-zero-p00",
+        "penetrating_clips": 0,
+        "penetrating_frames": 0,
+        "max_depth_pixels": 0.0
+      }
+    ],
+    "test_splits_evaluated": []
+  }
+}

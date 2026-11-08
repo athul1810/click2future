@@ -36,7 +36,14 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
         if not registered_holdout(plan):
             raise ValueError("E11 held-out sampling requires its registered D018 corpus")
     model, state = load_trajectory(checkpoint, device)
-    methods = {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 6: "E10", 7: "E11"}
+    if state["trajectory_format_version"] == 8 and plan["split"] not in {
+        "validation",
+        "validation-selected-object",
+    }:
+        raise ValueError(
+            "D019 loss candidates are validation-only; frozen held-out studies stay closed"
+        )
+    methods = {1: "E5", 2: "E6", 3: "E7", 4: "E8", 5: "E9", 6: "E10", 7: "E11", 8: "E11"}
     if method != methods.get(state["trajectory_format_version"]):
         raise ValueError("Checkpoint training variant and requested method disagree")
     if getattr(model, "world_prior_only", False) and steps != 1:
@@ -106,6 +113,13 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
             run["prior_contract"] = state["prior_contract"]
             run["world_prior_only"] = state["config"]["world_prior_only"]
             run["model_source_sha256"] = provenance["source_sha256"]
+            if state["trajectory_format_version"] == 8:
+                run.update(
+                    study_id="D020" if state["config"].get("rest_anchored") else "D019",
+                    objective_contract=state["objective_contract"],
+                    expected_objective=state["config"]["expected_objective"],
+                    rest_anchor_contract=state.get("rest_anchor_contract"),
+                )
         if method == "E9":
             run["surface_contract"] = state["surface_contract"]
             run["model_source_sha256"] = provenance["source_sha256"]
@@ -122,7 +136,8 @@ def sample_plan(plan_path, checkpoint, output, *, device="cpu", steps=16, method
                 **predictions,
                 "device": device,
                 "sampling_steps": steps,
-                "network_evaluations_per_sample": 2 * steps - 1,
+                "network_evaluations_per_sample": getattr(model, "backbone_evaluations", 1)
+                * (2 * steps - 1),
                 "sampler": "direct world-conditioned decode"
                 if getattr(model, "world_prior_only", False)
                 else "EDM Heun rho=7, no churn, float32",

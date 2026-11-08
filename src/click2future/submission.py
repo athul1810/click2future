@@ -23,6 +23,8 @@ DEMO_ASSETS = {
 }
 # TC2 jobs behind the final E0/E2/E3 runs and held-out results (D013-D015).
 FINAL_RUN_SCRIPTS = {
+    "cluster/contact_dynamics.sbatch",
+    "cluster/submit_once.py",
     "cluster/streamforce_runtime.py",
     "cluster/streamforce_worker.py",
     "cluster/streamforce_worker.sbatch",
@@ -100,6 +102,8 @@ def _check(name, payload):
             "submission/world_comparison.py",
             "submission/world_comparison.sbatch",
             "submission/prior_holdout.py",
+            "submission/expected_prior_comparison.py",
+            "submission/expected_prior_comparison.sbatch",
             "submission/prior_repeats.py",
             "submission/prior_repeats.sbatch",
             "submission/prior_comparison.py",
