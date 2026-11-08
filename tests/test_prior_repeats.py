@@ -12,7 +12,14 @@ ROOT = Path(__file__).parents[1]
 
 @pytest.mark.parametrize(
     "changed",
-    [None, "seed", "steps", "world_prior_only", "contact_transition_weight", "normal_velocity_weight"],
+    [
+        None,
+        "seed",
+        "steps",
+        "world_prior_only",
+        "contact_transition_weight",
+        "normal_velocity_weight",
+    ],
 )
 def test_repeat_recipes_keep_the_registered_budget_and_pairs(tmp_path, changed):
     shutil.copytree(ROOT / "configs/training", tmp_path / "configs/training")
