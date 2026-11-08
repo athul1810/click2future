@@ -103,3 +103,28 @@ The photo panel and rating rules must be frozen before any claimed evaluation.
 The completed native smoke and recorded-browser checks are recorded in
 [the evidence summary](results/photo-native-probe.json). Its official caption
 already requests swinging; these four clips are not a force-only control test.
+
+
+## Paired native run and offline fallback
+
+PHOTO-P03 completes both opposite pushes through the actual browser, transport
+and A40 worker. Each retains seeds 0-3. The two four-sample requests take 788.88
+and 792.06 seconds through the browser. All eight raw RGB/video hashes match
+the local backup. Right-push seeds 0/1 respond weakly; every reversed-push sample
+translates the mug left. These are manually inspected outputs on one public
+StreamForce development image, without physical ground truth or calibration.
+
+PHOTO-OPS01 checks cancellation before any completed sample and after one
+finished sample has been backed up. An incomplete request never becomes four
+ready futures. The prior result stays visible. The interrupted transport is
+also recovered under the original request IDs without resampling.
+
+Keep a separate offline spool snapshot with its actual recorded model identity.
+Start the same server against that snapshot with `--backend force-prompting-20`.
+It restores saved requests, replays matching actions, and refuses unseen
+requests while disconnected. Never attach the live transport to that frozen
+snapshot. Dependency installation is still required before going offline.
+
+The paired-run evidence and limitations are in
+[the integration summary](results/photo-paired-integration.json). The original
+models' physical quality and final presentation-machine rehearsal remain open.

@@ -1,0 +1,114 @@
+{
+  "study": "PHOTO-P03 and PHOTO-OPS01",
+  "status": "passed_functional_integration_and_offline_replay",
+  "scope": "external pretrained development demonstration; original trained-model quality gates remain open",
+  "model": "Force Prompting point-force / CogVideoX-5b-I2V, 20-step engineering profile",
+  "worker_source_revision": "fb3ebfd",
+  "allocation": "50985",
+  "seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "input_source": "StreamForce public development gallery, point_1",
+  "source_photo_sha256": "3cad294dbc889d8de5ec9240571c64a7376c9ee82eb8cf99d8984907658691c9",
+  "shape": [
+    49,
+    480,
+    720,
+    3
+  ],
+  "fps": 8,
+  "primary_actions": [
+    {
+      "request_id": "5c4dc1980f224fc99fa355fbdab37579",
+      "seconds_through_browser": 788.875,
+      "result_sha256": "e0d87452f7352cd3917c0096c83d5300d545989837babb60decc8a2519a1e22c",
+      "samples": [
+        {
+          "seed": 0,
+          "sha256": "3257f32c2ef4d75090766e94e2a0c875c0e05eac2d6d6cfeb9af9cc54e3fcdd1",
+          "raw_sha256": "4b27376f1e35ddb0161ccea15a777032135627ce50ee461335c99ab2ff7474c6",
+          "seconds": 194.4217304380145
+        },
+        {
+          "seed": 1,
+          "sha256": "bff64259ec15d476138d2b58a87d2c8d8f448a417b4d3031e014105b569710bd",
+          "raw_sha256": "94dd4966a28c7e9c1f84e11284e11691e57514e5f29926465a71136daf4f316f",
+          "seconds": 194.79353846999584
+        },
+        {
+          "seed": 2,
+          "sha256": "50df899bea6a7340cf0e34c2fc5203c49cd5258e9796be9e53d5cc16029f2e59",
+          "raw_sha256": "388c35936a93738b145a2e41630289dafb9d3bcaa696b009b1042d687d6fe31c",
+          "seconds": 194.89554349100217
+        },
+        {
+          "seed": 3,
+          "sha256": "4e475776b74e90c24554afd1a7db9b785abbec8adf8706d5d8013fbfd1ea2e7a",
+          "raw_sha256": "f786482140765759badfd0140dfd723f0968a05652328af7883612244073a2d6",
+          "seconds": 194.9033021290088
+        }
+      ]
+    },
+    {
+      "request_id": "862644c7c7a544cb89f6be90213ccad3",
+      "seconds_through_browser": 792.0620000000345,
+      "result_sha256": "2669da505d14501ec9e756ac32783634d68b49e0aebab7546e97acab1d42444b",
+      "samples": [
+        {
+          "seed": 0,
+          "sha256": "176cd0c60ed5b31ffd582d634eacd7bba469ba047f2ad0369390c59233456e5b",
+          "raw_sha256": "37ebaa0fa927251121ca5771e8d331069135977f50f3168664666a1e9a71e12e",
+          "seconds": 194.5205621639907
+        },
+        {
+          "seed": 1,
+          "sha256": "183c1834229c650328f22be5377c15ff0f352ca6365a16b2b3397f2312ca7a28",
+          "raw_sha256": "30b59494911fa1a3b01fac4153d88f55e015c419b1c3af3b144ad4d2f62c532b",
+          "seconds": 194.85935088800034
+        },
+        {
+          "seed": 2,
+          "sha256": "9590f9be3a592bfeb245ad5f4f372320c3915b2097dcdd29db77686795c56ac3",
+          "raw_sha256": "f5b9fef71a9e2329a4c8ee5a8410c4a8aacfc95396a0e7627c7f4b239e0c4fff",
+          "seconds": 194.87076080299448
+        },
+        {
+          "seed": 3,
+          "sha256": "18130b24f870bf8dab772a411a4286a9f60426117e48c2ef3aadf978280a4d72",
+          "raw_sha256": "c398201667f8d73b69fd24da218f52498455c40f501ee4bde522fb27e1e598ec",
+          "seconds": 194.8866260650102
+        }
+      ]
+    }
+  ],
+  "controls": "same image, caption, point, magnitude and seeds; opposite force vectors",
+  "visual_review": {
+    "all_eight_retained": true,
+    "right_push": "seeds 0 and 1 weak or nearly static; seeds 2 and 3 show rightward mug translation",
+    "left_push": "all four show leftward mug translation",
+    "identity": "recognizable mug and room; shape, hand and background variation remains",
+    "limitations": "one public development image, manual inspection, uncalibrated force and uncertainty, no physical ground truth"
+  },
+  "transport": "first metadata transfer interrupted; recovered the same request IDs without regenerating seeds",
+  "operations": [
+    "early cancellation returns no completed samples and keeps the prior four videos",
+    "one finished native sample is hash-verified locally before cancellation; an incomplete request never becomes four ready futures",
+    "cancellation preserves the previous four-result display and every request directory"
+  ],
+  "operations_allocation": "50997",
+  "offline_checks": [
+    "offline reversal returns the original matching four-seed cache; all eight are visible",
+    "unseen requests fail explicitly with the worker offline and preserve the last real output"
+  ],
+  "source_validation": {
+    "revision": "37078a0",
+    "passed": 733,
+    "subtests": 4,
+    "skipped": 0,
+    "archive_sha256": "4cff13c62baa35078589eb8b103cc2d9671020102cd53594c71d59529f1f93ed"
+  },
+  "promotion": "none; no calibrated physics, held-out quality, or SOTA result"
+}
