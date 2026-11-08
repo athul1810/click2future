@@ -475,7 +475,7 @@
       1,
       2
     ],
-    "progress": "The r6 review has 35 report pages, one contribution page and 18 editable slides. It adds the merged D028 geometric hybrid with its other-object regression and unchanged strict quality flag, alongside the separately credited native photograph demo. Athul's D020-D030 work is recorded. Three member confirmations, final team rehearsal and coordinated upload remain open. Historical scores stay unchanged.",
+    "progress": "The r6a contribution refresh uses Sanjay's own supplied wording and Athul's confirmed D019-D030 row. Sanjay, Ananya and Athul are reviewed; Shrijeet remains pending. The 35-page report, 18 slides and 391-file source archive preserve r6. Final team rehearsal and coordinated upload remain open. The strict physical-quality gate and the D017 raw-replay caveat stay unchanged.",
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {

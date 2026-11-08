@@ -130,3 +130,14 @@ the projection comparison and both simulator-reference control drivers.
 The contribution draft records Athul's merged D020-D030 implementation and
 analyses. Member review states remain unchanged. Final member confirmation,
 team rehearsal and coordinated upload remain open.
+
+
+## contribution confirmations, 8 november, r6a
+
+Sanjay supplied his replacement paragraph on issue 18; Athul confirmed his
+D019-D030 row on main in b90c172. Their exact accounts and Ananya's reviewed
+account are used in the refreshed one-page contribution draft. Only Shrijeet's
+confirmation remains pending. The 35-page report, 18 slides and source ZIP
+retain the checked r6 content. Final team rehearsal and coordinated submission
+remain open. D017's deleted raw outputs cannot be independently replayed from
+the retained score summaries; its caveat remains in the report.
