@@ -1,9 +1,9 @@
 """D030: what the unchanged scorers give for the true simulator on a fresh corpus.
 
 Two controls, rendered by the simulator and scored exactly like the models:
-- true_world: true geometry and true hidden physics. This is the scorer's own ceiling.
-- sampled_world: true geometry with the four prior draws (seeds of the plan). This is
-  the best a method can do while sampling hidden physics from the declared prior.
+- true_world: true geometry and true hidden physics, as a scorer reference control.
+- sampled_world: true geometry with the four prior draws (seeds of the plan), as a
+  prior-sampling control. Neither is a mathematical bound on other generators.
 Reports selected ADE in normalized units and native pixels, the strict gate and RGB
 contact F1. Descriptive only; no model, gate, scorer or historical result changes.
 """

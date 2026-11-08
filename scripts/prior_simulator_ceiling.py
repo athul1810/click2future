@@ -1,11 +1,11 @@
-"""D024 ceiling: the true simulator with sampled hidden physics, scored by the strict gate.
+"""D024 prior-sampling control, scored by the unchanged single-reference gate.
 
 Each case keeps its true scene geometry and visible frame zero. Only the hidden mass,
 friction and restitution are replaced by the same four prior draws that the
 physics-assisted baselines use. The renders are scored with the unchanged RGB tracker
 and the original single-reference gate. A control with the true hidden physics checks
-the tracker. This bounds what any method can reach without knowing hidden physics; it
-does not change any historical result.
+the tracker. These are descriptive simulator controls, not bounds on other methods.
+No historical result changes.
 """
 
 import argparse
