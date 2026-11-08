@@ -312,18 +312,6 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   contact metric. Final validation has exact rest but 4 of 96 penetrating clips;
   fresh D021 has 23 of 240. Reject it as a complete physical-quality repair.
 
-## New decision template
-
-```text
-ID / date:
-Decision:
-Alternatives considered:
-Evidence / linked issue or run:
-Tradeoffs:
-Effect on interfaces, experiments, and deadline:
-Owner / reviewers:
-```
-
 ## D021: Research-backed observable-physics baseline and fresh ID comparison
 
 - Review primary methods, released code and compute before further model changes;
@@ -353,3 +341,41 @@ Owner / reviewers:
   The rendered-reference RGB contact control scored only 0.529 F1, so contact
   scoring needs further validation before a timing-success claim. No gate was
   relaxed and no learned-model success is claimed.
+
+## D022: Local contact-dynamics pilot: 4 November 2026
+
+- All 23 D021 neural penetration failures were in the two directed collision
+  families. Test a small contact-aware state-transition model: shared pair and
+  wall networks predict response increments, integrated over 31 recurrent steps.
+- Fresh weights, seed 19, 8,000 updates, the same training cache and original
+  validation only. Promote only if it beats D020's 4/96 penetrating clips with
+  no rest drift and no worse selected ADE.
+- Result: 22/96 penetrating clips and selected ADE 0.02633 versus 0.02502 for
+  D020. Rejected. It stays out of the demo. See CONTACT_DYNAMICS_PILOT.md.
+- The rendered simulator references score only 0.489 precise-onset F1 under the
+  same detector, so onset F1 is a weak timing measure until it is validated.
+
+## D023: Observed circle geometry in the physics-assisted baseline: 4 November 2026
+
+- Treat a mask as a circle only when it exactly matches a rendered ellipse with
+  near-equal extents. Other masks keep the convex hull. No true geometry or
+  hidden labels enter generation.
+- Original validation, 96 samples: both physics variants have complete tracks,
+  zero penetration and no rest drift. Circle/hull selected ADE 0.02383 versus
+  0.02393; RGB contact F1 0.295 versus 0.258. These opened results do not
+  establish superiority.
+- A fresh seed-920000 comparison is frozen in PRIMITIVE_PHYSICS_COMPARISON.md
+  with prespecified acceptance rules. It has not been run. Until it passes, the
+  hull baseline stays the default and the demo does not use the circle variant.
+
+## New decision template
+
+```text
+ID / date:
+Decision:
+Alternatives considered:
+Evidence / linked issue or run:
+Tradeoffs:
+Effect on interfaces, experiments, and deadline:
+Owner / reviewers:
+```
