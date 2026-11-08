@@ -749,6 +749,65 @@ question or establish an external state-of-the-art advantage.
 
 The presentation demo keeps these experimental limits visible. It compares the ordinary flow CVAE, E5 and E6 on common validation images and four fixed samples. An action can be pinned while a changed push is generated on the same timeline. Switching among four simulator reference worlds changes only the separately labelled reference: generated model videos and their observable inputs remain unchanged. Equal seeds are paired random draws, not identified physical worlds for these models. An optional E7 profile also displays its four independent prior draws and reuses them across pushes; they are not inferred scene properties. Native synthetic PNG input now derives two object masks from the supplied 64px pixels, supports object click and force drag, and returns four 32-frame futures preserving frame zero. Image-only input has no simulator reference or known physical properties. The interface is an inspection tool, not evidence of calibrated probabilities. Force prompting already supports physical interaction with images~\cite{forceprompting}; shared-mechanism counterfactual generation is also established~\cite{oneworld}. We claim neither feature as a novel general capability.
 
+\subsection{Photograph interface with an external pretrained model}
+\label{sec:photo}
+We implement a separate photograph interface using the released Force
+Prompting point-force checkpoint and CogVideoX-5b-I2V~\cite{forceprompting}.
+This model was trained externally. Its outputs are excluded from every
+controlled-model score above. The interface centre-crops an uploaded RGB
+image, records a point and force vector, and retains four declared sampling
+seeds. A direction-independent caption describes the scene and the action.
+Pinning one action permits synchronized comparison against a reversed push.
+Its force scale and sample variation have no physical calibration.
+
+The full released transformer and ControlNet run on one A40 without layer
+truncation. Native output contains 49 frames at $720\times480$ and 8 fps.
+A preregistered development comparison (PHOTO-P02) keeps the image, caption,
+action and seeds 0, 1, 2 and 3 fixed while comparing 20 and 50 denoising steps.
+Median generation times are 192.84 and 466.42 seconds per sample, respectively.
+Motion is weak in both profiles. An independent repeat of the 20-step seed-0
+output is byte-exact at the raw RGB level. We select 20 steps for engineering
+cost, without claiming equivalent general quality or improved control.
+
+PHOTO-P03 freezes that decision before generating two fresh requests through
+the browser, SSH queue and allocated GPU worker. The image is a public
+development example from StreamForce~\cite{streamforce}: a mug on a desk.
+Both requests use the same image, caption, point, force magnitude and four
+seeds; only force direction changes. Each returns all four native clips,
+taking 788.88 and 792.06 seconds through the browser. Every raw-array and
+MP4 digest matches the local backup. A transfer interruption is recovered
+under the original request identifiers without regenerating samples.
+
+All four reversed-push samples show leftward mug translation. In the
+right-push set, seeds 0 and 1 respond weakly or remain nearly static, whereas
+seeds 2 and 3 translate right (Figure~\ref{fig:photo-pair}). The mug and room
+remain recognizable, with shape, hand and background variation. This manual
+inspection concerns one reused public development image. It establishes
+neither physical reliability nor generalization, and matched noise seeds do
+not identify a shared hidden world. The native video model also reconstructs
+its initial frame, unlike the synthetic interface's exact input-frame copy.
+
+Operational checks cover early cancellation, cancellation after one completed
+sample, retention of that partial sample and explicit refusal of new requests
+when the worker is offline. Completed requests remain available as labelled
+recorded replay. The presentation snapshot restores both actions without VPN
+or GPU access, while preserving all eight videos and their original records.
+This fallback makes the demonstration repeatable; it does not replace a live
+generation timing result or resolve the original physical-quality failures.
+
+\clearpage
+\begin{figure}[!ht]
+\centering
+\pdfximage width\linewidth{report/figures/photo_paired_native.png}\pdfrefximage\pdflastximage
+\caption{PHOTO-P03, every declared sample for both pushes. Columns show
+generated frame zero and 6.0 seconds. Each crop uses the same input-defined
+horizontal band, rows 350 to 479 of the native 480-row output; no generated
+pixels are altered. Weak right-push samples remain included. External model:
+Force Prompting/CogVideoX. Input: StreamForce public development gallery.}
+\label{fig:photo-pair}
+\end{figure}
+\clearpage
+
 \section{Conclusion}
 The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow-decoder CVAE fails the fixed 0.5-second window, yet over the full clip it moves the selected object along the force and reverses it in all three training seeds. It does not scale motion consistently with force magnitude, and the unselected object drifts in the selection probe. It is the final E0. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. The E6 follow-ups remove measured unforced drift and reduce penetration, while introducing a tradeoff with forward-motion spread and wall completeness. Their combined changes do not isolate a single loss effect. The later matched canvas-loss comparison improves visibility from 88 to 95 complete clips, while leaving penetration and overall strict quality unresolved. Rendered-reference calibration also shows that timed contact scores depend on estimator errors and hidden-physics variation. The final held-out evaluation repeats these patterns on unseen scenes (Section~\ref{sec:final}). With the pilot's 5,000 training clips, E2 and E3 produce no trackable video. Trained on as many clips as E0, they produce clean frames but lose object identity, so the numeric-versus-spatial question remains unanswered. Contact quality also remains open. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
 
@@ -763,5 +822,6 @@ The separately registered prior-decoder replication reduces penetrating clips in
 \bibitem{karras} Tero Karras, Miika Aittala, Timo Aila and Samuli Laine. Elucidating the Design Space of Diffusion-Based Generative Models. NeurIPS, 2022.
 \bibitem{forceprompting} Nate Gillman et al. Force Prompting: Video Generation Models Can Learn and Generalize Physics-Based Control Signals. NeurIPS, 2025.
 \bibitem{oneworld} Ke He, Yichen Ding and Bin Yang. OneWorld: Learning Consistent Physics Across Actions in World Models. arXiv:2609.30946, 2026.
+\bibitem{streamforce} Hanhui Wang, Yiming Xie, Haiwen Feng, Zhaoyang Lv, Shenlong Wang and Huaizu Jiang. Streaming Video Generation with Streaming Force Control. arXiv:2606.07508, 2026.
 \end{thebibliography}
 \end{document}

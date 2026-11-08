@@ -1,0 +1,236 @@
+{
+  "status": "completed_profile_study",
+  "study": "PHOTO-P02",
+  "scope": "public development image; engineering sampler choice only; weak motion and physical control remain unevaluated",
+  "job_id": "50963",
+  "input": {
+    "image": "point_3.png",
+    "angle": "180.2",
+    "force": "0.627",
+    "coordx": "548",
+    "coordy": "267",
+    "width": "832",
+    "height": "480",
+    "caption": "The dark red vase, positioned on the surface of a low wooden table, is gently nudged by an unseen external force, causing it to shift slightly from its original placement. The movement is subtle, with the vase tilting slightly as it responds to the push, its glossy surface catching the dim ambient light. The surrounding space remains still, the quiet room emphasizing the delicate interaction between the force and the vase, while the rest of the scene\u2014furniture, walls, and floor\u2014remains undisturbed."
+  },
+  "source_photo_sha256": "187b5789cc0292fcc32ed143129b2a956c3e99877d0983e0637422672e4dd7fc",
+  "control": {
+    "model": {
+      "mode": "point",
+      "force": 0.627,
+      "angle": 180.2,
+      "x_pos": 0.6833333333333333,
+      "y_pos": 0.55625
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "runs": [
+    {
+      "profile": "native20",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 20,
+      "seed": 0,
+      "seconds": 197.27683463398716,
+      "raw_sha256": "707b47db02faa610b9973511b581ed68ecc57a972aef5f911cc65220d4b221fb",
+      "video_sha256": "383b70cd41960739a2e1209eff5f858cb52da3d3e05ec94958318dbf35093ada",
+      "gpu_peak_bytes": 23446290432,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.7509172453703703
+    },
+    {
+      "profile": "native20",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 20,
+      "seed": 1,
+      "seconds": 192.86255468500894,
+      "raw_sha256": "a18c86ee767366f3e2b844d6f6b436f19ad2ca0df26fdf952f6e9f0b9120e33a",
+      "video_sha256": "8d15fa653851112a168df4b8a39ff4b96a0aded5d7a9558a981bbe9ff8899a62",
+      "gpu_peak_bytes": 19761703424,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.660541087962963
+    },
+    {
+      "profile": "native20",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 20,
+      "seed": 2,
+      "seconds": 192.81483179100906,
+      "raw_sha256": "cd9b742ae4af79282037ce0537a8c25121e064dee4b17653001a20cf43fcc386",
+      "video_sha256": "c81b357e1190caf3eade93a6f51e70d11d8da073eef833c9a8308baf866eb678",
+      "gpu_peak_bytes": 19761703424,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.8281462191358024
+    },
+    {
+      "profile": "native20",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 20,
+      "seed": 3,
+      "seconds": 192.72153459198307,
+      "raw_sha256": "90d9727c324eb0aa990b3e60467cb2b744376b5f569abec9f270b414b5347fed",
+      "video_sha256": "ab2e286a3bd30bda94bbea50468a9a0683c4be0421a4e2a32b9daabc06ba8b90",
+      "gpu_peak_bytes": 19761703424,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.7930102237654322
+    },
+    {
+      "profile": "native50",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 50,
+      "seed": 0,
+      "seconds": 466.1831426920253,
+      "raw_sha256": "decc33a12dadc86d0fe5a43e7065ac90485533118b86e868c8bca9ba3d8c4acf",
+      "video_sha256": "728aa64e560f7f28dd52ec1cd830abd8d443e26a827817e955328a3f63200ac0",
+      "gpu_peak_bytes": 19762250752,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.786021412037037
+    },
+    {
+      "profile": "native50",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 50,
+      "seed": 1,
+      "seconds": 466.4336647739983,
+      "raw_sha256": "1a61b47af653871acf5991bf101c4dbd5c6f4789b84b9ec1b33d4a0f584f35fb",
+      "video_sha256": "4fdea13b3ef6f78541559b3ecf57f51ad89666753add491d785964e84de89590",
+      "gpu_peak_bytes": 19762250752,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.744272762345679
+    },
+    {
+      "profile": "native50",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 50,
+      "seed": 2,
+      "seconds": 466.4124305250007,
+      "raw_sha256": "521a0688e69e4dd646f08fc6a0b0eb65b4ce44d8a676ed6e02b5f3e2468b99dd",
+      "video_sha256": "2316ddd072454ada101db37561ba68dc9d9d48e12833ac0794114ae7aa622eb4",
+      "gpu_peak_bytes": 19762250752,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.807879050925926
+    },
+    {
+      "profile": "native50",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 50,
+      "seed": 3,
+      "seconds": 466.4938231429842,
+      "raw_sha256": "c231b0751c13bb9c22c60a9202a1a61661c19bf24fbb0b6d9f9e0ea4df17b2da",
+      "video_sha256": "a726c090df54a85e0a974277494216fe71ae4c2c1b531f42f7e7a727d85c1ac3",
+      "gpu_peak_bytes": 19762250752,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.7721132330246914
+    },
+    {
+      "profile": "native20-repeat",
+      "size": [
+        720,
+        480
+      ],
+      "steps": 20,
+      "seed": 0,
+      "seconds": 192.9932616240112,
+      "raw_sha256": "707b47db02faa610b9973511b581ed68ecc57a972aef5f911cc65220d4b221fb",
+      "video_sha256": "383b70cd41960739a2e1209eff5f858cb52da3d3e05ec94958318dbf35093ada",
+      "gpu_peak_bytes": 19761703424,
+      "host_peak_rss_bytes": 6295678976,
+      "frame0_rgb_mae": 1.7509172453703703,
+      "repeat_pixel_max": 0,
+      "repeat_pixel_mean": 0.0,
+      "repeat_pixel_exact": true
+    }
+  ],
+  "model_artifacts_sha256": "6bf39b6bf566000b8a448055b8981900f9e60ea0d583827635305081b58b7a19",
+  "runtime_sha256": "8a7861fca09bf7cdf66d53537d4a13b299c069c33fa3eda32f025e8368a893a9",
+  "model": {
+    "backend": "Force Prompting released point-force checkpoint; external pretrained model",
+    "source_revision": "ef3d0f847f787552b5ce004906c4944292e58996",
+    "control_tensors": 174,
+    "dtype": "bfloat16",
+    "steps": 50,
+    "guidance_scale": 6.0,
+    "frames": 49,
+    "fps": 8,
+    "size": [
+      720,
+      480
+    ],
+    "sampler": "upstream custom pipeline and CogVideoX DPM scheduler",
+    "captioner": false,
+    "low_memory_layer_truncation": false,
+    "zero_semantics": "minimum native encoding; physical rest has not been established"
+  },
+  "replay_gate_passed": true,
+  "own_source_revision": "ef5ae38679d148b706801ebb1aaac8837ecb3185",
+  "archive_sha256": "52b988bcfdad3c1f173fe6aaf508ab475f6d2ff37f63b525fb28b651fe8cd22e",
+  "profile_record_sha256": "1e2bf1ee5641c2b6e43f63d3a9c6c21df85a1c3f670d1e26658e02d3f5173895",
+  "selection": {
+    "status": "frozen_before_p03",
+    "backend": "force-prompting-20",
+    "study": "PHOTO-P02",
+    "job_id": "50963",
+    "source_revision": "ef5ae38679d148b706801ebb1aaac8837ecb3185",
+    "profile_record_sha256": "1e2bf1ee5641c2b6e43f63d3a9c6c21df85a1c3f670d1e26658e02d3f5173895",
+    "source_archive_sha256": "52b988bcfdad3c1f173fe6aaf508ab475f6d2ff37f63b525fb28b651fe8cd22e",
+    "runtime_sha256": "8a7861fca09bf7cdf66d53537d4a13b299c069c33fa3eda32f025e8368a893a9",
+    "replay_pixel_max": 0,
+    "all_eight_raw_and_mp4_hashes_verified": true,
+    "visual_review": {
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "frames": [
+        0,
+        8,
+        16,
+        24,
+        32,
+        40,
+        48
+      ],
+      "result": "both profiles retain recognizable vase/room identity; no obvious subject loss. motion is weak in both; this does not establish successful force control."
+    },
+    "median_seconds": {
+      "native20": 192.838693238009,
+      "native50": 466.4230476494995
+    },
+    "scope": "development engineering selection for native P03; no physical-quality or SOTA promotion",
+    "frozen_at": 1793771642.9626172,
+    "worker_source_revision": "fb3ebfd",
+    "interface_revision": "5e1ccdd"
+  },
+  "all_nine_raw_and_mp4_backups_verified": true,
+  "independent_local_repeat_array_exact": true
+}

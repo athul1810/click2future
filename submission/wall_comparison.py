@@ -74,15 +74,28 @@ def main(argv=None):
     try:
         supplement = args.output / "training-actions"
         run(
-            "training_actions", "-m", "click2future.data.action_supplement",
-            "--parent", args.dataset, "--output", supplement,
+            "training_actions",
+            "-m",
+            "click2future.data.action_supplement",
+            "--parent",
+            args.dataset,
+            "--output",
+            supplement,
         )
         report["supplement_manifest_sha256"] = sha256(supplement / "supplement_manifest.json")
         for name, config in configs.items():
             run(
-                "train_" + name, "-m", "click2future.training.train_contact",
-                "--dataset", args.dataset, "--supplement", supplement,
-                "--config", config, "--run-dir", args.output / name,
+                "train_" + name,
+                "-m",
+                "click2future.training.train_contact",
+                "--dataset",
+                args.dataset,
+                "--supplement",
+                supplement,
+                "--config",
+                config,
+                "--run-dir",
+                args.output / name,
             )
             training = json.loads((args.output / name / "summary.json").read_text())
             if training["status"] != "completed":
@@ -92,24 +105,53 @@ def main(argv=None):
             checkpoint = args.output / name / "best.pt"
             output = args.output / (name + "-validation")
             run(
-                "evaluate_" + name, "-m", "click2future.evaluation.trajectory_pilot",
-                "--dataset", args.dataset, "--checkpoint", checkpoint,
-                "--output", output, "--device", "cuda", "--steps", "16", "--method", "E6",
+                "evaluate_" + name,
+                "-m",
+                "click2future.evaluation.trajectory_pilot",
+                "--dataset",
+                args.dataset,
+                "--checkpoint",
+                checkpoint,
+                "--output",
+                output,
+                "--device",
+                "cuda",
+                "--steps",
+                "16",
+                "--method",
+                "E6",
             )
             run(
-                "passive_" + name, "-m", "click2future.evaluation.passive_stationarity",
-                "--plan", output / "plan.json",
-                "--predictions", output / "validation-samples/predictions.json",
-                "--dataset", args.dataset, "--checkpoint", checkpoint,
-                "--output", output / "passive-stationarity.json",
+                "passive_" + name,
+                "-m",
+                "click2future.evaluation.passive_stationarity",
+                "--plan",
+                output / "plan.json",
+                "--predictions",
+                output / "validation-samples/predictions.json",
+                "--dataset",
+                args.dataset,
+                "--checkpoint",
+                checkpoint,
+                "--output",
+                output / "passive-stationarity.json",
             )
             run(
-                "wall_clipping_" + name, "-m", "click2future.evaluation.wall_clipping",
-                "--plan", output / "plan.json",
-                "--predictions", output / "validation-samples/predictions.json",
-                "--dataset", args.dataset, "--checkpoint", checkpoint,
-                "--poses-dir", output / "geometry-audit",
-                "--output", output / "wall-clipping.json",
+                "wall_clipping_" + name,
+                "-m",
+                "click2future.evaluation.wall_clipping",
+                "--plan",
+                output / "plan.json",
+                "--predictions",
+                output / "validation-samples/predictions.json",
+                "--dataset",
+                args.dataset,
+                "--checkpoint",
+                checkpoint,
+                "--poses-dir",
+                output / "geometry-audit",
+                "--output",
+                output / "wall-clipping.json",
             )
             report["models"][name]["quality"] = json.loads(
                 (output / "trajectory-results.json").read_text()

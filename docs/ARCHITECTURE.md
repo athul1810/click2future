@@ -159,3 +159,17 @@ contains one observed frame and an explicit 32-frame output length, without fake
 future arrays. Reference generation is disabled for these inputs. The same model
 adapter, four ordered sampling seeds and observable replay-cache identity are
 used for uploaded and preset images. At most eight unique uploads remain open.
+
+### Separate photograph extension
+
+`photo_server` accepts ordinary photographs through a separate interface and
+durable request queue. `scripts/photo_remote.py` synchronizes that queue over
+verified SSH to an allocated `cluster/photo_worker.py` process. The released
+external Force Prompting/CogVideoX model produces four ordered RGB videos;
+no simulator metadata or ground-truth masks are supplied. Model identity binds
+checkpoint, runtime and shared loader source, installed inference-library
+versions, sampler profile and video contract. The queue retains input,
+requests, all raw samples and presentation MP4 hashes. Cached replay is
+explicit and available offline; fresh inference needs a live allocated worker.
+This extension is separate from the original models and evaluation evidence.
+See [photo setup and limitations](PHOTO_DEMO.md).
