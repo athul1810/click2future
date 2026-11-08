@@ -748,3 +748,11 @@ this source archive.
 `scripts/prior_simulator_ceiling.py` and `scripts/metric_ceilings.py` render
 the D024/D030 simulator reference controls. Their filenames are historical;
 the controls do not establish mathematical bounds on other generators.
+
+`python scripts/pose_contact.py --dataset data/frozen --evaluation
+anchor=outputs/<anchor-validation-folder> --output outputs/pose-contact.json`
+reads contact onsets from saved rigid poses instead of pixels. Put the command
+on one line and repeat `--evaluation NAME=FOLDER` for each validation coverage
+folder. It replays the training/validation simulator references, chooses the
+touch threshold on training clips and scores only validation plans. Exact scene
+outlines are evaluation-only ground truth and never a model input.

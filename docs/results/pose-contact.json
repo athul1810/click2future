@@ -1,0 +1,882 @@
+{
+  "status": "measured_pose_contact_control",
+  "scope": "Contact onsets from saved rigid poses with exact scene outlines, calibrated on training/validation simulator references; no model, threshold or recorded score changes.",
+  "onset_rule": "interval i: outlines separated at frame i and within the touch threshold at frame i+1",
+  "event_tolerance_intervals": 1,
+  "pixel_reference_control_f1": 0.4888888888888889,
+  "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+  "source_sha256": {
+    "pose_contact.py": "5b2bdbb45f78876a008bdb68f0ae604938fa9f942142c866f00f26e78097abe5"
+  },
+  "primary_offset_pixels": 0.2,
+  "runs": [
+    {
+      "calibration": {
+        "offset_pixels": 0.2,
+        "touch_selected_on_train_pixels": 0.05,
+        "train_f1_by_touch": {
+          "0": 0.7567567567567568,
+          "0.01": 0.8825622775800712,
+          "0.02": 0.8972602739726028,
+          "0.05": 0.9016949152542373,
+          "0.1": 0.8934707903780069,
+          "0.2": 0.8927335640138409,
+          "0.3": 0.8671328671328671,
+          "0.5": 0.6105263157894737
+        },
+        "train": {
+          "clips": 336,
+          "labelled_onsets": 156,
+          "frame_visible_onsets": 113,
+          "already_touching_at_interval_start": 43,
+          "repeat_onsets_without_visible_separation": 18,
+          "events_vs_all_labels": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 133,
+            "false_positive": 6,
+            "false_negative": 23,
+            "precision": 0.9568345323741008,
+            "recall": 0.8525641025641025,
+            "f1": 0.9016949152542373,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "events_vs_frame_visible_labels": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 113,
+            "false_positive": 26,
+            "false_negative": 0,
+            "precision": 0.8129496402877698,
+            "recall": 1.0,
+            "f1": 0.8968253968253969,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          }
+        },
+        "validation": {
+          "clips": 84,
+          "labelled_onsets": 44,
+          "frame_visible_onsets": 28,
+          "already_touching_at_interval_start": 16,
+          "repeat_onsets_without_visible_separation": 10,
+          "events_vs_all_labels": {
+            "expected_timelines": 84,
+            "complete_timelines": 84,
+            "missing_timelines": 0,
+            "true_positive": 33,
+            "false_positive": 1,
+            "false_negative": 11,
+            "precision": 0.9705882352941176,
+            "recall": 0.75,
+            "f1": 0.8461538461538461,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "events_vs_frame_visible_labels": {
+            "expected_timelines": 84,
+            "complete_timelines": 84,
+            "missing_timelines": 0,
+            "true_positive": 28,
+            "false_positive": 6,
+            "false_negative": 0,
+            "precision": 0.8235294117647058,
+            "recall": 1.0,
+            "f1": 0.9032258064516129,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          }
+        }
+      },
+      "evaluations": {
+        "anchor": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "db5f77ab107f4dbcf593fff79d8fd8953faf10e32cb59898e68243f5e005743a",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 17,
+            "false_positive": 20,
+            "false_negative": 47,
+            "precision": 0.4594594594594595,
+            "recall": 0.265625,
+            "f1": 0.33663366336633666
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 14,
+            "false_positive": 12,
+            "false_negative": 50,
+            "precision": 0.5384615384615384,
+            "recall": 0.21875,
+            "f1": 0.3111111111111111,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 42,
+            "false_positive": 62,
+            "false_negative": 134,
+            "precision": 0.40384615384615385,
+            "recall": 0.23863636363636365,
+            "f1": 0.3,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9375,
+            "timed": 26,
+            "within_reference_range_plus_minus_one_interval": 0.8461538461538461,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.0
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        },
+        "narrow": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "e636128ca1663f415ba815bdb2bf03152416986c272d6323fd656e25a89bb85a",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 17,
+            "false_positive": 20,
+            "false_negative": 47,
+            "precision": 0.4594594594594595,
+            "recall": 0.265625,
+            "f1": 0.33663366336633666
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 13,
+            "false_positive": 18,
+            "false_negative": 51,
+            "precision": 0.41935483870967744,
+            "recall": 0.203125,
+            "f1": 0.2736842105263158,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 45,
+            "false_positive": 79,
+            "false_negative": 131,
+            "precision": 0.3629032258064516,
+            "recall": 0.2556818181818182,
+            "f1": 0.3,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9791666666666666,
+            "timed": 30,
+            "within_reference_range_plus_minus_one_interval": 0.8333333333333334,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 0.9
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        },
+        "broad": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "e9a2595a5d1ff236ed9f45d976ffe301a87946517521c98d2a25a873999022f3",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 95,
+            "missing_timelines": 1,
+            "true_positive": 18,
+            "false_positive": 20,
+            "false_negative": 46,
+            "precision": 0.47368421052631576,
+            "recall": 0.28125,
+            "f1": 0.35294117647058826
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 13,
+            "false_positive": 17,
+            "false_negative": 51,
+            "precision": 0.43333333333333335,
+            "recall": 0.203125,
+            "f1": 0.2765957446808511,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 39,
+            "false_positive": 81,
+            "false_negative": 137,
+            "precision": 0.325,
+            "recall": 0.2215909090909091,
+            "f1": 0.2635135135135135,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9583333333333334,
+            "timed": 28,
+            "within_reference_range_plus_minus_one_interval": 0.7142857142857143,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 2.25
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        }
+      }
+    },
+    {
+      "calibration": {
+        "offset_pixels": 0.0,
+        "touch_selected_on_train_pixels": 0.05,
+        "train_f1_by_touch": {
+          "0": 0.7567567567567568,
+          "0.01": 0.8825622775800712,
+          "0.02": 0.8972602739726028,
+          "0.05": 0.9016949152542373,
+          "0.1": 0.8934707903780069,
+          "0.2": 0.8927335640138409,
+          "0.3": 0.8671328671328671,
+          "0.5": 0.6105263157894737
+        },
+        "train": {
+          "clips": 336,
+          "labelled_onsets": 156,
+          "frame_visible_onsets": 113,
+          "already_touching_at_interval_start": 43,
+          "repeat_onsets_without_visible_separation": 18,
+          "events_vs_all_labels": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 133,
+            "false_positive": 6,
+            "false_negative": 23,
+            "precision": 0.9568345323741008,
+            "recall": 0.8525641025641025,
+            "f1": 0.9016949152542373,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "events_vs_frame_visible_labels": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 113,
+            "false_positive": 26,
+            "false_negative": 0,
+            "precision": 0.8129496402877698,
+            "recall": 1.0,
+            "f1": 0.8968253968253969,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          }
+        },
+        "validation": {
+          "clips": 84,
+          "labelled_onsets": 44,
+          "frame_visible_onsets": 28,
+          "already_touching_at_interval_start": 16,
+          "repeat_onsets_without_visible_separation": 10,
+          "events_vs_all_labels": {
+            "expected_timelines": 84,
+            "complete_timelines": 84,
+            "missing_timelines": 0,
+            "true_positive": 33,
+            "false_positive": 1,
+            "false_negative": 11,
+            "precision": 0.9705882352941176,
+            "recall": 0.75,
+            "f1": 0.8461538461538461,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "events_vs_frame_visible_labels": {
+            "expected_timelines": 84,
+            "complete_timelines": 84,
+            "missing_timelines": 0,
+            "true_positive": 28,
+            "false_positive": 6,
+            "false_negative": 0,
+            "precision": 0.8235294117647058,
+            "recall": 1.0,
+            "f1": 0.9032258064516129,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          }
+        }
+      },
+      "evaluations": {
+        "anchor": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "db5f77ab107f4dbcf593fff79d8fd8953faf10e32cb59898e68243f5e005743a",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 17,
+            "false_positive": 20,
+            "false_negative": 47,
+            "precision": 0.4594594594594595,
+            "recall": 0.265625,
+            "f1": 0.33663366336633666
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 14,
+            "false_positive": 13,
+            "false_negative": 50,
+            "precision": 0.5185185185185185,
+            "recall": 0.21875,
+            "f1": 0.3076923076923077,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 42,
+            "false_positive": 66,
+            "false_negative": 134,
+            "precision": 0.3888888888888889,
+            "recall": 0.23863636363636365,
+            "f1": 0.29577464788732394,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9375,
+            "timed": 26,
+            "within_reference_range_plus_minus_one_interval": 0.8461538461538461,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.0
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        },
+        "narrow": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "e636128ca1663f415ba815bdb2bf03152416986c272d6323fd656e25a89bb85a",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 17,
+            "false_positive": 20,
+            "false_negative": 47,
+            "precision": 0.4594594594594595,
+            "recall": 0.265625,
+            "f1": 0.33663366336633666
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 13,
+            "false_positive": 18,
+            "false_negative": 51,
+            "precision": 0.41935483870967744,
+            "recall": 0.203125,
+            "f1": 0.2736842105263158,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 45,
+            "false_positive": 79,
+            "false_negative": 131,
+            "precision": 0.3629032258064516,
+            "recall": 0.2556818181818182,
+            "f1": 0.3,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9791666666666666,
+            "timed": 30,
+            "within_reference_range_plus_minus_one_interval": 0.8333333333333334,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 0.9
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        },
+        "broad": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "e9a2595a5d1ff236ed9f45d976ffe301a87946517521c98d2a25a873999022f3",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 95,
+            "missing_timelines": 1,
+            "true_positive": 18,
+            "false_positive": 20,
+            "false_negative": 46,
+            "precision": 0.47368421052631576,
+            "recall": 0.28125,
+            "f1": 0.35294117647058826
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 12,
+            "false_positive": 17,
+            "false_negative": 52,
+            "precision": 0.41379310344827586,
+            "recall": 0.1875,
+            "f1": 0.25806451612903225,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 38,
+            "false_positive": 78,
+            "false_negative": 138,
+            "precision": 0.3275862068965517,
+            "recall": 0.2159090909090909,
+            "f1": 0.2602739726027397,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9479166666666666,
+            "timed": 27,
+            "within_reference_range_plus_minus_one_interval": 0.7037037037037037,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 2.185185185185185
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        }
+      }
+    },
+    {
+      "calibration": {
+        "offset_pixels": 0.5,
+        "touch_selected_on_train_pixels": 0.05,
+        "train_f1_by_touch": {
+          "0": 0.7567567567567568,
+          "0.01": 0.8825622775800712,
+          "0.02": 0.8972602739726028,
+          "0.05": 0.9016949152542373,
+          "0.1": 0.8934707903780069,
+          "0.2": 0.8927335640138409,
+          "0.3": 0.8671328671328671,
+          "0.5": 0.6105263157894737
+        },
+        "train": {
+          "clips": 336,
+          "labelled_onsets": 156,
+          "frame_visible_onsets": 113,
+          "already_touching_at_interval_start": 43,
+          "repeat_onsets_without_visible_separation": 18,
+          "events_vs_all_labels": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 133,
+            "false_positive": 6,
+            "false_negative": 23,
+            "precision": 0.9568345323741008,
+            "recall": 0.8525641025641025,
+            "f1": 0.9016949152542373,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "events_vs_frame_visible_labels": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 113,
+            "false_positive": 26,
+            "false_negative": 0,
+            "precision": 0.8129496402877698,
+            "recall": 1.0,
+            "f1": 0.8968253968253969,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          }
+        },
+        "validation": {
+          "clips": 84,
+          "labelled_onsets": 44,
+          "frame_visible_onsets": 28,
+          "already_touching_at_interval_start": 16,
+          "repeat_onsets_without_visible_separation": 10,
+          "events_vs_all_labels": {
+            "expected_timelines": 84,
+            "complete_timelines": 84,
+            "missing_timelines": 0,
+            "true_positive": 33,
+            "false_positive": 1,
+            "false_negative": 11,
+            "precision": 0.9705882352941176,
+            "recall": 0.75,
+            "f1": 0.8461538461538461,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "events_vs_frame_visible_labels": {
+            "expected_timelines": 84,
+            "complete_timelines": 84,
+            "missing_timelines": 0,
+            "true_positive": 28,
+            "false_positive": 6,
+            "false_negative": 0,
+            "precision": 0.8235294117647058,
+            "recall": 1.0,
+            "f1": 0.9032258064516129,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          }
+        }
+      },
+      "evaluations": {
+        "anchor": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "db5f77ab107f4dbcf593fff79d8fd8953faf10e32cb59898e68243f5e005743a",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 17,
+            "false_positive": 20,
+            "false_negative": 47,
+            "precision": 0.4594594594594595,
+            "recall": 0.265625,
+            "f1": 0.33663366336633666
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 14,
+            "false_positive": 12,
+            "false_negative": 50,
+            "precision": 0.5384615384615384,
+            "recall": 0.21875,
+            "f1": 0.3111111111111111,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 42,
+            "false_positive": 62,
+            "false_negative": 134,
+            "precision": 0.40384615384615385,
+            "recall": 0.23863636363636365,
+            "f1": 0.3,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9375,
+            "timed": 26,
+            "within_reference_range_plus_minus_one_interval": 0.8461538461538461,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 0.9230769230769231
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        },
+        "narrow": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "e636128ca1663f415ba815bdb2bf03152416986c272d6323fd656e25a89bb85a",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 17,
+            "false_positive": 20,
+            "false_negative": 47,
+            "precision": 0.4594594594594595,
+            "recall": 0.265625,
+            "f1": 0.33663366336633666
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 13,
+            "false_positive": 18,
+            "false_negative": 51,
+            "precision": 0.41935483870967744,
+            "recall": 0.203125,
+            "f1": 0.2736842105263158,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 46,
+            "false_positive": 78,
+            "false_negative": 130,
+            "precision": 0.3709677419354839,
+            "recall": 0.26136363636363635,
+            "f1": 0.30666666666666664,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9791666666666666,
+            "timed": 30,
+            "within_reference_range_plus_minus_one_interval": 0.8333333333333334,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 0.9333333333333333
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        },
+        "broad": {
+          "plan_sha256": "3bb66fc3ab10d6477249b9b0ad24ed0732861e1ab14026ad79655a26a93091dc",
+          "poses_sha256": "e9a2595a5d1ff236ed9f45d976ffe301a87946517521c98d2a25a873999022f3",
+          "pixel_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 95,
+            "missing_timelines": 1,
+            "true_positive": 18,
+            "false_positive": 20,
+            "false_negative": 46,
+            "precision": 0.47368421052631576,
+            "recall": 0.28125,
+            "f1": 0.35294117647058826
+          },
+          "pose_events_vs_first_reference": {
+            "expected_timelines": 96,
+            "complete_timelines": 96,
+            "missing_timelines": 0,
+            "true_positive": 14,
+            "false_positive": 16,
+            "false_negative": 50,
+            "precision": 0.4666666666666667,
+            "recall": 0.21875,
+            "f1": 0.2978723404255319,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "pose_events_vs_each_reference": {
+            "expected_timelines": 336,
+            "complete_timelines": 336,
+            "missing_timelines": 0,
+            "true_positive": 41,
+            "false_positive": 79,
+            "false_negative": 135,
+            "precision": 0.3416666666666667,
+            "recall": 0.23295454545454544,
+            "f1": 0.27702702702702703,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "first_contact": {
+            "samples": 96,
+            "occurrence_scored": 96,
+            "occurrence_agreement": 0.9583333333333334,
+            "timed": 28,
+            "within_reference_range_plus_minus_one_interval": 0.7857142857142857,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 2.107142857142857
+          },
+          "alternative_physics_events_vs_first_reference": {
+            "expected_timelines": 60,
+            "complete_timelines": 60,
+            "missing_timelines": 0,
+            "true_positive": 10,
+            "false_positive": 14,
+            "false_negative": 38,
+            "precision": 0.4166666666666667,
+            "recall": 0.20833333333333334,
+            "f1": 0.2777777777777778,
+            "scope": "Descriptive event counts; no independent-training or scene interval"
+          },
+          "reference_first_contact_leave_one_out": {
+            "samples": 84,
+            "occurrence_scored": 84,
+            "occurrence_agreement": 1.0,
+            "timed": 32,
+            "within_reference_range_plus_minus_one_interval": 0.75,
+            "median_nearest_reference_error_intervals": 1.0,
+            "mean_nearest_reference_error_intervals": 1.09375
+          }
+        }
+      }
+    }
+  ],
+  "test_splits_read": [],
+  "limitations": [
+    "Exact outlines come from the scene specification: evaluation-only ground truth, as labels are.",
+    "Circles and rectangles only; triangles occur only in the shape-OOD split.",
+    "Frame-sampled poses cannot see onsets that begin while objects already touch.",
+    "First-contact timing uses few collision conditions; arm differences are indicative."
+  ]
+}

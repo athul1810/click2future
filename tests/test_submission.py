@@ -34,6 +34,7 @@ def source_copy(tmp_path):
         "analyse_replication.py",
         "analyse_prior_replication.py",
         "plot_prior_replication.py",
+        "pose_contact.py",
     ):
         shutil.copyfile(root / "scripts" / name, target / "scripts" / name)
     if (root / "uv.lock").is_file():
