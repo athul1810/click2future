@@ -17,10 +17,21 @@ from .object_motion import encode_motion, observe, render_motion
 from .world_motion import WORLD_BOUNDS, WORLD_CONTRACT, sample_world
 
 PHYSICS_BASELINE = "observed-hull-sampled-world-pymunk-1"
+# D026 candidate: the bevel fitted on original train/validation same-world rollouts.
+# It is not the default until a fresh, prespecified comparison accepts it.
+CALIBRATED_BEVEL_PIXELS = 0.15
+CALIBRATED_PHYSICS_BASELINE = "observed-hull-calibrated-bevel-pymunk-1"
 
 
 def rollout_observation(
-    observation, force, world, *, future_frames=31, physics_hz=240, circle_radii=None
+    observation,
+    force,
+    world,
+    *,
+    future_frames=31,
+    physics_hz=240,
+    circle_radii=None,
+    bevel_pixels=0.5,
 ):
     """Integrate inferred convex sprites; no scene recipe or hidden labels enter."""
     force, world = np.asarray(force, dtype=np.float64), np.asarray(world, dtype=np.float64)
@@ -41,6 +52,8 @@ def rollout_observation(
     radii = np.zeros(2) if circle_radii is None else np.asarray(circle_radii)
     if radii.shape != (2,) or not np.isfinite(radii).all() or ((radii < 0) | (radii > 0.5)).any():
         raise ValueError("Provide two finite observed circle radii, or zero for hulls")
+    if not 0 <= bevel_pixels <= 0.5:
+        raise ValueError("Use a hull bevel between zero and half a native pixel")
     hulls = []
     for mask in observation.masks:
         y, x = np.nonzero(mask)
@@ -59,9 +72,10 @@ def rollout_observation(
     bodies = []
     for index, (mass, friction, restitution) in enumerate(world):
         vertices = (hulls[index] - observation.centers[index]).tolist()
-        # Pixel masks describe occupied cells. A half-pixel bevel approximates
-        # the cell extent around hulls of pixel centres, including at walls.
-        radius = 0.5 / resolution
+        # Pixel masks describe occupied cells. The default half-pixel bevel
+        # approximates the cell extent around hulls of pixel centres. D026 found
+        # that it starts contacts early in same-world train/validation rollouts.
+        radius = float(bevel_pixels) / resolution
         moment = (
             pymunk.moment_for_circle(float(mass), 0, float(radii[index]))
             if radii[index] > 0

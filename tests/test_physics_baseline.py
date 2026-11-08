@@ -129,3 +129,18 @@ def test_fresh_screen_rejects_an_unregistered_corpus_before_sampling(tmp_path):
     with pytest.raises(ValueError, match="registered fresh corpus"):
         screen(dataset, tmp_path / "result", fresh_id=True, training_data=tmp_path / "original")
     assert not (tmp_path / "result").exists()
+
+
+def test_default_bevel_is_unchanged_and_calibrated_bevel_is_bounded():
+    from click2future.models.physics_baseline import CALIBRATED_BEVEL_PIXELS
+
+    obs = observation(contact=True)
+    world = np.array([[1, 0.2, 0.1], [1, 0.2, 0.1]])
+    default = rollout_observation(obs, [0.5, 0], world)["positions"]
+    explicit = rollout_observation(obs, [0.5, 0], world, bevel_pixels=0.5)["positions"]
+    assert np.array_equal(default, explicit)
+    calibrated = rollout_observation(obs, [0.5, 0], world, bevel_pixels=CALIBRATED_BEVEL_PIXELS)
+    assert np.isfinite(calibrated["positions"]).all()
+    for bad in (-0.1, 0.6):
+        with pytest.raises(ValueError, match="bevel"):
+            rollout_observation(obs, [0.5, 0], world, bevel_pixels=bad)
