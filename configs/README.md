@@ -5,6 +5,8 @@
 - `simulator/dataset_0_2.toml`: controlled zero, directional, object-contact, and wall dataset.
 - `training/pilot_diffusion_0_3.json`: separate generalization-corpus diagnostic with
   a declared 1.5 force limit; see [the data guide](../docs/GENERALIZATION_DATA.md).
+- `training/prior_direct_contact_dynamics.json`: direct-prior candidate with optional
+  contact-transition and normal-velocity losses; `prior_direct.json` is its zero-weight control.
 - `development.yaml`: artifact-directory conventions.
 - `pilot.yaml`: synthetic denoiser profiler dimensions, conditioning, heads, object count,
   and precision. This is a prototype configuration, not a dataset trainer.

@@ -4,6 +4,7 @@ import argparse
 import copy
 import hashlib
 import json
+import math
 import os
 import time
 from dataclasses import asdict, dataclass, replace
@@ -25,11 +26,24 @@ from .world_data import load_cache
 @dataclass(frozen=True)
 class PriorConfig(WorldConfig):
     world_prior_only: bool = True
+    contact_transition_weight: float = 0.0
+    normal_velocity_weight: float = 0.0
 
     def validate(self):
         super().validate()
-        if not isinstance(self.world_prior_only, bool) or not (
-            self.world_condition and self.relational
+        if (
+            not isinstance(self.world_prior_only, bool)
+            or any(
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(value)
+                or value < 0
+                for value in (
+                    self.contact_transition_weight,
+                    self.normal_velocity_weight,
+                )
+            )
+            or not (self.world_condition and self.relational)
         ):
             raise ValueError("Require a boolean prior arm with conditioned relational backbone")
 
@@ -150,8 +164,10 @@ class PriorTrainer(WorldTrainer):
             "model_config": prior_config(self.config),
             "provenance": provenance,
         }
+        saved_config = asdict(PriorConfig(**state["config"]))
         if (
-            any(state[k] != v for k, v in expected.items())
+            saved_config != expected["config"]
+            or any(state[k] != v for k, v in expected.items() if k != "config")
             or isinstance(state["step"], bool)
             or not isinstance(state["step"], int)
             or not 0 <= state["step"] <= self.config.steps
