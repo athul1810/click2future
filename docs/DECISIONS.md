@@ -441,6 +441,15 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   projection already removes penetration for sampled outputs.
   Record: docs/results/contact-dynamics-loss-d029.json.
 
+## D030: Scorer ceilings on the fresh corpora: 8 November 2026
+
+- Score simulator renders of the D026 and D028 corpora with the unchanged
+  scorers (TC2 job 52309): true hidden physics and the four prior draws.
+- Sampled physics gives selected ADE 0.02189 and 0.02457 (1.4-1.6 px); every
+  prior-sampling method is within 1-2% of that. True physics gives 0.004 (0.27-
+  0.29 px). The simulator's own contact F1 is 0.590 and 0.250, so contact F1 is
+  a weak proxy. Descriptive only. See CONTACT_PROJECTION.md.
+
 ## New decision template
 
 ```text

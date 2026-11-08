@@ -53,3 +53,26 @@ object's same-world error rises by 11%, which the rules do not cover and is
 reported here. The physics-assisted baseline remains more accurate under the
 same hidden physics (D021: 0.00348 versus 0.00711 same-world ADE). Ten fresh ID groups, one
 checkpoint and no OOD claim. Record: `docs/results/contact-projection-d028.json`.
+
+## D030: what the scorers can reach (TC2 job 52309)
+
+The same corpora were re-rendered by the simulator and scored unchanged.
+`true_world` uses the true hidden physics, so it is the scorer's own ceiling.
+`sampled_world` uses the four prior draws, the best a prior-sampling method can
+reach. ADE is in normalized units; 0.025 is about 1.6 native pixels.
+
+| Corpus | Generator | Selected ADE | Pixels | Contact F1 |
+|---|---|---:|---:|---:|
+| D026 | Simulator, true physics | 0.00447 | 0.29 | 0.590 |
+| D026 | Simulator, sampled physics | 0.02189 | 1.40 | 0.184 |
+| D026 | Hull 0.5 px / 0.15 px | 0.02206 / 0.02213 | 1.41 / 1.42 | 0.147 / 0.208 |
+| D028 | Simulator, true physics | 0.00418 | 0.27 | 0.250 |
+| D028 | Simulator, sampled physics | 0.02457 | 1.57 | 0.172 |
+| D028 | Neural / neural + projection | 0.02495 / 0.02476 | 1.60 / 1.58 | 0.169 / 0.176 |
+
+Selected ADE for every prior-sampling method sits within 1-2% of the sampled
+physics control, so most of the remaining error is hidden-physics uncertainty.
+The RGB contact F1 of the simulator's own renders is 0.25-0.59 depending on the
+corpus, so that metric is a weak, corpus-dependent proxy and small F1 changes
+should not be read as contact-timing improvements.
+Record: `docs/results/metric-ceilings-d030.json`.
