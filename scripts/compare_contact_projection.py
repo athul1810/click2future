@@ -1,6 +1,6 @@
 """D028: the neural D020 sampler with and without the position-based contact projection.
 
-Selection (default) uses the original validation split only and scores two projection
+Selection (default) uses the original validation split only and scores three projection
 modes. The fresh run (--fresh) uses the mode frozen in FROZEN_MODE on a new seed-940000
 corpus and applies the acceptance rules in accept(), fixed before generation.
 """

@@ -165,6 +165,8 @@ class PhotoService:
 
     def worker(self):
         model = read_json(self.root / "MODEL.json", {})
+        if (self.root / "OFFLINE_REPLAY.json").is_file():
+            return {"model": model, "ready": False, "stage": "recorded replay only"}
         heartbeat = read_json(self.root / "WORKER.json", {})
         ready = bool(model.get("identity") and heartbeat.get("ready"))
         ready = ready and model.get("backend_id", self.backend) == self.backend

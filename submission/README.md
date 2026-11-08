@@ -735,3 +735,16 @@ Geometry comes from observed masks and hidden properties are sampled from the
 declared prior. This is not a learned neural model or simulator ground truth.
 It requires no trained checkpoint. The existing neural checkpoints remain
 separate comparison methods; inferred subpixel geometry remains approximate.
+
+## Contact projection and simulator controls
+
+`scripts/compare_contact_projection.py --help` describes the D028 paired
+comparison. Supply the generated corpus, the frozen neural checkpoint and,
+for the registered fresh run, the original training corpus and prior corpora
+used by the frame-zero overlap guard. The script retains all samples and the
+unchanged scoring rules. Checkpoints and generated datasets are excluded from
+this source archive.
+
+`scripts/prior_simulator_ceiling.py` and `scripts/metric_ceilings.py` render
+the D024/D030 simulator reference controls. Their filenames are historical;
+the controls do not establish mathematical bounds on other generators.

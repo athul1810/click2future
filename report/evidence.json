@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 34,
+  "pages": 35,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "80706a72d9004e99b7548db135b0a3db3134e61ce5d8a60085319630605ab2c1",
+    "main.tex": "dafae09e34405e0f6cfc45320892e264740e232211888b394848d9092c6206c9",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "c0381296f2c219f2e071140aaed85d4375acd07b6d1942c223a30a992c5d1737",
+    "contributions.md": "605252c5089ac04605aaf4e69ed809494eaa6251274f9651478031aedcf01a94",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -206,7 +206,10 @@
     "figures/photo_paired_native.png": "2a5b0e2d77bf4b8c8fd3e34ee81310909a2fd729f86cb1dff0f0fb2d3a8a03a7",
     "../docs/results/photo-paired-integration.json": "e1b2f3e7dda420a361483ae4c145bfb8fe177a058fc3c7a66712f7276b866011",
     "figures/photo_streamforce_native.png": "7afd59d5cd689604ba7d1f56cb488d4997db2f050ab4ef4950bd67f18aa568c2",
-    "../docs/results/photo-streamforce-integration.json": "8cf8bcb3f91d52a18cdac91e7b6b5ebe3f72255fc45b7bd46062be8ef079955d"
+    "../docs/results/photo-streamforce-integration.json": "8cf8bcb3f91d52a18cdac91e7b6b5ebe3f72255fc45b7bd46062be8ef079955d",
+    "../docs/results/contact-projection-d028.json": "fefaff0bc88a105d74c7d335ef22d38a043ecf3efd039fc0b8fa432fc9292dc4",
+    "../docs/results/contact-projection-selection-d028.json": "6db6d35f1074c2840a4b01cc94ccfb77830bab8e04ae13eaebef55f39104e8ca",
+    "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a"
   },
   "rendered_pdf_sha256": "c463a535af01491c258b80c11c1520e19ece1c90e58a1a488d41ef2c57582f3a",
   "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
@@ -1052,5 +1055,36 @@
       "presentation-machine team rehearsal",
       "coordinated submission"
     ]
-  }
+  },
+  "geometry_projection_2026_11_08": {
+    "record": "docs/results/contact-projection-d028.json",
+    "scope": "explicit post-sampling geometric hybrid, one checkpoint and ten fresh ID scene groups",
+    "study_source_revision": "314fa0c43670f163de101150747ada9351777320",
+    "checkpoint_sha256": "60e01fd60e6934e644653662d701a8aa8419d57d3d4d58a65d8b6ca87a3a45e4",
+    "dataset_manifest_sha256": "4c65ceb111c2dff38fc62441e18b1ca2819080d246577ebbe34284f5b4e2403e",
+    "clips_per_arm": 240,
+    "neural_penetrating_clips": 19,
+    "projected_penetrating_clips": 0,
+    "neural_boundary_clips": 25,
+    "projected_boundary_clips": 0,
+    "other_object_ade_relative_increase_rounded_percent": 11,
+    "strict_quality_flag": false,
+    "historical_scores_changed": false,
+    "report_pages": 35,
+    "new_pages_visually_inspected": [
+      33,
+      34,
+      35
+    ],
+    "first_32_report_pages_pixel_identical_to_r5": true,
+    "review_slides": 18,
+    "native_table_slide": 12,
+    "member_review_states_changed": false
+  },
+  "current_remaining": [
+    "strict learned-model physical-quality gate",
+    "three contribution confirmations",
+    "team presentation-machine rehearsal",
+    "coordinated upload"
+  ]
 }
