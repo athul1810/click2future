@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "605252c5089ac04605aaf4e69ed809494eaa6251274f9651478031aedcf01a94",
+    "contributions.md": "e925e0da44356011e588a9e6dfb0bb9d9a811c87c24c049b5dd36ffb476e8bb9",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -287,9 +287,9 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "one-page review export; Ananya reviewed; other accounts pending; latest E10/D017 and D018 work recorded",
-    "sha256": "9da9008b6f405ed618ee27a1c3929b80feaeb7ded2fb22ac91530bdaed8d91c7",
-    "pdf_sha256": "9cca0de61cabba938355170da54c5193e4781b5b6e0b091aa9cd35ef54b43b3a"
+    "status": "one-page review export; Sanjay, Ananya and Athul reviewed; Shrijeet pending",
+    "sha256": "e925e0da44356011e588a9e6dfb0bb9d9a811c87c24c049b5dd36ffb476e8bb9",
+    "pdf_sha256": "968d747ef80edb874860b325df760f7b59229ca49ea7396829b65ccd82b7ce90"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1083,8 +1083,23 @@
   },
   "current_remaining": [
     "strict learned-model physical-quality gate",
-    "three contribution confirmations",
+    "Shrijeet contribution confirmation",
     "team presentation-machine rehearsal",
     "coordinated upload"
-  ]
+  ],
+  "contribution_confirmations_2026_11_08": {
+    "reviewed": [
+      "PRAMOD SANJAY",
+      "KAPOOR ANANYA",
+      "BOBAN ATHUL KRISHNA"
+    ],
+    "pending": [
+      "MAITI SHRIJEET"
+    ],
+    "sanjay_authored_comment": 6717444859,
+    "athul_confirmed_comment": 6719312759,
+    "report_pages": 35,
+    "review_slides": 18,
+    "report_and_deck_unchanged_from_r6": true
+  }
 }

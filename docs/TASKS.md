@@ -368,13 +368,15 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [x] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
 - [x] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
 - [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
-- [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
+- [x] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
 The 3 November review export is 30 pages. It retains D014/D015, adds the separately trained E10 routing study and D017 results, and includes the E9/E11 screens and D018 replication. Conditional ADE is labelled with its missing-track caveat; D017 primary complete-sample counts and independent raw-video replay remain open. The contribution review is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable 16-slide presentation and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
 
 The 8 November r5 review has a 34-page report, one-page contribution draft and 17 editable slides. Its first 30 report pages preserve r4 exactly. Section 4.4 and the embedded native eight-video replay credit the external StreamForce model separately. Sanjay's merged optional contact-loss work is recorded. Ananya reviewed her contribution; Sanjay, Shrijeet and Athul remain pending. The original results and open D017 replay caveat remain unchanged. PR 78 physics follow-ups require separate review. Final team rehearsal, member approval and submission export remain open.
 
 8 November, r6: The r6 review has 35 report pages, one contribution page and 18 editable slides. It adds the merged D028 geometric hybrid with its other-object regression and unchanged strict quality flag, alongside the separately credited native photograph demo. Athul's D020-D030 work is recorded. Three member confirmations, final team rehearsal and coordinated upload remain open. Historical scores stay unchanged.
+
+8 November, r6a: The r6a contribution refresh uses Sanjay's own supplied wording and Athul's confirmed D019-D030 row. Sanjay, Ananya and Athul are reviewed; Shrijeet remains pending. The 35-page report, 18 slides and 391-file source archive preserve r6. Final team rehearsal and coordinated upload remain open. The strict physical-quality gate and the D017 raw-replay caveat stay unchanged.
 
 <a id="t19"></a>
 
