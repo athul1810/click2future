@@ -281,6 +281,11 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
     differ in more than routing, so E10 does not answer the E2-versus-E3 question
     for pixel diffusion.
 
+- 8 November: the raw per-clip outputs (job1/job2, 3.8 GB) were deleted from TC2
+  to free home quota. The plans and compact JSON summaries are kept in the draft
+  release "E10 seed-19 checkpoints and D017 summaries" with SHA256SUMS; the
+  aggregates in docs/results/replication-d017.json are unchanged.
+
 ## D019: Expected direct-decoder loss investigation
 
 - Keep D014-D018 and all negative results unchanged.
