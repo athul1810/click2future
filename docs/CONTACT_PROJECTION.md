@@ -33,8 +33,8 @@ rejected. Rules: 240/240 complete, zero penetrating clips, no more boundary
 clips, no rest or passive drift, contact F1 not lower, selected ADE at most
 0.0005 higher, and a paired scene-bootstrap 95% upper bound for same-world ADE
 below 0.0005. The margins are non-inferiority limits: the projection exists to
-remove penetration, and D024 shows single-reference ADE is dominated by prior
-sampling.
+remove penetration, and D024 suggests that prior sampling accounts for much of
+single-reference ADE.
 
 | Fresh D028 ID | Neural D020 | Neural + projection |
 |---|---:|---:|
@@ -54,12 +54,13 @@ reported here. The physics-assisted baseline remains more accurate under the
 same hidden physics (D021: 0.00348 versus 0.00711 same-world ADE). Ten fresh ID groups, one
 checkpoint and no OOD claim. Record: `docs/results/contact-projection-d028.json`.
 
-## D030: what the scorers can reach (TC2 job 52309)
+## D030: simulator reference controls (TC2 job 52309)
 
 The same corpora were re-rendered by the simulator and scored unchanged.
-`true_world` uses the true hidden physics, so it is the scorer's own ceiling.
-`sampled_world` uses the four prior draws, the best a prior-sampling method can
-reach. ADE is in normalized units; 0.025 is about 1.6 native pixels.
+`true_world` uses the true hidden physics: a reference control for the scorer,
+not a mathematical ceiling, since the scorer itself is imperfect. `sampled_world`
+uses the four prior draws: a prior-sampling control, not the best any method
+could reach. ADE is in normalized units; 0.025 is about 1.6 native pixels.
 
 | Corpus | Generator | Selected ADE | Pixels | Contact F1 |
 |---|---|---:|---:|---:|
@@ -71,7 +72,8 @@ reach. ADE is in normalized units; 0.025 is about 1.6 native pixels.
 | D028 | Neural / neural + projection | 0.02495 / 0.02476 | 1.60 / 1.58 | 0.169 / 0.176 |
 
 Selected ADE for every prior-sampling method sits within 1-2% of the sampled
-physics control, so most of the remaining error is hidden-physics uncertainty.
+physics control. This supports a hidden-physics explanation for much of the
+remaining error, but does not isolate all of it.
 The RGB contact F1 of the simulator's own renders is 0.25-0.59 depending on the
 corpus, so that metric is a weak, corpus-dependent proxy and small F1 changes
 should not be read as contact-timing improvements.

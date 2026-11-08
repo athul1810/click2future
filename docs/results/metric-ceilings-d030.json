@@ -6,7 +6,7 @@
     "d026_seed_930000": "c5c2f132e9a87f737ca44af03704d85869c1398b82036095600a4a49a8adbbe8",
     "d028_seed_940000": "4c65ceb111c2dff38fc62441e18b1ca2819080d246577ebbe34284f5b4e2403e"
   },
-  "note": "Simulator renders scored with the unchanged scorers. true_world is the scorer ceiling; sampled_world is the prior-sampling control. Descriptive only.",
+  "note": "Simulator renders scored with the unchanged scorers. true_world is a reference control for an imperfect scorer, not a mathematical ceiling; sampled_world is a prior-sampling control, not the best any method could reach. Descriptive only.",
   "corpora": {
     "d026": {
       "result_sha256": "b906c4d91e0d3844190ca789aa5344c4ce8f03d918450fa18f74d14e1e37f3e3",

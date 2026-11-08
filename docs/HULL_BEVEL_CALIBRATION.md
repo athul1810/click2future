@@ -35,7 +35,7 @@ method, rejecting any frame-zero overlap with the training, D021 and D023 corpor
 Same-world ADE fell in all ten scene groups; the paired bootstrap 95% interval is
 [-0.00182, -0.00128]. The candidate fails one prespecified rule: first-reference
 selected ADE is 0.00007 higher. It is rejected and 0.5 px stays the default. D024
-shows that this single-reference measure is dominated by prior sampling, but the
+suggests that prior sampling accounts for much of this single-reference measure, but the
 rule was fixed in advance and is not changed after the result.
 Record: `docs/results/hull-bevel-d026.json`.
 
