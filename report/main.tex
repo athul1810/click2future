@@ -395,7 +395,9 @@ Other physics renders & 60/60 & 10 & 27 & 38 & 0.2353 \\
 \end{table}
 
 The 60 alternative hidden-physics videos are valid simulator futures for the same observed conditions. Their low first-reference F1 demonstrates additional ambiguity from hidden physical properties. It is neither a model performance bound nor an alternative score used to rank candidates. The audit retains every per-reference event comparison, including unmatched events and missing intervals, without choosing a best reference. Original published scores are unchanged.
-Matching the exact simulator onsets of the same 60 alternatives with the first reference's onsets, without rendering or contact estimation, gives 9 matched, 19 extra and 39 missed events (F1 0.2368). The low first-reference score therefore reflects genuine hidden-physics timing variation rather than estimator error, so single-reference timed F1 cannot rank models whose futures differ only in plausible hidden physics.
+Matching the exact simulator onsets of the same 60 alternatives with the first reference's onsets, without rendering or contact estimation, gives 9 matched, 19 extra and 39 missed events (F1 0.2368). The low first-reference score therefore reflects genuine hidden-physics timing variation rather than estimator error, so a low single-reference timed F1 can reflect plausible hidden-physics variation rather than incorrect motion.
+
+\label{sec:pose-contact}Pose models save rigid poses, allowing a geometry-based contact check. Moving the exact scene outlines, used only for evaluation, by replayed simulator poses and counting a separated-to-touching edge gives validation F1 0.8462 against all 44 labelled onsets, compared with 0.4889 for the pixel estimator on correct renders. The 0.05-pixel touch threshold is chosen on training clips. Only 28 labels satisfy that same sampled edge rule; performance on this filtered subset is a rule-conditioned diagnostic, rather than independent detector validation. The other 16 labels begin within the touch band at the preceding frame. This binary rule cannot separate those events without a sampled transition; this is not a limit on every possible 8-fps estimator. On the saved coverage-study poses (Table~\ref{tab:coverage}), first-reference F1 is 0.3111, 0.2737 and 0.2766 for the E7 teacher, narrow and broad arms, while alternative reference poses score 0.2778. We also compare first-contact times with all references for each condition. Reference leave-one-out occurrence agrees in 80/80 scorable comparisons; four canonical zero-force references have no peer and are excluded. Reference timing is within one interval of the others' range in 75\% of 32 timed comparisons, with mean nearest error 1.09 intervals. Teacher, narrow and broad occurrence agreement on all 96 generated samples is 0.9375, 0.9792 and 0.9583. Conditional on a detected contact, their 26, 30 and 28 timed samples have range agreement 0.8462, 0.8333 and 0.7143 and mean nearest error 1.00, 0.90 and 2.25 intervals. Models use four references whereas timed reference leave-one-out uses three, so these reference comparisons are descriptive sensitivity checks. Only eight validation conditions involve contact; Section~\ref{sec:d018-contact-timing} repeats the paired model comparison on 20 held-out contact conditions.
 
 The next contact-training check should address sustained geometric overlap while preserving the measured rest and action controls. Timing improvements need the rendered-reference calibration alongside the original event score. Exact labels, auxiliary-head predictions and video-derived contact estimates must remain separate. Before any force-OOD evaluation of E6, its force limit of 1.1 also needs an explicitly reviewed inference contract for the existing recipe's 1.3 and 1.5 magnitudes. Clamping those actions or changing stored checkpoint metadata would alter the declared experiment. The core E2/E3/E4 configs accept 1.5 and the CVAE declares no limit, but no method is trained at these magnitudes: training uses 0.15 for pushes, 0.25 for collisions and 1.1 for the wall, so force-OOD pushes and collisions are 5-10 times their training force. This audit adds no training or final-test measurements.
 
@@ -725,6 +727,21 @@ seed 21 introduces none. Coverage is checked separately for all six action
 families, with all ten scene groups required; a pooled gain cannot offset a
 regression. The 0.5-second response/reversal checks were also present in the
 committed decision code before the new data was generated.
+
+\label{sec:d018-contact-timing}After every D018 decision was frozen and scored,
+we applied the pose-based first-contact measure of Section~\ref{sec:pose-contact}
+to the saved D018 poses, using the touch threshold chosen on the original training
+clips. Twenty of the 60 conditions involve contact. Reference occurrence uses 200 scorable leave-one-out comparisons; ten lone zero-force references have no comparator. Scored against the other
+references of their condition, the simulator references place 77.5\% of first
+contacts within one interval of the others' range, with mean nearest error 1.24
+intervals. The diffusion arms reach 0.7460, 0.7333 and 0.7288 for seeds 19, 20 and 21,
+with mean errors 1.65, 1.65 and 1.54 intervals, conditional on 63, 60 and 59 detected contacts out of 240 samples per arm. The one-pass arms reach only 0.5581,
+0.6111 and 0.5532, with mean errors 3.07, 2.83 and 2.83 intervals on 43, 54 and 47 timed samples, and miss contact
+more often (occurrence agreement 0.8458-0.8917 against 0.9125-0.9292). The ordering
+holds in every seed and at outline offsets of 0, 0.2 and 0.5 pixels. This confirms
+the timed-contact regression in Table~\ref{tab:prior-replication} with a measure that
+uses all references and no pixel contact estimation. It is a descriptive held-out
+check and changes no gate or selection.
 
 \begin{figure}[!ht]
 \centering
