@@ -754,5 +754,7 @@ anchor=outputs/<anchor-validation-folder> --output outputs/pose-contact.json`
 reads contact onsets from saved rigid poses instead of pixels. Put the command
 on one line and repeat `--evaluation NAME=FOLDER` for each validation coverage
 folder. It replays the training/validation simulator references, chooses the
-touch threshold on training clips and scores only validation plans. Exact scene
-outlines are evaluation-only ground truth and never a model input.
+touch threshold on training clips and scores validation plans. Optional
+`--held-out-dataset` and `--held-out NAME=FOLDER` score the frozen D018 `id_test`
+arms descriptively with that same threshold. Exact scene outlines are
+evaluation-only ground truth and never a model input.

@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "68b04c97bc85678f9e86e4af6d3ed814942a5e1adf6f8ef06b67ac0ba43d1fe0",
+    "main.tex": "09b8944b0787426d4451943269de54ee160722f6503b011fa1918378d08fd176",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -211,7 +211,7 @@
     "../docs/results/contact-projection-selection-d028.json": "6db6d35f1074c2840a4b01cc94ccfb77830bab8e04ae13eaebef55f39104e8ca",
     "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a"
   },
-  "rendered_pdf_sha256": "cc29aa78f0f1867ddd09fa078aaba9893981dd6a345ae329a942976605c0e160",
+  "rendered_pdf_sha256": "09fde78866c6d37a7200e5783b9b45f5c4cab4e1cb602f96fb33ec7ce986d222",
   "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
   "source_package_verification": {
     "status": "passed",
@@ -1103,10 +1103,10 @@
     "report_and_deck_unchanged_from_r6": true
   },
   "pose_contact_verification": {
-    "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing; no model, scoring threshold or historical score changes.",
+    "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
     "record": "docs/results/pose-contact.json",
-    "record_sha256": "9f5bb741632fc112e7b033ce65204085a0709ffbfcd3ac3bc71c24da4173852a",
-    "script_sha256": "5b2bdbb45f78876a008bdb68f0ae604938fa9f942142c866f00f26e78097abe5",
+    "record_sha256": "bd1dc01ddb9f0ec83f7d05e9d692b8c36a0cac7eb6345c300680a99b36ea66c4",
+    "script_sha256": "951a54f1c38ec2ebc71b7bc2c03b3b8e2865714fb6875a6ebc845aef33099ef2",
     "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
     "pages": 36,
     "external_urls": 0,
@@ -1114,9 +1114,10 @@
     "undefined_references": 0,
     "overfull_boxes": 0,
     "rendered_pages_inspected": [
-      19
+      19,
+      29
     ],
-    "pdf_sha256": "cc29aa78f0f1867ddd09fa078aaba9893981dd6a345ae329a942976605c0e160",
+    "pdf_sha256": "09fde78866c6d37a7200e5783b9b45f5c4cab4e1cb602f96fb33ec7ce986d222",
     "offsets_reproduced": [
       0.2,
       0,
@@ -1133,6 +1134,16 @@
     "replay_max_position_error_limit": 1e-06,
     "contact_conditions": 8,
     "validation_conditions": 24,
-    "test_splits_read": []
+    "test_splits_read": [
+      "id_test"
+    ],
+    "held_out_dataset_manifest_sha256": "073994edf9c0275a401c3638641c87ee0bf2b6cf60a3a49ca89b01066860c5ed",
+    "held_out_source": "d018-frozen-replication.tar.gz (release d018-results-2026-11-03, sha256 b398194628d29fac23e7725210639a63d13da796f71534a83758502621235841)",
+    "held_out_plan_sha256": "95bf312f8a31833d340a6d6da0d1c95d5b1cadd5b77e4706cdf20ffd67364bb7",
+    "held_out_arms": 6,
+    "held_out_contact_conditions": 20,
+    "held_out_conditions": 60,
+    "held_out_pixel_f1_matches_tab_prior_replication": true,
+    "validation_results_unchanged_from_previous_record": true
   }
 }

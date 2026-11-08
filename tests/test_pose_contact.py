@@ -61,3 +61,24 @@ def test_first_contact_scores_occurrence_range_and_nearest_error():
     assert stats["timed"] == 3
     assert stats["within_reference_range_plus_minus_one_interval"] == pytest.approx(1 / 3)
     assert stats["mean_nearest_reference_error_intervals"] == pytest.approx((1 + 3 + 3) / 3)
+
+
+def test_held_out_folders_require_their_dataset(tmp_path):
+    with pytest.raises(SystemExit):
+        MODULE["main"](
+            [
+                "--dataset",
+                str(tmp_path),
+                "--held-out",
+                f"arm={tmp_path}",
+                "--output",
+                str(tmp_path / "out.json"),
+            ]
+        )
+    assert not (tmp_path / "out.json").exists()
+
+
+def test_evaluate_rejects_a_plan_from_another_split(tmp_path):
+    (tmp_path / "plan.json").write_text('{"split": "id_test", "cases": []}')
+    with pytest.raises(ValueError, match="validation"):
+        MODULE["evaluate"](tmp_path, tmp_path, 0.05, 0.2)

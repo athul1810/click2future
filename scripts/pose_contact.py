@@ -19,7 +19,10 @@ Three parts:
    audit, and a hidden-physics-aware first-contact timing measure, calibrated
    by scoring each reference against the other references of its condition.
 
-No model, threshold or recorded score changes, and no test split is read.
+No model, threshold or recorded score changes. Validation is the default scope.
+Optional `--held-out` folders score a frozen held-out study (D018, `id_test`)
+descriptively, with the touch threshold already chosen on training clips; no
+selection, threshold or gate depends on them.
 """
 
 from __future__ import annotations
@@ -43,6 +46,7 @@ SPLITS = ("train", "validation")
 TOUCH_GRID = (0.0, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3, 0.5)
 VISIBLE_TOUCH = 0.05  # exact-shape gap treated as touching when classifying labels
 TOLERANCE = 1  # the audit's one-interval event tolerance
+_REFERENCE_ONSETS = {}
 
 
 def sha256(path):
@@ -270,11 +274,21 @@ def calibrate(dataset, offset):
     return result
 
 
-def evaluate(folder, dataset, touch, offset):
+def reference_onsets(dataset, name, touch, offset):
+    """Onsets of one replayed reference, cached across arms that share references."""
+    key = (str(Path(dataset).resolve()), name, touch, offset)
+    if key not in _REFERENCE_ONSETS:
+        _REFERENCE_ONSETS[key] = onsets(
+            reference_distance(load_rollout(dataset, name), offset), touch
+        )
+    return _REFERENCE_ONSETS[key]
+
+
+def evaluate(folder, dataset, touch, offset, split="validation"):
     folder = Path(folder)
     plan = json.loads((folder / "plan.json").read_text())
-    if plan["split"] != "validation":
-        raise ValueError("Only validation plans are scored here")
+    if plan["split"] != split:
+        raise ValueError(f"Expected a {split} plan, found {plan['split']}")
     first_rows, all_rows, alternative, leave_one_out, timing = [], [], [], [], []
     pose_hash = hashlib.sha256()
     for case in plan["cases"]:
@@ -282,8 +296,8 @@ def evaluate(folder, dataset, touch, offset):
         base = references[0]
         polygons, centres, _, resolution = reference_geometry(base, offset)
         reference_first = []
-        for reference in references:
-            onset = onsets(reference_distance(reference, offset), touch)
+        for name, reference in zip(case["reference_ids"], references, strict=True):
+            onset = reference_onsets(dataset, name, touch, offset)
             reference_first.append(first_contact(onset))
             if reference is not base:
                 alternative.append(
@@ -309,7 +323,10 @@ def evaluate(folder, dataset, touch, offset):
                 for r in references
             ]
             timing.append((first_contact(onset), reference_first))
-    pixel = json.loads((folder / "collision-audit.json").read_text())
+    audit = folder / "collision-audit.json"
+    if not audit.exists():
+        audit = folder / "collision.json"  # D018 file name
+    pixel = json.loads(audit.read_text())
     return {
         "plan_sha256": plan["plan_sha256"],
         "poses_sha256": pose_hash.hexdigest(),
@@ -328,14 +345,19 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument("--evaluation", action="append", default=[], metavar="NAME=FOLDER")
+    parser.add_argument("--held-out-dataset", type=Path)
+    parser.add_argument("--held-out", action="append", default=[], metavar="NAME=FOLDER")
     parser.add_argument("--offsets", type=float, nargs="+", default=[0.2, 0.0, 0.5])
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("Preserve earlier results; use a fresh output path")
     evaluations = [item.partition("=")[::2] for item in args.evaluation]
-    if any(not name or not folder for name, folder in evaluations):
-        parser.error("Use --evaluation NAME=FOLDER")
+    held_out = [item.partition("=")[::2] for item in args.held_out]
+    if any(not name or not folder for name, folder in evaluations + held_out):
+        parser.error("Use NAME=FOLDER")
+    if bool(held_out) != bool(args.held_out_dataset):
+        parser.error("--held-out needs --held-out-dataset, and the reverse")
     runs = []
     for offset in args.offsets:
         calibration = calibrate(args.dataset, offset)
@@ -346,6 +368,10 @@ def main(argv=None):
                 "evaluations": {
                     name: evaluate(folder, args.dataset, touch, offset)
                     for name, folder in evaluations
+                },
+                "held_out_id_test": {
+                    name: evaluate(folder, args.held_out_dataset, touch, offset, "id_test")
+                    for name, folder in held_out
                 },
             }
         )
@@ -362,16 +388,26 @@ def main(argv=None):
         "event_tolerance_intervals": TOLERANCE,
         "pixel_reference_control_f1": 0.4888888888888889,
         "dataset_manifest_sha256": sha256(args.dataset / "dataset_manifest.json"),
+        "held_out_dataset_manifest_sha256": sha256(args.held_out_dataset / "dataset_manifest.json")
+        if held_out
+        else None,
+        "held_out_scope": (
+            "Descriptive only: frozen D018 checkpoints and plans, touch threshold "
+            "chosen on training clips before reading them; no selection or gate."
+        )
+        if held_out
+        else None,
         "source_sha256": {"pose_contact.py": sha256(__file__)},
         "primary_offset_pixels": args.offsets[0],
         "runs": runs,
-        "test_splits_read": [],
+        "test_splits_read": ["id_test"] if held_out else [],
         "limitations": [
             "Exact outlines come from the scene specification: evaluation-only ground "
             "truth, as labels are.",
             "Circles and rectangles only; triangles occur only in the shape-OOD split.",
             "Frame-sampled poses cannot see onsets that begin while objects already touch.",
-            "First-contact timing uses few collision conditions; arm differences are indicative.",
+            "Validation first-contact timing uses eight collision conditions; held-out "
+            "D018 adds twenty on ten fresh ID scenes.",
         ],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
