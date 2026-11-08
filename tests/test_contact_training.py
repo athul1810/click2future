@@ -12,6 +12,7 @@ from click2future.evaluation.rigid_geometry import geometry_diagnostics
 from click2future.models.object_motion import observe
 from click2future.sim import run_rollout
 from click2future.training.contact_geometry import (
+    contact_dynamics,
     contact_objective,
     observed_hulls,
     signed_penetration,
@@ -74,6 +75,18 @@ def test_sat_is_symmetric_under_identity_swap_and_world_translation():
     torch.testing.assert_close(
         expected, signed_penetration(motion, translated, geometry), atol=1e-7, rtol=1e-6
     )
+
+
+def test_contact_dynamics_measures_entry_and_normal_speed_with_gradients():
+    true = torch.tensor([[-0.10, -0.04, 0.0, -0.04, -0.10]])
+    predicted = (true + torch.tensor([[0.0, 0.02, 0.04, 0.02, 0.0]])).requires_grad_()
+    transition, velocity = contact_dynamics(predicted, true, window_pixels=3.2)
+    torch.testing.assert_close(transition, torch.tensor([0.0002]))
+    torch.testing.assert_close(velocity, torch.tensor([0.0004]))
+    (transition + velocity).sum().backward()
+    assert torch.isfinite(predicted.grad).all() and predicted.grad.abs().sum() > 0
+    zero = contact_dynamics(true, true, window_pixels=3.2)
+    assert all(value.count_nonzero() == 0 for value in zero)
 
 
 def fixture_data():
