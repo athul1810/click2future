@@ -364,9 +364,16 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   zero penetration and no rest drift. Circle/hull selected ADE 0.02383 versus
   0.02393; RGB contact F1 0.295 versus 0.258. These opened results do not
   establish superiority.
-- A fresh seed-920000 comparison is frozen in PRIMITIVE_PHYSICS_COMPARISON.md
-  with prespecified acceptance rules. It has not been run. Until it passes, the
-  hull baseline stays the default and the demo does not use the circle variant.
+- The fresh seed-920000 comparison in PRIMITIVE_PHYSICS_COMPARISON.md ran
+  unchanged in TC2 job 52275 at source 0442df2: 240 clips per method, all
+  complete, zero penetration and no rest/passive drift for both.
+- Circle/hull was better on matched-world ADE (0.00318 versus 0.00395), contact
+  F1 (0.274 versus 0.257) and selected ADE (0.02629 versus 0.02638). It failed
+  two prespecified rules: 12 boundary-clipped clips versus 0, and a paired
+  bootstrap 95% upper bound of 0.0, not below zero. Only 3 of 10 scene groups
+  contain a recognised circle; the other 7 give identical predictions.
+- Rejected. The hull baseline stays the default and the demo does not use the
+  circle variant. See docs/results/primitive-physics-d023.json.
 
 ## New decision template
 

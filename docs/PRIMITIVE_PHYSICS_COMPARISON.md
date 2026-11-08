@@ -57,3 +57,28 @@ The comparison script is `scripts/compare_primitive_physics.py`. Primitive and
 legacy methods retain distinct source-based cache identities. If accepted, the
 explicit `--physics-baseline` option will select the circle/hull generator first
 in the demo while retaining the physics-assisted label and neural comparisons.
+
+## Result: TC2 job 52275, 8 November 2026
+
+The frozen comparison ran unchanged at source 0442df2. The D021 corpus was
+regenerated from seed 910000 for the overlap check; the training corpus manifest
+matches the hash recorded for D021.
+
+| Measure | Hull | Circle/hull |
+|---|---:|---:|
+| Complete selected clips | 240/240 | 240/240 |
+| Penetrating clips | 0 | 0 |
+| Boundary-clipped clips | 0 | 12 |
+| Rest / passive drift | 0/40, 0/80 | 0/40, 0/80 |
+| First-reference selected ADE | 0.02638 | 0.02629 |
+| RGB contact F1 | 0.257 | 0.274 |
+| Same-world displacement ADE | 0.00395 | 0.00318 |
+
+Paired scene-bootstrap 95% interval for the same-world ADE difference:
+[-0.00156, 0.0]. Only 3 of 10 scene groups contain a recognised circle. The
+other 7 give identical predictions, so their difference is exactly zero.
+
+The candidate fails the boundary rule and the bootstrap rule (upper bound not
+below zero). It is rejected as the demo physics method. The hull baseline stays
+the default. Both methods still fail the original strict single-reference gate.
+The full record is `docs/results/primitive-physics-d023.json`.
