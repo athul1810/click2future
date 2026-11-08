@@ -25,7 +25,13 @@ and result bundle. The first model failed generated-video quality checks; that i
 a learning issue rather than an access failure. See
 [training evidence](results/diffusion_pilot_2026-10-16.json).
 
-Storage quota, total usage allowance and access expiry remain unconfirmed.
+The numeric storage quota, total usage allowance and access expiry remain
+unconfirmed. Home-directory quota enforcement is confirmed: the 8 November
+photo-worker recovery hit `Disk quota exceeded` while the shared filesystem
+still had free space. Filesystem-wide `df` output cannot establish user capacity.
+Keep large raw outputs node-local until verified off-node backup completes.
+The StreamForce batch script checks a real 32 MiB spool write at startup;
+later requests still require quota monitoring and retained failure records.
 
 17 october: vpn reachability and authenticated ssh worked after reconnecting.
 jobs 43389/43396 prepared the frozen corpus and trained the trajectory pilot on

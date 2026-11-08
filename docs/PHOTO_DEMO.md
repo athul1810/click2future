@@ -122,6 +122,13 @@ Use a new `streamforce` spool. Set `C2F_PHOTO_PROJECT`, `C2F_STREAMFORCE_ROOT`,
 The candidate's native contract is 81 frames, 832x480 at 16 fps with four
 denoising steps. This describes its interface, not a measured A40 speed result.
 
+The batch script exercises a 32 MiB write of distinct data in the shared spool
+before starting the worker. TC2's home quota can reject writes even when `df`
+shows free filesystem space. This startup check cannot reserve capacity for
+later requests or other jobs. Keep large raw arrays on the allocated node,
+verify their off-node backup, and retain adequate home quota for MP4s and
+atomic metadata writes. A quota failure remains a failed attempt.
+
 The completed native smoke and recorded-browser checks are recorded in
 [the evidence summary](results/photo-native-probe.json). Its official caption
 already requests swinging; these four clips are not a force-only control test.
