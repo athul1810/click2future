@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 35,
+  "pages": 37,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "414bdd57fc6c20ba92e113a2f214bc01ba89b2399c5e0f8c4d2731f7177a49a4",
+    "main.tex": "a7ce260a85b9b084534471ecb4303fed2b0c58ca067bae2a0ed4727b06878c85",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "e925e0da44356011e588a9e6dfb0bb9d9a811c87c24c049b5dd36ffb476e8bb9",
+    "contributions.md": "160190338f634b5d1084f073ea2d5e2660777cb9a1d187d14f0e4f46c32e6091",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -287,9 +287,9 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "one-page review export; Sanjay, Ananya and Athul reviewed; Shrijeet pending",
-    "sha256": "e925e0da44356011e588a9e6dfb0bb9d9a811c87c24c049b5dd36ffb476e8bb9",
-    "pdf_sha256": "968d747ef80edb874860b325df760f7b59229ca49ea7396829b65ccd82b7ce90"
+    "status": "one-page export; Sanjay, Ananya and Athul reviewed; Shrijeet pending; Ananya latest authored work included",
+    "sha256": "160190338f634b5d1084f073ea2d5e2660777cb9a1d187d14f0e4f46c32e6091",
+    "pdf_sha256": "d7a752eafcc3bc6abd55ec0bdc9602752958260cea4fbe4997517e417182faa2"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1137,18 +1137,86 @@
     "focused_packaging_and_boundary_tests_passed": 15
   },
   "current_review_export": {
-    "revision_label": "r7",
-    "report_pages": 35,
-    "slides": 18,
+    "revision_label": "pose-control review before final methods consolidation",
+    "report_pages": 37,
     "contribution_pages": 1,
+    "slides": 18,
     "contribution_reviewed": 3,
     "contribution_pending": [
       "MAITI SHRIJEET"
     ],
-    "report_changed_pages_from_r6a": [
-      12
-    ],
-    "unchanged_model_scores": true,
     "strict_quality_flag": false
+  },
+  "pose_contact_verification": {
+    "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
+    "record": "docs/results/pose-contact.json",
+    "record_sha256": "41f2ce9473af78757315e496247b2fa4a07166202b2d6eaad5ccdf754757b019",
+    "script_sha256": "329362f4a145a4589d21e46f6322432ea67358cd1437f3c695b0fc42bae91c41",
+    "dataset_manifest_sha256": "03c9468ec2aa48425ebc142fff7b792284bf38001a9518187924859ba5703388",
+    "pages": 37,
+    "external_urls": 0,
+    "em_or_en_dashes": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "rendered_pages_inspected": [
+      19,
+      29
+    ],
+    "pdf_sha256": "148713e707022117a2d278ac5eff887a4f2c64c01c5160a5ef216092f2695423",
+    "offsets_reproduced": [
+      0.2,
+      0,
+      0.5
+    ],
+    "touch_threshold_selected_on_train_pixels": 0.05,
+    "validation_events_all_labels": {
+      "true_positive": 33,
+      "false_positive": 1,
+      "false_negative": 11
+    },
+    "validation_labelled_onsets": 44,
+    "validation_frame_visible_onsets": 28,
+    "replay_max_position_error_limit": 1e-06,
+    "contact_conditions": 8,
+    "validation_conditions": 24,
+    "test_splits_read": [
+      "id_test"
+    ],
+    "held_out_dataset_manifest_sha256": "073994edf9c0275a401c3638641c87ee0bf2b6cf60a3a49ca89b01066860c5ed",
+    "held_out_source": "d018-frozen-replication.tar.gz (release d018-results-2026-11-03, sha256 b398194628d29fac23e7725210639a63d13da796f71534a83758502621235841)",
+    "held_out_plan_sha256": "95bf312f8a31833d340a6d6da0d1c95d5b1cadd5b77e4706cdf20ffd67364bb7",
+    "held_out_arms": 6,
+    "held_out_contact_conditions": 20,
+    "held_out_conditions": 60,
+    "held_out_pixel_f1_matches_tab_prior_replication": true,
+    "validation_results_unchanged_from_previous_record": false,
+    "reference_occurrence_denominators": {
+      "validation": 80,
+      "id_test": 200
+    },
+    "independent_full_replay": {
+      "status": "passed_independent_full_replay",
+      "original_source": "610aa663e6d6bdca5797373569385d3c87e3501d",
+      "corrected_script_sha256": "329362f4a145a4589d21e46f6322432ea67358cd1437f3c695b0fc42bae91c41",
+      "offsets": [
+        0.2,
+        0,
+        0.5
+      ],
+      "calibration_clips_per_offset": 420,
+      "coverage_arms": 3,
+      "coverage_samples_per_arm": 96,
+      "held_out_arms": 6,
+      "held_out_samples_per_arm": 240,
+      "max_abs_stat_difference_excluding_corrected_reference_denominators": 0.0,
+      "corrected_reference_occurrence_denominators": {
+        "validation": 80,
+        "id_test": 200
+      },
+      "timing_metrics_and_model_scores_changed": false,
+      "scope": "descriptive frozen D018 id_test plus training/validation calibration; no model, threshold, gate or selection changes"
+    },
+    "changed_diagnostic_fields": "reference occurrence denominators exclude empty leave-one-out peers; timing scores and model occurrence scores are unchanged",
+    "visible_subset_scope": "rule-conditioned diagnostic; no independent detector-validation claim"
   }
 }
