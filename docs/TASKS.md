@@ -380,6 +380,8 @@ The 8 November r5 review has a 34-page report, one-page contribution draft and 1
 
 8 November, r7: The r7 review keeps 35 report pages and 18 slides. Page 12 adds the penetration positive control with corrected target-depth populations, retained denominators and offset limitations. All 7920 control trials were rerun; historical model scores and the strict failing quality flag stay unchanged. The source archive includes the calibration driver and its boundary regression. Three contribution accounts are reviewed; Shrijeet confirmation, team rehearsal and coordinated upload remain open.
 
+8 November, r8: The r8 review has 37 report pages, one contribution page, 18 slides and a 395-file source ZIP. It includes Sanjay's source-checked simulator/data assumptions, the recorded D029 comparison and the corrected penetration/pose-contact controls. Full runtime checks pass 794 tests plus four subtests, with two Linux-only skips. Native pose-control replay matches all timing statistics; empty reference comparisons are excluded. Three contribution accounts are reviewed; Shrijeet confirmation, shared-paper synchronization, team rehearsal and coordinated upload remain open. Historical model scores and the strict failing quality flag stay unchanged.
+
 <a id="t19"></a>
 
 ### T19: Verify reproducibility and prepare the source-code ZIP

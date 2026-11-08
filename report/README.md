@@ -153,3 +153,16 @@ scorer on circles and rectangles, with no triangle or model-quality claim.
 The original primary rows reproduce within 1.4e-14; the corrected pooled
 groups retain 1200 trials each. Independent raw D017 video replay remains
 unavailable from its retained summaries.
+
+
+## consolidated methods and controls, 8 november, r8
+
+The r8 review has 37 report pages, one contribution page, 18 slides and a 395-file source ZIP. It includes Sanjay's source-checked simulator/data assumptions, the recorded D029 comparison and the corrected penetration/pose-contact controls. Full runtime checks pass 794 tests plus four subtests, with two Linux-only skips. Native pose-control replay matches all timing statistics; empty reference comparisons are excluded. Three contribution accounts are reviewed; Shrijeet confirmation, shared-paper synchronization, team rehearsal and coordinated upload remain open. Historical model scores and the strict failing quality flag stay unchanged.
+
+Only section 2.1 is taken from Sanjay's supplied older report file; the newer
+StreamForce and projection sections remain. The controlled-data exceptions
+are 41 clips per repeated-physics group and 20 per force-OOD group. The exact
+contact-dynamics config was already run in D029, so no duplicate run is added.
+The source ZIP is byte-identical to the tested runtime at 196dae6; this final
+consolidation changes documentation only. The contribution text includes
+Ananya's latest confirmed account and Sanjay's methods-writing contribution.
