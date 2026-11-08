@@ -21,6 +21,27 @@ export HF_HOME="$C2F_STREAMFORCE_ROOT/hf-cache" HF_HUB_OFFLINE=1
 export PYTHONUNBUFFERED=1 TOKENIZERS_PARALLELISM=false
 export TORCHINDUCTOR_CACHE_DIR="$C2F_STREAMFORCE_ROOT/torch-compile"
 export TRITON_CACHE_DIR="$C2F_STREAMFORCE_ROOT/triton"
+# Filesystem free space does not reflect TC2's per-user home quota. Exercise
+# actual writes before making this allocation available to the photo queue.
+"$C2F_STREAMFORCE_ROOT/.venv/bin/python" - "$C2F_PHOTO_SPOOL" <<'PY'
+import os
+import sys
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+
+root = Path(sys.argv[1]).resolve()
+root.mkdir(parents=True, exist_ok=True)
+try:
+    with NamedTemporaryFile(prefix=".quota-preflight-", dir=root) as stream:
+        block = bytes(1024 * 1024)
+        for _ in range(32):
+            stream.write(block)
+        stream.flush()
+        os.fsync(stream.fileno())
+except OSError as error:
+    raise SystemExit(f"Photo spool cannot hold a 32 MiB write: {error}") from error
+print("photo spool: 32 MiB write passed; keep monitoring user quota", flush=True)
+PY
 "$C2F_STREAMFORCE_ROOT/.venv/bin/python" "$C2F_PHOTO_PROJECT/cluster/streamforce_worker.py" \
     --repo "$C2F_STREAMFORCE_ROOT/streamforce" --spool "$C2F_PHOTO_SPOOL" \
     --probe "$C2F_STREAMFORCE_PROBE" --raw-root "$C2F_STREAMFORCE_ROOT/raw" \
