@@ -101,6 +101,21 @@ def main():
         prompt = sample["caption"]
         backend, metadata = load_backend(repo, [prompt], progress=progress)
         record["model"] = metadata
+        # Observe the native float video before the upstream uint8 cast. The
+        # released inference method and its returned tensors remain unchanged.
+        original_inference = backend.pipeline.inference_rolling_forcing_stream
+        validated_outputs = []
+
+        def checked_inference(*values, **keywords):
+            result = original_inference(*values, **keywords)
+            video = result[0]
+            if not isinstance(video, torch.Tensor) or not bool(torch.isfinite(video).all()):
+                raise ValueError("Native float video contains non-finite values")
+            validated_outputs.append(True)
+            return result
+
+        backend.pipeline.inference_rolling_forcing_stream = checked_inference
+        record["timing_scope"] = "native generation including a final float-finiteness check"
         from interactive_demo_force_adapter import (
             ForceAdapterConfig,
             build_model_condition_signal,
@@ -157,6 +172,8 @@ def main():
                 "video_sha256": digest(video),
                 "gpu_peak_bytes": torch.cuda.max_memory_allocated(),
                 "stream_metrics": generated["stream_metrics"],
+                "native_float_output_finite": len(validated_outputs) == index + 1,
+                "host_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024,
             }
             if first_frames is None:
                 first_frames = frames.copy()
