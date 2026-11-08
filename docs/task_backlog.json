@@ -475,7 +475,7 @@
       1,
       2
     ],
-    "progress": "The r6a contribution refresh uses Sanjay's own supplied wording and Athul's confirmed D019-D030 row. Sanjay, Ananya and Athul are reviewed; Shrijeet remains pending. The 35-page report, 18 slides and 391-file source archive preserve r6. Final team rehearsal and coordinated upload remain open. The strict physical-quality gate and the D017 raw-replay caveat stay unchanged.",
+    "progress": "The r7 review keeps 35 report pages and 18 slides. Page 12 adds the penetration positive control with corrected target-depth populations, retained denominators and offset limitations. All 7920 control trials were rerun; historical model scores and the strict failing quality flag stay unchanged. The source archive includes the calibration driver and its boundary regression. Three contribution accounts are reviewed; Shrijeet confirmation, team rehearsal and coordinated upload remain open.",
     "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
   },
   {

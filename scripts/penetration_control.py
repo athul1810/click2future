@@ -124,12 +124,15 @@ def run(dataset, *, offset, trials, seed, keep_rows):
                 )
 
                 if true_depth(low) > 0 or true_depth(high) < depth:
-                    continue
+                    raise ValueError(f"Unreachable target depth {depth} in {sample_id}")
                 for _ in range(60):
                     middle = (low + high) / 2
                     below = true_depth(middle) <= 1e-9 if depth == 0 else true_depth(middle) < depth
                     low, high = (middle, high) if below else (low, middle)
                 step = low if depth == 0 else (low + high) / 2
+                achieved = true_depth(step)
+                if not math.isfinite(achieved) or abs(achieved - depth) > 1e-5:
+                    raise ValueError(f"Target depth {depth} was not solved in {sample_id}")
                 shift = lateral + step * toward
                 motion = np.zeros((1, 1, 2, 4))
                 motion[0, 0, mover, :2] = shift / (0.5 * resolution)
@@ -140,7 +143,7 @@ def run(dataset, *, offset, trials, seed, keep_rows):
                     {
                         "layout": sample_id,
                         "target_depth": depth,
-                        "true_depth": true_depth(step),
+                        "true_depth": achieved,
                         "measured_depth": clip["hull_penetration_pixels_per_frame"][0],
                         "mask_overlap_pixels": clip["overlap_pixels_per_frame"][0],
                         "shapes": sorted(objects[oid]["shape"] for oid in order),
@@ -152,6 +155,7 @@ def run(dataset, *, offset, trials, seed, keep_rows):
 
 def summarize(rows, used, offset, trials, seed, keep_rows):
     true = np.array([r["true_depth"] for r in rows])
+    target = np.array([r["target_depth"] for r in rows])
     measured = np.array([r["measured_depth"] for r in rows])
     error = measured - true
     by_depth = {}
@@ -175,7 +179,11 @@ def summarize(rows, used, offset, trials, seed, keep_rows):
                 )
             ),
         }
-    clear = true >= 0.5
+    # Bisection leaves tiny signed errors at a nominal boundary. Use the
+    # declared design strata so every boundary trial stays in its population.
+    clear = target >= 0.5
+    shallow = target <= TOLERANCE
+    deep = target >= 1.5
     slope, intercept = np.polyfit(true[clear], measured[clear], 1)
     shapes = {}
     for pair in sorted({tuple(r["shapes"]) for r in rows}):
@@ -200,12 +208,20 @@ def summarize(rows, used, offset, trials, seed, keep_rows):
         "share_within_half_pixel_true_at_least_half_pixel": float(
             np.mean(np.abs(error[clear]) <= 0.5)
         ),
-        "false_flag_rate_true_at_most_one_pixel": float(
-            np.mean(measured[true <= TOLERANCE] > TOLERANCE)
-        ),
-        "miss_rate_true_at_least_one_and_half_pixel": float(
-            np.mean(measured[true >= 1.5] <= TOLERANCE)
-        ),
+        "false_flag_rate_true_at_most_one_pixel": float(np.mean(measured[shallow] > TOLERANCE)),
+        "miss_rate_true_at_least_one_and_half_pixel": float(np.mean(measured[deep] <= TOLERANCE)),
+        "threshold_population_rule": "declared target depth; solved true depth within 1e-5 pixels",
+        "threshold_group_counts": {
+            "target_at_most_one_pixel": {
+                "trials": int(shallow.sum()),
+                "flagged": int(np.sum(measured[shallow] > TOLERANCE)),
+            },
+            "target_at_least_one_and_half_pixel": {
+                "trials": int(deep.sum()),
+                "missed": int(np.sum(measured[deep] <= TOLERANCE)),
+            },
+            "fit_target_at_least_half_pixel": int(clear.sum()),
+        },
         "by_target_depth": by_depth,
         "by_shape_pair_true_at_least_half_pixel": shapes,
     }

@@ -748,3 +748,15 @@ this source archive.
 `scripts/prior_simulator_ceiling.py` and `scripts/metric_ceilings.py` render
 the D024/D030 simulator reference controls. Their filenames are historical;
 the controls do not establish mathematical bounds on other generators.
+
+`python scripts/penetration_control.py --dataset data/frozen --output
+outputs/penetration-control.json` reproduces the known-overlap calibration on
+locally generated training/validation layouts. Put the command on one line.
+The retained study uses the frozen corpus identified in its record. Threshold
+groups follow the declared target depth, with all numerator/denominator counts
+retained; this calibrates the scorer rather than improving a model.
+
+The separate StreamForce worker requires the verified external environment and
+completed native probe. Its native contract is 81 frames at 832x480, 16 fps and
+four denoising steps. A prepared recorded spool can replay saved actions without
+a worker. External models, images and recordings are excluded from this archive.

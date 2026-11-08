@@ -378,6 +378,8 @@ The 8 November r5 review has a 34-page report, one-page contribution draft and 1
 
 8 November, r6a: The r6a contribution refresh uses Sanjay's own supplied wording and Athul's confirmed D019-D030 row. Sanjay, Ananya and Athul are reviewed; Shrijeet remains pending. The 35-page report, 18 slides and 391-file source archive preserve r6. Final team rehearsal and coordinated upload remain open. The strict physical-quality gate and the D017 raw-replay caveat stay unchanged.
 
+8 November, r7: The r7 review keeps 35 report pages and 18 slides. Page 12 adds the penetration positive control with corrected target-depth populations, retained denominators and offset limitations. All 7920 control trials were rerun; historical model scores and the strict failing quality flag stay unchanged. The source archive includes the calibration driver and its boundary regression. Three contribution accounts are reviewed; Shrijeet confirmation, team rehearsal and coordinated upload remain open.
+
 <a id="t19"></a>
 
 ### T19: Verify reproducibility and prepare the source-code ZIP

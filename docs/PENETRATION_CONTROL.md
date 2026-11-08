@@ -37,7 +37,12 @@ changes.
 python scripts/penetration_control.py --dataset data/frozen --output outputs/penetration-control.json
 ```
 
-## Result (offset 0.2; 0 and 0.5 agree)
+Pooled rates use the declared target-depth groups. Bisection must solve every
+target within 0.00001 pixels; its remaining numerical error cannot move a
+boundary trial into a different group. The record includes each group's
+numerator and denominator.
+
+## Result (primary offset 0.2; sensitivity offsets 0 and 0.5)
 
 | True overlap, pixels | Median reported | Flagged above one pixel |
 |---:|---:|---:|
@@ -49,14 +54,15 @@ python scripts/penetration_control.py --dataset data/frozen --output outputs/pen
 | 1.5 | 1.27 | 94% |
 | 2.0-4.0 | true minus 0.25 | 100% |
 
-- The reported depth follows the true depth with slope 1.00 (1.002-1.007 across
-  offsets) and reads about 0.25 pixels shallow (median error -0.25; 72% of
+- The reported depth follows the true depth with slope 1.00 (1.0046-1.0051 across
+  offsets) and has median error about -0.25 pixels (72.5% of
   trials within ±0.5 pixels; mean absolute error 0.40).
 - The one-pixel tolerance therefore acts at about 1.25 pixels of true overlap.
-  Overlaps of 1.5 pixels or more are caught in 94-100% of trials (0.6% missed at
-  1.5 pixels or more). Touching objects are not flagged (0%, or 2% with the
-  outlines placed 0.5 pixels from the origin).
-- Near the tolerance the count is noisy: 14.5% of true overlaps of at most one
+  Overlaps of 1.5 pixels or more are caught in 94-100% of trials (1.25% missed
+  across the declared targets of 1.5 pixels or more). Touching objects are
+  flagged in 0% at the primary offset, or 2% with the outlines placed 0.5 pixels
+  from the origin.
+- Near the tolerance the count is noisy: 15.6% of declared overlaps of at most one
   pixel are flagged. Over-estimates of up to about 0.8 pixels (95th percentile)
   occur mainly for pairs that include a rectangle, whose rasterised mask extends
   slightly past its outline.
@@ -68,8 +74,8 @@ python scripts/penetration_control.py --dataset data/frozen --output outputs/pen
 - Penetrating-clip counts are reliable for clear overlaps (1.5 pixels or more)
   and blurred near the tolerance. Small differences between methods may reflect
   overlaps close to one pixel rather than a change in clear penetration.
-- Reported maximum depths are conservative by about a quarter pixel: a reported
-  2.45 pixels corresponds to roughly 2.7 pixels of true overlap.
+- The errors have both signs. The median bias does not provide a correction for
+  an individual pair or a model's maximum depth.
 - Comparisons between methods scored with the same audit share this bias.
 
 ## Limitations

@@ -141,3 +141,15 @@ confirmation remains pending. The 35-page report, 18 slides and source ZIP
 retain the checked r6 content. Final team rehearsal and coordinated submission
 remain open. D017's deleted raw outputs cannot be independently replayed from
 the retained score summaries; its caveat remains in the report.
+
+
+## penetration-control review, 8 november, r7
+
+The r7 review keeps 35 report pages and 18 slides. Page 12 adds the penetration positive control with corrected target-depth populations, retained denominators and offset limitations. All 7920 control trials were rerun; historical model scores and the strict failing quality flag stay unchanged. The source archive includes the calibration driver and its boundary regression. Three contribution accounts are reviewed; Shrijeet confirmation, team rehearsal and coordinated upload remain open.
+
+Only page 12 changes from r6a; the other 34 report pages, contribution PDF,
+presentation and media remain identical. The positive control measures the
+scorer on circles and rectangles, with no triangle or model-quality claim.
+The original primary rows reproduce within 1.4e-14; the corrected pooled
+groups retain 1200 trials each. Independent raw D017 video replay remains
+unavailable from its retained summaries.
