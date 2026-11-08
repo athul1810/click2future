@@ -24,6 +24,8 @@ DEMO_ASSETS = {
 # TC2 jobs behind the final E0/E2/E3 runs and held-out results (D013-D015).
 FINAL_RUN_SCRIPTS = {
     "cluster/streamforce_runtime.py",
+    "cluster/streamforce_worker.py",
+    "cluster/streamforce_worker.sbatch",
     "cluster/verify_streamforce_artifacts.py",
     "cluster/force_prompting_runtime.py",
     "cluster/photo_worker.py",

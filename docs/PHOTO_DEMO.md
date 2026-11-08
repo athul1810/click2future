@@ -100,6 +100,38 @@ extension need separate labels in slides and recordings. PHOTO-P01/P02 are
 engineering development studies, not untouched evaluation or SOTA evidence.
 The photo panel and rating rules must be frozen before any claimed evaluation.
 
+## StreamForce candidate
+
+The separate `cluster/streamforce_worker.py` remains gated by a completed native
+four-seed probe plus the seed-0 repeat. It checks the probe's native frame
+contract, source/artifact/loader identities, library versions and compiled
+attention binary before accepting work. The initial model-structure and small
+attention-kernel checks alone do not enable it.
+
+Each action loads the model in a separate GPU process and generates its four
+seeds there. Cancellation terminates that process before the parent publishes
+the final state. Finished samples retain their incomplete-attempt records.
+The next action starts with a fresh process, including text encoding. This
+avoids reusing an interrupted asynchronous decoder, at the cost of a cold load
+for each action. PHOTO-S02 now passes paired fresh generation, native cancellation, recovery
+and offline replay. Teammate review remains open; keep the existing backend
+and its recorded fallback available.
+
+Use a new `streamforce` spool. Set `C2F_PHOTO_PROJECT`, `C2F_STREAMFORCE_ROOT`,
+`C2F_STREAMFORCE_PROBE` and `C2F_PHOTO_SPOOL`, then submit
+`cluster/streamforce_worker.sbatch` on the node holding the verified files.
+The candidate's native contract is 81 frames, 832x480 at 16 fps with four
+denoising steps. PHOTO-S01 measures about 21 seconds per clip after loading. The complete
+four-seed browser requests take 132.73 and 134.28 seconds with a cold process
+per action. These scopes differ from published hardware measurements.
+
+The batch script exercises a 32 MiB write of distinct data in the shared spool
+before starting the worker. TC2's home quota can reject writes even when `df`
+shows free filesystem space. This startup check cannot reserve capacity for
+later requests or other jobs. Keep large raw arrays on the allocated node,
+verify their off-node backup, and retain adequate home quota for MP4s and
+atomic metadata writes. A quota failure remains a failed attempt.
+
 The completed native smoke and recorded-browser checks are recorded in
 [the evidence summary](results/photo-native-probe.json). Its official caption
 already requests swinging; these four clips are not a force-only control test.
@@ -128,3 +160,15 @@ snapshot. Dependency installation is still required before going offline.
 The paired-run evidence and limitations are in
 [the integration summary](results/photo-paired-integration.json). The original
 models' physical quality and final presentation-machine rehearsal remain open.
+
+
+## StreamForce paired run
+
+The [native integration record](results/photo-streamforce-integration.json)
+retains all eight primary samples, the five-run smoke, cancellation attempts
+and the separate post-cancellation recovery request. All raw/MP4 digests are
+verified locally. The frozen `streamforce` spool replays both opposite pushes
+without a live worker and rejects unseen requests. Manual fixed-frame review
+shows all four samples moving in each requested direction; mug shape, hands
+and background still vary. This reused public development photograph has no
+physical ground truth or calibrated uncertainty. No original-model score changes.

@@ -1,0 +1,362 @@
+{
+  "study": "PHOTO-S01, PHOTO-S02 and STREAMFORCE-OPS01/02",
+  "status": "passed_native_pair_cancellation_recovery_and_offline_replay",
+  "scope": "external pretrained engineering development; no original-model promotion or SOTA claim",
+  "model": "StreamForce released student EMA; team did not train this model",
+  "source_revision": "57a15e95eca25bbbb32d6ac6322ba3e12fd45083",
+  "worker_revision": "086931dfab2a80c55e43493ae814a4cfc7dc21e5",
+  "probe_revision": "e4cfc361a4ed5611cd9d0e33f05c88b5fe804093",
+  "source_checkpoint_sha256": "e2b112d1c1f1f09f84a8ed305c9ab7778335cc843b47434e81ea9af2942a4efb",
+  "inference_checkpoint_sha256": "df7db8615d76016cc2089cb9753b1dfea256333d719d44935947bfea6523fac3",
+  "checkpoint_scope": "byte-identical user download; no publisher checksum was available; exact EMA-only extraction, original retained",
+  "loader_sha256": "0b83c06a671b433ad2062e175e3c2a76a65fcfdffa500f089a2c58545f1d0137",
+  "probe_sha256": "e41a2d2612766801c6f9dc6eeaafec2693a3acfb2251fab23f64fb11e3deb57f",
+  "native_job": 52286,
+  "integration_job": 52291,
+  "operations_job": 52314,
+  "gpu": "NVIDIA A40",
+  "native_shape": [
+    81,
+    480,
+    832,
+    3
+  ],
+  "fps": 16,
+  "steps": 4,
+  "seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "native_smoke": {
+    "runs": [
+      {
+        "seed": 0,
+        "seconds": 22.219359865994193,
+        "time_to_first_chunk_seconds": 4.554378779954277,
+        "frames": 81,
+        "shape": [
+          81,
+          480,
+          832,
+          3
+        ],
+        "raw_sha256": "758b6694f3792bae77302925875f694536744369cc9db88005f6485638b9a22a",
+        "video_sha256": "04c490844b79fc34641acf558d84766bc6593bf6396f36abcf1203db2f729f43",
+        "gpu_peak_bytes": 29788542464,
+        "stream_metrics": {
+          "mode": "rolling_forcing_stream",
+          "decoded_frames": 81,
+          "ttff_ms": 4342.142525012605,
+          "total_ms": 20109.13121700287,
+          "fps_end_to_end": 4.0280208590768005,
+          "fps_after_first_frame": 5.073892140269026,
+          "fps_after_first_chunk": 5.073892140269026,
+          "seconds_after_first_frame": 15.766988691990264,
+          "num_latent_frames": 21,
+          "num_frame_per_block": 3,
+          "backend_total_ms": 20297.8860179428
+        },
+        "native_float_output_finite": true,
+        "host_peak_rss_bytes": 39671345152
+      },
+      {
+        "seed": 1,
+        "seconds": 20.91722857998684,
+        "time_to_first_chunk_seconds": 3.7123422619188204,
+        "frames": 81,
+        "shape": [
+          81,
+          480,
+          832,
+          3
+        ],
+        "raw_sha256": "21a4c8c5d159142db3b7c85b2d8eb704aa6b3d40dffd11c9f759221489792796",
+        "video_sha256": "2c2d8030d4749ccc809cc9470f9f341873395a5ca2172d11464330e8c6088937",
+        "gpu_peak_bytes": 29737655296,
+        "stream_metrics": {
+          "mode": "rolling_forcing_stream",
+          "decoded_frames": 81,
+          "ttff_ms": 3636.45574497059,
+          "total_ms": 19526.816344005056,
+          "fps_end_to_end": 4.148141641372475,
+          "fps_after_first_frame": 5.034498713947435,
+          "fps_after_first_chunk": 5.034498713947435,
+          "seconds_after_first_frame": 15.890360599034466,
+          "num_latent_frames": 21,
+          "num_frame_per_block": 3,
+          "backend_total_ms": 19610.213784035295
+        },
+        "native_float_output_finite": true,
+        "host_peak_rss_bytes": 39671345152
+      },
+      {
+        "seed": 2,
+        "seconds": 20.500554403988644,
+        "time_to_first_chunk_seconds": 3.7270457410486415,
+        "frames": 81,
+        "shape": [
+          81,
+          480,
+          832,
+          3
+        ],
+        "raw_sha256": "371adb918ff114ac00c999821e2b43463eae1ec6f5262d5bb4204ad3822110b5",
+        "video_sha256": "356ebcea24826b9e2cd035617157ec84893097f5da3244975b2d8e7fe8793b4d",
+        "gpu_peak_bytes": 29805982720,
+        "stream_metrics": {
+          "mode": "rolling_forcing_stream",
+          "decoded_frames": 81,
+          "ttff_ms": 3652.7816029265523,
+          "total_ms": 19661.46095492877,
+          "fps_end_to_end": 4.1197345500256315,
+          "fps_after_first_frame": 4.997289173013159,
+          "fps_after_first_chunk": 4.997289173013159,
+          "seconds_after_first_frame": 16.00867935200222,
+          "num_latent_frames": 21,
+          "num_frame_per_block": 3,
+          "backend_total_ms": 19744.69077202957
+        },
+        "native_float_output_finite": true,
+        "host_peak_rss_bytes": 39671345152
+      },
+      {
+        "seed": 3,
+        "seconds": 20.51741636299994,
+        "time_to_first_chunk_seconds": 3.7247711160453036,
+        "frames": 81,
+        "shape": [
+          81,
+          480,
+          832,
+          3
+        ],
+        "raw_sha256": "702f347e3fd33ee7e0478acbdec2d656b895010aa9c5dfd431233a53463bcc19",
+        "video_sha256": "4abe657c1df6e795bdade77144e0edc63a221b79494cddb3e12d8efe0217540a",
+        "gpu_peak_bytes": 29741911040,
+        "stream_metrics": {
+          "mode": "rolling_forcing_stream",
+          "decoded_frames": 81,
+          "ttff_ms": 3650.2385010244325,
+          "total_ms": 19644.725659978576,
+          "fps_end_to_end": 4.123244142065984,
+          "fps_after_first_frame": 5.001723356613772,
+          "fps_after_first_chunk": 5.001723356613772,
+          "seconds_after_first_frame": 15.994487158954144,
+          "num_latent_frames": 21,
+          "num_frame_per_block": 3,
+          "backend_total_ms": 19728.11631008517
+        },
+        "native_float_output_finite": true,
+        "host_peak_rss_bytes": 39671345152
+      },
+      {
+        "seed": 0,
+        "seconds": 20.648114808951505,
+        "time_to_first_chunk_seconds": 3.7414944189367816,
+        "frames": 81,
+        "shape": [
+          81,
+          480,
+          832,
+          3
+        ],
+        "raw_sha256": "758b6694f3792bae77302925875f694536744369cc9db88005f6485638b9a22a",
+        "video_sha256": "04c490844b79fc34641acf558d84766bc6593bf6396f36abcf1203db2f729f43",
+        "gpu_peak_bytes": 29723361792,
+        "stream_metrics": {
+          "mode": "rolling_forcing_stream",
+          "decoded_frames": 81,
+          "ttff_ms": 3653.8053959375247,
+          "total_ms": 19726.91552597098,
+          "fps_end_to_end": 4.106065131842911,
+          "fps_after_first_frame": 4.977257005818418,
+          "fps_after_first_chunk": 4.977257005818418,
+          "seconds_after_first_frame": 16.073110130033456,
+          "num_latent_frames": 21,
+          "num_frame_per_block": 3,
+          "backend_total_ms": 19810.561532038264
+        },
+        "native_float_output_finite": true,
+        "host_peak_rss_bytes": 39671345152,
+        "repeat_pixel_max_absolute_difference": 0,
+        "repeat_pixel_mean_absolute_difference": 0.0,
+        "repeat_pixel_exact": true
+      }
+    ],
+    "median_generation_seconds": 20.71732247149339,
+    "all_float_outputs_finite": true,
+    "repeat_exact": true,
+    "peak_process_rss_bytes": 39671345152,
+    "slurm_reported_max_rss_kib": 16693540,
+    "memory_note": "process lifetime peak RSS and Slurm sampled RSS differ; sampling and mapped-file accounting may contribute, but the cause was not independently isolated",
+    "caption_scope": "official development caption already mentions mug motion; smoke alone is not force-only control evidence"
+  },
+  "input_source": "StreamForce public development gallery point_1",
+  "source_photo_sha256": "3cad294dbc889d8de5ec9240571c64a7376c9ee82eb8cf99d8984907658691c9",
+  "primary_actions": [
+    {
+      "job_id": "c27a5a52c704463da3907b0c60e3fd6a",
+      "seconds_through_browser": 132.73399999993853,
+      "request": {
+        "photo": "photo-9d369a8e91575fffc7ba7507fd4dc44eca8c090b7949e9c51deb86f2a59b5cfb",
+        "prompt": "A white ceramic mug stands on a wooden desk beside an open laptop. A woman in a blue and white striped shirt sits behind the desk with her hands on the keyboard. Windows and chairs are visible in the softly lit room. A brief push is applied to the mug at the marked point; the mug responds while the camera stays fixed. Retain the mug, desk and room's appearance.",
+        "anchor": [
+          0.44711538461538464,
+          0.8708333333333333
+        ],
+        "force": [
+          0.666853715877722,
+          -0.01396859406219909
+        ],
+        "seeds": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "media": [
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        },
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        },
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        },
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        }
+      ],
+      "result_sha256": "afef74b77671c3e33d745cc3a664b1d2cb2fe3e2da2375b8dbe840efb233397c"
+    },
+    {
+      "job_id": "dee4749d489c43aa839b61633ee98011",
+      "seconds_through_browser": 134.28100000019185,
+      "request": {
+        "photo": "photo-9d369a8e91575fffc7ba7507fd4dc44eca8c090b7949e9c51deb86f2a59b5cfb",
+        "prompt": "A white ceramic mug stands on a wooden desk beside an open laptop. A woman in a blue and white striped shirt sits behind the desk with her hands on the keyboard. Windows and chairs are visible in the softly lit room. A brief push is applied to the mug at the marked point; the mug responds while the camera stays fixed. Retain the mug, desk and room's appearance.",
+        "anchor": [
+          0.44711538461538464,
+          0.8708333333333333
+        ],
+        "force": [
+          -0.666853715877722,
+          0.01396859406219909
+        ],
+        "seeds": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "media": [
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        },
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        },
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        },
+        {
+          "width": 832,
+          "height": 480,
+          "duration": 5.0625
+        }
+      ],
+      "result_sha256": "50f9d19632394c54eb2e6fe8a01c11ff849ed687f09134a1d7f2ee508cb2668e"
+    }
+  ],
+  "pair_controls": "same image, neutral caption, anchor, magnitude and seeds; opposite force vectors",
+  "process_policy": "one cold model/text-encoding process per action; four seeds within it",
+  "visual_review": {
+    "frames": [
+      0,
+      16,
+      32,
+      48,
+      64,
+      80
+    ],
+    "all_eight_retained": true,
+    "right_translation_manual_count": 4,
+    "left_translation_manual_count": 4,
+    "remaining_artifacts": "mug size/shape, hands and background vary; initial frame is reconstructed",
+    "limits": "one reused public development image; manual review, no physical ground truth, force or uncertainty calibration"
+  },
+  "operations": [
+    "early cancellation returns no completed samples and keeps the prior four videos",
+    "one finished native sample is hash-verified locally before cancellation; an incomplete request never becomes four ready futures",
+    "cancellation preserves the previous four-result display and every request directory",
+    "a fresh unseen request completes all four seeds after cancellation, with every raw and MP4 hash backed up"
+  ],
+  "operational_requests": [
+    {
+      "id": "f7dbe26abe9b4d1b91b2860ef7f72dda",
+      "kind": "early cancellation",
+      "state": "cancelled",
+      "completed_samples": 0
+    },
+    {
+      "id": "9fda75929c95494ebcfd408f59b8b685",
+      "kind": "cancel after one complete sample",
+      "state": "cancelled",
+      "completed_samples": 1,
+      "partial_manifest_sha256": "d33bb919fe8f8589ad394d45dedd5f63d25fad4c64f6364fa0861d91ef5dbaf1",
+      "raw_sha256": "dda6cee8fcee5ad6626a3fde953958d896554697264e9ccf92f1753bdb2b7ebe",
+      "video_sha256": "9cfaa8463a1a6d55ca89bd093845689498f1f7b301f92f882df06a75651a7410"
+    },
+    {
+      "id": "205c4c4bf79d44a58f416a6d42237f0b",
+      "kind": "fresh post-cancellation recovery, operational only",
+      "state": "complete",
+      "seeds": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "seconds_through_browser": 136.2029999999795,
+      "result_sha256": "2bfbb7e4485914980f4749aa447fa2a7ca6caef0d0883155b382dba407c63e94"
+    }
+  ],
+  "retained_failures": {
+    "OPS01": "paired run and both cancellations passed; recovery request 947348ab5ce64fa58925ad6abe4f862f failed on home quota; all completed and unpublished raw arrays retained",
+    "job_52308": "32 MiB startup write passed but the immediate heartbeat still hit quota; no model inference or output in this attempt",
+    "resolution": "freed 55,713,137 bytes of redundant source archives after local/remote SHA equality; confirmed 32 MiB distinct-data and atomic metadata writes on the compute node; repeated the full operational check under job 52314",
+    "forward_model_changed": false
+  },
+  "offline_checks": [
+    "offline reversal returns the original matching four-seed cache; all eight are visible",
+    "unseen requests fail explicitly with the worker offline and preserve the last real output"
+  ],
+  "raw_and_video_local_hashes_verified": true,
+  "comparison_scope": "Force Prompting used a different crop, horizon and sampler; these runs do not isolate a model quality or speed effect",
+  "original_quality_gate": "still failing; all controlled-model scores remain unchanged",
+  "remaining": [
+    "teammate review of PRs 79 and 82",
+    "three contribution confirmations",
+    "presentation-machine team rehearsal",
+    "coordinated submission"
+  ]
+}

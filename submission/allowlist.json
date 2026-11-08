@@ -1,6 +1,8 @@
 {
   "include": [
     "cluster/streamforce_runtime.py",
+    "cluster/streamforce_worker.py",
+    "cluster/streamforce_worker.sbatch",
     "cluster/verify_streamforce_artifacts.py",
     "cluster/force_prompting_runtime.py",
     "cluster/photo_worker.py",

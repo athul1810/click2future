@@ -101,4 +101,17 @@ The paired A40 run, cancellation checks and offline recorded replay pass.
 The first 28 report pages remain pixel-identical to the prior review export.
 The 17-slide review deck adds one embedded all-eight video. Three contribution
 confirmations, the final team rehearsal and coordinated upload remain open.
-StreamForce native feasibility is a separate pending engineering probe.
+The 7 November snapshot preceded the completed native StreamForce checks below.
+
+
+## native StreamForce extension, 8 november
+
+The current review has 34 pages. Section 4.4 and Figure 8 retain all eight
+StreamForce samples for the opposite pushes. Both fresh browser actions,
+cancellation, post-cancellation recovery and disconnected replay pass. The
+first recovery failed on home quota; its records and unpublished raw arrays
+remain retained. This external pretrained model and public development image
+do not establish calibrated physical quality or improve the original scores.
+The 17-slide deck embeds the complete native eight-video comparison.
+Three contribution confirmations, the team rehearsal and coordinated upload
+remain open. The physics follow-ups in PR 78 require separate review.
