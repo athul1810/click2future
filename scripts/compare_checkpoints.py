@@ -49,6 +49,7 @@ from click2future.evaluation.video import evaluate_videos
 from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
 from click2future.models.object_motion import observe, render_motion
 from click2future.models.physics_baseline import CALIBRATED_BEVEL_PIXELS, rollout_observation
+from click2future.models.rest_anchored_prior import RestAnchoredPriorModel
 from click2future.models.world_motion import sample_world
 from click2future.sim import run_rollout
 from click2future.training.sample_trajectory import load_trajectory
@@ -99,14 +100,20 @@ def _no_new_drift(c, h):
     )
 
 
+def _selected_ade_within(c, h):
+    """Selected ADE rises by at most the margin. An undefined ADE (incomplete tracks)
+    on either side cannot show that, so it counts as not satisfied."""
+    first = c["quality"]["selected_ade_mean_cases_if_all_complete"]
+    second = h["quality"]["selected_ade_mean_cases_if_all_complete"]
+    return first is not None and second is not None and first <= second + SELECTED_ADE_MARGIN
+
+
 def eligible(c, h):
     """D032: a candidate must cut penetration without new failures, within the margins."""
     return bool(
         c["quality"]["complete_all_object_clips"] == h["quality"]["complete_all_object_clips"]
         and _no_new_drift(c, h)
-        and c["quality"]["selected_ade_mean_cases_if_all_complete"] is not None
-        and c["quality"]["selected_ade_mean_cases_if_all_complete"]
-        <= h["quality"]["selected_ade_mean_cases_if_all_complete"] + SELECTED_ADE_MARGIN
+        and _selected_ade_within(c, h)
         and c["matched_world_ade"] <= h["matched_world_ade"] + SAME_WORLD_ADE_MARGIN
         and c["energy"]["selected"] <= h["energy"]["selected"] + ENERGY_MARGIN_PIXELS
         and c["penetrating_clips"] < h["penetrating_clips"]
@@ -135,8 +142,7 @@ def projection_holds(p, h):
         and p["penetrating_clips"] == 0
         and p["boundary_clips"] == 0
         and _no_new_drift(p, h)
-        and p["quality"]["selected_ade_mean_cases_if_all_complete"]
-        <= h["quality"]["selected_ade_mean_cases_if_all_complete"] + SELECTED_ADE_MARGIN
+        and _selected_ade_within(p, h)
         and p["energy"]["selected"] <= h["energy"]["selected"] + ENERGY_MARGIN_PIXELS
     )
 
@@ -148,8 +154,7 @@ def learned_geometry_holds(c, h, same_world_interval):
         and c["penetrating_clips"] < h["penetrating_clips"]
         and c["boundary_clips"] <= h["boundary_clips"]
         and _no_new_drift(c, h)
-        and c["quality"]["selected_ade_mean_cases_if_all_complete"]
-        <= h["quality"]["selected_ade_mean_cases_if_all_complete"] + SELECTED_ADE_MARGIN
+        and _selected_ade_within(c, h)
         and same_world_interval[1] < SAME_WORLD_ADE_MARGIN
         and c["energy"]["selected"] <= h["energy"]["selected"] + ENERGY_MARGIN_PIXELS
     )
@@ -212,7 +217,27 @@ def _arm():
         events=dict(tp=0, fp=0, fn=0),
         rest=dict.fromkeys(counts, 0),
         passive=dict.fromkeys(counts, 0),
+        zero_pixels=dict(samples=0, changed=0),
     )
+
+
+def zero_pixel_check(models):
+    """Arms whose zero-force output is exactly the first frame by construction.
+
+    The rest-anchored model subtracts its own zero-force response, and the hull
+    baseline starts from rest, so any changed pixel there is a bug. Direct and E10
+    models have no such guarantee; their zero-force motion is measured by the
+    unchanged zero_force drift counts instead. Recorded, not raised, so a run is
+    never lost; a violation must be explained before any result is used.
+    """
+    exact = sorted(
+        name
+        for name, m in models.items()
+        if m["zero_force_pixels"] is not None
+        and (m["rest_anchored"] or name.startswith("physics_baseline"))
+    )
+    violations = [name for name in exact if models[name]["zero_force_pixels"]["changed"]]
+    return {"expected_exact": exact, "violations": violations, "passes": not violations}
 
 
 def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_data=()):
@@ -254,13 +279,20 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
     arms = {}
     for name, model in models.items():
         conditioned = bool(getattr(model, "world_condition", False))
-        arms[name] = dict(checkpoint=name, projected=False, world_conditioned=conditioned)
-        arms[name + "+projection"] = dict(
-            checkpoint=name, projected=True, world_conditioned=conditioned
-        )
+        anchored = isinstance(model, RestAnchoredPriorModel)
+        for suffix, projected in (("", False), ("+projection", True)):
+            arms[name + suffix] = dict(
+                checkpoint=name,
+                projected=projected,
+                world_conditioned=conditioned,
+                rest_anchored=anchored,
+            )
     for name in CONTROLS:
         arms[name] = dict(
-            checkpoint=None, projected=False, world_conditioned=name != "oracle_first_reference"
+            checkpoint=None,
+            projected=False,
+            world_conditioned=name != "oracle_first_reference",
+            rest_anchored=False,
         )
     output.mkdir(parents=True)
     write(output / "plan.json", plan)
@@ -370,10 +402,12 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
                 value = zero_horizon(ref, videos)
                 for key in values["rest"]:
                     values["rest"][key] += value[key]
-                if motion is not None and not np.array_equal(
-                    videos, np.broadcast_to(obs.first, videos.shape)
-                ):
-                    raise ValueError("Zero force changed observed pixels")
+                if motion is not None:
+                    values["zero_pixels"]["samples"] += len(videos)
+                    values["zero_pixels"]["changed"] += sum(
+                        not np.array_equal(video, np.broadcast_to(obs.first, video.shape))
+                        for video in videos
+                    )
             if family in ("forward", "reverse") and all(
                 stationary_reference(r) for r in references
             ):
@@ -414,6 +448,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             penetrating_clips=sum(r["penetrating_clips"] for r in cases) if has_geometry else None,
             boundary_clips=sum(r["boundary_clips"] for r in cases) if has_geometry else None,
             zero_force=values["rest"],
+            zero_force_pixels=values["zero_pixels"] if has_geometry else None,
             passive=values["passive"],
             contact_counts=events,
             contact_f1=2 * events["tp"] / den if den else None,
@@ -464,6 +499,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             intervals[f"{name}+projection_minus_raw_{key}"] = paired_scene_interval(values)
     result["paired_scene_bootstrap_95_intervals"] = intervals
     result["metric_check"] = metric_check(summary, intervals)
+    result["zero_pixel_check"] = zero_pixel_check(summary)
     if mode == "validation":
         # A candidate whose training failed is simply not eligible.
         result["selection"] = {
@@ -536,6 +572,12 @@ if __name__ == "__main__":
             "ES",
             round(m["energy"]["selected"], 4),
         )
-    for key in ("selection", "projection_holds", "learned_geometry", "metric_check"):
+    for key in (
+        "selection",
+        "projection_holds",
+        "learned_geometry",
+        "metric_check",
+        "zero_pixel_check",
+    ):
         if key in r:
             print(key, json.dumps(r[key]))

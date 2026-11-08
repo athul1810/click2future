@@ -474,6 +474,13 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   recipe with the two contact-dynamics weights scaled by 128 and 1024. Select at
   most one scale per family on original validation with `select_scale`, fixed
   before training. See GEOMETRY_LOSS_SCALE.md. Result: pending.
+- First attempt (job 52502, 285d482) trained all eight arms, then stopped before
+  any score at an assertion that zero force leaves pixels unchanged. That holds by
+  construction only for rest-anchored models and the hull baseline; the direct
+  models move on 2 of 16 zero-force samples, as D029 already recorded in its drift
+  count. The assertion now records a count instead, and an undefined selected ADE
+  now fails a rule instead of raising. No rule or margin changed. The run is
+  repeated in full.
 
 ## D033: Fresh confirmation and the projection across checkpoints: 9 November 2026
 

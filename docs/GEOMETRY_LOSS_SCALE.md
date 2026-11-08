@@ -62,6 +62,29 @@ Rules (`scripts/compare_checkpoints.py`):
 Same-world ADE is only meaningful for models that receive the sampled world; for E10 it
 is reported but not interpreted.
 
+## Runs
+
+The first attempt, TC2 job 52502 at 285d482, trained all eight arms and then stopped
+before producing any score. The scorer asserted that zero force leaves every rendered
+pixel unchanged, a check copied from the D028 script, where only the rest-anchored D020
+model and the hull baseline were scored. Both are exact by construction: the rest-anchored
+model subtracts its own zero-force response, and the baseline starts at rest. Direct and
+E10 models have no such guarantee. The D029 direct models move on 2 of 16 zero-force
+validation samples, which the zero-force drift count already records. Two fixes, made
+before any score was seen:
+
+- `zero_pixel_check` records how many zero-force samples change pixels for every
+  pose-producing arm and requires zero only for rest-anchored checkpoints (raw and
+  projected) and the hull baselines. It is reported, not raised, so a run is never lost.
+- An undefined selected ADE (incomplete tracks) on either side now fails a rule instead
+  of raising.
+
+No rule, margin or arm changed. A local run on validation covering every model type
+(D020, both D029 checkpoints, E10 numeric and spatial) reproduced the D028 values for
+D020. The full job is repeated, keeping each checkpoint as soon as it trains. It also
+compares the retrained `rest_x1`, `direct_x0` and `direct_dyn_x1` weights with D020 and
+D029.
+
 Results: pending.
 
 ## Limits

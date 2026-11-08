@@ -75,6 +75,36 @@ def test_learned_geometry_rule_uses_the_same_world_interval():
     assert not holds(summary(pen=4, bnd=6), control, [-0.0001, 0.0004])
 
 
+def test_undefined_selected_ade_fails_the_rules_instead_of_raising():
+    control = summary(ade=None)
+    candidate = summary(pen=0, bnd=0)
+    assert not MODULE["eligible"](candidate, control)
+    assert not MODULE["projection_holds"](candidate, control)
+    assert not MODULE["learned_geometry_holds"](candidate, control, [-0.0001, 0.0004])
+    assert not MODULE["eligible"](summary(pen=0, ade=None), summary())
+
+
+def test_zero_pixel_check_only_binds_arms_that_are_exact_by_construction():
+    check = MODULE["zero_pixel_check"]
+
+    def arm(changed, anchored):
+        return {"zero_force_pixels": {"samples": 8, "changed": changed}, "rest_anchored": anchored}
+
+    models = {
+        "rest_x1": arm(0, True),
+        "rest_x1+projection": arm(0, True),
+        "direct_x0": arm(3, False),
+        "physics_baseline_0.5px": arm(0, False),
+        "simulator_sampled_world": {"zero_force_pixels": None, "rest_anchored": False},
+    }
+    result = check(models)
+    assert result["passes"]
+    assert result["expected_exact"] == ["physics_baseline_0.5px", "rest_x1", "rest_x1+projection"]
+    models["rest_x1"] = arm(1, True)
+    result = check(models)
+    assert not result["passes"] and result["violations"] == ["rest_x1"]
+
+
 def test_metric_check_flags_a_generator_that_beats_the_prior_matched_simulator():
     check = MODULE["metric_check"]
     models = {
