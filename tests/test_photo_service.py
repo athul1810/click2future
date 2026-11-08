@@ -101,6 +101,25 @@ def test_stale_heartbeat_cannot_still_say_that_the_worker_is_ready(service):
     assert "expired" in state["stage"]
 
 
+@pytest.mark.parametrize("heartbeat_age", [0, 100])
+def test_frozen_replay_stays_offline_without_an_expired_worker_warning(service, heartbeat_age):
+    request = action(service)
+    receipt = service.submit(request)
+    complete(service, receipt)
+    write_json(service.root / "OFFLINE_REPLAY.json", {"scope": "presentation snapshot"})
+    write_json(
+        service.root / "WORKER.json",
+        {"ready": True, "updated_at": time.time() - heartbeat_age},
+    )
+    state = service.state()
+    assert not state["ready"]
+    assert state["stage"] == "recorded replay only"
+    assert service.submit(request) == {"id": receipt["id"], "source": "cached replay"}
+    request["force"] = [-0.3, 0]
+    with pytest.raises(ValueError, match="unavailable"):
+        service.submit(request)
+
+
 @pytest.mark.parametrize(
     "value",
     ["not an image", "data:image/png;base64,??", image_data((32, 32)), image_data(format="GIF")],

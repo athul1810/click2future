@@ -162,6 +162,10 @@ It restores saved requests, replays matching actions, and refuses unseen
 requests while disconnected. Never attach the live transport to that frozen
 snapshot. Dependency installation is still required before going offline.
 
+The `OFFLINE_REPLAY.json` marker keeps a frozen spool in recorded-only mode,
+including after old heartbeat timestamps expire. Cached actions remain usable;
+the marker prevents the snapshot from advertising fresh generation as ready.
+
 The paired-run evidence and limitations are in
 [the integration summary](results/photo-paired-integration.json). The original
 models' physical quality and final presentation-machine rehearsal remain open.
