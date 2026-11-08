@@ -389,6 +389,33 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   could score differently. Descriptive only; no gate or result changed.
   See PRIMITIVE_PHYSICS_COMPARISON.md and docs/results/prior-simulator-ceiling-d024.json.
 
+## D025: Rerun of D021 with saved motions: 8 November 2026
+
+- TC2 job 52290 reproduced the D021 corpus and checkpoint hashes and saved every
+  sampled motion. Same-world travel matched the true simulator exactly in free
+  motion but was about 7% short in collisions and 1.4% short at walls.
+- Its rank test reused the same four draws in every case and is not a valid
+  calibration check; D027 replaces it. See HULL_BEVEL_CALIBRATION.md.
+
+## D026: Calibrated hull bevel: 8 November 2026
+
+- Fit on original train/validation only: a 0.15 px bevel halves same-world
+  selected ADE (0.116 versus 0.214 px). Collision slop has no effect.
+- Fresh seed-930000 test under the unchanged D023 rules (job 52293): same-world
+  ADE 0.00177 versus 0.00332, lower in all ten groups, interval [-0.00182,
+  -0.00128]; contact F1 0.208 versus 0.147; zero penetration, clipping and drift.
+- First-reference selected ADE was 0.00007 higher, which fails one prespecified
+  rule. Rejected; 0.5 px stays the default. The rule is not changed after the result.
+
+## D027: Calibration with independent draws: 8 November 2026
+
+- 24 independent prior draws per case on the fresh D026 corpus. No generator
+  rejects uniform ranks (p 0.29-0.49), with low power from 50 correlated cases.
+- The reference falls outside all samples in 4% of cases for the exact simulator
+  and the neural model, and in 20% for both hulls, all wall pushes where sub-pixel
+  shape error dominates. The neural spread is well matched; its penetration
+  failures remain. Descriptive only. See HULL_BEVEL_CALIBRATION.md.
+
 ## New decision template
 
 ```text
