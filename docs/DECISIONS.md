@@ -416,6 +416,19 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   shape error dominates. The neural spread is well matched; its penetration
   failures remain. Descriptive only. See HULL_BEVEL_CALIBRATION.md.
 
+## D028: Position-based contact projection for the neural sampler: 8 November 2026
+
+- Apply a PhysDiff-style projection, using position-based dynamics, to each D020
+  sample: separate overlapping observed hulls by inverse sampled mass and keep
+  them on the canvas. Only violations change; the network is unchanged.
+- Mode chosen on original validation only (per frame, mass-weighted). Rules and
+  non-inferiority margins frozen at 314fa0c before generating seed 940000.
+- Fresh result, TC2 job 52299: penetrating clips 19 to 0, boundary clips 25 to 0,
+  no drift, contact F1 0.169 to 0.176, selected ADE 0.02495 to 0.02476,
+  same-world ADE 0.00706 to 0.00712 (interval [-0.00014, 0.00028]). Accepted as
+  the neural sampler's contact layer. The other object's same-world error rose
+  11%. See CONTACT_PROJECTION.md.
+
 ## New decision template
 
 ```text
