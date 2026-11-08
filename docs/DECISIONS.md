@@ -457,6 +457,32 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   every method; similar ADEs support, but do not isolate, a hidden-physics
   explanation. Descriptive only. See CONTACT_PROJECTION.md.
 
+## D031: Multi-reference energy score: 9 November 2026
+
+- Add a fair energy score over all references of a condition, on pose
+  displacements in native pixels, as a descriptive distributional measure beside
+  the unchanged single-reference gate. Checks: a first-reference oracle must score
+  worse than the prior-matched simulator, and no generator may beat that simulator
+  by a paired scene interval. Registered run: the opened D028 corpus, which must
+  also reproduce the D028 numbers. See ENERGY_SCORE.md. Result: pending.
+
+## D032: Geometry-loss scale sweep: 9 November 2026
+
+- The geometry losses were about 0.5% of the D020 training loss and the D029
+  contact-dynamics terms about 0.02% of theirs. Retrain the D020 recipe with the
+  penetration, contact and canvas weights scaled by 16, 128 and 1024, and the D029
+  recipe with the two contact-dynamics weights scaled by 128 and 1024. Select at
+  most one scale per family on original validation with `select_scale`, fixed
+  before training. See GEOMETRY_LOSS_SCALE.md. Result: pending.
+
+## D033: Fresh confirmation and the projection across checkpoints: 9 November 2026
+
+- New seed-950000 corpus, ten ID groups, generated after the rules were committed.
+  Score both family controls, any D032 selection and the six E10 models, raw and
+  with the D028 projection, plus the simulator, oracle and hull controls. Rules:
+  `projection_holds`, `learned_geometry_holds` and `metric_check`. See
+  GEOMETRY_LOSS_SCALE.md. Result: pending.
+
 ## New decision template
 
 ```text
