@@ -78,6 +78,14 @@ def test_held_out_folders_require_their_dataset(tmp_path):
     assert not (tmp_path / "out.json").exists()
 
 
+def test_empty_reference_set_is_unscorable_instead_of_a_no_contact_vote():
+    stats = MODULE["first_contact_stats"]([(None, []), (3, []), (5, [4, 9])])
+    assert stats["samples"] == 3
+    assert stats["occurrence_scored"] == 1
+    assert stats["occurrence_agreement"] == 1.0
+    assert stats["timed"] == 1
+
+
 def test_evaluate_rejects_a_plan_from_another_split(tmp_path):
     (tmp_path / "plan.json").write_text('{"split": "id_test", "cases": []}')
     with pytest.raises(ValueError, match="validation"):

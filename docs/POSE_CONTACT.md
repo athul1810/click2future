@@ -2,10 +2,9 @@
 
 The collision audit reads contact onsets from rendered pixels. On correct
 simulator renders of the validation clips that estimator scores event F1 0.489
-(`contact-reference-control.json`), so it is too noisy to judge small timing
-differences. Pose models (E5-E8 and the physics baseline) also save rigid poses
+(`contact-reference-control.json`), motivating a separate geometry-based timing control. Pose models (E5-E8 and the physics baseline) also save rigid poses
 for every sample (`geometry-audit/*-poses.npz`), so their contacts can be read
-from geometry instead of pixels. This control asks two questions:
+from geometry instead of pixels. This control asks three questions:
 
 1. How well can contact onsets be recovered from poses when the poses are
    exactly right?
@@ -15,7 +14,7 @@ from geometry instead of pixels. This control asks two questions:
 3. Does the timing measure hold up on more contact conditions? The frozen D018
    replication supplies 20 on ten fresh ID scenes.
 
-No model, threshold or recorded score changes. The D018 part reads that study's
+Original models, scorer thresholds and historical model scores stay unchanged. The D018 part reads that study's
 `id_test` split after its checkpoints, plans and gates were frozen and scored.
 It is descriptive only and uses the touch threshold chosen on training clips.
 
@@ -67,19 +66,19 @@ give the same validation F1.
 | Validation, 84 reference clips | Matched | Extra | Missed | F1 |
 |---|---:|---:|---:|---:|
 | Pose onsets vs all 44 labelled onsets | 33 | 1 | 11 | 0.846 |
-| Pose onsets vs 28 frame-visible onsets | 28 | 6 | 0 | 0.903 |
+| Pose onsets vs 28 rule-conditioned labels (auxiliary) | 28 | 6 | 0 | 0.903 |
 | Pixel estimator on correct renders | | | | 0.489 |
 
-The 11 missed onsets are not detector errors. Of the 44 labelled validation
-onsets, 16 begin while the objects already touch at the preceding frame, and 10
-are repeat contact-begin events with no visible separation since the previous
-one (training: 43 of 156 and 18). Contact that breaks and resumes between two
-frames 1/8 s apart cannot be seen by any frame-sampled method. Against the 28
-onsets that start from a visible gap, the pose detector finds every one. Five
-of its six extras there match a labelled onset one interval away, and only one
-has no label at all (the single extra against all labels).
+The all-label count retains all 11 missed onsets. Of the 44 validation labels,
+16 begin while the preceding frame is within the touch band, including ten
+repeat onsets without a sampled separation (training: 43 of 156 and 18).
+The 28-event subset intersects true labels with the same fixed gap-to-touch
+rule. At the selected threshold, recall on this subset follows by construction;
+its F1 is an auxiliary rule-conditioned diagnostic. It does not independently
+validate detector accuracy or establish a limit on every 8-fps estimator.
 
-## Result 2: single-reference F1 still cannot rank the coverage arms
+
+## Result 2: single-reference F1 remains sensitive to hidden-world choice
 
 Applied to the 96 saved samples of each coverage-study arm:
 
@@ -91,7 +90,7 @@ Applied to the 96 saved samples of each coverage-study arm:
 Under the same pose rule, the exact replayed poses of the 60 valid alternative
 hidden-physics references score 0.278 against the first reference (10 matched,
 14 extra, 38 missed). True simulator futures score no better than the models,
-confirming with an accurate detector that single-reference timed F1 cannot rank
+confirming with a geometry-based detector that single-reference timed F1 mixes hidden-world variation with differences in
 models whose futures differ only in plausible hidden physics.
 
 ## Result 3: hidden-physics-aware first-contact timing
@@ -110,16 +109,18 @@ other references of its condition (leave-one-out).
 
 | First contact | Occurrence | Timed | Within range ±1 | Mean nearest error |
 |---|---:|---:|---:|---:|
-| Simulator references (leave-one-out) | 84/84 (1.00) | 32 | 0.75 | 1.09 |
+| Simulator references (leave-one-out) | 80/80 (1.00) | 32 | 0.75 | 1.09 |
 | E7 teacher | 0.938 | 26 | 0.846 | 1.00 |
 | Narrow | 0.979 | 30 | 0.833 | 0.90 |
 | Broad | 0.958 | 28 | 0.714 | 2.25 |
 
-Median nearest error is one interval in every row. The teacher and narrow arm
-place first contacts as close to the reference set as the references are to
-each other. Broad samples miss more often and are further away on average.
-Offsets 0 and 0.5 keep this ordering (broad range agreement 0.704 and 0.786,
-mean error 2.19 and 2.11).
+Median nearest error is one interval in every row. Timing is conditional on
+detected contact; occurrence is scored on all 96 model samples. Four lone
+zero-force references have no leave-one-out comparator and are unscorable,
+leaving 80 reference occurrence comparisons. Model timing uses four references
+and reference leave-one-out uses three, so the reference row is a descriptive
+sensitivity check. The paired model arms use the same number of references.
+
 
 ## Result 4: held-out D018, one-pass arm places contact worse in every seed
 
@@ -138,14 +139,14 @@ threshold stays at 0.05 pixels from the training sweep.
 | One pass, seed 20 | 0.892 | 54 | 0.611 | 2.83 |
 | One pass, seed 21 | 0.863 | 47 | 0.553 | 2.83 |
 
-Occurrence is scored on all 240 samples per arm. In every seed and at every
+Occurrence is scored on all 240 samples per arm. Reference occurrence has 200 scorable comparisons; ten lone zero-force references have no leave-one-out peer. In every seed and at every
 offset, the one-pass arm misses contact more often and places first contact
 further from the references: range agreement 0.52-0.61 against 0.69-0.75 for
 diffusion, mean error 2.55-3.34 against 1.54-1.93 intervals. Diffusion stays
 close to, but behind, the references' own agreement. Median nearest error is one
 interval in every row. This confirms D018's recorded timed-contact regression
 with a measure that uses all references and no pixels. Single-reference pose F1
-again cannot rank: arms score 0.145-0.229 and valid alternative references
+also needs this qualification: arms score 0.145-0.229 and valid alternative references
 0.275.
 
 ## Limitations

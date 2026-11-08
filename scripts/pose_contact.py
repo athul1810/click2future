@@ -1,9 +1,9 @@
 """Contact timing from predicted poses, calibrated on simulator references.
 
 The pixel contact estimator scores 0.489 event F1 on correct validation renders
-(contact-reference-control.json), so it cannot judge small contact-timing
-changes. Pose models (E5-E8 and the physics baseline) save rigid poses, so their
-contacts can be read from geometry instead. This moves the scene's exact object
+(contact-reference-control.json), motivating a separate geometry-based timing
+control. For models that save rigid poses, contact can be read from geometry.
+This moves the scene's exact object
 outlines (evaluation-only ground truth, never a model input) by the saved poses,
 in the same frame-zero encoding as `rigid_geometry.geometry_diagnostics`, and
 detects a contact onset in interval i when the outlines are separated at frame i
@@ -14,7 +14,7 @@ Three parts:
 1. Reference calibration on training/validation clips. Simulator poses are
    replayed exactly, encoded like model poses and scored against their own
    onset labels. The touch threshold is chosen on training clips only.
-2. Label visibility: how many labelled onsets any 8-fps frame method can see.
+2. The diagnostic subset of labels satisfying this binary touch-edge rule.
 3. Saved-pose evaluations: single-reference event F1, compared with the pixel
    audit, and a hidden-physics-aware first-contact timing measure, calibrated
    by scoring each reference against the other references of its condition.
@@ -193,6 +193,8 @@ def first_contact_stats(pairs):
     """pairs of (candidate first-contact interval, reference first-contact intervals)."""
     occurrence, inside, error = [], [], []
     for candidate, references in pairs:
+        if not references:
+            continue  # A lone reference has no leave-one-out comparator.
         meet = [r for r in references if r is not None]
         if len(meet) in (0, len(references)):  # references agree on whether contact occurs
             occurrence.append((candidate is not None) == bool(meet))
@@ -246,6 +248,10 @@ def calibrate(dataset, offset):
         "offset_pixels": offset,
         "touch_selected_on_train_pixels": touch,
         "train_f1_by_touch": train,
+        "visible_subset_scope": (
+            "Labels intersected with the fixed VISIBLE_TOUCH gap-to-touch rule; "
+            "a rule-conditioned diagnostic, not independent detector validation."
+        ),
     }
     for split, rows in clips.items():
         distance = [d for d, _ in rows]
@@ -379,8 +385,9 @@ def main(argv=None):
         "status": "measured_pose_contact_control",
         "scope": (
             "Contact onsets from saved rigid poses with exact scene outlines, calibrated on "
-            "training/validation simulator references; no model, threshold or recorded "
-            "score changes."
+            "training simulator references and checked on validation; original model, "
+            "scorer thresholds and historical scores unchanged. Optional frozen D018 "
+            "id_test is descriptive only, with no selection or gate changes."
         ),
         "onset_rule": (
             "interval i: outlines separated at frame i and within the touch threshold at frame i+1"
@@ -405,7 +412,13 @@ def main(argv=None):
             "Exact outlines come from the scene specification: evaluation-only ground "
             "truth, as labels are.",
             "Circles and rectangles only; triangles occur only in the shape-OOD split.",
-            "Frame-sampled poses cannot see onsets that begin while objects already touch.",
+            "This binary touch-edge rule does not identify onsets without a sampled "
+            "gap-to-touch transition.",
+            "Timing is conditional on detected contact; occurrence and timed denominators "
+            "remain reported.",
+            "Model samples use four references; leave-one-out reference comparisons use three.",
+            "A canonical zero-force reference has no leave-one-out peer and is unscorable "
+            "for reference occurrence.",
             "Validation first-contact timing uses eight collision conditions; held-out "
             "D018 adds twenty on ten fresh ID scenes.",
         ],
