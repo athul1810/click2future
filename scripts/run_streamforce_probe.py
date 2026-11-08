@@ -6,6 +6,7 @@ import hashlib
 import importlib.metadata
 import json
 import os
+import platform
 import resource
 import sys
 import time
@@ -25,6 +26,7 @@ def digest(path):
 
 
 def main():
+    import flash_attn_2_cuda
     import imageio.v2 as imageio
     import numpy as np
     import torch
@@ -47,6 +49,10 @@ def main():
         "gpu": torch.cuda.get_device_name(),
         "torch": torch.__version__,
         "cuda": torch.version.cuda,
+        "python": sys.version,
+        "platform": platform.platform(),
+        "gpu_memory_bytes": torch.cuda.get_device_properties(0).total_memory,
+        "flash_attention_binary_sha256": digest(Path(flash_attn_2_cuda.__file__)),
         "seeds": args.seeds,
         "stages": [],
         "runs": [],
@@ -97,6 +103,7 @@ def main():
         }
         progress("artifacts_verified")
         sample = next(csv.DictReader((repo / "assets/samples/point_force.csv").open()))
+        record["input_table_sha256"] = digest(repo / "assets/samples/point_force.csv")
         (out / "input-record.json").write_text(json.dumps(sample, indent=2) + "\n")
         prompt = sample["caption"]
         backend, metadata = load_backend(repo, [prompt], progress=progress)
