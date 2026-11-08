@@ -1,0 +1,47 @@
+{
+  "status": "passed_all_local_and_github_archive_roundtrips",
+  "date": "2026-11-08",
+  "scope": "external pretrained engineering records; no predictive-quality promotion",
+  "primary_samples": 8,
+  "complete_operational_recovery_samples": 4,
+  "published_partial_samples": 3,
+  "unpublished_raw_outputs": 3,
+  "total_queue_raw_arrays": 18,
+  "separate_native_smoke_arrays_including_repeat": 5,
+  "node_inventory_sha256": "0f7b047a277cb35087e623bc36941668ca7708c42f3319dcd7cb91f40b05ee15",
+  "all_node_raw_files_matched_local_copies": true,
+  "gpu_allocation": 52314,
+  "shutdown": "intentionally cancelled the idle allocation after all raw backups; node outputs retained",
+  "artifacts": {
+    "release": "streamforce-demo-2026-11-08",
+    "streamforce-all-attempts-20261108.tar.gz": {
+      "bytes": 1663176014,
+      "sha256": "9c36235d2f7e36bc64f33b2ea118b41b004eb9bcf28eecbd5b09f6a9b9b3199f"
+    },
+    "streamforce-unpublished-supplement-20261108.zip": {
+      "bytes": 180740747,
+      "sha256": "cc74020d92d6eb93c608f61bb8466cdd053f50828d8365164f18368221640622"
+    },
+    "streamforce-video-review-20261108.zip": {
+      "bytes": 78587417,
+      "sha256": "77f3d1e1793ac3565461e4a77935396581a2f78e71ef6c8b09d71bf961911c8d"
+    },
+    "complete_retention": "the base archive and unpublished-output supplement are both required",
+    "verification": "local archive extraction/hash checks and full GitHub downloads match all three archives"
+  },
+  "review_package": {
+    "release": "review-package-2026-11-08-r5",
+    "source_revision": "49144337a7dad16067ffd1061286634d44044356",
+    "report_pages": 34,
+    "contribution_pages": 1,
+    "slides": 17,
+    "bytes": 18381710,
+    "sha256": "867a13b4f92f56c9f93aad718ad271bf8f5d508ae7b89b3759d3a0e30f904bf4",
+    "verification": "full GitHub download matches the locally verified review archive"
+  },
+  "limitations": [
+    "One reused public development photograph, without physical ground truth or uncertainty calibration.",
+    "Cancelled and failed outputs are retained but are not primary or complete four-sample results.",
+    "Original controlled-model quality gates, member confirmation and final presentation-machine rehearsal remain open."
+  ]
+}
