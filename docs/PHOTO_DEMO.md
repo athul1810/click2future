@@ -100,6 +100,28 @@ extension need separate labels in slides and recordings. PHOTO-P01/P02 are
 engineering development studies, not untouched evaluation or SOTA evidence.
 The photo panel and rating rules must be frozen before any claimed evaluation.
 
+## StreamForce candidate
+
+The separate `cluster/streamforce_worker.py` remains gated by a completed native
+four-seed probe plus the seed-0 repeat. It checks the probe's native frame
+contract, source/artifact/loader identities, library versions and compiled
+attention binary before accepting work. The initial model-structure and small
+attention-kernel checks alone do not enable it.
+
+Each action loads the model in a separate GPU process and generates its four
+seeds there. Cancellation terminates that process before the parent publishes
+the final state. Finished samples retain their incomplete-attempt records.
+The next action starts with a fresh process, including text encoding. This
+avoids reusing an interrupted asynchronous decoder, at the cost of a cold load
+for each action. End-to-end timing and native cancellation still need to pass
+before this candidate replaces the existing backend.
+
+Use a new `streamforce` spool. Set `C2F_PHOTO_PROJECT`, `C2F_STREAMFORCE_ROOT`,
+`C2F_STREAMFORCE_PROBE` and `C2F_PHOTO_SPOOL`, then submit
+`cluster/streamforce_worker.sbatch` on the node holding the verified files.
+The candidate's native contract is 81 frames, 832x480 at 16 fps with four
+denoising steps. This describes its interface, not a measured A40 speed result.
+
 The completed native smoke and recorded-browser checks are recorded in
 [the evidence summary](results/photo-native-probe.json). Its official caption
 already requests swinging; these four clips are not a force-only control test.
