@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "eab0a213358c88eba858af43fd6f51c5daac77af04e5976932ddb3497274fec7",
+    "main.tex": "dafae09e34405e0f6cfc45320892e264740e232211888b394848d9092c6206c9",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "605252c5089ac04605aaf4e69ed809494eaa6251274f9651478031aedcf01a94",
+    "contributions.md": "e925e0da44356011e588a9e6dfb0bb9d9a811c87c24c049b5dd36ffb476e8bb9",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -211,7 +211,7 @@
     "../docs/results/contact-projection-selection-d028.json": "6db6d35f1074c2840a4b01cc94ccfb77830bab8e04ae13eaebef55f39104e8ca",
     "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a"
   },
-  "rendered_pdf_sha256": "b889c6c50c09160ba3f3e16b40dcb925cbe66f011b42e548aa26cf3f9364afbd",
+  "rendered_pdf_sha256": "c463a535af01491c258b80c11c1520e19ece1c90e58a1a488d41ef2c57582f3a",
   "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
   "source_package_verification": {
     "status": "passed",
@@ -287,9 +287,9 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "one-page review export; Ananya reviewed; other accounts pending; latest E10/D017 and D018 work recorded",
-    "sha256": "9da9008b6f405ed618ee27a1c3929b80feaeb7ded2fb22ac91530bdaed8d91c7",
-    "pdf_sha256": "9cca0de61cabba938355170da54c5193e4781b5b6e0b091aa9cd35ef54b43b3a"
+    "status": "one-page review export; Sanjay, Ananya and Athul reviewed; Shrijeet pending",
+    "sha256": "e925e0da44356011e588a9e6dfb0bb9d9a811c87c24c049b5dd36ffb476e8bb9",
+    "pdf_sha256": "968d747ef80edb874860b325df760f7b59229ca49ea7396829b65ccd82b7ce90"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1083,10 +1083,25 @@
   },
   "current_remaining": [
     "strict learned-model physical-quality gate",
-    "three contribution confirmations",
+    "Shrijeet contribution confirmation",
     "team presentation-machine rehearsal",
     "coordinated upload"
   ],
+  "contribution_confirmations_2026_11_08": {
+    "reviewed": [
+      "PRAMOD SANJAY",
+      "KAPOOR ANANYA",
+      "BOBAN ATHUL KRISHNA"
+    ],
+    "pending": [
+      "MAITI SHRIJEET"
+    ],
+    "sanjay_authored_comment": 6717444859,
+    "athul_confirmed_comment": 6719312759,
+    "report_pages": 35,
+    "review_slides": 18,
+    "report_and_deck_unchanged_from_r6": true
+  },
   "penetration_control_verification": {
     "scope": "Five sentences after the geometry-audit paragraph reporting the hull-penetration positive control; no other report text changes.",
     "record": "docs/results/penetration-control.json",
