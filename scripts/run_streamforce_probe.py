@@ -4,6 +4,7 @@ import argparse
 import csv
 import hashlib
 import importlib.metadata
+import importlib.util
 import json
 import os
 import platform
@@ -26,7 +27,6 @@ def digest(path):
 
 
 def main():
-    import flash_attn_2_cuda
     import imageio.v2 as imageio
     import numpy as np
     import torch
@@ -52,7 +52,9 @@ def main():
         "python": sys.version,
         "platform": platform.platform(),
         "gpu_memory_bytes": torch.cuda.get_device_properties(0).total_memory,
-        "flash_attention_binary_sha256": digest(Path(flash_attn_2_cuda.__file__)),
+        "flash_attention_binary_sha256": digest(
+            Path(importlib.util.find_spec("flash_attn_2_cuda").origin)
+        ),
         "seeds": args.seeds,
         "stages": [],
         "runs": [],
