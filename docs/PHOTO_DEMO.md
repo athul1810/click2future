@@ -86,6 +86,11 @@ The transport backs up raw arrays through the existing Slurm allocation when
 `--archive-raw` is enabled. Finish this backup before the allocation expires;
 node-local storage is not durable. Back up the complete local spool separately.
 
+The live transport memoizes verified local artifact digests with file identity,
+size and timestamps. New or changed files require full verification. Mutable
+worker and request metadata still refresh each pass. Final backup audits hash
+all artifacts independently.
+
 An exact prior request returns **cached replay**, including while the worker
 is offline. New requests require a ready worker. Cached output, live output,
 generation failure and unavailable transport are separate states. Retain and

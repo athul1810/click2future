@@ -3,6 +3,7 @@
 import hashlib
 import importlib.util
 import io
+import os
 import shutil
 from pathlib import Path, PurePosixPath
 
@@ -83,7 +84,10 @@ def test_raw_copy_rejects_path_and_allocation_injection_before_execution(tmp_pat
     assert client.command is None
 
 
-def test_cancelled_request_backs_up_its_finished_sample_without_claiming_completion(tmp_path):
+def test_cancelled_request_backs_up_its_finished_sample_without_claiming_completion(
+    tmp_path, monkeypatch
+):
+    from click2future.demo import photo_service
     from click2future.demo.photo_service import PhotoService, read_json, write_json
 
     service = PhotoService(tmp_path / "local", backend="force-prompting")
@@ -133,12 +137,68 @@ def test_cancelled_request_backs_up_its_finished_sample_without_claiming_complet
         def open(self, source, mode):
             return self.path(source).open(mode)
 
-    remote.sync(SFTP(), service.root, PurePosixPath("/spool"), archive_raw=True, client=Client(raw))
+    class TransferClient(Client):
+        calls = 0
+
+        def exec_command(self, command, timeout):
+            self.calls += 1
+            return super().exec_command(command, timeout)
+
+    client = TransferClient(raw)
+    hashes = []
+    original_hash = photo_service.sha256
+
+    def counted_hash(path):
+        hashes.append(Path(path))
+        return original_hash(path)
+
+    monkeypatch.setattr(photo_service, "sha256", counted_hash)
+    verified = {}
+    for _ in range(3):
+        remote.sync(
+            SFTP(),
+            service.root,
+            PurePosixPath("/spool"),
+            archive_raw=True,
+            client=client,
+            verified=verified,
+        )
+    assert client.calls == 1
+    assert hashes.count(folder / "0.npy") == 1
+    assert hashes.count(folder / "0.mp4") == 1
+    # A same-size local edit must trigger a new verification and repair.
+    target = folder / "0.npy"
+    previous_time = target.stat().st_mtime_ns
+    target.write_bytes(b"x" * len(raw))
+    os.utime(target, ns=(previous_time + 1_000_000_000, previous_time + 1_000_000_000))
+    remote.sync(
+        SFTP(),
+        service.root,
+        PurePosixPath("/spool"),
+        archive_raw=True,
+        client=client,
+        verified=verified,
+    )
+    assert client.calls == 2
     assert (folder / "0.mp4").read_bytes() == video
     assert (folder / "0.npy").read_bytes() == raw
     assert not read_json(folder / "attempt.json")["complete"]
     assert service.job(job_id)["status"] == "cancelled"
     assert service.job(job_id)["result"] is None
+
+
+def test_changed_hash_identity_and_deleted_files_invalidate_verification(tmp_path):
+    path = tmp_path / "0.npy"
+    path.write_bytes(b"fixture")
+    cache = {}
+    expected = hashlib.sha256(b"fixture").hexdigest()
+    assert remote.verified_file(path, expected, cache)
+    assert not remote.verified_file(path, "0" * 64, cache)
+    path.unlink()
+    assert not remote.verified_file(path, expected, cache)
+    path.write_bytes(b"changed")
+    assert not remote.verified_file(path, expected, cache)
+    assert remote.verified_file(path, hashlib.sha256(b"changed").hexdigest(), cache)
 
 
 def test_mutable_json_retries_a_stale_handle_and_preserves_last_good_state(tmp_path, monkeypatch):

@@ -8,6 +8,7 @@ import re
 import shlex
 import time
 from pathlib import Path, PurePosixPath
+from stat import S_ISREG
 
 import paramiko
 
@@ -91,8 +92,46 @@ def archive_raw_file(client, model, job_id, row, target):
     temporary.replace(target)
 
 
-def sync(sftp, local, remote, *, archive_raw=False, client=None):
-    from click2future.demo.photo_service import JOB_ID, PHOTO_ID, read_json, sha256
+def verified_file(path, expected, cache):
+    """Memoize local artifact hashes until their filesystem identity changes.
+
+    Mutable queue metadata is never cached. Final archive audits still hash
+    every file independently; this memo only avoids repeated sync-loop reads.
+    """
+    from click2future.demo.photo_service import sha256
+
+    def identity():
+        value = path.stat()
+        if not S_ISREG(value.st_mode):
+            raise FileNotFoundError(path)
+        return (
+            value.st_dev,
+            value.st_ino,
+            value.st_size,
+            value.st_mtime_ns,
+            value.st_ctime_ns,
+        )
+
+    try:
+        before = identity()
+        saved = cache.get(path)
+        if saved and saved[0] == before:
+            return saved[1] == expected
+        digest = sha256(path)
+        if identity() != before:
+            cache.pop(path, None)
+            return False
+    except FileNotFoundError:
+        cache.pop(path, None)
+        return False
+    cache[path] = (before, digest)
+    return digest == expected
+
+
+def sync(sftp, local, remote, *, archive_raw=False, client=None, verified=None):
+    from click2future.demo.photo_service import JOB_ID, PHOTO_ID, read_json
+
+    verified = {} if verified is None else verified
 
     for name in ["MODEL.json", "WORKER.json"]:
         if exists(sftp, remote / name):
@@ -129,21 +168,24 @@ def sync(sftp, local, remote, *, archive_raw=False, client=None):
                     raw_path = request.parent / row["raw_file"]
                     if not re.fullmatch(r"[0-3]\.npy", row["raw_file"]):
                         raise ValueError("Unexpected raw media name")
-                    if not raw_path.is_file() or sha256(raw_path) != row["raw_sha256"]:
+                    if not verified_file(raw_path, row["raw_sha256"], verified):
                         raw_pending.append((result["model"], job, row, raw_path))
                 for name, expected in copies:
                     if not re.fullmatch(r"[0-3]\.(?:mp4|npy)", name):
                         raise ValueError("Unexpected remote media name")
                     path = request.parent / name
-                    if not path.is_file() or sha256(path) != expected:
+                    if not verified_file(path, expected, verified):
                         get(sftp, folder / name, path)
-                        if sha256(path) != expected:
+                        if not verified_file(path, expected, verified):
                             raise ValueError("Remote media hash mismatch")
     # Keep heartbeat and cancellation synchronization responsive during large backups.
     if raw_pending:
         if client is None:
             raise ValueError("Raw backup requires the authenticated SSH transport")
         archive_raw_file(client, *raw_pending[0])
+        _, _, row, target = raw_pending[0]
+        if not verified_file(target, row["raw_sha256"], verified):
+            raise ValueError("Raw artifact changed after backup")
 
 
 def main():
@@ -181,6 +223,7 @@ def main():
         client.get_transport().set_keepalive(20)
         print("photo transport connected; leave this process running", flush=True)
         failures = 0
+        verified = {}
         while True:
             try:
                 with client.open_sftp() as sftp:
@@ -188,7 +231,12 @@ def main():
                         raise ValueError("Start the allocated worker before connecting its spool")
                     while True:
                         sync(
-                            sftp, service.root, remote, archive_raw=args.archive_raw, client=client
+                            sftp,
+                            service.root,
+                            remote,
+                            archive_raw=args.archive_raw,
+                            client=client,
+                            verified=verified,
                         )
                         failures = 0
                         time.sleep(1)
