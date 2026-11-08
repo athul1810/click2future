@@ -1,0 +1,190 @@
+{
+  "study_id": "D028",
+  "split": "validation",
+  "plan_sha256": "64d85b3579173f43d43e2f63283571c60de5df6a3183121aff96316e449415da",
+  "projection_contract": "observed-hull-position-projection-1",
+  "checkpoint_sha256": "60e01fd60e6934e644653662d701a8aa8419d57d3d4d58a65d8b6ca87a3a45e4",
+  "scorer_sha256": "5613bb3dc688ddf83d68173eb225836bd955910a0cac5fb393e5224f690ef0fe",
+  "projected_frame_paired_scene_differences": [
+    0.0005114222440170115,
+    -4.391340189613402e-05,
+    -3.14763116572676e-05,
+    -0.0002463972195982933
+  ],
+  "projected_frame_paired_scene_bootstrap_95_interval": [
+    -0.00019266699261303688,
+    0.00037258833253872516
+  ],
+  "projected_carry_paired_scene_differences": [
+    0.0006739229478019597,
+    0.0003760835291662561,
+    -7.438194006681442e-05,
+    4.580275466044802e-05
+  ],
+  "projected_carry_paired_scene_bootstrap_95_interval": [
+    -1.4289592703183203e-05,
+    0.0005250032384841079
+  ],
+  "projected_driven_paired_scene_differences": [
+    0.0,
+    2.7070210004845677e-05,
+    0.0,
+    -0.00024584638110051495
+  ],
+  "projected_driven_paired_scene_bootstrap_95_interval": [
+    -0.0001843847858253862,
+    2.0302657503634258e-05
+  ],
+  "models": {
+    "neural": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5952,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 96,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 96,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": 0.025018095156669407,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "matched_world_ade": 0.007336114119728639,
+      "other_object_matched_world_ade": 0.003349118699892036,
+      "penetrating_clips": 4,
+      "boundary_clips": 6,
+      "zero_force": {
+        "total_samples": 16,
+        "complete_samples": 16,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "passive": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "contact_counts": {
+        "tp": 17,
+        "fp": 23,
+        "fn": 47
+      },
+      "contact_f1": 0.3269230769230769
+    },
+    "projected_frame": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5952,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 96,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 96,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": 0.0249252097017096,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "matched_world_ade": 0.007383522947444969,
+      "other_object_matched_world_ade": 0.003571732060663635,
+      "penetrating_clips": 0,
+      "boundary_clips": 0,
+      "zero_force": {
+        "total_samples": 16,
+        "complete_samples": 16,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "passive": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "contact_counts": {
+        "tp": 18,
+        "fp": 23,
+        "fn": 46
+      },
+      "contact_f1": 0.34285714285714286
+    },
+    "projected_carry": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5952,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 96,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 96,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": 0.02495092021407754,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "matched_world_ade": 0.007591470942619101,
+      "other_object_matched_world_ade": 0.003642828542069765,
+      "penetrating_clips": 0,
+      "boundary_clips": 0,
+      "zero_force": {
+        "total_samples": 16,
+        "complete_samples": 16,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "passive": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "contact_counts": {
+        "tp": 18,
+        "fp": 26,
+        "fn": 46
+      },
+      "contact_f1": 0.3333333333333333
+    },
+    "projected_driven": {
+      "quality": {
+        "case_count": 24,
+        "expected_observations": 5952,
+        "tracked_observations": 5952,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 96,
+        "expected_selected_clips": 96,
+        "complete_all_object_clips": 96,
+        "expected_all_object_clips": 96,
+        "selected_ade_mean_cases_if_all_complete": 0.024931889242227584,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "matched_world_ade": 0.0072814200769547215,
+      "other_object_matched_world_ade": 0.003990872907403779,
+      "penetrating_clips": 0,
+      "boundary_clips": 0,
+      "zero_force": {
+        "total_samples": 16,
+        "complete_samples": 16,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "passive": {
+        "total_samples": 32,
+        "complete_samples": 32,
+        "missing_samples": 0,
+        "drifting_samples": 0
+      },
+      "contact_counts": {
+        "tp": 18,
+        "fp": 24,
+        "fn": 46
+      },
+      "contact_f1": 0.33962264150943394
+    }
+  },
+  "selection_rule": "Among modes with zero penetrating clips, choose the lowest selected plus other-object same-world ADE. Chosen: projected_frame (mass-weighted, per frame).",
+  "earlier_attempts": "Two earlier validation runs kept hulls one pixel inside the rendered interior; that over-corrected wall contacts (frame mode same-world ADE 0.00771). A run without the 0.001 px margin left 6 boundary clips from float32 rounding. Both are superseded by this run."
+}
