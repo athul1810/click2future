@@ -31,6 +31,7 @@ def source_copy(tmp_path):
         "compare_contact_projection.py",
         "metric_ceilings.py",
         "prior_simulator_ceiling.py",
+        "penetration_control.py",
         "analyse_replication.py",
         "analyse_prior_replication.py",
         "plot_prior_replication.py",
