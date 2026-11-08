@@ -51,5 +51,5 @@ Paired same-world interval: [-0.00014, 0.00028]. All rules pass, so the
 projection is accepted as the contact layer for the neural sampler. The other
 object's same-world error rises by 11%, which the rules do not cover and is
 reported here. The physics-assisted baseline remains more accurate under the
-same hidden physics (D026: 0.0033 same-world ADE). Ten fresh ID groups, one
+same hidden physics (D021: 0.00348 versus 0.00711 same-world ADE). Ten fresh ID groups, one
 checkpoint and no OOD claim. Record: `docs/results/contact-projection-d028.json`.

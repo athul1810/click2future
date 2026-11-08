@@ -429,6 +429,18 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   the neural sampler's contact layer. The other object's same-world error rose
   11%. See CONTACT_PROJECTION.md.
 
+## D029: Contact-transition and normal-velocity losses (#80): 8 November 2026
+
+- Pramod's recipe adds two contact losses to the direct prior decoder. Train it
+  and the unchanged control from the same E7 teacher, cache, seed 19 and 8,000
+  updates (TC2 job 52304, source c455945); score both on original validation.
+- Control: 1/96 penetrating clips (4 frames), 2/16 rest drift, selected ADE
+  0.02515, contact F1 0.305. Candidate: 1/96 (7 frames), 2/16, 0.02516, 0.305.
+  The control reproduces the D019 control counts.
+- No measurable improvement; not promoted. One seed and validation only. D028's
+  projection already removes penetration for sampled outputs.
+  Record: docs/results/contact-dynamics-loss-d029.json.
+
 ## New decision template
 
 ```text

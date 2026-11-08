@@ -1,0 +1,508 @@
+{
+  "study_id": "D029",
+  "tc2_job": 52304,
+  "source_revision": "c455945fc42ccbc3a7d824242ea4317a409012e2",
+  "scope": "original validation only; no test split scored",
+  "recipes": {
+    "control": "configs/training/prior_direct.json",
+    "candidate": "configs/training/prior_direct_contact_dynamics.json",
+    "difference": "contact_transition_weight 0 vs 8, normal_velocity_weight 0 vs 4"
+  },
+  "input_sha256": {
+    "teacher.pt": "93db6c714a0049b311117abe68faeef0d0e27080315bb8e67a2ecda59010c041",
+    "cache/manifest.json": "2c695895d5caed7be0369b28827739aab677a127c00b3d85b6e9f2488f9b9290",
+    "cache/arrays.npz": "079af4237a58b9c9e06f906d85251ecc9731a5d81c3079970a3399ec05a7c0bd",
+    "prior_direct.json": "cbfcd46078c607767bc27d4070cc20534a19a47014397cd4553ea793ef5540c0",
+    "prior_direct_contact_dynamics.json": "6cff9b1f483a93a537b22b454d812af4d9abed19b13eb68f69794195d55a7be1"
+  },
+  "checkpoint_sha256": {
+    "direct": "7db39eaeea65a6a1a971f4de129ce6a89bbce8c145c8ad9ce7510eb75572b791",
+    "direct_contact_dynamics": "404d4b636ef982c4f43a2515f0568555a21d6205d04019864f58cefe959cbf82"
+  },
+  "arms": {
+    "direct": {
+      "training": {
+        "status": "completed",
+        "steps_completed": 8000,
+        "elapsed_seconds": 268.30175869504455
+      },
+      "validation": {
+        "source": "trained neural poses; unchanged sampler",
+        "quality": {
+          "case_count": 24,
+          "expected_observations": 5952,
+          "tracked_observations": 5952,
+          "tracking_fraction": 1.0,
+          "complete_selected_clips": 96,
+          "expected_selected_clips": 96,
+          "complete_all_object_clips": 96,
+          "expected_all_object_clips": 96,
+          "selected_ade_mean_cases_if_all_complete": 0.02514639808224182,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "penetrating_clips": 1,
+        "penetrating_frames": 4,
+        "max_depth_pixels": 1.0538482230483908,
+        "zero_force": {
+          "total_samples": 16,
+          "complete_samples": 16,
+          "missing_samples": 0,
+          "drifting_samples": 2
+        },
+        "passive": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "rgb_contact_against_first_reference": {
+          "true_positive": 16,
+          "false_positive": 25,
+          "false_negative": 48,
+          "complete_pair_timelines": 96,
+          "expected_pair_timelines": 96,
+          "f1": 0.3047619047619048,
+          "scope": "approximate RGB estimator against one realized hidden world; not physical-validity proof"
+        },
+        "cases": [
+          {
+            "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "4896111260eb6d45b02293080e576bb7c1221e2d2d2f0cb8d0e8681d823e8c31",
+            "penetrating_clips": 1,
+            "penetrating_frames": 4,
+            "max_depth_pixels": 1.0538482230483908
+          },
+          {
+            "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "6188dcc11b97d62832f391163add6382aeb0c88883cba502e1f5d80918f03b8e",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.806563309938106
+          },
+          {
+            "sample_id": "g03-scene-00730016-forward-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "1e48f9126847ae3021dd57371a8d8654d76ce445f144a583f5388ec4e4eaf3a9",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730016-reverse-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "2c1be8665b5e2750081edea9297cd094270c4b578d31299e3708a19ccb6fca71",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730016-wall-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "ed158a7c5b526e7d517ae517fc401c6d5bc10fa030fc5cba471e314b6a1c79f3",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730016-zero-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "05a1d6278d8dbd243406de9571d5d95ecf2666c5c50ac912c789df8ff372e5d2",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "ea01236e3a93490c720e348d0c358b61c56ca394376bbdb84b8510fab2fea75a",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.09466227096141822
+          },
+          {
+            "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "d2501ffadfe3cb608f348f93a3335c6decb40c7d7630b4501fea370c91ca6eb5",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-forward-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "201645b66db7d341b41dba3f965b1b4aff6263f50cb2ecf371f1db576579800d",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-reverse-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "d291956d7d192306479de221832bd5988c0fb7fe5c506f06605301c3782085fb",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-wall-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "f00a022f8df3943298b2ee85fbc90dbf3fabff66b7841019f17d01fa8b5c7ae6",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-zero-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "b4efd4f634a4e48a4c7e7cb2524ff5addc53ff267063586e249ae44131a84060",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "db41a5e422ab6a9c1959814d396bca5b01762e48ffb611e10917dfd7383798ae",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "9bdcbe0b17ed1731107cd05a3dc4c0b55d737d0741a669d457e6a97288babcfa",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-forward-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "d4f8db80cfada41fbc22963de95217813a743a731716dadfca3c999af1b96c93",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-reverse-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "c4829dcdcfc64fae7c9545ee775fed1c7458b78b5842948a924cc50ea2ec1219",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-wall-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "19cf4435dbb45ac66a7e52dba90385023a307042480366ca17c9a2c45bc9265a",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-zero-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "21eb5066ff32c6f4291f1d101ae4f7c3bf80739f89774a73243cd39ce5d522ee",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "76c02bf58b63833ba3738f45908bf5a43798fb5fb10a276256f9aa0ff883c2cb",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.46349183898523805
+          },
+          {
+            "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "3eaf8a3a8d6b16d4bf2287270e409e84c896fb375fe1d31438f897db17534e5d",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-forward-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "5cfcf262075ec713e3d73b57dd39298cde201458043feb8ef0e67d01d95ed7c9",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-reverse-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "72fa21988f9cdae93afad75f33d344104ca92e7aaaec04a74154d6a3c94fe3e1",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-wall-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "6e4816f5913b75daac7cc189deb818b630727eba80595babbb2d57520018dc44",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-zero-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "3d3680a8041f6a5dbae87e3b36e2e614b394c4140cc7bf53b730f33201e9712e",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          }
+        ]
+      },
+      "plan_sha256": "832b4e8c8849e1362f2cd5dfbdd981b1a5d6e30880519489fec327cb0967236b"
+    },
+    "direct_contact_dynamics": {
+      "training": {
+        "status": "completed",
+        "steps_completed": 8000,
+        "elapsed_seconds": 276.76611219800543
+      },
+      "validation": {
+        "source": "trained neural poses; unchanged sampler",
+        "quality": {
+          "case_count": 24,
+          "expected_observations": 5952,
+          "tracked_observations": 5952,
+          "tracking_fraction": 1.0,
+          "complete_selected_clips": 96,
+          "expected_selected_clips": 96,
+          "complete_all_object_clips": 96,
+          "expected_all_object_clips": 96,
+          "selected_ade_mean_cases_if_all_complete": 0.025155503429821563,
+          "passes_tracking_and_selected_trajectory_gate": false,
+          "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+        },
+        "penetrating_clips": 1,
+        "penetrating_frames": 7,
+        "max_depth_pixels": 1.0939564741729981,
+        "zero_force": {
+          "total_samples": 16,
+          "complete_samples": 16,
+          "missing_samples": 0,
+          "drifting_samples": 2
+        },
+        "passive": {
+          "total_samples": 32,
+          "complete_samples": 32,
+          "missing_samples": 0,
+          "drifting_samples": 0
+        },
+        "rgb_contact_against_first_reference": {
+          "true_positive": 16,
+          "false_positive": 25,
+          "false_negative": 48,
+          "complete_pair_timelines": 96,
+          "expected_pair_timelines": 96,
+          "f1": 0.3047619047619048,
+          "scope": "approximate RGB estimator against one realized hidden world; not physical-validity proof"
+        },
+        "cases": [
+          {
+            "sample_id": "g03-scene-00730016-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "da51229028e926c5d512ffc7cffaf95434efff387a1e2929d467e51a7b76d094",
+            "penetrating_clips": 1,
+            "penetrating_frames": 7,
+            "max_depth_pixels": 1.0939564741729981
+          },
+          {
+            "sample_id": "g03-scene-00730016-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "f830a67a4f71b61b139afef3fe5a7917bd45306587d54638ae0330f817d5834e",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.8232891645454998
+          },
+          {
+            "sample_id": "g03-scene-00730016-forward-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "0852d1aa3068fe62288c1b8bacf1a9a7799654a81f7bbf16c7228245de409adb",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730016-reverse-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "a8eb30e7f6ebb59f96fbd3795f142e3762162c7c79aa3440c8c08f1333da1143",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730016-wall-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "f521c1140a64f1827050db933d8d3ac0540fd42289875ef46f4a10705ecd7134",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730016-zero-p00",
+            "scene_group_id": "g03-scene-00730016",
+            "archive_sha256": "3978764c3fc9c26fd80df34bab2ca976a51a25ea393f396b77ad4b3b7cc81662",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "1b246ca4a5b60cfcf1098d24e596d89b44c9051ba70e60611637d82fdd577dac",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.08683538595882467
+          },
+          {
+            "sample_id": "g03-scene-00730017-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "0a7feeba4f3fe08b688606242bf8d4fe33c0347a298db729547dcad36647eec9",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-forward-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "9f34ae7e4d80b04393201295bfe77f9a94f6a1866d3c35ee9d84f422a23c3fd2",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-reverse-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "539bbcb43b8022e5076270ecffb29623a11bb387f42376f9b82dea40a4038278",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-wall-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "506f69c3faa8d323add86127004cf456783b93b9732b5d13c32f246782982471",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730017-zero-p00",
+            "scene_group_id": "g03-scene-00730017",
+            "archive_sha256": "2bdc5d82bb85028aa1c5d6f8daa9dd3ac63b33893bdb6f8fb21d3a48de041f78",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "eaa49ca711b4d6d68bd61df29f3cb00b8827df6385205af4d95b9fd086622e65",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "e2363f862c48c0a63daf0d7c39c886b16db2de8e75d653c16ea1a52be0e33995",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-forward-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "ab90c64781d2aaf33821fcf9aa2e1a5aacdca4d90633f21dc142935e6ef3af43",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-reverse-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "b123b6e484182eed61f1dff476e4b3ea5b22997f23609096a9f479c072b9c623",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-wall-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "fcc22e112477ad485ddc3aa9746d6d0926bed310085b37f9bb7bb9de51807d31",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730018-zero-p00",
+            "scene_group_id": "g03-scene-00730018",
+            "archive_sha256": "0241ee288a4a20a4e71f299796861e2c2b8daf4559d48fd36e1849e14b38fb6f",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-collision_0_to_1-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "ae8c480f33835c8da219bcecc881a7ccaccbc719e3e0bae634602a9e1159c64e",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.24000380965727786
+          },
+          {
+            "sample_id": "g03-scene-00730019-collision_1_to_0-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "7ca46c9d0af391084a31342a0232c536108046f5c14e0de480be02de3cf7757d",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-forward-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "6f1c7ca5b5a47ed6edd128537e8ca3859626e1255730350842c58a2ef756826e",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-reverse-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "46629e68de7c0b81890a2e19a6570e183de6ba678bb0ab9724d7af3f333609d4",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-wall-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "ebaecb5d85e3c43b055d51e24ef02e5b6dff48d820ee543ca856cb7534062c76",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          },
+          {
+            "sample_id": "g03-scene-00730019-zero-p00",
+            "scene_group_id": "g03-scene-00730019",
+            "archive_sha256": "b81b1671daaf23bb708429dcc96d224576a7618491da21589bb42b99e7947d83",
+            "penetrating_clips": 0,
+            "penetrating_frames": 0,
+            "max_depth_pixels": 0.0
+          }
+        ]
+      },
+      "plan_sha256": "832b4e8c8849e1362f2cd5dfbdd981b1a5d6e30880519489fec327cb0967236b"
+    }
+  }
+}
