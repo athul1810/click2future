@@ -374,6 +374,8 @@ The 3 November review export is 30 pages. It retains D014/D015, adds the separat
 
 The 8 November r5 review has a 34-page report, one-page contribution draft and 17 editable slides. Its first 30 report pages preserve r4 exactly. Section 4.4 and the embedded native eight-video replay credit the external StreamForce model separately. Sanjay's merged optional contact-loss work is recorded. Ananya reviewed her contribution; Sanjay, Shrijeet and Athul remain pending. The original results and open D017 replay caveat remain unchanged. PR 78 physics follow-ups require separate review. Final team rehearsal, member approval and submission export remain open.
 
+8 November, r6: The r6 review has 35 report pages, one contribution page and 18 editable slides. It adds the merged D028 geometric hybrid with its other-object regression and unchanged strict quality flag, alongside the separately credited native photograph demo. Athul's D020-D030 work is recorded. Three member confirmations, final team rehearsal and coordinated upload remain open. Historical scores stay unchanged.
+
 <a id="t19"></a>
 
 ### T19: Verify reproducibility and prepare the source-code ZIP

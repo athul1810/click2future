@@ -91,7 +91,7 @@ demo, with masks derived from pixels and no invented reference for uploads.
 
 ## external photograph demo, 7 november
 
-The current review export has 32 pages. Section 4.3 and Figure 7 describe the
+The 7 November review export has 32 pages. Section 4.3 and Figure 7 describe the
 separate external Force Prompting/CogVideoX integration. Every seed for both
 opposite pushes remains visible, including weak right-push seeds 0/1. The
 one-image development example has no physical ground truth or calibration.
@@ -106,7 +106,7 @@ The 7 November snapshot preceded the completed native StreamForce checks below.
 
 ## native StreamForce extension, 8 november
 
-The current review has 34 pages. Section 4.4 and Figure 8 retain all eight
+The earlier 8 November r5 review has 34 pages. Section 4.4 and Figure 8 retain all eight
 StreamForce samples for the opposite pushes. Both fresh browser actions,
 cancellation, post-cancellation recovery and disconnected replay pass. The
 first recovery failed on home quota; its records and unpublished raw arrays
@@ -114,4 +114,19 @@ remain retained. This external pretrained model and public development image
 do not establish calibrated physical quality or improve the original scores.
 The 17-slide deck embeds the complete native eight-video comparison.
 Three contribution confirmations, the team rehearsal and coordinated upload
-remain open. The physics follow-ups in PR 78 require separate review.
+remain open. PR 78 was awaiting review in that frozen r5 snapshot and is now merged.
+
+
+## reviewed geometry follow-up, 8 november, r6
+
+The latest review has 35 report pages, one contribution page and 18 editable
+slides. Section 4.5 and slide 12 add D028's explicit geometric projection:
+19 to zero penetrating clips on the registered fresh corpus, alongside the
+11% other-object error increase and the unchanged failing strict quality flag.
+The original 32 report pages remain unchanged. This is a labelled hybrid,
+without an OOD, calibrated-physics or SOTA claim. The source package includes
+the projection comparison and both simulator-reference control drivers.
+
+The contribution draft records Athul's merged D020-D030 implementation and
+analyses. Member review states remain unchanged. Final member confirmation,
+team rehearsal and coordinated upload remain open.

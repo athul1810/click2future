@@ -861,13 +861,72 @@ development outputs without calibrated physical ground truth.}
 \end{figure}
 \clearpage
 
+
+\subsection{Contact projection and simulator controls}
+\label{sec:contact-projection}
+D028 tests an explicit geometric layer after sampling the D020 neural pose
+trajectory. D020 subtracts the backbone's zero-force response from its action
+response for each sampled world. It uses a seed-19 checkpoint trained for
+8,000 updates from the frozen E7 teacher/cache. Inspired by position-based dynamics~\cite{pbd} and physics-guided
+motion projection~\cite{physdiff}, it separates overlapping observed pixel
+hulls using inverse sampled-mass weights and keeps hulls within the canvas.
+Our layer runs after sampling, preserves the neural weights and rotations,
+and changes only violating positions. It is a geometric hybrid, rather than
+evidence that the neural model has learned contact dynamics.
+
+The mode is selected on original validation. Its rules and non-inferiority
+margins are fixed before generating ten fresh ID scene groups, with frame-zero
+overlap against opened corpora rejected. Both arms use one frozen checkpoint
+and identical prior draws. All 240 clips per arm are tracked completely.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lrr}
+\hline
+Fresh D028 ID & Neural D020 & With projection \\
+\hline
+Penetrating clips, over 1 px & 19/240 & 0/240 \\
+Boundary-clipped clips & 25/240 & 0/240 \\
+Rest / passive drift & 0/40; 0/80 & 0/40; 0/80 \\
+RGB contact F1 & 0.169 & 0.176 \\
+First-reference selected ADE & 0.02495 & 0.02476 \\
+Same-world selected ADE & 0.00706 & 0.00712 \\
+Same-world other-object ADE & 0.00320 & 0.00355 \\
+\hline
+\end{tabular}
+\caption{D028 contact projection, with the unchanged scorers. ADE uses normalized
+coordinates. Geometry improves, while other-object same-world error rises.}
+\label{tab:projection}
+\end{table}
+
+The paired scene-bootstrap 95\% interval for selected same-world ADE change
+is $[-0.00014,0.00028]$, below the prespecified upper margin of 0.0005.
+The projection passes its registered rules. Other-object error nevertheless
+rises by 11\%; that regression was not an acceptance rule and remains reported.
+The unchanged strict quality flag is false for both arms. This is one checkpoint
+on ten ID groups, with no OOD or calibrated physics claim.
+
+D030 re-renders the simulator with true hidden physics and with the four prior
+draws. The true-physics RGB contact F1 varies from 0.250 to 0.590 across the two
+corpora, exposing the estimator's limitations. Sampled-physics ADE is close
+to the model results, consistent with a substantial hidden-physics contribution.
+These are descriptive reference controls, not mathematical method ceilings.
+Earlier local-contact and optional-loss candidates retain their negative results.
+
+\clearpage
+
 \section{Conclusion}
 The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow-decoder CVAE fails the fixed 0.5-second window, yet over the full clip it moves the selected object along the force and reverses it in all three training seeds. It does not scale motion consistently with force magnitude, and the unselected object drifts in the selection probe. It is the final E0. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. The E6 follow-ups remove measured unforced drift and reduce penetration, while introducing a tradeoff with forward-motion spread and wall completeness. Their combined changes do not isolate a single loss effect. The later matched canvas-loss comparison improves visibility from 88 to 95 complete clips, while leaving penetration and overall strict quality unresolved. Rendered-reference calibration also shows that timed contact scores depend on estimator errors and hidden-physics variation. The final held-out evaluation repeats these patterns on unseen scenes (Section~\ref{sec:final}). With the pilot's 5,000 training clips, E2 and E3 produce no trackable video. Trained on as many clips as E0, they produce clean frames but lose object identity, so the numeric-versus-spatial question remains unanswered. Contact quality also remains open. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
 
 The separately registered prior-decoder replication reduces penetrating clips in all three refinements on fresh ID scenes, while every seed regresses in contact timing, selected trajectory error, early force scaling and two coverage families. This is a reproducible tradeoff rather than an overall improvement.
 
+The later geometric projection removes measured penetration and boundary clipping
+on D028, while increasing other-object error. It supplies a bounded hybrid
+option; learned contact reliability, the strict trajectory gate and calibrated
+physical uncertainty remain open.
+
 \clearpage
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 \bibitem{kingma} Diederik P. Kingma and Max Welling. Auto-Encoding Variational Bayes. arXiv:1312.6114, 2013.
 \bibitem{sohn} Kihyuk Sohn, Honglak Lee and Xinchen Yan. Learning Structured Output Representation using Deep Conditional Generative Models. Advances in Neural Information Processing Systems 28, 2015.
 \bibitem{ho} Jonathan Ho, Ajay Jain and Pieter Abbeel. Denoising Diffusion Probabilistic Models. arXiv:2006.11239, 2020.
@@ -876,5 +935,7 @@ The separately registered prior-decoder replication reduces penetrating clips in
 \bibitem{forceprompting} Nate Gillman et al. Force Prompting: Video Generation Models Can Learn and Generalize Physics-Based Control Signals. NeurIPS, 2025.
 \bibitem{oneworld} Ke He, Yichen Ding and Bin Yang. OneWorld: Learning Consistent Physics Across Actions in World Models. arXiv:2609.30946, 2026.
 \bibitem{streamforce} Hanhui Wang, Yiming Xie, Haiwen Feng, Zhaoyang Lv, Shenlong Wang and Huaizu Jiang. Streaming Video Generation with Streaming Force Control. arXiv:2606.07508, 2026.
+\bibitem{pbd} Matthias Mueller, Bruno Heidelberger, Marcus Hennix and John Ratcliff. Position based dynamics. Journal of Visual Communication and Image Representation 18(2), 2007.
+\bibitem{physdiff} Ye Yuan et al. PhysDiff: Physics-Guided Human Motion Diffusion Model. ICCV, 2023.
 \end{thebibliography}
 \end{document}
