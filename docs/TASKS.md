@@ -354,6 +354,8 @@ The original synthetic-image path now accepts native 64px two-object PNGs, deriv
 7 November: PHOTO-P03 completed two fresh opposite pushes through browser, SSH and A40 worker 50985: all eight native samples and hashes are backed up, with the same image/caption/point/seeds. PHOTO-OPS01 passed early and partial cancellation; the finished partial sample remains retained. Offline replay restores both actions and rejects new uncached requests while disconnected. Right-push seeds 0/1 are weak; all four reversed-push samples move left. This is one public development image with an external pretrained model. The original physical-quality gate and final presentation-machine rehearsal remain open. Source 37078a0 passes 733 tests and four subtests. See docs/results/photo-paired-integration.json.
 
 
+8 November: PHOTO-S01 passes all four native StreamForce seeds and the declared repeat on A40. PHOTO-S02 returns both opposite pushes through the browser in 132.73 and 134.28 seconds, including cold loading and transfer. STREAMFORCE-OPS02 passes cancellation, partial retention and fresh four-seed recovery after the retained home-quota failure. Offline reversal and native PowerPoint playback pass. All 18 queue raw arrays and five smoke arrays are backed up, including unpublished cancelled output. This external pretrained development example does not close the original physical-quality or final presentation-machine rehearsal gates. See docs/results/photo-streamforce-integration.json.
+
 <a id="t18"></a>
 
 ### T18: Draft the technical report and contribution statement
@@ -369,6 +371,8 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [ ] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
 The 3 November review export is 30 pages. It retains D014/D015, adds the separately trained E10 routing study and D017 results, and includes the E9/E11 screens and D018 replication. Conditional ADE is labelled with its missing-track caveat; D017 primary complete-sample counts and independent raw-video replay remain open. The contribution review is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable 16-slide presentation and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
+
+The 8 November r5 review has a 34-page report, one-page contribution draft and 17 editable slides. Its first 30 report pages preserve r4 exactly. Section 4.4 and the embedded native eight-video replay credit the external StreamForce model separately. Sanjay's merged optional contact-loss work is recorded. Ananya reviewed her contribution; Sanjay, Shrijeet and Athul remain pending. The original results and open D017 replay caveat remain unchanged. PR 78 physics follow-ups require separate review. Final team rehearsal, member approval and submission export remain open.
 
 <a id="t19"></a>
 
