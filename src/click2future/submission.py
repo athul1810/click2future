@@ -74,6 +74,7 @@ def _check(name, payload):
             "scripts/compare_contact_projection.py",
             "scripts/metric_ceilings.py",
             "scripts/prior_simulator_ceiling.py",
+            "scripts/penetration_control.py",
             "scripts/analyse_replication.py",
             "scripts/analyse_prior_replication.py",
             "scripts/plot_prior_replication.py",
