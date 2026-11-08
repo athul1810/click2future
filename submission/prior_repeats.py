@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 import sys
+from dataclasses import asdict
 from pathlib import Path
 
 from click2future.training.train_cvae import require_tc2, sha256
@@ -12,6 +13,12 @@ from click2future.training.train_prior import PriorConfig, prior_sources
 
 SEEDS = (20, 21)
 ARMS = ("direct", "diffusion")
+
+
+def normalized_config(value):
+    config = PriorConfig(**value)
+    config.validate()
+    return asdict(config)
 
 
 def recipes(project):
@@ -22,8 +29,7 @@ def recipes(project):
             base = json.loads((project / f"configs/training/prior_{arm}.json").read_text())
             path = project / f"configs/training/prior_repeats/{arm}-seed{seed}.json"
             value = json.loads(path.read_text())
-            PriorConfig(**value).validate()
-            if value != {**base, "seed": seed}:
+            if normalized_config(value) != normalized_config({**base, "seed": seed}):
                 raise ValueError("Repeat recipes may change only the refinement seed")
             result[f"{arm}-seed{seed}"] = path
     return result
@@ -50,7 +56,7 @@ def main():
             "seed": int(name.rsplit("seed", 1)[1]),
             "world_prior_only": name.startswith("direct-"),
         }
-        if json.loads(path.read_text()) != expected:
+        if normalized_config(json.loads(path.read_text())) != normalized_config(expected):
             raise ValueError("Repeat hyperparameters differ from the completed screen")
     if original["provenance"]["source_sha256"] != prior_sources():
         raise ValueError("Repeat training/model code differs from the seed-19 screen")
