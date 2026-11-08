@@ -375,7 +375,7 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
 - Rejected. The hull baseline stays the default and the demo does not use the
   circle variant. See docs/results/primitive-physics-d023.json.
 
-## D024: Ceiling for the strict gate without hidden physics: 8 November 2026
+## D024: Prior-sampling control for the strict gate: 8 November 2026
 
 - Re-simulate each fresh D023 case with its true geometry and the four sampled
   prior worlds, then score it with the unchanged tracker and strict gate.
@@ -383,8 +383,10 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   so even an exact simulator fails without the hidden physics. With the true
   hidden physics it is 0/60 (0.00424), which checks the tracker.
 - The hull baseline's 19 failing cases include all 18; one collision case is its
-  own error. The remaining strict-gate failure is mostly hidden-physics
-  uncertainty, not generator error. Descriptive only; no gate or result changed.
+  own error. For prior-sampling methods the remaining strict-gate failure is
+  mostly hidden-physics uncertainty, not generator error. This is a control, not a
+  bound for every method: an inferred posterior or a different point estimate
+  could score differently. Descriptive only; no gate or result changed.
   See PRIMITIVE_PHYSICS_COMPARISON.md and docs/results/prior-simulator-ceiling-d024.json.
 
 ## New decision template

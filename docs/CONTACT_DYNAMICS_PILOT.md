@@ -92,3 +92,21 @@ Reproduce with `PYTHONPATH=src python scripts/audit_reference_contacts.py
 references are read. The machine-readable result is
 `docs/results/contact-reference-control.json`. No historical scorer or score
 was changed. This analysis and its research links stay outside the source ZIP.
+
+## Result: TC2 job 50876
+
+The frozen pilot trained for all 8,000 updates at source dc11b07 (41,735
+parameters, 378 s, peak CUDA allocation 170,858,496 bytes). The exact CUDA
+continuation check had zero model, EMA and loss error.
+
+| Original validation | D022 | D020 |
+|---|---:|---:|
+| Complete selected clips | 96/96 | 96/96 |
+| Penetrating clips over 1 px | 22/96 | 4/96 |
+| Selected ADE | 0.02633 | 0.02502 |
+| Rest / passive drift | 0/16, 0/32 | exact rest |
+| RGB contact F1 | 0.266 | - |
+
+It fails the penetration and ADE rules, so it is rejected and stays out of the
+demo. No fresh or historical test split was scored. The record with job, source,
+cache, checkpoint and plan hashes is `docs/results/contact-dynamics-d022.json`.

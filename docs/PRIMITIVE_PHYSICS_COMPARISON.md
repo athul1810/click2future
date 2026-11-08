@@ -83,7 +83,7 @@ below zero). It is rejected as the demo physics method. The hull baseline stays
 the default. Both methods still fail the original strict single-reference gate.
 The full record is `docs/results/primitive-physics-d023.json`.
 
-## D024: how far the strict gate can be reached without hidden physics
+## D024: prior-sampling control for the strict gate
 
 The strict gate needs every case's mean selected ADE to be at most 0.03125
 against one simulator reference. That reference uses the true hidden mass,
@@ -97,12 +97,14 @@ scores it with the unchanged tracker and gate (TC2 job 52279, same corpus hash).
 | Generator on the D023 corpus | Cases over 0.03125 | Mean selected ADE | Gate |
 |---|---:|---:|---|
 | True simulator, true hidden physics (tracker check) | 0/60 | 0.00424 | Pass |
-| True simulator, sampled hidden physics (ceiling) | 18/60 | 0.02561 | Fail |
+| True simulator, sampled hidden physics (prior-sampling control) | 18/60 | 0.02561 | Fail |
 | Hull physics-assisted baseline (D023) | 19/60 | 0.02638 | Fail |
 
-All 18 ceiling failures also fail for the hull baseline; one collision case fails
+All 18 control failures also fail for the hull baseline; one collision case fails
 only for the baseline. Under this prior, exact geometry and an exact simulator
-still fail the gate, so the gate also measures hidden-physics uncertainty. It is
-not passable by a method that samples hidden physics from the declared prior. The
+still fail the gate, so the gate also measures hidden-physics uncertainty. This is
+a control for methods that sample hidden physics from the declared prior, not a
+bound for every possible method: an inferred posterior or a different point
+estimate could score differently. The
 gate and every historical result stay unchanged; this is a descriptive bound.
 The record is `docs/results/prior-simulator-ceiling-d024.json`.
