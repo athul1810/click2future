@@ -1,0 +1,140 @@
+{
+  "scope": "native external-model functional smoke and recorded browser checks; no physical-quality or SOTA claim",
+  "native_source_revision": "67547f86350507e19dde89f746f9523cbb309519",
+  "interface_source_revision": "fb3ebfd3e537c21edca2b50ea7a452771975ef20",
+  "external_source_revision": "ef3d0f847f787552b5ce004906c4944292e58996",
+  "job_id": "50957",
+  "status": "passed_functional_probe",
+  "input_source": "Force Prompting README first ornament example",
+  "input_sha256": "b74e08369c3fc41d3b3eefc43b46d2e83b374dbe07e594b97b7ff467b5ba9cca",
+  "caption_confound": "official caption already requests swinging; not a force-only intervention test",
+  "model_revisions": {
+    "THUDM/CogVideoX-5b-I2V": "a6f0f4858a8395e7429d82493864ce92bf73af11",
+    "brown-palm/force-prompting": "bc1a3faa381a8c935ebce980a18afb597d4a15c4"
+  },
+  "checkpoint_sha256": "b4a4344313234af3c23d9e050c2630b71851a27d5afed4a027bfac9020a16c27",
+  "official_artifacts_manifest_sha256": "6bf39b6bf566000b8a448055b8981900f9e60ea0d583827635305081b58b7a19",
+  "official_artifact_file_count": 18,
+  "shape": [
+    49,
+    480,
+    720,
+    3
+  ],
+  "fps": 8,
+  "steps": 50,
+  "gpu": "NVIDIA A40",
+  "torch": "2.5.0+cu121",
+  "cuda": "12.1",
+  "runs": [
+    {
+      "seed": 0,
+      "seconds": 471.4784136849921,
+      "frames": 49,
+      "raw_sha256": "da2def74227f66fe659c84c88984847107051e35294d4ba793f40ccc9471a3bd",
+      "video_sha256": "d54e1fe7c14a403f804bafa547e356993b72aeb38eabc0e21cf4f078efac5b17",
+      "gpu_peak_bytes": 23446290432
+    },
+    {
+      "seed": 1,
+      "seconds": 467.79448847001186,
+      "frames": 49,
+      "raw_sha256": "89a827b9d99d4e6893750922d01c178af0ba479c8c3a73dab3be92ee65a95eab",
+      "video_sha256": "0ed753ef4eb623651387a6dd8bd0902a83af0c6791174a2b16c828a659479b2e",
+      "gpu_peak_bytes": 19762250752
+    },
+    {
+      "seed": 2,
+      "seconds": 467.60126264800783,
+      "frames": 49,
+      "raw_sha256": "e370a5bf53f51273cf69ae12a3ece42973b0e4a9e363cdd471ba8b1d89b18b5c",
+      "video_sha256": "35ff13a6207e220d15f3a17a5b1c92a0d51f385caba79fb3983903d910158ae4",
+      "gpu_peak_bytes": 19762250752
+    },
+    {
+      "seed": 3,
+      "seconds": 467.08625253100763,
+      "frames": 49,
+      "raw_sha256": "a6a49c36bb711e26149ad5e6544bf423ba2c289d2631ec24716470238b9b171e",
+      "video_sha256": "a9ffc274f17f8b693803cb66dc04dcbabc1199239fbf259fcef283da1fd0f242",
+      "gpu_peak_bytes": 19762250752
+    }
+  ],
+  "host_peak_rss_bytes": 6334885888,
+  "all_local_raw_and_video_hashes_verified": true,
+  "visual_inspection": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "frames": [
+      0,
+      8,
+      16,
+      24,
+      32,
+      40,
+      48
+    ],
+    "finding": "recognizable ornament/scene identity; small swing and some background drift; no calibrated force or reliability claim"
+  },
+  "browser_checks": [
+    "latest complete recorded run restores its image and action at startup without live inference",
+    "all four hash-verified native clips decode at 720x480 with 49-frame duration; explicitly cached and worker offline",
+    "reduced-motion preference prevents autoplay",
+    "shared timeline seeks all clips; pin retains four samples; unavailable fresh action preserves old output and reports failure",
+    "drag maps equal screen distances to equal horizontal and vertical control components",
+    "keyboard, strength and minimum controls obey the normalized action contract",
+    "invalid image preserves the input and existing videos",
+    "390-pixel viewport has no horizontal overflow",
+    "all-video playback and pause operate under the shared controls"
+  ],
+  "browser_errors": [],
+  "source_archive": {
+    "files": 358,
+    "sha256": "39c0fc3620829e177e5d7a8881c81ddfb7dbe56687d049ded4cd2d7471d696ac",
+    "clean_extraction_tests_passed": 731,
+    "subtests_passed": 4,
+    "skips": 0
+  },
+  "retained_failed_attempts": {
+    "50954": "environment index resolution before model execution",
+    "50955": "home cache quota before model execution",
+    "50956": "stopped before inference; official StreamForce student download quota-blocked",
+    "50962": "PHOTO-P01 preview rejected by released learned positional embedding before its first denoising step"
+  },
+  "pending": [
+    "PHOTO-P02 profile decision",
+    "PHOTO-P03 full fresh paired-action path",
+    "original physical-quality gate",
+    "final presentation rehearsal"
+  ],
+  "layout_followup": {
+    "source_revision": "5e1ccddfe788f61c069b4087cf45f198cdc61ca4",
+    "python_source_unchanged_from_full_tested_archive": true,
+    "browser_checks": [
+      "latest complete recorded run restores its image and action at startup without live inference",
+      "all four hash-verified native clips decode at 720x480 with 49-frame duration; explicitly cached and worker offline",
+      "reduced-motion preference prevents autoplay",
+      "four native futures and the generation button fit at 1366x768 without image distortion",
+      "all eight pinned/current videos fit in the 1440x900 desktop viewport",
+      "shared timeline seeks all clips; pin retains four samples; unavailable fresh action preserves old output and reports failure",
+      "drag maps equal screen distances to equal horizontal and vertical control components",
+      "keyboard, strength and minimum controls obey the normalized action contract",
+      "invalid image preserves the input and existing videos",
+      "390-pixel viewport has no horizontal overflow",
+      "all-video playback and pause operate under the shared controls"
+    ],
+    "errors": [],
+    "archive_sha256": "162cbd7332b966712c44ec70c20f392e0b4dade222b3cddd1a5aee4d87f078d9",
+    "packaging_tests_passed": 13
+  },
+  "backup": {
+    "release_url": "https://github.com/athul1810/click2future/releases/tag/untagged-0100ef5ed6a7bc2f5c80",
+    "raw_bundle_sha256": "769449fe7557c907f0c613bd822fe110ddb88690f1b87e6a75d01840bde5c88f",
+    "download_hash_verified": true,
+    "small_video_bundle": "photo-native-videos-50957.zip"
+  }
+}

@@ -22,12 +22,14 @@ cu128 = [
     "torchvision==0.26.0; sys_platform == 'win32' or sys_platform == 'linux'",
 ]
 image-metrics = ["scikit-image==0.26.0", "lpips==0.1.4", "torchvision==0.26.0"]
+photo-remote = ["paramiko==4.0.0"]
 
 [project.scripts]
 click2future-check = "click2future.env_check:main"
 
 [dependency-groups]
 dev = [
+    "paramiko==4.0.0",
     "ipykernel>=6,<8",
     "pip>=25,<27",
     "pytest>=8,<10",

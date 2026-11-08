@@ -436,17 +436,19 @@
       "Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.",
       "Keep the labelled simulator reference and hidden physics outside neural inference.",
       "Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.",
-      "Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup."
+      "Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.",
+      "Add a separately attributed real-photo extension with four retained samples, live/recorded states and paired-action replay; verify the complete allocated-worker path and retain pretrained-model limitations."
     ],
     "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/17",
-    "progress": "Native synthetic PNG upload derives masks from the supplied pixels, preserves exact frame zero and generates four ordered seeded futures without simulator metadata. The integrated real-checkpoint browser run passes 46 checks, including both object selections, paired actions and upload rejection. The source suite passes 700 tests and four subtests. Physical-quality gates and the offline presentation rehearsal remain open. See docs/results/demo-image-input.json.",
+    "progress": "PHOTO-P03 completed two fresh opposite pushes through browser, SSH and A40 worker 50985: all eight native samples and hashes are backed up, with the same image/caption/point/seeds. PHOTO-OPS01 passed early and partial cancellation; the finished partial sample remains retained. Offline replay restores both actions and rejects new uncached requests while disconnected. Right-push seeds 0/1 are weak; all four reversed-push samples move left. This is one public development image with an external pretrained model. The original physical-quality gate and final presentation-machine rehearsal remain open. Source 37078a0 passes 733 tests and four subtests. See docs/results/photo-paired-integration.json.",
     "completed_acceptance": [
       0,
       1,
       2,
-      3
+      3,
+      5
     ]
   },
   {

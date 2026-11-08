@@ -347,8 +347,11 @@ Make the model and simulator comparison understandable and repeatable.
 - [x] Keep the labelled simulator reference and hidden physics outside neural inference.
 - [x] Provide synchronized playback, bounded generation, cancellation, visible pixel-track failures, labelled exact replay and a documented local launch path.
 - [ ] Pass held-out motion/action quality and rehearse the final demo offline; repeat latency measurements on the final presentation setup.
+- [x] Add a separately attributed real-photo extension with four retained samples, live/recorded states and paired-action replay; verify the complete allocated-worker path and retain pretrained-model limitations.
 
 The original synthetic-image path now accepts native 64px two-object PNGs, derives masks from pixels and preserves the supplied frame zero in all four futures. Uploads have no simulator ground truth. The integrated E11/E0/E7 real-checkpoint run passes 46 browser checks, including both object selections, paired actions, rejected uploads and common laptop layouts. The source suite passes 700 tests and four subtests. Final physical quality and an offline rehearsal on the presentation setup remain open. See app/README.md and results/demo-image-input.json. Earlier model-specific timings remain historical and are not a benchmark of the new upload flow.
+
+7 November: PHOTO-P03 completed two fresh opposite pushes through browser, SSH and A40 worker 50985: all eight native samples and hashes are backed up, with the same image/caption/point/seeds. PHOTO-OPS01 passed early and partial cancellation; the finished partial sample remains retained. Offline replay restores both actions and rejects new uncached requests while disconnected. Right-push seeds 0/1 are weak; all four reversed-push samples move left. This is one public development image with an external pretrained model. The original physical-quality gate and final presentation-machine rehearsal remain open. Source 37078a0 passes 733 tests and four subtests. See docs/results/photo-paired-integration.json.
 
 
 <a id="t18"></a>

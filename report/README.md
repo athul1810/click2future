@@ -87,3 +87,18 @@ conditional on surviving complete trajectories; represented scene groups are
 not complete-clip counts. The primary sample-count export and independent raw
 video replay remain pending. Native synthetic PNG input is now included in the
 demo, with masks derived from pixels and no invented reference for uploads.
+
+
+## external photograph demo, 7 november
+
+The current review export has 32 pages. Section 4.3 and Figure 7 describe the
+separate external Force Prompting/CogVideoX integration. Every seed for both
+opposite pushes remains visible, including weak right-push seeds 0/1. The
+one-image development example has no physical ground truth or calibration.
+The photo outputs do not enter the original trained-model scores.
+
+The paired A40 run, cancellation checks and offline recorded replay pass.
+The first 28 report pages remain pixel-identical to the prior review export.
+The 17-slide review deck adds one embedded all-eight video. Three contribution
+confirmations, the final team rehearsal and coordinated upload remain open.
+StreamForce native feasibility is a separate pending engineering probe.

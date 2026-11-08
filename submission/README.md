@@ -678,6 +678,27 @@ and rechecks that identity at completion. Dependencies and generated outputs are
 outside this source identity. Use the fixed training recipes to reproduce the
 six checkpoints; the code ZIP contains no supplied weights or datasets.
 
+## Separate real-photo interface
+
+Start the photograph interface with:
+
+```text
+python -m click2future.demo.photo_server --spool outputs/photo --backend force-prompting --port 8770
+```
+
+The external
+pretrained Force Prompting/CogVideoX backend is separate from our trained
+64-pixel models and their reported evaluations. This archive contains the
+interface, queue, SSH transport and allocated-worker source, but no external
+model, external repository, photographs or recordings. A prepared external
+environment and verified official artifacts are required for fresh generation.
+Use the optional `photo-remote` dependency for `scripts/photo_remote.py`.
+The full backend setup is team infrastructure, not an offline reproduction
+claim for this source-only submission. Native output is 49 frames, 720x480,
+8 fps; four declared seeds are retained and replay is explicitly labelled.
+Force is an uncalibrated native control; sampled variation is not calibrated
+uncertainty. Do not attribute pretrained photo outputs to our original models.
+
 After all six runs finish, `python scripts/analyse_prior_replication.py --root RESULTS
 --output NEW_JSON` rechecks the frozen inputs, checkpoint identities, pixel
 replays and per-scene counts, and reproduces the declared decision. Generate

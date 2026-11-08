@@ -68,9 +68,14 @@ def test_rotated_grids_match_native_pillow_crop_with_subpixel_translations():
     rng = np.random.default_rng(43788)
     obs = observation()
     for angle in [0, np.pi / 2, -np.pi / 2, np.pi, *rng.uniform(-np.pi, np.pi, 60)]:
-        value = np.array([
-            *rng.uniform(-1.5, 1.5, 2), np.sin(angle), (np.cos(angle) - 1) / 2,
-        ], np.float32)
+        value = np.array(
+            [
+                *rng.uniform(-1.5, 1.5, 2),
+                np.sin(angle),
+                (np.cos(angle) - 1) / 2,
+            ],
+            np.float32,
+        )
         # sprite_areas refuses a native crop that differs by even one pixel.
         result = sprite_areas(obs, value, 0)
         assert 0 <= result["native_amodal_area"] <= result["unclipped_amodal_area"]
