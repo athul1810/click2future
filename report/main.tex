@@ -808,6 +808,59 @@ Force Prompting/CogVideoX. Input: StreamForce public development gallery.}
 \end{figure}
 \clearpage
 
+
+\subsection{Native StreamForce integration}
+\label{sec:photo-streamforce}
+The released StreamForce student EMA~\cite{streamforce} provides a second,
+separately attributed photograph backend. PHOTO-S01 checks all four native
+seeds and a seed-0 repeat on one A40. Each clip has 81 frames at $832\times480$
+and 16 fps, using the released four-step sampler. Every float output is finite
+before conversion to RGB. Generation takes 20.50 to 22.22 seconds per clip in
+this smoke run after loading. The repeated seed matches exactly. The official
+smoke caption already describes motion, so this result alone cannot establish
+force control. These outputs do not enter the controlled-model scores.
+
+PHOTO-S02 uses the same public mug image, neutral caption, point, magnitude
+and seeds for opposite pushes. Both fresh requests run through the browser,
+SSH queue and allocated worker. They take 132.73 and 134.28 seconds, including
+a fresh model load for each action and presentation-file transfer. Every raw
+RGB array and MP4 matches its local backup digest. Fixed-frame manual review
+shows rightward mug translation in all four right-push samples and leftward
+translation in all four reversed samples (Figure~\ref{fig:photo-streamforce}).
+Mug size and shape, hands and the background still vary. One reused public
+development image provides no physical ground truth, generalization estimate
+or calibration. The different native crop, horizon and sampler also prevent
+an isolated quality or speed comparison with PHOTO-P03.
+
+The queue isolates each action in a disposable GPU process. The initial
+recovery attempt fails on home-directory quota while saving output; its raw
+arrays and failure records remain retained. After freeing byte-verified
+redundant source archives and checking actual writable capacity, repeated
+operational
+checks cancel before any completed sample and after one finished sample has
+been backed up. The cancelled action retains its partial output and never
+becomes four ready futures. The preceding complete output stays visible.
+A new request with seeds 16, 17, 18 and 19 then completes and backs up all four samples,
+checking recovery after interruption. A separate offline snapshot restores
+both primary pushes with eight synchronized videos and explicit replay labels.
+It refuses unseen requests while preserving the previous output. This supports
+a repeatable presentation, while the original learned-model quality gates
+remain open.
+
+\clearpage
+\begin{figure}[!ht]
+\centering
+\pdfximage width\linewidth{report/figures/photo_streamforce_native.png}\pdfrefximage\pdflastximage
+\caption{PHOTO-S02, every declared native StreamForce sample for both pushes.
+Columns show frames zero and 80 (5.0 seconds). All rows use the same
+input-defined horizontal band, rows 320 to 479 of the 480-row output, without
+altering generated pixels. External model: released StreamForce student EMA.
+Input: its public development gallery, point\_1. These are manually inspected
+development outputs without calibrated physical ground truth.}
+\label{fig:photo-streamforce}
+\end{figure}
+\clearpage
+
 \section{Conclusion}
 The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow-decoder CVAE fails the fixed 0.5-second window, yet over the full clip it moves the selected object along the force and reverses it in all three training seeds. It does not scale motion consistently with force magnitude, and the unselected object drifts in the selection probe. It is the final E0. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. The E6 follow-ups remove measured unforced drift and reduce penetration, while introducing a tradeoff with forward-motion spread and wall completeness. Their combined changes do not isolate a single loss effect. The later matched canvas-loss comparison improves visibility from 88 to 95 complete clips, while leaving penetration and overall strict quality unresolved. Rendered-reference calibration also shows that timed contact scores depend on estimator errors and hidden-physics variation. The final held-out evaluation repeats these patterns on unseen scenes (Section~\ref{sec:final}). With the pilot's 5,000 training clips, E2 and E3 produce no trackable video. Trained on as many clips as E0, they produce clean frames but lose object identity, so the numeric-versus-spatial question remains unanswered. Contact quality also remains open. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
 

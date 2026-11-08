@@ -105,6 +105,9 @@ def make_server(service, *, port=8770):
                     self.video(service.media(job_id, name))
                 else:
                     self.send(404, {"error": "Not found"})
+            except (BrokenPipeError, ConnectionResetError):
+                # Browsers cancel range downloads when seeking or closing a video.
+                return
             except (KeyError, ValueError, FileNotFoundError):
                 self.send(404, {"error": "Not found"})
 

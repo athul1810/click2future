@@ -113,14 +113,17 @@ seeds there. Cancellation terminates that process before the parent publishes
 the final state. Finished samples retain their incomplete-attempt records.
 The next action starts with a fresh process, including text encoding. This
 avoids reusing an interrupted asynchronous decoder, at the cost of a cold load
-for each action. End-to-end timing and native cancellation still need to pass
-before this candidate replaces the existing backend.
+for each action. PHOTO-S02 now passes paired fresh generation, native cancellation, recovery
+and offline replay. Teammate review remains open; keep the existing backend
+and its recorded fallback available.
 
 Use a new `streamforce` spool. Set `C2F_PHOTO_PROJECT`, `C2F_STREAMFORCE_ROOT`,
 `C2F_STREAMFORCE_PROBE` and `C2F_PHOTO_SPOOL`, then submit
 `cluster/streamforce_worker.sbatch` on the node holding the verified files.
 The candidate's native contract is 81 frames, 832x480 at 16 fps with four
-denoising steps. This describes its interface, not a measured A40 speed result.
+denoising steps. PHOTO-S01 measures about 21 seconds per clip after loading. The complete
+four-seed browser requests take 132.73 and 134.28 seconds with a cold process
+per action. These scopes differ from published hardware measurements.
 
 The batch script exercises a 32 MiB write of distinct data in the shared spool
 before starting the worker. TC2's home quota can reject writes even when `df`
@@ -157,3 +160,15 @@ snapshot. Dependency installation is still required before going offline.
 The paired-run evidence and limitations are in
 [the integration summary](results/photo-paired-integration.json). The original
 models' physical quality and final presentation-machine rehearsal remain open.
+
+
+## StreamForce paired run
+
+The [native integration record](results/photo-streamforce-integration.json)
+retains all eight primary samples, the five-run smoke, cancellation attempts
+and the separate post-cancellation recovery request. All raw/MP4 digests are
+verified locally. The frozen `streamforce` spool replays both opposite pushes
+without a live worker and rejects unseen requests. Manual fixed-frame review
+shows all four samples moving in each requested direction; mug shape, hands
+and background still vary. This reused public development photograph has no
+physical ground truth or calibrated uncertainty. No original-model score changes.

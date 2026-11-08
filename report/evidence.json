@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 32,
+  "pages": 34,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "878d28908f9b63abb715b45aadc54463e7d4641d46bff4282df7c34994270f06",
+    "main.tex": "80706a72d9004e99b7548db135b0a3db3134e61ce5d8a60085319630605ab2c1",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "aa675cf794bbba1a7bba3fbeef8bfefaeefd40a85f04546466a71e9013c99ec6",
+    "contributions.md": "c0381296f2c219f2e071140aaed85d4375acd07b6d1942c223a30a992c5d1737",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -204,7 +204,9 @@
     "../docs/results/replication-d017.json": "e06727449e0539d40f88396470fe88eb98c7b937b8168d8a259b2111e6f81fe7",
     "../docs/results/demo-image-input.json": "a377474122b6a5cba199b95acaa3c98823b067a758c882dc64038616dbd1ffe9",
     "figures/photo_paired_native.png": "2a5b0e2d77bf4b8c8fd3e34ee81310909a2fd729f86cb1dff0f0fb2d3a8a03a7",
-    "../docs/results/photo-paired-integration.json": "e1b2f3e7dda420a361483ae4c145bfb8fe177a058fc3c7a66712f7276b866011"
+    "../docs/results/photo-paired-integration.json": "e1b2f3e7dda420a361483ae4c145bfb8fe177a058fc3c7a66712f7276b866011",
+    "figures/photo_streamforce_native.png": "7afd59d5cd689604ba7d1f56cb488d4997db2f050ab4ef4950bd67f18aa568c2",
+    "../docs/results/photo-streamforce-integration.json": "8cf8bcb3f91d52a18cdac91e7b6b5ebe3f72255fc45b7bd46062be8ef079955d"
   },
   "rendered_pdf_sha256": "c463a535af01491c258b80c11c1520e19ece1c90e58a1a488d41ef2c57582f3a",
   "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
@@ -1005,6 +1007,50 @@
       "held-out physical quality",
       "presentation-machine team rehearsal",
       "three contribution confirmations"
+    ]
+  },
+  "external_streamforce_2026_11_08": {
+    "record": "docs/results/photo-streamforce-integration.json",
+    "scope": "external pretrained engineering development; no original-model promotion or SOTA claim",
+    "native_primary_samples": 8,
+    "all_seeds_retained": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "native_shape": [
+      81,
+      480,
+      832,
+      3
+    ],
+    "fps": 16,
+    "steps": 4,
+    "browser_action_seconds": [
+      132.73399999993853,
+      134.28100000019185
+    ],
+    "all_raws_and_videos_verified": true,
+    "cancellation_and_recovery": "passed after retained quota failure",
+    "offline_replay": "passed",
+    "report_pages": 34,
+    "new_pages_inspected": [
+      31,
+      32,
+      33,
+      34
+    ],
+    "review_slides": 17,
+    "native_powerpoint_playback_inspected": true,
+    "model_credit": "StreamForce released student EMA; team did not train this model",
+    "input_credit": "StreamForce public development gallery point_1",
+    "original_quality_gate": "still failing; all controlled-model scores remain unchanged",
+    "remaining": [
+      "teammate review of PRs 79 and 82",
+      "three contribution confirmations",
+      "presentation-machine team rehearsal",
+      "coordinated submission"
     ]
   }
 }
