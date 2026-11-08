@@ -32,5 +32,7 @@
   "risk_penetration_weight": 0.0,
   "relational": true,
   "world_condition": true,
-  "world_prior_only": false
+  "world_prior_only": false,
+  "contact_transition_weight": 0.0,
+  "normal_velocity_weight": 0.0
 }
