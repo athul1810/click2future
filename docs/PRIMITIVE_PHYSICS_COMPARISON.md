@@ -82,3 +82,27 @@ The candidate fails the boundary rule and the bootstrap rule (upper bound not
 below zero). It is rejected as the demo physics method. The hull baseline stays
 the default. Both methods still fail the original strict single-reference gate.
 The full record is `docs/results/primitive-physics-d023.json`.
+
+## D024: how far the strict gate can be reached without hidden physics
+
+The strict gate needs every case's mean selected ADE to be at most 0.03125
+against one simulator reference. That reference uses the true hidden mass,
+friction and restitution, which are sampled independently of appearance, so a
+single image does not reveal them.
+
+`scripts/prior_simulator_ceiling.py` re-simulates each D023 case with its true
+scene geometry and the same four prior draws the baselines use, renders it, and
+scores it with the unchanged tracker and gate (TC2 job 52279, same corpus hash).
+
+| Generator on the D023 corpus | Cases over 0.03125 | Mean selected ADE | Gate |
+|---|---:|---:|---|
+| True simulator, true hidden physics (tracker check) | 0/60 | 0.00424 | Pass |
+| True simulator, sampled hidden physics (ceiling) | 18/60 | 0.02561 | Fail |
+| Hull physics-assisted baseline (D023) | 19/60 | 0.02638 | Fail |
+
+All 18 ceiling failures also fail for the hull baseline; one collision case fails
+only for the baseline. Under this prior, exact geometry and an exact simulator
+still fail the gate, so the gate also measures hidden-physics uncertainty. It is
+not passable by a method that samples hidden physics from the declared prior. The
+gate and every historical result stay unchanged; this is a descriptive bound.
+The record is `docs/results/prior-simulator-ceiling-d024.json`.

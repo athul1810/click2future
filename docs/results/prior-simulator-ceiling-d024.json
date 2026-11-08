@@ -1,0 +1,418 @@
+{
+  "study_id": "D024",
+  "tc2_job": 52279,
+  "source_revision": "25b627b64b3940e57b84902a1edef9b8b8951839",
+  "dataset_manifest_sha256": "f79d140e4667424a27bcc6c60655b598c1b166c03143adcdf9d355ec1ff777b9",
+  "result_sha256": "560d0b5687b428dfa6999e3791afd6ecbeddfb751ed9bdb310e54d6c34c3fd05",
+  "comparison_with_d023_hull": {
+    "hull_cases_over_gate": 19,
+    "ceiling_cases_over_gate": 18,
+    "over_gate_in_both": 18,
+    "over_gate_only_for_hull": [
+      "g03-scene-00920003-collision_1_to_0-p00"
+    ],
+    "over_gate_only_for_ceiling": []
+  },
+  "note": "Same corpus as D023 (seed 920000, regenerated on TC2). A laptop regeneration gives a different manifest hash, so reproduce on TC2. Descriptive bound only; no gate, scorer or historical result changed.",
+  "result": {
+    "study_id": "D024",
+    "split": "fresh_id_test",
+    "gate_selected_ade": 0.03125,
+    "sampled_world": {
+      "quality": {
+        "case_count": 60,
+        "expected_observations": 14880,
+        "tracked_observations": 14880,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 240,
+        "expected_selected_clips": 240,
+        "complete_all_object_clips": 240,
+        "expected_all_object_clips": 240,
+        "selected_ade_mean_cases_if_all_complete": 0.025607993820515082,
+        "passes_tracking_and_selected_trajectory_gate": false,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "cases_over_gate": 18,
+      "case_count": 60
+    },
+    "true_world": {
+      "quality": {
+        "case_count": 60,
+        "expected_observations": 14880,
+        "tracked_observations": 14880,
+        "tracking_fraction": 1.0,
+        "complete_selected_clips": 240,
+        "expected_selected_clips": 240,
+        "complete_all_object_clips": 240,
+        "expected_all_object_clips": 240,
+        "selected_ade_mean_cases_if_all_complete": 0.004239251932411342,
+        "passes_tracking_and_selected_trajectory_gate": true,
+        "scope": "Strict single-reference engineering check. Hidden-physics coverage and action response are reported separately; this is not a physical-validity guarantee."
+      },
+      "cases_over_gate": 0,
+      "case_count": 60
+    },
+    "cases": [
+      {
+        "sample_id": "g03-scene-00920002-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920002",
+        "sampled_world_selected_ade": 0.011652417074292699,
+        "true_world_selected_ade": 0.003748829040781909
+      },
+      {
+        "sample_id": "g03-scene-00920002-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920002",
+        "sampled_world_selected_ade": 0.022207550879017626,
+        "true_world_selected_ade": 0.0031183690584041294
+      },
+      {
+        "sample_id": "g03-scene-00920002-forward-p00",
+        "scene_group_id": "g03-scene-00920002",
+        "sampled_world_selected_ade": 0.013190899424299761,
+        "true_world_selected_ade": 0.005625370339389265
+      },
+      {
+        "sample_id": "g03-scene-00920002-reverse-p00",
+        "scene_group_id": "g03-scene-00920002",
+        "sampled_world_selected_ade": 0.013190903851628709,
+        "true_world_selected_ade": 0.0056253709041272516
+      },
+      {
+        "sample_id": "g03-scene-00920002-wall-p00",
+        "scene_group_id": "g03-scene-00920002",
+        "sampled_world_selected_ade": 0.03225162692872875,
+        "true_world_selected_ade": 0.006380171751410131
+      },
+      {
+        "sample_id": "g03-scene-00920002-zero-p00",
+        "scene_group_id": "g03-scene-00920002",
+        "sampled_world_selected_ade": 0.004687488079071045,
+        "true_world_selected_ade": 0.004687488079071045
+      },
+      {
+        "sample_id": "g03-scene-00920003-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920003",
+        "sampled_world_selected_ade": 0.038691547155870074,
+        "true_world_selected_ade": 0.004662886060354132
+      },
+      {
+        "sample_id": "g03-scene-00920003-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920003",
+        "sampled_world_selected_ade": 0.02673528061539764,
+        "true_world_selected_ade": 0.003565964042362833
+      },
+      {
+        "sample_id": "g03-scene-00920003-forward-p00",
+        "scene_group_id": "g03-scene-00920003",
+        "sampled_world_selected_ade": 0.061748087800313683,
+        "true_world_selected_ade": 0.005011279103994077
+      },
+      {
+        "sample_id": "g03-scene-00920003-reverse-p00",
+        "scene_group_id": "g03-scene-00920003",
+        "sampled_world_selected_ade": 0.06174808786075276,
+        "true_world_selected_ade": 0.005011272768732381
+      },
+      {
+        "sample_id": "g03-scene-00920003-wall-p00",
+        "scene_group_id": "g03-scene-00920003",
+        "sampled_world_selected_ade": 0.052774031786212164,
+        "true_world_selected_ade": 0.003632016380340829
+      },
+      {
+        "sample_id": "g03-scene-00920003-zero-p00",
+        "scene_group_id": "g03-scene-00920003",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      },
+      {
+        "sample_id": "g03-scene-00920004-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920004",
+        "sampled_world_selected_ade": 0.03375187382176863,
+        "true_world_selected_ade": 0.0034398116142923298
+      },
+      {
+        "sample_id": "g03-scene-00920004-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920004",
+        "sampled_world_selected_ade": 0.015951624819268213,
+        "true_world_selected_ade": 0.002907103214510532
+      },
+      {
+        "sample_id": "g03-scene-00920004-forward-p00",
+        "scene_group_id": "g03-scene-00920004",
+        "sampled_world_selected_ade": 0.06755781835071659,
+        "true_world_selected_ade": 0.004632654997337365
+      },
+      {
+        "sample_id": "g03-scene-00920004-reverse-p00",
+        "scene_group_id": "g03-scene-00920004",
+        "sampled_world_selected_ade": 0.06755781930854585,
+        "true_world_selected_ade": 0.0046326536875794045
+      },
+      {
+        "sample_id": "g03-scene-00920004-wall-p00",
+        "scene_group_id": "g03-scene-00920004",
+        "sampled_world_selected_ade": 0.08289201956348174,
+        "true_world_selected_ade": 0.007829998086850266
+      },
+      {
+        "sample_id": "g03-scene-00920004-zero-p00",
+        "scene_group_id": "g03-scene-00920004",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      },
+      {
+        "sample_id": "g03-scene-00920005-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920005",
+        "sampled_world_selected_ade": 0.022989710078867208,
+        "true_world_selected_ade": 0.002717880984693611
+      },
+      {
+        "sample_id": "g03-scene-00920005-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920005",
+        "sampled_world_selected_ade": 0.018535028096296754,
+        "true_world_selected_ade": 0.0035041478821697613
+      },
+      {
+        "sample_id": "g03-scene-00920005-forward-p00",
+        "scene_group_id": "g03-scene-00920005",
+        "sampled_world_selected_ade": 0.037305318194227145,
+        "true_world_selected_ade": 0.0038523420877040367
+      },
+      {
+        "sample_id": "g03-scene-00920005-reverse-p00",
+        "scene_group_id": "g03-scene-00920005",
+        "sampled_world_selected_ade": 0.03730531839907747,
+        "true_world_selected_ade": 0.003852342867184728
+      },
+      {
+        "sample_id": "g03-scene-00920005-wall-p00",
+        "scene_group_id": "g03-scene-00920005",
+        "sampled_world_selected_ade": 0.05334543964655853,
+        "true_world_selected_ade": 0.004243891879327956
+      },
+      {
+        "sample_id": "g03-scene-00920005-zero-p00",
+        "scene_group_id": "g03-scene-00920005",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      },
+      {
+        "sample_id": "g03-scene-00920006-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920006",
+        "sampled_world_selected_ade": 0.010560162177587476,
+        "true_world_selected_ade": 0.003247246841534138
+      },
+      {
+        "sample_id": "g03-scene-00920006-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920006",
+        "sampled_world_selected_ade": 0.02156522402140076,
+        "true_world_selected_ade": 0.003462664639053126
+      },
+      {
+        "sample_id": "g03-scene-00920006-forward-p00",
+        "scene_group_id": "g03-scene-00920006",
+        "sampled_world_selected_ade": 0.010251747703393864,
+        "true_world_selected_ade": 0.0055764421149994145
+      },
+      {
+        "sample_id": "g03-scene-00920006-reverse-p00",
+        "scene_group_id": "g03-scene-00920006",
+        "sampled_world_selected_ade": 0.010251748361202654,
+        "true_world_selected_ade": 0.005576441257755515
+      },
+      {
+        "sample_id": "g03-scene-00920006-wall-p00",
+        "scene_group_id": "g03-scene-00920006",
+        "sampled_world_selected_ade": 0.023291756264555666,
+        "true_world_selected_ade": 0.005478088920960701
+      },
+      {
+        "sample_id": "g03-scene-00920006-zero-p00",
+        "scene_group_id": "g03-scene-00920006",
+        "sampled_world_selected_ade": 0.004687488079071045,
+        "true_world_selected_ade": 0.004687488079071045
+      },
+      {
+        "sample_id": "g03-scene-00920007-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920007",
+        "sampled_world_selected_ade": 0.026785676129297883,
+        "true_world_selected_ade": 0.0032620345374535418
+      },
+      {
+        "sample_id": "g03-scene-00920007-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920007",
+        "sampled_world_selected_ade": 0.023183833154465452,
+        "true_world_selected_ade": 0.003049251156743685
+      },
+      {
+        "sample_id": "g03-scene-00920007-forward-p00",
+        "scene_group_id": "g03-scene-00920007",
+        "sampled_world_selected_ade": 0.04281706041594559,
+        "true_world_selected_ade": 0.004737255081843067
+      },
+      {
+        "sample_id": "g03-scene-00920007-reverse-p00",
+        "scene_group_id": "g03-scene-00920007",
+        "sampled_world_selected_ade": 0.04281705852378335,
+        "true_world_selected_ade": 0.004737255050901419
+      },
+      {
+        "sample_id": "g03-scene-00920007-wall-p00",
+        "scene_group_id": "g03-scene-00920007",
+        "sampled_world_selected_ade": 0.08089575431353185,
+        "true_world_selected_ade": 0.005604683757340917
+      },
+      {
+        "sample_id": "g03-scene-00920007-zero-p00",
+        "scene_group_id": "g03-scene-00920007",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      },
+      {
+        "sample_id": "g03-scene-00920008-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920008",
+        "sampled_world_selected_ade": 0.010083406409000142,
+        "true_world_selected_ade": 0.004156053702908326
+      },
+      {
+        "sample_id": "g03-scene-00920008-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920008",
+        "sampled_world_selected_ade": 0.02113301373569476,
+        "true_world_selected_ade": 0.0031262796786356677
+      },
+      {
+        "sample_id": "g03-scene-00920008-forward-p00",
+        "scene_group_id": "g03-scene-00920008",
+        "sampled_world_selected_ade": 0.00980443279275905,
+        "true_world_selected_ade": 0.004803665065511338
+      },
+      {
+        "sample_id": "g03-scene-00920008-reverse-p00",
+        "scene_group_id": "g03-scene-00920008",
+        "sampled_world_selected_ade": 0.009804432411709077,
+        "true_world_selected_ade": 0.004803667927289966
+      },
+      {
+        "sample_id": "g03-scene-00920008-wall-p00",
+        "scene_group_id": "g03-scene-00920008",
+        "sampled_world_selected_ade": 0.021218171235563386,
+        "true_world_selected_ade": 0.0041256845011170854
+      },
+      {
+        "sample_id": "g03-scene-00920008-zero-p00",
+        "scene_group_id": "g03-scene-00920008",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      },
+      {
+        "sample_id": "g03-scene-00920009-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920009",
+        "sampled_world_selected_ade": 0.015956081531510242,
+        "true_world_selected_ade": 0.0033380566992100087
+      },
+      {
+        "sample_id": "g03-scene-00920009-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920009",
+        "sampled_world_selected_ade": 0.025932149257760172,
+        "true_world_selected_ade": 0.0033135503334672345
+      },
+      {
+        "sample_id": "g03-scene-00920009-forward-p00",
+        "scene_group_id": "g03-scene-00920009",
+        "sampled_world_selected_ade": 0.025344560883222872,
+        "true_world_selected_ade": 0.004023257050992641
+      },
+      {
+        "sample_id": "g03-scene-00920009-reverse-p00",
+        "scene_group_id": "g03-scene-00920009",
+        "sampled_world_selected_ade": 0.025344560501309326,
+        "true_world_selected_ade": 0.004023254877634957
+      },
+      {
+        "sample_id": "g03-scene-00920009-wall-p00",
+        "scene_group_id": "g03-scene-00920009",
+        "sampled_world_selected_ade": 0.03301334437425128,
+        "true_world_selected_ade": 0.004159969526538567
+      },
+      {
+        "sample_id": "g03-scene-00920009-zero-p00",
+        "scene_group_id": "g03-scene-00920009",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      },
+      {
+        "sample_id": "g03-scene-00920010-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920010",
+        "sampled_world_selected_ade": 0.010959210508494556,
+        "true_world_selected_ade": 0.0038282095866468214
+      },
+      {
+        "sample_id": "g03-scene-00920010-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920010",
+        "sampled_world_selected_ade": 0.026500963897183646,
+        "true_world_selected_ade": 0.0026309460518012234
+      },
+      {
+        "sample_id": "g03-scene-00920010-forward-p00",
+        "scene_group_id": "g03-scene-00920010",
+        "sampled_world_selected_ade": 0.021332439850632424,
+        "true_world_selected_ade": 0.005506551153248672
+      },
+      {
+        "sample_id": "g03-scene-00920010-reverse-p00",
+        "scene_group_id": "g03-scene-00920010",
+        "sampled_world_selected_ade": 0.02133243867186553,
+        "true_world_selected_ade": 0.005506554476778666
+      },
+      {
+        "sample_id": "g03-scene-00920010-wall-p00",
+        "scene_group_id": "g03-scene-00920010",
+        "sampled_world_selected_ade": 0.04256667067757779,
+        "true_world_selected_ade": 0.006764565784519863
+      },
+      {
+        "sample_id": "g03-scene-00920010-zero-p00",
+        "scene_group_id": "g03-scene-00920010",
+        "sampled_world_selected_ade": 0.004687488079071045,
+        "true_world_selected_ade": 0.004687488079071045
+      },
+      {
+        "sample_id": "g03-scene-00920011-collision_0_to_1-p00",
+        "scene_group_id": "g03-scene-00920011",
+        "sampled_world_selected_ade": 0.019763219850558796,
+        "true_world_selected_ade": 0.004100263633076434
+      },
+      {
+        "sample_id": "g03-scene-00920011-collision_1_to_0-p00",
+        "scene_group_id": "g03-scene-00920011",
+        "sampled_world_selected_ade": 0.01176606652481027,
+        "true_world_selected_ade": 0.004607990228576349
+      },
+      {
+        "sample_id": "g03-scene-00920011-forward-p00",
+        "scene_group_id": "g03-scene-00920011",
+        "sampled_world_selected_ade": 0.023937169710207765,
+        "true_world_selected_ade": 0.004293523306587163
+      },
+      {
+        "sample_id": "g03-scene-00920011-reverse-p00",
+        "scene_group_id": "g03-scene-00920011",
+        "sampled_world_selected_ade": 0.023937171613594436,
+        "true_world_selected_ade": 0.00429352987684148
+      },
+      {
+        "sample_id": "g03-scene-00920011-wall-p00",
+        "scene_group_id": "g03-scene-00920011",
+        "sampled_world_selected_ade": 0.03701015238899705,
+        "true_world_selected_ade": 0.004286274689449797
+      },
+      {
+        "sample_id": "g03-scene-00920011-zero-p00",
+        "scene_group_id": "g03-scene-00920011",
+        "sampled_world_selected_ade": 0.003125011920928955,
+        "true_world_selected_ade": 0.003125011920928955
+      }
+    ]
+  }
+}
