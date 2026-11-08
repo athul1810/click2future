@@ -33,9 +33,8 @@ root = Path(sys.argv[1]).resolve()
 root.mkdir(parents=True, exist_ok=True)
 try:
     with NamedTemporaryFile(prefix=".quota-preflight-", dir=root) as stream:
-        block = bytes(1024 * 1024)
         for _ in range(32):
-            stream.write(block)
+            stream.write(os.urandom(1024 * 1024))
         stream.flush()
         os.fsync(stream.fileno())
 except OSError as error:
