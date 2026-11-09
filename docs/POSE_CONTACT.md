@@ -57,6 +57,17 @@ from the team's checksummed `d018-frozen-replication.tar.gz` release backup.
 The retained record is `docs/results/pose-contact.json` (about 8 minutes on a
 laptop CPU with all six D018 arms, no GPU).
 
+The D028 record `docs/results/pose-contact-d028.json` (about 6 minutes) uses the
+D028 comparison layout:
+
+```sh
+python scripts/pose_contact.py --dataset data/frozen \
+  --held-out-dataset <seed-940000 data> --held-out-study D028 \
+  --held-out neural=compare/neural --held-out projected=compare/projected \
+  --held-out-touch 0.3 0.5 0.8 1.0 --standoff \
+  --output outputs/pose-contact-d028.json
+```
+
 ## Result 1: poses recover contact far better than pixels
 
 Primary offset 0.2. The training sweep selects a touch threshold of 0.05
@@ -149,6 +160,58 @@ with a measure that uses all references and no pixels. Single-reference pose F1
 also needs this qualification: arms score 0.145-0.229 and valid alternative references
 0.275.
 
+## Result 5: the D028 projection stops objects short of exact contact
+
+D028 applies a geometric projection after sampling the D020 neural poses: it
+separates overlapping observed pixel-centre hulls (`contact_projection.py`). Its
+recorded RGB contact F1 is 0.169 raw and 0.176 projected, which cannot show what
+the projection does to contact timing. The raw job-52299 outputs (Athul's draft
+release `d028-compare-raw-job52299.tar.gz`, `results.json` equal to the recorded
+`result_sha256`) are scored here with `--held-out-study D028`. The seed-940000
+corpus was regenerated locally from 314fa0c: all 210 `id_test` clip arrays match
+the plan's `input_sha256` byte for byte, while metadata files differ only in the
+last float digit, so the local manifest hash (75a51045) differs from TC2's.
+Every reference replay passes the 1e-6 position check.
+
+Twenty of the 60 conditions involve contact. Offset 0.2, training-selected touch
+threshold 0.05 pixels:
+
+| First contact | Occurrence | Timed | Within range ±1 | Mean nearest error |
+|---|---:|---:|---:|---:|
+| Simulator references (leave-one-out, 200 scorable) | 1.000 | 80 | 0.850 | 0.84 |
+| Neural D020 | 0.904 | 57 | 0.491 | 3.61 |
+| Neural + projection | 0.796 | 31 | 0.516 | 3.26 |
+
+All 160 samples of no-contact conditions are correct in both arms. The drop comes
+from contact conditions: 49 of 80 projected samples never reach exact contact,
+against 23 raw. The projection separates observed pixel-centre hulls, and those
+hulls do not coincide with the exact outlines. The recorded diagnostic
+(`--standoff`, `projection_standoff_diagnostic`) replays every reference of the 20
+contact conditions: at the 1,032 frames where they truly touch, the pixel-centre
+hulls are still 0.23 pixels apart at the median, and anywhere from 0.91 pixels
+overlapping to 0.46 pixels apart (5th-95th percentile), depending on orientation.
+The closest exact gap of a projected sample has median 0.29 pixels (interquartile
+-0.20 to 0.56), against -0.20 raw, so projected objects usually stop short of the
+exact outline, which the 0.05-pixel touch rule counts as no contact. Offsets 0 and 0.5 give the same pattern (projected occurrence 0.783 and
+0.817 against 0.900 and 0.921 raw).
+
+A labelled sensitivity check rescores references and both arms at looser touch
+thresholds (`--held-out-touch`); the training-selected threshold stays primary:
+
+| Touch, pixels | References: range / error | Neural: occurrence / range / error | Projected: occurrence / range / error |
+|---|---|---|---|
+| 0.05 | 0.850 / 0.84 | 0.904 / 0.491 / 3.61 | 0.796 / 0.516 / 3.26 |
+| 0.3 | 0.863 / 0.85 | 0.954 / 0.609 / 2.36 | 0.838 / 0.634 / 2.98 |
+| 0.5 | 0.887 / 0.70 | 0.983 / 0.658 / 1.78 | 0.858 / 0.609 / 3.11 |
+| 0.8 | 0.887 / 0.66 | 1.000 / 0.888 / 0.88 | 0.979 / 0.867 / 1.08 |
+| 1.0 | 0.912 / 0.57 | 1.000 / 0.863 / 0.60 | 1.000 / 0.813 / 0.70 |
+
+At about one pixel of tolerance both arms reach contact in every contact
+condition, with timing close to the references; the projection is slightly
+behind the raw sampler. At exact-contact resolution the projection leaves a
+sub-pixel standoff that no pixel-level score can see. This is one checkpoint on
+ten fresh ID groups and changes no D028 rule or result.
+
 ## Limitations
 
 - Only 8 of the 24 validation conditions involve contact (four scenes, two
@@ -164,6 +227,8 @@ also needs this qualification: arms score 0.145-0.229 and valid alternative refe
   triangles appear only in the shape-OOD split, which is not read.
 - D018 is a held-out split. It is read after every D018 decision was frozen and
   changes no gate, selection or threshold.
+- D028 is likewise read after its decision was frozen. Its touch-threshold sweep
+  is a sensitivity check, not a re-selected threshold.
 - This is a measurement control. It does not change any recorded score or
   promote a checkpoint, and the validation scenes were already used for
   development.

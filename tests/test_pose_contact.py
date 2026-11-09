@@ -90,3 +90,17 @@ def test_evaluate_rejects_a_plan_from_another_split(tmp_path):
     (tmp_path / "plan.json").write_text('{"split": "id_test", "cases": []}')
     with pytest.raises(ValueError, match="validation"):
         MODULE["evaluate"](tmp_path, tmp_path, 0.05, 0.2)
+
+
+def test_d028_layout_reads_shared_plan_and_per_arm_pixel_counts(tmp_path):
+    compare = tmp_path / "compare"
+    (compare / "projected").mkdir(parents=True)
+    (compare / "plan.json").write_text('{"split": "validation", "cases": []}')
+    (compare / "results.json").write_text(
+        '{"models": {"projected": {"contact_counts": {"tp": 21, "fp": 94, "fn": 103}}}}'
+    )
+    events = MODULE["_pixel_events"](compare / "projected", True)
+    assert events["true_positive"] == 21
+    assert events["f1"] == pytest.approx(42 / (42 + 94 + 103))
+    with pytest.raises(ValueError, match="id_test"):
+        MODULE["evaluate"](compare / "projected", tmp_path, 0.05, 0.2, "id_test")

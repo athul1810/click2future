@@ -927,6 +927,22 @@ rises by 11\%; that regression was not an acceptance rule and remains reported.
 The unchanged strict quality flag is false for both arms. This is one checkpoint
 on ten ID groups, with no OOD or calibrated physics claim.
 
+After D028 was frozen, we applied the pose-based first-contact measure of
+Section~\ref{sec:pose-contact} to the saved D028 poses, with the touch threshold
+chosen on the original training clips. Twenty of the 60 conditions involve
+contact. The projected samples agree with the references on whether contact
+occurs in 0.7958 of samples, against 0.9042 for the raw sampler: 49 of 80
+projected contact-condition samples never reach exact contact, against 23 raw.
+The projection separates observed pixel-centre hulls, which at true simulator
+contact are still 0.23 pixels apart at the median. Projected objects therefore
+stop short of the exact outline (median closest gap 0.29 pixels, against $-0.20$
+raw). With a one-pixel touch tolerance, used only as a sensitivity check, both
+arms reach contact in every contact condition, and the projection's mean
+first-contact error of 0.70 intervals is close to the raw 0.60 and the
+references' 0.57. The projection thus preserves contact timing at pixel
+resolution but leaves a sub-pixel standoff that the RGB contact score cannot
+detect.
+
 D030 re-renders the simulator with true hidden physics and with the four prior
 draws. The true-physics RGB contact F1 varies from 0.250 to 0.590 across the two
 corpora, exposing the estimator's limitations. Sampled-physics ADE is close
