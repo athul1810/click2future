@@ -457,6 +457,91 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   every method; similar ADEs support, but do not isolate, a hidden-physics
   explanation. Descriptive only. See CONTACT_PROJECTION.md.
 
+## D031: Multi-reference energy score: 9 November 2026
+
+- Add a fair energy score over all references of a condition, on pose
+  displacements in native pixels, as a descriptive distributional measure beside
+  the unchanged single-reference gate. Checks: a first-reference oracle must score
+  worse than the prior-matched simulator, and no generator may beat that simulator
+  by a paired scene interval. Registered run: the opened D028 corpus, which must
+  also reproduce the D028 numbers. See ENERGY_SCORE.md.
+- Result (job 52537, db539bc): every D028 scorer field is reproduced exactly, with
+  same-world ADE to 1.5e-10. On the D028 corpus D020 scores 1.105 px against 1.060
+  for the simulator (interval 0.019 to 0.074), and 1.103 with the projection.
+  `metric_check` passes on validation, D028 and D033. The 0.15 px hull baseline is
+  within noise of the simulator on all three; every learned checkpoint is worse. See
+  `docs/results/energy-score-d031.json`.
+
+## D032: Geometry-loss scale sweep: 9 November 2026
+
+- The geometry losses were about 0.5% of the D020 training loss and the D029
+  contact-dynamics terms about 0.02% of theirs. Retrain the D020 recipe with the
+  penetration, contact and canvas weights scaled by 16, 128 and 1024, and the D029
+  recipe with the two contact-dynamics weights scaled by 128 and 1024. Select at
+  most one scale per family on original validation with `select_scale`, fixed
+  before training. See GEOMETRY_LOSS_SCALE.md.
+- First attempt (job 52502, 285d482) trained all eight arms, then stopped before
+  any score at an assertion that zero force leaves pixels unchanged. That holds by
+  construction only for rest-anchored models and the hull baseline; the direct
+  models move on 2 of 16 zero-force samples, as D029 already recorded in its drift
+  count. The assertion now records a count instead, and an undefined selected ADE
+  now fails a rule instead of raising. No rule or margin changed. The run is
+  repeated in full.
+- Result (job 52537, db539bc): selected `rest_x16` and `direct_dyn_x1024`. In the
+  rest family larger weights cut penetration, but same-world ADE and energy score
+  rise at every step; x16 passed with 0.00003 same-world and 0.0004 px energy room.
+  In the direct family only x1024 cut penetration (1 to 0), with slightly lower ADE
+  and no zero-force drift. Retrained controls are bitwise equal to D020 and D029.
+  See `docs/results/geometry-loss-scale-d032.json`.
+
+## D033: Fresh confirmation and the projection across checkpoints: 9 November 2026
+
+- New seed-950000 corpus, ten ID groups, generated after the rules were committed.
+  Score both family controls, any D032 selection and the six E10 models, raw and
+  with the D028 projection, plus the simulator, oracle and hull controls. Rules:
+  `projection_holds`, `learned_geometry_holds` and `metric_check`. See
+  GEOMETRY_LOSS_SCALE.md.
+- Result (job 52537, db539bc): `projection_holds` passes for all ten checkpoints,
+  E10 included, at most +0.0003 selected ADE and +0.014 px energy score.
+  `learned_geometry_holds` fails for `rest_x16` (same-world interval upper bound
+  0.00065) and holds for `direct_dyn_x1024`: penetrating clips 3 to 0, zero-force
+  drift 5 to 0, same-world interval -0.00084 to -0.00040. One training seed;
+  boundary clips go only from 15 to 14, so the projection is still needed.
+  `metric_check` passes. See `docs/results/checkpoint-projection-d033.json`. The
+  `direct_dyn_x1024` result did not replicate on other seeds; see D034.
+
+## D034: Seed replication of the contact-dynamics result: 9 November 2026
+
+- The D033 `direct_dyn_x1024` result rests on training seed 19. Retrain it and its
+  `direct_x0` control with seeds 20 and 21, and score each pair on the D033 corpus
+  with the unchanged `learned_geometry_holds`. Replicated if the rule holds for both
+  seeds, partial if for one, not replicated if for neither. This tests training-seed
+  variation only, on an opened corpus. See GEOMETRY_LOSS_SCALE.md.
+- Result (job 52561, 87f4bbd): not replicated. Seed 20 loses five tracks and adds two
+  boundary clips; seed 21 adds one boundary clip. Penetrating clips still reach zero on
+  all three seeds, but the seed-19 accuracy gain is within the control's seed variation.
+  The four control records equal D033 exactly. No general learned geometry gain is
+  claimed. See `docs/results/seed-replication-d034.json`.
+- Diagnosis: every boundary clip is a wall push, and all five lost tracks are wall
+  clips with 60-67% of the object past the edge. The scaled losses overshoot walls
+  more on every seed. See `docs/results/wall-overshoot-d034.json`.
+
+## D035: Scaled contact-dynamics losses with the projection: 9 November 2026
+
+- The scaled losses remove penetration but overshoot walls, and the projection removes
+  wall overshoot. Test them together on a new seed-960000 corpus, generated after this
+  rule is committed, with the six existing checkpoints and no training. `combined_holds`
+  must hold per seed against the same-seed control. Confirmed if it holds for all three
+  seeds, partial for one or two, not confirmed for none. A same-world accuracy gain is
+  claimed only if the interval is below zero on all three. This comparison was chosen
+  after seeing D034, which stays as recorded. See GEOMETRY_LOSS_SCALE.md.
+- Result (job 52574, 381a0f1): confirmed. `combined_holds` holds on all three seeds:
+  raw penetrating clips 4, 10 and 5 to 0, no violations and no lost tracks when
+  projected, and same-world intervals entirely below zero. Same-world ADE falls by
+  8-10% (0.03 to 0.05 px). Selected ADE and energy score do not improve on every seed,
+  and the raw losses still do not fix walls. Every learned run stays worse than the
+  simulator on energy score. See `docs/results/combined-d035.json`.
+
 ## D036: Reference-free physics-guided candidate selection: 9 November 2026
 
 - Generate 16 E11 futures for each of the 60 opened D018 ID conditions and

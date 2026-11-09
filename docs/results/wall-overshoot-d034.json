@@ -1,0 +1,283 @@
+{
+  "study_id": "D034 diagnosis",
+  "script": "scripts/diagnose_wall_overshoot.py",
+  "source_runs": {
+    "seed19": "TC2 job 52537 raw output",
+    "seed20": "TC2 job 52561 raw output",
+    "seed21": "TC2 job 52561 raw output"
+  },
+  "note": "Descriptive only. Run on a Mac from the saved TC2 motions and a local regeneration of the seed-950000 corpus. All 210 sample arrays are byte-identical to the TC2 plan's input hashes; some metadata JSON and therefore the manifest hash differ across platforms. The recount of complete, penetrating and boundary clips equals the recorded values for all six runs. Training terms cover the last 20% of updates.",
+  "diagnosis": {
+    "seed19": {
+      "direct_x0": {
+        "clips": 240,
+        "complete_clips": 240,
+        "penetrating_clips": 3,
+        "clips_by_family": {
+          "collision": 80,
+          "push": 80,
+          "wall": 40,
+          "zero": 40
+        },
+        "boundary_clips": 15,
+        "boundary_clips_by_family": {
+          "wall": 15
+        },
+        "boundary_object_frames": 146,
+        "boundary_depth_pixels": {
+          "mean": 2.0861793336380896,
+          "median": 2.2497511520050466,
+          "maximum": 3.837323168758303,
+          "clips_over_2": 8,
+          "clips_over_4": 0
+        },
+        "lost_track_clips": []
+      },
+      "direct_dyn_x1024": {
+        "clips": 240,
+        "complete_clips": 240,
+        "penetrating_clips": 0,
+        "clips_by_family": {
+          "collision": 80,
+          "push": 80,
+          "wall": 40,
+          "zero": 40
+        },
+        "boundary_clips": 14,
+        "boundary_clips_by_family": {
+          "wall": 14
+        },
+        "boundary_object_frames": 186,
+        "boundary_depth_pixels": {
+          "mean": 2.5893863872996525,
+          "median": 2.6215781286009587,
+          "maximum": 4.727685951627791,
+          "clips_over_2": 9,
+          "clips_over_4": 2
+        },
+        "lost_track_clips": []
+      }
+    },
+    "seed20": {
+      "direct_x0": {
+        "clips": 240,
+        "complete_clips": 240,
+        "penetrating_clips": 6,
+        "clips_by_family": {
+          "collision": 80,
+          "push": 80,
+          "wall": 40,
+          "zero": 40
+        },
+        "boundary_clips": 28,
+        "boundary_clips_by_family": {
+          "wall": 28
+        },
+        "boundary_object_frames": 267,
+        "boundary_depth_pixels": {
+          "mean": 2.11016734752619,
+          "median": 1.8080063766101375,
+          "maximum": 4.363653983804397,
+          "clips_over_2": 12,
+          "clips_over_4": 2
+        },
+        "lost_track_clips": []
+      },
+      "direct_dyn_x1024": {
+        "clips": 240,
+        "complete_clips": 235,
+        "penetrating_clips": 0,
+        "clips_by_family": {
+          "collision": 80,
+          "push": 80,
+          "wall": 40,
+          "zero": 40
+        },
+        "boundary_clips": 30,
+        "boundary_clips_by_family": {
+          "wall": 30
+        },
+        "boundary_object_frames": 333,
+        "boundary_depth_pixels": {
+          "mean": 2.621137340265947,
+          "median": 2.0908068999415264,
+          "maximum": 5.885336205363274,
+          "clips_over_2": 17,
+          "clips_over_4": 6
+        },
+        "lost_track_clips": [
+          {
+            "sample_id": "g03-scene-00950003-wall-p00",
+            "family": "wall",
+            "sample": 2,
+            "boundary_depth": 4.515914745628834,
+            "boundary_frames": 21,
+            "penetration_depth": 0.0,
+            "overlap_fraction": 0.0,
+            "outside_fraction": 0.625,
+            "reasons": {
+              "area_change": 3,
+              "ok": 245
+            }
+          },
+          {
+            "sample_id": "g03-scene-00950005-wall-p00",
+            "family": "wall",
+            "sample": 2,
+            "boundary_depth": 5.691932772286236,
+            "boundary_frames": 21,
+            "penetration_depth": 0.0,
+            "overlap_fraction": 0.0,
+            "outside_fraction": 0.631578947368421,
+            "reasons": {
+              "area_change": 4,
+              "ok": 244
+            }
+          },
+          {
+            "sample_id": "g03-scene-00950007-wall-p00",
+            "family": "wall",
+            "sample": 2,
+            "boundary_depth": 5.885336205363274,
+            "boundary_frames": 21,
+            "penetration_depth": 0.0,
+            "overlap_fraction": 0.0,
+            "outside_fraction": 0.6,
+            "reasons": {
+              "area_change": 6,
+              "ok": 242
+            }
+          },
+          {
+            "sample_id": "g03-scene-00950009-wall-p00",
+            "family": "wall",
+            "sample": 2,
+            "boundary_depth": 3.809028070420027,
+            "boundary_frames": 17,
+            "penetration_depth": 0.0,
+            "overlap_fraction": 0.0,
+            "outside_fraction": 0.6666666666666666,
+            "reasons": {
+              "area_change": 4,
+              "ok": 244
+            }
+          },
+          {
+            "sample_id": "g03-scene-00950011-wall-p00",
+            "family": "wall",
+            "sample": 2,
+            "boundary_depth": 4.691359154880047,
+            "boundary_frames": 21,
+            "penetration_depth": 0.0,
+            "overlap_fraction": 0.0,
+            "outside_fraction": 0.625,
+            "reasons": {
+              "area_change": 4,
+              "ok": 244
+            }
+          }
+        ]
+      }
+    },
+    "seed21": {
+      "direct_x0": {
+        "clips": 240,
+        "complete_clips": 240,
+        "penetrating_clips": 3,
+        "clips_by_family": {
+          "collision": 80,
+          "push": 80,
+          "wall": 40,
+          "zero": 40
+        },
+        "boundary_clips": 25,
+        "boundary_clips_by_family": {
+          "wall": 25
+        },
+        "boundary_object_frames": 219,
+        "boundary_depth_pixels": {
+          "mean": 2.042678489051759,
+          "median": 1.7635645363479853,
+          "maximum": 3.9730982896871865,
+          "clips_over_2": 9,
+          "clips_over_4": 0
+        },
+        "lost_track_clips": []
+      },
+      "direct_dyn_x1024": {
+        "clips": 240,
+        "complete_clips": 240,
+        "penetrating_clips": 0,
+        "clips_by_family": {
+          "collision": 80,
+          "push": 80,
+          "wall": 40,
+          "zero": 40
+        },
+        "boundary_clips": 26,
+        "boundary_clips_by_family": {
+          "wall": 26
+        },
+        "boundary_object_frames": 267,
+        "boundary_depth_pixels": {
+          "mean": 2.2731135409983554,
+          "median": 1.8123233201913536,
+          "maximum": 4.955315455794334,
+          "clips_over_2": 13,
+          "clips_over_4": 2
+        },
+        "lost_track_clips": []
+      }
+    }
+  },
+  "training_terms": {
+    "seed19": {
+      "direct_x0": {
+        "mean_loss": 0.7615895865019411,
+        "weighted_canvas": 0.0005572044306643154,
+        "canvas_share_of_loss": 0.0007316334683928812,
+        "weighted_contact_dynamics": 0.0,
+        "contact_dynamics_over_canvas": 0.0
+      },
+      "direct_dyn_x1024": {
+        "mean_loss": 0.954364662989974,
+        "weighted_canvas": 0.0005647528352799025,
+        "canvas_share_of_loss": 0.000591757906784354,
+        "weighted_contact_dynamics": 0.032412100583314896,
+        "contact_dynamics_over_canvas": 57.39165624064699
+      }
+    },
+    "seed20": {
+      "direct_x0": {
+        "mean_loss": 0.7299946413841099,
+        "weighted_canvas": 0.0006009849600729922,
+        "canvas_share_of_loss": 0.0008232731118868103,
+        "weighted_contact_dynamics": 0.0,
+        "contact_dynamics_over_canvas": 0.0
+      },
+      "direct_dyn_x1024": {
+        "mean_loss": 0.8175285765901208,
+        "weighted_canvas": 0.0006339566559177001,
+        "canvas_share_of_loss": 0.0007754550410481162,
+        "weighted_contact_dynamics": 0.029360004504269455,
+        "contact_dynamics_over_canvas": 46.31232156048371
+      }
+    },
+    "seed21": {
+      "direct_x0": {
+        "mean_loss": 0.9414958520792425,
+        "weighted_canvas": 0.000895655928680128,
+        "canvas_share_of_loss": 0.0009513116034469196,
+        "weighted_contact_dynamics": 0.0,
+        "contact_dynamics_over_canvas": 0.0
+      },
+      "direct_dyn_x1024": {
+        "mean_loss": 1.0643045911565423,
+        "weighted_canvas": 0.0009663421584207299,
+        "canvas_share_of_loss": 0.0009079563937337148,
+        "weighted_contact_dynamics": 0.028852739556896267,
+        "contact_dynamics_over_canvas": 29.85768478118518
+      }
+    }
+  }
+}
