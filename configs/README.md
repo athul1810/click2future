@@ -11,6 +11,9 @@
   `training/prior_direct_contact_dynamics_x{128,1024}.json`: D032 copies of the D020 and
   D029 recipes with only the geometry or contact-dynamics weights scaled; see
   [the study](../docs/GEOMETRY_LOSS_SCALE.md).
+- `training/prior_direct_seed{20,21}.json` and
+  `training/prior_direct_contact_dynamics_x1024_seed{20,21}.json`: D034 copies that change
+  only the training seed.
 - `development.yaml`: artifact-directory conventions.
 - `pilot.yaml`: synthetic denoiser profiler dimensions, conditioning, heads, object count,
   and precision. This is a prototype configuration, not a dataset trainer.

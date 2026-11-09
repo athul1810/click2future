@@ -509,6 +509,14 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   boundary clips go only from 15 to 14, so the projection is still needed.
   `metric_check` passes. See `docs/results/checkpoint-projection-d033.json`.
 
+## D034: Seed replication of the contact-dynamics result: 9 November 2026
+
+- The D033 `direct_dyn_x1024` result rests on training seed 19. Retrain it and its
+  `direct_x0` control with seeds 20 and 21, and score each pair on the D033 corpus
+  with the unchanged `learned_geometry_holds`. Replicated if the rule holds for both
+  seeds, partial if for one, not replicated if for neither. This tests training-seed
+  variation only, on an opened corpus. See GEOMETRY_LOSS_SCALE.md. Result: pending.
+
 ## New decision template
 
 ```text

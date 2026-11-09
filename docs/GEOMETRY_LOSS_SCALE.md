@@ -175,11 +175,29 @@ significantly better.
 - The projection works on every checkpoint tested, including E10 models that never see a
   world, and costs at most 0.014 px of energy score.
 
+## D034: seed replication of `direct_dyn_x1024`
+
+The D033 result rests on training seed 19. Registered before these runs:
+
+- Train `direct_x0` and `direct_dyn_x1024` with seeds 20 and 21. Teacher, cache and recipe
+  are unchanged; the configs differ only in the seed.
+- Regenerate the D033 corpus, whose manifest must equal `32e9a852...`. Score each seed
+  pair with `--mode fresh`, using the same two arm names, so `learned_geometry_holds`
+  applies unchanged against the same-seed control. The scorer file is unchanged from D033.
+- Outcome: replicated if the rule holds for both seeds, partial if it holds for one, not
+  replicated if it holds for neither.
+- Consistency check: the simulator, oracle and hull controls must equal D033 exactly.
+- `projection_holds` is also reported for the four new checkpoints.
+
+This tests training-seed variation only. The corpus is already open, so it adds no
+evidence about unseen scenes.
+
+Results: pending.
+
 ## Limits
 
-- One training seed per arm and four validation scenes for selection. The
-  `direct_dyn_x1024` result rests on one seed; repeating it with seeds 20 and 21 would
-  show whether it is stable.
+- One training seed per arm and four validation scenes for selection. Only
+  `direct_dyn_x1024` and its control are repeated with other seeds (D034).
 - Ten fresh ID scene groups; no OOD claim.
 - On the fresh corpus every learned checkpoint still has boundary-clipped clips without
   the projection.

@@ -1,6 +1,7 @@
 """D031-D033 rules: scale selection, projection acceptance and the energy-score checks."""
 
 import copy
+import json
 import runpy
 from pathlib import Path
 
@@ -145,3 +146,13 @@ def test_families_list_the_control_first_and_scales_in_increasing_order():
         assert (root / f"prior_rest_anchored_geometry_x{scale}.json").is_file()
     for scale in (128, 1024):
         assert (root / f"prior_direct_contact_dynamics_x{scale}.json").is_file()
+
+
+def test_d034_seed_configs_change_only_the_seed():
+    root = Path(__file__).resolve().parents[1] / "configs/training"
+    for base in ("prior_direct", "prior_direct_contact_dynamics_x1024"):
+        config = json.loads((root / f"{base}.json").read_text())
+        assert config["seed"] == 19
+        for seed in (20, 21):
+            copy = json.loads((root / f"{base}_seed{seed}.json").read_text())
+            assert copy == {**config, "seed": seed}
