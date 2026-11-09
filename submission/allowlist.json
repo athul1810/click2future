@@ -24,6 +24,7 @@
     "scripts/pose_contact.py",
     "scripts/compare_checkpoints.py",
     "scripts/diagnose_wall_overshoot.py",
+    "scripts/run_physics_selection.py",
     "src/click2future/**/*.py",
     "src/click2future/demo/static/index.html",
     "src/click2future/demo/static/style.css",

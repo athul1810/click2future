@@ -554,12 +554,12 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   penetrating clips fall 19 to 0 and boundary clips 27.75 to 14. The geometry
   reductions are contract satisfaction, not independent evidence, because the
   selector scores those definitions directly.
-- A reference-only oracle reaches 0.01245 ADE, showing candidate-pool headroom
-  that this score cannot identify. The selector is not promoted to the public
-  sampler. Keep the accepted D028 projection as the optional physics-aware
-  output block: it enforces visible constraints without 16 model evaluations.
-  One checkpoint and an opened corpus; record:
-  docs/results/physics-guided-selection-d036.json.
+- A reference-only oracle reaches 0.01245 ADE by using the reference future,
+  which no selector has at inference, so it is not an achievable target. The
+  selector is not promoted to the public sampler. Keep the accepted D028
+  projection as the optional physics-aware output block: it enforces visible
+  constraints without 16 model evaluations. One checkpoint and an opened
+  corpus; record: docs/results/physics-guided-selection-d036.json.
 
 ## New decision template
 

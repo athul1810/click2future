@@ -2,7 +2,7 @@
   "study_id": "D036",
   "status": "measured_fair_control_not_promoted",
   "base_revision": "eb55e036f20cbc652d4aee863668946612707a15",
-  "scope": "fresh D018 ID corpus; one frozen E11 diffusion checkpoint; no training",
+  "scope": "opened D018 ID corpus; one frozen E11 diffusion checkpoint; no training",
   "method": {
     "candidate_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     "returned_futures": 4,
@@ -63,7 +63,7 @@
       "scope": "uses the reference future and is unavailable at inference"
     }
   },
-  "interpretation": "The selector is not an accuracy improvement: its ADE is 5.28% worse than the exact uniform-four expectation. It raises expected complete clips from 237.25 to 240 and filters penetration and boundary failures, but those geometry definitions are part of its score rather than independent evidence. The oracle ADE of 0.01245 shows substantial candidate-pool headroom that this hand-written score cannot identify. The selector is not promoted to the public sampler.",
+  "interpretation": "The selector is not an accuracy improvement: its ADE is 5.28% worse than the exact uniform-four expectation. It raises expected complete clips from 237.25 to 240 and filters penetration and boundary failures, but those geometry definitions are part of its score rather than independent evidence. The oracle reaches 0.01245 ADE only by using the reference future, which no selector has at inference, so it is not an achievable target. The selector is not promoted to the public sampler.",
   "limitations": [
     "one checkpoint and the D018 ID split only",
     "16 candidates cost four times as many model samples as four direct outputs",
