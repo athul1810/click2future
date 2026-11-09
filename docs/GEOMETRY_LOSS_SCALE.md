@@ -165,11 +165,11 @@ significantly better.
 
 - Scaling the D020 geometry losses buys fewer violations at a cost in motion accuracy.
   The one scale that passed selection did not hold up on the fresh corpus.
-- Scaled by 1024, the D029 contact-dynamics losses pass the pre-registered fresh
-  test, where D019, D022 and D029 found no learned geometry gain. In this one training
-  seed they remove penetration without a loss of accuracy and also remove the direct
-  model's zero-force drift. They do not fix canvas clipping (15 to 14 boundary clips),
-  so the projection is still needed.
+- Scaled by 1024, the D029 contact-dynamics losses passed the fresh test at training
+  seed 19 but did not replicate on seeds 20 and 21 (D034). What repeats on all three seeds
+  is narrower: no penetrating clips and no zero-force drift. Boundary clips do not improve,
+  seed 20 loses five tracks, and the seed-19 accuracy gain is within seed variation. This
+  is not evidence of a general learned geometry gain, and the projection is still needed.
 - `direct_dyn_x1024` is not compared with D020 by any registered rule. Against `rest_x1` it
   has lower selected and same-world ADE but a higher energy score (1.084 against 1.055).
 - The projection works on every checkpoint tested, including E10 models that never see a
@@ -192,7 +192,35 @@ The D033 result rests on training seed 19. Registered before these runs:
 This tests training-seed variation only. The corpus is already open, so it adds no
 evidence about unseen scenes.
 
-Results: pending.
+### D034 results (TC2 job 52561, source 87f4bbd)
+
+Record: `docs/results/seed-replication-d034.json`.
+
+**Outcome: not replicated.** `learned_geometry_holds` holds for neither seed 20 nor seed
+21. Each cell reads `direct_x0` to `direct_dyn_x1024`, both raw; the interval is for the
+same-world ADE change.
+
+| Seed | Complete clips (of 240) | Penetrating | Boundary | Zero-force drift | Selected ADE | Same-world interval | ES | Rule |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| 19 (D033) | 240 to 240 | 3 to 0 | 15 to 14 | 5 to 0 | 0.02701 to 0.02627 | -0.00084 to -0.00040 | 1.089 to 1.084 | holds |
+| 20 | 240 to 235 | 6 to 0 | 28 to 30 | 5 to 0 | 0.02639 to undefined | -0.00042 to 0.00011 | 1.070 to 1.077 | fails |
+| 21 | 240 to 240 | 3 to 0 | 25 to 26 | 0 to 0 | 0.02611 to 0.02609 | -0.00049 to -0.00001 | 1.066 to 1.074 | fails |
+
+- Seed 20 fails because five clips lose track, which also leaves its selected ADE
+  undefined, and because boundary clips rise by two. Seed 21 fails only on boundary clips,
+  which rise by one.
+- Described, not a rule pass: penetrating clips reach zero and zero-force drift is absent
+  at x1024 on all three seeds. Energy score is lower only on seed 19, and RGB contact F1,
+  a weak proxy (D028), is lower on all three (0.320 to 0.301, 0.311 to 0.291, 0.344 to
+  0.296).
+- The control itself varies by seed: selected ADE 0.02611 to 0.02701, 3 to 6 penetrating
+  clips, 15 to 28 boundary clips. That ADE range (0.0009) is larger than the seed-19
+  improvement (0.00074), so that improvement cannot be told apart from seed variation.
+- `projection_holds` passes for both controls and for seed 21 at x1024. It fails as written
+  for seed 20 at x1024 because the raw run has 235 complete clips and an undefined ADE. The
+  projected run itself tracks all 240 clips with zero penetrating and boundary clips.
+- Consistency check passes: the four control records equal D033 exactly, with the same
+  corpus manifest and scorer hash.
 
 ## Limits
 

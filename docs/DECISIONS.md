@@ -507,7 +507,8 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   0.00065) and holds for `direct_dyn_x1024`: penetrating clips 3 to 0, zero-force
   drift 5 to 0, same-world interval -0.00084 to -0.00040. One training seed;
   boundary clips go only from 15 to 14, so the projection is still needed.
-  `metric_check` passes. See `docs/results/checkpoint-projection-d033.json`.
+  `metric_check` passes. See `docs/results/checkpoint-projection-d033.json`. The
+  `direct_dyn_x1024` result did not replicate on other seeds; see D034.
 
 ## D034: Seed replication of the contact-dynamics result: 9 November 2026
 
@@ -515,7 +516,12 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   `direct_x0` control with seeds 20 and 21, and score each pair on the D033 corpus
   with the unchanged `learned_geometry_holds`. Replicated if the rule holds for both
   seeds, partial if for one, not replicated if for neither. This tests training-seed
-  variation only, on an opened corpus. See GEOMETRY_LOSS_SCALE.md. Result: pending.
+  variation only, on an opened corpus. See GEOMETRY_LOSS_SCALE.md.
+- Result (job 52561, 87f4bbd): not replicated. Seed 20 loses five tracks and adds two
+  boundary clips; seed 21 adds one boundary clip. Penetrating clips still reach zero on
+  all three seeds, but the seed-19 accuracy gain is within the control's seed variation.
+  The four control records equal D033 exactly. No general learned geometry gain is
+  claimed. See `docs/results/seed-replication-d034.json`.
 
 ## New decision template
 
