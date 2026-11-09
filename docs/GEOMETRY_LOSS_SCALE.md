@@ -222,6 +222,56 @@ same-world ADE change.
 - Consistency check passes: the four control records equal D033 exactly, with the same
   corpus manifest and scorer hash.
 
+### Why the rule failed
+
+Descriptive, from `scripts/diagnose_wall_overshoot.py`; record
+`docs/results/wall-overshoot-d034.json`. Its recount of complete, penetrating and boundary
+clips equals the recorded values for all six runs.
+
+- Every boundary clip in all six runs is a wall push, out of 40 wall clips per run. None
+  is a collision, plain push or zero-force clip.
+- All five lost tracks at seed 20 are wall clips in the same sampled world (sample 2). The
+  object goes 3.8 to 5.9 px past the boundary and 60-67% of its pixels leave the interior.
+  There is no overlap or penetration in those clips. The tracker reports an area change.
+- `direct_dyn_x1024` overshoots walls more on every seed. Mean depth among boundary clips
+  goes from 2.09 to 2.59 px, 2.11 to 2.62 px and 2.04 to 2.27 px. Clips deeper than 4 px go
+  from 0 to 2, 2 to 6 and 0 to 2.
+- In training the weighted canvas term is under 0.1% of the loss in both arms. At x1024 the
+  two contact-dynamics terms are 30 to 57 times larger than it. That could crowd out the
+  canvas term, but the share barely differs from the control, so the cause is not shown.
+- Raising the canvas weight is not an obvious fix. In the rest family, where it was scaled
+  together with penetration and contact gap, validation wall energy rose from 1.97 to
+  2.52 px (D032). That sweep does not isolate the canvas term.
+
+## D035: scaled contact-dynamics losses with the projection
+
+The two parts fail in different places. The scaled losses remove penetration but overshoot
+walls; the projection removes wall overshoot. With the projection on both arms, on the D033
+corpus, `direct_dyn_x1024` has lower selected and same-world ADE than `direct_x0` on all
+three seeds. That comparison was chosen after seeing D034, so it needs new scenes. Registered
+before this corpus exists:
+
+- New corpus, seed 960000, ten ID groups (`FRESH_COUNTS`). Frame-zero images are checked
+  against the original, D021, D023, D026, D028 and D033 corpora.
+- No training. The six existing `direct_x0` and `direct_dyn_x1024` checkpoints, seeds 19-21,
+  one `--mode d035` run per seed. Runs use CPU only. The seed-19 run also scores `rest_x1`
+  (bitwise the D020 weights) as a descriptive reference, outside the rule.
+- `combined_holds`, per seed against the same-seed control: the raw candidate has fewer
+  penetrating clips. With the projection on both arms, the candidate tracks the same complete
+  clips, has zero penetrating and zero boundary clips, adds no drift, stays within 0.0005
+  selected ADE and 0.032 px energy score, and the same-world ADE interval's upper bound is
+  below 0.0005.
+- Outcome: confirmed if it holds for all three seeds, partial for one or two, not confirmed
+  for none.
+- This tests that nothing is lost. A same-world accuracy gain is claimed only if the interval
+  lies entirely below zero on all three seeds.
+
+D034 stays as recorded: the raw rule did not replicate, and this does not reverse it. The
+hypothesis came from looking at results, and it is one of several follow-ups run on this
+project, so it should be reported with them. ID scenes only.
+
+Results: pending.
+
 ## Limits
 
 - One training seed per arm and four validation scenes for selection. Only

@@ -522,6 +522,19 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   all three seeds, but the seed-19 accuracy gain is within the control's seed variation.
   The four control records equal D033 exactly. No general learned geometry gain is
   claimed. See `docs/results/seed-replication-d034.json`.
+- Diagnosis: every boundary clip is a wall push, and all five lost tracks are wall
+  clips with 60-67% of the object past the edge. The scaled losses overshoot walls
+  more on every seed. See `docs/results/wall-overshoot-d034.json`.
+
+## D035: Scaled contact-dynamics losses with the projection: 9 November 2026
+
+- The scaled losses remove penetration but overshoot walls, and the projection removes
+  wall overshoot. Test them together on a new seed-960000 corpus, generated after this
+  rule is committed, with the six existing checkpoints and no training. `combined_holds`
+  must hold per seed against the same-seed control. Confirmed if it holds for all three
+  seeds, partial for one or two, not confirmed for none. A same-world accuracy gain is
+  claimed only if the interval is below zero on all three. This comparison was chosen
+  after seeing D034, which stays as recorded. See GEOMETRY_LOSS_SCALE.md. Result: pending.
 
 ## New decision template
 

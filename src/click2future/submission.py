@@ -80,6 +80,7 @@ def _check(name, payload):
             "scripts/plot_prior_replication.py",
             "scripts/pose_contact.py",
             "scripts/compare_checkpoints.py",
+            "scripts/diagnose_wall_overshoot.py",
         }
         or (name.startswith("configs/") and path.suffix in {".yaml", ".toml", ".json"})
         or (

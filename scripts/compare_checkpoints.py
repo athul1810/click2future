@@ -8,6 +8,8 @@ Modes (all rules below were fixed before any of these runs):
   sampler, its projection and the controls; it also reproduces the D028 numbers.
 - ``fresh`` (D033): a new seed-950000 corpus, generated after this file was committed.
   ``projection_holds`` and ``learned_geometry_holds`` are the acceptance rules.
+- ``d035``: a new seed-960000 corpus, generated after ``combined_holds`` was committed.
+  Tests whether the scaled contact-dynamics losses plus the projection hold together.
 
 Every checkpoint is scored raw and with the D028 projection in its frozen per-frame
 mode. Projection weights use the sampled masses when the model is conditioned on the
@@ -57,6 +59,9 @@ from click2future.training.trajectory_data import canonical_ids
 
 FRESH_SEED = 950000
 D031_SEED = 940000
+D035_SEED = 960000
+# D035 compares these two arms, per training seed: control, then scaled losses.
+COMBINED = ("direct_x0", "direct_dyn_x1024")
 PROJECTION_MODE = "frame"
 SELECTED_ADE_MARGIN = 0.0005
 SAME_WORLD_ADE_MARGIN = 0.0005
@@ -160,6 +165,27 @@ def learned_geometry_holds(c, h, same_world_interval):
     )
 
 
+def combined_holds(raw, raw_control, projected, projected_control, same_world_interval):
+    """D035 rule for one training seed, against the same-seed control.
+
+    The scaled losses must keep their raw penetration gain. With the projection on both
+    arms, they must have no violations, no lost tracks and no new drift, within the same
+    margins as ``learned_geometry_holds``.
+    """
+    return bool(
+        raw["penetrating_clips"] < raw_control["penetrating_clips"]
+        and projected["quality"]["complete_all_object_clips"]
+        == projected_control["quality"]["complete_all_object_clips"]
+        and projected["penetrating_clips"] == 0
+        and projected["boundary_clips"] == 0
+        and _no_new_drift(projected, projected_control)
+        and _selected_ade_within(projected, projected_control)
+        and same_world_interval[1] < SAME_WORLD_ADE_MARGIN
+        and projected["energy"]["selected"]
+        <= projected_control["energy"]["selected"] + ENERGY_MARGIN_PIXELS
+    )
+
+
 def metric_check(models, intervals):
     """D031 checks of the score itself.
 
@@ -244,7 +270,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
     dataset, output = Path(dataset), Path(output)
     if output.exists():
         raise ValueError("Retain previous comparisons and choose a fresh output")
-    if mode not in ("validation", "d031", "fresh"):
+    if mode not in ("validation", "d031", "fresh", "d035"):
         raise ValueError("Unknown mode")
     root = Path(__file__).resolve().parents[1]
     config = root / "configs/evaluation/pixel.yaml"
@@ -253,7 +279,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         plan = prepare_plan(dataset, config, split="validation", metrics=("ssim",))
     else:
         manifest = json.loads((dataset / "dataset_manifest.json").read_text())
-        expected = FRESH_SEED if mode == "fresh" else D031_SEED
+        expected = {"fresh": FRESH_SEED, "d031": D031_SEED, "d035": D035_SEED}[mode]
         if manifest["seed"] != expected or manifest["group_counts"] != FRESH_COUNTS:
             raise ValueError(f"{mode} requires its registered seed-{expected} corpus")
         if training_data is None:
@@ -261,7 +287,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         plan = prepare_plan(
             dataset, config, split="id_test", metrics=("ssim",), training_corpus=training_data
         )
-    if mode == "fresh":
+    if mode in ("fresh", "d035"):
         old = set()
         for folder in previous_data:
             previous = json.loads((Path(folder) / "dataset_manifest.json").read_text())
@@ -271,7 +297,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         for case in plan["cases"]:
             frame = load_rollout(dataset, case["sample_id"])["frames"][0]
             if hashlib.sha256(frame.tobytes()).hexdigest() in old:
-                raise ValueError("Fresh D033 image duplicates an opened corpus")
+                raise ValueError("Fresh image duplicates an opened corpus")
     models = {}
     for name, path in checkpoints.items():
         model, _ = load_trajectory(path)
@@ -422,6 +448,9 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
                 row["boundary_clips"] = sum(
                     r["boundary_over_one_pixel_object_frames"] > 0 for r in geo["clips"]
                 )
+                row["boundary_clips_over_4_pixels"] = sum(
+                    r["maximum_boundary_depth_pixels"] > 4 for r in geo["clips"]
+                )
             # Same-world error, normalized units as in D028 (pixels / resolution).
             errors = np.linalg.norm(paths - same_world, axis=-1).mean(1) / scale
             row["matched_world_ade"] = float(errors[:, sel].mean())
@@ -447,6 +476,9 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             ),
             penetrating_clips=sum(r["penetrating_clips"] for r in cases) if has_geometry else None,
             boundary_clips=sum(r["boundary_clips"] for r in cases) if has_geometry else None,
+            boundary_clips_over_4_pixels=(
+                sum(r["boundary_clips_over_4_pixels"] for r in cases) if has_geometry else None
+            ),
             zero_force=values["rest"],
             zero_force_pixels=values["zero_pixels"] if has_geometry else None,
             passive=values["passive"],
@@ -475,7 +507,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             cases=cases,
         )
     result = dict(
-        study_id={"validation": "D032", "d031": "D031", "fresh": "D033"}[mode],
+        study_id={"validation": "D032", "d031": "D031", "fresh": "D033", "d035": "D035"}[mode],
         mode=mode,
         split=plan["split"],
         plan_sha256=plan["plan_sha256"],
@@ -510,10 +542,29 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         result["candidates_not_scored"] = sorted(
             c for _, candidates in FAMILIES.values() for c in candidates if c not in summary
         )
-    if mode == "fresh":
+    if mode in ("fresh", "d035"):
         result["projection_holds"] = {
             name: projection_holds(summary[name + "+projection"], summary[name]) for name in models
         }
+    if mode == "d035":
+        control, candidate = COMBINED
+        values = _scene_differences(
+            summary, control + "+projection", candidate + "+projection", "matched_world_ade"
+        )
+        interval = paired_scene_interval(values)
+        result["combined"] = dict(
+            control=control,
+            candidate=candidate,
+            projected_same_world_interval=interval,
+            holds=combined_holds(
+                summary[candidate],
+                summary[control],
+                summary[candidate + "+projection"],
+                summary[control + "+projection"],
+                interval,
+            ),
+        )
+    if mode == "fresh":
         learned = {}
         for control, candidates in FAMILIES.values():
             for name in models:
@@ -544,7 +595,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--mode", choices=("validation", "d031", "fresh"), required=True)
+    parser.add_argument("--mode", choices=("validation", "d031", "fresh", "d035"), required=True)
     parser.add_argument("--checkpoint", action="append", default=[], metavar="NAME=PATH")
     parser.add_argument("--training-data", type=Path)
     parser.add_argument("--previous-data", type=Path, nargs="*", default=())
@@ -576,6 +627,7 @@ if __name__ == "__main__":
         "selection",
         "projection_holds",
         "learned_geometry",
+        "combined",
         "metric_check",
         "zero_pixel_check",
     ):

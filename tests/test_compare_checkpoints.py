@@ -76,6 +76,30 @@ def test_learned_geometry_rule_uses_the_same_world_interval():
     assert not holds(summary(pen=4, bnd=6), control, [-0.0001, 0.0004])
 
 
+def test_combined_rule_needs_the_raw_gain_and_a_clean_projected_run():
+    holds = MODULE["combined_holds"]
+    raw_control = summary(pen=3, bnd=25)
+    control = summary(pen=0, bnd=0)
+    clean = summary(pen=0, bnd=0, ade=0.0254, energy=0.83)
+    good = [-0.0001, 0.0004]
+    # Raw boundary clips and lost raw tracks are not part of this rule: the projection
+    # handles them. Their raw penetration gain is.
+    assert holds(summary(pen=0, bnd=26, ade=None), raw_control, clean, control, good)
+    assert not holds(summary(pen=3), raw_control, clean, control, good)
+    assert not holds(summary(pen=0), raw_control, summary(pen=1, bnd=0), control, good)
+    assert not holds(summary(pen=0), raw_control, summary(pen=0, bnd=1), control, good)
+    assert not holds(summary(pen=0), raw_control, summary(pen=0, bnd=0, ade=None), control, good)
+    assert not holds(summary(pen=0), raw_control, summary(pen=0, bnd=0, ade=0.0256), control, good)
+    assert not holds(
+        summary(pen=0), raw_control, summary(pen=0, bnd=0, energy=0.833), control, good
+    )
+    assert not holds(summary(pen=0), raw_control, summary(pen=0, bnd=0, drift=1), control, good)
+    assert not holds(summary(pen=0), raw_control, clean, control, [-0.0001, 0.0006])
+    fewer = summary(pen=0, bnd=0)
+    fewer["quality"]["complete_all_object_clips"] = 95
+    assert not holds(summary(pen=0), raw_control, fewer, control, good)
+
+
 def test_undefined_selected_ade_fails_the_rules_instead_of_raising():
     control = summary(ade=None)
     candidate = summary(pen=0, bnd=0)
