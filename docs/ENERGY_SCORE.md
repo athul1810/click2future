@@ -54,9 +54,9 @@ replaced by (a) and (b) before any D032 or D033 run.
 
 The oracle is best by single-reference ADE and worst by energy score, as intended. D020
 is worse than the simulator: the paired scene interval of the difference is 0.042 to
-0.127 px, and most of the gap is in wall pushes (1.97 against 1.57 px). The new scorer reproduces the committed D028 validation record
-exactly for D020 and its projection (penetration, boundary, selected ADE, contact F1;
-same-world ADE to 1e-10).
+0.127 px, and most of the gap is in wall pushes (1.97 against 1.57 px). The new scorer
+reproduces the committed D028 validation record exactly for D020 and its projection
+(penetration, boundary, selected ADE, contact F1; same-world ADE to 1e-10).
 
 ## Registered runs
 
@@ -64,7 +64,53 @@ same-world ADE to 1e-10).
   four controls (`--mode d031`). It must reproduce the D028 numbers.
 - D032 and D033 use the same score; see [GEOMETRY_LOSS_SCALE.md](GEOMETRY_LOSS_SCALE.md).
 
-Results: pending.
+## Results (TC2 job 52537, source db539bc)
+
+Record: `docs/results/energy-score-d031.json`. The first attempt, job 52502, stopped
+before any score; see [GEOMETRY_LOSS_SCALE.md](GEOMETRY_LOSS_SCALE.md#runs).
+
+**Reproduction.** The D028 corpus was regenerated in the job and its manifest equals the
+D028 record (`4c65ceb1...`). The plan has the same 60 conditions, sampling seeds, input
+file hashes and training-corpus binding; only absolute paths and the new
+`energy_score.py` source hash differ. For D020 and its projection, every D028 scorer
+field is equal: 19 and 0 penetrating clips, 25 and 0 boundary clips, selected ADE
+0.02495 and 0.02476, contact F1 0.169 and 0.176, and the drift counts. Same-world ADE
+agrees to 1.5e-10 (0.00706 and 0.00712).
+
+**D031, opened D028 corpus** (ten ID scene groups, 60 conditions, 240 clips):
+
+| Generator | Selected-object ES (px) | Minus simulator, 95% interval | Selected ADE |
+|---|---:|---:|---:|
+| Simulator, sampled hidden physics | 1.060 | | 0.0246 |
+| Physics baseline, 0.15 px bevel | 1.062 | -0.009 to 0.016 | 0.0244 |
+| Physics baseline, 0.5 px bevel | 1.071 | -0.012 to 0.039 | 0.0241 |
+| D020 with projection | 1.103 | 0.020 to 0.068 | 0.0248 |
+| D020 | 1.105 | 0.019 to 0.074 | 0.0249 |
+| Oracle, first reference repeated | 1.304 | -0.056 to 0.519 | 0.0042 |
+
+- `metric_check` passes. The oracle's mean is worse than the simulator's, although its
+  interval includes zero on this corpus, and no generator is significantly better than
+  the simulator.
+- D020 is worse than the simulator, with the interval above zero. The projection removes
+  every penetration and leaves the energy score almost unchanged (1.105 to 1.103).
+- As on validation, wall pushes carry most of the gap (2.45 against 2.25 px). Collision
+  conditions differ by 0.04 px and plain pushes by less than 0.01 px.
+
+**Across all three corpora** (original validation, D028, D033):
+
+- `metric_check` passes on each.
+- The 0.15 px hull baseline is within noise of the simulator on each. Its intervals are
+  -0.043 to 0.004, -0.009 to 0.016 and -0.004 to 0.026.
+- Every learned checkpoint is significantly worse than the simulator on each corpus where
+  it was scored, raw or projected. On D033 the D020 recipe's interval is 0.029 to 0.074,
+  and the E10 routing models score 1.29-1.49 px against the simulator's 1.00.
+
+The simulator draws from the reference distribution by construction, and the explicit
+hull baseline cannot be told apart from it. The learned samplers are measurably worse,
+most of all in wall pushes. The strict single-reference gate fails the simulator itself;
+the energy score places it with the two hull baselines at the top on every corpus, as a
+proper score should.
+It is still descriptive and changes no recorded result.
 
 ## Limits
 

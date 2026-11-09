@@ -464,7 +464,13 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   the unchanged single-reference gate. Checks: a first-reference oracle must score
   worse than the prior-matched simulator, and no generator may beat that simulator
   by a paired scene interval. Registered run: the opened D028 corpus, which must
-  also reproduce the D028 numbers. See ENERGY_SCORE.md. Result: pending.
+  also reproduce the D028 numbers. See ENERGY_SCORE.md.
+- Result (job 52537, db539bc): every D028 scorer field is reproduced exactly, with
+  same-world ADE to 1.5e-10. On the D028 corpus D020 scores 1.105 px against 1.060
+  for the simulator (interval 0.019 to 0.074), and 1.103 with the projection.
+  `metric_check` passes on validation, D028 and D033. The 0.15 px hull baseline is
+  within noise of the simulator on all three; every learned checkpoint is worse. See
+  `docs/results/energy-score-d031.json`.
 
 ## D032: Geometry-loss scale sweep: 9 November 2026
 
@@ -473,7 +479,7 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   penetration, contact and canvas weights scaled by 16, 128 and 1024, and the D029
   recipe with the two contact-dynamics weights scaled by 128 and 1024. Select at
   most one scale per family on original validation with `select_scale`, fixed
-  before training. See GEOMETRY_LOSS_SCALE.md. Result: pending.
+  before training. See GEOMETRY_LOSS_SCALE.md.
 - First attempt (job 52502, 285d482) trained all eight arms, then stopped before
   any score at an assertion that zero force leaves pixels unchanged. That holds by
   construction only for rest-anchored models and the hull baseline; the direct
@@ -481,6 +487,12 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   count. The assertion now records a count instead, and an undefined selected ADE
   now fails a rule instead of raising. No rule or margin changed. The run is
   repeated in full.
+- Result (job 52537, db539bc): selected `rest_x16` and `direct_dyn_x1024`. In the
+  rest family larger weights cut penetration, but same-world ADE and energy score
+  rise at every step; x16 passed with 0.00003 same-world and 0.0004 px energy room.
+  In the direct family only x1024 cut penetration (1 to 0), with slightly lower ADE
+  and no zero-force drift. Retrained controls are bitwise equal to D020 and D029.
+  See `docs/results/geometry-loss-scale-d032.json`.
 
 ## D033: Fresh confirmation and the projection across checkpoints: 9 November 2026
 
@@ -488,7 +500,14 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   Score both family controls, any D032 selection and the six E10 models, raw and
   with the D028 projection, plus the simulator, oracle and hull controls. Rules:
   `projection_holds`, `learned_geometry_holds` and `metric_check`. See
-  GEOMETRY_LOSS_SCALE.md. Result: pending.
+  GEOMETRY_LOSS_SCALE.md.
+- Result (job 52537, db539bc): `projection_holds` passes for all ten checkpoints,
+  E10 included, at most +0.0003 selected ADE and +0.014 px energy score.
+  `learned_geometry_holds` fails for `rest_x16` (same-world interval upper bound
+  0.00065) and holds for `direct_dyn_x1024`: penetrating clips 3 to 0, zero-force
+  drift 5 to 0, same-world interval -0.00084 to -0.00040. One training seed;
+  boundary clips go only from 15 to 14, so the projection is still needed.
+  `metric_check` passes. See `docs/results/checkpoint-projection-d033.json`.
 
 ## New decision template
 
