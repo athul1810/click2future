@@ -457,6 +457,38 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   every method; similar ADEs support, but do not isolate, a hidden-physics
   explanation. Descriptive only. See CONTACT_PROJECTION.md.
 
+## D036: Reference-free physics-guided candidate selection: 9 November 2026
+
+- Generate 16 E11 futures for each of the 60 opened D018 ID conditions and
+  return four without using reference futures, hidden physics or evaluation
+  metrics. Rank visible penetration, boundary excess, zero-force drift and
+  force opposition, then preserve trajectory diversity. Compare with the first
+  four candidates from the identical pool.
+- Selected ADE falls from 0.02918 to 0.02760; penetrating clips fall 26 to 0
+  and boundary clips 30 to 14, with complete tracking and no zero-force drift.
+  The strict gate still fails because it requires every case, rather than the
+  reported mean, to have selected-object ADE at most 0.03125.
+- Exploratory only: one checkpoint, an opened corpus and four times the model
+  sampling cost. The selector is optional and the model is unchanged. Record:
+  docs/results/physics-guided-selection-d036.json.
+
+## D037: Projected repair-aware candidate selection: 9 November 2026
+
+- Reproduce the D020 recipe locally from the recorded E7 teacher and cache.
+  Apply the accepted D028 frame-wise projection to all 16 candidates, then
+  select four using visible physics, projection repair and diversity. The
+  control projects candidates 0-3 from the same pool.
+- Selected ADE falls 7.58%, from 0.02976 to 0.02750. Both arms retain complete
+  tracking, zero penetration, zero boundary clipping and zero-force rest; 122
+  of 240 selected outputs come from candidates 4-15.
+- The strict gate still fails because at least one case exceeds 0.03125. This
+  does not erase the mean and physical-quality improvements, but it prevents a
+  promotion claim. D024 already shows that sampled hidden physics can make an
+  exact simulator fail this single-reference gate, so the physical checks stay
+  visible beside it; the gate itself is unchanged. The checkpoint is a local
+  same-recipe reproduction rather than the original TC2 D020 artifact, and
+  D018 was already opened. Record: docs/results/projected-physics-selection-d037.json.
+
 ## New decision template
 
 ```text

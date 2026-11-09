@@ -14,6 +14,7 @@ from click2future.training.sample_trajectory import load_trajectory
 from click2future.training.train_expected_prior import (
     ExpectedPriorConfig,
     ExpectedPriorTrainer,
+    require_training_gpu,
     sources,
 )
 
@@ -31,6 +32,15 @@ def fixture(expected=True, anchored=False):
         physics_sigma_max=1.0,
     )
     return ExpectedPriorTrainer(data, geometry, worlds, config), obs
+
+
+def test_local_reproduction_requires_one_cuda_gpu_without_weakening_tc2_gate(monkeypatch):
+    monkeypatch.delenv("SLURM_JOB_ID", raising=False)
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: 1)
+    assert require_training_gpu(local_reproduction=True) == "local_reproduction"
+    with pytest.raises(ValueError, match="TC2 GPU allocation"):
+        require_training_gpu()
 
 
 def test_analytic_coefficients_include_clipping_and_match_independent_quadrature():

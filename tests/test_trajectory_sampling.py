@@ -12,7 +12,13 @@ from click2future.demo.models import CheckpointModel
 from click2future.evaluation import trajectory_pilot
 from click2future.models.object_motion import observe
 from click2future.sim import run_rollout
-from click2future.training.sample_trajectory import load_trajectory, sample_trajectory_videos
+from click2future.training.sample_trajectory import (
+    load_trajectory,
+    sample_trajectory_videos,
+)
+from click2future.training.sample_trajectory import (
+    main as sample_main,
+)
 from click2future.training.train_cvae import sha256
 from click2future.training.train_trajectory import TrajectoryConfig, TrajectoryTrainer
 
@@ -77,6 +83,44 @@ def test_public_sampler_and_demo_match_and_isolate_seeds(fixture_checkpoint):
             future_frames=31,
             cancelled=threading.Event(),
         )
+
+
+def test_physics_selection_cli_retains_candidate_provenance(fixture_checkpoint, tmp_path):
+    path, ref = fixture_checkpoint
+    condition = tmp_path / "condition.npz"
+    output = tmp_path / "selected.npz"
+    np.savez_compressed(
+        condition,
+        frames=ref["frames"],
+        selected_mask=ref["selected_mask"],
+        force_xy=ref["force_xy"],
+    )
+    sample_main(
+        [
+            "--checkpoint",
+            str(path),
+            "--condition",
+            str(condition),
+            "--output",
+            str(output),
+            "--sampling-steps",
+            "3",
+            "--candidate-count",
+            "4",
+            "--output-count",
+            "2",
+            "--physics-select",
+        ]
+    )
+    with np.load(output, allow_pickle=False) as archive:
+        assert archive["videos"].shape == (2, 32, 64, 64, 3)
+        assert archive["candidate_motion"].shape == (4, 31, 2, 4)
+        np.testing.assert_array_equal(archive["candidate_seeds"], np.arange(4))
+        selected = archive["selected_indices"].tolist()
+    metadata = json.loads(output.with_suffix(".json").read_text())
+    assert len(selected) == len(set(selected)) == 2
+    assert metadata["seeds"] == [metadata["candidate_seeds"][index] for index in selected]
+    assert metadata["physics_selection"]["candidate_count"] == 4
 
 
 @pytest.mark.parametrize("seeds", [[], [1, 1], [True], [-1]])
