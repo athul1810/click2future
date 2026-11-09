@@ -7,12 +7,14 @@ from pathlib import Path
 import numpy as np
 import torch
 
+from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
 from click2future.models.object_motion import (
     MOTION_CONTRACT,
     TrajectoryDiffusion,
     observe,
     render_motion,
 )
+from click2future.models.world_motion import sample_world
 
 from .conditioning import observable_condition
 from .train_cvae import sha256
@@ -91,7 +93,7 @@ def sampling_geometry(model, observation, device):
 
 
 @torch.inference_mode()
-def sample_trajectory_videos(
+def sample_trajectory_motions(
     model,
     first_frame,
     selected_mask,
@@ -100,6 +102,7 @@ def sample_trajectory_videos(
     seeds=(0, 1, 2, 3),
     sampling_steps=16,
     force_limit=None,
+    contact_project=False,
     cancelled=None,
 ):
     if (
@@ -108,12 +111,15 @@ def sample_trajectory_videos(
         or any(isinstance(seed, bool) or not isinstance(seed, int) or seed < 0 for seed in seeds)
         or isinstance(sampling_steps, bool)
         or not isinstance(sampling_steps, int)
+        or not isinstance(contact_project, bool)
         or not (
             (getattr(model, "world_prior_only", False) and sampling_steps == 1)
             or (not getattr(model, "world_prior_only", False) and 2 <= sampling_steps <= 128)
         )
     ):
         raise ValueError("Use distinct nonnegative integer seeds and 2-128 sampling steps")
+    if contact_project and not getattr(model, "world_condition", False):
+        raise ValueError("Contact projection requires a world-conditioned trajectory model")
     first_frame = np.asarray(first_frame)
     if first_frame.shape != (64, 64, 3) or first_frame.dtype != np.uint8:
         raise ValueError("This trajectory checkpoint requires native 64px uint8 RGB")
@@ -128,7 +134,7 @@ def sample_trajectory_videos(
     observable_condition(frame, mask, force, force_limit=force_limit)
     features = torch.from_numpy(obs.features[None]).to(device)
     geometry = sampling_geometry(model, obs, device)
-    videos = []
+    motions = []
     for seed in seeds:
         if cancelled is not None and cancelled.is_set():
             raise InterruptedError("Generation cancelled")
@@ -141,8 +147,37 @@ def sample_trajectory_videos(
             sigma_max=model.sigma_max,
             **geometry,
         )[0]
-        videos.append(render_motion(obs, motion.cpu().numpy()))
-    return np.stack(videos)
+        motion = motion.cpu().numpy()
+        if contact_project:
+            motion = project_motion(obs, motion, sample_world(seed)[0, :, 0].numpy())
+        motions.append(motion)
+    return obs, np.stack(motions)
+
+
+def sample_trajectory_videos(
+    model,
+    first_frame,
+    selected_mask,
+    force_xy,
+    *,
+    seeds=(0, 1, 2, 3),
+    sampling_steps=16,
+    force_limit=None,
+    contact_project=False,
+    cancelled=None,
+):
+    observation, motions = sample_trajectory_motions(
+        model,
+        first_frame,
+        selected_mask,
+        force_xy,
+        seeds=seeds,
+        sampling_steps=sampling_steps,
+        force_limit=force_limit,
+        contact_project=contact_project,
+        cancelled=cancelled,
+    )
+    return np.stack([render_motion(observation, motion) for motion in motions])
 
 
 def main(argv=None):
@@ -153,14 +188,24 @@ def main(argv=None):
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--sampling-steps", type=int, default=16)
     parser.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2, 3])
+    parser.add_argument("--contact-project", action="store_true")
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("Use a fresh output file")
     model, state = load_trajectory(args.checkpoint, args.device)
     with np.load(args.condition, allow_pickle=False) as archive:
-        condition = {key: archive[key] for key in ("first_frame", "selected_mask", "force_xy")}
+        first_frame = archive["first_frame"] if "first_frame" in archive else archive["frames"][0]
+        condition = {
+            "first_frame": first_frame,
+            "selected_mask": archive["selected_mask"],
+            "force_xy": archive["force_xy"],
+        }
     videos = sample_trajectory_videos(
-        model, **condition, seeds=args.seeds, sampling_steps=args.sampling_steps
+        model,
+        **condition,
+        seeds=args.seeds,
+        sampling_steps=args.sampling_steps,
+        contact_project=args.contact_project,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(args.output, videos=videos)
@@ -174,7 +219,10 @@ def main(argv=None):
                 "sampler": "direct world-conditioned decode"
                 if getattr(model, "world_prior_only", False)
                 else "EDM rho-7 Heun, no churn, float32 integration",
-                "network_evaluations_per_sample": 2 * args.sampling_steps - 1,
+                "network_evaluations_per_sample": getattr(model, "backbone_evaluations", 1)
+                if getattr(model, "world_prior_only", False)
+                else 2 * args.sampling_steps - 1,
+                "contact_projection": PROJECTION_CONTRACT if args.contact_project else None,
                 "scope": (
                     "supervised trajectory diffusion and rigid RGB decoding; quality unverified"
                 ),

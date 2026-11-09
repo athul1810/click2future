@@ -1,6 +1,7 @@
 """Noise removal, E7 control parity, continuation and observable public sampling."""
 
 import copy
+import json
 import threading
 
 import numpy as np
@@ -9,8 +10,16 @@ import torch
 from test_contact_training import fixture_data
 
 from click2future.demo.models import CheckpointModel
+from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
 from click2future.models.world_motion import WorldTrajectoryDiffusion, sample_world
-from click2future.training.sample_trajectory import load_trajectory, sample_trajectory_videos
+from click2future.training.sample_trajectory import (
+    load_trajectory,
+    sample_trajectory_motions,
+    sample_trajectory_videos,
+)
+from click2future.training.sample_trajectory import (
+    main as sample_main,
+)
 from click2future.training.train_prior import PriorConfig, PriorTrainer, prior_sources
 from click2future.training.train_world import WorldConfig, WorldTrainer, source_identity
 
@@ -160,6 +169,59 @@ def test_checkpoint_resume_sampler_and_demo_keep_all_seeded_samples(tmp_path, di
         seeds=[11, 12, 13, 14],
         sampling_steps=steps,
     )
+    if direct:
+        _, raw = sample_trajectory_motions(
+            model,
+            obs.first,
+            obs.masks[obs.selected_index],
+            force[0].numpy(),
+            seeds=[11, 12],
+            sampling_steps=steps,
+        )
+        _, projected = sample_trajectory_motions(
+            model,
+            obs.first,
+            obs.masks[obs.selected_index],
+            force[0].numpy(),
+            seeds=[11, 12],
+            sampling_steps=steps,
+            contact_project=True,
+        )
+        expected = np.stack(
+            [
+                project_motion(obs, motion, sample_world(seed)[0, :, 0].numpy())
+                for seed, motion in zip((11, 12), raw, strict=True)
+            ]
+        )
+        np.testing.assert_array_equal(projected, expected)
+        condition = tmp_path / "condition.npz"
+        output = tmp_path / "projected.npz"
+        np.savez_compressed(
+            condition,
+            first_frame=obs.first,
+            selected_mask=obs.masks[obs.selected_index],
+            force_xy=force[0].numpy(),
+        )
+        sample_main(
+            [
+                "--checkpoint",
+                str(checkpoint),
+                "--condition",
+                str(condition),
+                "--output",
+                str(output),
+                "--sampling-steps",
+                "1",
+                "--seeds",
+                "11",
+                "12",
+                "--contact-project",
+            ]
+        )
+        with np.load(output, allow_pickle=False) as arrays:
+            assert arrays["videos"].shape == (2, 32, 64, 64, 3)
+        metadata = json.loads(output.with_suffix(".json").read_text())
+        assert metadata["contact_projection"] == PROJECTION_CONTRACT
     adapter = CheckpointModel("fixture", checkpoint, trajectory_steps=steps)
     actual = adapter.predict(
         obs.first,

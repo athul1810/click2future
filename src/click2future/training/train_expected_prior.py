@@ -229,13 +229,23 @@ def resume_probe(data, geometry, worlds, config, path, *, device):
     return {"device": device, "losses_equal": True, "max_abs_difference": differences}
 
 
+def require_training_gpu(local_reproduction=False):
+    if not local_reproduction:
+        require_tc2()
+        return "tc2"
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+        raise ValueError("Local reproduction requires exactly one CUDA GPU")
+    return "local_reproduction"
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("cache", "warm-start", "config", "run-dir"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--local-reproduction", action="store_true")
     args = parser.parse_args(argv)
-    require_tc2()
+    execution_environment = require_training_gpu(args.local_reproduction)
     revision = os.environ["C2F_SOURCE_REVISION"]
     if not revision or revision == "unrecorded":
         parser.error("Require immutable committed source")
@@ -270,7 +280,10 @@ def main(argv=None):
         nonlocal stopping
         stopping = True
 
-    for signum in (signal.SIGTERM, signal.SIGINT, signal.SIGUSR1):
+    stop_signals = [signal.SIGTERM, signal.SIGINT]
+    if hasattr(signal, "SIGUSR1"):
+        stop_signals.append(signal.SIGUSR1)
+    for signum in stop_signals:
         signal.signal(signum, stop)
     started, previous_step = time.perf_counter(), trainer.step
     record = {
@@ -281,7 +294,8 @@ def main(argv=None):
         "trainable_parameter_count": sum(p.numel() for p in trainer.model.parameters()),
         "gpu": torch.cuda.get_device_name(),
         "torch": str(torch.__version__),
-        "slurm_job_id": os.environ["SLURM_JOB_ID"],
+        "execution_environment": execution_environment,
+        "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
         "resumed_from_step": previous_step,
         "selection": "fixed final update; validation is diagnostic only",
         "test_splits_evaluated": [],

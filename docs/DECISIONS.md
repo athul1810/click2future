@@ -542,6 +542,25 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   and the raw losses still do not fix walls. Every learned run stays worse than the
   simulator on energy score. See `docs/results/combined-d035.json`.
 
+## D036: Reference-free physics-guided candidate selection: 9 November 2026
+
+- Generate 16 E11 futures for each of the 60 opened D018 ID conditions and
+  return four without using reference futures, hidden physics, ADE or tracker
+  output. Rank visible penetration, boundary excess, zero-force drift and
+  force opposition, then preserve trajectory diversity.
+- The original first-four comparison was seed-dependent. Exact enumeration of
+  uniform four-of-16 subsets gives ADE 0.02621, while selection gives 0.02760
+  (5.28% worse). Expected complete clips rise from 237.25 to 240; expected
+  penetrating clips fall 19 to 0 and boundary clips 27.75 to 14. The geometry
+  reductions are contract satisfaction, not independent evidence, because the
+  selector scores those definitions directly.
+- A reference-only oracle reaches 0.01245 ADE by using the reference future,
+  which no selector has at inference, so it is not an achievable target. The
+  selector is not promoted to the public sampler. Keep the accepted D028
+  projection as the optional physics-aware output block: it enforces visible
+  constraints without 16 model evaluations. One checkpoint and an opened
+  corpus; record: docs/results/physics-guided-selection-d036.json.
+
 ## New decision template
 
 ```text

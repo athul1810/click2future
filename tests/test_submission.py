@@ -38,6 +38,7 @@ def source_copy(tmp_path):
         "pose_contact.py",
         "compare_checkpoints.py",
         "diagnose_wall_overshoot.py",
+        "run_physics_selection.py",
     ):
         shutil.copyfile(root / "scripts" / name, target / "scripts" / name)
     if (root / "uv.lock").is_file():
