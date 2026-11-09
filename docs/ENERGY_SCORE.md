@@ -107,7 +107,9 @@ agrees to 1.5e-10 (0.00706 and 0.00712).
 
 The simulator draws from the reference distribution by construction, and the explicit
 hull baseline cannot be told apart from it. The learned samplers are measurably worse,
-most of all in wall pushes. The strict single-reference gate fails the simulator itself;
+most of all in wall pushes. The new D035 corpus shows the same pattern (see
+[GEOMETRY_LOSS_SCALE.md](GEOMETRY_LOSS_SCALE.md)). The strict single-reference gate fails
+the simulator itself;
 the energy score places it with the two hull baselines at the top on every corpus, as a
 proper score should.
 It is still descriptive and changes no recorded result.

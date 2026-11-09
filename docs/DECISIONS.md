@@ -534,7 +534,13 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   must hold per seed against the same-seed control. Confirmed if it holds for all three
   seeds, partial for one or two, not confirmed for none. A same-world accuracy gain is
   claimed only if the interval is below zero on all three. This comparison was chosen
-  after seeing D034, which stays as recorded. See GEOMETRY_LOSS_SCALE.md. Result: pending.
+  after seeing D034, which stays as recorded. See GEOMETRY_LOSS_SCALE.md.
+- Result (job 52574, 381a0f1): confirmed. `combined_holds` holds on all three seeds:
+  raw penetrating clips 4, 10 and 5 to 0, no violations and no lost tracks when
+  projected, and same-world intervals entirely below zero. Same-world ADE falls by
+  8-10% (0.03 to 0.05 px). Selected ADE and energy score do not improve on every seed,
+  and the raw losses still do not fix walls. Every learned run stays worse than the
+  simulator on energy score. See `docs/results/combined-d035.json`.
 
 ## New decision template
 

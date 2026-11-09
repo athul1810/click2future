@@ -168,8 +168,11 @@ significantly better.
 - Scaled by 1024, the D029 contact-dynamics losses passed the fresh test at training
   seed 19 but did not replicate on seeds 20 and 21 (D034). What repeats on all three seeds
   is narrower: no penetrating clips and no zero-force drift. Boundary clips do not improve,
-  seed 20 loses five tracks, and the seed-19 accuracy gain is within seed variation. This
-  is not evidence of a general learned geometry gain, and the projection is still needed.
+  seed 20 loses five tracks, and the seed-19 accuracy gain is within seed variation. On
+  their own they do not show a general learned geometry gain.
+- Used with the projection, the same losses pass a registered test on new scenes on all
+  three seeds (D035): no violations and 8-10% lower same-world ADE against the projected
+  control. That is the supported claim, and the projection is part of it.
 - `direct_dyn_x1024` is not compared with D020 by any registered rule. Against `rest_x1` it
   has lower selected and same-world ADE but a higher energy score (1.084 against 1.055).
 - The projection works on every checkpoint tested, including E10 models that never see a
@@ -270,7 +273,38 @@ D034 stays as recorded: the raw rule did not replicate, and this does not revers
 hypothesis came from looking at results, and it is one of several follow-ups run on this
 project, so it should be reported with them. ID scenes only.
 
-Results: pending.
+### D035 results (TC2 job 52574, source 381a0f1)
+
+Record: `docs/results/combined-d035.json`. New corpus manifest `0b383ae8...`, 240 clips.
+All seven checkpoints matched their recorded hashes, and no frame-zero image repeats an
+earlier corpus.
+
+**Outcome: confirmed.** `combined_holds` holds on all three seeds. The same-world interval
+lies entirely below zero on all three, so the registered accuracy claim is met. Each row
+compares `direct_x0` with `direct_dyn_x1024`. Every projected run has zero penetrating and
+zero boundary clips and tracks all 240 clips. Apart from the raw penetration column, all
+figures are with the projection on.
+
+| Seed | Raw penetrating | Same-world ADE | Same-world interval | Selected ADE change | ES change (px) | Zero-force drift |
+|---|---:|---:|---:|---:|---:|---:|
+| 19 | 4 to 0 | 0.00746 to 0.00669 | -0.00102 to -0.00051 | -0.00032 | -0.022 | 5 to 0 |
+| 20 | 10 to 0 | 0.00655 to 0.00595 | -0.00075 to -0.00043 | -0.00028 | -0.012 | 5 to 0 |
+| 21 | 5 to 0 | 0.00664 to 0.00611 | -0.00070 to -0.00036 | +0.00021 | +0.001 | 0 to 0 |
+
+- The accuracy gain is small: same-world ADE falls by 8-10%, or 0.03 to 0.05 px.
+- It is limited to same-world ADE. Selected ADE and energy score improve on seeds 19 and 20
+  and are slightly worse on seed 21, inside the margins.
+- The raw scaled losses still do not fix walls. Boundary clips go from 12 to 11, 26 to 26
+  and 21 to 24. At seed 20 the raw run again has five lost tracks (235 complete clips), so
+  `projection_holds` fails as written for that checkpoint, as in D034. Its projected run
+  tracks all 240 clips.
+- Reference, outside the rule, seed 19 only: `rest_x1` with the projection (the D020 weights)
+  has a lower energy score (1.044 against 1.073), a higher same-world ADE (0.00720 against
+  0.00669) and about the same selected ADE (0.02943 against 0.02946). Neither recipe is
+  better on every measure.
+- Every learned run stays significantly worse than the simulator on energy score (lowest
+  interval lower bound 0.003 px). The hull baselines score 0.993 and 0.995 against the
+  simulator's 1.003, within noise. `metric_check` passes.
 
 ## Limits
 
