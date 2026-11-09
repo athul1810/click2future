@@ -1,6 +1,7 @@
 """Compare fixed-seed sampling with reference-free physics-guided selection."""
 
 import argparse
+import itertools
 import json
 from pathlib import Path
 
@@ -45,89 +46,188 @@ def _zero_summary(rows):
     return {key: sum(row[key] for row in rows) for key in keys}
 
 
-def run(dataset, checkpoint, output, *, device, candidate_count=16, output_count=4):
-    dataset, checkpoint, output = map(Path, (dataset, checkpoint, output))
+def _uniform_four(reports, geometries, zero_rows, output_count):
+    case_ades = []
+    pass_probabilities = []
+    complete = total = 0
+    expected_observations = tracked_observations = 0
+    for report in reports:
+        all_objects = report["trajectory"]["all_objects"]
+        expected_observations += all_objects["expected_future_observations"]
+        tracked_observations += all_objects["tracked_future_observations"]
+        records = report["trajectory"]["selected_object"]["per_sample"]
+        ades = [row["ade"] for row in records]
+        known = [value for value in ades if value is not None]
+        complete += len(known)
+        total += len(ades)
+        case_ades.append(float(np.mean(known)) if known else None)
+        subsets = list(itertools.combinations(range(len(ades)), output_count))
+        passed = sum(
+            all(ades[index] is not None for index in subset)
+            and np.mean([ades[index] for index in subset]) <= 0.03125
+            for subset in subsets
+        )
+        pass_probabilities.append(passed / len(subsets))
+
+    pool_geometry = _geometry_summary(geometries)
+    pool_zero = _zero_summary(zero_rows)
+    scale = output_count / (total / len(reports))
+    return {
+        "quality": {
+            "case_count": len(reports),
+            "expected_selected_clips": len(reports) * output_count,
+            "expected_complete_selected_clips": complete * scale,
+            "expected_missing_selected_clips": (total - complete) * scale,
+            "tracking_fraction": tracked_observations / expected_observations,
+            "selected_ade_mean_cases_over_complete_candidates": float(
+                np.mean([value for value in case_ades if value is not None])
+            ),
+            "mean_per_case_gate_pass_probability": float(np.mean(pass_probabilities)),
+            "all_cases_gate_pass_probability": float(np.prod(pass_probabilities)),
+            "scope": "Exact expectation over uniform four-of-K subsets; no random draw.",
+        },
+        "geometry": {
+            key: value * scale
+            for key, value in pool_geometry.items()
+            if key
+            in {
+                "clips",
+                "penetrating_clips",
+                "penetrating_frames",
+                "boundary_clips",
+                "boundary_object_frames",
+            }
+        },
+        "zero_force": {key: value * scale for key, value in pool_zero.items()},
+    }
+
+
+def _evaluate(reference, videos, settings, run_id):
+    report, _ = evaluate_videos(
+        reference,
+        videos,
+        tracker=TrackerConfig(**settings["tracker"]),
+        max_gap_pixels=settings["max_gap_pixels"],
+        event_tolerance=settings["event_tolerance_intervals"],
+        motion_threshold=settings["motion_threshold"],
+        motion_window=settings["motion_window"],
+        motion_rule=settings["motion_rule"],
+        run_id=run_id,
+    )
+    return report
+
+
+def run(
+    dataset,
+    output,
+    *,
+    checkpoint=None,
+    candidate_source=None,
+    device="cpu",
+    candidate_count=16,
+    output_count=4,
+):
+    dataset, output = map(Path, (dataset, output))
     if output.exists():
         raise ValueError("Use a fresh output folder")
     if candidate_count < output_count or output_count < 1:
         raise ValueError("candidate_count must be at least output_count")
+    if (checkpoint is None) == (candidate_source is None):
+        raise ValueError("Provide either a checkpoint or saved candidate source")
 
     project = Path(__file__).parents[1]
     settings_path = project / "configs/evaluation/pixel.yaml"
     settings = yaml.safe_load(settings_path.read_text())
     plan = prepare_plan(dataset, settings_path, split="id_test", metrics=("ssim",))
-    model, state = load_trajectory(checkpoint, device)
-    seeds = list(range(candidate_count))
+    if candidate_source is None:
+        checkpoint = Path(checkpoint)
+        model, state = load_trajectory(checkpoint, device)
+        seeds = list(range(candidate_count))
+        checkpoint_sha256, checkpoint_step = sha256(checkpoint), state["step"]
+    else:
+        candidate_source = Path(candidate_source)
+        previous = json.loads((candidate_source / "results.json").read_text())
+        seeds = previous["candidate_seeds"]
+        if (
+            previous["dataset_manifest_sha256"] != sha256(dataset / "dataset_manifest.json")
+            or previous["plan_sha256"] != plan["plan_sha256"]
+            or len(seeds) != candidate_count
+        ):
+            raise ValueError("Saved candidates do not match this dataset, plan or pool size")
+        checkpoint_sha256 = previous["checkpoint_sha256"]
+        checkpoint_step = previous["checkpoint_step"]
     output.mkdir(parents=True)
     _write(output / "plan.json", plan)
 
-    video_reports = {"control": [], "selected": []}
-    geometry_reports = {"control": [], "selected": []}
-    zero_reports = {"control": [], "selected": []}
+    arms = ("first_four", "selected", "oracle_four")
+    video_reports = {name: [] for name in arms}
+    geometry_reports = {name: [] for name in arms}
+    zero_reports = {name: [] for name in arms}
+    pool_reports, pool_geometry, pool_zero = [], [], []
     cases = []
     for case_number, case in enumerate(plan["cases"], start=1):
         reference = load_rollout(dataset, case["sample_id"])
         observation = observe(reference["frames"][0], reference["selected_mask"])
-        model_device = next(model.parameters()).device
-        features = torch.from_numpy(observation.features[None]).to(model_device)
-        force = torch.from_numpy(reference["force_xy"][None]).to(model_device)
-        with torch.inference_mode():
-            motion = (
-                model.sample(
-                    features,
-                    force,
-                    seeds=seeds,
-                    steps=1 if getattr(model, "world_prior_only", False) else 16,
-                    sigma_min=model.sigma_min,
-                    sigma_max=model.sigma_max,
-                    **sampling_geometry(model, observation, model_device),
+        if candidate_source is None:
+            model_device = next(model.parameters()).device
+            features = torch.from_numpy(observation.features[None]).to(model_device)
+            force = torch.from_numpy(reference["force_xy"][None]).to(model_device)
+            with torch.inference_mode():
+                motion = (
+                    model.sample(
+                        features,
+                        force,
+                        seeds=seeds,
+                        steps=1 if getattr(model, "world_prior_only", False) else 16,
+                        sigma_min=model.sigma_min,
+                        sigma_max=model.sigma_max,
+                        **sampling_geometry(model, observation, model_device),
+                    )
+                    .cpu()
+                    .numpy()
                 )
-                .cpu()
-                .numpy()
-            )
+            archive = output / f"{case['sample_id']}.npz"
+            np.savez_compressed(archive, candidate_motion=motion)
+        else:
+            archive = candidate_source / f"{case['sample_id']}.npz"
+            with np.load(archive, allow_pickle=False) as arrays:
+                motion = arrays["candidate_motion"]
         selection = select_physics_guided(
             observation, motion, reference["force_xy"], output_count=output_count
         )
+        all_videos = np.stack([render_motion(observation, item) for item in motion])
+        pool_report = _evaluate(reference, all_videos, settings, "candidate_pool")
+        ades = pool_report["trajectory"]["selected_object"]["per_sample"]
+        complete = [row for row in ades if row["ade"] is not None]
+        if len(complete) < output_count:
+            raise ValueError("Oracle diagnostic requires at least four complete candidates")
+        oracle = [row["sample_index"] for row in sorted(complete, key=lambda row: row["ade"])][
+            :output_count
+        ]
         indices = {
-            "control": list(range(output_count)),
+            "first_four": list(range(output_count)),
             "selected": selection["selected_indices"],
+            "oracle_four": oracle,
         }
-        videos = {
-            name: np.stack([render_motion(observation, motion[index]) for index in chosen])
-            for name, chosen in indices.items()
-        }
-        archive = output / f"{case['sample_id']}.npz"
-        np.savez_compressed(
-            archive,
-            candidate_motion=motion,
-            control_indices=np.asarray(indices["control"]),
-            selected_indices=np.asarray(indices["selected"]),
-            control_videos=videos["control"],
-            selected_videos=videos["selected"],
-        )
-        for name in ("control", "selected"):
-            report, _ = evaluate_videos(
-                reference,
-                videos[name],
-                tracker=TrackerConfig(**settings["tracker"]),
-                max_gap_pixels=settings["max_gap_pixels"],
-                event_tolerance=settings["event_tolerance_intervals"],
-                motion_threshold=settings["motion_threshold"],
-                motion_window=settings["motion_window"],
-                motion_rule=settings["motion_rule"],
-                run_id=name,
-            )
+        pool_reports.append(pool_report)
+        pool_geometry.append(geometry_diagnostics(observation, motion))
+        if action_family(case) == "zero":
+            pool_zero.append(zero_horizon(reference, all_videos))
+        for name in arms:
+            videos = all_videos[indices[name]]
+            report = _evaluate(reference, videos, settings, name)
             video_reports[name].append(report)
             geometry_reports[name].append(geometry_diagnostics(observation, motion[indices[name]]))
             if action_family(case) == "zero":
-                zero_reports[name].append(zero_horizon(reference, videos[name]))
+                zero_reports[name].append(zero_horizon(reference, videos))
         cases.append(
             {
                 "sample_id": case["sample_id"],
                 "scene_group_id": case["scene_group_id"],
                 "action_family": action_family(case),
                 "archive_sha256": sha256(archive),
-                "control_indices": indices["control"],
+                "first_four_indices": indices["first_four"],
+                "oracle_indices": indices["oracle_four"],
                 **selection,
             }
         )
@@ -136,24 +236,30 @@ def run(dataset, checkpoint, output, *, device, candidate_count=16, output_count
     result = {
         "study": "reference-free physics-guided candidate selection",
         "selection_contract": SELECTION_CONTRACT,
-        "checkpoint_sha256": sha256(checkpoint),
-        "checkpoint_step": state["step"],
+        "checkpoint_sha256": checkpoint_sha256,
+        "checkpoint_step": checkpoint_step,
         "dataset_manifest_sha256": sha256(dataset / "dataset_manifest.json"),
         "plan_sha256": plan["plan_sha256"],
         "candidate_seeds": seeds,
-        "control_rule": f"first {output_count} candidates from the identical pool",
+        "primary_control": f"exact uniform {output_count}-of-{candidate_count} expectation",
+        "operational_baseline": f"first {output_count} candidates from the identical pool",
+        "oracle_scope": "reference-dependent diagnostic only; unavailable at inference",
         "selection_inputs": "visible frame zero, selected mask, force vector, generated poses",
-        "excluded_from_selection": "reference futures, hidden physics and evaluation metrics",
+        "selection_does_not_use": "reference futures, hidden physics, ADE or tracker output",
+        "shared_with_physical_audit": "observed-hull penetration and boundary definitions",
         "runs": {
             name: {
                 "quality": summarize_quality(video_reports[name]),
                 "geometry": _geometry_summary(geometry_reports[name]),
                 "zero_force": _zero_summary(zero_reports[name]),
             }
-            for name in ("control", "selected")
+            for name in arms
         },
         "cases": cases,
     }
+    result["runs"]["uniform_four"] = _uniform_four(
+        pool_reports, pool_geometry, pool_zero, output_count
+    )
     _write(output / "results.json", result)
     return result
 
@@ -161,7 +267,9 @@ def run(dataset, checkpoint, output, *, device, candidate_count=16, output_count
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, required=True)
-    parser.add_argument("--checkpoint", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--checkpoint", type=Path)
+    source.add_argument("--reuse-candidates", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--candidate-count", type=int, default=16)
@@ -170,8 +278,9 @@ def main():
     torch.set_num_threads(4)
     result = run(
         args.dataset,
-        args.checkpoint,
         args.output,
+        checkpoint=args.checkpoint,
+        candidate_source=args.reuse_candidates,
         device=args.device,
         candidate_count=args.candidate_count,
         output_count=args.output_count,

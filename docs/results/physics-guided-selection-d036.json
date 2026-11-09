@@ -1,15 +1,18 @@
 {
   "study_id": "D036",
-  "status": "measured_local_exploratory_not_promoted",
+  "status": "measured_fair_control_not_promoted",
   "base_revision": "eb55e036f20cbc652d4aee863668946612707a15",
   "scope": "fresh D018 ID corpus; one frozen E11 diffusion checkpoint; no training",
   "method": {
     "candidate_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     "returned_futures": 4,
-    "control": "first four candidates from the identical 16-candidate pool",
+    "primary_control": "exact expectation over uniform four-of-16 subsets",
+    "operational_baseline": "first four candidates from the identical pool",
+    "oracle": "reference-dependent best four; diagnostic only",
     "selection": "hard-valid candidates first, then reference-free physics score and trajectory diversity",
     "selection_inputs": "visible frame zero, selected mask, force vector and generated poses",
-    "excluded_from_selection": "reference futures, hidden physics and evaluation metrics"
+    "selection_does_not_use": "reference futures, hidden physics, ADE or tracker output",
+    "shared_with_physical_audit": "observed-hull penetration and boundary definitions"
   },
   "inputs": {
     "checkpoint_sha256": "946568fec10ccb7bd9ae92ab35ca0d9151bf30fa43090a31d3bf917d8118f7fd",
@@ -18,7 +21,7 @@
     "plan_sha256": "bd41037dbc11b0c310ed917a35f4165043a79323b841e9b607395212ccc9a8f9"
   },
   "results": {
-    "control": {
+    "first_four": {
       "clips": 240,
       "tracking_fraction": 1.0,
       "selected_ade": 0.029183428509981256,
@@ -28,6 +31,16 @@
       "boundary_object_frames": 307,
       "zero_force_drifting_clips": 0,
       "passes_strict_quality_gate": false
+    },
+    "uniform_four_expectation": {
+      "expected_clips": 240,
+      "expected_complete_clips": 237.25,
+      "tracking_fraction": 0.9989079301075269,
+      "selected_ade_over_complete_candidates": 0.02621376221504339,
+      "expected_penetrating_clips": 19.0,
+      "expected_boundary_clips": 27.75,
+      "mean_per_case_gate_pass_probability": 0.6803113553113554,
+      "all_cases_gate_pass_probability": 0.0
     },
     "physics_guided": {
       "clips": 240,
@@ -39,17 +52,29 @@
       "boundary_object_frames": 90,
       "zero_force_drifting_clips": 0,
       "passes_strict_quality_gate": false
+    },
+    "oracle_four": {
+      "clips": 240,
+      "tracking_fraction": 1.0,
+      "selected_ade": 0.012453107827767736,
+      "penetrating_clips": 16,
+      "boundary_clips": 29,
+      "passes_strict_quality_gate": false,
+      "scope": "uses the reference future and is unavailable at inference"
     }
   },
-  "interpretation": "Physics-guided test-time selection removed observed hull penetrations and reduced wall violations without reducing tracker coverage. The strict quality gate remains failed, so this is evidence for candidate selection rather than a promoted model.",
+  "interpretation": "The selector is not an accuracy improvement: its ADE is 5.28% worse than the exact uniform-four expectation. It raises expected complete clips from 237.25 to 240 and filters penetration and boundary failures, but those geometry definitions are part of its score rather than independent evidence. The oracle ADE of 0.01245 shows substantial candidate-pool headroom that this hand-written score cannot identify. The selector is not promoted to the public sampler.",
   "limitations": [
     "one checkpoint and the D018 ID split only",
-    "16 candidates cost four times as many model samples as the four-future control",
+    "16 candidates cost four times as many model samples as four direct outputs",
     "the selector checks necessary visible constraints, not full physical correctness",
-    "the selected ADE is a diagnostic against one realized hidden-physics reference"
+    "uniform ADE is the exact expectation over complete candidates; missing-clip expectation is reported separately",
+    "ADE and the oracle are diagnostics against one realized hidden-physics reference"
   ],
   "provenance": {
     "note": "Hashes identify the measured snapshot; later changes were locked formatting and administrative renumbering from D031 to D036.",
+    "fair_reanalysis_results.json": "30ffe7874cac319ef720bd84cff742b8ed0d5896bf2c38df591febb00c8c2deb",
+    "fair_reanalysis_runner.py": "15cbedef1890428a1c08e20308b95a01e06cbf071564e5767179b22b3676b9fe",
     "physics_selection.py": "2ed34f590030fa86a64923132997684aa72f3f5827da4f5593ab4d5b8700dadc",
     "run_physics_selection.py": "5a5f0e7dac03807fe2e28d9b3ba2f23e2098652129601c4436e74a4d49f1dc1e",
     "test_physics_selection.py": "d834e477217bdd512d4b8b31750794e37549fecb48b3eaef6b738f7c3805257b",

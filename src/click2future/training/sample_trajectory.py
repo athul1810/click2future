@@ -7,13 +7,14 @@ from pathlib import Path
 import numpy as np
 import torch
 
+from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
 from click2future.models.object_motion import (
     MOTION_CONTRACT,
     TrajectoryDiffusion,
     observe,
     render_motion,
 )
-from click2future.models.physics_selection import select_physics_guided
+from click2future.models.world_motion import sample_world
 
 from .conditioning import observable_condition
 from .train_cvae import sha256
@@ -101,6 +102,7 @@ def sample_trajectory_motions(
     seeds=(0, 1, 2, 3),
     sampling_steps=16,
     force_limit=None,
+    contact_project=False,
     cancelled=None,
 ):
     if (
@@ -109,12 +111,15 @@ def sample_trajectory_motions(
         or any(isinstance(seed, bool) or not isinstance(seed, int) or seed < 0 for seed in seeds)
         or isinstance(sampling_steps, bool)
         or not isinstance(sampling_steps, int)
+        or not isinstance(contact_project, bool)
         or not (
             (getattr(model, "world_prior_only", False) and sampling_steps == 1)
             or (not getattr(model, "world_prior_only", False) and 2 <= sampling_steps <= 128)
         )
     ):
         raise ValueError("Use distinct nonnegative integer seeds and 2-128 sampling steps")
+    if contact_project and not getattr(model, "world_condition", False):
+        raise ValueError("Contact projection requires a world-conditioned trajectory model")
     first_frame = np.asarray(first_frame)
     if first_frame.shape != (64, 64, 3) or first_frame.dtype != np.uint8:
         raise ValueError("This trajectory checkpoint requires native 64px uint8 RGB")
@@ -142,7 +147,10 @@ def sample_trajectory_motions(
             sigma_max=model.sigma_max,
             **geometry,
         )[0]
-        motions.append(motion.cpu().numpy())
+        motion = motion.cpu().numpy()
+        if contact_project:
+            motion = project_motion(obs, motion, sample_world(seed)[0, :, 0].numpy())
+        motions.append(motion)
     return obs, np.stack(motions)
 
 
@@ -155,6 +163,7 @@ def sample_trajectory_videos(
     seeds=(0, 1, 2, 3),
     sampling_steps=16,
     force_limit=None,
+    contact_project=False,
     cancelled=None,
 ):
     observation, motions = sample_trajectory_motions(
@@ -165,6 +174,7 @@ def sample_trajectory_videos(
         seeds=seeds,
         sampling_steps=sampling_steps,
         force_limit=force_limit,
+        contact_project=contact_project,
         cancelled=cancelled,
     )
     return np.stack([render_motion(observation, motion) for motion in motions])
@@ -177,31 +187,11 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--sampling-steps", type=int, default=16)
-    parser.add_argument("--seeds", type=int, nargs="+")
-    parser.add_argument("--candidate-count", type=int)
-    parser.add_argument("--output-count", type=int, default=4)
-    parser.add_argument("--physics-select", action="store_true")
+    parser.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2, 3])
+    parser.add_argument("--contact-project", action="store_true")
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("Use a fresh output file")
-    if args.seeds is not None and args.candidate_count is not None:
-        parser.error("Choose explicit seeds or candidate-count, not both")
-    if args.candidate_count is not None and args.candidate_count < 1:
-        parser.error("candidate-count must be positive")
-    if args.output_count < 1:
-        parser.error("output-count must be positive")
-    if not args.physics_select and args.output_count != 4:
-        parser.error("output-count requires physics-select")
-    if args.seeds is not None:
-        candidate_seeds = args.seeds
-    elif args.candidate_count is not None:
-        candidate_seeds = list(range(args.candidate_count))
-    elif args.physics_select:
-        candidate_seeds = list(range(16))
-    else:
-        candidate_seeds = [0, 1, 2, 3]
-    if args.physics_select and args.output_count > len(candidate_seeds):
-        parser.error("output-count cannot exceed the candidate pool")
     model, state = load_trajectory(args.checkpoint, args.device)
     with np.load(args.condition, allow_pickle=False) as archive:
         first_frame = archive["first_frame"] if "first_frame" in archive else archive["frames"][0]
@@ -210,42 +200,21 @@ def main(argv=None):
             "selected_mask": archive["selected_mask"],
             "force_xy": archive["force_xy"],
         }
-    arrays = {}
-    selection = None
-    if args.physics_select:
-        observation, motions = sample_trajectory_motions(
-            model, **condition, seeds=candidate_seeds, sampling_steps=args.sampling_steps
-        )
-        selection = select_physics_guided(
-            observation,
-            motions,
-            condition["force_xy"],
-            output_count=args.output_count,
-        )
-        selected_indices = selection["selected_indices"]
-        videos = np.stack(
-            [render_motion(observation, motions[index]) for index in selected_indices]
-        )
-        arrays.update(
-            candidate_motion=motions,
-            candidate_seeds=np.asarray(candidate_seeds),
-            selected_indices=np.asarray(selected_indices),
-        )
-        output_seeds = [candidate_seeds[index] for index in selected_indices]
-    else:
-        videos = sample_trajectory_videos(
-            model, **condition, seeds=candidate_seeds, sampling_steps=args.sampling_steps
-        )
-        output_seeds = candidate_seeds
+    videos = sample_trajectory_videos(
+        model,
+        **condition,
+        seeds=args.seeds,
+        sampling_steps=args.sampling_steps,
+        contact_project=args.contact_project,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(args.output, videos=videos, **arrays)
+    np.savez_compressed(args.output, videos=videos)
     args.output.with_suffix(".json").write_text(
         json.dumps(
             {
                 "checkpoint_sha256": sha256(args.checkpoint),
                 "step": state["step"],
-                "seeds": output_seeds,
-                "candidate_seeds": candidate_seeds,
+                "seeds": args.seeds,
                 "sampling_steps": args.sampling_steps,
                 "sampler": "direct world-conditioned decode"
                 if getattr(model, "world_prior_only", False)
@@ -253,14 +222,7 @@ def main(argv=None):
                 "network_evaluations_per_sample": getattr(model, "backbone_evaluations", 1)
                 if getattr(model, "world_prior_only", False)
                 else 2 * args.sampling_steps - 1,
-                "physics_selection": None
-                if selection is None
-                else {
-                    "contract": selection["contract"],
-                    "selected_indices": selection["selected_indices"],
-                    "candidate_count": len(candidate_seeds),
-                    "output_count": args.output_count,
-                },
+                "contact_projection": PROJECTION_CONTRACT if args.contact_project else None,
                 "scope": (
                     "supervised trajectory diffusion and rigid RGB decoding; quality unverified"
                 ),
