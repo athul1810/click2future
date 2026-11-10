@@ -1,6 +1,6 @@
 """Differentiable convex-silhouette training losses; never a sampling correction."""
 
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 import numpy as np
@@ -119,7 +119,7 @@ def contact_dynamics(predicted_depth, true_depth, window_pixels):
     return transition_error, normal_velocity_error
 
 
-@lru_cache(maxsize=None)
+@cache
 def force_acceleration_profile(
     future_frames,
     *,
@@ -128,13 +128,7 @@ def force_acceleration_profile(
     force_duration=0.25,
 ):
     """Finite-difference acceleration from one unit of constant external force."""
-    if (
-        future_frames < 2
-        or fps <= 0
-        or physics_hz <= 0
-        or physics_hz % fps
-        or force_duration < 0
-    ):
+    if future_frames < 2 or fps <= 0 or physics_hz <= 0 or physics_hz % fps or force_duration < 0:
         raise ValueError("Use valid frame and force timing")
     step = 1 / physics_hz
     steps_per_frame = physics_hz // fps

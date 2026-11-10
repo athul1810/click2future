@@ -12,7 +12,6 @@ import numpy as np
 
 from click2future.evaluation.rigid_geometry import _hull
 
-
 MOMENTUM_BLOCK_CONTRACT = "wall-free-contact-aware-linear-momentum-1"
 
 

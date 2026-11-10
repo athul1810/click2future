@@ -15,7 +15,6 @@ from click2future.training.contact_geometry import (
     contact_dynamics,
     contact_objective,
     dynamics_residual,
-    force_acceleration_profile,
     observed_hulls,
     signed_penetration,
 )

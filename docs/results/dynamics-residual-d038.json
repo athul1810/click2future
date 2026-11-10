@@ -1,0 +1,96 @@
+{
+  "study_id": "D038",
+  "status": "registered_full_pipeline_holds_optional_not_default",
+  "source_revision": "9daf9db67993369006a559e9f2d2e70f96600b32",
+  "scope": "fresh seed-980000 ID corpus; one matched seed-20 training pair; four futures per condition",
+  "method": {
+    "control": "rest-anchored expected prior plus contact projection",
+    "candidate": "force/mass residual-trained prior plus momentum correction plus contact projection",
+    "config_difference": {
+      "dynamics_residual_weight": [0.0, 4.0]
+    },
+    "shared_training": {
+      "seed": 20,
+      "updates": 8000,
+      "teacher": "E7",
+      "initial_tensors_sha256": "08b824125c493083ff16a9e5fdacfaef507fa08b6011d8c1f7b1c101dc7b11ad",
+      "initial_private_rng_sha256": "2c9283ef4f966a139e173e32e2e0566d82a0762fa382e6cf8c0124580c53b580"
+    },
+    "contracts": {
+      "momentum": "wall-free-contact-aware-linear-momentum-1",
+      "projection": "observed-hull-position-projection-1"
+    }
+  },
+  "inputs": {
+    "control_checkpoint_sha256": "41037adc66a80f915cda90e27674ab238482ec55051787dcb853c4bec8af98e2",
+    "candidate_checkpoint_sha256": "79cc609227a6fe1afb4f8a3cf6b688149f151d979583f053fbf849f697d11d87",
+    "control_summary_sha256": "e3f1a76169509e865f9358b5c3181f7d0cb9f701564c37853e2a84687116b097",
+    "candidate_summary_sha256": "1476735332e8c49b5750234ae1b69bf94398b8c05253b1af7273a1f38ecffce6",
+    "dataset_manifest_sha256": "af51d8d951a3b749b7a9b5bfcd4a5f9af2ad6f76fb1d33cbcf20d9514a768c00",
+    "plan_sha256": "abe8c3aace6d1824f73f5deded595c13194ae3ab66b8a989b16d41a5f164b9fc",
+    "scorer_sha256": "73dfd473fc43f243db384a76197a53b0b9d068c4a703752d87dfe49ad0e40bf3",
+    "raw_results_sha256": "43bc87ef8bfe9d95e4f34927d1e3b999accd32def784e05d6439ba01f6b6b1db",
+    "stored_simulator_clips": 355,
+    "exact_replays": 355,
+    "id_scene_groups": 10,
+    "conditions": 60,
+    "generated_clips_per_arm": 240
+  },
+  "registered_checks": {
+    "tracking_not_worse": true,
+    "zero_geometry_violations": true,
+    "no_new_drift": true,
+    "pose_ade_noninferior": true,
+    "same_world_ade_improves": true,
+    "dynamics_residual_improves": true,
+    "momentum_conserved": true,
+    "energy_noninferior": true,
+    "all_hold": true
+  },
+  "results": {
+    "control": {
+      "complete_clips": 240,
+      "penetrating_clips": 0,
+      "boundary_clips": 0,
+      "zero_force_drifting_clips": 0,
+      "passive_drifting_clips": 0,
+      "same_world_selected_ade": 0.006988156590765963,
+      "first_reference_pose_ade": 0.027707880440478522,
+      "dynamics_residual": 0.005641331137667294,
+      "post_force_momentum_error": 0.00864501184383408,
+      "energy_score_pixels": 1.2605258538533481,
+      "contact_f1": 0.22764227642276422
+    },
+    "candidate": {
+      "complete_clips": 240,
+      "penetrating_clips": 0,
+      "boundary_clips": 0,
+      "zero_force_drifting_clips": 0,
+      "passive_drifting_clips": 0,
+      "same_world_selected_ade": 0.005816875131373914,
+      "first_reference_pose_ade": 0.026645169003556173,
+      "dynamics_residual": 0.0010072605629223594,
+      "post_force_momentum_error": 1.6356181974756131e-8,
+      "energy_score_pixels": 1.253883344210341,
+      "contact_f1": 0.2125984251968504
+    },
+    "candidate_minus_control_intervals": {
+      "same_world_selected_ade_95_percent": [-0.0014922300097047507, -0.0008386944537051022],
+      "dynamics_residual_95_percent": [-0.005949361398000595, -0.003282065279774239]
+    },
+    "same_world_ade_by_family": {
+      "zero": [0.0, 0.0],
+      "push": [0.00379730827407911, 0.00226851468032692],
+      "collision": [0.00773207913152874, 0.00782252908684313],
+      "wall": [0.0188701647333801, 0.0147191632539034]
+    }
+  },
+  "interpretation": "The registered aggregate gate passes. Same-world ADE is 16.8% lower overall, with gains in push and wall cases; grouped collision ADE is 1.17% higher and contact F1 falls slightly, so no collision-specific improvement is claimed.",
+  "limitations": [
+    "one confirmatory training seed and ten fresh ID scene groups",
+    "no OOD claim",
+    "the momentum and contact stages are explicit hybrid corrections",
+    "RGB tracker contact F1 is a weak proxy and decreased in this run",
+    "the compact record retains hashes and aggregate evidence; checkpoints, corpus and raw per-case output remain external artifacts"
+  ]
+}

@@ -561,6 +561,27 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   constraints without 16 model evaluations. One checkpoint and an opened
   corpus; record: docs/results/physics-guided-selection-d036.json.
 
+## D037-D038: Force/mass residual and full physics pipeline: 10 November 2026
+
+- Add an optional free-motion force/mass residual during training and an optional
+  wall-aware momentum correction before the accepted D028 contact projection. D037's
+  seed-19 development screen lowered the residual about 79%; it fixed neither walls nor
+  contact by itself, so D038 tests the complete pipeline.
+- The D038 rule and seed were committed at `9daf9db` before data generation. A matched
+  seed-20 pair was trained locally for 8,000 updates from the same E7 teacher, cache,
+  initialization and private RNG; only `dynamics_residual_weight` differs (0 versus 4).
+  All 355 clips in the fresh seed-980000 corpus replay exactly.
+- Result: all eight registered checks pass. Against the projected control, the residual
+  plus momentum plus projection pipeline tracks 240/240 clips, retains zero penetration,
+  boundary violations and drift, and lowers same-world ADE from 0.00699 to 0.00582. The
+  paired interval is [-0.00149, -0.00084]. Dynamics residual falls from 0.00564 to 0.00101
+  (interval [-0.00595, -0.00328]) and momentum error reaches 1.64e-8.
+- The gain is not uniform: push and wall ADE fall 40.3% and 22.0%, while grouped collision
+  ADE rises 1.17% and contact F1 falls from 0.228 to 0.213. Accept the implementation as an
+  opt-in physics-informed pipeline, not a default or a collision-specific improvement.
+  One confirmatory training seed, fresh ID scenes only; see DYNAMICS_RESIDUAL.md and
+  `docs/results/dynamics-residual-d038.json`.
+
 ## New decision template
 
 ```text

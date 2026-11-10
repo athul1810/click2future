@@ -71,9 +71,7 @@ def test_contact_correction_preserves_relative_collision_motion():
 
 
 def test_simulator_wall_free_motion_already_satisfies_the_block():
-    scene = json.loads(
-        (Path(__file__).parent / "fixtures" / "tiny_scene.json").read_text()
-    )
+    scene = json.loads((Path(__file__).parent / "fixtures" / "tiny_scene.json").read_text())
     rollout = run_rollout(scene, frame_count=32)
     obs = observe(rollout["frames"][0], rollout["selected_mask"])
     motion = np.zeros((31, 2, 4), dtype=np.float32)

@@ -208,10 +208,8 @@ def dynamics_residual_holds(candidate, control, interval):
         and candidate["boundary_clips"] <= control["boundary_clips"]
         and _no_new_drift(candidate, control)
         and _selected_ade_within(candidate, control)
-        and candidate["matched_world_ade"]
-        <= control["matched_world_ade"] + SAME_WORLD_ADE_MARGIN
-        and candidate["energy"]["selected"]
-        <= control["energy"]["selected"] + ENERGY_MARGIN_PIXELS
+        and candidate["matched_world_ade"] <= control["matched_world_ade"] + SAME_WORLD_ADE_MARGIN
+        and candidate["energy"]["selected"] <= control["energy"]["selected"] + ENERGY_MARGIN_PIXELS
     )
 
 

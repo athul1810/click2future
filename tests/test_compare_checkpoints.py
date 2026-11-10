@@ -139,9 +139,7 @@ def test_free_motion_residual_recognizes_a_matched_simulator_rollout():
     target = run_rollout(scene, frame_count=32, fps=8, physics_hz=240, resolution=64)
     observation = observe(target["frames"][0], target["selected_mask"])
     order = canonical_ids(observation, target["selected_object_id"])
-    motion = encode_motion(
-        target["positions"][:, order], replay_angles(target)[:, order]
-    )[None]
+    motion = encode_motion(target["positions"][:, order], replay_angles(target)[:, order])[None]
     objects = {obj["object_id"]: obj for obj in scene["objects"]}
     world = np.asarray(
         [

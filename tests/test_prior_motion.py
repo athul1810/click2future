@@ -150,22 +150,20 @@ def test_rest_anchored_residual_recipe_changes_only_the_new_weight():
     control = json.loads((root / "prior_rest_anchored.json").read_text())
     candidate = json.loads((root / "prior_rest_anchored_dynamics_residual.json").read_text())
     control["dynamics_residual_weight"] = 0.0
-    assert {
-        key for key in control if control[key] != candidate[key]
-    } == {"dynamics_residual_weight"}
+    assert {key for key in control if control[key] != candidate[key]} == {
+        "dynamics_residual_weight"
+    }
     ExpectedPriorConfig(**candidate).validate()
 
 
 def test_seed20_residual_comparison_changes_only_seed_and_residual_weight():
     root = Path(__file__).parents[1] / "configs/training"
     control = json.loads((root / "prior_rest_anchored_seed20.json").read_text())
-    candidate = json.loads(
-        (root / "prior_rest_anchored_dynamics_residual_seed20.json").read_text()
-    )
+    candidate = json.loads((root / "prior_rest_anchored_dynamics_residual_seed20.json").read_text())
     assert control["seed"] == candidate["seed"] == 20
-    assert {
-        key for key in control if control[key] != candidate[key]
-    } == {"dynamics_residual_weight"}
+    assert {key for key in control if control[key] != candidate[key]} == {
+        "dynamics_residual_weight"
+    }
     ExpectedPriorConfig(**control).validate()
     ExpectedPriorConfig(**candidate).validate()
 
