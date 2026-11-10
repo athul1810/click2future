@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "cede28a01b15291ab51beac2a065ff49a437d4e3d366a41e14a96c1dc28c5266",
+    "main.tex": "87fdd3825d18d098f81465f2591ceea8a03d2e056861c471d6b44a64623a0dc8",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -211,7 +211,7 @@
     "../docs/results/contact-projection-selection-d028.json": "6db6d35f1074c2840a4b01cc94ccfb77830bab8e04ae13eaebef55f39104e8ca",
     "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a"
   },
-  "rendered_pdf_sha256": "6190022cbc13bbd2615f1c2b54d32f8cd31e0df2965f91d228c7cf5355c0ad18",
+  "rendered_pdf_sha256": "81e3f5bc44772ea464fe30ce5e17861412808f49d2fef6af76ed5584584ac799",
   "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
   "source_package_verification": {
     "status": "passed",
@@ -1242,8 +1242,8 @@
   "pose_contact_d028_verification": {
     "scope": "Pose-based first-contact timing on the frozen D028 neural and projected arms (job 52299), descriptive and after the D028 decision; no model, threshold, gate or recorded score changes.",
     "record": "docs/results/pose-contact-d028.json",
-    "record_sha256": "b90e87e412e780a0001a9e646979e98ba3098ca230e58e6e915c409599a7f307",
-    "script_sha256": "09bd4107c9c12f49587ca4188850593ce42fad33af5c26285093bf07a7350850",
+    "record_sha256": "a1e0b56e0dbb15490e047535cb844d5f8ec99cce6e928ab6a08403231550a600",
+    "script_sha256": "61c976774fdd94b5769154974bad4da34982075bbf5bce993609bf1ef0905c3d",
     "raw_source": "d028-compare-raw-job52299.tar.gz (draft release untagged-73707b25ba0bbf3e4a49); results.json sha256 equals result_sha256 in docs/results/contact-projection-d028.json",
     "plan_sha256": "7da637e8545bb3fb855a2504a9bf19972f14f018a39c62c8e4a657e99c74021d",
     "dataset": "seed 940000 regenerated from 314fa0c; 210/210 id_test clip arrays match plan input_sha256; metadata differs only in the last float digit; local manifest sha256 75a51045d0a0164e9f8d04a9872adf47c814b783ef86609cd57abf5406e51111",
@@ -1261,6 +1261,6 @@
     "rendered_pages_inspected": [
       35
     ],
-    "pdf_sha256": "6190022cbc13bbd2615f1c2b54d32f8cd31e0df2965f91d228c7cf5355c0ad18"
+    "pdf_sha256": "81e3f5bc44772ea464fe30ce5e17861412808f49d2fef6af76ed5584584ac799"
   }
 }

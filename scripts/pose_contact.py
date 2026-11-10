@@ -48,6 +48,7 @@ SPLITS = ("train", "validation")
 TOUCH_GRID = (0.0, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3, 0.5)
 VISIBLE_TOUCH = 0.05  # exact-shape gap treated as touching when classifying labels
 TOLERANCE = 1  # the audit's one-interval event tolerance
+HULL_TOUCH = 0.01  # pixel-hull gap read as held at contact (projection separates by 1e-3)
 _REFERENCE_ONSETS = {}
 
 
@@ -375,10 +376,12 @@ def standoff(folders, dataset, touch, offset):
     """Diagnostic for hull-based corrections: exact gaps where pixel-centre hulls meet.
 
     Records, for contact conditions, the pixel-centre hull gap at frames where the
-    replayed references truly touch, and each arm's closest exact gap.
+    replayed references truly touch, each arm's closest exact gap, and, for samples
+    that never reach exact contact, the pixel-hull gap at their closest exact frame.
     """
     plan = json.loads((Path(next(iter(folders.values()))).parent / "plan.json").read_text())
     hull_gap, closest = [], {name: [] for name in folders}
+    missed = {name: [] for name in folders}
     for case in plan["cases"]:
         names = case["reference_ids"]
         if all(first_contact(reference_onsets(dataset, n, touch, offset)) is None for n in names):
@@ -396,21 +399,38 @@ def standoff(folders, dataset, touch, offset):
         for arm, folder in folders.items():
             with np.load(Path(folder) / f"{case['sample_id']}.npz", allow_pickle=False) as a:
                 for motion in a["motion"]:
-                    closest[arm].append(
-                        float(distances(polygons, centres, motion, resolution)[1:].min())
-                    )
+                    exact = distances(polygons, centres, motion, resolution)
+                    t = 1 + int(np.argmin(exact[1:]))
+                    closest[arm].append(float(exact[t]))
+                    if first_contact(onsets(exact, touch)) is None:
+                        frame = motion[t - 1]
+                        gap = signed_distance(*move(hulls, centres, frame, resolution))
+                        missed[arm].append((float(exact[t]), float(gap)))
 
     def quantiles(values):
         q = np.percentile(values, [5, 25, 50, 75, 95])
         return dict(zip(("p5", "p25", "median", "p75", "p95"), q.tolist(), strict=True))
 
+    def misses(rows):
+        held = [e for e, h in rows if abs(h) <= HULL_TOUCH]
+        apart = [h for e, h in rows if abs(h) > HULL_TOUCH]
+        return {
+            "samples_without_exact_contact": len(rows),
+            "pixel_hulls_touching_at_closest_frame": len(held),
+            "exact_gap_when_hulls_touching_pixels": quantiles(held) if held else None,
+            "pixel_hull_gap_otherwise_pixels": quantiles(apart) if apart else None,
+        }
+
     return {
         "scope": "Diagnostic over contact conditions; changes no score.",
         "reference_touching_frames": len(hull_gap),
         "pixel_hull_gap_at_true_contact_pixels": quantiles(hull_gap),
+        "reference_touching_frames_with_overlapping_hulls": int(np.sum(np.array(hull_gap) < 0)),
         "closest_exact_gap_pixels": {
             arm: {"samples": len(v), **quantiles(v)} for arm, v in closest.items()
         },
+        "hull_touch_tolerance_pixels": HULL_TOUCH,
+        "samples_without_exact_contact": {arm: misses(v) for arm, v in missed.items()},
     }
 
 

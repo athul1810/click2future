@@ -8,7 +8,7 @@
   "held_out_dataset_manifest_sha256": "75a51045d0a0164e9f8d04a9872adf47c814b783ef86609cd57abf5406e51111",
   "held_out_scope": "Descriptive only: frozen D028 checkpoints and plans, touch threshold chosen on training clips before reading them; no selection or gate.",
   "source_sha256": {
-    "pose_contact.py": "09bd4107c9c12f49587ca4188850593ce42fad33af5c26285093bf07a7350850"
+    "pose_contact.py": "61c976774fdd94b5769154974bad4da34982075bbf5bce993609bf1ef0905c3d"
   },
   "primary_offset_pixels": 0.2,
   "runs": [
@@ -1190,6 +1190,7 @@
       "p75": 0.4092098079862457,
       "p95": 0.4626348641526194
     },
+    "reference_touching_frames_with_overlapping_hulls": 491,
     "closest_exact_gap_pixels": {
       "neural": {
         "samples": 80,
@@ -1206,6 +1207,39 @@
         "median": 0.28875586938420106,
         "p75": 0.5633578237908304,
         "p95": 0.8951811333001481
+      }
+    },
+    "hull_touch_tolerance_pixels": 0.01,
+    "samples_without_exact_contact": {
+      "neural": {
+        "samples_without_exact_contact": 23,
+        "pixel_hulls_touching_at_closest_frame": 0,
+        "exact_gap_when_hulls_touching_pixels": null,
+        "pixel_hull_gap_otherwise_pixels": {
+          "p5": -0.6729965516613453,
+          "p25": -0.4398323100742164,
+          "median": -0.2384484042349353,
+          "p75": 0.5032213866066316,
+          "p95": 0.707631391433882
+        }
+      },
+      "projected": {
+        "samples_without_exact_contact": 49,
+        "pixel_hulls_touching_at_closest_frame": 35,
+        "exact_gap_when_hulls_touching_pixels": {
+          "p5": 0.32773032801242796,
+          "p25": 0.5611795938746507,
+          "median": 0.5631820727894645,
+          "p75": 0.5733250110406573,
+          "p95": 0.9309083072094608
+        },
+        "pixel_hull_gap_otherwise_pixels": {
+          "p5": 0.03116165738455487,
+          "p25": 0.22343029811266713,
+          "median": 0.4308315137278808,
+          "p75": 0.6430324327337189,
+          "p95": 0.7412614512369419
+        }
       }
     }
   }

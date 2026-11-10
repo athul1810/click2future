@@ -187,12 +187,19 @@ from contact conditions: 49 of 80 projected samples never reach exact contact,
 against 23 raw. The projection separates observed pixel-centre hulls, and those
 hulls do not coincide with the exact outlines. The recorded diagnostic
 (`--standoff`, `projection_standoff_diagnostic`) replays every reference of the 20
-contact conditions: at the 1,032 frames where they truly touch, the pixel-centre
-hulls are still 0.23 pixels apart at the median, and anywhere from 0.91 pixels
-overlapping to 0.46 pixels apart (5th-95th percentile), depending on orientation.
-The closest exact gap of a projected sample has median 0.29 pixels (interquartile
--0.20 to 0.56), against -0.20 raw, so projected objects usually stop short of the
-exact outline, which the 0.05-pixel touch rule counts as no contact. Offsets 0 and 0.5 give the same pattern (projected occurrence 0.783 and
+contact conditions. At the 1,032 frames where they truly touch, the hull gap
+depends on orientation and falls into two groups: in 491 frames the hulls already
+overlap (25th percentile -0.70 pixels, 5th -0.91), and in the rest they are still
+apart (median +0.23 pixels). Only the overlapping group matters for the
+projection, since hulls that are apart do not trigger it. There, the projection
+stops the objects when the hulls touch, before the exact outlines can meet. In 35
+of the 49 projected misses, the hulls are touching (within 0.01 pixels) at the
+sample's closest frame, with the exact outlines a median 0.56 pixels apart. In the
+other 14 the hulls are still apart (median 0.43 pixels), so the sampled motion
+itself stops short; none of the 23 raw misses has touching hulls. The closest
+exact gap of a projected sample has median 0.29 pixels (interquartile -0.20 to
+0.56), against -0.20 raw, which the 0.05-pixel touch rule counts as no contact.
+Offsets 0 and 0.5 give the same pattern (projected occurrence 0.783 and
 0.817 against 0.900 and 0.921 raw).
 
 A labelled sensitivity check rescores references and both arms at looser touch
@@ -206,10 +213,12 @@ thresholds (`--held-out-touch`); the training-selected threshold stays primary:
 | 0.8 | 0.887 / 0.66 | 1.000 / 0.888 / 0.88 | 0.979 / 0.867 / 1.08 |
 | 1.0 | 0.912 / 0.57 | 1.000 / 0.863 / 0.60 | 1.000 / 0.813 / 0.70 |
 
-At about one pixel of tolerance both arms reach contact in every contact
-condition, with timing close to the references; the projection is slightly
-behind the raw sampler. At exact-contact resolution the projection leaves a
-sub-pixel standoff that no pixel-level score can see. This is one checkpoint on
+Only at about one pixel of tolerance do both arms reach contact in every contact
+condition, with timing close to the references and the projection slightly
+behind the raw sampler. Below that, the projection's timing is clearly worse:
+at 0.5 pixels its mean error is 3.11 intervals against 1.78 raw. The projection
+therefore holds many objects a sub-pixel distance short of contact, which
+delays or removes their first contact, and the RGB contact score cannot see it. This is one checkpoint on
 ten fresh ID groups and changes no D028 rule or result.
 
 ## Limitations
