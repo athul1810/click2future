@@ -19,6 +19,9 @@
 - `training/prior_rest_anchored_seed20.json` and
   `training/prior_rest_anchored_dynamics_residual_seed20.json`: the matched seed-20
   control and candidate registered for the D038 full-pipeline comparison.
+- `training/collision_impulse_screen_control.json` and
+  `training/collision_impulse_screen_x1024.json`: matched 2,000-update seed-22 recipes
+  for the exploratory D039 collision-impulse screen.
 - `development.yaml`: artifact-directory conventions.
 - `pilot.yaml`: synthetic denoiser profiler dimensions, conditioning, heads, object count,
   and precision. This is a prototype configuration, not a dataset trainer.

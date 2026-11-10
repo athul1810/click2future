@@ -76,3 +76,35 @@ Train the residual arm with
 `configs/training/prior_rest_anchored_dynamics_residual_seed20.json`. At sampling time,
 world-conditioned checkpoints accept `--momentum-block --contact-project`; omitting both
 keeps raw model output.
+
+## D039 exploratory collision-impulse screen
+
+`collision_impulse_weight` optionally emphasizes the mass-weighted velocity jump at
+isolated object contacts. Its target is the clean simulator trajectory, so sampled
+friction and restitution are retained rather than replaced by a frictionless collision
+formula. The mask excludes wall contact and intervals whose two clean object impulses are
+not equal-and-opposite within 5%, which removes external-force contamination. Weight zero
+keeps the D038 objective unchanged.
+
+A short matched screen used seed 22, 2,000 updates and the already-opened D038 corpus.
+Both arms retained the D038 dynamics residual and used momentum correction followed by
+projection at inference; only the collision weight differed (0 versus 1024). The candidate
+tracked all 240 clips with zero penetration, boundary violations or drift.
+
+| Opened D038 ID screen | Control | Collision residual |
+|---|---:|---:|
+| Overall same-world ADE | 0.00565 | 0.00528 |
+| Collision same-world ADE | 0.00683 | 0.00606 |
+| Direct first-reference pose ADE | 0.02697 | 0.02712 |
+| Energy score (px) | 1.2662 | 1.2548 |
+| RGB tracker contact F1 | 0.168 | 0.238 |
+
+Collision ADE improves 11.3%, with a scene-paired interval of
+`[-0.00117, -0.00043]`. Push ADE improves 7.9%, wall ADE improves 1.5%, and zero-force
+output is unchanged. Raw neural collision ADE is 3.2% worse, however; the gain appears
+only when both arms use the intended momentum-plus-projection pipeline.
+
+This is enough to retain the loss as an experimental opt-in term, but not to claim a
+confirmed improvement: the run is shortened, uses one seed and reuses an opened corpus.
+A full matched run on newly registered scenes would be required before promotion. Record:
+`docs/results/collision-impulse-screen-d039.json`.

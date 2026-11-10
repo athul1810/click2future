@@ -582,6 +582,20 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   One confirmatory training seed, fresh ID scenes only; see DYNAMICS_RESIDUAL.md and
   `docs/results/dynamics-residual-d038.json`.
 
+## D039: Collision-impulse residual screen: 10 November 2026
+
+- Add an optional training residual that matches the clean mass-weighted velocity jump at
+  isolated wall-free object contacts. It uses the simulator target, preserving hidden
+  friction and restitution, and rejects intervals contaminated by external impulse.
+- A matched seed-22 screen used 2,000 updates and the opened D038 corpus. With momentum
+  correction and projection on both arms, collision same-world ADE falls 11.3%, from
+  0.00683 to 0.00606; the paired interval is [-0.00117, -0.00043]. Contact F1 rises from
+  0.168 to 0.238, with 240/240 complete clips and no geometry or drift failures.
+- Raw neural collision ADE rises 3.2%, so this is an interaction with the complete hybrid
+  pipeline rather than a standalone learned-collision gain. Keep the default-zero term as
+  an experimental option. Do not promote it without a full matched run on fresh scenes.
+  See DYNAMICS_RESIDUAL.md and `docs/results/collision-impulse-screen-d039.json`.
+
 ## New decision template
 
 ```text
