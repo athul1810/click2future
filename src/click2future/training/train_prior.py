@@ -29,6 +29,7 @@ class PriorConfig(WorldConfig):
     contact_transition_weight: float = 0.0
     normal_velocity_weight: float = 0.0
     dynamics_residual_weight: float = 0.0
+    collision_impulse_weight: float = 0.0
 
     def validate(self):
         super().validate()
@@ -43,6 +44,7 @@ class PriorConfig(WorldConfig):
                     self.contact_transition_weight,
                     self.normal_velocity_weight,
                     self.dynamics_residual_weight,
+                    self.collision_impulse_weight,
                 )
             )
             or not (self.world_condition and self.relational)

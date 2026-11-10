@@ -145,6 +145,26 @@ def test_dynamics_residual_is_an_optional_prior_training_term():
         PriorConfig(dynamics_residual_weight=-1).validate()
 
 
+def test_collision_impulse_is_an_optional_prior_training_term():
+    _, data, geometry, _ = fixture()
+    worlds = {split: sample_world(1).numpy().repeat(6, axis=0) for split in data}
+    candidate = PriorTrainer(
+        data,
+        geometry,
+        worlds,
+        PriorConfig(
+            steps=4,
+            width=16,
+            layers=1,
+            batch_size=3,
+            collision_impulse_weight=1,
+        ),
+    )
+    assert candidate.train_step()["collision_impulse"] >= 0
+    with pytest.raises(ValueError):
+        PriorConfig(collision_impulse_weight=-1).validate()
+
+
 def test_rest_anchored_residual_recipe_changes_only_the_new_weight():
     root = Path(__file__).parents[1] / "configs/training"
     control = json.loads((root / "prior_rest_anchored.json").read_text())
@@ -163,6 +183,19 @@ def test_seed20_residual_comparison_changes_only_seed_and_residual_weight():
     assert control["seed"] == candidate["seed"] == 20
     assert {key for key in control if control[key] != candidate[key]} == {
         "dynamics_residual_weight"
+    }
+    ExpectedPriorConfig(**control).validate()
+    ExpectedPriorConfig(**candidate).validate()
+
+
+def test_collision_impulse_screen_changes_only_the_registered_weight():
+    root = Path(__file__).parents[1] / "configs/training"
+    control = json.loads((root / "collision_impulse_screen_control.json").read_text())
+    candidate = json.loads((root / "collision_impulse_screen_x1024.json").read_text())
+    assert control["seed"] == candidate["seed"] == 22
+    assert control["steps"] == candidate["steps"] == 2000
+    assert {key for key in control if control[key] != candidate[key]} == {
+        "collision_impulse_weight"
     }
     ExpectedPriorConfig(**control).validate()
     ExpectedPriorConfig(**candidate).validate()

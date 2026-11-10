@@ -180,6 +180,46 @@ def dynamics_residual(
     return (error * valid).sum((1, 2)) / valid.sum((1, 2)).clamp_min(1)
 
 
+def collision_impulse_residual(
+    prediction,
+    clean,
+    features,
+    masses,
+    geometry,
+    *,
+    contact_window_pixels,
+):
+    """Match mass-weighted velocity jumps at wall-free object contacts."""
+    if masses.shape != prediction.shape[:1] + (2,):
+        raise ValueError("Collision residual requires two masses per sample")
+
+    def velocity(motion):
+        position = 0.5 * motion[..., :2]
+        initial = torch.zeros_like(position[:, :1])
+        return torch.diff(torch.cat((initial, position), 1), dim=1) * 8
+
+    predicted_jump = torch.diff(velocity(prediction), dim=1)
+    clean_jump = torch.diff(velocity(clean), dim=1)
+    mass = masses[:, None, :, None]
+    error = ((predicted_jump - clean_jump) * mass).square().mean((2, 3))
+
+    with torch.no_grad():
+        clean_impulse = clean_jump * mass
+        depth = signed_penetration(clean, features, geometry)
+        near_contact = depth.abs() <= contact_window_pixels / 64
+        near_contact = near_contact[:, :-1] | near_contact[:, 1:]
+        points, _ = transformed_hulls(clean, features, geometry)
+        margin = contact_window_pixels / 64
+        wall = (points.amin(-2) <= margin).any(-1) | (points.amax(-2) >= 1 - margin).any(-1)
+        wall = (wall[:, :-1] | wall[:, 1:]).any(-1)
+        impulse_size = clean_impulse.norm(dim=-1).sum(-1)
+        imbalance = clean_impulse.sum(2).norm(dim=-1)
+        isolated = imbalance <= 0.05 * impulse_size
+        valid = near_contact & ~wall & (impulse_size > 1e-6) & isolated
+
+    return (error * valid).sum(1) / valid.sum(1).clamp_min(1)
+
+
 def contact_objective(model, clean, features, force, sigma, noise, geometry, config):
     prediction = model(clean + sigma[:, None, None, None] * noise, sigma, features, force)
     error = prediction - clean
@@ -269,4 +309,20 @@ def contact_objective(model, clean, features, force, sigma, noise, geometry, con
         residual_loss = (residual * low_noise).mean()
         loss = loss + residual_weight * residual_loss
         parts["dynamics_residual"] = residual_loss.detach()
+    collision_weight = getattr(config, "collision_impulse_weight", 0.0)
+    if collision_weight > 0:
+        world = getattr(model, "world", None)
+        if world is None:
+            raise ValueError("Collision residual requires sampled physical-world labels")
+        residual = collision_impulse_residual(
+            prediction,
+            clean,
+            features,
+            world[..., 0],
+            geometry,
+            contact_window_pixels=config.contact_window_pixels,
+        )
+        collision_loss = (residual * low_noise).mean()
+        loss = loss + collision_weight * collision_loss
+        parts["collision_impulse"] = collision_loss.detach()
     return loss, parts

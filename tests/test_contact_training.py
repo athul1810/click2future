@@ -9,9 +9,10 @@ import pytest
 import torch
 
 from click2future.evaluation.rigid_geometry import geometry_diagnostics
-from click2future.models.object_motion import observe
-from click2future.sim import run_rollout
+from click2future.models.object_motion import encode_motion, observe
+from click2future.sim import make_controlled_scene, run_rollout
 from click2future.training.contact_geometry import (
+    collision_impulse_residual,
     contact_dynamics,
     contact_objective,
     dynamics_residual,
@@ -21,6 +22,7 @@ from click2future.training.contact_geometry import (
 from click2future.training.sample_trajectory import load_trajectory, sample_trajectory_videos
 from click2future.training.train_contact import ContactConfig, ContactTrainer, main, resume_probe
 from click2future.training.train_cvae import sha256
+from click2future.training.trajectory_data import canonical_ids, replay_angles
 
 
 def observation():
@@ -129,6 +131,59 @@ def test_dynamics_residual_matches_wall_free_simulator_motion():
         contact_window_pixels=2,
     )
     assert changed > residual
+    changed.sum().backward()
+    assert torch.isfinite(prediction.grad).all() and prediction.grad.abs().sum() > 0
+
+
+def test_collision_impulse_residual_matches_oblique_simulator_contact():
+    scene = make_controlled_scene(
+        970000,
+        action_variant="collision_0_to_1",
+        physics_seed=970100,
+    )
+    ref = run_rollout(scene, frame_count=32, resolution=64, fps=8)
+    assert ref["collision_onset"].any()
+    obs = observe(ref["frames"][0], ref["selected_mask"])
+    order = canonical_ids(obs, ref["selected_object_id"])
+    motion = encode_motion(ref["positions"][:, order], replay_angles(ref)[:, order])[None]
+    clean = torch.from_numpy(motion)
+    features = torch.from_numpy(obs.features[None])
+    objects = {obj["object_id"]: obj for obj in scene["objects"]}
+    masses = torch.tensor(
+        [[objects[identifier]["hidden_physics"]["mass"] for identifier in order]],
+        dtype=torch.float32,
+    )
+    geometry = tensor_geometry(obs)
+    residual = collision_impulse_residual(
+        clean,
+        clean,
+        features,
+        masses,
+        geometry,
+        contact_window_pixels=2,
+    )
+    assert residual.item() == 0
+
+    prediction = clean.clone()
+    event = int(np.flatnonzero(ref["collision_onset"].any((1, 2)))[0])
+    prediction[:, event + 1 :, 0, 0] += (
+        torch.arange(
+            1,
+            prediction.shape[1] - event,
+            dtype=prediction.dtype,
+        )
+        * 0.01
+    )
+    prediction.requires_grad_()
+    changed = collision_impulse_residual(
+        prediction,
+        clean,
+        features,
+        masses,
+        geometry,
+        contact_window_pixels=2,
+    )
+    assert changed.item() > 0
     changed.sum().backward()
     assert torch.isfinite(prediction.grad).all() and prediction.grad.abs().sum() > 0
 
