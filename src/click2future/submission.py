@@ -80,6 +80,7 @@ def _check(name, payload):
             "scripts/plot_prior_replication.py",
             "scripts/pose_contact.py",
             "scripts/compare_checkpoints.py",
+            "scripts/compare_momentum_block.py",
             "scripts/diagnose_wall_overshoot.py",
             "scripts/run_physics_selection.py",
         }

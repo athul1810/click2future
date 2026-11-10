@@ -69,6 +69,7 @@ def expected_direct_objective(model, clean, features, force, geometry, config):
         penetration_weight=config.penetration_weight * probability,
         contact_weight=config.contact_weight * probability,
         boundary_weight=config.boundary_weight * probability,
+        dynamics_residual_weight=config.dynamics_residual_weight * probability,
     )
     loss, parts = contact_objective(
         model, clean, features, force, sigma, torch.zeros_like(clean), geometry, effective

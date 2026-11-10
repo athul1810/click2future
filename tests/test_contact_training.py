@@ -14,6 +14,8 @@ from click2future.sim import run_rollout
 from click2future.training.contact_geometry import (
     contact_dynamics,
     contact_objective,
+    dynamics_residual,
+    force_acceleration_profile,
     observed_hulls,
     signed_penetration,
 )
@@ -87,6 +89,49 @@ def test_contact_dynamics_measures_entry_and_normal_speed_with_gradients():
     assert torch.isfinite(predicted.grad).all() and predicted.grad.abs().sum() > 0
     zero = contact_dynamics(true, true, window_pixels=3.2)
     assert all(value.count_nonzero() == 0 for value in zero)
+
+
+def test_dynamics_residual_matches_wall_free_simulator_motion():
+    scene = json.loads(Path("tests/fixtures/tiny_scene.json").read_text())
+    ref = run_rollout(scene, frame_count=32, resolution=64, fps=8)
+    obs = observe(ref["frames"][0], ref["selected_mask"])
+    motion = np.zeros((1, 31, 2, 4), np.float32)
+    motion[0, ..., :2] = (ref["positions"][1:] - ref["positions"][:1]) / 0.5
+    clean = torch.from_numpy(motion)
+    features = torch.from_numpy(obs.features[None])
+    force = torch.from_numpy(ref["force_xy"][None])
+    masses = torch.tensor(
+        [[obj["hidden_physics"]["mass"] for obj in scene["objects"]]],
+        dtype=torch.float32,
+    )
+    geometry = tensor_geometry(obs)
+    residual = dynamics_residual(
+        clean,
+        clean,
+        features,
+        force,
+        masses,
+        geometry,
+        contact_window_pixels=2,
+    )
+    assert residual.item() < 1e-9
+
+    prediction = clean.clone()
+    time = torch.arange(31, dtype=prediction.dtype)
+    prediction[:, :, 1, 0] += 0.001 * time.square()
+    prediction.requires_grad_()
+    changed = dynamics_residual(
+        prediction,
+        clean,
+        features,
+        force,
+        masses,
+        geometry,
+        contact_window_pixels=2,
+    )
+    assert changed > residual
+    changed.sum().backward()
+    assert torch.isfinite(prediction.grad).all() and prediction.grad.abs().sum() > 0
 
 
 def fixture_data():

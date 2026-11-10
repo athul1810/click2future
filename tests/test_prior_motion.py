@@ -3,6 +3,7 @@
 import copy
 import json
 import threading
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -11,6 +12,7 @@ from test_contact_training import fixture_data
 
 from click2future.demo.models import CheckpointModel
 from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
+from click2future.models.momentum_block import MOMENTUM_BLOCK_CONTRACT, apply_momentum_block
 from click2future.models.world_motion import WorldTrajectoryDiffusion, sample_world
 from click2future.training.sample_trajectory import (
     load_trajectory,
@@ -20,6 +22,7 @@ from click2future.training.sample_trajectory import (
 from click2future.training.sample_trajectory import (
     main as sample_main,
 )
+from click2future.training.train_expected_prior import ExpectedPriorConfig
 from click2future.training.train_prior import PriorConfig, PriorTrainer, prior_sources
 from click2future.training.train_world import WorldConfig, WorldTrainer, source_identity
 
@@ -121,6 +124,52 @@ def test_contact_dynamics_loss_is_an_optional_prior_training_term():
         PriorConfig(contact_transition_weight=-1).validate()
 
 
+def test_dynamics_residual_is_an_optional_prior_training_term():
+    control, data, geometry, _ = fixture()
+    worlds = {split: sample_world(1).numpy().repeat(6, axis=0) for split in data}
+    candidate = PriorTrainer(
+        data,
+        geometry,
+        worlds,
+        PriorConfig(
+            steps=4,
+            width=16,
+            layers=1,
+            batch_size=3,
+            dynamics_residual_weight=1,
+        ),
+    )
+    assert "dynamics_residual" not in control.train_step()
+    assert candidate.train_step()["dynamics_residual"] >= 0
+    with pytest.raises(ValueError):
+        PriorConfig(dynamics_residual_weight=-1).validate()
+
+
+def test_rest_anchored_residual_recipe_changes_only_the_new_weight():
+    root = Path(__file__).parents[1] / "configs/training"
+    control = json.loads((root / "prior_rest_anchored.json").read_text())
+    candidate = json.loads((root / "prior_rest_anchored_dynamics_residual.json").read_text())
+    control["dynamics_residual_weight"] = 0.0
+    assert {
+        key for key in control if control[key] != candidate[key]
+    } == {"dynamics_residual_weight"}
+    ExpectedPriorConfig(**candidate).validate()
+
+
+def test_seed20_residual_comparison_changes_only_seed_and_residual_weight():
+    root = Path(__file__).parents[1] / "configs/training"
+    control = json.loads((root / "prior_rest_anchored_seed20.json").read_text())
+    candidate = json.loads(
+        (root / "prior_rest_anchored_dynamics_residual_seed20.json").read_text()
+    )
+    assert control["seed"] == candidate["seed"] == 20
+    assert {
+        key for key in control if control[key] != candidate[key]
+    } == {"dynamics_residual_weight"}
+    ExpectedPriorConfig(**control).validate()
+    ExpectedPriorConfig(**candidate).validate()
+
+
 @pytest.mark.parametrize("direct", [True, False])
 def test_checkpoint_resume_sampler_and_demo_keep_all_seeded_samples(tmp_path, direct):
     trainer, _, _, obs = fixture(direct)
@@ -194,6 +243,27 @@ def test_checkpoint_resume_sampler_and_demo_keep_all_seeded_samples(tmp_path, di
             ]
         )
         np.testing.assert_array_equal(projected, expected)
+        _, momentum = sample_trajectory_motions(
+            model,
+            obs.first,
+            obs.masks[obs.selected_index],
+            force[0].numpy(),
+            seeds=[11, 12],
+            sampling_steps=steps,
+            momentum_block=True,
+        )
+        expected_momentum = np.stack(
+            [
+                apply_momentum_block(
+                    obs,
+                    motion,
+                    sample_world(seed)[0, :, 0].numpy(),
+                    force[0].numpy(),
+                )
+                for seed, motion in zip((11, 12), raw, strict=True)
+            ]
+        )
+        np.testing.assert_array_equal(momentum, expected_momentum)
         condition = tmp_path / "condition.npz"
         output = tmp_path / "projected.npz"
         np.savez_compressed(
@@ -216,12 +286,14 @@ def test_checkpoint_resume_sampler_and_demo_keep_all_seeded_samples(tmp_path, di
                 "11",
                 "12",
                 "--contact-project",
+                "--momentum-block",
             ]
         )
         with np.load(output, allow_pickle=False) as arrays:
             assert arrays["videos"].shape == (2, 32, 64, 64, 3)
         metadata = json.loads(output.with_suffix(".json").read_text())
         assert metadata["contact_projection"] == PROJECTION_CONTRACT
+        assert metadata["momentum_block"] == MOMENTUM_BLOCK_CONTRACT
     adapter = CheckpointModel("fixture", checkpoint, trajectory_steps=steps)
     actual = adapter.predict(
         obs.first,

@@ -37,6 +37,7 @@ def source_copy(tmp_path):
         "plot_prior_replication.py",
         "pose_contact.py",
         "compare_checkpoints.py",
+        "compare_momentum_block.py",
         "diagnose_wall_overshoot.py",
         "run_physics_selection.py",
     ):
@@ -123,6 +124,10 @@ def test_deterministic_source_archive_extracts_and_replays_without_working_data(
         assert "configs/training/routing/numeric-seed19.json" in names
         assert "src/click2future/models/contact_memory.py" in names
         assert "src/click2future/training/contact_geometry.py" in names
+        assert "src/click2future/models/momentum_block.py" in names
+        assert "scripts/compare_momentum_block.py" in names
+        assert "configs/training/prior_rest_anchored_seed20.json" in names
+        assert "configs/training/prior_rest_anchored_dynamics_residual_seed20.json" in names
         assert "src/click2future/training/train_contact.py" in names
         assert "configs/training/contact_pilot.json" in names
         assert "submission/evaluate_trajectory.sbatch" in names
