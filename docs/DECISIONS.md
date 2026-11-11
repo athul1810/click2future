@@ -564,23 +564,28 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
 ## D037-D038: Force/mass residual and full physics pipeline: 10 November 2026
 
 - Add an optional free-motion force/mass residual during training and an optional
-  wall-aware momentum correction before the accepted D028 contact projection. D037's
-  seed-19 development screen lowered the residual about 79%; it fixed neither walls nor
-  contact by itself, so D038 tests the complete pipeline.
-- The D038 rule and seed were committed at `9daf9db` before data generation. A matched
-  seed-20 pair was trained locally for 8,000 updates from the same E7 teacher, cache,
-  initialization and private RNG; only `dynamics_residual_weight` differs (0 versus 4).
-  All 355 clips in the fresh seed-980000 corpus replay exactly.
-- Result: all eight registered checks pass. Against the projected control, the residual
-  plus momentum plus projection pipeline tracks 240/240 clips, retains zero penetration,
-  boundary violations and drift, and lowers same-world ADE from 0.00699 to 0.00582. The
-  paired interval is [-0.00149, -0.00084]. Dynamics residual falls from 0.00564 to 0.00101
-  (interval [-0.00595, -0.00328]) and momentum error reaches 1.64e-8.
+  wall-aware momentum correction before the accepted D028 contact projection. D037 was
+  unrecorded development work; no D037 numeric result or rule outcome is retained.
+- The D038 rule and seed were committed locally at `9daf9db` before data generation, but
+  that commit and the result commit first reached GitHub together, so the remote history
+  does not independently prove the ordering. A matched seed-20 pair used the same E7
+  teacher, cache, initialization, private RNG and 8,000 updates; only
+  `dynamics_residual_weight` differs (0 versus 4). All 355 fresh clips replay exactly.
+- Result: seven comparison checks pass. Momentum conservation also passes, but is an
+  implementation check because the block enforces it. The full pipeline tracks 240/240
+  clips, retains zero penetration, boundary violations and drift, and lowers same-world
+  ADE from 0.00699 to 0.00582 (16.8%, interval [-0.00149, -0.00084]); first-reference pose
+  ADE falls from 0.02771 to 0.02665 (3.8%).
+- The momentum block alone reaches 0.00618 (interval [-0.00115, -0.00046]) and accounts
+  for about two thirds of the total same-world gain. The residual alone reaches 0.00688
+  ([-0.00018, -0.00005]); on top of the block it reaches 0.00582
+  ([-0.00046, -0.00028]). Without the block, dynamics residual falls 80.7% and contact F1
+  rises from 0.228 to 0.278.
 - The gain is not uniform: push and wall ADE fall 40.3% and 22.0%, while grouped collision
-  ADE rises 1.17% and contact F1 falls from 0.228 to 0.213. Accept the implementation as an
-  opt-in physics-informed pipeline, not a default or a collision-specific improvement.
-  One confirmatory training seed, fresh ID scenes only; see DYNAMICS_RESIDUAL.md and
-  `docs/results/dynamics-residual-d038.json`.
+  ADE rises 1.17% and full-pipeline contact F1 falls from 0.228 to 0.213. The wall gain is
+  entirely from the block; the block alone worsens collision ADE and the residual recovers
+  most of it. Accept an opt-in pipeline, not a default or collision-specific improvement.
+  One training seed, fresh ID scenes only; see DYNAMICS_RESIDUAL.md and the D038 record.
 
 ## D039: Collision-impulse residual screen: 10 November 2026
 

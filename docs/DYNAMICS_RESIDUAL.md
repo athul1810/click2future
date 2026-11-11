@@ -21,24 +21,25 @@ flags reproduce the previous path.
 
 ## D037 development screen
 
-Seed-19 residual and matched-control models were trained locally for 8,000 updates and
-scored on a new seed-970000 ID corpus. The residual error fell about 79%, including push,
-collision and wall strata. With contact projection, both arms had zero penetration and
-boundary violations. A frozen-pose follow-up showed that momentum correction alone could
-increase boundary clipping, while momentum followed by projection lowered same-world ADE.
-Those observations motivated D038; they are development evidence, not the confirmatory
-result.
+D037 was an unrecorded local development screen that motivated the registered D038
+comparison. It has no compact evidence record, and its rule result is not retained or
+used as evidence here.
 
 ## D038 registered comparison
 
-The rule and seed were committed at `9daf9db` before generating the evaluation corpus.
-Two seed-20 models used the same E7 teacher, cache, initialization, private RNG and 8,000
-updates. Their resolved configs differ only in `dynamics_residual_weight` (0 versus 4).
-The fresh seed-980000 corpus contains ten ID scene groups and 60 conditions, with four
-generated futures per condition. All 355 stored simulator clips replay exactly.
+The rule and seed were committed locally at `9daf9db` before generating the evaluation
+corpus. That commit and the result commit first reached GitHub together, so the remote
+history does not independently demonstrate the ordering; future registered studies must
+push the rule before generating data. Two seed-20 models used the same E7 teacher, cache,
+initialization, private RNG and 8,000 updates. Their resolved configs differ only in
+`dynamics_residual_weight` (0 versus 4). The fresh seed-980000 corpus contains ten ID
+scene groups and 60 conditions, with four generated futures per condition. All 355 stored
+simulator clips replay exactly.
 
 The primary comparison is the projected control against the residual-trained model with
-momentum correction and projection. It passes all eight registered checks.
+momentum correction and projection. It passes all seven comparison checks. The eighth
+recorded boolean, post-force momentum conservation, is an implementation check that
+passes by construction because the block enforces it.
 
 | Fresh D038 ID | Control + projection | Residual + momentum + projection |
 |---|---:|---:|
@@ -48,23 +49,39 @@ momentum correction and projection. It passes all eight registered checks.
 | Same-world selected ADE | 0.00699 | 0.00582 |
 | Direct first-reference pose ADE | 0.02771 | 0.02665 |
 | Free-motion dynamics residual | 0.00564 | 0.00101 |
-| Post-force momentum error | 0.00865 | 1.64e-8 |
+| Post-force momentum error (implementation check) | 0.00865 | 1.64e-8 |
 | Multi-reference energy score (px) | 1.2605 | 1.2539 |
 | RGB tracker contact F1 | 0.228 | 0.213 |
 
 The scene-paired 95% interval for candidate-minus-control same-world ADE is
 `[-0.00149, -0.00084]`; for the dynamics residual it is
-`[-0.00595, -0.00328]`. Same-world ADE improves 16.8% overall. By grouped action family it
-is unchanged for zero force, 40.3% lower for plain pushes, 22.0% lower for wall pushes and
-1.17% higher for object collisions.
+`[-0.00595, -0.00328]`. Same-world ADE improves 16.8% overall, while direct
+first-reference pose ADE improves 3.8% (`0.02771` to `0.02665`). The same-world score uses
+the same sampled masses supplied to the block, so the component breakdown is essential:
+
+| D038 component comparison | Same-world ADE | Paired interval |
+|---|---:|---:|
+| Projected control | 0.00699 | -- |
+| Add momentum block | 0.00618 | [-0.00115, -0.00046] |
+| Residual without block | 0.00688 | [-0.00018, -0.00005] |
+| Residual added on top of block | 0.00582 | [-0.00046, -0.00028] |
+
+The momentum block accounts for about two thirds of the total same-world reduction. The
+wall gain is entirely attributable to the block: wall ADE changes from 0.01887 to 0.01466
+with the block, while the residual alone gives 0.01946. The block alone worsens collision
+ADE from 0.00773 to 0.00886; the residual brings it back to 0.00782. Without the block,
+the residual lowers its trained dynamics error by 80.7% (`0.00564` to `0.00109`) and
+raises contact F1 from 0.228 to 0.278.
 
 The supported claim is therefore narrow: on this fresh ID study, the complete opt-in
 pipeline improves aggregate matched-world motion while retaining complete tracking,
-stationarity and visible geometry constraints. It does not show a collision-specific
-improvement. Contact F1 also falls slightly; it was reported but not gated because the
-simulator controls already show that this RGB tracker metric is a weak contact proxy.
-There is one confirmatory training seed, no OOD claim, and the momentum/projection stages
-remain explicit hybrid corrections rather than learned physics.
+stationarity and visible geometry constraints. Most of the aggregate accuracy gain comes
+from the explicit momentum block; the learned residual's clearest independent result is
+lower free-motion dynamics error. It does not show a collision-specific improvement.
+Full-pipeline contact F1 falls slightly; it was reported but not gated because simulator
+controls already show that this RGB tracker metric is a weak contact proxy. There is one
+confirmatory training seed, no OOD claim, and the momentum/projection stages remain
+explicit hybrid corrections rather than learned physics.
 
 The compact evidence record is
 `docs/results/dynamics-residual-d038.json`. Checkpoints and generated datasets remain

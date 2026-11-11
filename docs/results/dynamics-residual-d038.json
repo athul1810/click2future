@@ -2,6 +2,10 @@
   "study_id": "D038",
   "status": "registered_full_pipeline_holds_optional_not_default",
   "source_revision": "9daf9db67993369006a559e9f2d2e70f96600b32",
+  "registration": {
+    "ordering": "rule committed locally before seed-980000 generation",
+    "limitation": "the registration and result commits first reached GitHub together, so remote history does not independently demonstrate the ordering"
+  },
   "scope": "fresh seed-980000 ID corpus; one matched seed-20 training pair; four futures per condition",
   "method": {
     "control": "rest-anchored expected prior plus contact projection",
@@ -36,18 +40,60 @@
     "conditions": 60,
     "generated_clips_per_arm": 240
   },
-  "registered_checks": {
+  "comparison_checks": {
     "tracking_not_worse": true,
     "zero_geometry_violations": true,
     "no_new_drift": true,
     "pose_ade_noninferior": true,
     "same_world_ade_improves": true,
     "dynamics_residual_improves": true,
-    "momentum_conserved": true,
     "energy_noninferior": true,
     "all_hold": true
   },
+  "implementation_checks": {
+    "momentum_conserved_by_construction": true,
+    "candidate_post_force_momentum_error": 1.6356181974756131e-8
+  },
   "results": {
+    "component_breakdown": {
+      "projected_control": {
+        "same_world_selected_ade": 0.006988156590765963,
+        "first_reference_pose_ade": 0.027707880440478522,
+        "dynamics_residual": 0.005641331137667294,
+        "contact_f1": 0.22764227642276422,
+        "wall_same_world_ade": 0.01887016473338008,
+        "collision_same_world_ade": 0.007732079131528735
+      },
+      "control_plus_momentum": {
+        "same_world_selected_ade": 0.006183504846800739,
+        "first_reference_pose_ade": 0.02672127539602419,
+        "dynamics_residual": 0.005410896233358168,
+        "contact_f1": 0.20512820512820512,
+        "wall_same_world_ade": 0.014657684043049813,
+        "collision_same_world_ade": 0.008856263849884272
+      },
+      "residual_plus_projection": {
+        "same_world_selected_ade": 0.006875380361452699,
+        "first_reference_pose_ade": 0.027525372710078953,
+        "dynamics_residual": 0.0010879134224827188,
+        "contact_f1": 0.27848101265822783,
+        "wall_same_world_ade": 0.019458287861198187,
+        "collision_same_world_ade": 0.00753210224211216
+      },
+      "residual_plus_momentum_and_projection": {
+        "same_world_selected_ade": 0.005816875131373914,
+        "first_reference_pose_ade": 0.026645169003556173,
+        "dynamics_residual": 0.0010072605629223594,
+        "contact_f1": 0.2125984251968504,
+        "wall_same_world_ade": 0.014719163253903388,
+        "collision_same_world_ade": 0.007822529086843133
+      },
+      "paired_same_world_ade_95_percent_intervals": {
+        "momentum_only_minus_projected_control": [-0.0011460982830127854, -0.0004608786071670089],
+        "residual_only_minus_projected_control": [-0.0001816124764930765, -0.000053221718505179755],
+        "residual_plus_momentum_minus_control_plus_momentum": [-0.00046499723090770776, -0.0002830772794307751]
+      }
+    },
     "control": {
       "complete_clips": 240,
       "penetrating_clips": 0,
@@ -85,10 +131,12 @@
       "wall": [0.0188701647333801, 0.0147191632539034]
     }
   },
-  "interpretation": "The registered aggregate gate passes. Same-world ADE is 16.8% lower overall, with gains in push and wall cases; grouped collision ADE is 1.17% higher and contact F1 falls slightly, so no collision-specific improvement is claimed.",
+  "interpretation": "The seven comparison checks pass. Same-world ADE is 16.8% lower and first-reference pose ADE is 3.8% lower for the complete pipeline, but about two thirds of the same-world reduction comes from the explicit momentum block. The residual alone gives a smaller same-world gain while reducing its trained dynamics error by 80.7% and raising contact F1. Grouped collision ADE is 1.17% higher for the complete pipeline, so no collision-specific improvement is claimed. Momentum conservation is an implementation check, not evidence of model quality.",
   "limitations": [
+    "registration was committed locally first but was not pushed separately before data generation",
     "one confirmatory training seed and ten fresh ID scene groups",
     "no OOD claim",
+    "same-world ADE uses the same sampled masses supplied to the momentum block",
     "the momentum and contact stages are explicit hybrid corrections",
     "RGB tracker contact F1 is a weak proxy and decreased in this run",
     "the compact record retains hashes and aggregate evidence; checkpoints, corpus and raw per-case output remain external artifacts"
