@@ -586,6 +586,11 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   entirely from the block; the block alone worsens collision ADE and the residual recovers
   most of it. Accept an opt-in pipeline, not a default or collision-specific improvement.
   One training seed, fresh ID scenes only; see DYNAMICS_RESIDUAL.md and the D038 record.
+- Both models were first trained locally. TC2 job 53377 retrained them on an A40 from
+  `9daf9db` with the same initialization and scored them on a TC2-regenerated seed-980000
+  corpus. All checks hold and the values agree with the local run to about four
+  significant figures. The TC2 corpus manifest differs from the local one, so simulator
+  output varies slightly across platforms.
 
 ## D039: Collision-impulse residual screen: 10 November 2026
 
@@ -600,6 +605,8 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   pipeline rather than a standalone learned-collision gain. Keep the default-zero term as
   an experimental option. Do not promote it without a full matched run on fresh scenes.
   See DYNAMICS_RESIDUAL.md and `docs/results/collision-impulse-screen-d039.json`.
+- TC2 job 53377 retrained both screen models from `e377e48`; the TC2 values agree with
+  this record to about six decimal places.
 
 ## New decision template
 

@@ -131,6 +131,36 @@
       "wall": [0.0188701647333801, 0.0147191632539034]
     }
   },
+  "tc2_reproduction": {
+    "slurm_job_id": "53377",
+    "gpu": "NVIDIA A40",
+    "source_revision": "9daf9db67993369006a559e9f2d2e70f96600b32",
+    "scorer_sha256": "73dfd473fc43f243db384a76197a53b0b9d068c4a703752d87dfe49ad0e40bf3",
+    "initialization_matches_local_pair": true,
+    "control_checkpoint_sha256": "803eb99cf310abec761dfe443c1672c699e4ae27589d687b432acd3ad016a8a0",
+    "candidate_checkpoint_sha256": "a7920d1b239ba6204b5c1f67a049c3693a4c0c9157bbedad38eef58d97c35bb6",
+    "dataset_manifest_sha256": "beb31301e45b6d591790e2b45c2d6bfa30daa027edbf547dd1108f7ab357f8ec",
+    "plan_sha256": "833b54ba7266ff39d488f3fa4d7fe43364011d8c5336186fd719abaceb65a4be",
+    "all_checks_hold": true,
+    "same_world_selected_ade": [0.006988178003424158, 0.0058168726449366655],
+    "same_world_ade_95_percent_interval": [-0.001492248272673654, -0.0008387178968405353],
+    "first_reference_pose_ade": [0.027707877149805427, 0.026645191370820005],
+    "dynamics_residual_95_percent_interval": [-0.005949400593682792, -0.003282073356073549],
+    "energy_score_pixels": [1.2605265817777505, 1.253883500440249],
+    "contact_f1": [0.22672064777327935, 0.21428571428571427],
+    "component_same_world_ade": {
+      "projected_control": 0.006988178003424158,
+      "control_plus_momentum": 0.006183491292176768,
+      "residual_plus_projection": 0.006875382507375131,
+      "residual_plus_momentum_and_projection": 0.0058168726449366655
+    },
+    "component_95_percent_intervals": {
+      "momentum_only_minus_projected_control": [-0.001146134351195845, -0.0004609144577989355],
+      "residual_only_minus_projected_control": [-0.00018163077989205093, -5.32421577372588e-05],
+      "residual_plus_momentum_minus_control_plus_momentum": [-0.0004649764815258097, -0.0002830596542723169]
+    },
+    "note": "Both models retrained on TC2 from the same initialization. The regenerated seed-980000 corpus has a different manifest hash from the local one, so simulator output differs slightly across platforms; all checks still hold and the values agree with the local run to about four significant figures."
+  },
   "interpretation": "The seven comparison checks pass. Same-world ADE is 16.8% lower and first-reference pose ADE is 3.8% lower for the complete pipeline, but about two thirds of the same-world reduction comes from the explicit momentum block. The residual alone gives a smaller same-world gain while reducing its trained dynamics error by 80.7% and raising contact F1. Grouped collision ADE is 1.17% higher for the complete pipeline, so no collision-specific improvement is claimed. Momentum conservation is an implementation check, not evidence of model quality.",
   "limitations": [
     "registration was committed locally first but was not pushed separately before data generation",

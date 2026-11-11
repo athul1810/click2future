@@ -87,6 +87,16 @@ The compact evidence record is
 `docs/results/dynamics-residual-d038.json`. Checkpoints and generated datasets remain
 external run artifacts.
 
+## TC2 reproduction
+
+Both D038 models were first trained locally. TC2 job 53377 retrained them on an A40 from
+`9daf9db`, starting from the same initialization and private RNG, and scored them on the
+seed-980000 corpus regenerated on TC2. That corpus has a different manifest hash from the
+local one, so simulator output differs slightly across platforms. All checks still hold,
+and same-world ADE (0.00699 to 0.00582), first-reference pose ADE (0.02771 to 0.02665)
+and the component intervals agree with the local run to about four significant figures.
+The TC2 hashes and values are stored under `tc2_reproduction` in the D038 record.
+
 ## Commands
 
 Train the residual arm with
@@ -125,3 +135,7 @@ This is enough to retain the loss as an experimental opt-in term, but not to cla
 confirmed improvement: the run is shortened, uses one seed and reuses an opened corpus.
 A full matched run on newly registered scenes would be required before promotion. Record:
 `docs/results/collision-impulse-screen-d039.json`.
+
+TC2 job 53377 also retrained this screen pair from `e377e48` and scored it on the
+TC2-regenerated corpus. The values agree with the record to about six decimal places and
+are stored under `tc2_reproduction` in the D039 record.

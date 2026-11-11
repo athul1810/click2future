@@ -53,6 +53,22 @@
     "collision_candidate_minus_control_95_percent_interval": [-0.0011692664740257897, -0.00043423658469691876],
     "raw_neural_collision_interval": [0.00004671538510592654, 0.0003781089361291378]
   },
+  "tc2_reproduction": {
+    "slurm_job_id": "53377",
+    "gpu": "NVIDIA A40",
+    "source_revision": "e377e486c7d03b792b2fa689549b7ebc2a669cdd",
+    "scorer_sha256": "6a0ee67b817798e0b703912dfbb41db23d909945c2aee3d55ae0513f2f9ecd19",
+    "control_checkpoint_sha256": "56a94b82e6032c4b182bc991295f49da4241b65ae433b37a2aafadf03f5de20f",
+    "candidate_checkpoint_sha256": "843e90fa3516b4e28f438d7671584b707f7e178788dee0da34d0c898c83dcfdf",
+    "dataset_manifest_sha256": "beb31301e45b6d591790e2b45c2d6bfa30daa027edbf547dd1108f7ab357f8ec",
+    "plan_sha256": "894a36145136c11414a09289f5ee96ef49b990a1c75d8bd2adb7c3d68d336df6",
+    "same_world_ade": [0.005645264050690458, 0.00528448565164581],
+    "collision_same_world_ade": [0.006833383964840322, 0.006059059832477942],
+    "collision_candidate_minus_control_95_percent_interval": [-0.0011692639849206897, -0.0004342293257650454],
+    "raw_neural_collision_interval": [4.67290190863423e-05, 0.00037811798712937154],
+    "contact_f1": [0.16831683168316833, 0.2376237623762376],
+    "note": "Both screen models retrained on TC2 and scored on the TC2-regenerated seed-980000 corpus. The values agree with the local record to about six decimal places."
+  },
   "interpretation": "The collision residual is worth retaining as an experimental option in the full momentum-plus-projection pipeline. It is not a standalone raw-model improvement and is not confirmed on fresh data.",
   "limitations": [
     "2000 updates rather than the registered 8000-update budget",
