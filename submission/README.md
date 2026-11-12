@@ -768,5 +768,8 @@ on one line and repeat `--evaluation NAME=FOLDER` for each validation coverage
 folder. It replays the training/validation simulator references, chooses the
 touch threshold on training clips and scores validation plans. Optional
 `--held-out-dataset` and `--held-out NAME=FOLDER` score the frozen D018 `id_test`
-arms descriptively with that same threshold. Exact scene outlines are
+arms descriptively with that same threshold. `--held-out-study D028` reads the
+D028 comparison layout (one folder per arm, `plan.json` and `results.json` one
+level up); `--held-out-touch` adds a labelled touch-threshold sensitivity check
+and `--standoff` records the hull-standoff diagnostic. Exact scene outlines are
 evaluation-only ground truth and never a model input.
