@@ -166,3 +166,21 @@ contact-dynamics config was already run in D029, so no duplicate run is added.
 The source ZIP is byte-identical to the tested runtime at 196dae6; this final
 consolidation changes documentation only. The contribution text includes
 Ananya's latest confirmed account and Sanjay's methods-writing contribution.
+
+
+## final review, 12 november, r9
+
+The 41-page report includes the merged D031-D039 evidence and the D028 pose-contact
+analysis, with component attribution, failed replication, fair candidate-selection
+control and exploratory limits. The one-page contribution statement retains the
+reviewed accounts; Shrijeet's paragraph was checked against authored commits and
+retained evidence at his request. Later merged work is separately attributed.
+The 20-slide deck retains the eight-sample native replay. The 419-file source
+archive rebuilds deterministically, extracts cleanly and passes procedural smoke
+checks. Runtime 75854bc passes 832 tests and four subtests, with two TC2-only
+skips; lint and formatting pass. The portable viewer passes the actual browser
+replay/error checks from its bundled source.
+
+The original strict quality flag remains false. Typst cloud reconciliation, the
+full team rehearsal and coordinated portal submission remain open. See
+[final review](../docs/FINAL_REVIEW.md).

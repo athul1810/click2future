@@ -16,7 +16,26 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-We study whether a compact generative video model can predict several physical futures while following an explicit object selection and force. A procedural tabletop simulator provides initial images, action inputs, trajectories and contact labels. The implemented methods comprise a conditional video variational autoencoder and a small pixel diffusion model with numeric or spatial action conditioning. Evaluation separates image appearance, tracked motion, collisions and ensemble uncertainty. We train E0, E2, E3 and E4 on 336 synthetic clips and evaluate 24 validation conditions from four held-out scenes. None produces complete tracked trajectories. A flow-decoder CVAE improves object visibility and reverses objects correctly over the full clip, but too slowly for the 0.5-second force controls. A fixed-checkpoint 16/32/64-step DDIM study also fails the video-quality gate. A separate pose-supervised trajectory diffusion model (E5) improves short-window force and selection response, but 22 of 96 clips show geometric penetration above one native pixel. All 16 zero-force samples drift over the full horizon. Three contact-aware training follow-ups (E6) retain the architecture and sampler. The paired-action package removes measured zero-force and passive drift, but still has penetration in 12 of 96 clips, six incomplete tracks and limited forward-motion spread. On the five reserved test splits, with three training seeds per method, the flow CVAE (E0) keeps appearance (SSIM 0.89-0.98), completes 63-94 percent of samples and reverses correctly over the full clip on four splits, but moves too slowly for the 0.5-second window and fails selected-object control. E2 and E3 produce no fully tracked sample. A secondary evaluation, chosen after these results, trains E2/E3 on E0's 40,000 clips: the frames become clean (SSIM 0.93-0.94 outside force OOD), but objects change shape and colour, so physical behaviour still cannot be measured. These results expose limits of appearance metrics and short-window controls; they do not establish calibrated physical uncertainty.
+We study action-conditioned video generation when a single image leaves mass,
+friction and restitution unknown. A procedural two-object tabletop dataset
+supports comparisons of a conditional video VAE, numeric and spatial pixel
+diffusion, and pose-supervised trajectory models. Appearance scores alone
+conceal incomplete tracking, weak action control and contact errors. On five
+reserved splits with three training seeds per method, the flow CVAE retains
+appearance and some full-horizon action response, while the pixel diffusion
+models do not yield measurable physical trajectories. Structured follow-ups
+improve visibility and stationarity but retain contact and coverage failures.
+An explicit observed-hull projection removes tested penetration and boundary
+clipping, with a reported other-object accuracy regression and sub-pixel
+contact standoff. Multi-reference energy scores show that learned samplers
+still underperform a prior-matched simulator. A later matched dynamics-residual
+and momentum-correction hybrid reduces same-world trajectory error by 16.8\%
+on ten fresh ID scenes, but most of the gain comes from the explicit block;
+collision error and tracker contact scores do not improve. A separate
+photograph demonstration uses a credited external pretrained model, retains
+all four samples for opposite actions and provides an offline replay. These
+results separate controllability, geometric constraints and calibrated
+physical uncertainty; they do not establish overall physical reliability.
 \end{abstract}
 
 \section{Introduction}
@@ -957,6 +976,8 @@ D029 separately compares an 8,000-update seed-19 direct decoder with the same re
 
 \clearpage
 
+\input{report/followups_20261112.tex}
+
 \section{Conclusion}
 The simulator and evaluation workflow support a controlled study of action-conditioned tabletop futures. The implemented baselines make the intended numeric-versus-spatial comparison possible, and reference calibration exposes failure modes that simple image diversity or collision accuracy can hide. The four-method validation pilot and sampling-step study retain failed tracking and action response. The flow-decoder CVAE fails the fixed 0.5-second window, yet over the full clip it moves the selected object along the force and reverses it in all three training seeds. It does not scale motion consistently with force magnitude, and the unselected object drifts in the selection probe. It is the final E0. These results do not establish whether spatial conditioning or auxiliary supervision improves useful generated futures. E5 improves short-window action response under additional pose supervision, but the geometry audit and full-horizon zero-force check expose contact penetration and unforced drift. Action-conditioned diversity therefore remains distinct from calibrated physical uncertainty. The E6 follow-ups remove measured unforced drift and reduce penetration, while introducing a tradeoff with forward-motion spread and wall completeness. Their combined changes do not isolate a single loss effect. The later matched canvas-loss comparison improves visibility from 88 to 95 complete clips, while leaving penetration and overall strict quality unresolved. Rendered-reference calibration also shows that timed contact scores depend on estimator errors and hidden-physics variation. The final held-out evaluation repeats these patterns on unseen scenes (Section~\ref{sec:final}). With the pilot's 5,000 training clips, E2 and E3 produce no trackable video. Trained on as many clips as E0, they produce clean frames but lose object identity, so the numeric-versus-spatial question remains unanswered. Contact quality also remains open. Possible extensions include a validated latent representation and 128px generation after the core 64px comparison works.
 
@@ -966,6 +987,17 @@ The later geometric projection removes measured penetration and boundary clippin
 on D028, while increasing other-object error. It supplies a bounded hybrid
 option; learned contact reliability, the strict trajectory gate and calibrated
 physical uncertainty remain open.
+
+The later matched studies refine the conclusion. Loss scaling alone does
+not give a general geometry improvement across training seeds. Scaled losses
+with projection improve a narrow matched-world measure on three seeds, and
+D038's residual-plus-momentum hybrid improves aggregate same-world ADE on
+one fresh ID comparison. The component analysis attributes most of D038's
+aggregate gain to the explicit block, while collision error and contact F1
+regress. Candidate selection fails against a fair random control, and the
+collision-residual screen remains exploratory. The supported outcome is a
+reproducible set of bounded comparisons and a labelled interactive system,
+not a calibrated physics engine or a state-of-the-art claim.
 
 \clearpage
 \begin{thebibliography}{99}
@@ -979,5 +1011,7 @@ physical uncertainty remain open.
 \bibitem{streamforce} Hanhui Wang, Yiming Xie, Haiwen Feng, Zhaoyang Lv, Shenlong Wang and Huaizu Jiang. Streaming Video Generation with Streaming Force Control. arXiv:2606.07508, 2026.
 \bibitem{pbd} Matthias Mueller, Bruno Heidelberger, Marcus Hennix and John Ratcliff. Position based dynamics. Journal of Visual Communication and Image Representation 18(2), 2007.
 \bibitem{physdiff} Ye Yuan et al. PhysDiff: Physics-Guided Human Motion Diffusion Model. ICCV, 2023.
+\bibitem{gneiting} Tilmann Gneiting and Adrian E. Raftery. Strictly Proper Scoring Rules, Prediction, and Estimation. Journal of the American Statistical Association 102(477), 359 to 378, 2007.
+\bibitem{ferro} Christopher A. T. Ferro. Fair scores for ensemble forecasts. Quarterly Journal of the Royal Meteorological Society 140, 1917 to 1923, 2014.
 \end{thebibliography}
 \end{document}

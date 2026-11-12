@@ -367,7 +367,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [x] Draft at least four pages using introduction, methods, experiments and analysis, and conclusion; follow docs/REPORT_OUTLINE.md.
 - [x] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
 - [x] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
-- [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
+- [x] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [x] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
 The 3 November review export is 30 pages. It retains D014/D015, adds the separately trained E10 routing study and D017 results, and includes the E9/E11 screens and D018 replication. Conditional ADE is labelled with its missing-track caveat; D017 primary complete-sample counts and independent raw-video replay remain open. The contribution review is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable 16-slide presentation and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
@@ -381,6 +381,25 @@ The 8 November r5 review has a 34-page report, one-page contribution draft and 1
 8 November, r7: The r7 review keeps 35 report pages and 18 slides. Page 12 adds the penetration positive control with corrected target-depth populations, retained denominators and offset limitations. All 7920 control trials were rerun; historical model scores and the strict failing quality flag stay unchanged. The source archive includes the calibration driver and its boundary regression. Three contribution accounts are reviewed; Shrijeet confirmation, team rehearsal and coordinated upload remain open.
 
 8 November, r8: The r8 review has 37 report pages, one contribution page, 18 slides and a 395-file source ZIP. It includes Sanjay's source-checked simulator/data assumptions, the recorded D029 comparison and the corrected penetration/pose-contact controls. Full runtime checks pass 794 tests plus four subtests, with two Linux-only skips. Native pose-control replay matches all timing statistics; empty reference comparisons are excluded. Three contribution accounts are reviewed; Shrijeet confirmation, shared-paper synchronization, team rehearsal and coordinated upload remain open. Historical model scores and the strict failing quality flag stay unchanged.
+
+
+
+#### final review, 12 november, r9
+
+The 41-page report includes the merged D031-D039 evidence and the D028 pose-contact
+analysis, with component attribution, failed replication, fair candidate-selection
+control and exploratory limits. The one-page contribution statement retains the
+reviewed accounts; Shrijeet's paragraph was checked against authored commits and
+retained evidence at his request. Later merged work is separately attributed.
+The 20-slide deck retains the eight-sample native replay. The 419-file source
+archive rebuilds deterministically, extracts cleanly and passes procedural smoke
+checks. Runtime 75854bc passes 832 tests and four subtests, with two TC2-only
+skips; lint and formatting pass. The portable viewer passes the actual browser
+replay/error checks from its bundled source.
+
+The original strict quality flag remains false. Typst cloud reconciliation, the
+full team rehearsal and coordinated portal submission remain open. See
+[final review](FINAL_REVIEW.md).
 
 <a id="t19"></a>
 

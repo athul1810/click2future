@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 38,
+  "pages": 41,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "87fdd3825d18d098f81465f2591ceea8a03d2e056861c471d6b44a64623a0dc8",
+    "main.tex": "fd087f9035cad7ac7a480a5605350805e385c3279820433b2b38cdfcedd8fd0b",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "0a88f34b2c35cbcf2822b1f47921bda6bc0809d82a0af3a40336e97af0422848",
+    "contributions.md": "42b06b9011c4a0500a07dd504a52bd4c4ececf141c8c32aa2bc4525af24cec15",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -209,9 +209,19 @@
     "../docs/results/photo-streamforce-integration.json": "8cf8bcb3f91d52a18cdac91e7b6b5ebe3f72255fc45b7bd46062be8ef079955d",
     "../docs/results/contact-projection-d028.json": "fefaff0bc88a105d74c7d335ef22d38a043ecf3efd039fc0b8fa432fc9292dc4",
     "../docs/results/contact-projection-selection-d028.json": "6db6d35f1074c2840a4b01cc94ccfb77830bab8e04ae13eaebef55f39104e8ca",
-    "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a"
+    "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a",
+    "../docs/results/energy-score-d031.json": "aa12a71c2bfee20767c4f45fbbb38724248946245f28e44b1e1271e631d2d0c5",
+    "../docs/results/geometry-loss-scale-d032.json": "ba3fa9af8f1d6dd6fa414fe188cd4893a8791c26dd5835b61b6a343e1632ed1e",
+    "../docs/results/checkpoint-projection-d033.json": "a16c013abfc0821d6d2d7af76fef3ddc4c949c904f6c3f5bea1290eb71bf72fa",
+    "../docs/results/seed-replication-d034.json": "8f022b6f11fb074dcb875edc3f8084999b54d03d921f975184c22c47e3d229cd",
+    "../docs/results/wall-overshoot-d034.json": "230066a89471fc6853a9a08aeb0743432803d4e44648bb3787bc1da28041e94e",
+    "../docs/results/combined-d035.json": "e0e071991364c9de8cbb38c7b7028d0d724df62d971a34e7892ffb2f3335a899",
+    "../docs/results/physics-guided-selection-d036.json": "6b934a57b6f1d65429635d9d124ac59275db73dc6a1775662ef46f0279f98c2e",
+    "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
+    "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
+    "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0"
   },
-  "rendered_pdf_sha256": "81e3f5bc44772ea464fe30ce5e17861412808f49d2fef6af76ed5584584ac799",
+  "rendered_pdf_sha256": "7ac9318ead09a71fc35fbb84c3d92acd52c3f786809a9cd12f523c03f863ad1d",
   "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
   "source_package_verification": {
     "status": "passed",
@@ -227,9 +237,10 @@
     "archive": "outputs/presentation-review-20261103-r3/group_07_code.zip"
   },
   "remaining": [
-    "Contact quality, wall completeness and forward-motion uncertainty",
-    "Member-reviewed contribution descriptions",
-    "Independent integration review and final course submission checks"
+    "Overall physical reliability and calibrated uncertainty remain unestablished",
+    "shared Typst source reconciliation; no browser is exposed",
+    "final team presentation-machine rehearsal",
+    "live submission instructions and coordinated NTULearn upload"
   ],
   "trajectory_followup": {
     "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
@@ -287,9 +298,9 @@
   },
   "contribution_draft": {
     "source": "contributions.md",
-    "status": "one-page export; three author accounts reviewed; Shrijeet pending; expanded Ananya account and Sanjay section 2.1 credit",
-    "sha256": "0a88f34b2c35cbcf2822b1f47921bda6bc0809d82a0af3a40336e97af0422848",
-    "pdf_sha256": "81a9836cb72e4434c6a07e3e69347c3907cab532ce06750aa55218e0a874c11c"
+    "status": "one-page export; three previously reviewed accounts; Shrijeet verified against repository at his request; later work source-attributed",
+    "sha256": "42b06b9011c4a0500a07dd504a52bd4c4ececf141c8c32aa2bc4525af24cec15",
+    "pdf_sha256": "fe90fa678ea74e513a27afff8aa48c0fdbee005d1d627194c0311cfc341e5296"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1082,11 +1093,9 @@
     "member_review_states_changed": false
   },
   "current_remaining": [
-    "strict learned-model physical-quality gate",
-    "Shrijeet contribution confirmation",
-    "shared-paper synchronization",
-    "team presentation-machine rehearsal",
-    "coordinated upload"
+    "shared Typst source reconciliation; no browser is exposed",
+    "final team presentation-machine rehearsal",
+    "live submission instructions and coordinated NTULearn upload"
   ],
   "contribution_confirmations_2026_11_08": {
     "reviewed": [
@@ -1138,21 +1147,19 @@
     "focused_packaging_and_boundary_tests_passed": 15
   },
   "current_review_export": {
-    "revision_label": "r8",
-    "report_pages": 37,
-    "report_pdf_sha256": "f96f26160f329c94f9537aee608baf41c2c43856fdae4d5c57742c893c9891b9",
-    "contribution_pages": 1,
-    "slides": 18,
-    "source_archive_files": 395,
-    "runtime_tested_revision": "196dae62e4d9071d54428da91142c9146c53d5a9",
-    "runtime_tests_passed": 794,
+    "date": "2026-11-12",
+    "revision_label": "r9",
+    "runtime_tested_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8",
+    "runtime_tests_passed": 832,
     "runtime_linux_only_skips": 2,
     "runtime_subtests": 4,
-    "contribution_reviewed": 3,
-    "contribution_pending": [
-      "MAITI SHRIJEET"
-    ],
-    "strict_quality_flag": false
+    "report_pages": 41,
+    "contribution_pages": 1,
+    "slides": 20,
+    "source_archive_files": 419,
+    "contribution_pending": [],
+    "strict_quality_flag": false,
+    "cloud_typst_synchronized": false
   },
   "pose_contact_verification": {
     "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
@@ -1262,5 +1269,52 @@
       35
     ],
     "pdf_sha256": "81e3f5bc44772ea464fe30ce5e17861412808f49d2fef6af76ed5584584ac799"
+  },
+  "followups_2026_11_12": {
+    "runtime_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8",
+    "report_sections": "4.6-4.8",
+    "compact_records": [
+      "energy-score-d031",
+      "geometry-loss-scale-d032",
+      "checkpoint-projection-d033",
+      "seed-replication-d034",
+      "wall-overshoot-d034",
+      "combined-d035",
+      "physics-guided-selection-d036",
+      "dynamics-residual-d038",
+      "collision-impulse-screen-d039"
+    ],
+    "verification_scope": "source and compact records; peer-reviewed TC2 reproductions; no new independent raw D031-D039 replay claimed",
+    "typst_cloud_synchronized": false,
+    "strict_quality_flag": false
+  },
+  "contribution_repository_verification_20261112": {
+    "member": "MAITI SHRIJEET",
+    "status": "passed_repository_verification_at_member_request",
+    "commits": [
+      "df2e9d7bfc1c80f46ef9ef4ef080c4d396f6674b",
+      "5c21e30b9e7f213dcbf92bbe691e529d74f66161",
+      "4d5c903f1e2d21aec16e82298c59812291c96526",
+      "8b117c7496166c29702eade572a4de94fa7a3c6c",
+      "f1238ebe54705c70d636ce1d0fb8a8a42780a246",
+      "4c0735ca51106628ef0d75caabfe6a1e6d04f184",
+      "49144337a7dad16067ffd1061286634d44044356",
+      "196dae62e4d9071d54428da91142c9146c53d5a9",
+      "68ec6266536e9b5f633f15b1060b843637f33202"
+    ],
+    "paragraph_changed": false,
+    "review_delegated_by_member": true
+  },
+  "source_hash_normalization": "UTF-8 text uses LF line endings; binary assets use exact bytes.",
+  "contribution_confirmations_2026_11_12": {
+    "previously_reviewed": [
+      "PRAMOD SANJAY",
+      "KAPOOR ANANYA",
+      "BOBAN ATHUL KRISHNA"
+    ],
+    "repository_verified_at_member_request": [
+      "MAITI SHRIJEET"
+    ],
+    "pending": []
   }
 }
