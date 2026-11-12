@@ -1,0 +1,147 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=20mm,headheight=14pt,headsep=8mm,footskip=10mm]{geometry}
+\usepackage{mathpazo}
+\usepackage[scale=0.92]{tgheros}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\definecolor{ink}{HTML}{15252C}
+\definecolor{accent}{HTML}{176B70}
+\definecolor{muted}{HTML}{53636B}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\linespread{1.04}
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{muted}CLICK2FUTURE}
+\fancyhead[R]{\sffamily\footnotesize\color{muted}AI6132\quad /\quad GROUP 07}
+\fancyfoot[L]{\sffamily\footnotesize\color{muted}Contribution statement\quad |\quad 12 November 2026}
+\fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage\ /\ \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\newcommand{\member}[2]{%
+  \par\vspace{10pt}{\sffamily\bfseries\fontsize{13.5}{16}\selectfont\color{accent}#1}\par
+  {\sffamily\small\color{muted}#2}\par\vspace{2pt}}
+\newcommand{\evidence}[1]{\par{\small\color{muted}\textit{Source anchors:} #1}\par}
+\begin{document}
+\color{ink}
+{\sffamily\bfseries\fontsize{25}{29}\selectfont Contribution statement}\par
+{\large Click2Future: action-conditioned tabletop futures}\par
+{\sffamily\small\color{muted}AI6132 Generative AI for Visual Synthesis\quad |\quad Group 7}\par
+\vspace{5pt}
+{\color{accent}\rule{\linewidth}{0.7pt}}\par
+\vspace{3pt}
+
+This statement records the completed implementation, experiments, analysis and
+writing of the four members. PRAMOD SANJAY is the group coordinator. Shared
+review and integration are described separately from the original implementation;
+commit counts are not used as contribution percentages.
+
+\member{PRAMOD SANJAY}{Simulator, data generation and physical training objectives}
+Implemented the seeded Pymunk tabletop simulator, renderer and force/action
+contract. Built deterministic rollouts with instance masks, trajectories,
+physical contact labels and replay validation, together with dataset generation,
+loading and scene-group splits that prevent near-identical scenes crossing
+training and evaluation. Added the controlled directional, object-collision and
+wall-contact cases and their contract checks. Wrote the report's simulator and
+physics-assumption subsection.
+
+Implemented the optional contact-transition and contact-depth-change training
+losses and matched control/candidate recipes. Added the reference-free
+physics-guided candidate-selection study and its fair uniform-subset control;
+the negative accuracy result is retained. Implemented the free-motion dynamics
+residual, optional momentum correction and collision-impulse residual, with
+matched configurations, tests and compact evidence. Recorded the component
+comparisons and exploratory limitations rather than treating enforced geometry
+or momentum constraints as learned physical reliability.
+
+\evidence{\texttt{sim/}, dataset generation and validation; contact-dynamics
+training; \texttt{physics\_selection.py}, \texttt{momentum\_block.py};
+PRs 80, 93 and 94; D036, D038 and D039.}
+
+\member{KAPOOR ANANYA}{CVAE experiments, action diagnostics and contact measurement}
+Set up TC2 on a second account and added the macOS/Linux setup helper.
+Independently reproduced the RGB and flow CVAE pilots, ran the
+$\beta$-by-latent-size validation study, and repeated the flow CVAE with two
+additional training seeds. Implemented and measured force, full-horizon motion
+and changed-selection probes. Traced the flow CVAE's short-window ``stationary''
+result to its slower motion, and investigated missing force scaling and
+unselected-object drift alongside the training data's force and selection
+coverage. Wrote the corresponding report analysis and the E0 held-out discussion.
+
+Added a known-overlap positive control for the hull-penetration audit and a
+pose-based contact-timing measure with multiple hidden-physics references.
+Extended that measure to the frozen D028 projection outputs and analyzed its
+sub-pixel contact standoff. Reviewed collision/evaluation changes, including
+the label-only hidden-physics control, and reviewed teammate model and analysis
+changes.
+
+\evidence{CVAE study and probe scripts; \texttt{penetration\_control.py},
+\texttt{pose\_contact.py}; report CVAE and held-out analysis;
+PRs 54, 59, 87, 88 and 92.}
+
+\newpage
+\member{MAITI SHRIJEET}{Diffusion models, experimental integration and interactive systems}
+Set up the approved TC2 workspace, scheduled GPU probes and checkpoint-continuation checks. Built pixel video diffusion training and seeded sampling, numeric and spatial
+action conditioning, EMA/checkpoint continuation and inference provenance
+checks. Developed the supervised object-trajectory diffusion pilot and its
+rigid RGB renderer, then implemented and evaluated the E5/E6 contact,
+stationarity and paired-action follow-ups. Ran and documented the shared-world,
+temporal-memory, coverage, local-surface and prior-decoder comparisons, the
+fixed-teacher refinement repeats and the fresh-scene D018 evaluation. Retained
+failed attempts and regressions rather than selecting only successful outputs.
+
+Implemented the interactive synthetic-image comparison: object selection and
+force input, four seeded futures, synchronized playback, pixel-derived tracks,
+pinned/reversed actions and separately labelled simulator references. Built
+the photograph interface and allocated TC2 worker paths for the externally
+pretrained Force Prompting and StreamForce models. Verified checkpoint copies,
+prepared the inference weights and native runtime, and checked GPU inference,
+paired actions, interruption recovery, cancellation and partial-output retention.
+Preserved every declared sample and kept those external-model results separate
+from the controlled-model evaluation.
+
+Independently replayed retained poses and generated videos, checked result and
+artifact hashes, and backed up native outputs. Reviewed teammate code and
+measurement claims; corrected penetration-control boundary populations and
+excluded empty leave-one-out contact comparisons. Consolidated the report,
+verified contribution attribution and prepared reproducible source packages.
+Implemented and tested the portable recorded comparison, including offline
+errors and Windows runtime selection. Updated the report sources against the
+merged experiment records and checked the rendered deliverables.
+
+\evidence{Diffusion training/sampling, \texttt{object\_motion.py}, contact,
+world, memory, coverage, surface and prior studies, \texttt{demo/} and photo workers;
+commits \texttt{6289a3e}, \texttt{fbca399}, \texttt{df2e9d7}, \texttt{5c21e30},
+\texttt{4d5c903}, \texttt{f1238eb}, \texttt{4c0735c},
+\texttt{4914433}, \texttt{68ec626} and \texttt{196dae6}.}
+
+\member{BOBAN ATHUL KRISHNA}{Baseline models, evaluation and physical-quality studies}
+Implemented the CVAE baseline, generated-video evaluation, tracker calibration,
+selection controls, E4 and uncertainty/contact audits, and source packaging.
+Ran the E10 routing comparison and D017 held-out replication, and implemented
+and evaluated the D019-D030 physical-quality studies with the physics-assisted
+baseline on TC2. Developed the multi-reference energy score and D031-D035
+loss-scaling, projection and training-seed studies, including the failed raw-loss
+replication and the narrower projected comparison.
+
+Retrained and checked the D038/D039 comparisons on TC2, recording checkpoint,
+corpus and scorer provenance and the component-level limitations. Reviewed
+teammate implementations, experiment records and report changes, and checked
+their reproduction and source-package consistency.
+
+\evidence{\texttt{train\_cvae.py}, \texttt{evaluation/},
+\texttt{submission.py}, \texttt{compare\_checkpoints.py};
+PRs 76, 78 and 91; D017, D019-D035 and TC2 reproduction records for D038/D039.}
+
+\vfill
+{\small\color{muted}\textit{Attribution.} The photograph extension uses externally
+pretrained models; their original training and model authorship are not claimed
+as team contributions. Shared review and integration do not replace the original
+authors' implementation credits.}
+\end{document}

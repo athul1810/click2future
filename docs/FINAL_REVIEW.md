@@ -5,13 +5,11 @@ promoted by this report refresh. Completion remains targeted for 14 November.
 
 ## Verified package
 
-- Report: 41 pages, including D031-D039, component comparisons, negative results
+- Report: 34 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
   and the D028 contact-standoff analysis. D037 contributes no numeric evidence.
-- Contribution statement: all four accounts recorded. At Shrijeet's request,
+- Contribution statement: two pages of LaTeX, with all four accounts recorded. At Shrijeet's request,
   his existing paragraph was verified against nine authored commits and ten
   retained evidence files. Later work is separately attributed from merged history.
-- Presentation: 20 editable slides, with D038 and a follow-up summary. The
-  recorded photo montage retains every native paired-action sample.
 - Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
   replay smoke check pass. Datasets, weights and external links are excluded.
 - Runtime at `75854bc`: 832 tests and four subtests pass on Windows; two
@@ -43,23 +41,22 @@ and development photograph are separate from the controlled-model evaluation.
 
 ## Remaining external steps
 
-1. Reconcile the shared Typst project with these report sources. The current
-   automation session exposes no browser or connected document; the cloud
-   project has not been read or edited. An exported project ZIP and PDF are
-   sufficient for an exact offline comparison.
-2. Run the complete presentation on the presentation machine with all speakers,
-   including embedded playback and the portable recorded fallback. Automated
-   browser checks are not a team rehearsal.
-3. Check the live NTULearn instructions, coordinate the single group upload with
-   Sanjay, and retain its receipt. Submit only `group_07_report.pdf`,
-   `group_07_contribution.pdf` and `group_07_code.zip` unless the course changes
-   the requirements. The possible 16 November cutoff does not move our target.
+1. Apply the edited `main.typ`, `references.bib` and new native photograph figure
+   to the shared Typst project. The supplied archive was reconciled and compiled
+   locally; no cloud edit is claimed. Complete the group's final report review.
+2. Check the live NTULearn instructions, coordinate the single group upload with
+   Sanjay, and retain its receipt. Submit `group_07_report.pdf`,
+   `group_07_contribution.pdf` and `group_07_code.zip`. The possible 16 November
+   cutoff does not move the 14 November target.
+
+The World Models paper presentation is separate. Click2Future slides, live demo
+operation and a team demo rehearsal are optional and are not submission gates.
 
 ## Rebuild
 
-From the repository root, run `pdflatex -interaction=nonstopmode -halt-on-error
--jobname=group_07_report -output-directory=<existing-output-folder> report/main.tex`
-twice. Keep `report/followups_20261112.tex` and the figure directory beside the
-main source. Build and inspect the code archive with
-`python -m click2future.submission build --output <folder>/group_07_code.zip`
-and `python -m click2future.submission inspect --archive <folder>/group_07_code.zip`.
+Compile the assessed report with `typst compile report/main.typ group_07_report.pdf`
+from the repository root. It uses `report/references.bib` and the existing figure
+folder. Compile `report/contribution.tex` twice with `pdflatex`, setting the job
+name to `group_07_contribution`. The earlier `report/main.tex` is retained as an
+alternative source snapshot; do not submit two report versions. Build and inspect
+the code ZIP with the commands in SUBMISSION.md.

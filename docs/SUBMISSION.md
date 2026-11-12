@@ -14,8 +14,7 @@ Submit these three files for **Group 7**, using `07` in the filenames.
 
 One group makes one submission through **NTULearn > course site > Assignments > submission link for Project 1**. The PDF allows replacement submissions without a stated limit. Coordinate uploads through PRAMOD SANJAY, the first member in the supplied roster.
 
-**Internal completion deadline: 14 November 2026.** All three deliverables and the
-presentation must be ready then. Page 5 of the
+**Internal completion deadline: 14 November 2026.** All three required deliverables must be ready then. Page 5 of the
 brief lists 16 November for upload. Confirm the exact NTULearn cutoff; this does
 not change the internal completion date. On 3 November the user reported no
 changes to the current submission page; its exact cutoff was not independently
@@ -85,7 +84,7 @@ archive corruption, excluded working files, external links, and clean-folder rep
 The source archive includes CVAE and diffusion training/sampling, structured-motion
 follow-ups, evaluation, demo integration and the final-run job scripts. Clean
 extraction and smoke checks have passed. Final submission still needs the reviewed
-contribution statement, presentation rehearsal and a coordinated upload of the
+contribution statement, final report review and a coordinated upload of the
 three named files; a review draft is not a submitted deliverable.
 
 ## Final check

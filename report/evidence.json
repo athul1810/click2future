@@ -1,6 +1,6 @@
 {
   "status": "working_draft",
-  "pages": 41,
+  "pages": 34,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "42b06b9011c4a0500a07dd504a52bd4c4ececf141c8c32aa2bc4525af24cec15",
+    "contributions.md": "4dc7009eba8a56e1353c737be092844b4b22f60d4848f6311e1389c8e9108b87",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -219,28 +219,31 @@
     "../docs/results/physics-guided-selection-d036.json": "6b934a57b6f1d65429635d9d124ac59275db73dc6a1775662ef46f0279f98c2e",
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
-    "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0"
+    "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0",
+    "main.typ": "5e3578ad96ec6e30fa7dcc92eaeb87aa9a7d30d2395eaa82a314b2930f9863b5",
+    "references.bib": "dc6fe554afc990ed2a6238bc7a84ede0893e9574547a04a6e1e3166df2c54e08",
+    "contribution.tex": "532c49f57633c33075023eed4d816135824c61889899a63ad8fedb0139ec2784"
   },
-  "rendered_pdf_sha256": "7ac9318ead09a71fc35fbb84c3d92acd52c3f786809a9cd12f523c03f863ad1d",
-  "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
+  "rendered_pdf_sha256": "a712a81f4ddaa6852141b8f04c05805e3ab73e3db3233ef075376cb955cd9e56",
+  "visual_review": "All 34 report pages and both contribution pages rendered and visually inspected; new result sections, bibliography and contribution pages also inspected at full size.",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 346,
-    "bytes": 622773,
-    "archive_sha256": "042437c9001372203845980445e20e42a020d46f7ca4cadc844cac8e16e3af00",
+    "file_count": 419,
+    "bytes": 791396,
+    "archive_sha256": "231d4e66101891069c1ca7642c7b464ff0429e39a0197c1f804d69c987141138",
     "checks": [
       "source-only inventory and hashes",
       "no data, weights, URLs, Git or environments",
       "clean extraction smoke",
       "manifest identity without Git; tamper/missing/unlisted cases covered by submission tests"
     ],
-    "archive": "outputs/presentation-review-20261103-r3/group_07_code.zip"
+    "archive": "outputs/typst-review-20261112/deliverables/group_07_code.zip",
+    "runtime_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8"
   },
   "remaining": [
-    "Overall physical reliability and calibrated uncertainty remain unestablished",
-    "shared Typst source reconciliation; no browser is exposed",
-    "final team presentation-machine rehearsal",
-    "live submission instructions and coordinated NTULearn upload"
+    "Physical reliability and calibrated uncertainty remain unestablished",
+    "Apply the edited Typst source to the shared project and complete group report review",
+    "Check live portal instructions and coordinate the single three-file submission"
   ],
   "trajectory_followup": {
     "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
@@ -297,10 +300,10 @@
     "reference_npz_sha256": "bc4466c2963988463e1edeaa196b9a77d1f70d782536e7717af25b59e4e69b2e"
   },
   "contribution_draft": {
-    "source": "contributions.md",
-    "status": "one-page export; three previously reviewed accounts; Shrijeet verified against repository at his request; later work source-attributed",
-    "sha256": "42b06b9011c4a0500a07dd504a52bd4c4ececf141c8c32aa2bc4525af24cec15",
-    "pdf_sha256": "fe90fa678ea74e513a27afff8aa48c0fdbee005d1d627194c0311cfc341e5296"
+    "source": "contribution.tex",
+    "status": "two-page source-verified statement; all four members, expanded implementation and later merged work",
+    "sha256": "532c49f57633c33075023eed4d816135824c61889899a63ad8fedb0139ec2784",
+    "pdf_sha256": "3af530356f928c1f0d3303382ad32dc56d5c6b9be62353e34564b2e253bd0911"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1093,9 +1096,8 @@
     "member_review_states_changed": false
   },
   "current_remaining": [
-    "shared Typst source reconciliation; no browser is exposed",
-    "final team presentation-machine rehearsal",
-    "live submission instructions and coordinated NTULearn upload"
+    "Apply the edited Typst source to the shared project and complete group report review",
+    "Check live portal instructions and coordinate the single three-file submission"
   ],
   "contribution_confirmations_2026_11_08": {
     "reviewed": [
@@ -1148,18 +1150,19 @@
   },
   "current_review_export": {
     "date": "2026-11-12",
-    "revision_label": "r9",
+    "revision_label": "typst-reconciled",
+    "report_source": "main.typ",
+    "report_pages": 34,
+    "contribution_source": "contribution.tex",
+    "contribution_pages": 2,
+    "source_archive_files": 419,
     "runtime_tested_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8",
     "runtime_tests_passed": 832,
     "runtime_linux_only_skips": 2,
     "runtime_subtests": 4,
-    "report_pages": 41,
-    "contribution_pages": 1,
-    "slides": 20,
-    "source_archive_files": 419,
-    "contribution_pending": [],
     "strict_quality_flag": false,
-    "cloud_typst_synchronized": false
+    "cloud_typst_synchronized": false,
+    "c2f_presentation_required": false
   },
   "pose_contact_verification": {
     "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
@@ -1316,5 +1319,16 @@
       "MAITI SHRIJEET"
     ],
     "pending": []
+  },
+  "typst_reconciliation_20261112": {
+    "original_archive_sha256": "8d8ecdbd1061da3b0c8358ef96ce77cdf04519c6fd620ffff7a287bdbbb705fd",
+    "original_tables_preserved": 17,
+    "updated_tables": 21,
+    "original_figures_byte_identical": 9,
+    "new_figure": "figures/photo_streamforce_native.png",
+    "cloud_edited": false,
+    "compiler": "Typst 0.15.1",
+    "report_pages": 34,
+    "new_code_changes": false
   }
 }

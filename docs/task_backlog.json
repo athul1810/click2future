@@ -442,7 +442,7 @@
     "owner": "MAITI SHRIJEET",
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/17",
-    "progress": "The merged implementation and retained native photo replay are packaged against runtime 75854bc. The portable browser checks pass using bundled source. Fresh photo actions need an allocated worker. Physical reliability and the full team presentation-machine rehearsal remain open.",
+    "progress": "Optional demo implemented and checked; its model-quality limitations remain reported. The user confirmed that Click2Future slides and demo rehearsal are not required for the separate technical-review submission.",
     "completed_acceptance": [
       0,
       1,
@@ -477,8 +477,8 @@
       3,
       4
     ],
-    "progress": "r9 has 41 report pages, one source-verified contribution page and 20 slides, including the merged follow-ups through #94. Shrijeet delegated his paragraph check; authored commits and retained evidence support it. Shared Typst reconciliation, team rehearsal and submission remain open. Strict physical quality still fails.",
-    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
+    "progress": "The supplied GenAI.zip is reconciled offline into a 34-page Typst report, preserving all 17 original tables and nine figures and adding the merged follow-ups. The contribution statement is a two-page LaTeX document with source-verified accounts. User will apply the source in Typst; final group review and submission remain. No required Click2Future presentation.",
+    "evidence": "report/main.typ; report/references.bib; report/contribution.tex; report/evidence.json; docs/FINAL_REVIEW.md."
   },
   {
     "id": "T19",
@@ -519,7 +519,6 @@
       "T14",
       "T15",
       "T16",
-      "T17",
       "T18",
       "T19"
     ],
@@ -537,6 +536,11 @@
     "owner": null,
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/20",
-    "progress": "r9 prepares the 41-page report PDF, one-page contribution PDF and verified 419-file source ZIP with exact submission filenames. No upload is claimed. Shared-paper reconciliation, live portal instruction check, team rehearsal and coordinated submission remain open; target 14 November."
+    "progress": "Prepared the updated Typst report PDF, two-page contribution PDF and unchanged checked 419-file source ZIP. The user will update the shared Typst project. Final group review, live portal check and coordinated upload remain; no C2F deck or demo rehearsal is required. Target 14 November.",
+    "completed_acceptance": [
+      2,
+      4,
+      5
+    ]
   }
 ]

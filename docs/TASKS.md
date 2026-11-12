@@ -338,6 +338,10 @@ The validation measurement work was reviewed by Sanjay and merged in #47; #16 cl
 
 ### T17: Build the interactive four-future comparison demo
 
+This is optional project work, not an assessed submission requirement. The World
+Models paper presentation is separate. Model-quality limitations remain reported;
+a Click2Future presentation or team demo rehearsal does not block T18/T20.
+
 Make the model and simulator comparison understandable and repeatable.
 
 **Dependencies:** T04, T05, T10. **Owner:** MAITI SHRIJEET. **Status:** In progress.
@@ -401,6 +405,16 @@ The original strict quality flag remains false. Typst cloud reconciliation, the
 full team rehearsal and coordinated portal submission remain open. See
 [final review](FINAL_REVIEW.md).
 
+#### supplied Typst source and contribution update, 12 november
+
+The user supplied GenAI.zip. Its edited source compiles to 34 pages, preserving
+17 original tables and nine figure assets and adding the missing merged studies.
+The contribution statement is now a two-page LaTeX document with expanded,
+source-verified accounts. Runtime and the verified 419-file code ZIP are unchanged.
+Required finalization is applying the source in Typst, group report review and
+the coordinated three-file upload. The separate World Models presentation is
+required; a Click2Future deck or demo rehearsal is not.
+
 <a id="t19"></a>
 
 ### T19: Verify reproducibility and prepare the source-code ZIP
@@ -424,15 +438,15 @@ Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174
 
 Complete one group submission through NTULearn using the exact required filenames and content restrictions.
 
-**Dependencies:** T14, T15, T16, T17, T18, T19. **Owner:** Unassigned. **Status:** In progress.
+**Dependencies:** T14, T15, T16, T18, T19. **Owner:** Unassigned. **Status:** In progress.
 
 - [ ] Confirm the live NTULearn upload cutoff while preserving 14 November 2026 as the working deadline; do not assume the PDF resolves the discrepancy.
 - [ ] Check NTULearn for any updated submission instructions before exporting and uploading the final artifacts.
 
-- [ ] Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
+- [x] Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
 - [ ] Export group_07_contribution.pdf with every member's full name and reviewed contribution description.
-- [ ] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.
-- [ ] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
+- [x] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.
+- [x] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
 - [ ] Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.
 - [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.
 

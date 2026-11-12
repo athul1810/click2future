@@ -1,4 +1,27 @@
-# Report draft
+## current assessed sources, 12 november
+
+`main.typ` is the updated source from the supplied `GenAI.zip`, compiled with
+Typst 0.15.1 to a 34-page report. All 17 original tables and nine figure assets
+are preserved; four new tables and the native StreamForce figure are added.
+The earlier conversion spacing and unnecessary page breaks are corrected.
+`references.bib` is its bibliography. `contribution.tex` builds the two-page
+contribution statement with standard LaTeX packages. `main.tex` is retained as
+the earlier alternative report source; submit one report, not both versions.
+
+The updated Typst project compiles offline and is ready for the user to apply
+to the shared cloud project. No cloud edit is claimed. Required deliverables
+are the report PDF, contribution PDF and code ZIP. The World Models paper
+presentation is separate; Click2Future slides and demo rehearsal are optional.
+Runtime 75854bc and the checked 419-file code ZIP are unchanged. Final group
+review, applying the Typst source and the coordinated portal upload remain.
+
+# Historical exports
+
+The dated notes below describe earlier drafts. Their page counts, pending reviews
+and rehearsal notes are historical; the assessed sources and remaining steps are
+listed above.
+
+## Earlier LaTeX report draft
 
 `main.tex` is Group 7's working AI6132 technical review. It includes the
 E0/E2/E3/E4 validation comparison, SSIM/LPIPS, auxiliary head-versus-RGB scores,
