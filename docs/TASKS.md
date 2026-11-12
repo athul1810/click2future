@@ -409,8 +409,9 @@ full team rehearsal and coordinated portal submission remain open. See
 
 The user supplied GenAI.zip. Its edited source compiles to 34 pages, preserving
 17 original tables and nine figure assets and adding the missing merged studies.
-The contribution statement is now a two-page LaTeX document with expanded,
-source-verified accounts. Runtime and the verified 419-file code ZIP are unchanged.
+The contribution statement is a two-page LaTeX document focused on models,
+experiments, analysis and writing, with detailed evidence kept in the repository.
+Runtime and the verified 419-file code ZIP are unchanged.
 Required finalization is applying the source in Typst, group report review and
 the coordinated three-file upload. The separate World Models presentation is
 required; a Click2Future deck or demo rehearsal is not.

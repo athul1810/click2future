@@ -5,7 +5,9 @@ Typst 0.15.1 to a 34-page report. All 17 original tables and nine figure assets
 are preserved; four new tables and the native StreamForce figure are added.
 The earlier conversion spacing and unnecessary page breaks are corrected.
 `references.bib` is its bibliography. `contribution.tex` builds the two-page
-contribution statement with standard LaTeX packages. `main.tex` is retained as
+contribution statement with standard LaTeX packages. The accounts focus on
+implementation, experiments, analysis and writing; setup details, generic review
+claims and commit lists are kept out of the PDF. `main.tex` is retained as
 the earlier alternative report source; submit one report, not both versions.
 
 The updated Typst project compiles offline and is ready for the user to apply

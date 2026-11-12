@@ -477,7 +477,7 @@
       3,
       4
     ],
-    "progress": "The supplied GenAI.zip is reconciled offline into a 34-page Typst report, preserving all 17 original tables and nine figures and adding the merged follow-ups. The contribution statement is a two-page LaTeX document with source-verified accounts. User will apply the source in Typst; final group review and submission remain. No required Click2Future presentation.",
+    "progress": "The supplied GenAI.zip is reconciled offline into a 34-page Typst report, preserving all 17 original tables and nine figures and adding the merged follow-ups. The contribution statement is a two-page LaTeX document focused on implementation, experiments, analysis and writing. User will apply the source in Typst; final group review and submission remain. No required Click2Future presentation.",
     "evidence": "report/main.typ; report/references.bib; report/contribution.tex; report/evidence.json; docs/FINAL_REVIEW.md."
   },
   {

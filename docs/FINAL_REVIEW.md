@@ -7,9 +7,9 @@ promoted by this report refresh. Completion remains targeted for 14 November.
 
 - Report: 34 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
   and the D028 contact-standoff analysis. D037 contributes no numeric evidence.
-- Contribution statement: two pages of LaTeX, with all four accounts recorded. At Shrijeet's request,
-  his existing paragraph was verified against nine authored commits and ten
-  retained evidence files. Later work is separately attributed from merged history.
+- Contribution statement: two pages of LaTeX covering each member's models,
+  experiments, analysis and writing. Routine setup and generic review claims are
+  omitted; detailed source attribution is retained in the repository ledger.
 - Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
   replay smoke check pass. Datasets, weights and external links are excluded.
 - Runtime at `75854bc`: 832 tests and four subtests pass on Windows; two
