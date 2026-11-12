@@ -19,6 +19,8 @@ ROOT = Path(__file__).parents[1]
         "world_prior_only",
         "contact_transition_weight",
         "normal_velocity_weight",
+        "dynamics_residual_weight",
+        "collision_impulse_weight",
     ],
 )
 def test_repeat_recipes_keep_the_registered_budget_and_pairs(tmp_path, changed):
@@ -45,6 +47,12 @@ def test_screen_comparison_normalizes_only_missing_default_fields():
     driver = runpy.run_path(str(ROOT / "submission/prior_repeats.py"))
     normalize = driver["normalized_config"]
     legacy = json.loads((ROOT / "configs/training/prior_repeats/direct-seed20.json").read_text())
-    explicit = {**legacy, "contact_transition_weight": 0.0, "normal_velocity_weight": 0.0}
+    explicit = {
+        **legacy,
+        "contact_transition_weight": 0.0,
+        "normal_velocity_weight": 0.0,
+        "dynamics_residual_weight": 0.0,
+        "collision_impulse_weight": 0.0,
+    }
     assert normalize(legacy) == normalize(explicit)
     assert normalize(legacy) != normalize({**explicit, "normal_velocity_weight": 4.0})

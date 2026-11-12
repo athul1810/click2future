@@ -14,6 +14,14 @@
 - `training/prior_direct_seed{20,21}.json` and
   `training/prior_direct_contact_dynamics_x1024_seed{20,21}.json`: D034 copies that change
   only the training seed.
+- `training/prior_rest_anchored_dynamics_residual.json`: D037 candidate that adds a
+  free-motion force/mass acceleration residual to the rest-anchored expected prior.
+- `training/prior_rest_anchored_seed20.json` and
+  `training/prior_rest_anchored_dynamics_residual_seed20.json`: the matched seed-20
+  control and candidate registered for the D038 full-pipeline comparison.
+- `training/collision_impulse_screen_control.json` and
+  `training/collision_impulse_screen_x1024.json`: matched 2,000-update seed-22 recipes
+  for the exploratory D039 collision-impulse screen.
 - `development.yaml`: artifact-directory conventions.
 - `pilot.yaml`: synthetic denoiser profiler dimensions, conditioning, heads, object count,
   and precision. This is a prototype configuration, not a dataset trainer.

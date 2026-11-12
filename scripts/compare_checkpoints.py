@@ -1,4 +1,4 @@
-"""D031-D033: pose checkpoints, the contact projection and simulator controls, scored
+"""D031-D038: pose checkpoints, physics corrections and simulator controls, scored
 with the unchanged scorers plus the multi-reference energy score.
 
 Modes (all rules below were fixed before any of these runs):
@@ -10,6 +10,11 @@ Modes (all rules below were fixed before any of these runs):
   ``projection_holds`` and ``learned_geometry_holds`` are the acceptance rules.
 - ``d035``: a new seed-960000 corpus, generated after ``combined_holds`` was committed.
   Tests whether the scaled contact-dynamics losses plus the projection hold together.
+- ``d037``: a new seed-970000 corpus, generated after ``dynamics_residual_holds`` was
+  committed. Tests a Newtonian free-motion training residual against its matched control.
+- ``d038``: a new seed-980000 corpus, generated only after this rule was committed.
+  Tests the residual-trained model with momentum correction and contact projection
+  against its matched projected control.
 
 Every checkpoint is scored raw and with the D028 projection in its frozen per-frame
 mode. Projection weights use the sampled masses when the model is conditioned on the
@@ -49,19 +54,25 @@ from click2future.evaluation.tracking import TrackerConfig
 from click2future.evaluation.uncertainty_strata import action_family, zero_horizon
 from click2future.evaluation.video import evaluate_videos
 from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
-from click2future.models.object_motion import observe, render_motion
+from click2future.models.momentum_block import MOMENTUM_BLOCK_CONTRACT, apply_momentum_block
+from click2future.models.object_motion import encode_motion, observe, render_motion
 from click2future.models.physics_baseline import CALIBRATED_BEVEL_PIXELS, rollout_observation
 from click2future.models.rest_anchored_prior import RestAnchoredPriorModel
 from click2future.models.world_motion import sample_world
 from click2future.sim import run_rollout
+from click2future.training.contact_geometry import dynamics_residual, observed_hulls
 from click2future.training.sample_trajectory import load_trajectory
-from click2future.training.trajectory_data import canonical_ids
+from click2future.training.trajectory_data import canonical_ids, replay_angles
 
 FRESH_SEED = 950000
 D031_SEED = 940000
 D035_SEED = 960000
+D037_SEED = 970000
+D038_SEED = 980000
 # D035 compares these two arms, per training seed: control, then scaled losses.
 COMBINED = ("direct_x0", "direct_dyn_x1024")
+DYNAMICS_RESIDUAL = ("control", "residual")
+FULL_PIPELINE = ("control+projection", "residual+momentum+projection")
 PROJECTION_MODE = "frame"
 SELECTED_ADE_MARGIN = 0.0005
 SAME_WORLD_ADE_MARGIN = 0.0005
@@ -186,6 +197,39 @@ def combined_holds(raw, raw_control, projected, projected_control, same_world_in
     )
 
 
+def dynamics_residual_holds(candidate, control, interval):
+    """D037 rule: improve free-motion dynamics without degrading existing safeguards."""
+    return bool(
+        interval[1] < 0
+        and candidate["dynamics_residual"] < control["dynamics_residual"]
+        and candidate["quality"]["complete_all_object_clips"]
+        == control["quality"]["complete_all_object_clips"]
+        and candidate["penetrating_clips"] <= control["penetrating_clips"]
+        and candidate["boundary_clips"] <= control["boundary_clips"]
+        and _no_new_drift(candidate, control)
+        and _selected_ade_within(candidate, control)
+        and candidate["matched_world_ade"] <= control["matched_world_ade"] + SAME_WORLD_ADE_MARGIN
+        and candidate["energy"]["selected"] <= control["energy"]["selected"] + ENERGY_MARGIN_PIXELS
+    )
+
+
+def full_pipeline_checks(candidate, control, same_world_interval, residual_interval):
+    return {
+        "tracking_not_worse": candidate["quality"]["complete_all_object_clips"]
+        >= control["quality"]["complete_all_object_clips"],
+        "zero_geometry_violations": candidate["penetrating_clips"] == 0
+        and candidate["boundary_clips"] == 0,
+        "no_new_drift": _no_new_drift(candidate, control),
+        "pose_ade_noninferior": candidate["pose_selected_ade"]
+        <= control["pose_selected_ade"] + SELECTED_ADE_MARGIN,
+        "same_world_ade_improves": same_world_interval[1] < 0,
+        "dynamics_residual_improves": residual_interval[1] < 0,
+        "momentum_conserved": candidate["post_force_momentum_error"] <= 1e-6,
+        "energy_noninferior": candidate["energy"]["selected"]
+        <= control["energy"]["selected"] + ENERGY_MARGIN_PIXELS,
+    }
+
+
 def metric_check(models, intervals):
     """D031 checks of the score itself.
 
@@ -240,11 +284,51 @@ def _arm():
     return dict(
         reports=[],
         cases=[],
+        dynamics_residual=[],
+        momentum_error=[],
         events=dict(tp=0, fp=0, fn=0),
         rest=dict.fromkeys(counts, 0),
         passive=dict.fromkeys(counts, 0),
         zero_pixels=dict(samples=0, changed=0),
     )
+
+
+def matched_world_motion(observation, targets):
+    motions = []
+    for target in targets:
+        order = canonical_ids(observation, target["selected_object_id"])
+        motions.append(
+            encode_motion(target["positions"][:, order], replay_angles(target)[:, order])
+        )
+    return np.stack(motions)
+
+
+def free_motion_residual(observation, motion, target_motion, worlds, force):
+    """Score generated acceleration using matched-world contact and wall masks."""
+    geometry = {
+        key: torch.from_numpy(np.repeat(value[None], len(motion), axis=0))
+        for key, value in observed_hulls(observation).items()
+    }
+    features = torch.from_numpy(np.repeat(observation.features[None], len(motion), axis=0))
+    forces = torch.from_numpy(np.repeat(np.asarray(force, np.float32)[None], len(motion), axis=0))
+    masses = torch.from_numpy(np.stack([world[:, 0] for world in worlds]))
+    return dynamics_residual(
+        torch.from_numpy(motion),
+        torch.from_numpy(target_motion),
+        features,
+        forces,
+        masses,
+        geometry,
+        contact_window_pixels=2.0,
+    ).numpy()
+
+
+def momentum_error(motion, masses, force, *, duration=0.25, fps=8):
+    positions = np.concatenate((np.zeros((1, 2, 2)), 0.5 * motion[..., :2]))
+    velocity = np.diff(positions, axis=0) * fps
+    start = int(np.ceil(duration * fps))
+    total = (masses[:, None] * velocity[start:]).sum(1)
+    return float(np.linalg.norm(total - np.asarray(force) * duration, axis=-1).mean())
 
 
 def zero_pixel_check(models):
@@ -270,7 +354,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
     dataset, output = Path(dataset), Path(output)
     if output.exists():
         raise ValueError("Retain previous comparisons and choose a fresh output")
-    if mode not in ("validation", "d031", "fresh", "d035"):
+    if mode not in ("validation", "d031", "fresh", "d035", "d037", "d038"):
         raise ValueError("Unknown mode")
     root = Path(__file__).resolve().parents[1]
     config = root / "configs/evaluation/pixel.yaml"
@@ -279,7 +363,13 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         plan = prepare_plan(dataset, config, split="validation", metrics=("ssim",))
     else:
         manifest = json.loads((dataset / "dataset_manifest.json").read_text())
-        expected = {"fresh": FRESH_SEED, "d031": D031_SEED, "d035": D035_SEED}[mode]
+        expected = {
+            "fresh": FRESH_SEED,
+            "d031": D031_SEED,
+            "d035": D035_SEED,
+            "d037": D037_SEED,
+            "d038": D038_SEED,
+        }[mode]
         if manifest["seed"] != expected or manifest["group_counts"] != FRESH_COUNTS:
             raise ValueError(f"{mode} requires its registered seed-{expected} corpus")
         if training_data is None:
@@ -287,7 +377,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         plan = prepare_plan(
             dataset, config, split="id_test", metrics=("ssim",), training_corpus=training_data
         )
-    if mode in ("fresh", "d035"):
+    if mode in ("fresh", "d035", "d037", "d038"):
         old = set()
         for folder in previous_data:
             previous = json.loads((Path(folder) / "dataset_manifest.json").read_text())
@@ -306,10 +396,14 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
     for name, model in models.items():
         conditioned = bool(getattr(model, "world_condition", False))
         anchored = isinstance(model, RestAnchoredPriorModel)
-        for suffix, projected in (("", False), ("+projection", True)):
+        variants = [("", False, False), ("+projection", True, False)]
+        if mode == "d038":
+            variants += [("+momentum", False, True), ("+momentum+projection", True, True)]
+        for suffix, projected, momentum in variants:
             arms[name + suffix] = dict(
                 checkpoint=name,
                 projected=projected,
+                momentum=momentum,
                 world_conditioned=conditioned,
                 rest_anchored=anchored,
             )
@@ -317,6 +411,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         arms[name] = dict(
             checkpoint=None,
             projected=False,
+            momentum=False,
             world_conditioned=name != "oracle_first_reference",
             rest_anchored=False,
         )
@@ -349,6 +444,8 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         same_world = np.stack(
             [(t["positions"][1:, order] - t["positions"][:1, order]) * scale for t in targets]
         )
+        target_motion = matched_world_motion(obs, targets)
+        family = action_family(case)
         outputs = {}
         for name, model in models.items():
             with torch.inference_mode():
@@ -372,6 +469,19 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
                     [project_motion(obs, raw[k], masses[k]) for k in range(len(worlds))]
                 )
             )
+            if mode == "d038":
+                corrected = np.stack(
+                    [
+                        apply_momentum_block(obs, raw[k], masses[k], ref["force_xy"])
+                        for k in range(len(worlds))
+                    ]
+                )
+                outputs[name + "+momentum"] = dict(motion=corrected)
+                outputs[name + "+momentum+projection"] = dict(
+                    motion=np.stack(
+                        [project_motion(obs, corrected[k], masses[k]) for k in range(len(worlds))]
+                    )
+                )
         for bevel, label in (
             (0.5, "physics_baseline_0.5px"),
             (CALIBRATED_BEVEL_PIXELS, "physics_baseline_0.15px"),
@@ -397,6 +507,13 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             if motion is not None:
                 videos = np.stack([render_motion(obs, value) for value in motion])
                 paths = motion[..., :2] * 0.5 * scale
+                residual = free_motion_residual(obs, motion, target_motion, worlds, ref["force_xy"])
+                values["dynamics_residual"].extend(residual.tolist())
+                if family != "wall":
+                    values["momentum_error"].extend(
+                        momentum_error(motion[k], worlds[k][:, 0], ref["force_xy"])
+                        for k in range(len(worlds))
+                    )
             else:
                 videos, paths = item["videos"], item["paths"]
             np.savez_compressed(
@@ -423,7 +540,6 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
                     ("fn", "false_negative"),
                 ):
                     values["events"][key] += sample["event"][field]
-            family = action_family(case)
             if family == "zero":
                 value = zero_horizon(ref, videos)
                 for key in values["rest"]:
@@ -451,10 +567,13 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
                 row["boundary_clips_over_4_pixels"] = sum(
                     r["maximum_boundary_depth_pixels"] > 4 for r in geo["clips"]
                 )
+                row["dynamics_residual"] = float(residual.mean())
             # Same-world error, normalized units as in D028 (pixels / resolution).
             errors = np.linalg.norm(paths - same_world, axis=-1).mean(1) / scale
             row["matched_world_ade"] = float(errors[:, sel].mean())
             row["other_object_matched_world_ade"] = float(errors[:, other].mean())
+            first_errors = np.linalg.norm(paths - reference_paths[0], axis=-1).mean(1) / scale
+            row["pose_selected_ade"] = float(first_errors[:, sel].mean())
             selected = energy_score(paths[:, :, sel], reference_paths[:, :, sel])
             both = energy_score(paths, reference_paths)
             row["energy_selected"] = selected["score"]
@@ -474,6 +593,13 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             other_object_matched_world_ade=float(
                 np.mean([r["other_object_matched_world_ade"] for r in cases])
             ),
+            dynamics_residual=(
+                float(np.mean(values["dynamics_residual"])) if has_geometry else None
+            ),
+            post_force_momentum_error=(
+                float(np.mean(values["momentum_error"])) if has_geometry else None
+            ),
+            pose_selected_ade=float(np.mean([r["pose_selected_ade"] for r in cases])),
             penetrating_clips=sum(r["penetrating_clips"] for r in cases) if has_geometry else None,
             boundary_clips=sum(r["boundary_clips"] for r in cases) if has_geometry else None,
             boundary_clips_over_4_pixels=(
@@ -507,13 +633,21 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
             cases=cases,
         )
     result = dict(
-        study_id={"validation": "D032", "d031": "D031", "fresh": "D033", "d035": "D035"}[mode],
+        study_id={
+            "validation": "D032",
+            "d031": "D031",
+            "fresh": "D033",
+            "d035": "D035",
+            "d037": "D037",
+            "d038": "D038",
+        }[mode],
         mode=mode,
         split=plan["split"],
         plan_sha256=plan["plan_sha256"],
         dataset_manifest_sha256=sha256(dataset / "dataset_manifest.json"),
         projection_contract=PROJECTION_CONTRACT,
         projection_mode=PROJECTION_MODE,
+        momentum_contract=MOMENTUM_BLOCK_CONTRACT,
         energy_score_contract=ENERGY_SCORE_CONTRACT,
         checkpoint_sha256={name: sha256(path) for name, path in checkpoints.items()},
         scorer_sha256=sha256(__file__),
@@ -542,7 +676,7 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
         result["candidates_not_scored"] = sorted(
             c for _, candidates in FAMILIES.values() for c in candidates if c not in summary
         )
-    if mode in ("fresh", "d035"):
+    if mode in ("fresh", "d035", "d037", "d038"):
         result["projection_holds"] = {
             name: projection_holds(summary[name + "+projection"], summary[name]) for name in models
         }
@@ -564,6 +698,39 @@ def compare(dataset, output, *, mode, checkpoints, training_data=None, previous_
                 interval,
             ),
         )
+    if mode == "d037":
+        control, candidate = DYNAMICS_RESIDUAL
+        if not {control, candidate} <= models.keys():
+            raise ValueError("D037 requires control and residual checkpoints")
+        comparisons = {}
+        for suffix in ("", "+projection"):
+            first, second = control + suffix, candidate + suffix
+            values = _scene_differences(summary, first, second, "dynamics_residual")
+            interval = paired_scene_interval(values)
+            comparisons["raw" if not suffix else "projected"] = dict(
+                control=first,
+                candidate=second,
+                paired_scene_interval=interval,
+                holds=dynamics_residual_holds(summary[second], summary[first], interval),
+            )
+        result["dynamics_residual"] = comparisons
+    if mode == "d038":
+        control, candidate = FULL_PIPELINE
+        same_world = paired_scene_interval(
+            _scene_differences(summary, control, candidate, "matched_world_ade")
+        )
+        residual = paired_scene_interval(
+            _scene_differences(summary, control, candidate, "dynamics_residual")
+        )
+        checks = full_pipeline_checks(summary[candidate], summary[control], same_world, residual)
+        result["full_pipeline"] = {
+            "control": control,
+            "candidate": candidate,
+            "same_world_ade_interval": same_world,
+            "dynamics_residual_interval": residual,
+            "checks": checks,
+            "holds": all(checks.values()),
+        }
     if mode == "fresh":
         learned = {}
         for control, candidates in FAMILIES.values():
@@ -595,7 +762,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--mode", choices=("validation", "d031", "fresh", "d035"), required=True)
+    parser.add_argument(
+        "--mode",
+        choices=("validation", "d031", "fresh", "d035", "d037", "d038"),
+        required=True,
+    )
     parser.add_argument("--checkpoint", action="append", default=[], metavar="NAME=PATH")
     parser.add_argument("--training-data", type=Path)
     parser.add_argument("--previous-data", type=Path, nargs="*", default=())

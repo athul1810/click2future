@@ -5,12 +5,28 @@ import json
 import runpy
 from pathlib import Path
 
+import numpy as np
 import pytest
+
+from click2future.models.object_motion import encode_motion, observe
+from click2future.sim import make_controlled_scene, run_rollout
+from click2future.training.trajectory_data import canonical_ids, replay_angles
 
 MODULE = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts/compare_checkpoints.py"))
 
 
-def summary(pen=4, bnd=6, ade=0.025, same=0.0073, energy=0.80, drift=0, missing=0):
+def summary(
+    pen=4,
+    bnd=6,
+    ade=0.025,
+    same=0.0073,
+    energy=0.80,
+    residual=0.01,
+    momentum=0.005,
+    pose_ade=0.025,
+    drift=0,
+    missing=0,
+):
     return {
         "quality": {
             "complete_all_object_clips": 96,
@@ -19,6 +35,9 @@ def summary(pen=4, bnd=6, ade=0.025, same=0.0073, energy=0.80, drift=0, missing=
         "penetrating_clips": pen,
         "boundary_clips": bnd,
         "matched_world_ade": same,
+        "dynamics_residual": residual,
+        "post_force_momentum_error": momentum,
+        "pose_selected_ade": pose_ade,
         "zero_force": {"drifting_samples": drift, "missing_samples": missing},
         "passive": {"drifting_samples": 0, "missing_samples": 0},
         "energy": {"selected": energy},
@@ -98,6 +117,73 @@ def test_combined_rule_needs_the_raw_gain_and_a_clean_projected_run():
     fewer = summary(pen=0, bnd=0)
     fewer["quality"]["complete_all_object_clips"] = 95
     assert not holds(summary(pen=0), raw_control, fewer, control, good)
+
+
+def test_dynamics_residual_rule_requires_paired_gain_without_regressions():
+    holds = MODULE["dynamics_residual_holds"]
+    control = summary()
+    good = summary(residual=0.008)
+    assert holds(good, control, [-0.004, -0.001])
+    assert not holds(good, control, [-0.004, 0.001])
+    assert not holds(summary(residual=0.011), control, [-0.004, -0.001])
+    assert not holds(summary(residual=0.008, pen=5), control, [-0.004, -0.001])
+    assert not holds(summary(residual=0.008, bnd=7), control, [-0.004, -0.001])
+    assert not holds(summary(residual=0.008, ade=0.0256), control, [-0.004, -0.001])
+    assert not holds(summary(residual=0.008, same=0.0079), control, [-0.004, -0.001])
+    assert not holds(summary(residual=0.008, energy=0.84), control, [-0.004, -0.001])
+    assert not holds(summary(residual=0.008, drift=1), control, [-0.004, -0.001])
+
+
+def test_free_motion_residual_recognizes_a_matched_simulator_rollout():
+    scene = make_controlled_scene(970000, action_variant="forward", physics_seed=970100)
+    target = run_rollout(scene, frame_count=32, fps=8, physics_hz=240, resolution=64)
+    observation = observe(target["frames"][0], target["selected_mask"])
+    order = canonical_ids(observation, target["selected_object_id"])
+    motion = encode_motion(target["positions"][:, order], replay_angles(target)[:, order])[None]
+    objects = {obj["object_id"]: obj for obj in scene["objects"]}
+    world = np.asarray(
+        [
+            [
+                objects[identifier]["hidden_physics"][key]
+                for key in ("mass", "friction", "restitution")
+            ]
+            for identifier in order
+        ],
+        dtype=np.float32,
+    )
+    residual = MODULE["free_motion_residual"](
+        observation, motion, motion, [world], target["force_xy"]
+    )
+    assert residual.shape == (1,)
+    assert residual[0] < 1e-10
+
+
+def test_full_pipeline_rule_requires_physical_gain_without_regressions():
+    check = MODULE["full_pipeline_checks"]
+    control = summary(pen=0, bnd=0)
+    candidate = summary(pen=0, bnd=0, residual=0.008, momentum=1e-8)
+    result = check(candidate, control, [-0.002, -0.001], [-0.004, -0.001])
+    assert all(result.values())
+    for key in result:
+        broken = copy.deepcopy(candidate)
+        same, residual = [-0.002, -0.001], [-0.004, -0.001]
+        if key == "tracking_not_worse":
+            broken["quality"]["complete_all_object_clips"] -= 1
+        elif key == "zero_geometry_violations":
+            broken["penetrating_clips"] = 1
+        elif key == "no_new_drift":
+            broken["zero_force"]["drifting_samples"] = 1
+        elif key == "pose_ade_noninferior":
+            broken["pose_selected_ade"] += 0.0006
+        elif key == "same_world_ade_improves":
+            same = [-0.002, 0.001]
+        elif key == "dynamics_residual_improves":
+            residual = [-0.004, 0.001]
+        elif key == "momentum_conserved":
+            broken["post_force_momentum_error"] = 2e-6
+        elif key == "energy_noninferior":
+            broken["energy"]["selected"] += 0.033
+        assert not check(broken, control, same, residual)[key]
 
 
 def test_undefined_selected_ade_fails_the_rules_instead_of_raising():

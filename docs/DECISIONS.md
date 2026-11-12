@@ -561,6 +561,53 @@ Use the AI6132 technical-review requirements in [REQUIREMENTS.md](REQUIREMENTS.m
   constraints without 16 model evaluations. One checkpoint and an opened
   corpus; record: docs/results/physics-guided-selection-d036.json.
 
+## D037-D038: Force/mass residual and full physics pipeline: 10 November 2026
+
+- Add an optional free-motion force/mass residual during training and an optional
+  wall-aware momentum correction before the accepted D028 contact projection. D037 was
+  unrecorded development work; no D037 numeric result or rule outcome is retained.
+- The D038 rule and seed were committed locally at `9daf9db` before data generation, but
+  that commit and the result commit first reached GitHub together, so the remote history
+  does not independently prove the ordering. A matched seed-20 pair used the same E7
+  teacher, cache, initialization, private RNG and 8,000 updates; only
+  `dynamics_residual_weight` differs (0 versus 4). All 355 fresh clips replay exactly.
+- Result: seven comparison checks pass. Momentum conservation also passes, but is an
+  implementation check because the block enforces it. The full pipeline tracks 240/240
+  clips, retains zero penetration, boundary violations and drift, and lowers same-world
+  ADE from 0.00699 to 0.00582 (16.8%, interval [-0.00149, -0.00084]); first-reference pose
+  ADE falls from 0.02771 to 0.02665 (3.8%).
+- The momentum block alone reaches 0.00618 (interval [-0.00115, -0.00046]) and accounts
+  for about two thirds of the total same-world gain. The residual alone reaches 0.00688
+  ([-0.00018, -0.00005]); on top of the block it reaches 0.00582
+  ([-0.00046, -0.00028]). Without the block, dynamics residual falls 80.7% and contact F1
+  rises from 0.228 to 0.278.
+- The gain is not uniform: push and wall ADE fall 40.3% and 22.0%, while grouped collision
+  ADE rises 1.17% and full-pipeline contact F1 falls from 0.228 to 0.213. The wall gain is
+  entirely from the block; the block alone worsens collision ADE and the residual recovers
+  most of it. Accept an opt-in pipeline, not a default or collision-specific improvement.
+  One training seed, fresh ID scenes only; see DYNAMICS_RESIDUAL.md and the D038 record.
+- Both models were first trained locally. TC2 job 53377 retrained them on an A40 from
+  `9daf9db` with the same initialization and scored them on a TC2-regenerated seed-980000
+  corpus. All checks hold and the values agree with the local run to about four
+  significant figures. The TC2 corpus manifest differs from the local one, so simulator
+  output varies slightly across platforms.
+
+## D039: Collision-impulse residual screen: 10 November 2026
+
+- Add an optional training residual that matches the clean mass-weighted velocity jump at
+  isolated wall-free object contacts. It uses the simulator target, preserving hidden
+  friction and restitution, and rejects intervals contaminated by external impulse.
+- A matched seed-22 screen used 2,000 updates and the opened D038 corpus. With momentum
+  correction and projection on both arms, collision same-world ADE falls 11.3%, from
+  0.00683 to 0.00606; the paired interval is [-0.00117, -0.00043]. Contact F1 rises from
+  0.168 to 0.238, with 240/240 complete clips and no geometry or drift failures.
+- Raw neural collision ADE rises 3.2%, so this is an interaction with the complete hybrid
+  pipeline rather than a standalone learned-collision gain. Keep the default-zero term as
+  an experimental option. Do not promote it without a full matched run on fresh scenes.
+  See DYNAMICS_RESIDUAL.md and `docs/results/collision-impulse-screen-d039.json`.
+- TC2 job 53377 retrained both screen models from `e377e48`; the TC2 values agree with
+  this record to about six decimal places.
+
 ## New decision template
 
 ```text

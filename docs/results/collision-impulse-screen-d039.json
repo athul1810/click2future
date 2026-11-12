@@ -1,0 +1,80 @@
+{
+  "study_id": "D039",
+  "status": "exploratory_keep_optional_not_confirmed",
+  "source_revision": "9531dc65121fb0759ce7c2bde2833a5f3f2b7ae9",
+  "scope": "matched 2000-update seed-22 screen on the opened D038 ID corpus",
+  "method": {
+    "control": "dynamics residual plus momentum correction and projection",
+    "candidate": "dynamics and collision-impulse residuals plus momentum correction and projection",
+    "config_difference": {
+      "collision_impulse_weight": [0.0, 1024.0]
+    },
+    "shared_training": {
+      "seed": 22,
+      "updates": 2000,
+      "dynamics_residual_weight": 4.0
+    },
+    "collision_target": "clean mass-weighted velocity jump at wall-free isolated near-contact intervals"
+  },
+  "inputs": {
+    "control_checkpoint_sha256": "e586ed35e6647468da50a161a8daca3505df47c8017b09b20d8d5db7b24d14d3",
+    "candidate_checkpoint_sha256": "3020b414c8a834a0d63019eb402d04409541ae6bf3fd816fbe67b556959ee34e",
+    "control_summary_sha256": "c5574e6f17965f4798bf500daa18734549daf6c2aec1982a98d694319cc0ce81",
+    "candidate_summary_sha256": "de0b6b9b91d23d705659ec26b0a06c599973234a88ad9f341684a1fc565b6f12",
+    "dataset_manifest_sha256": "af51d8d951a3b749b7a9b5bfcd4a5f9af2ad6f76fb1d33cbcf20d9514a768c00",
+    "plan_sha256": "abe8c3aace6d1824f73f5deded595c13194ae3ab66b8a989b16d41a5f164b9fc",
+    "scorer_sha256": "6a0ee67b817798e0b703912dfbb41db23d909945c2aee3d55ae0513f2f9ecd19",
+    "raw_results_sha256": "664d8f52b0b9eaa7893b59a22cd1d4de36c11141d7c2b4075676f4406cbf921e",
+    "id_scene_groups": 10,
+    "conditions": 60,
+    "generated_clips_per_arm": 240
+  },
+  "results": {
+    "safeguards": {
+      "complete_clips": [240, 240],
+      "penetrating_clips": [0, 0],
+      "boundary_clips": [0, 0],
+      "zero_force_drifting_clips": [0, 0],
+      "passive_drifting_clips": [0, 0]
+    },
+    "overall": {
+      "same_world_ade": [0.005645262164762244, 0.005284482655891528],
+      "same_world_ade_95_percent_interval": [-0.0006512433187162967, -0.000148819720343454],
+      "first_reference_pose_ade": [0.026971550363426407, 0.02711612538745006],
+      "energy_score_pixels": [1.2661762573232884, 1.2548300020826537],
+      "contact_f1": [0.16831683168316833, 0.2376237623762376]
+    },
+    "same_world_ade_by_family": {
+      "zero": [0.0, 0.0],
+      "push": [0.002458245650632307, 0.002263424952980131],
+      "collision": [0.006833383359480649, 0.006059053330682218],
+      "wall": [0.015288314968347549, 0.015061939368024468]
+    },
+    "collision_candidate_minus_control_95_percent_interval": [-0.0011692664740257897, -0.00043423658469691876],
+    "raw_neural_collision_interval": [0.00004671538510592654, 0.0003781089361291378]
+  },
+  "tc2_reproduction": {
+    "slurm_job_id": "53377",
+    "gpu": "NVIDIA A40",
+    "source_revision": "e377e486c7d03b792b2fa689549b7ebc2a669cdd",
+    "scorer_sha256": "6a0ee67b817798e0b703912dfbb41db23d909945c2aee3d55ae0513f2f9ecd19",
+    "control_checkpoint_sha256": "56a94b82e6032c4b182bc991295f49da4241b65ae433b37a2aafadf03f5de20f",
+    "candidate_checkpoint_sha256": "843e90fa3516b4e28f438d7671584b707f7e178788dee0da34d0c898c83dcfdf",
+    "dataset_manifest_sha256": "beb31301e45b6d591790e2b45c2d6bfa30daa027edbf547dd1108f7ab357f8ec",
+    "plan_sha256": "894a36145136c11414a09289f5ee96ef49b990a1c75d8bd2adb7c3d68d336df6",
+    "same_world_ade": [0.005645264050690458, 0.00528448565164581],
+    "collision_same_world_ade": [0.006833383964840322, 0.006059059832477942],
+    "collision_candidate_minus_control_95_percent_interval": [-0.0011692639849206897, -0.0004342293257650454],
+    "raw_neural_collision_interval": [4.67290190863423e-05, 0.00037811798712937154],
+    "contact_f1": [0.16831683168316833, 0.2376237623762376],
+    "note": "Both screen models retrained on TC2 and scored on the TC2-regenerated seed-980000 corpus. The values agree with the local record to about six decimal places."
+  },
+  "interpretation": "The collision residual is worth retaining as an experimental option in the full momentum-plus-projection pipeline. It is not a standalone raw-model improvement and is not confirmed on fresh data.",
+  "limitations": [
+    "2000 updates rather than the registered 8000-update budget",
+    "one training seed",
+    "reuses the opened D038 ID corpus",
+    "raw neural collision ADE worsens",
+    "no OOD or standalone collision-model claim"
+  ]
+}

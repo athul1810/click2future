@@ -1,5 +1,6 @@
 """Differentiable convex-silhouette training losses; never a sampling correction."""
 
+from functools import cache
 from pathlib import Path
 
 import numpy as np
@@ -118,6 +119,107 @@ def contact_dynamics(predicted_depth, true_depth, window_pixels):
     return transition_error, normal_velocity_error
 
 
+@cache
+def force_acceleration_profile(
+    future_frames,
+    *,
+    fps=8,
+    physics_hz=240,
+    force_duration=0.25,
+):
+    """Finite-difference acceleration from one unit of constant external force."""
+    if future_frames < 2 or fps <= 0 or physics_hz <= 0 or physics_hz % fps or force_duration < 0:
+        raise ValueError("Use valid frame and force timing")
+    step = 1 / physics_hz
+    steps_per_frame = physics_hz // fps
+    velocity = position = time = 0.0
+    positions = [position]
+    for _ in range(future_frames):
+        for _ in range(steps_per_frame):
+            position += velocity * step
+            if time < force_duration:
+                velocity += step
+            time += step
+        positions.append(position)
+    interval_velocity = np.diff(positions) * fps
+    return np.diff(interval_velocity) * fps
+
+
+def dynamics_residual(
+    prediction,
+    clean,
+    features,
+    force,
+    masses,
+    geometry,
+    *,
+    contact_window_pixels,
+):
+    """Per-sample Newtonian acceleration residual outside contact and walls."""
+    if masses.shape != prediction.shape[:1] + (2,):
+        raise ValueError("Dynamics residual requires two masses per sample")
+    predicted_position = 0.5 * prediction[..., :2]
+    initial = torch.zeros_like(predicted_position[:, :1])
+    velocity = torch.diff(torch.cat((initial, predicted_position), 1), dim=1) * 8
+    acceleration = torch.diff(velocity, dim=1) * 8
+    profile = prediction.new_tensor(force_acceleration_profile(prediction.shape[1]))
+    external = features[..., -1:] * force[:, None] / masses[..., None]
+    target = profile[None, :, None, None] * external[:, None]
+
+    with torch.no_grad():
+        depth = signed_penetration(clean, features, geometry)
+        contact = depth.abs() <= contact_window_pixels / 64
+        contact = contact[:, :-1] | contact[:, 1:]
+        points, _ = transformed_hulls(clean, features, geometry)
+        margin = contact_window_pixels / 64
+        wall = (points.amin(-2) <= margin).any(-1) | (points.amax(-2) >= 1 - margin).any(-1)
+        wall = wall[:, :-1] | wall[:, 1:]
+        valid = ~(contact[:, :, None] | wall)
+
+    error = (acceleration - target).square().mean(-1)
+    return (error * valid).sum((1, 2)) / valid.sum((1, 2)).clamp_min(1)
+
+
+def collision_impulse_residual(
+    prediction,
+    clean,
+    features,
+    masses,
+    geometry,
+    *,
+    contact_window_pixels,
+):
+    """Match mass-weighted velocity jumps at wall-free object contacts."""
+    if masses.shape != prediction.shape[:1] + (2,):
+        raise ValueError("Collision residual requires two masses per sample")
+
+    def velocity(motion):
+        position = 0.5 * motion[..., :2]
+        initial = torch.zeros_like(position[:, :1])
+        return torch.diff(torch.cat((initial, position), 1), dim=1) * 8
+
+    predicted_jump = torch.diff(velocity(prediction), dim=1)
+    clean_jump = torch.diff(velocity(clean), dim=1)
+    mass = masses[:, None, :, None]
+    error = ((predicted_jump - clean_jump) * mass).square().mean((2, 3))
+
+    with torch.no_grad():
+        clean_impulse = clean_jump * mass
+        depth = signed_penetration(clean, features, geometry)
+        near_contact = depth.abs() <= contact_window_pixels / 64
+        near_contact = near_contact[:, :-1] | near_contact[:, 1:]
+        points, _ = transformed_hulls(clean, features, geometry)
+        margin = contact_window_pixels / 64
+        wall = (points.amin(-2) <= margin).any(-1) | (points.amax(-2) >= 1 - margin).any(-1)
+        wall = (wall[:, :-1] | wall[:, 1:]).any(-1)
+        impulse_size = clean_impulse.norm(dim=-1).sum(-1)
+        imbalance = clean_impulse.sum(2).norm(dim=-1)
+        isolated = imbalance <= 0.05 * impulse_size
+        valid = near_contact & ~wall & (impulse_size > 1e-6) & isolated
+
+    return (error * valid).sum(1) / valid.sum(1).clamp_min(1)
+
+
 def contact_objective(model, clean, features, force, sigma, noise, geometry, config):
     prediction = model(clean + sigma[:, None, None, None] * noise, sigma, features, force)
     error = prediction - clean
@@ -190,4 +292,37 @@ def contact_objective(model, clean, features, force, sigma, noise, geometry, con
             velocity_loss = (normal_velocity * low_noise).mean()
             loss = loss + velocity_weight * velocity_loss
             parts["normal_velocity"] = velocity_loss.detach()
+    residual_weight = getattr(config, "dynamics_residual_weight", 0.0)
+    if residual_weight > 0:
+        world = getattr(model, "world", None)
+        if world is None:
+            raise ValueError("Dynamics residual requires sampled physical-world labels")
+        residual = dynamics_residual(
+            prediction,
+            clean,
+            features,
+            force,
+            world[..., 0],
+            geometry,
+            contact_window_pixels=config.contact_window_pixels,
+        )
+        residual_loss = (residual * low_noise).mean()
+        loss = loss + residual_weight * residual_loss
+        parts["dynamics_residual"] = residual_loss.detach()
+    collision_weight = getattr(config, "collision_impulse_weight", 0.0)
+    if collision_weight > 0:
+        world = getattr(model, "world", None)
+        if world is None:
+            raise ValueError("Collision residual requires sampled physical-world labels")
+        residual = collision_impulse_residual(
+            prediction,
+            clean,
+            features,
+            world[..., 0],
+            geometry,
+            contact_window_pixels=config.contact_window_pixels,
+        )
+        collision_loss = (residual * low_noise).mean()
+        loss = loss + collision_weight * collision_loss
+        parts["collision_impulse"] = collision_loss.detach()
     return loss, parts

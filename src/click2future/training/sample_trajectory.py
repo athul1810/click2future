@@ -8,6 +8,7 @@ import numpy as np
 import torch
 
 from click2future.models.contact_projection import PROJECTION_CONTRACT, project_motion
+from click2future.models.momentum_block import MOMENTUM_BLOCK_CONTRACT, apply_momentum_block
 from click2future.models.object_motion import (
     MOTION_CONTRACT,
     TrajectoryDiffusion,
@@ -103,6 +104,7 @@ def sample_trajectory_motions(
     sampling_steps=16,
     force_limit=None,
     contact_project=False,
+    momentum_block=False,
     cancelled=None,
 ):
     if (
@@ -112,6 +114,7 @@ def sample_trajectory_motions(
         or isinstance(sampling_steps, bool)
         or not isinstance(sampling_steps, int)
         or not isinstance(contact_project, bool)
+        or not isinstance(momentum_block, bool)
         or not (
             (getattr(model, "world_prior_only", False) and sampling_steps == 1)
             or (not getattr(model, "world_prior_only", False) and 2 <= sampling_steps <= 128)
@@ -120,6 +123,8 @@ def sample_trajectory_motions(
         raise ValueError("Use distinct nonnegative integer seeds and 2-128 sampling steps")
     if contact_project and not getattr(model, "world_condition", False):
         raise ValueError("Contact projection requires a world-conditioned trajectory model")
+    if momentum_block and not getattr(model, "world_condition", False):
+        raise ValueError("Momentum block requires a world-conditioned trajectory model")
     first_frame = np.asarray(first_frame)
     if first_frame.shape != (64, 64, 3) or first_frame.dtype != np.uint8:
         raise ValueError("This trajectory checkpoint requires native 64px uint8 RGB")
@@ -148,6 +153,13 @@ def sample_trajectory_motions(
             **geometry,
         )[0]
         motion = motion.cpu().numpy()
+        if momentum_block:
+            motion = apply_momentum_block(
+                obs,
+                motion,
+                sample_world(seed)[0, :, 0].numpy(),
+                force_xy,
+            )
         if contact_project:
             motion = project_motion(obs, motion, sample_world(seed)[0, :, 0].numpy())
         motions.append(motion)
@@ -164,6 +176,7 @@ def sample_trajectory_videos(
     sampling_steps=16,
     force_limit=None,
     contact_project=False,
+    momentum_block=False,
     cancelled=None,
 ):
     observation, motions = sample_trajectory_motions(
@@ -175,6 +188,7 @@ def sample_trajectory_videos(
         sampling_steps=sampling_steps,
         force_limit=force_limit,
         contact_project=contact_project,
+        momentum_block=momentum_block,
         cancelled=cancelled,
     )
     return np.stack([render_motion(observation, motion) for motion in motions])
@@ -189,6 +203,7 @@ def main(argv=None):
     parser.add_argument("--sampling-steps", type=int, default=16)
     parser.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2, 3])
     parser.add_argument("--contact-project", action="store_true")
+    parser.add_argument("--momentum-block", action="store_true")
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("Use a fresh output file")
@@ -206,6 +221,7 @@ def main(argv=None):
         seeds=args.seeds,
         sampling_steps=args.sampling_steps,
         contact_project=args.contact_project,
+        momentum_block=args.momentum_block,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(args.output, videos=videos)
@@ -223,6 +239,7 @@ def main(argv=None):
                 if getattr(model, "world_prior_only", False)
                 else 2 * args.sampling_steps - 1,
                 "contact_projection": PROJECTION_CONTRACT if args.contact_project else None,
+                "momentum_block": MOMENTUM_BLOCK_CONTRACT if args.momentum_block else None,
                 "scope": (
                     "supervised trajectory diffusion and rigid RGB decoding; quality unverified"
                 ),
