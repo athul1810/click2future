@@ -8,14 +8,14 @@ stores several references that differ only in hidden physics. The energy score
 
     ES(X, y) = mean_i d(x_i, y) - 1/2 * mean_{i != j} d(x_i, x_j)
 
-It is a proper scoring rule, so in expectation it is lowest when the samples come
-from the same distribution as the references. The pairwise term uses distinct pairs
-only (the "fair" form of Ferro, 2014), which removes the small-ensemble bias for K
+The underlying energy score is proper. For independent forecast samples, its fair
+estimate is lowest in expectation at the reference distribution. The pairwise term
+uses distinct pairs only (the "fair" form of Ferro, 2014), removing the ensemble bias for K
 samples. The score of a condition averages ES over its references. Lower is better.
 
 Trajectories are displacements from frame zero in native pixels. The distance d is
-the root mean square over frames of the Euclidean distance, summed over the objects
-included. This is a fixed multiple of the Euclidean norm, so the rule stays proper.
+the root mean square over frames of Euclidean distance in the concatenated object
+coordinates. This is a fixed multiple of the Euclidean norm, so the rule stays proper.
 The score is descriptive: it changes no gate, scorer or recorded result.
 """
 

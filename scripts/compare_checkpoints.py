@@ -26,7 +26,7 @@ sampled world, and equal masses otherwise. Controls, all with the plan's samplin
   It has zero single-reference error and no spread.
 - physics_baseline_0.5px and physics_baseline_0.15px: the explicit hull baseline.
 
-All sampling runs on CPU, as in D028, so results do not depend on the GPU.
+Sampling runs on CPU, as in D028. GPU training is a separate recorded stage.
 """
 
 import argparse

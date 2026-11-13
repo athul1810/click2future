@@ -1,21 +1,25 @@
-# Final review, 12 November 2026
+# Final review, 13 November 2026
 
-The implementation through PR #94 is merged at `75854bc`. No new model is
-promoted by this report refresh. Completion remains targeted for 14 November.
+The implementation through PR #94 is merged at `75854bc`. The audit updates
+writing, run instructions and tracker-status text without changing models,
+losses, sampling equations or reported scores. Completion remains targeted for 14 November.
 
 ## Verified package
 
-- Report: 34 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
+- Report: 30 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
   and the D028 contact-standoff analysis. D037 contributes no numeric evidence.
 - Contribution statement: two pages of LaTeX covering each member's models,
   experiments, analysis and writing. Routine setup and generic review claims are
   omitted; detailed source attribution is retained in the repository ledger.
 - Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
   replay smoke check pass. Datasets, weights and external links are excluded.
-- Runtime at `75854bc`: 832 tests and four subtests pass on Windows; two
+- Full runtime suite: 832 tests and four subtests pass on Windows; two
   TC2/Linux-only checks are skipped. Lint and formatting pass.
-- Eight source-package diagnostic drivers import, and the trajectory sampler
-  exposes the explicit momentum and projection flags. Defaults are unchanged.
+- The final extracted source passes 61 focused tests, a procedural smoke check
+  and 16 CLI help commands. All 277 Python files parse; AST comparison confirms
+  unchanged numerical code after excluding docstrings and two status messages.
+- The main comparison now precedes its diagnostics. A model map and explicit
+  metric definitions clarify the results; all 21 existing data tables remain.
 
 The report's source hashes use LF-normalized UTF-8 for text and exact bytes for
 binary assets. The archive manifest continues to hash its exact stored bytes.

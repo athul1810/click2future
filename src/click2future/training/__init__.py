@@ -1,4 +1,4 @@
-"""Auxiliary target/loss components; the dataset diffusion trainer is still pending."""
+"""Training utilities and auxiliary trajectory/contact targets and losses."""
 
 from .auxiliary import (
     AuxiliaryLoss,

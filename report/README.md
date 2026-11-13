@@ -1,21 +1,24 @@
-## current assessed sources, 12 november
+## current assessed sources, 13 november
 
-`main.typ` is the updated source from the supplied `GenAI.zip`, compiled with
-Typst 0.15.1 to a 34-page report. All 17 original tables and nine figure assets
-are preserved; four new tables and the native StreamForce figure are added.
-The earlier conversion spacing and unnecessary page breaks are corrected.
-`references.bib` is its bibliography. `contribution.tex` builds the two-page
-contribution statement with standard LaTeX packages. The accounts focus on
-implementation, experiments, analysis and writing; setup details, generic review
-claims and commit lists are kept out of the PDF. `main.tex` is retained as
-the earlier alternative report source; submit one report, not both versions.
+`main.typ` is the audited 30-page report from the supplied `GenAI.zip`.
+The primary held-out results now precede the validation diagnostics. All 21
+existing data tables and eight figure references remain; a model-summary table
+is added. `references.bib` includes the SSIM and LPIPS references.
+`contribution.tex` builds the two-page statement. Its accounts focus on models,
+experiments, analysis and writing; the source-archive builder's credit is explicit.
 
-The updated Typst project compiles offline and is ready for the user to apply
-to the shared cloud project. No cloud edit is claimed. Required deliverables
-are the report PDF, contribution PDF and code ZIP. The World Models paper
-presentation is separate; Click2Future slides and demo rehearsal are optional.
-Runtime 75854bc and the checked 419-file code ZIP are unchanged. Final group
-review, applying the Typst source and the coordinated portal upload remain.
+The 419-file code ZIP has a rewritten run guide and corrected tracker-status
+text. Models and numerical algorithms are unchanged. The full suite passes
+832 tests and four subtests, with two Linux/TC2 skips; 61 focused tests pass
+from the final extraction. All 277 Python files and structured configs parse;
+clean extraction, smoke, inventory and 16 command-line entry points pass.
+Both editable source ZIPs rebuild to pixel-identical PDFs (30 and two pages).
+
+Apply `main.typ`, `references.bib` and the figure directory to the shared Typst
+project. No cloud edit is claimed. Final teammate review, the live portal check
+and coordinated three-file upload remain. The World Models presentation is
+separate; C2F slides and a demo rehearsal are optional. `main.tex` below is an
+earlier report snapshot, not an additional submission.
 
 # Historical exports
 

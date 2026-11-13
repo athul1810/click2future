@@ -477,7 +477,7 @@
       3,
       4
     ],
-    "progress": "The supplied GenAI.zip is reconciled offline into a 34-page Typst report, preserving all 17 original tables and nine figures and adding the merged follow-ups. The contribution statement is a two-page LaTeX document focused on implementation, experiments, analysis and writing. User will apply the source in Typst; final group review and submission remain. No required Click2Future presentation.",
+    "progress": "13 November audit: report 30 pages, contribution two pages. All 21 existing data tables and eight figure references remain, with one model map added. Clearer prose, explicit metric definitions and corrected attribution; editable sources rebuild identically. Apply sources in Typst and complete teammate review.",
     "evidence": "report/main.typ; report/references.bib; report/contribution.tex; report/evidence.json; docs/FINAL_REVIEW.md."
   },
   {
@@ -536,7 +536,7 @@
     "owner": null,
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/20",
-    "progress": "Prepared the updated Typst report PDF, two-page contribution PDF and unchanged checked 419-file source ZIP. The user will update the shared Typst project. Final group review, live portal check and coordinated upload remain; no C2F deck or demo rehearsal is required. Target 14 November.",
+    "progress": "The audited 30-page report, two-page contribution statement and 419-file source ZIP are prepared. Full suite: 832 tests plus four subtests, two Linux skips; final extraction: 61 focused tests, smoke and 16 CLI checks. Current portal check, teammate review and one coordinated three-file upload remain; target 14 November. No C2F deck or demo rehearsal is required.",
     "completed_acceptance": [
       2,
       4,

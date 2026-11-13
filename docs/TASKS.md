@@ -405,16 +405,15 @@ The original strict quality flag remains false. Typst cloud reconciliation, the
 full team rehearsal and coordinated portal submission remain open. See
 [final review](FINAL_REVIEW.md).
 
-#### supplied Typst source and contribution update, 12 november
+#### submission audit, 13 november
 
-The user supplied GenAI.zip. Its edited source compiles to 34 pages, preserving
-17 original tables and nine figure assets and adding the missing merged studies.
-The contribution statement is a two-page LaTeX document focused on models,
-experiments, analysis and writing, with detailed evidence kept in the repository.
-Runtime and the verified 419-file code ZIP are unchanged.
-Required finalization is applying the source in Typst, group report review and
-the coordinated three-file upload. The separate World Models presentation is
-required; a Click2Future deck or demo rehearsal is not.
+The audited report is 30 pages and the contribution statement is two pages.
+All 21 existing data tables and eight figure references remain, with one model
+map added. The 419-file source ZIP has revised instructions and corrected status
+text; models and numeric algorithms are unchanged. The full suite passes 832
+tests plus four subtests (two Linux skips), and 61 focused tests pass from clean
+extraction. Applying the Typst sources, teammate review and the coordinated
+three-file upload remain. A C2F presentation or demo rehearsal is not required.
 
 <a id="t19"></a>
 

@@ -1,6 +1,6 @@
 {
-  "status": "working_draft",
-  "pages": 34,
+  "status": "local_submission_audit_passed_pending_group_review",
+  "pages": 30,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "cd95f11af127119ab8c344de2998b20327823f388a3b34291606962da26a7f16",
+    "contributions.md": "9dd91e5238a944843065be7ad39f003df6341cbd1b05358510ca9ac835ed1b74",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -220,25 +220,25 @@
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
     "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0",
-    "main.typ": "5e3578ad96ec6e30fa7dcc92eaeb87aa9a7d30d2395eaa82a314b2930f9863b5",
-    "references.bib": "dc6fe554afc990ed2a6238bc7a84ede0893e9574547a04a6e1e3166df2c54e08",
-    "contribution.tex": "15979dcac4325b1a57ee81827ce46f8d486c6d27c40cd4805ced535633f2bbad"
+    "main.typ": "c160368320d88ee1f5d2fe0d7badb126a31851e7c7ad07ab199216509162a08d",
+    "references.bib": "7a1e9659638d4993ea7c3e55b5f540e647ac2043c317efe8f7c9265bc03f3255",
+    "contribution.tex": "c52cd8ff9b9ef1fcc7b135af30d763bd0acd13d1bcd098562080dacb1a0f53e9"
   },
-  "rendered_pdf_sha256": "a712a81f4ddaa6852141b8f04c05805e3ab73e3db3233ef075376cb955cd9e56",
-  "visual_review": "All 34 report pages and both contribution pages rendered and visually inspected; new result sections, bibliography and contribution pages also inspected at full size.",
+  "rendered_pdf_sha256": "832f64169143dd759f565a13a5919105f03103f23178361f85ac998d2a1ac3db",
+  "visual_review": "All 30 report pages and both contribution pages rendered and inspected; final float placement and changed pages checked at full size.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 419,
-    "bytes": 791396,
-    "archive_sha256": "231d4e66101891069c1ca7642c7b464ff0429e39a0197c1f804d69c987141138",
+    "bytes": 772065,
+    "archive_sha256": "f959dd7769285c49b26283a9da6d50158559ae46cca837ca6c370f6c1de887a7",
     "checks": [
       "source-only inventory and hashes",
       "no data, weights, URLs, Git or environments",
       "clean extraction smoke",
       "manifest identity without Git; tamper/missing/unlisted cases covered by submission tests"
     ],
-    "archive": "outputs/typst-review-20261112/deliverables/group_07_code.zip",
-    "runtime_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8"
+    "archive": "outputs/submission-audit-20261112/deliverables/group_07_code.zip",
+    "runtime_revision": "75854bc baseline; audit changes status text and documentation only"
   },
   "remaining": [
     "Physical reliability and calibrated uncertainty remain unestablished",
@@ -301,9 +301,9 @@
   },
   "contribution_draft": {
     "source": "contribution.tex",
-    "status": "two-page statement focused on implementation, experiments, analysis and writing; routine setup and generic review claims removed",
-    "sha256": "15979dcac4325b1a57ee81827ce46f8d486c6d27c40cd4805ced535633f2bbad",
-    "pdf_sha256": "3fd0bf2391b47573c5d0ec56dac5b278eb446ae7c1c1b753e4ccd94fd4b6e472"
+    "status": "two-page statement focused on implemented models, experiments, analysis and writing; source-archive builder attribution clarified",
+    "sha256": "c52cd8ff9b9ef1fcc7b135af30d763bd0acd13d1bcd098562080dacb1a0f53e9",
+    "pdf_sha256": "0e1ed7e79cf2c03508f6913344634b2052ea833e46d4bd1f53399516f2f3d478"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1149,20 +1149,22 @@
     "focused_packaging_and_boundary_tests_passed": 15
   },
   "current_review_export": {
-    "date": "2026-11-12",
-    "revision_label": "typst-reconciled",
+    "date": "2026-11-13",
+    "revision_label": "submission-audit",
     "report_source": "main.typ",
-    "report_pages": 34,
+    "report_pages": 30,
     "contribution_source": "contribution.tex",
     "contribution_pages": 2,
     "source_archive_files": 419,
-    "runtime_tested_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8",
+    "runtime_tested_revision": "993908f plus status-text corrections; numeric algorithms unchanged",
     "runtime_tests_passed": 832,
     "runtime_linux_only_skips": 2,
     "runtime_subtests": 4,
     "strict_quality_flag": false,
     "cloud_typst_synchronized": false,
-    "c2f_presentation_required": false
+    "c2f_presentation_required": false,
+    "final_extracted_focused_tests_passed": 61,
+    "code_archive_sha256": "f959dd7769285c49b26283a9da6d50158559ae46cca837ca6c370f6c1de887a7"
   },
   "pose_contact_verification": {
     "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
@@ -1323,12 +1325,12 @@
   "typst_reconciliation_20261112": {
     "original_archive_sha256": "8d8ecdbd1061da3b0c8358ef96ce77cdf04519c6fd620ffff7a287bdbbb705fd",
     "original_tables_preserved": 17,
-    "updated_tables": 21,
+    "updated_tables": 22,
     "original_figures_byte_identical": 9,
     "new_figure": "figures/photo_streamforce_native.png",
     "cloud_edited": false,
     "compiler": "Typst 0.15.1",
-    "report_pages": 34,
+    "report_pages": 30,
     "new_code_changes": false
   },
   "contribution_editorial_update_20261112": {
@@ -1338,5 +1340,30 @@
     "pages": 2,
     "new_member_confirmations": false,
     "runtime_changed": false
+  },
+  "submission_audit_20261113": {
+    "scope": "report prose, contribution attribution, source README and source/config inventory",
+    "original_data_tables_preserved": 21,
+    "model_summary_tables_added": 1,
+    "original_figure_references_preserved": 8,
+    "retained_evidence_inputs_verified": 57,
+    "python_files_compared": 277,
+    "numeric_algorithms_changed": false,
+    "all_model_sources_byte_identical": true,
+    "code_changes": "two tracker adoption-status strings; documentation and docstrings",
+    "full_suite": {
+      "passed": 832,
+      "subtests": 4,
+      "linux_only_skips": 2
+    },
+    "final_extracted_focused_tests_passed": 61,
+    "clean_extraction_smoke": "passed",
+    "cli_help_commands_checked": 16,
+    "source_zip_rebuilds_pixel_identical_pages": [
+      30,
+      2
+    ],
+    "cloud_typst_edited": false,
+    "ntulearn_submitted": false
   }
 }
