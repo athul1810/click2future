@@ -41,9 +41,9 @@
   trajectory error by 16.8% on ten fresh ID scenes; most of the gain comes from
   the explicit correction, and collision error increases. Multi-reference energy
   scores remain worse than those of a prior-matched simulator. We also integrate
-  external pretrained models in a separate photograph interface. The experiments
-  show why appearance, action response, contact geometry and distributional
-  accuracy need separate evaluation.
+  external pretrained models in a separate photograph interface. Across these studies, better
+  appearance or less overlap does not consistently improve action control or
+  the distribution of motion.
 ]
 
 = Introduction
@@ -56,8 +56,8 @@ alone does not show that these conditions hold.
 
 We predict future RGB frames from an initial image, a selected-object mask and
 a force vector. Our controlled environment is a bounded, top-down tabletop
-with two rigid objects. This gives us exact simulator labels and permits
-training on the course GPU cluster. It excludes depth, deformable objects and
+with two rigid objects. Exact simulator labels let us compare the same visible
+scene under different hidden physics. This setting excludes depth, deformable objects and
 arbitrary photographs. The photograph interface in @sec:demo uses externally
 pretrained models and is evaluated separately.
 
@@ -130,7 +130,7 @@ training distribution; OOD changes the named factor. Generalization comparisons
 use models trained on this corpus, rather than an earlier model tested on
 unmatched data.
 
-*Model observations and action encoding.*The observed inputs are frame-zero RGB, the selected mask and numeric force.
+*Model observations and action encoding.* The observed inputs are frame-zero RGB, the selected mask and numeric force.
 Future states and true hidden coefficients are unavailable at inference. RGB
 is normalized to $[-1,1]$. Forces are divided by 0.5 without clipping; a separate
 magnitude limit validates inputs. The spatial action map is
@@ -216,7 +216,7 @@ The first attempt balances zero-force, contact and other training examples. The 
 
 = Experiments and analysis
 <experiments-and-analysis>
-== Frozen evaluation and failure handling
+== Evaluation protocol
 <frozen-evaluation-and-failure-handling>
 Evaluation plans fix the conditions, references, sample seeds and scorer
 settings before sampling. Input and checkpoint hashes detect changed files;
@@ -257,7 +257,7 @@ Action response and reference coverage are separate checks. This
 single-reference rule can reject a valid future drawn from different hidden
 physics; later simulator controls and energy scores examine that limitation.
 
-== Action controls and extractor calibration
+== Action tests and contact measurement
 <action-controls-and-extractor-calibration>
 Action controls first score the initial 0.5 seconds, ending at frame four.
 Nonzero-force motion is the selected object's endpoint displacement, with at
@@ -279,7 +279,7 @@ fail. We retain the native-force calibration and use the validation-chosen
 
 Contact extraction has an independent timing limitation. On a fresh 63-clip controlled check over three scene groups, all 3,906 object observations were tracked. Any-encounter scoring produced TP=23, FP=0, FN=1 and TN=39, while timed-event F1 was 0.551. The stronger occurrence result cannot substitute for the weaker event-timing result. These extractor measurements do not count the 63 dependent clips as 63 independent scenes.
 
-== Final held-out evaluation
+== Held-out RGB generation
 <sec:final>
 The primary held-out comparison fixes E0 as the flow CVAE and uses training
 seeds 0-2 for every method. E2/E3 retain 5,000 batch-one updates, final EMA
@@ -307,7 +307,7 @@ is still scored. Every suite completes.
     [Force OOD], [89/120], [0/120], [0/120], [0.886 / 0.144], [0.217 / 0.391], [0.256 / 0.332],
     [Repeated physics], [132/144], [0/144], [0/144], [0.973 / 0.012], [0.457 / 0.180], [0.451 / 0.183],
   )]
-  , caption: [Final held-out evaluation, TC2 job 46716. Three training seeds per method and four sampling seeds per condition. Complete samples have every object tracked in every future frame. SSIM/LPIPS are single-reference scores pooled over training seeds.]
+  , caption: [Primary held-out evaluation. Three training seeds per method and four sampling seeds per condition. Complete samples have every object tracked in every future frame. SSIM/LPIPS are single-reference scores pooled over training seeds.]
   , kind: table
   )
 <tab:final>
@@ -322,7 +322,7 @@ Selected-object control fails on every split. No complete pair moves the correct
 
 Contact occurrence is predicted better than contact timing. Collision event F1 is 0.09-0.22, while encounter F1 is 0.92-0.95 on the ID, texture and repeated-physics splits, 0.75 on force OOD and 0.31 on shape OOD. E0 produces no false encounter on four splits and one on force OOD, so its encounter errors are missed contacts, and the low shape-OOD score reflects 2 of 11 contacts found. Its event F1 should be read against the calibration in @tab:collision_calibration, where valid alternative physics reaches only 0.24 against a single reference.
 
-== Diffusion at E0's clip count: a secondary test result
+== Matching the number of training clips
 <sec:d015>
 In @tab:final, E2/E3 see 5,000 training clips, while E0 sees 40,000 (20,000 updates at batch two). After the test results, we retrained E2/E3 for 40,000 updates with training seeds 0 to 2, changing only the number of updates; the cosine schedule spans all 40,000. This matches training clips seen, not updates or GPU time: each 40,000-update diffusion run took about 33 minutes on an A40. On validation, training seed 0 improves steadily: tracked observations rise from 176 (E2) and 5 (E3) at 5,000 updates to 3,434 and 2,869 at 40,000. Pooled over the three seeds, validation SSIM rises from 0.45-0.46 to 0.93, and the 40,000-update runs complete 0 to 8 of 96 clips per run, against E0's 80 to 92.
 
@@ -345,7 +345,7 @@ showing that exact numerical reproduction also depends on GPU type.
     [Force OOD], [0/120], [0/120], [0.744 / 0.188], [0.788 / 0.155],
     [Repeated physics], [7/144], [10/144], [0.934 / 0.034], [0.932 / 0.036],
   )]
-  , caption: [Secondary held-out evaluation of E2/E3 trained for 40,000 updates, TC2 job 46837. Same splits, plans, scorer and sampling seeds as @tab:final\; E0 is unchanged from that table.]
+  , caption: [Secondary held-out evaluation of E2/E3 trained for 40,000 updates. Same splits, plans, scorer and sampling seeds as @tab:final\; E0 is unchanged from that table.]
   , kind: table
   )
 <tab:d015>
@@ -360,7 +360,7 @@ E3 produces enough complete trajectories for a reliable physical comparison.
 The numeric-versus-spatial conditioning question therefore remains unresolved
 for these pixel models.
 
-== Tracking by split and cost
+== Tracking failures and computational cost
 <sec:cost>
 @tab:split_tracking gives the share of future object observations the tracker loses on each split, pooled over training seeds. For E0 and the 40,000-update models, new shapes and new forces raise tracker failures, while new textures and repeated hidden physics stay close to ID. The 5,000-update models lose 86 to 100 percent everywhere. @fig:ood shows the first forward condition of each OOD split. On shape OOD, both 40,000-update models turn the large triangle into a square, and E0 rounds its corners. On force OOD, the reference pushes the rectangle to the wall within two seconds. No model moves it there: E0 leaves dark streaks at the image border, and E2/E3 smear the rectangle.
 
@@ -381,7 +381,7 @@ for these pixel models.
   )
 <tab:split_tracking>
 
-@tab:cost compares cost. The diffusion models have more parameters and, trained on as many clips as E0, take about 2.6 times as long on an A40. Each video needs 32 denoising steps, so in the same job they sample 42 (5k) and 47 (40k) times more slowly than E0. The final-phase TC2 jobs used 4.9 GPU-hours on one account.
+@tab:cost reports training and sampling times. The diffusion models have more parameters and, trained on as many clips as E0, take about 2.6 times as long on an A40. Each video needs 32 denoising steps, so in the same job they sample 42 (5k) and 47 (40k) times more slowly than E0. The final-phase TC2 runs used 4.9 GPU-hours.
 
 #figure(
   align(center)[#table(
@@ -398,7 +398,7 @@ for these pixel models.
   )
 <tab:cost>
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/final_heldout.png", width: 86%),
   caption: [
     First sorted ID-test forward condition, sample seed 0 and training seed 0, at six fixed times, with one simulator reference. The 5,000-update diffusion models leave heavy noise in every generated frame. At 40,000 updates the noise is gone, but the small ball becomes a square and changes colour, so the tracker loses it. Selection is fixed before visual inspection; this is not a best-sample comparison.
@@ -406,7 +406,8 @@ for these pixel models.
 )
 <fig:final>
 
-#figure(placement: auto,
+
+#figure(placement: none,
   image("figures/final_ood.png", width: 100%),
   caption: [
     First sorted forward condition of the shape-OOD, texture-OOD and force-OOD splits, sample seed 0 and training seed 0, at three fixed times, with one simulator reference. The diffusion models are the 40,000-update runs. Selection is fixed before visual inspection; this is not a best-sample comparison.
@@ -416,7 +417,8 @@ for these pixel models.
 
 
 
-== Multi-scene validation pilot
+
+== Validation diagnostics
 <multi-scene-validation-pilot>
 The following validation studies explain the decoder choice and the failures
 seen in the main comparison. They do not change its held-out results.
@@ -463,15 +465,15 @@ The whole-scene 95-percent LPIPS bootstrap intervals are \[0.0797, 0.1746\] for 
 
 The RGB CVAE's validation posterior MAE is 0.02091 and prior MAE 0.02113 in normalized RGB units. Training posterior/prior errors are 0.01205/0.01386. Its validation mean per-latent KL is 0.2741 and pairwise prior RGB MAE is 0.00330. Nonzero KL and sample variation do not establish useful latent uncertainty; these diagnostics alone also do not justify calling the failure posterior collapse.
 
-== Auxiliary heads versus generated RGB
+=== Auxiliary heads versus generated RGB
 <auxiliary-heads-versus-generated-rgb>
 The E4 analysis replays all 96 validation samplings while capturing the actual final timestep-zero DDIM heads. Every RGB pixel matches the saved sample. Head predictions have all-object ADE 0.1314 and FDE 0.1560 in normalized coordinates against one declared reference. At the fixed 0.5 probability threshold, timed-contact matching with one-interval tolerance gives TP=28, FP=331 and FN=36, hence event F1=0.1324. Exact-interval positive prevalence is 64/2,976 and interval F1=0.1087. Any-encounter F1=0.5714 does not establish correct timing.
 
 Only 162 of 5,952 future object observations are jointly available from the head and RGB extraction. Their mean position disagreement is 0.1481. No pair interval is jointly observed, so RGB/head collision agreement is undefined. Accurate-looking auxiliary outputs cannot substitute for decoded-video behavior.
 
-A separate 5,000-update check on the first sorted training collision clip has head ADE 0.00493 and contact-event F1 1.0 (TP=4, FP=0, FN=0 across four samples). RGB tracks 247/248 observations, with three complete clips. One missing selected observation still fails the strict gate; conditional selected ADE 0.00396 over the other three clips is not a best-of-four score. This training-only result shows that the head can learn a known contact, not that physical behavior generalizes. The allocation lasted 423 seconds.
+A separate 5,000-update check on the first sorted training collision clip has head ADE 0.00493 and contact-event F1 1.0 (TP=4, FP=0, FN=0 across four samples). RGB tracks 247/248 observations, with three complete clips. One missing selected observation still fails the strict gate; conditional selected ADE 0.00396 over the other three clips is not a best-of-four score. This training-only result shows that the head can learn a known contact, not that physical behavior generalizes.
 
-== Validation sampling-step study
+=== Sampling steps
 <validation-sampling-step-study>
 A predeclared study holds the E3 checkpoint, sample seeds and metric settings fixed. It uses the first four sorted validation scenes and zero, forward, reverse and collision-0-to-1 conditions, for 16 conditions and 64 videos per setting. Excluded validation conditions remain listed. This is a subset study rather than the full 24-condition comparison.
 
@@ -490,9 +492,9 @@ A predeclared study holds the E3 checkpoint, sample seeds and metric settings fi
   )
 <tab:steps>
 
-All three settings have zero complete selected-object clips and fail the action checks through missing tracks. More sampling steps increase cost without repairing this checkpoint. The study does not select a successful sampler or establish a general advantage for fewer steps. The allocation lasted 160 seconds, within the reserved 0.5-hour study limit.
+All three settings have zero complete selected-object clips and fail the action checks through missing tracks. More sampling steps increase cost without repairing this checkpoint. The study does not select a successful sampler or establish a general advantage for fewer steps.
 
-== CVAE decoder follow-up
+== CVAE appearance and action response
 <cvae-decoder-follow-up>
 The RGB samples change object appearance on held-out scenes. A separate exploratory CVAE therefore predicts a backward displacement field and bilinearly samples observed frame-zero pixels. Its zero-initialized output copies the initial image. The latent distributions, data, seed, RGB/KL loss and 20,000-update limit are retained, but decoder parameterization and initialization change. The model has 574,226 parameters. It cannot reconstruct unseen textures, enforce rigidity or enforce collision laws.
 
@@ -500,7 +502,7 @@ This flow model tracks 5,654/5,952 observations (94.99 percent), with 80/96 comp
 
 A further displacement-supervised variant is kept separate from the ordinary CVAE: future masks and positions enter a training loss only, not generator conditioning. The displacement-supervised run completes 20,000 updates, with its combined validation criterion selecting update 9,000. It tracks 5,765/5,952 observations and 80/96 complete clips, with SSIM 0.9729 and LPIPS 0.0168. Yet only one of 16 reversal pairs has the correct force signs: 15 forward samples move, while only one reversed sample moves. All 16 selected-object pairs remain stationary. Additional supervision improves these appearance scores but does not establish reliable action control. Neither exploratory variant provides an independent final test.
 
-== CVAE KL weight and latent size
+=== KL weight and latent size
 <sec:cvae_study>
 The RGB CVAE's action controls are undefined rather than failed: every forward, reversal and selected-object sample loses at least one track. The flow variants keep tracks but remain stationary in the 0.5-second window. Two explanations could leave a CVAE without usable action response. The conditioning path could discard the force, but it does not at initialization: across 20 randomly initialized networks on synthetic two-object scenes, flipping the force changes the prior's input more than switching the selected object, and about 90 percent of the force-induced change survives the first group normalization.
 
@@ -572,7 +574,7 @@ in 13/14, 14/14 and 6/6 complete samples; seed 2 loses a later track in ten of
 those 16 samples. These repeats support the slow-motion and selection-bias
 diagnosis beyond the original training seed.
 
-== Full-horizon action scores
+=== Motion over the full clip
 <sec:horizon>
 We score the saved validation videos at 0.5 and 3.875 seconds using the same
 action rules. All four validation groups are contact-free throughout, so
@@ -601,7 +603,7 @@ The full-clip score therefore separates slow but correct motion from absent moti
 
 
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/multiscene_validation.png", width: 100%),
   caption: [
     First sorted validation forward condition, seed zero, at six fixed times. The simulator is one declared reference. The E0 row is the RGB CVAE pilot; the separately shown Flow CVAE is the final E0 decoder. The RGB CVAE uses its conditional prior; E2/E3/E4 use EMA and 32 DDIM steps. Both flow variants preserve appearance but fail the selection controls in the 0.5-second window and over the full clip. The supervised variant also fails 15/16 force-reversal pairs in the window but passes all 16 over the full clip (@sec:horizon). Selection is fixed before visual inspection; this is not a best-sample comparison.
@@ -611,7 +613,8 @@ The full-clip score therefore separates slow but correct motion from absent moti
 
 
 
-== Trajectory model and contact audit
+
+== Predicting poses instead of pixels
 <trajectory-model-and-contact-audit>
 #block(breakable: false)[
 E5 trains for 6,000 updates on the same 336 training and 84 validation clips.
@@ -651,11 +654,11 @@ A positive control places two training or validation objects at known continuous
 
 In the declared target groups, 15.6 percent of overlaps up to one pixel are flagged and 1.25 percent of overlaps of at least 1.5 pixels are missed. Errors have both signs, so the median is not a correction for individual maxima. Raw raster overlap exceeds one pixel for 54 percent of touching pairs. This calibrates circles and rectangles from training and validation, without triangle coverage or model-score changes.
 
-Boundary checks remain insufficiently calibrated: 13/96 generated clips and 12/84 oracle renders exceed the one-pixel interior tolerance. Their maximum depths are 3.872 and 1.385 pixels. We retain these measurements without treating the generated count as a wall-violation accuracy result. Static-copy controls have no overlap or boundary excursions but fail nonzero-action behavior. Audit jobs 43514/43515 use 28 and 30 allocated seconds; no training or final-test evaluation is added.
+Boundary checks remain insufficiently calibrated: 13/96 generated clips and 12/84 oracle renders exceed the one-pixel interior tolerance. Their maximum depths are 3.872 and 1.385 pixels. We retain these measurements without treating the generated count as a wall-violation accuracy result. Static-copy controls have no overlap or boundary excursions but fail nonzero-action behavior.
 
 
 
-== Uncertainty after action conditioning
+=== Spread within each action family
 <uncertainty-after-action-conditioning>
 We stratify all 24 validation conditions by their six action families. Every family remains present, including incomplete contact ensembles. @tab:uncertainty uses selected-object trajectories. Spread is conditional on complete sample pairs; nearest-reference coverage requires all four sampled trajectories for a case. The scored-scene count is reported rather than filling missing coverage with zero.
 
@@ -683,7 +686,7 @@ In complete timelines, estimated any-contact frequency is 0.25 under forward for
 
 A supplementary zero-force control verifies that all reference frames and positions remain stationary, then checks maximum excursion of any valid object over the full clip with the unchanged one-pixel motion threshold. All 16 E5 clips have complete tracks and exceed that threshold; static-reference copies drift in 0/16. The original half-second result of 0/16 drifting clips remains unchanged. Late motion explains why short-window adherence and visible sample diversity cannot establish useful hidden-physics uncertainty.
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/trajectory_contact.png", width: 86%),
   caption: [
     First sorted validation contact-0-to-1 condition, one simulator reference and all four E5 seeds at fixed times. Some generated futures overlap substantially. The view retains the same image and action; visual diversity does not make every sampled motion physically valid.
@@ -693,7 +696,8 @@ A supplementary zero-force control verifies that all reference frames and positi
 
 
 
-== Contact-aware follow-ups and retained regressions
+
+== Contact losses and stationary objects
 <contact-aware-follow-ups-and-retained-regressions>
 The first two E6 attempts use the original 336 training clips and 6,000 updates each. The paired-action package adds 2,080 clips from the same 16 training worlds: both objects, eight directions, magnitudes 0.25 and 0.5, the four existing physics profiles, plus zero-force controls. Initial appearance and hidden physics remain unchanged. The original 84 validation references and all 248 final-test clips remain separate. The third attempt trains for 16,000 updates and selects update 15,500. The three TC2 A40 allocations total 24 minutes 2 seconds. Additional data and updates are confounded; this is not an isolated effect of contact loss.
 
@@ -726,7 +730,7 @@ The first recipe improves contact timing but regresses target selection to 7/16.
 
 
 
-== Uncertainty after contact-aware training
+=== Spread after contact-aware training
 <uncertainty-after-contact-aware-training>
 @tab:contact_uncertainty retains every action family for the paired package. Forward spread is 0.0040, compared with reference spread 0.0258 and E5 spread 0.0167. Stationarity improves while free-motion samples become less dispersed than the finite reference set. Similar wall spread is insufficient: no wall scene has all four complete selected trajectories, so wall coverage is undefined. Contact-family coverage is now defined in all four scenes, with descriptive any-contact rates of 1.0 matching the finite references. Contact-event F1 of 0.3000 still shows that occurrence and timing are different checks.
 
@@ -754,7 +758,7 @@ Saved-pose replay reproduces all 288 E6 videos, and rescoring the saved RGB
 reproduces trajectory, contact and uncertainty reports. These checks verify
 the reported measurements without adding training seeds or held-out scenes.
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/contact_followup.png", width: 100%),
   caption: [
     E5 and paired E6 on the same first sorted validation contact-0-to-1 condition, all four seeds, at frames 0, 8, 16 and 31. Each panel includes the same single simulator reference. The case and times match @fig:contact\; no seed is selected for visual quality. Improved contact-case tracking does not imply the wall cases or all contacts are physically correct.
@@ -764,7 +768,8 @@ the reported measurements without adding training seeds or held-out scenes.
 
 
 
-== Matched training-only canvas penalty
+
+== Keeping objects inside the image
 <matched-training-only-canvas-penalty>
 #block(breakable: false)[
 The clipping diagnosis motivates a controlled loss comparison. Both recipes use the same training source, seed 19, initialization policy, balanced draws, 2,080 supplementary actions, 16,000 updates and fixed-seed validation denoising criterion. Only the canvas-loss weight changes from zero to 256. The loss squares hull excursion beyond the native image canvas after a one-pixel allowance, using the existing low-noise gate. Maximum training-label excursion is 0.638 pixels across the complete augmented corpus, below this allowance. Validation does not choose the margin. There is no inference correction, tracker relaxation or change to the Heun sampler.
@@ -803,7 +808,7 @@ the 192 saved-pose videos and their reported clipping measurements.
 
 
 
-== Collision failures and reference-estimator calibration
+== Measuring collisions
 <collision-failures-and-reference-estimator-calibration>
 The saved-pose audit localizes all 15 canvas-model penetration failures to the two contact families. Every contact clip tracks completely, yet penetration exceeds the one-pixel tolerance in 142 of 2,976 pair frames. Maximum depth is 2.176 pixels, and the longest consecutive run spans 22 rendered frames. The matched control has 141 affected frames, maximum 2.216 pixels and a longest run of 21 frames. The worst example for both is scene 730016, contact from object 1 to 0, sample seed 2. In the canvas model, frames 10-31 remain above tolerance. All seeds and failures are retained; the example is selected by maximum depth. These pixel-centre hulls are approximate geometry diagnostics. Oracle-motion controls remain below tolerance in all 84 reference clips.
 
@@ -866,9 +871,9 @@ therefore test substantial extrapolation.
 
 
 
-== Independent routing study and a separate held-out replication
+== Force routing across training seeds
 <independent-routing-study-and-a-separate-held-out-replication>
-D016 trains six pose-space E10 models from fresh random initializations: spatial and numeric force routing at seeds 19, 20 and 21, each for 16,000 updates in TC2 job 50264. The paired arms of each seed share initial tensors, batches, optimizer and contact-training recipe; routing is the declared difference. These are independent initializations, unlike E11's refinements of one E7 teacher. Both arms use future-pose/contact supervision, so this experiment addresses routing within the pose model, not the unresolved E2/E3 pixel comparison.
+D016 trains six pose-space E10 models from fresh random initializations: spatial and numeric force routing at seeds 19, 20 and 21, each for 16,000 updates. The paired arms of each seed share initial tensors, batches, optimizer and contact-training recipe; routing is the declared difference. These are independent initializations, unlike E11's refinements of one E7 teacher. Both arms use future-pose/contact supervision, so this experiment addresses routing within the pose model, not the unresolved E2/E3 pixel comparison.
 
 D017 evaluates frozen E0, both E2/E3 budgets and all six E10 models on a
 separate generator seed, 790000, with ten scenes in each of five splits.
@@ -901,7 +906,7 @@ The compact counts can be checked, but the RGB collection cannot be replayed
 independently. The conditional ADE ordering also compares arms with different
 missing observations; it is not an unconditional accuracy ranking.
 
-= Exploratory extensions after the held-out evaluation
+= Physical structure and sampled worlds
 <sec:exploratory>
 The next studies examine why the pose models fail. Initial E7/E8/E9/E11
 comparisons reuse the original four validation scenes and usually one training
@@ -957,7 +962,7 @@ Windows CPU probe. This small platform-sensitive difference is not a training
 gain. Independent replay reproduces all 288 clips, including an anchor
 identical to the earlier coverage study. The run uses 1,819 A40 seconds.
 
-== Noise after conditioning on a sampled world
+== One-pass decoding versus diffusion
 <noise-after-conditioning-on-a-sampled-world>
 E11 compares a one-pass pose decoder with conditional diffusion after sampling the same physical prior. Both refine the same E7 tensors on the original cache for 8,000 updates at seed 19, with identical batches, random draws, loss weights, optimizer and nominal 1,064,580 parameters. The direct arm replaces noisy motion with zero and fixes the decoder noise level to one. Its motion-input weights have zero gradient, so active capacity differs; the transferred function is preserved only in the diffusion control. Hidden subpixel geometry remains unknown even after conditioning on mass, friction and restitution.
 
@@ -980,7 +985,7 @@ E11 compares a one-pass pose decoder with conditional diffusion after sampling t
     [Forward trajectory spread], [0.02498], [0.02346],
     [96-video sampling/export (seconds)], [2.31], [31.06],
   )]
-  , caption: [Exploratory E11, job 50455, one training seed and four reused validation scenes. ADE and spread use normalized image coordinates. Sampling includes native rendering/export but excludes checkpoint loading; it is not browser latency. The finite reference forward spread is 0.02580.]
+  , caption: [Exploratory E11, one training seed and four reused validation scenes. ADE and spread use normalized image coordinates. Sampling includes native rendering/export but excludes checkpoint loading; it is not browser latency. The finite reference forward spread is 0.02580.]
   , kind: table
   )
 <tab:prior>
@@ -994,7 +999,7 @@ excluded because their references reach contact. All 288 primary clips replay
 exactly. The run uses 1,497 allocated A40 seconds. The tradeoff is measured on
 one refinement seed and four reused validation scenes; D018 tests its repeatability.
 
-== Fresh-scene replication of the prior decoder
+== Repeating the decoder comparison on new scenes
 <fresh-scene-replication-of-the-prior-decoder>
 D018 fixes six final-update checkpoints before generating a new corpus at
 seed 830000. Seeds 20/21 repeat the two 8,000-update refinements; seed 19
@@ -1025,13 +1030,14 @@ splits are validated but receive no model scores.
 
 All six models track every primary clip. One-pass reduces penetration, worst depth and duration in each refinement seed, but every seed fails the frozen overall improvement rule. All three regress selected ADE, timed contact F1, early force-scaling success, wall coverage and object-1-to-0 collision-family coverage. Seeds 19 and 20 also introduce five zero-force drifts out of 40; seed 21 introduces none. Coverage is checked separately for all six action families, with all ten scene groups required; a pooled gain cannot offset a regression. The 0.5-second response/reversal checks were also present in the committed decision code before the new data was generated.
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/prior_replication.png", width: 100%),
   caption: [
     First sorted D018 ID condition, refinement seed 19. Every sampling seed and all four reference variants are shown at the same four times. Reference row indices do not identify the models' sampled physical worlds. This is a fixed-case visualization, not a selected best sample or a calibrated posterior.
   ]
 )
 <fig:prior-replication>
+
 
 === First-contact timing with multiple references
 <sec:d018-contact-timing>
@@ -1053,9 +1059,9 @@ check and changes no gate or selection.
 D018 inference runs on an RTX 3060 with deterministic algorithms and TF32
 disabled. All 1,440 saved primary videos replay exactly from their poses.
 Concurrent CPU checks prevent an isolated timing comparison, so the earlier
-controlled E11 screen supplies the cost comparison. The contact improvement
-repeats across refinement seeds, but the accompanying accuracy and control
-regressions prevent an overall improvement claim.
+controlled E11 screen supplies the cost comparison. The reduction in penetration
+repeats across refinement seeds, but contact timing and action control worsen,
+so we cannot call the one-pass decoder an overall improvement.
 
 == Contact projection and simulator controls
 
@@ -1192,7 +1198,7 @@ improve at every seed, and every learned run remains worse than the simulator
 on energy score. This supports the limited hybrid comparison, not an overall
 learned-physics or OOD claim.
 
-== Candidate selection: a negative accuracy result
+== Selecting four futures from sixteen
 
 <sec:candidate-selection>
 
@@ -1309,9 +1315,9 @@ falls. The momentum block alone worsens collision motion; the residual
 recovers most of that loss. Without the block, residual training reduces its
 trained dynamics error by 80.7% and raises contact F1 from 0.228 to 0.278,
 but gives only a small same-world ADE improvement. One training
-seed and ten ID groups support no collision-specific or OOD claim. TC2 A40
-job 53377 independently retrains the pair and reproduces the principal values
-to about four significant figures on a regenerated corpus; this is a
+seed and ten ID groups support no collision-specific or OOD claim. An independent
+A40 retraining reproduces the principal values to about four significant figures
+on a regenerated corpus; this is a
 cross-platform reproduction, not another training-seed replication.
 
 D039 retains a separate exploratory collision-impulse screen. Both seed-22
@@ -1326,7 +1332,7 @@ single-seed screen on an opened corpus is not confirmation or evidence of a
 standalone learned-collision improvement. The default-zero loss remains
 experimental.
 
-= Interactive demonstration
+= Interactive comparison
 <sec:demo>
 The interactive interface compares the flow CVAE, E5 and E6 on a common image
 with four fixed sample seeds. Users select an object, drag a force and compare
@@ -1339,7 +1345,7 @@ futures with the exact input frame prepended. Uploaded images have no known
 simulator reference. This interface visualizes the measured models; it is not
 an additional accuracy experiment.
 
-== Photograph interface with an external pretrained model
+== Force Prompting photograph generation
 <sec:photo>
 We implement a separate photograph interface using the released Force Prompting point-force checkpoint and CogVideoX-5b-I2V~@forceprompting. This model was trained externally. Its outputs are excluded from every controlled-model score above. The interface centre-crops an uploaded RGB image, records a point and force vector, and retains four declared sampling seeds. A direction-independent caption describes the scene and the action. Pinning one action permits synchronized comparison against a reversed push. Its force scale and sample variation have no physical calibration.
 
@@ -1360,7 +1366,7 @@ works without a VPN or GPU; fresh generation requires an allocated worker.
 
 
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/photo_paired_native.png", width: 100%),
   caption: [
     PHOTO-P03, every declared sample for both pushes. Columns show generated frame zero and 6.0 seconds. Each crop uses the same input-defined horizontal band, rows 350 to 479 of the native 480-row output; no generated pixels are altered. Weak right-push samples remain included. External model: Force Prompting/CogVideoX. Input: StreamForce public development gallery.
@@ -1370,7 +1376,8 @@ works without a VPN or GPU; fresh generation requires an allocated worker.
 
 
 
-== Native StreamForce integration
+
+== StreamForce photograph generation
 
 <sec:photo-streamforce>
 
@@ -1404,7 +1411,7 @@ checks concern interface operation, not physical accuracy.
 
 
 
-#figure(placement: auto,
+#figure(placement: none,
   image("figures/photo_streamforce_native.png", width: 100%), caption: [PHOTO-S02, every declared native StreamForce sample for both pushes.
 Columns show frames zero and 80 (5.0 seconds). All rows use the same
 input-defined horizontal band, rows 320 to 479 of the 480-row output, without
@@ -1416,7 +1423,6 @@ development outputs without calibrated physical ground truth.])
 
 
 
-#place.flush()
 
 = Conclusion
 The flow CVAE preserves appearance and follows force direction over the full
@@ -1437,12 +1443,12 @@ correction; collision error and RGB contact F1 regress. Multi-reference energy
 scores still favour the prior-matched simulator. These distinctions prevent
 geometric feasibility from being mistaken for learned physical accuracy.
 
-The next priority is broader training coverage of force magnitude and selected
-object, followed by contact measures calibrated against exact outlines and
-multiple valid references. Improvements should be tested across independent
-training seeds and new scenes, with conditional trajectory errors reported
-beside missing tracks. Higher resolution or latent video models would be
-useful only if they preserve the action and object-identity improvements under
-those same tests.
+The next experiment should vary free-push magnitude and selected object
+independently during training, then repeat the force and selection tests on
+new scenes. This would test the coverage explanation directly. For contact,
+we need to compare exact-outline timing and multi-reference scores alongside
+hull overlap: the projection study shows that removing overlap can also remove
+contact. Any gain should survive independent training seeds, with missing
+tracks reported beside conditional trajectory errors.
 
 #bibliography("references.bib", style: "ieee", title: "References")

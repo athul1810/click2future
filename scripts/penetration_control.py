@@ -1,20 +1,12 @@
-"""Positive control for the rigid hull-penetration audit at known true overlaps.
+"""Calibrate hull-penetration detection against known continuous overlaps.
 
-The geometry audit has a negative control (oracle motion stays below its one-pixel
-tolerance) but no positive one. This places two objects from each distinct
-training/validation frame-zero layout at known continuous overlaps, using the
-simulator's exact shapes, and scores the resulting poses with the unchanged
-`geometry_diagnostics`. One object is rotated about its observed centre and slid
-towards the other along their centre line, with a random lateral offset, until
-the exact convex penetration depth equals the target. Only frame-zero masks and
-scene specifications of training and validation clips are read; no model,
-threshold or recorded score changes.
+Place training/validation object pairs at target depths using exact simulator
+outlines, then score their encoded poses with geometry_diagnostics. Rotate one
+object and move it along the centre line with a random lateral offset.
 
-The simulator's rasterisation fixes the true shapes only to within a fraction of
-a pixel, so every offset in --offsets places them that far from the pixel-index
-origin. Penetration depends only on relative placement, so the offset matters
-only through rotation; the summary reports each offset separately.
-"""
+Report each subpixel outline offset separately. Relative placement determines
+penetration; the offset affects the comparison when a raster-derived hull
+is rotated. No model is sampled and the one-pixel threshold is kept fixed."""
 
 from __future__ import annotations
 

@@ -1,31 +1,15 @@
-"""Contact timing from predicted poses, calibrated on simulator references.
+"""Measure contact timing from saved rigid poses and exact scene outlines.
 
-The pixel contact estimator scores 0.489 event F1 on correct validation renders
-(contact-reference-control.json), motivating a separate geometry-based timing
-control. For models that save rigid poses, contact can be read from geometry.
-This moves the scene's exact object
-outlines (evaluation-only ground truth, never a model input) by the saved poses,
-in the same frame-zero encoding as `rigid_geometry.geometry_diagnostics`, and
-detects a contact onset in interval i when the outlines are separated at frame i
-and touching at frame i+1.
+Scene outlines are evaluation labels, not model inputs. A contact onset is a
+separated-to-touching transition between consecutive frames. Choose the touch
+threshold on training clips, then calibrate on validation. Report all labels
+and the subset satisfying that sampled-transition rule separately.
 
-Three parts:
-
-1. Reference calibration on training/validation clips. Simulator poses are
-   replayed exactly, encoded like model poses and scored against their own
-   onset labels. The touch threshold is chosen on training clips only.
-2. The diagnostic subset of labels satisfying this binary touch-edge rule.
-3. Saved-pose evaluations: single-reference event F1, compared with the pixel
-   audit, and a hidden-physics-aware first-contact timing measure, calibrated
-   by scoring each reference against the other references of its condition.
-
-No model, threshold or recorded score changes. Validation is the default scope.
-Optional `--held-out` folders score a frozen held-out study (D018, `id_test`)
-descriptively, with the touch threshold already chosen on training clips; no
-selection, threshold or gate depends on them. `--held-out-study D028` reads the
-D028 comparison layout instead: one folder per arm holding `<sample_id>.npz`
-with `motion`, the shared `plan.json` and `results.json` one level up.
-"""
+Compare model first contacts with every hidden-physics reference, and calibrate
+this measure by leaving out each reference in turn. Validation is the default.
+--held-out reads frozen D018 id_test outputs; --held-out-study D028 reads one
+folder per arm with motion NPZs and shared plan.json/results.json above it.
+Held-out measurements are descriptive and do not choose thresholds or models."""
 
 from __future__ import annotations
 

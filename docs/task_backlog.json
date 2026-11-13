@@ -477,7 +477,7 @@
       3,
       4
     ],
-    "progress": "13 November audit: report 30 pages, contribution two pages. All 21 existing data tables and eight figure references remain, with one model map added. Clearer prose, explicit metric definitions and corrected attribution; editable sources rebuild identically. Apply sources in Typst and complete teammate review.",
+    "progress": "13 November language review: report and code documentation tightened; tables, algorithms and experiment decisions preserved. Ananya will edit the report source directly from PR #95 and open follow-up PRs. Complete teammate review and rebuild after those edits.",
     "evidence": "report/main.typ; report/references.bib; report/contribution.tex; report/evidence.json; docs/FINAL_REVIEW.md."
   },
   {
@@ -536,7 +536,7 @@
     "owner": null,
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/20",
-    "progress": "The audited 30-page report, two-page contribution statement and 419-file source ZIP are prepared. Full suite: 832 tests plus four subtests, two Linux skips; final extraction: 61 focused tests, smoke and 16 CLI checks. Current portal check, teammate review and one coordinated three-file upload remain; target 14 November. No C2F deck or demo rehearsal is required.",
+    "progress": "The report, contribution statement and source-only code ZIP are prepared. Ananya is taking report edits through GitHub PRs. Rebuild after merged edits, then check portal instructions and coordinate one three-file upload; target 14 November. No C2F deck or demo rehearsal is required.",
     "completed_acceptance": [
       2,
       4,

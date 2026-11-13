@@ -6,18 +6,19 @@ losses, sampling equations or reported scores. Completion remains targeted for 1
 
 ## Verified package
 
-- Report: 30 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
+- Report: 32 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
   and the D028 contact-standoff analysis. D037 contributes no numeric evidence.
 - Contribution statement: two pages of LaTeX covering each member's models,
   experiments, analysis and writing. Routine setup and generic review claims are
   omitted; detailed source attribution is retained in the repository ledger.
 - Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
   replay smoke check pass. Datasets, weights and external links are excluded.
-- Full runtime suite: 832 tests and four subtests pass on Windows; two
-  TC2/Linux-only checks are skipped. Lint and formatting pass.
-- The final extracted source passes 61 focused tests, a procedural smoke check
-  and 16 CLI help commands. All 277 Python files parse; AST comparison confirms
-  unchanged numerical code after excluding docstrings and two status messages.
+- Baseline full suite at `87b7a48`: 832 tests and four subtests pass on Windows;
+  two TC2/Linux-only checks skip. Current extraction: 46 focused and 81 interface
+  tests, inventory and procedural smoke pass. Lint and formatting pass.
+- All 277 Python ASTs match that baseline after docstring removal. Six browser
+  files are formatted with a parsed-structure check. Models and numerical
+  algorithms are unchanged.
 - The main comparison now precedes its diagnostics. A model map and explicit
   metric definitions clarify the results; all 21 existing data tables remain.
 
@@ -45,9 +46,9 @@ and development photograph are separate from the controlled-model evaluation.
 
 ## Remaining external steps
 
-1. Apply the edited `main.typ`, `references.bib` and new native photograph figure
-   to the shared Typst project. The supplied archive was reconciled and compiled
-   locally; no cloud edit is claimed. Complete the group's final report review.
+1. Ananya edits the report source directly from PR #95 and opens follow-up PRs.
+   Review those changes and rebuild the PDFs after they merge. A shared Typst
+   update is not required.
 2. Check the live NTULearn instructions, coordinate the single group upload with
    Sanjay, and retain its receipt. Submit `group_07_report.pdf`,
    `group_07_contribution.pdf` and `group_07_code.zip`. The possible 16 November

@@ -405,15 +405,17 @@ The original strict quality flag remains false. Typst cloud reconciliation, the
 full team rehearsal and coordinated portal submission remain open. See
 [final review](FINAL_REVIEW.md).
 
-#### submission audit, 13 november
+#### language and submission review, 13 november
 
-The audited report is 30 pages and the contribution statement is two pages.
-All 21 existing data tables and eight figure references remain, with one model
-map added. The 419-file source ZIP has revised instructions and corrected status
-text; models and numeric algorithms are unchanged. The full suite passes 832
-tests plus four subtests (two Linux skips), and 61 focused tests pass from clean
-extraction. Applying the Typst sources, teammate review and the coordinated
-three-file upload remain. A C2F presentation or demo rehearsal is not required.
+The report is 32 pages and the contribution statement is two pages. All 21
+data tables, the model map and eight figure references remain. Related studies
+are grouped under clearer headings; inline figures preserve paragraph order.
+Script docstrings are shorter, six browser files are formatted and the stale
+compute worksheet is replaced with recorded timings. Numerical algorithms are
+unchanged. The final extraction passes 46 focused and 81 interface tests,
+inventory and smoke. Ananya will edit the report source directly from #95 and
+open follow-up PRs. Review and rebuild after those edits, then coordinate the
+three-file upload. A C2F presentation or demo rehearsal is not required.
 
 <a id="t19"></a>
 

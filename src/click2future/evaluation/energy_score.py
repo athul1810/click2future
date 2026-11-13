@@ -1,23 +1,15 @@
-"""D031: multi-reference energy score for sampled trajectory futures.
-
-The strict trajectory gate compares every sample with one reference. D024 and D030
-show that even the simulator with true geometry and prior-sampled hidden physics fails
-that gate, so it partly measures hidden-physics uncertainty. Each controlled condition
-stores several references that differ only in hidden physics. The energy score
-(Gneiting and Raftery, 2007) compares the whole sample set with each of them:
+"""Fair energy score for trajectory ensembles, averaged over all references.
 
     ES(X, y) = mean_i d(x_i, y) - 1/2 * mean_{i != j} d(x_i, x_j)
 
-The underlying energy score is proper. For independent forecast samples, its fair
-estimate is lowest in expectation at the reference distribution. The pairwise term
-uses distinct pairs only (the "fair" form of Ferro, 2014), removing the ensemble bias for K
-samples. The score of a condition averages ES over its references. Lower is better.
+Lower is better. The distinct-pair estimate removes finite-ensemble bias for
+independent samples (Ferro, 2014). Its expectation is minimized by the reference
+distribution under the proper energy score (Gneiting and Raftery, 2007).
 
-Trajectories are displacements from frame zero in native pixels. The distance d is
-the root mean square over frames of Euclidean distance in the concatenated object
-coordinates. This is a fixed multiple of the Euclidean norm, so the rule stays proper.
-The score is descriptive: it changes no gate, scorer or recorded result.
-"""
+Use displacement from frame zero in native pixels. Distance is the RMS over
+frames of Euclidean distance in concatenated object coordinates, a fixed
+multiple of their Euclidean norm. Average each condition over its references;
+paired intervals resample whole scene groups."""
 
 import itertools
 

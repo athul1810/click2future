@@ -209,7 +209,7 @@ experiment script, not in the ordinary four-seed sampler.
 
 ## Diagnostics
 
-Use `python -m MODULE --help` or `python scripts/NAME.py --help` for these tools:
+Each diagnostic below provides a `--help` option:
 
 | Tool | Purpose |
 |---|---|

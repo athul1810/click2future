@@ -1,6 +1,6 @@
 {
-  "status": "local_submission_audit_passed_pending_group_review",
-  "pages": 30,
+  "status": "language_review_passed_pending_team_edits",
+  "pages": 32,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -220,25 +220,25 @@
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
     "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0",
-    "main.typ": "c160368320d88ee1f5d2fe0d7badb126a31851e7c7ad07ab199216509162a08d",
+    "main.typ": "99b558c20c5141fda55ac5fc081625a6105225b6facd9971718af319c8503d2c",
     "references.bib": "7a1e9659638d4993ea7c3e55b5f540e647ac2043c317efe8f7c9265bc03f3255",
     "contribution.tex": "c52cd8ff9b9ef1fcc7b135af30d763bd0acd13d1bcd098562080dacb1a0f53e9"
   },
-  "rendered_pdf_sha256": "832f64169143dd759f565a13a5919105f03103f23178361f85ac998d2a1ac3db",
-  "visual_review": "All 30 report pages and both contribution pages rendered and inspected; final float placement and changed pages checked at full size.",
+  "rendered_pdf_sha256": "efe7c0c4a730a89e8ff6753ddcc6980747f37230774638ed38bd91ad6a4776dd",
+  "visual_review": "All 32 pages rendered and inspected; inline figures preserve paragraph and section order.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 419,
-    "bytes": 772065,
-    "archive_sha256": "f959dd7769285c49b26283a9da6d50158559ae46cca837ca6c370f6c1de887a7",
+    "bytes": 771084,
+    "archive_sha256": "c13ccab31ec0fb4e54801a9038aa81f72cca920508238f90c6d7ed82222bd231",
     "checks": [
       "source-only inventory and hashes",
       "no data, weights, URLs, Git or environments",
       "clean extraction smoke",
       "manifest identity without Git; tamper/missing/unlisted cases covered by submission tests"
     ],
-    "archive": "outputs/submission-audit-20261112/deliverables/group_07_code.zip",
-    "runtime_revision": "75854bc baseline; audit changes status text and documentation only"
+    "archive": "outputs/style-review-20261113/deliverables/group_07_code.zip",
+    "runtime_revision": "87b7a48 plus docstring edits and browser-source formatting; parsed structures checked"
   },
   "remaining": [
     "Physical reliability and calibrated uncertainty remain unestablished",
@@ -1150,21 +1150,24 @@
   },
   "current_review_export": {
     "date": "2026-11-13",
-    "revision_label": "submission-audit",
+    "revision_label": "language-review",
     "report_source": "main.typ",
-    "report_pages": 30,
+    "report_pages": 32,
     "contribution_source": "contribution.tex",
     "contribution_pages": 2,
     "source_archive_files": 419,
-    "runtime_tested_revision": "993908f plus status-text corrections; numeric algorithms unchanged",
+    "runtime_tested_revision": "Full suite at 87b7a48; 277 Python ASTs unchanged after docstring removal; 46 current focused and 81 current interface tests pass",
     "runtime_tests_passed": 832,
     "runtime_linux_only_skips": 2,
     "runtime_subtests": 4,
     "strict_quality_flag": false,
     "cloud_typst_synchronized": false,
     "c2f_presentation_required": false,
-    "final_extracted_focused_tests_passed": 61,
-    "code_archive_sha256": "f959dd7769285c49b26283a9da6d50158559ae46cca837ca6c370f6c1de887a7"
+    "final_extracted_focused_tests_passed": 46,
+    "code_archive_sha256": "c13ccab31ec0fb4e54801a9038aa81f72cca920508238f90c6d7ed82222bd231",
+    "final_extracted_interface_tests_passed": 81,
+    "shared_typst_update_required": false,
+    "report_edit_handoff": "Ananya edits repository source from PR 95 through follow-up PRs"
   },
   "pose_contact_verification": {
     "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
@@ -1365,5 +1368,46 @@
     ],
     "cloud_typst_edited": false,
     "ntulearn_submitted": false
+  },
+  "language_review_20261113": {
+    "status": "passed",
+    "baseline_commit": "87b7a4899aaa9d0354b133c811b8c621a10894a2",
+    "source_files": 419,
+    "source_lines_scanned": 55124,
+    "python_files_ast_compared": 277,
+    "comments_and_docstrings": 691,
+    "changed_python_files": [
+      "cluster/final_evaluation.py",
+      "cluster/final_rehearsal.py",
+      "cluster/replication_evaluation.py",
+      "scripts/compare_checkpoints.py",
+      "scripts/diagnose_wall_overshoot.py",
+      "scripts/metric_ceilings.py",
+      "scripts/penetration_control.py",
+      "scripts/pose_contact.py",
+      "src/click2future/evaluation/energy_score.py",
+      "src/click2future/models/__init__.py",
+      "submission/cvae_motion_timing.py",
+      "submission/cvae_selection_drift.py",
+      "tests/test_environment.py"
+    ],
+    "numerical_algorithms_changed": false,
+    "model_implementation_files_byte_identical": true,
+    "model_package_init_docstring_only": true,
+    "unfinished_placeholders_or_tool_banners_in_submission": 0,
+    "report_pages": 32,
+    "contribution_pages": 2,
+    "all_22_tables_unchanged": true,
+    "all_8_figure_references_unchanged": true,
+    "report_source_rebuild_pixel_identical_pages": 32,
+    "contribution_pdf_and_latex_archive_unchanged": true,
+    "focused_tests": "46 passed in 54.78s",
+    "frontend_files_formatted": 6,
+    "frontend_parsed_structure_check": "prettier debug-check passed before formatting",
+    "interface_tests": "81 passed in 19.44s",
+    "visual_review": "all 32 rendered pages inspected",
+    "report_layout": "inline image figures; captions and paragraphs stay in source order",
+    "shared_typst_update_required": false,
+    "focused_tests_from_final_formatted_extraction": true
   }
 }

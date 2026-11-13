@@ -1,10 +1,7 @@
-"""D034 diagnosis: where boundary clips and lost tracks come from.
+"""Locate boundary excursions and lost tracks in saved D034 trajectories.
 
-Reads saved motions from ``compare_checkpoints.py`` runs and scores them again with the
-unchanged geometry and tracking code. It reports which action families the boundary
-clips fall in, how deep they go, and the geometry of every clip that loses a track.
-Descriptive only: it changes no rule, gate or recorded result.
-"""
+Re-score saved poses with the original geometry and tracker, grouping failures
+by action family. This diagnostic does not change the comparison's decisions."""
 
 import argparse
 import json

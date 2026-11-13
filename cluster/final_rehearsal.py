@@ -1,9 +1,7 @@
-"""Validation-only rehearsal of the final E0/E2/E3 run with one shared plan.
+"""Run the E0/E2/E3 validation comparison on one shared plan.
 
-Prepares the validation plan and force-0.4 selected-object plan from current
-source, samples every run against the same plans, scores SSIM/LPIPS, actions and
-targets with the suite, then adds both action horizons. Test splits are never opened.
-"""
+Includes force-0.4 selection controls, SSIM/LPIPS and both action horizons.
+Reserved test splits are not read."""
 
 import argparse
 import json

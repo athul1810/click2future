@@ -1,4 +1,4 @@
-"""Checks for the environment diagnostic, independent of future model tests."""
+"""Dependency, artifact-I/O and CPU/CUDA checks for the environment diagnostic."""
 
 import json
 

@@ -1,33 +1,16 @@
-"""D031-D038: pose checkpoints, physics corrections and simulator controls, scored
-with the unchanged scorers plus the multi-reference energy score.
+"""Compare pose checkpoints, physical corrections and simulator controls.
 
-Modes (all rules below were fixed before any of these runs):
-- ``validation`` (D032): original validation split. ``select_scale`` picks at most one
-  geometry-loss scale per training family. No test split is read.
-- ``d031``: the opened seed-940000 D028 corpus. Descriptive energy scores for the D020
-  sampler, its projection and the controls; it also reproduces the D028 numbers.
-- ``fresh`` (D033): a new seed-950000 corpus, generated after this file was committed.
-  ``projection_holds`` and ``learned_geometry_holds`` are the acceptance rules.
-- ``d035``: a new seed-960000 corpus, generated after ``combined_holds`` was committed.
-  Tests whether the scaled contact-dynamics losses plus the projection hold together.
-- ``d037``: a new seed-970000 corpus, generated after ``dynamics_residual_holds`` was
-  committed. Tests a Newtonian free-motion training residual against its matched control.
-- ``d038``: a new seed-980000 corpus, generated only after this rule was committed.
-  Tests the residual-trained model with momentum correction and contact projection
-  against its matched projected control.
+Modes: validation selects D032 loss scales; d031 describes the opened D028
+corpus; fresh, d035, d037 and d038 use their declared new corpora and rules.
+Acceptance functions below specify each comparison. Sampling runs on CPU;
+GPU training is a separate stage.
 
-Every checkpoint is scored raw and with the D028 projection in its frozen per-frame
-mode. Projection weights use the sampled masses when the model is conditioned on the
-sampled world, and equal masses otherwise. Controls, all with the plan's sampling seeds:
-- simulator_sampled_world: true geometry and prior-sampled hidden physics. Its samples
-  come from the same distribution as the references, so in expectation no generator
-  should beat its energy score (``metric_check``).
-- oracle_first_reference: four copies of the first reference (true hidden physics).
-  It has zero single-reference error and no spread.
-- physics_baseline_0.5px and physics_baseline_0.15px: the explicit hull baseline.
-
-Sampling runs on CPU, as in D028. GPU training is a separate recorded stage.
-"""
+Score each checkpoint raw and with the frozen per-frame D028 projection.
+Use sampled masses for world-conditioned models and equal masses otherwise.
+The energy score compares all samples with all hidden-physics references.
+Controls include a prior-matched simulator, copies of the first reference
+and the explicit hull baseline. The copied reference has no spread and is
+not a distributional optimum."""
 
 import argparse
 import copy

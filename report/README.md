@@ -1,22 +1,23 @@
 ## current assessed sources, 13 november
 
-`main.typ` is the audited 30-page report from the supplied `GenAI.zip`.
+`main.typ` is the audited 32-page report from the supplied `GenAI.zip`.
 The primary held-out results now precede the validation diagnostics. All 21
 existing data tables and eight figure references remain; a model-summary table
 is added. `references.bib` includes the SSIM and LPIPS references.
 `contribution.tex` builds the two-page statement. Its accounts focus on models,
 experiments, analysis and writing; the source-archive builder's credit is explicit.
 
-The 419-file code ZIP has a rewritten run guide and corrected tracker-status
-text. Models and numerical algorithms are unchanged. The full suite passes
-832 tests and four subtests, with two Linux/TC2 skips; 61 focused tests pass
-from the final extraction. All 277 Python files and structured configs parse;
-clean extraction, smoke, inventory and 16 command-line entry points pass.
-Both editable source ZIPs rebuild to pixel-identical PDFs (30 and two pages).
+The language pass shortens script docstrings and formats six browser files.
+All 277 Python ASTs match 87b7a48 after docstring removal; the formatter also
+checks parsed browser-source structure. No numerical algorithm changes. The
+prior full suite passed 832 tests and four subtests, with two Linux skips.
+The current extraction passes 46 focused and 81 interface tests, inventory and
+procedural smoke. The report source rebuilds to 32 pixel-identical pages;
+the checked contribution PDF and source ZIP are unchanged.
 
-Apply `main.typ`, `references.bib` and the figure directory to the shared Typst
-project. No cloud edit is claimed. Final teammate review, the live portal check
-and coordinated three-file upload remain. The World Models presentation is
+Ananya will edit the report source directly from PR #95 and open follow-up PRs.
+The repository source is the handoff; a shared Typst update is not required.
+Final teammate review, the live portal check and coordinated upload remain. The World Models presentation is
 separate; C2F slides and a demo rehearsal are optional. `main.tex` below is an
 earlier report snapshot, not an additional submission.
 
