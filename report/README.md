@@ -14,16 +14,24 @@ The language pass shortens script docstrings and formats six browser files.
 All 277 Python ASTs match 87b7a48 after docstring removal; the formatter also
 checks parsed browser-source structure. No numerical algorithm changes. The
 prior full suite passed 832 tests and four subtests, with two Linux skips.
-The current extraction passes 46 focused and 81 interface tests, inventory and
+The language-pass extraction passed 46 focused and 81 interface tests, inventory and
 procedural smoke. The report source rebuilds to 32 pixel-identical pages.
 The 14 November contribution layout rebuilds from LaTeX to two identical rendered
 pages. The final comparison audit clarifies the full training budget versus
 selected-checkpoint exposure, and separates A40 timings from the L40S runs.
 All 22 tables, figures, scores and numerical algorithms are unchanged.
+Athul's review separates the D020 geometry share (about 0.5% after activation)
+from D029's contact-dynamics share (about 0.02%). The D039 scorer is restored
+byte-for-byte to its recorded hash, and bibliography ranges and venues are
+updated. Contribution descriptions and layout are unchanged.
+The restored-scorer extraction passes 29 focused tests, inventory, smoke and
+lint/format checks, with all 277 Python ASTs unchanged after docstring removal.
 
-Ananya will edit the report source directly from PR #95 and open follow-up PRs.
+Any follow-up report edits go through PR #95 and need a rebuild after review.
 The repository source is the handoff; a shared Typst update is not required.
-Final teammate review, the live portal check and coordinated upload remain. The World Models presentation is
+Final teammate review and coordinated upload remain. Athul reports a portal
+cutoff of 16 November at 23:59 (UTC+8), with unlimited attempts and unchanged
+file restrictions. The World Models presentation is
 separate; C2F slides and a demo rehearsal are optional. `main.tex` below is an
 earlier report snapshot, not an additional submission.
 

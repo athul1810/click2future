@@ -28,8 +28,9 @@ single-reference ADE is therefore insufficient evidence of a matched forecast
 distribution.
 
 D032 investigates why the optional geometric and contact-dynamics terms had
-little effect. In D029, the added weighted terms contributed only about
-0.02\% of total training loss. The screen scales the D020 geometry terms by
+little effect. In matched retraining, the D020 recipe's weighted geometry terms
+contributed about 0.5\% of total training loss, while the D029 contact-dynamics
+terms contributed about 0.02\%. The screen scales the D020 geometry terms by
 16, 128 and 1024, and the D029 contact-dynamics terms by 128 and 1024. The
 original-validation rule selects at most one scale per family: rest-anchored
 $\times16$ and direct contact-dynamics $\times1024$. Increasing the rest-family

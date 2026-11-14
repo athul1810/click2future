@@ -25,12 +25,11 @@ The PDF does not require a novel method, five variants, 128px generation, slides
 ## Deadline
 
 **Internal completion deadline: 14 November 2026** for the report, contribution
-PDF and validated source ZIP. The course brief lists 16 November
-for upload; the exact NTULearn cutoff remains unverified. It does not extend the
-internal deadline. See [SUBMISSION.md](SUBMISSION.md). The research-paper presentation is a separate
-assessment; the user confirmed that its World Models slides are the presentation
-required on 14 November. A Click2Future deck or demo rehearsal is not a required
-submission item.
+PDF and validated source ZIP. Athul checked NTULearn on 14 November and reported
+an upload cutoff of **16 November 2026, 23:59 (UTC+8)**, with unlimited attempts
+and the same three-file restrictions. See [his portal check](https://github.com/athul1810/click2future/issues/20#issuecomment-6878101546)
+and [SUBMISSION.md](SUBMISSION.md). The research-paper presentation is a separate
+assessment. A Click2Future deck or demo rehearsal is not a required submission item.
 
 ## Rubric and teamwork
 
@@ -63,8 +62,8 @@ The simulator values and units are frozen in ARCHITECTURE.md. The pixel model sc
 ## Remaining details to record
 
 - [x] Group 7, full member names, and coordinator recorded from the supplied roster.
-- [ ] Deadline discrepancy, exact cutoff/timezone, and live NTULearn submission link.
-- [ ] Any additional report template, page maximum, file-size limit, or updated instructions on NTULearn; none is specified in the course brief.
+- [x] Exact cutoff and timezone recorded from Athul's 14 November portal check; the upload is through the course's Project 1 assignment.
+- [x] Athul reports the same three filenames, no datasets/models/links and unlimited attempts. The brief specifies no report template, page maximum or file-size limit; no new requirement was reported.
 - [ ] Rules on pretrained weights and AI-assisted work, if given elsewhere; the PDF's ban concerns submitted datasets and model files.
 - [x] TC2 access approval for Athul and account resource/job limits recorded in [COMPUTE.md](COMPUTE.md).
 - [x] TC2 first login, A40 hardware/software checks and checkpoint continuation verified in scheduled jobs; see [COMPUTE.md](COMPUTE.md).

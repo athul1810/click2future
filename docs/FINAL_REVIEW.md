@@ -17,7 +17,7 @@ losses, sampling equations or reported scores. Completion remains targeted for 1
 - Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
   replay smoke check pass. Datasets, weights and external links are excluded.
 - Baseline full suite at `87b7a48`: 832 tests and four subtests pass on Windows;
-  two TC2/Linux-only checks skip. Current extraction: 46 focused and 81 interface
+  two TC2/Linux-only checks skip. The language-pass extraction passed 46 focused and 81 interface
   tests, inventory and procedural smoke pass. Lint and formatting pass.
 - All 277 Python ASTs match that baseline after docstring removal. Six browser
   files are formatted with a parsed-structure check. Models and numerical
@@ -28,6 +28,12 @@ losses, sampling equations or reported scores. Completion remains targeted for 1
   and 13,000 updates) separately from its completed 20,000-update runs. D015
   matches the full per-run clip budget, not each selected checkpoint's exposure.
   Its A40 and L40S training times are labelled separately. No score changes.
+- Athul's review corrects the loss-share attribution: the D020 recipe's weighted
+  geometry terms contribute about 0.5% in matched retraining, versus about 0.02%
+  for D029's contact-dynamics terms. The D039 scorer is restored to its recorded
+  `6a0ee67b` hash. Bibliography page ranges and conference venues are updated.
+  The restored-scorer extraction passes 29 focused tests, inventory, smoke and
+  lint/format checks; all 277 Python ASTs match after docstring removal.
 
 The report's source hashes use LF-normalized UTF-8 for text and exact bytes for
 binary assets. The archive manifest continues to hash its exact stored bytes.
@@ -53,13 +59,13 @@ and development photograph are separate from the controlled-model evaluation.
 
 ## Remaining external steps
 
-1. Ananya edits the report source directly from PR #95 and opens follow-up PRs.
-   Review those changes and rebuild the PDFs after they merge. A shared Typst
-   update is not required.
-2. Check the live NTULearn instructions, coordinate the single group upload with
-   Sanjay, and retain its receipt. Submit `group_07_report.pdf`,
-   `group_07_contribution.pdf` and `group_07_code.zip`. The possible 16 November
-   cutoff does not move the 14 November target.
+1. Review any follow-up report edits through PR #95 and rebuild after they merge.
+   The repository source is the handoff; a shared Typst update is not required.
+2. Complete Athul's recheck of #95, then coordinate the single group
+   upload with Sanjay and retain its receipt. Submit `group_07_report.pdf`,
+   `group_07_contribution.pdf` and `group_07_code.zip`. Athul's 14 November portal
+   check reports a cutoff of 16 November at 23:59 (UTC+8), unlimited attempts and
+   unchanged file restrictions. Nothing has been uploaded.
 
 The World Models paper presentation is separate. Click2Future slides, live demo
 operation and a team demo rehearsal are optional and are not submission gates.

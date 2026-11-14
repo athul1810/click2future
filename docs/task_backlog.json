@@ -18,7 +18,7 @@
       1,
       2
     ],
-    "progress": "Group 7, the full roster, coordinator, course requirements and adopted 64px E0/E2/E3 scope are recorded. Final NTULearn cutoff and updated-instruction checks are tracked in T20; they are not claimed as verified."
+    "progress": "Group 7, roster, coordinator and course scope are recorded. Athul checked the portal on 14 November: upload cutoff is 16 November 2026 at 23:59 (UTC+8), with unlimited attempts and unchanged three-file restrictions. T20 tracks final review and upload."
   },
   {
     "id": "T02",
@@ -440,9 +440,9 @@
       "Add a separately attributed real-photo extension with four retained samples, live/recorded states and paired-action replay; verify the complete allocated-worker path and retain pretrained-model limitations."
     ],
     "owner": "MAITI SHRIJEET",
-    "status": "In progress",
+    "status": "Closed (not planned)",
     "issue_url": "https://github.com/athul1810/click2future/issues/17",
-    "progress": "Optional demo implemented and checked; its model-quality limitations remain reported. The user confirmed that Click2Future slides and demo rehearsal are not required for the separate technical-review submission.",
+    "progress": "Athul closed issue 17 as not_planned on 14 November because the demo is optional. The implemented synthetic/photo paths and recorded checks remain; the original physical-quality gate is still false. Closure does not claim that gate passed.",
     "completed_acceptance": [
       0,
       1,
@@ -524,21 +524,24 @@
     ],
     "outcome": "Complete one group submission through NTULearn using the exact required filenames and content restrictions.",
     "acceptance": [
-      "Confirm the live NTULearn upload cutoff while preserving 14 November 2026 as the working deadline; do not assume the PDF resolves the discrepancy.",
-      "Check NTULearn for any updated submission instructions before exporting and uploading the final artifacts.",
+      "Record the NTULearn cutoff: 16 November 2026, 23:59 (UTC+8), confirmed by Athul on 14 November; keep 14 November as the internal file-preparation target.",
+      "Record current portal instructions: unlimited attempts, the same three filenames, and no datasets, model files or external links; Athul checked on 14 November.",
       "Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.",
       "Export group_07_contribution.pdf with every member's full name and reviewed contribution description.",
       "Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.",
       "Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.",
-      "Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.",
+      "Coordinate one group submission through NTULearn > Assignments > Project 1 by 16 November 2026, 23:59 (UTC+8), after final fixes and review.",
       "Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files."
     ],
     "owner": null,
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/20",
-    "progress": "The report, contribution statement and source-only code ZIP are prepared. Ananya is taking report edits through GitHub PRs. Rebuild after merged edits, then check portal instructions and coordinate one three-file upload; target 14 November. No C2F deck or demo rehearsal is required.",
+    "progress": "The three submission files are prepared and the four requested corrections on PR 95 are implemented and checked. Athul confirmed the portal deadline and restrictions on 14 November. His recheck and one coordinated upload remain; due 16 November at 23:59 (UTC+8). Nothing is submitted yet.",
     "completed_acceptance": [
+      0,
+      1,
       2,
+      3,
       4,
       5
     ]

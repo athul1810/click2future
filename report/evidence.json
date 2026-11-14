@@ -1,5 +1,5 @@
 {
-  "status": "final_audit_passed_pending_team_review_and_submission",
+  "status": "peer_review_fixes_passed_pending_recheck_and_submission",
   "pages": 32,
   "external_links": 0,
   "external_urls_in_text": 0,
@@ -219,26 +219,25 @@
     "../docs/results/physics-guided-selection-d036.json": "6b934a57b6f1d65429635d9d124ac59275db73dc6a1775662ef46f0279f98c2e",
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
-    "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0",
-    "main.typ": "ad28b0790082075b7d5458b9c7b4255cb93c1fcb14976fb627f9f696e46b3dfb",
-    "references.bib": "7a1e9659638d4993ea7c3e55b5f540e647ac2043c317efe8f7c9265bc03f3255",
+    "followups_20261112.tex": "0b1fa1a864722dc6809cf7259e25b05705671ddd0559da542ae27295ae848309",
+    "main.typ": "f7dfe13ddc3e87d4990caff8de9185552bc202f46183b501ca28ec52d0d2cf59",
+    "references.bib": "da55543aa2d5f34c52d9d2df29530bca3f854b3805c6d1c36f06d840a937ce2d",
     "contribution.tex": "c481cb67c89f5dc1713508089ed5a90b15a43615a9890265f4a4a87880dcf56f"
   },
-  "rendered_pdf_sha256": "d6b6b81048ca3aed2f1d42c71897d4ad385c70b555417d5873faa0733df47678",
-  "visual_review": "All 32 report pages inspected; pages 5-8 rechecked after budget/timing clarification; the other 28 pages are pixel-identical.",
+  "rendered_pdf_sha256": "992ec40ee06ceeb9ed1b768c5f439368e6fbd82bdad92963fc74a46012330ec8",
+  "visual_review": "Pages 27, 28, 29 and 32 checked after peer corrections; the other 28 pages are pixel-identical to the checked 8835ec8 report.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 419,
-    "bytes": 771084,
-    "archive_sha256": "c13ccab31ec0fb4e54801a9038aa81f72cca920508238f90c6d7ed82222bd231",
+    "bytes": 771606,
+    "archive_sha256": "ccf42be7b11e22b66e22e423aa99c02e637385264bb55b5f9ad5b0b7e4c92a0c",
     "checks": [
-      "source-only inventory and hashes",
-      "no data, weights, URLs, Git or environments",
-      "clean extraction smoke",
-      "manifest identity without Git; tamper/missing/unlisted cases covered by submission tests"
-    ],
-    "archive": "outputs/style-review-20261113/deliverables/group_07_code.zip",
-    "runtime_revision": "87b7a48 plus docstring edits and browser-source formatting; parsed structures checked"
+      "allowed source files; no datasets, models or external links",
+      "clean extraction inventory and procedural smoke",
+      "29 focused tests; lint and format",
+      "all 277 Python ASTs unchanged after docstring removal",
+      "D039 scorer exact hash restored"
+    ]
   },
   "remaining": [
     "Physical reliability and calibrated uncertainty remain unestablished",
@@ -1461,5 +1460,41 @@
     "cli_help_commands_passed": 16,
     "full_suite_rerun": false,
     "test_boundary": "existing dependency environment; clean extracted project source; no new training or raw experiment replay"
+  },
+  "athul_review_corrections_20261114": {
+    "reviewed_commit": "8835ec8b14a3f9bde14d6ea648cfad9b07d48436",
+    "review_comment": "https://github.com/athul1810/click2future/pull/95#issuecomment-6878079824",
+    "geometry_weighted_loss_share_percent": 0.5075914151755586,
+    "contact_dynamics_weighted_loss_share_percent": 0.023933868800977275,
+    "scorer_sha256": "6a0ee67b817798e0b703912dfbb41db23d909945c2aee3d55ae0513f2f9ecd19",
+    "executable_AST_changed": false,
+    "requirements_presentation_attribution_removed": true,
+    "bibliography": "standard page ranges; PBD and SSIM pages; NeurIPS 2020 and SIGGRAPH Asia 2026 venues",
+    "contribution_pdf_unchanged": true,
+    "report_pages": 32,
+    "changed_report_pages": [
+      27,
+      28,
+      29,
+      32
+    ],
+    "other_pixel_identical_pages": 28,
+    "packaged_source_rebuild_pixel_identical_pages": 32,
+    "focused_tests": "29 passed in 19.37s",
+    "full_suite_rerun": false,
+    "peer_full_suite": "Athul reports 834 tests pass at 8835ec8"
+  },
+  "portal_check_20261114": {
+    "checked_by": "BOBAN ATHUL KRISHNA",
+    "source": "https://github.com/athul1810/click2future/issues/20#issuecomment-6878101546",
+    "due": "2026-11-16T23:59:00+08:00",
+    "attempts": "unlimited",
+    "required_files": [
+      "group_07_report.pdf",
+      "group_07_contribution.pdf",
+      "group_07_code.zip"
+    ],
+    "restrictions": "no datasets, model files or external links",
+    "submitted": false
   }
 }

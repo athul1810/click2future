@@ -1186,8 +1186,9 @@ validation, D028 and D033. Every learned pose checkpoint included in this
 comparison scores worse than the simulator. Matching single-reference ADE
 does not imply a matched forecast distribution.
 
-D032 checks the scale of losses that changed D029 little. The added terms
-contribute only about 0.02% of total training loss. Geometry weights are
+D032 checks the scale of losses in matched retraining. The D020 recipe's
+weighted geometry terms contribute about 0.5% of total training loss; D029's
+contact-dynamics terms contribute about 0.02%. Geometry weights are
 multiplied by 16, 128 or 1024; contact-dynamics weights by 128 or 1024.
 Original-validation selection chooses rest-anchored geometry at 16 times its
 weight and direct contact dynamics at 1024 times. Every tested geometry scale

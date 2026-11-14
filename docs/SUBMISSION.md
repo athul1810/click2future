@@ -15,10 +15,11 @@ Submit these three files for **Group 7**, using `07` in the filenames.
 One group makes one submission through **NTULearn > course site > Assignments > submission link for Project 1**. The PDF allows replacement submissions without a stated limit. Coordinate uploads through PRAMOD SANJAY, the first member in the supplied roster.
 
 **Internal completion deadline: 14 November 2026.** All three required deliverables must be ready then. Page 5 of the
-brief lists 16 November for upload. Confirm the exact NTULearn cutoff; this does
-not change the internal completion date. On 3 November the user reported no
-changes to the current submission page; its exact cutoff was not independently
-verified in a signed-in browser.
+brief lists 16 November for upload. Athul checked NTULearn on 14 November and
+reported **16 November 2026, 23:59 (UTC+8)**, unlimited attempts and the same
+three filenames and content restrictions. [Portal-check record](https://github.com/athul1810/click2future/issues/20#issuecomment-6878101546).
+The team is waiting for the #95 fixes and recheck before uploading; no submission
+is claimed.
 
 ## Report
 
