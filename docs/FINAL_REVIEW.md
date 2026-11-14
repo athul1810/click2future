@@ -1,0 +1,80 @@
+# Final review, 14 November 2026
+
+The implementation through PR #94 is merged at `75854bc`. The audit updates
+writing, run instructions and tracker-status text without changing models,
+losses, sampling equations or reported scores. Completion remains targeted for 14 November.
+
+## Verified package
+
+- Report: 32 pages, from the supplied Typst archive, including D031-D039, component comparisons, negative results
+  and the D028 contact-standoff analysis. D037 contributes no numeric evidence.
+- Contribution statement: two pages of LaTeX covering each member's models,
+  experiments, analysis and writing. Routine setup and generic review claims are
+  omitted; detailed source attribution is retained in the repository ledger.
+  The 14 November layout uses the report's Libertinus type, 22 mm margins and
+  centered title, with a small running header and plain page numbers. The
+  coordinator label is removed; contribution descriptions are unchanged.
+- Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
+  replay smoke check pass. Datasets, weights and external links are excluded.
+- Baseline full suite at `87b7a48`: 832 tests and four subtests pass on Windows;
+  two TC2/Linux-only checks skip. The language-pass extraction passed 46 focused and 81 interface
+  tests, inventory and procedural smoke pass. Lint and formatting pass.
+- All 277 Python ASTs match that baseline after docstring removal. Six browser
+  files are formatted with a parsed-structure check. Models and numerical
+  algorithms are unchanged.
+- The main comparison now precedes its diagnostics. A model map and explicit
+  metric definitions clarify the results; all 21 existing data tables remain.
+- The final comparison audit records E0's selected checkpoints (20,000, 14,000
+  and 13,000 updates) separately from its completed 20,000-update runs. D015
+  matches the full per-run clip budget, not each selected checkpoint's exposure.
+  Its A40 and L40S training times are labelled separately. No score changes.
+- Athul's review corrects the loss-share attribution: the D020 recipe's weighted
+  geometry terms contribute about 0.5% in matched retraining, versus about 0.02%
+  for D029's contact-dynamics terms. The D039 scorer is restored to its recorded
+  `6a0ee67b` hash. Bibliography page ranges and conference venues are updated.
+  The restored-scorer extraction passes 29 focused tests, inventory, smoke and
+  lint/format checks; all 277 Python ASTs match after docstring removal.
+
+The report's source hashes use LF-normalized UTF-8 for text and exact bytes for
+binary assets. The archive manifest continues to hash its exact stored bytes.
+The newer training results have teammate-reviewed TC2 reproductions. This
+refresh checks the compact evidence and source; it does not claim a new
+independent replay of all raw D031-D039 outputs.
+
+## Model and demo boundaries
+
+D035 improves a narrow matched-world measure across three training seeds.
+D038 improves aggregate matched-world ADE by 16.8% on one fresh ID study;
+most of that gain comes from the explicit momentum block. Contact F1 and
+collision-family ADE regress. D036 selection is worse than a fair uniform
+control. D039 is an opened-corpus, short exploratory screen. The original
+strict gate still fails. These results do not establish calibrated uncertainty,
+general physical reliability or superiority to external state-of-the-art models.
+
+The portable photograph demo is recorded replay with two saved opposite actions.
+It shows all eight native samples and explicitly rejects uncached requests.
+Fresh photograph generation needs an allocated TC2 worker; its two measured
+four-sample requests took about 133 seconds each. The external pretrained model
+and development photograph are separate from the controlled-model evaluation.
+
+## Remaining external steps
+
+1. Review any follow-up report edits through PR #95 and rebuild after they merge.
+   The repository source is the handoff; a shared Typst update is not required.
+2. Complete Athul's recheck of #95, then coordinate the single group
+   upload with Sanjay and retain its receipt. Submit `group_07_report.pdf`,
+   `group_07_contribution.pdf` and `group_07_code.zip`. Athul's 14 November portal
+   check reports a cutoff of 16 November at 23:59 (UTC+8), unlimited attempts and
+   unchanged file restrictions. Nothing has been uploaded.
+
+The World Models paper presentation is separate. Click2Future slides, live demo
+operation and a team demo rehearsal are optional and are not submission gates.
+
+## Rebuild
+
+Compile the assessed report with `typst compile report/main.typ group_07_report.pdf`
+from the repository root. It uses `report/references.bib` and the existing figure
+folder. Compile `report/contribution.tex` twice with `pdflatex`, setting the job
+name to `group_07_contribution`. The earlier `report/main.tex` is retained as an
+alternative source snapshot; do not submit two report versions. Build and inspect
+the code ZIP with the commands in SUBMISSION.md.

@@ -1,11 +1,8 @@
-"""Final held-out E0/E2/E3 evaluation from one account and one set of frozen plans (D014, D015).
+"""Evaluate frozen E0/E2/E3 checkpoints on shared held-out plans (D014/D015).
 
-All plans are prepared and recorded before any video is generated. For every reserved
-split the primary plan keeps the action controls, except on splits without zero force,
-and the force-0.4 selected-object plan is derived from it. Every run is sampled against
-the same plans and scored with the suite, then both action horizons are added. A failed
-suite is recorded and the remaining suites still run. Nothing is tuned on these results.
-"""
+Prepare every split's plans before sampling, including force-0.4 selection
+controls. Score appearance and both action horizons, recording failures without
+dropping the remaining runs. This runner does not train or select checkpoints."""
 
 import argparse
 import json

@@ -1,6 +1,6 @@
 # Compute and feasibility
 
-**Training resource: the course-provided TC2 GPU Cluster.** CCDS has made TC2 available to MSAI, MSDS, and MSCS students for course-related work. The team will use this resource for training.
+**Training resource: the course-provided TC2 GPU Cluster.** CCDS has made TC2 available to MSAI, MSDS, and MSCS students for course-related work. We used TC2 for model training and the photograph inference workers.
 
 ## Access and account limits
 
@@ -19,7 +19,7 @@ The email lists these Slurm settings:
 | GPU model and VRAM | Job 42886 on TC2N01: NVIDIA A40; 46,068 MiB reported by nvidia-smi; 44.43 GiB visible to PyTorch |
 | Total GPU-hour quota and access expiry | Not stated in the email |
 | CUDA, driver, Python, framework | CUDA runtime 12.8; driver 570.148.08; Python 3.12.15; PyTorch 2.11.0+cu128; glibc 2.34 |
-| Dataset/checkpoint storage quota | To record |
+| Dataset/checkpoint storage quota | No personal quota returned by the recorded check |
 
 The resource limits apply across the user's running jobs. Two job slots do not provide two GPUs. The `30G` limit is system RAM, not GPU VRAM. Plan single-GPU training and save resumable checkpoints before the six-hour limit, including model, optimizer, scheduler, step, and random-number states.
 
@@ -92,49 +92,26 @@ no user-specific limit. Shared-filesystem capacity is not a personal quota.
 See [pilot evidence](results/diffusion_pilot_2026-10-16.json). Do not extrapolate
 four-clip cache timings into a final suite budget before measuring the chosen data.
 
-## Profiling sequence
+## Measured main-comparison cost
 
-1. Run a device/memory smoke check on TC2 and record the environment.
-2. Generate a small simulator dataset on CPU; measure samples/second and bytes/clip.
-3. For the proposed pixel pilot, profile the denoiser directly. If a latent path is
-   selected, first gate its autoencoder on object-boundary/contact preservation.
-4. Overfit a tiny fixed video batch, then independently check held-out action response.
-5. Profile the compact 64px, 32-total-frame model (31 predicted frames): peak VRAM, seconds/step, throughput, checkpoint size, and four-sample latency. The synthetic batch-one profile is complete; dataset training and sampling remain unmeasured.
-6. Calculate the total ablation budget, including evaluation and failed-run reserve, before launching long jobs.
+The final E0/E2/E3 records supersede the original planning worksheet.
+Values below come from `docs/results/final-cost.json`.
 
-Measure after warm-up; state precision, batch size, gradient accumulation, and hardware. A successful tiny-batch overfit check establishes basic plumbing, not generalization.
+| Model | Training budget | Training time per run | Sampling time per video |
+|---|---|---|---|
+| E0 flow CVAE | 20,000 updates, batch two | 742-757 s | 0.012-0.015 s |
+| E2/E3, original budget | 5,000 updates, batch one | 246-281 s | about 0.54 s |
+| E2/E3, matched clip count | 40,000 updates, batch one | 1,965-1,970 s on A40 | 0.58-0.59 s |
 
-## Budget worksheet
+E0 seeds 1/2 and the original diffusion runs used A40 GPUs; E0 seed 0's GPU
+type was not recorded. The longer diffusion seed-0 pair used A40s; seeds 1/2
+used L40S GPUs and took 1,130-1,156 seconds. Sampling was measured on A40 and
+includes checkpoint loading and video export. These are not browser timings.
 
-```text
-training GPU-hours per run = measured seconds/step × planned steps × GPU count / 3600
-suite GPU-hours = sum(per-run cost × seed count) + autoencoder cost + evaluation cost
-planned allocation = suite GPU-hours + explicit retry/debug reserve
-raw RGB bytes = clips × frames × height × width × 3
-```
+E0 has 574,226 parameters and E2/E3 have 964,035. The longer diffusion budget
+matches E0's number of clips seen, not optimizer updates or GPU time. Better
+image quality at that budget did not resolve object identity or action control.
 
-Queue time and CPU data generation affect wall time even when GPU-hours fit. Measure masks, oracle arrays, and compression separately. Keep at least one recoverable checkpoint per active run and use resumable jobs when time limits require them.
-
-| Component | Steps / seeds | Measured time | Estimated GPU-hours | Decision |
-|---|---|---|---|---|
-| Autoencoder, if latent path chosen | TBD | Pending | Pending | Reconstruction gate |
-| E0 CVAE | TBD | Pending | Pending | Profile |
-| E1 first-frame diffusion | TBD | Pending | Pending | Profile |
-| E2 numeric-action diffusion | TBD | Pending | Pending | Profile |
-| E3 spatial conditioning | TBD | Pending | Pending | Profile |
-| E4 auxiliary supervision | TBD | Pending | Pending | Profile |
-| Evaluation / sampling | TBD | Pending | Pending | Reserve |
-
-## 128px gate
-
-Proceed only if the 64px baseline works, the core comparisons fit the remaining allocation, and a measured 128px profile fits memory and the deadline. Doubling both image dimensions quadruples raw pixels; actual training cost depends on the architecture and must be measured. Preserve scene identities and split membership when rerendering at 128px.
-
-## Fallback order
-
-1. Keep the final resolution at 64px.
-2. Reduce clip length, channel width, batch size, and latent size if applicable as measured needs dictate.
-3. Reduce dataset/run size coherently across comparisons; report the resulting limits.
-4. Use fewer seeds for exploratory runs and reserve repeats for the main claims.
-5. Drop optional FVD, additional supervision ablations, and friction-conditioned generation.
-
-Do not assume a particular large GPU or promise a fixed training duration before profiling.
+The submitted experiments remain at 64px and 32 total frames. No 128px or
+latent-autoencoder result is claimed. The setup and four-clip measurements
+above are dated pilot records, not estimates of final model quality.

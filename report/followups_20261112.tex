@@ -1,0 +1,184 @@
+\subsection{Distributional evaluation and loss scaling}
+\label{sec:distribution-followups}
+The strict engineering gate compares each generated future with one realized
+reference. D024 and D030 show that even simulator samples with valid hidden
+physics can fail it. D031 therefore adds a descriptive multi-reference energy
+score on pose displacements in native pixels. For $K$ sampled trajectories and
+one reference $y$, the fair finite-ensemble form is
+\[
+ \widehat{ES}(X,y)=\frac{1}{K}\sum_i d(x_i,y)
+ -\frac{1}{2K(K-1)}\sum_{i\ne j}d(x_i,x_j),
+\]
+averaged over the available references of each condition. Here $d$ is the
+Euclidean trajectory distance divided by the square root of the number of
+frames. Under independent sampling from the forecast distribution, the fair
+form removes the finite-ensemble bias; the underlying energy score is proper
+\cite{gneiting,ferro}. Four samples and at most four references still give noisy
+per-condition estimates. Comparisons use paired scene-group intervals, and the
+same four sampled worlds are shared across conditions. This does not establish
+calibrated uncertainty or change the original gate.
+
+D031 reproduces the recorded D028 scorer fields, with same-world ADE agreeing
+within $1.5\times10^{-10}$. On that corpus D020 scores 1.105 pixels against
+1.060 for the prior-matched simulator; the paired difference interval is
+$[0.019,0.074]$. The 0.15-pixel hull baseline is within sampling uncertainty of
+the simulator on validation, D028 and D033. Every evaluated learned checkpoint
+remains worse than the simulator on this distributional measure. Matching a
+single-reference ADE is therefore insufficient evidence of a matched forecast
+distribution.
+
+D032 investigates why the optional geometric and contact-dynamics terms had
+little effect. In matched retraining, the D020 recipe's weighted geometry terms
+contributed about 0.5\% of total training loss, while the D029 contact-dynamics
+terms contributed about 0.02\%. The screen scales the D020 geometry terms by
+16, 128 and 1024, and the D029 contact-dynamics terms by 128 and 1024. The
+original-validation rule selects at most one scale per family: rest-anchored
+$\times16$ and direct contact-dynamics $\times1024$. Increasing the rest-family
+weights reduces penetration but worsens same-world ADE and energy score at
+every tested scale. Retrained controls match the original model and EMA weights
+bitwise. The initial scoring attempt stopped at an invalid assumption that
+zero-force images must be fixed for direct models. The rerun records their
+actual drift without changing any rule, margin or arm.
+
+D033 evaluates the selections and six E10 checkpoints on ten new ID scene
+groups. The projection passes its declared checks for all ten checkpoints.
+The direct contact-dynamics selection improves at training seed 19, but D034
+fails to replicate that complete rule at either seed 20 or 21: wall overshoot
+and lost tracks remain. Penetration alone reaches zero at all three seeds.
+The raw losses do not establish a general geometry improvement.
+
+D035 tests the scaled direct losses together with projection on another ten
+new ID groups, generated after that comparison was registered. All three
+training seeds pass the combined rule. Same-world selected ADE falls by
+8 to 10\%, or 0.03 to 0.05 native pixels, with zero projected geometry violations
+or lost tracks. The comparison was chosen after seeing D034; the failed raw
+replication is retained. Selected first-reference ADE and energy score do not
+improve at every seed, and every learned run remains worse than the simulator
+on energy score. This supports the limited hybrid comparison, not an overall
+learned-physics or OOD claim.
+
+\subsection{Candidate selection: a negative accuracy result}
+\label{sec:candidate-selection}
+D036 generates 16 candidates from one frozen E11 checkpoint on the already
+opened D018 ID corpus, then selects four using visible hull violations,
+stationarity, force opposition and trajectory diversity. The selector sees no
+reference future or true hidden physics. Its fair control is the exact
+expectation over uniform four-of-16 subsets, rather than a favorable or
+unfavorable choice of the first four seeds.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lrrr}
+\hline
+D036, 240 returned clips & Uniform expectation & Selector & Oracle \\
+\hline
+Selected ADE & 0.02621 & 0.02760 & 0.01245 \\
+Complete clips & 237.25 & 240 & 240 \\
+Penetrating clips & 19.0 & 0 & 16 \\
+Boundary-clipped clips & 27.75 & 14 & 29 \\
+\hline
+\end{tabular}
+\caption{D036 candidate selection. Uniform ADE averages complete candidates;
+its missing-clip expectation is reported separately. The oracle uses the
+reference future and is unavailable at inference. Geometry counts use the
+same hull definitions as the selector and are not independent evidence.}
+\label{tab:selection-negative}
+\end{table}
+
+Selection raises completeness but worsens ADE by 5.28\% against the fair
+control. The oracle identifies substantial candidate-pool headroom that this
+hand-written score cannot recover. Sixteen candidates also require four times
+the model sampling of four direct outputs. The selector is not promoted to
+the public sampler. The accepted D028 projection is exposed separately as an
+explicit optional correction, preserving the ordinary seeded sampling path.
+
+\subsection{Dynamics residual and momentum correction}
+\label{sec:dynamics-residual}
+D038 adds two separate optional components. A training residual matches
+finite-difference free-motion acceleration to the known force divided by
+sampled mass, excluding object and wall contacts where impulses make that
+target incomplete. An inference block corrects post-force linear momentum
+using the known applied impulse and sampled masses. Before predicted contact,
+the correction acts on the selected object; after contact, it adjusts the
+centre-of-mass motion while preserving relative velocity. Rotation is
+unchanged. Trajectories approaching a wall are skipped because wall impulse
+is unobserved. The inference order is neural sampling, momentum correction,
+then the accepted hull projection. These are explicitly labelled hybrid
+corrections, rather than evidence that the model learned the enforced laws.
+
+The matched seed-20 pair uses the same E7 teacher, initialization, private RNG
+and 8,000 updates; only the dynamics-residual weight differs, zero versus four.
+The fresh seed-980000 corpus contains ten ID scene groups, 60 conditions and
+240 generated clips per arm. All 355 stored simulator clips replay exactly.
+The rule was committed locally before generation, but the registration and
+results first reached GitHub together. Remote history therefore does not
+independently establish the registration ordering.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lrr}
+\hline
+D038 fresh ID & Projected control & Full hybrid \\
+\hline
+Complete clips & 240/240 & 240/240 \\
+Penetrating / boundary clips & 0 / 0 & 0 / 0 \\
+Zero-force / passive drift & 0 / 0 & 0 / 0 \\
+Same-world selected ADE & 0.00699 & 0.00582 \\
+First-reference pose ADE & 0.02771 & 0.02665 \\
+Free-motion dynamics residual & 0.00564 & 0.00101 \\
+Energy score, pixels & 1.2605 & 1.2539 \\
+RGB contact F1 & 0.228 & 0.213 \\
+\hline
+\end{tabular}
+\caption{D038 full hybrid: dynamics-residual training, momentum correction and
+projection. ADE uses normalized coordinates. First-reference pose ADE is
+distinct from RGB-tracked ADE. Zero geometry violations are measured on
+observed hulls and do not establish complete physical validity.}
+\label{tab:dynamics-residual}
+\end{table}
+
+All seven comparison checks pass. Same-world ADE falls by 16.8\%, with a
+paired scene interval of $[-0.00149,-0.00084]$. The first-reference pose ADE
+gain is 3.8\%. The recorded momentum-conservation check is separate: the block
+enforces it by construction. Same-world ADE also uses the same sampled
+masses supplied to that block, making the component comparison essential.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lr}
+\hline
+D038 component & Same-world selected ADE \\
+\hline
+Control plus projection & 0.00699 \\
+Add momentum correction & 0.00618 \\
+Residual training plus projection, no momentum block & 0.00688 \\
+Residual plus momentum plus projection & 0.00582 \\
+\hline
+\end{tabular}
+\caption{D038 component attribution. The explicit momentum block accounts for
+about two thirds of the aggregate gain and all of the wall-family gain.}
+\label{tab:dynamics-components}
+\end{table}
+
+The full pipeline's collision-family ADE rises by 1.17\%, and RGB contact F1
+falls. The momentum block alone worsens collision motion; the residual
+recovers most of that loss. Without the block, residual training reduces its
+trained dynamics error by 80.7\% and raises contact F1 from 0.228 to 0.278,
+but gives only a small same-world ADE improvement. One confirmatory training
+seed and ten ID groups support no collision-specific or OOD claim. TC2 A40
+job 53377 independently retrains the pair and reproduces the principal values
+to about four significant figures on a regenerated corpus; this is a
+cross-platform reproduction, not another training-seed replication.
+
+D039 retains a separate exploratory collision-impulse screen. Both seed-22
+arms train for 2,000 updates with the dynamics residual and use momentum
+correction plus projection; only the collision-residual weight differs, zero
+versus 1024. On the already opened D038 corpus, collision same-world ADE
+changes from 0.00683 to 0.00606, with interval $[-0.00117,-0.00043]$, while
+contact F1 changes from 0.168 to 0.238. Both retain 240 complete clips without
+measured geometry violations or drift. First-reference pose ADE becomes
+slightly worse, and raw neural collision ADE worsens by 3.2\%. A shortened,
+single-seed screen on an opened corpus is not confirmation or evidence of a
+standalone learned-collision improvement. The default-zero loss remains
+experimental. D037 was unrecorded development work and contributes no numeric
+evidence to this report.

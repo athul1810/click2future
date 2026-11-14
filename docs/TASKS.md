@@ -25,10 +25,10 @@ the optional autoencoder is outside the critical path. See [decisions](DECISIONS
 | T14 | [Run and analyze E0/E2/E3, with gated E1/E4 ablations](https://github.com/athul1810/click2future/issues/14) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T15 | [Evaluate held-out shapes, textures, and forces](https://github.com/athul1810/click2future/issues/15) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
 | T16 | [Evaluate hidden-physics uncertainty and action controls](https://github.com/athul1810/click2future/issues/16) | T13 | BOBAN ATHUL KRISHNA and KAPOOR ANANYA | Done |
-| T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | In progress |
+| T17 | [Build the interactive four-future comparison demo](https://github.com/athul1810/click2future/issues/17) | T04, T05, T10 | MAITI SHRIJEET | Closed (not planned) |
 | T18 | [Draft the technical report and contribution statement](https://github.com/athul1810/click2future/issues/18) | T01, T13 | Unassigned | In progress |
 | T19 | [Verify reproducibility and prepare the source-code ZIP](https://github.com/athul1810/click2future/issues/19) | T03, T04 | Unassigned | Done |
-| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T17, T18, T19 | Unassigned | In progress |
+| T20 | [Finalize the two PDFs and submit the three required files](https://github.com/athul1810/click2future/issues/20) | T14, T15, T16, T18, T19 | Unassigned | In progress |
 
 The matched canvas-loss follow-up in #49 completes 95/96 validation clips versus
 88/96 for its control. Penetration remains in 15/96 clips and overall quality
@@ -69,7 +69,7 @@ Apply the AI6132 technical-review requirements and record the remaining group an
 - [x] Record the course brief requirements, the 14 November 2026 working deadline and the unresolved 16 November upload-date discrepancy.
 - [x] Agree on the Click2Future scope, preserving at least two compared methods and one evaluation dataset; record any change to the five-variant plan.
 
-Group 7, the full roster, coordinator, course requirements and adopted 64px E0/E2/E3 scope are recorded. Final NTULearn cutoff and updated-instruction checks are tracked in T20; they are not claimed as verified.
+Group 7, roster, coordinator and course scope are recorded. Athul checked the portal on 14 November: upload cutoff is 16 November 2026 at 23:59 (UTC+8), with unlimited attempts and unchanged three-file restrictions. T20 tracks final review and upload.
 
 <a id="t02"></a>
 
@@ -338,9 +338,15 @@ The validation measurement work was reviewed by Sanjay and merged in #47; #16 cl
 
 ### T17: Build the interactive four-future comparison demo
 
+This is optional project work, not an assessed submission requirement. The World
+Models paper presentation is separate. Model-quality limitations remain reported;
+a Click2Future presentation or team demo rehearsal does not block T18/T20.
+
+Athul closed issue 17 as not_planned on 14 November because the demo is optional. The implemented synthetic/photo paths and recorded checks remain; the original physical-quality gate is still false. Closure does not claim that gate passed.
+
 Make the model and simulator comparison understandable and repeatable.
 
-**Dependencies:** T04, T05, T10. **Owner:** MAITI SHRIJEET. **Status:** In progress.
+**Dependencies:** T04, T05, T10. **Owner:** MAITI SHRIJEET. **Status:** Closed (not planned).
 
 - [x] Support declared development/validation presets and native 64px two-object synthetic PNG input with pixel-derived masks.
 - [x] Map drag arrows to positive-x-right/positive-y-down forces and generate four paired seeded futures with the offline sampler.
@@ -367,7 +373,7 @@ Prepare the two required PDFs using the course structure and the team's measured
 - [x] Draft at least four pages using introduction, methods, experiments and analysis, and conclusion; follow docs/REPORT_OUTLINE.md.
 - [x] Compare at least two methods on at least one dataset and explain the implemented methods and related work without unsupported novelty claims.
 - [x] Include method comparison, hyperparameter analysis, component analysis, visualizations, strengths, limitations, and future extensions using our own measured runs.
-- [ ] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
+- [x] Draft each member's actual contribution using docs/CONTRIBUTION_TEMPLATE.md; collect reviewed descriptions rather than invent shares.
 - [x] Embed assessed figures and tables directly in the report; use bibliography entries without external links in both submitted PDFs.
 
 The 3 November review export is 30 pages. It retains D014/D015, adds the separately trained E10 routing study and D017 results, and includes the E9/E11 screens and D018 replication. Conditional ADE is labelled with its missing-track caveat; D017 primary complete-sample counts and independent raw-video replay remain open. The contribution review is one page. Ananya's account is reviewed; Sanjay, Shrijeet and Athul still need to confirm theirs. The editable 16-slide presentation and recorded replay are prepared locally. Final member approval and submission export remain open. Source: report/main.tex; report/evidence.json.
@@ -381,6 +387,37 @@ The 8 November r5 review has a 34-page report, one-page contribution draft and 1
 8 November, r7: The r7 review keeps 35 report pages and 18 slides. Page 12 adds the penetration positive control with corrected target-depth populations, retained denominators and offset limitations. All 7920 control trials were rerun; historical model scores and the strict failing quality flag stay unchanged. The source archive includes the calibration driver and its boundary regression. Three contribution accounts are reviewed; Shrijeet confirmation, team rehearsal and coordinated upload remain open.
 
 8 November, r8: The r8 review has 37 report pages, one contribution page, 18 slides and a 395-file source ZIP. It includes Sanjay's source-checked simulator/data assumptions, the recorded D029 comparison and the corrected penetration/pose-contact controls. Full runtime checks pass 794 tests plus four subtests, with two Linux-only skips. Native pose-control replay matches all timing statistics; empty reference comparisons are excluded. Three contribution accounts are reviewed; Shrijeet confirmation, shared-paper synchronization, team rehearsal and coordinated upload remain open. Historical model scores and the strict failing quality flag stay unchanged.
+
+
+
+#### final review, 12 november, r9
+
+The 41-page report includes the merged D031-D039 evidence and the D028 pose-contact
+analysis, with component attribution, failed replication, fair candidate-selection
+control and exploratory limits. The one-page contribution statement retains the
+reviewed accounts; Shrijeet's paragraph was checked against authored commits and
+retained evidence at his request. Later merged work is separately attributed.
+The 20-slide deck retains the eight-sample native replay. The 419-file source
+archive rebuilds deterministically, extracts cleanly and passes procedural smoke
+checks. Runtime 75854bc passes 832 tests and four subtests, with two TC2-only
+skips; lint and formatting pass. The portable viewer passes the actual browser
+replay/error checks from its bundled source.
+
+The original strict quality flag remains false. Typst cloud reconciliation, the
+full team rehearsal and coordinated portal submission remain open. See
+[final review](FINAL_REVIEW.md).
+
+#### language and submission review, 13 november
+
+The report is 32 pages and the contribution statement is two pages. All 21
+data tables, the model map and eight figure references remain. Related studies
+are grouped under clearer headings; inline figures preserve paragraph order.
+Script docstrings are shorter, six browser files are formatted and the stale
+compute worksheet is replaced with recorded timings. Numerical algorithms are
+unchanged. The final extraction passes 46 focused and 81 interface tests,
+inventory and smoke. Ananya will edit the report source directly from #95 and
+open follow-up PRs. Review and rebuild after those edits, then coordinate the
+three-file upload. A C2F presentation or demo rehearsal is not required.
 
 <a id="t19"></a>
 
@@ -405,16 +442,18 @@ Source packaging and trained-checkpoint reproduction are verified. TC2 job 43174
 
 Complete one group submission through NTULearn using the exact required filenames and content restrictions.
 
-**Dependencies:** T14, T15, T16, T17, T18, T19. **Owner:** Unassigned. **Status:** In progress.
+**Dependencies:** T14, T15, T16, T18, T19. **Owner:** Unassigned. **Status:** In progress.
 
-- [ ] Confirm the live NTULearn upload cutoff while preserving 14 November 2026 as the working deadline; do not assume the PDF resolves the discrepancy.
-- [ ] Check NTULearn for any updated submission instructions before exporting and uploading the final artifacts.
+- [x] Record the NTULearn cutoff: 16 November 2026, 23:59 (UTC+8), confirmed by Athul on 14 November; keep 14 November as the internal file-preparation target.
+- [x] Record current portal instructions: unlimited attempts, the same three filenames, and no datasets, model files or external links; Athul checked on 14 November.
 
-- [ ] Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
-- [ ] Export group_07_contribution.pdf with every member's full name and reviewed contribution description.
-- [ ] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.
-- [ ] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
-- [ ] Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.
+- [x] Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.
+- [x] Export group_07_contribution.pdf with every member's full name and reviewed contribution description.
+- [x] Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.
+- [x] Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.
+- [ ] Coordinate one group submission through NTULearn > Assignments > Project 1 by 16 November 2026, 23:59 (UTC+8), after final fixes and review.
 - [ ] Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files.
 
 3 November: the review PDFs, editable 16-slide presentation, source archive and recorded fallback are prepared. The original synthetic-image upload path now passes 46 browser checks with real checkpoints; the source suite passes 700 tests and four subtests. The user reports no submission-page changes; the cutoff is not independently verified. Three member contribution confirmations, the team rehearsal and the actual upload remain pending. D018 completed all six frozen-model runs on ten fresh ID scenes. The contact gain repeats, but every seed fails the overall gate; no model is promoted. PR #76 is reviewed and merged. D017 primary complete-sample counts and independent raw-video replay remain open.
+
+14 November: The three submission files are prepared and the four requested corrections on PR 95 are implemented and checked. Athul confirmed the portal deadline and restrictions on 14 November. His recheck and one coordinated upload remain; due 16 November at 23:59 (UTC+8). Nothing is submitted yet. See the portal-check comment on issue #20.

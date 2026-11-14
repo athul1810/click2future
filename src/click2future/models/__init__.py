@@ -1,1 +1,1 @@
-"""Untrained diffusion prototype and conditional VAE baseline architecture."""
+"""Video generators, pose models and optional physical corrections."""

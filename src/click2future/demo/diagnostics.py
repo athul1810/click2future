@@ -14,7 +14,7 @@ def pixel_diagnostics(videos, initial_masks, object_valid):
         "source": "generated pixels",
         "extractor_version": TRACKER_VERSION,
         "settings": asdict(settings),
-        "adoption": "candidate pending independent calibration review",
+        "adoption": "version 2; calibration reviewed",
         "samples": [],
     }
     try:

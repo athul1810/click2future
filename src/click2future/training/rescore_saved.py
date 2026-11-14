@@ -77,7 +77,7 @@ def rescore(spec, *, root):
         "status": "saved_pixel_rescore",
         "scope": "training-clip diagnostic only; no retraining or held-out action success",
         "extractor_version": TRACKER_VERSION,
-        "extractor_adoption": "candidate pending the independent calibration review in PR 42",
+        "extractor_adoption": "version 2; calibration reviewed",
         "tracker_settings": asdict(TrackerConfig()),
         "source_sha256": {
             "rescore_saved.py": digest(Path(__file__)),

@@ -1,13 +1,9 @@
-"""Time-resolved object motion in saved evaluation samples versus their references.
+"""Report motion over time in saved CVAE videos and simulator references.
 
-The action controls score only the first 0.5 seconds. This reads the saved sample
-videos of a finished evaluation suite (validation or selected-object), tracks every
-frame with the evaluation tracker and reports, for the selected object and the
-other object separately, the displacement from frame zero, its projection on the
-force direction and the tracked-area ratio at fixed times. Simulator positions of
-every reference in the suite's plan give the same quantities for comparison.
-Frame-0 masks align identities only, as in the evaluation; nothing is resampled.
-"""
+Track every frame and report each object's displacement, force-direction
+projection and area ratio at fixed times. Frame-zero masks align identities;
+no videos are resampled. This historical diagnostic counts motion strictly
+above one pixel, whereas official action scores include exactly one pixel."""
 
 from __future__ import annotations
 

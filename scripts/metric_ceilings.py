@@ -1,12 +1,8 @@
-"""D030: what the unchanged scorers give for the true simulator on a fresh corpus.
+"""Measure the original scorers on simulator controls (D030).
 
-Two controls, rendered by the simulator and scored exactly like the models:
-- true_world: true geometry and true hidden physics, as a scorer reference control.
-- sampled_world: true geometry with the four prior draws (seeds of the plan), as a
-  prior-sampling control. Neither is a mathematical bound on other generators.
-Reports selected ADE in normalized units and native pixels, the strict gate and RGB
-contact F1. Descriptive only; no model, gate, scorer or historical result changes.
-"""
+Render true geometry with either the true hidden physics or four prior draws.
+Report selected ADE in normalized units and pixels, the original acceptance
+rule and RGB contact F1. These controls are not bounds on other generators."""
 
 import argparse
 import copy

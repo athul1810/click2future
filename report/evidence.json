@@ -1,6 +1,6 @@
 {
-  "status": "working_draft",
-  "pages": 38,
+  "status": "peer_review_fixes_passed_pending_recheck_and_submission",
+  "pages": 32,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -162,7 +162,7 @@
     ]
   },
   "source_sha256": {
-    "main.tex": "87fdd3825d18d098f81465f2591ceea8a03d2e056861c471d6b44a64623a0dc8",
+    "main.tex": "fd087f9035cad7ac7a480a5605350805e385c3279820433b2b38cdfcedd8fd0b",
     "figures/multiscene_validation.png": "182a044a7b899e318b092375a58261298176ae0d6527532d145f6ce6c28778f0",
     "../docs/results/multiscene-validation-checks.json": "6d5bedbb3eec7ac3df512fe0579fd8e5d7146270febccf4e7d8ebdbbbe64779e",
     "figures/trajectory_contact.png": "4a78b47d9331ebd5eda0bec249c98d72fb0ec837bf410ba5ad97ca29a8b8ce91",
@@ -191,7 +191,7 @@
     "../docs/results/final-cost.json": "ab91142d1a7e0f051d0d174fe7c10d56766bbe92017245c100787a20fa49bdd5",
     "figures/final_ood.png": "ea6ab3092511b182b4397ab7758a3a86b9cb0d062a315e5159ad47d12979f119",
     "../docs/results/final-conditional-scores.json": "ca18c69c8e4b3e5f88088dd14c86ccf4ffe772a6e1e862f433f211702eee3813",
-    "contributions.md": "0a88f34b2c35cbcf2822b1f47921bda6bc0809d82a0af3a40336e97af0422848",
+    "contributions.md": "80ba0e1c33a9a56a845e46eac9703e01e64a63407d9f580e22547e8affe308cd",
     "../docs/results/shared-world-validation.json": "7ed0366d3b1a3ef14fd2433e21caf3ddaaa5786b56fd17ede735f56aa46815bb",
     "../docs/results/temporal-memory-validation.json": "334c5656a85d3686c084440f0354e5d94ea1370a6aad9deb89e72611d0733f18",
     "../docs/results/coverage-validation.json": "1e4e27a646f740cccc4b02890c47545a4bc8f45ed70157c7d82c1686452b73d2",
@@ -209,27 +209,40 @@
     "../docs/results/photo-streamforce-integration.json": "8cf8bcb3f91d52a18cdac91e7b6b5ebe3f72255fc45b7bd46062be8ef079955d",
     "../docs/results/contact-projection-d028.json": "fefaff0bc88a105d74c7d335ef22d38a043ecf3efd039fc0b8fa432fc9292dc4",
     "../docs/results/contact-projection-selection-d028.json": "6db6d35f1074c2840a4b01cc94ccfb77830bab8e04ae13eaebef55f39104e8ca",
-    "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a"
+    "../docs/results/metric-ceilings-d030.json": "9dcb518c559fc7cb4c80ecdd35cfd421a7408a1b80bdb9b55a8703c6b2dadc5a",
+    "../docs/results/energy-score-d031.json": "aa12a71c2bfee20767c4f45fbbb38724248946245f28e44b1e1271e631d2d0c5",
+    "../docs/results/geometry-loss-scale-d032.json": "ba3fa9af8f1d6dd6fa414fe188cd4893a8791c26dd5835b61b6a343e1632ed1e",
+    "../docs/results/checkpoint-projection-d033.json": "a16c013abfc0821d6d2d7af76fef3ddc4c949c904f6c3f5bea1290eb71bf72fa",
+    "../docs/results/seed-replication-d034.json": "8f022b6f11fb074dcb875edc3f8084999b54d03d921f975184c22c47e3d229cd",
+    "../docs/results/wall-overshoot-d034.json": "230066a89471fc6853a9a08aeb0743432803d4e44648bb3787bc1da28041e94e",
+    "../docs/results/combined-d035.json": "e0e071991364c9de8cbb38c7b7028d0d724df62d971a34e7892ffb2f3335a899",
+    "../docs/results/physics-guided-selection-d036.json": "6b934a57b6f1d65429635d9d124ac59275db73dc6a1775662ef46f0279f98c2e",
+    "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
+    "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
+    "followups_20261112.tex": "0b1fa1a864722dc6809cf7259e25b05705671ddd0559da542ae27295ae848309",
+    "main.typ": "f7dfe13ddc3e87d4990caff8de9185552bc202f46183b501ca28ec52d0d2cf59",
+    "references.bib": "da55543aa2d5f34c52d9d2df29530bca3f854b3805c6d1c36f06d840a937ce2d",
+    "contribution.tex": "c481cb67c89f5dc1713508089ed5a90b15a43615a9890265f4a4a87880dcf56f"
   },
-  "rendered_pdf_sha256": "81e3f5bc44772ea464fe30ce5e17861412808f49d2fef6af76ed5584584ac799",
-  "visual_review": "pages 1-24 pixel-identical to the previous reviewed export; pages 25-30 and the contribution page inspected at full size",
+  "rendered_pdf_sha256": "992ec40ee06ceeb9ed1b768c5f439368e6fbd82bdad92963fc74a46012330ec8",
+  "visual_review": "Pages 27, 28, 29 and 32 checked after peer corrections; the other 28 pages are pixel-identical to the checked 8835ec8 report.",
   "source_package_verification": {
     "status": "passed",
-    "file_count": 346,
-    "bytes": 622773,
-    "archive_sha256": "042437c9001372203845980445e20e42a020d46f7ca4cadc844cac8e16e3af00",
+    "file_count": 419,
+    "bytes": 771606,
+    "archive_sha256": "ccf42be7b11e22b66e22e423aa99c02e637385264bb55b5f9ad5b0b7e4c92a0c",
     "checks": [
-      "source-only inventory and hashes",
-      "no data, weights, URLs, Git or environments",
-      "clean extraction smoke",
-      "manifest identity without Git; tamper/missing/unlisted cases covered by submission tests"
-    ],
-    "archive": "outputs/presentation-review-20261103-r3/group_07_code.zip"
+      "allowed source files; no datasets, models or external links",
+      "clean extraction inventory and procedural smoke",
+      "29 focused tests; lint and format",
+      "all 277 Python ASTs unchanged after docstring removal",
+      "D039 scorer exact hash restored"
+    ]
   },
   "remaining": [
-    "Contact quality, wall completeness and forward-motion uncertainty",
-    "Member-reviewed contribution descriptions",
-    "Independent integration review and final course submission checks"
+    "Physical reliability and calibrated uncertainty remain unestablished",
+    "Apply the edited Typst source to the shared project and complete group report review",
+    "Check live portal instructions and coordinate the single three-file submission"
   ],
   "trajectory_followup": {
     "checkpoint_sha256": "0e5404c1e62a611058a43074209f5a6ab8b9b7772f1d4c79be6def98b10af7a6",
@@ -286,10 +299,10 @@
     "reference_npz_sha256": "bc4466c2963988463e1edeaa196b9a77d1f70d782536e7717af25b59e4e69b2e"
   },
   "contribution_draft": {
-    "source": "contributions.md",
-    "status": "one-page export; three author accounts reviewed; Shrijeet pending; expanded Ananya account and Sanjay section 2.1 credit",
-    "sha256": "0a88f34b2c35cbcf2822b1f47921bda6bc0809d82a0af3a40336e97af0422848",
-    "pdf_sha256": "81a9836cb72e4434c6a07e3e69347c3907cab532ce06750aa55218e0a874c11c"
+    "source": "contribution.tex",
+    "status": "two-page statement focused on implemented models, experiments, analysis and writing; source-archive builder attribution clarified",
+    "sha256": "c52cd8ff9b9ef1fcc7b135af30d763bd0acd13d1bcd098562080dacb1a0f53e9",
+    "pdf_sha256": "0e1ed7e79cf2c03508f6913344634b2052ea833e46d4bd1f53399516f2f3d478"
   },
   "wall_clipping": {
     "record": "docs/results/contact-wall-clipping.json",
@@ -1082,11 +1095,8 @@
     "member_review_states_changed": false
   },
   "current_remaining": [
-    "strict learned-model physical-quality gate",
-    "Shrijeet contribution confirmation",
-    "shared-paper synchronization",
-    "team presentation-machine rehearsal",
-    "coordinated upload"
+    "Apply the edited Typst source to the shared project and complete group report review",
+    "Check live portal instructions and coordinate the single three-file submission"
   ],
   "contribution_confirmations_2026_11_08": {
     "reviewed": [
@@ -1138,21 +1148,25 @@
     "focused_packaging_and_boundary_tests_passed": 15
   },
   "current_review_export": {
-    "revision_label": "r8",
-    "report_pages": 37,
-    "report_pdf_sha256": "f96f26160f329c94f9537aee608baf41c2c43856fdae4d5c57742c893c9891b9",
-    "contribution_pages": 1,
-    "slides": 18,
-    "source_archive_files": 395,
-    "runtime_tested_revision": "196dae62e4d9071d54428da91142c9146c53d5a9",
-    "runtime_tests_passed": 794,
+    "date": "2026-11-13",
+    "revision_label": "language-review",
+    "report_source": "main.typ",
+    "report_pages": 32,
+    "contribution_source": "contribution.tex",
+    "contribution_pages": 2,
+    "source_archive_files": 419,
+    "runtime_tested_revision": "Full suite at 87b7a48; 277 Python ASTs unchanged after docstring removal; 46 current focused and 81 current interface tests pass",
+    "runtime_tests_passed": 832,
     "runtime_linux_only_skips": 2,
     "runtime_subtests": 4,
-    "contribution_reviewed": 3,
-    "contribution_pending": [
-      "MAITI SHRIJEET"
-    ],
-    "strict_quality_flag": false
+    "strict_quality_flag": false,
+    "cloud_typst_synchronized": false,
+    "c2f_presentation_required": false,
+    "final_extracted_focused_tests_passed": 46,
+    "code_archive_sha256": "c13ccab31ec0fb4e54801a9038aa81f72cca920508238f90c6d7ed82222bd231",
+    "final_extracted_interface_tests_passed": 81,
+    "shared_typst_update_required": false,
+    "report_edit_handoff": "Ananya edits repository source from PR 95 through follow-up PRs"
   },
   "pose_contact_verification": {
     "scope": "Contact onsets from saved rigid poses with exact evaluation-only outlines, calibrated on simulator references; hidden-physics-aware first-contact timing on validation and, descriptively, on the frozen D018 id_test arms; no model, scoring threshold, gate or historical score changes.",
@@ -1262,5 +1276,225 @@
       35
     ],
     "pdf_sha256": "81e3f5bc44772ea464fe30ce5e17861412808f49d2fef6af76ed5584584ac799"
+  },
+  "followups_2026_11_12": {
+    "runtime_revision": "75854bc7201823a25a768c14b220af82ee3e0bc8",
+    "report_sections": "4.6-4.8",
+    "compact_records": [
+      "energy-score-d031",
+      "geometry-loss-scale-d032",
+      "checkpoint-projection-d033",
+      "seed-replication-d034",
+      "wall-overshoot-d034",
+      "combined-d035",
+      "physics-guided-selection-d036",
+      "dynamics-residual-d038",
+      "collision-impulse-screen-d039"
+    ],
+    "verification_scope": "source and compact records; peer-reviewed TC2 reproductions; no new independent raw D031-D039 replay claimed",
+    "typst_cloud_synchronized": false,
+    "strict_quality_flag": false
+  },
+  "contribution_repository_verification_20261112": {
+    "member": "MAITI SHRIJEET",
+    "status": "passed_repository_verification_at_member_request",
+    "commits": [
+      "df2e9d7bfc1c80f46ef9ef4ef080c4d396f6674b",
+      "5c21e30b9e7f213dcbf92bbe691e529d74f66161",
+      "4d5c903f1e2d21aec16e82298c59812291c96526",
+      "8b117c7496166c29702eade572a4de94fa7a3c6c",
+      "f1238ebe54705c70d636ce1d0fb8a8a42780a246",
+      "4c0735ca51106628ef0d75caabfe6a1e6d04f184",
+      "49144337a7dad16067ffd1061286634d44044356",
+      "196dae62e4d9071d54428da91142c9146c53d5a9",
+      "68ec6266536e9b5f633f15b1060b843637f33202"
+    ],
+    "paragraph_changed": false,
+    "review_delegated_by_member": true
+  },
+  "source_hash_normalization": "UTF-8 text uses LF line endings; binary assets use exact bytes.",
+  "contribution_confirmations_2026_11_12": {
+    "previously_reviewed": [
+      "PRAMOD SANJAY",
+      "KAPOOR ANANYA",
+      "BOBAN ATHUL KRISHNA"
+    ],
+    "repository_verified_at_member_request": [
+      "MAITI SHRIJEET"
+    ],
+    "pending": []
+  },
+  "typst_reconciliation_20261112": {
+    "original_archive_sha256": "8d8ecdbd1061da3b0c8358ef96ce77cdf04519c6fd620ffff7a287bdbbb705fd",
+    "original_tables_preserved": 17,
+    "updated_tables": 22,
+    "original_figures_byte_identical": 9,
+    "new_figure": "figures/photo_streamforce_native.png",
+    "cloud_edited": false,
+    "compiler": "Typst 0.15.1",
+    "report_pages": 30,
+    "new_code_changes": false
+  },
+  "contribution_editorial_update_20261112": {
+    "scope": "trim setup details, generic review claims, routine artifact bookkeeping and commit lists from all four submitted accounts",
+    "retained": "models, experiments, analysis, report writing and specific evaluation corrections",
+    "detailed_evidence": "contributions.md ledger; original supporting history retained",
+    "pages": 2,
+    "new_member_confirmations": false,
+    "runtime_changed": false
+  },
+  "submission_audit_20261113": {
+    "scope": "report prose, contribution attribution, source README and source/config inventory",
+    "original_data_tables_preserved": 21,
+    "model_summary_tables_added": 1,
+    "original_figure_references_preserved": 8,
+    "retained_evidence_inputs_verified": 57,
+    "python_files_compared": 277,
+    "numeric_algorithms_changed": false,
+    "all_model_sources_byte_identical": true,
+    "code_changes": "two tracker adoption-status strings; documentation and docstrings",
+    "full_suite": {
+      "passed": 832,
+      "subtests": 4,
+      "linux_only_skips": 2
+    },
+    "final_extracted_focused_tests_passed": 61,
+    "clean_extraction_smoke": "passed",
+    "cli_help_commands_checked": 16,
+    "source_zip_rebuilds_pixel_identical_pages": [
+      30,
+      2
+    ],
+    "cloud_typst_edited": false,
+    "ntulearn_submitted": false
+  },
+  "language_review_20261113": {
+    "status": "passed",
+    "baseline_commit": "87b7a4899aaa9d0354b133c811b8c621a10894a2",
+    "source_files": 419,
+    "source_lines_scanned": 55124,
+    "python_files_ast_compared": 277,
+    "comments_and_docstrings": 691,
+    "changed_python_files": [
+      "cluster/final_evaluation.py",
+      "cluster/final_rehearsal.py",
+      "cluster/replication_evaluation.py",
+      "scripts/compare_checkpoints.py",
+      "scripts/diagnose_wall_overshoot.py",
+      "scripts/metric_ceilings.py",
+      "scripts/penetration_control.py",
+      "scripts/pose_contact.py",
+      "src/click2future/evaluation/energy_score.py",
+      "src/click2future/models/__init__.py",
+      "submission/cvae_motion_timing.py",
+      "submission/cvae_selection_drift.py",
+      "tests/test_environment.py"
+    ],
+    "numerical_algorithms_changed": false,
+    "model_implementation_files_byte_identical": true,
+    "model_package_init_docstring_only": true,
+    "unfinished_placeholders_or_tool_banners_in_submission": 0,
+    "report_pages": 32,
+    "contribution_pages": 2,
+    "all_22_tables_unchanged": true,
+    "all_8_figure_references_unchanged": true,
+    "report_source_rebuild_pixel_identical_pages": 32,
+    "contribution_pdf_and_latex_archive_unchanged": true,
+    "focused_tests": "46 passed in 54.78s",
+    "frontend_files_formatted": 6,
+    "frontend_parsed_structure_check": "prettier debug-check passed before formatting",
+    "interface_tests": "81 passed in 19.44s",
+    "visual_review": "all 32 rendered pages inspected",
+    "report_layout": "inline image figures; captions and paragraphs stay in source order",
+    "shared_typst_update_required": false,
+    "focused_tests_from_final_formatted_extraction": true
+  },
+  "contribution_layout_20261114": {
+    "pages": 2,
+    "font": "Libertinus Serif",
+    "body_size_pt": 11,
+    "margins_mm": 22,
+    "style": "report typography; centered title; small running header; centered page numbers",
+    "coordinator_label_removed": true,
+    "contribution_accounts_unchanged": true,
+    "all_four_names_preserved": true,
+    "external_links": 0,
+    "report_pdf_unchanged": true,
+    "code_zip_unchanged": true,
+    "runtime_changed": false,
+    "source_archive_rebuild_render_check": "two pixel-identical pages",
+    "all_fonts_embedded": true,
+    "latex_warnings": 0,
+    "visual_review": "both rendered pages inspected"
+  },
+  "final_comparison_audit_20261114": {
+    "report_pages": 32,
+    "contribution_pages": 2,
+    "table_bodies_unchanged": 22,
+    "figure_files_unchanged": 8,
+    "primary_and_secondary_table_values_checked": 75,
+    "collision_calibration_F1_rows_recomputed": 4,
+    "headline_D036_D038_percentages_recomputed": true,
+    "clarifications": [
+      "E0 completes 20,000 updates, while validation selects 20,000/14,000/13,000 for seeds 0/1/2.",
+      "D015 matches the full per-run clip budget, not every evaluated checkpoint exposure.",
+      "The 40k seed-0 training times are A40; seeds 1/2 train on L40S."
+    ],
+    "changed_rendered_pages": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "other_pixel_identical_pages": 28,
+    "packaged_report_source_rebuild_pixel_identical_pages": 32,
+    "code_archive_changed_entries": [
+      "README.md",
+      "submission/README.md",
+      "MANIFEST.json"
+    ],
+    "runtime_source_changed": false,
+    "clean_extraction_inventory": "passed",
+    "clean_extraction_smoke": "passed",
+    "readme_generate_and_replay": "passed",
+    "cli_help_commands_passed": 16,
+    "full_suite_rerun": false,
+    "test_boundary": "existing dependency environment; clean extracted project source; no new training or raw experiment replay"
+  },
+  "athul_review_corrections_20261114": {
+    "reviewed_commit": "8835ec8b14a3f9bde14d6ea648cfad9b07d48436",
+    "review_comment": "https://github.com/athul1810/click2future/pull/95#issuecomment-6878079824",
+    "geometry_weighted_loss_share_percent": 0.5075914151755586,
+    "contact_dynamics_weighted_loss_share_percent": 0.023933868800977275,
+    "scorer_sha256": "6a0ee67b817798e0b703912dfbb41db23d909945c2aee3d55ae0513f2f9ecd19",
+    "executable_AST_changed": false,
+    "requirements_presentation_attribution_removed": true,
+    "bibliography": "standard page ranges; PBD and SSIM pages; NeurIPS 2020 and SIGGRAPH Asia 2026 venues",
+    "contribution_pdf_unchanged": true,
+    "report_pages": 32,
+    "changed_report_pages": [
+      27,
+      28,
+      29,
+      32
+    ],
+    "other_pixel_identical_pages": 28,
+    "packaged_source_rebuild_pixel_identical_pages": 32,
+    "focused_tests": "29 passed in 19.37s",
+    "full_suite_rerun": false,
+    "peer_full_suite": "Athul reports 834 tests pass at 8835ec8"
+  },
+  "portal_check_20261114": {
+    "checked_by": "BOBAN ATHUL KRISHNA",
+    "source": "https://github.com/athul1810/click2future/issues/20#issuecomment-6878101546",
+    "due": "2026-11-16T23:59:00+08:00",
+    "attempts": "unlimited",
+    "required_files": [
+      "group_07_report.pdf",
+      "group_07_contribution.pdf",
+      "group_07_code.zip"
+    ],
+    "restrictions": "no datasets, model files or external links",
+    "submitted": false
   }
 }

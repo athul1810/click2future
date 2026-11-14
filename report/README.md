@@ -1,4 +1,47 @@
-# Report draft
+## current assessed sources, 14 november
+
+`main.typ` is the audited 32-page report from the supplied `GenAI.zip`.
+The primary held-out results now precede the validation diagnostics. All 21
+existing data tables and eight figure references remain; a model-summary table
+is added. `references.bib` includes the SSIM and LPIPS references.
+`contribution.tex` builds the two-page statement. Its accounts focus on models,
+experiments, analysis and writing; the source-archive builder's credit is explicit.
+Its Libertinus type, margins and title now follow the report. The coordinator
+label, coloured headings and branded footer are removed; the four accounts are
+unchanged.
+
+The language pass shortens script docstrings and formats six browser files.
+All 277 Python ASTs match 87b7a48 after docstring removal; the formatter also
+checks parsed browser-source structure. No numerical algorithm changes. The
+prior full suite passed 832 tests and four subtests, with two Linux skips.
+The language-pass extraction passed 46 focused and 81 interface tests, inventory and
+procedural smoke. The report source rebuilds to 32 pixel-identical pages.
+The 14 November contribution layout rebuilds from LaTeX to two identical rendered
+pages. The final comparison audit clarifies the full training budget versus
+selected-checkpoint exposure, and separates A40 timings from the L40S runs.
+All 22 tables, figures, scores and numerical algorithms are unchanged.
+Athul's review separates the D020 geometry share (about 0.5% after activation)
+from D029's contact-dynamics share (about 0.02%). The D039 scorer is restored
+byte-for-byte to its recorded hash, and bibliography ranges and venues are
+updated. Contribution descriptions and layout are unchanged.
+The restored-scorer extraction passes 29 focused tests, inventory, smoke and
+lint/format checks, with all 277 Python ASTs unchanged after docstring removal.
+
+Any follow-up report edits go through PR #95 and need a rebuild after review.
+The repository source is the handoff; a shared Typst update is not required.
+Final teammate review and coordinated upload remain. Athul reports a portal
+cutoff of 16 November at 23:59 (UTC+8), with unlimited attempts and unchanged
+file restrictions. The World Models presentation is
+separate; C2F slides and a demo rehearsal are optional. `main.tex` below is an
+earlier report snapshot, not an additional submission.
+
+# Historical exports
+
+The dated notes below describe earlier drafts. Their page counts, pending reviews
+and rehearsal notes are historical; the assessed sources and remaining steps are
+listed above.
+
+## Earlier LaTeX report draft
 
 `main.tex` is Group 7's working AI6132 technical review. It includes the
 E0/E2/E3/E4 validation comparison, SSIM/LPIPS, auxiliary head-versus-RGB scores,
@@ -166,3 +209,21 @@ contact-dynamics config was already run in D029, so no duplicate run is added.
 The source ZIP is byte-identical to the tested runtime at 196dae6; this final
 consolidation changes documentation only. The contribution text includes
 Ananya's latest confirmed account and Sanjay's methods-writing contribution.
+
+
+## final review, 12 november, r9
+
+The 41-page report includes the merged D031-D039 evidence and the D028 pose-contact
+analysis, with component attribution, failed replication, fair candidate-selection
+control and exploratory limits. The one-page contribution statement retains the
+reviewed accounts; Shrijeet's paragraph was checked against authored commits and
+retained evidence at his request. Later merged work is separately attributed.
+The 20-slide deck retains the eight-sample native replay. The 419-file source
+archive rebuilds deterministically, extracts cleanly and passes procedural smoke
+checks. Runtime 75854bc passes 832 tests and four subtests, with two TC2-only
+skips; lint and formatting pass. The portable viewer passes the actual browser
+replay/error checks from its bundled source.
+
+The original strict quality flag remains false. Typst cloud reconciliation, the
+full team rehearsal and coordinated portal submission remain open. See
+[final review](../docs/FINAL_REVIEW.md).

@@ -35,6 +35,7 @@ Follow [development setup](docs/SETUP.md) for the dependency lock, environment c
 and development checks. The TC2 A40 environment and cross-job diffusion resume
 checks passed. Simulation, grouped data generation/replay, evaluation, diffusion
 training/sampling and the CVAE baseline code are available. CVAE and diffusion training, measured follow-ups and the interactive demo are
-implemented. Overall physical quality, final member review, the presentation
-rehearsal and the coordinated submission remain open.
+implemented. Physical-quality limitations remain documented. Final report review
+and coordinated submission remain open. The World Models presentation is a
+separate assessment; a Click2Future deck or demo rehearsal is optional.
 See [the build plan](docs/BUILD_PLAN.md) for the prototype checks and remaining evidence gates.

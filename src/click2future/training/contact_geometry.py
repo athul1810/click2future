@@ -102,7 +102,7 @@ def signed_penetration(motion, features, geometry):
 
 
 def contact_dynamics(predicted_depth, true_depth, window_pixels):
-    """Per-sample contact-transition and signed-normal-speed errors."""
+    """Per-sample contact-transition and signed contact-depth-change errors."""
     with torch.no_grad():
         near_contact = true_depth.abs() <= window_pixels / 64
         transition = near_contact[:, 1:] != near_contact[:, :-1]

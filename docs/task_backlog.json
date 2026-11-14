@@ -18,7 +18,7 @@
       1,
       2
     ],
-    "progress": "Group 7, the full roster, coordinator, course requirements and adopted 64px E0/E2/E3 scope are recorded. Final NTULearn cutoff and updated-instruction checks are tracked in T20; they are not claimed as verified."
+    "progress": "Group 7, roster, coordinator and course scope are recorded. Athul checked the portal on 14 November: upload cutoff is 16 November 2026 at 23:59 (UTC+8), with unlimited attempts and unchanged three-file restrictions. T20 tracks final review and upload."
   },
   {
     "id": "T02",
@@ -440,9 +440,9 @@
       "Add a separately attributed real-photo extension with four retained samples, live/recorded states and paired-action replay; verify the complete allocated-worker path and retain pretrained-model limitations."
     ],
     "owner": "MAITI SHRIJEET",
-    "status": "In progress",
+    "status": "Closed (not planned)",
     "issue_url": "https://github.com/athul1810/click2future/issues/17",
-    "progress": "PHOTO-P03 completed two fresh opposite pushes through browser, SSH and A40 worker 50985: all eight native samples and hashes are backed up, with the same image/caption/point/seeds. PHOTO-OPS01 passed early and partial cancellation; the finished partial sample remains retained. Offline replay restores both actions and rejects new uncached requests while disconnected. Right-push seeds 0/1 are weak; all four reversed-push samples move left. This is one public development image with an external pretrained model. The original physical-quality gate and final presentation-machine rehearsal remain open. Source 37078a0 passes 733 tests and four subtests. See docs/results/photo-paired-integration.json. 8 November: PHOTO-S01 passes all four native StreamForce seeds and the declared repeat on A40. PHOTO-S02 returns both opposite pushes through the browser in 132.73 and 134.28 seconds, including cold loading and transfer. STREAMFORCE-OPS02 passes cancellation, partial retention and fresh four-seed recovery after the retained home-quota failure. Offline reversal and native PowerPoint playback pass. All 18 queue raw arrays and five smoke arrays are backed up, including unpublished cancelled output. This external pretrained development example does not close the original physical-quality or final presentation-machine rehearsal gates. See docs/results/photo-streamforce-integration.json.",
+    "progress": "Athul closed issue 17 as not_planned on 14 November because the demo is optional. The implemented synthetic/photo paths and recorded checks remain; the original physical-quality gate is still false. Closure does not claim that gate passed.",
     "completed_acceptance": [
       0,
       1,
@@ -473,10 +473,12 @@
     "completed_acceptance": [
       0,
       1,
-      2
+      2,
+      3,
+      4
     ],
-    "progress": "The r8 review has 37 report pages, one contribution page, 18 slides and a 395-file source ZIP. It includes Sanjay's source-checked simulator/data assumptions, the recorded D029 comparison and the corrected penetration/pose-contact controls. Full runtime checks pass 794 tests plus four subtests, with two Linux-only skips. Native pose-control replay matches all timing statistics; empty reference comparisons are excluded. Three contribution accounts are reviewed; Shrijeet confirmation, shared-paper synchronization, team rehearsal and coordinated upload remain open. Historical model scores and the strict failing quality flag stay unchanged.",
-    "evidence": "docs/MULTISCENE_PILOT.md; docs/results/multiscene-validation-checks.json; report/main.tex. PR #43."
+    "progress": "13 November language review: report and code documentation tightened; tables, algorithms and experiment decisions preserved. Ananya will edit the report source directly from PR #95 and open follow-up PRs. Complete teammate review and rebuild after those edits.",
+    "evidence": "report/main.typ; report/references.bib; report/contribution.tex; report/evidence.json; docs/FINAL_REVIEW.md."
   },
   {
     "id": "T19",
@@ -517,24 +519,31 @@
       "T14",
       "T15",
       "T16",
-      "T17",
       "T18",
       "T19"
     ],
     "outcome": "Complete one group submission through NTULearn using the exact required filenames and content restrictions.",
     "acceptance": [
-      "Confirm the live NTULearn upload cutoff while preserving 14 November 2026 as the working deadline; do not assume the PDF resolves the discrepancy.",
-      "Check NTULearn for any updated submission instructions before exporting and uploading the final artifacts.",
+      "Record the NTULearn cutoff: 16 November 2026, 23:59 (UTC+8), confirmed by Athul on 14 November; keep 14 November as the internal file-preparation target.",
+      "Record current portal instructions: unlimited attempts, the same three filenames, and no datasets, model files or external links; Athul checked on 14 November.",
       "Export group_07_report.pdf with at least four pages and the required sections/analysis; inspect every page for readable figures, tables, and references.",
       "Export group_07_contribution.pdf with every member's full name and reviewed contribution description.",
       "Use the confirmed group ID in all three filenames and verify group_07_code.zip contains source code only, with no datasets, model files, or external links. Regenerate and verify this final archive after all experiment/demo changes.",
       "Check both PDFs for external URLs and hyperlinks; include all assessed material directly rather than use cloud-hosted substitutes.",
-      "Coordinate one group submission through NTULearn > Assignments > Project 1; all three files must be complete by 14 November regardless of the verified upload cutoff.",
+      "Coordinate one group submission through NTULearn > Assignments > Project 1 by 16 November 2026, 23:59 (UTC+8), after final fixes and review.",
       "Keep the submission receipt privately; if replacing a submission, coordinate the update so the latest three files are consistent. Do not upload slides, checkpoints, or a demo video as extra required files."
     ],
     "owner": null,
     "status": "In progress",
     "issue_url": "https://github.com/athul1810/click2future/issues/20",
-    "progress": "Review PDFs, a 16-slide editable presentation, source-only archive and recorded fallback are prepared. Synthetic PNG input passes 46 real-checkpoint browser checks. The user reports no submission-page changes; the exact cutoff is not independently verified. Member contribution confirmations, presentation rehearsal and coordinated upload remain open. D017 primary complete-sample counts and independent raw-video replay remain open; D018 improves penetration in all three seeds but no model passes the overall gate."
+    "progress": "The three submission files are prepared and the four requested corrections on PR 95 are implemented and checked. Athul confirmed the portal deadline and restrictions on 14 November. His recheck and one coordinated upload remain; due 16 November at 23:59 (UTC+8). Nothing is submitted yet.",
+    "completed_acceptance": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
   }
 ]

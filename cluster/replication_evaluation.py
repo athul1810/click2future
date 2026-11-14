@@ -1,11 +1,8 @@
-"""Held-out replication on a separately generated corpus (D017).
+"""Evaluate frozen checkpoints on the separately generated D017 corpus.
 
-Frozen checkpoints only: nothing is trained, selected or tuned here. The corpus uses
-a new seed and ten scene groups per reserved split. Every plan binds the checkpoints'
-training corpus and rejects shared visible scenes, and all plans are frozen before
-any video is generated. E0/E2/E3 runs use the D014 sampler and scorer; E10 pose runs
-use their validated 16-step Heun sampler and the same scorer.
-"""
+Use ten new scene groups per split and reject visible-scene overlap with the
+training corpus. Prepare all plans before sampling. E0/E2/E3 use the D014
+sampler; E10 uses its 16-step Heun sampler. No checkpoint is trained or selected."""
 
 import argparse
 import json

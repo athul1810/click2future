@@ -1,11 +1,9 @@
-"""Break down unselected-object drift in a saved selected-object probe, per case and seed.
+"""Inspect unselected-object drift in a saved selection probe.
 
-For each saved sample, tracks both objects with the evaluation tracker and reports
-the selected and other object's final displacement, the other object's motion along
-the force, its first frame above one pixel and the minimum centre gap (to rule out
-contact). Also counts which object each training/validation clip selects, from clip
-metadata only. Frame-0 masks align identities only; nothing is resampled.
-"""
+For each case and seed, report both objects' displacement, the unselected
+object's force projection and first above-one-pixel frame, and minimum centre
+gap. Count selected identities in training/validation metadata for comparison.
+Frame-zero masks align identities; no videos are resampled."""
 
 from __future__ import annotations
 
