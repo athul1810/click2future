@@ -1,43 +1,40 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=20mm,headheight=14pt,headsep=8mm,footskip=10mm]{geometry}
-\usepackage{mathpazo}
-\usepackage[scale=0.92]{tgheros}
+\usepackage[margin=22mm,headheight=12pt,headsep=6mm,footskip=10mm]{geometry}
+\usepackage{libertinus}
 \usepackage{microtype}
-\usepackage{xcolor}
 \usepackage{fancyhdr}
-\usepackage{lastpage}
-\definecolor{ink}{HTML}{15252C}
-\definecolor{accent}{HTML}{176B70}
-\definecolor{muted}{HTML}{53636B}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt}
-\linespread{1.04}
+\setlength{\emergencystretch}{2em}
 \widowpenalty=10000
 \clubpenalty=10000
 \brokenpenalty=10000
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\sffamily\footnotesize\color{muted}CLICK2FUTURE}
-\fancyhead[R]{\sffamily\footnotesize\color{muted}AI6132\quad /\quad GROUP 07}
-\fancyfoot[L]{\sffamily\footnotesize\color{muted}Contribution statement\quad |\quad 13 November 2026}
-\fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage\ /\ \pageref{LastPage}}
+\fancyhead[R]{\fontsize{8.5}{10}\selectfont Click2Future | AI6132 | Group 7}
+\fancyfoot[C]{\fontsize{9}{11}\selectfont\thepage}
 \renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\fontsize{9}{11}\selectfont\thepage}
+  \renewcommand{\headrulewidth}{0pt}}
 \newcommand{\member}[2]{%
-  \par\vspace{10pt}{\sffamily\bfseries\fontsize{13.5}{16}\selectfont\color{accent}#1}\par
-  {\sffamily\small\color{muted}#2}\par\vspace{2pt}}
-\newcommand{\evidence}[1]{\par{\small\color{muted}\textit{Components and experiments:} #1}\par}
+  \par\addvspace{13pt}{\bfseries\fontsize{13.2}{16}\selectfont #1}\par\nobreak
+  {\itshape #2}\par\nobreak\vspace{2pt}}
+\newcommand{\evidence}[1]{\par{\fontsize{9.5}{12}\selectfont\textit{Components and experiments:} #1\par}}
 \begin{document}
-\color{ink}
-{\sffamily\bfseries\fontsize{25}{29}\selectfont Contribution statement}\par
-{\large Click2Future: action-conditioned tabletop futures}\par
-{\sffamily\small\color{muted}AI6132 Generative AI for Visual Synthesis\quad |\quad Group 7}\par
-\vspace{5pt}
-{\color{accent}\rule{\linewidth}{0.7pt}}\par
-\vspace{3pt}
-
-Group coordinator: PRAMOD SANJAY.
+\thispagestyle{plain}
+\begin{center}
+{\bfseries\fontsize{18}{22}\selectfont
+Click2Future: Action-Conditioned Video Generation for Tabletop Futures\par}
+\vspace{8pt}
+{\large Contribution Statement\par}
+\vspace{4pt}
+Group 7, AI6132 Generative AI For Visual Synthesis\par
+{\fontsize{9}{11}\selectfont 13 November 2026\par}
+\end{center}
 
 \member{PRAMOD SANJAY}{Simulator, data generation and physical training objectives}
 Implemented the seeded Pymunk tabletop simulator, renderer and force/action
@@ -118,7 +115,7 @@ analysis in the report.
 \texttt{submission.py}, \texttt{compare\_checkpoints.py};
 D017, D019-D035 and the D038/D039 reproductions.}
 
-\vfill
-{\small\color{muted}\textit{Photograph extension.} Force Prompting and StreamForce
+\medskip
+{\small\textit{Photograph extension.} Force Prompting and StreamForce
 are externally pretrained models integrated into the photograph interface.}
 \end{document}

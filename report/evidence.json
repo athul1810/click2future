@@ -222,7 +222,7 @@
     "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0",
     "main.typ": "99b558c20c5141fda55ac5fc081625a6105225b6facd9971718af319c8503d2c",
     "references.bib": "7a1e9659638d4993ea7c3e55b5f540e647ac2043c317efe8f7c9265bc03f3255",
-    "contribution.tex": "c52cd8ff9b9ef1fcc7b135af30d763bd0acd13d1bcd098562080dacb1a0f53e9"
+    "contribution.tex": "c481cb67c89f5dc1713508089ed5a90b15a43615a9890265f4a4a87880dcf56f"
   },
   "rendered_pdf_sha256": "efe7c0c4a730a89e8ff6753ddcc6980747f37230774638ed38bd91ad6a4776dd",
   "visual_review": "All 32 pages rendered and inspected; inline figures preserve paragraph and section order.",
@@ -1409,5 +1409,23 @@
     "report_layout": "inline image figures; captions and paragraphs stay in source order",
     "shared_typst_update_required": false,
     "focused_tests_from_final_formatted_extraction": true
+  },
+  "contribution_layout_20261114": {
+    "pages": 2,
+    "font": "Libertinus Serif",
+    "body_size_pt": 11,
+    "margins_mm": 22,
+    "style": "report typography; centered title; small running header; centered page numbers",
+    "coordinator_label_removed": true,
+    "contribution_accounts_unchanged": true,
+    "all_four_names_preserved": true,
+    "external_links": 0,
+    "report_pdf_unchanged": true,
+    "code_zip_unchanged": true,
+    "runtime_changed": false,
+    "source_archive_rebuild_render_check": "two pixel-identical pages",
+    "all_fonts_embedded": true,
+    "latex_warnings": 0,
+    "visual_review": "both rendered pages inspected"
   }
 }

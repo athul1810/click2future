@@ -1,4 +1,4 @@
-## current assessed sources, 13 november
+## current assessed sources, 14 november
 
 `main.typ` is the audited 32-page report from the supplied `GenAI.zip`.
 The primary held-out results now precede the validation diagnostics. All 21
@@ -6,14 +6,18 @@ existing data tables and eight figure references remain; a model-summary table
 is added. `references.bib` includes the SSIM and LPIPS references.
 `contribution.tex` builds the two-page statement. Its accounts focus on models,
 experiments, analysis and writing; the source-archive builder's credit is explicit.
+Its Libertinus type, margins and title now follow the report. The coordinator
+label, coloured headings and branded footer are removed; the four accounts are
+unchanged.
 
 The language pass shortens script docstrings and formats six browser files.
 All 277 Python ASTs match 87b7a48 after docstring removal; the formatter also
 checks parsed browser-source structure. No numerical algorithm changes. The
 prior full suite passed 832 tests and four subtests, with two Linux skips.
 The current extraction passes 46 focused and 81 interface tests, inventory and
-procedural smoke. The report source rebuilds to 32 pixel-identical pages;
-the checked contribution PDF and source ZIP are unchanged.
+procedural smoke. The report source rebuilds to 32 pixel-identical pages.
+The 14 November contribution layout rebuilds from LaTeX to two identical rendered
+pages. The report PDF and code ZIP are unchanged.
 
 Ananya will edit the report source directly from PR #95 and open follow-up PRs.
 The repository source is the handoff; a shared Typst update is not required.

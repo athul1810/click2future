@@ -15,6 +15,8 @@ for the team.
 
 The formatted source is `report/contribution.tex`. It focuses on implementation,
 experiments, analysis and writing, with brief component and experiment references.
+Its 14 November layout follows the report's academic typography. The coordinator
+label is omitted; names, roles and contribution descriptions are unchanged.
 Routine setup, generic review claims and commit lists are omitted from the PDF.
 The evidence column above retains the detailed source record. Existing review
 states are unchanged; this edit does not claim a new member confirmation.

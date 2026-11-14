@@ -1,4 +1,4 @@
-# Final review, 13 November 2026
+# Final review, 14 November 2026
 
 The implementation through PR #94 is merged at `75854bc`. The audit updates
 writing, run instructions and tracker-status text without changing models,
@@ -11,6 +11,9 @@ losses, sampling equations or reported scores. Completion remains targeted for 1
 - Contribution statement: two pages of LaTeX covering each member's models,
   experiments, analysis and writing. Routine setup and generic review claims are
   omitted; detailed source attribution is retained in the repository ledger.
+  The 14 November layout uses the report's Libertinus type, 22 mm margins and
+  centered title, with a small running header and plain page numbers. The
+  coordinator label is removed; contribution descriptions are unchanged.
 - Source ZIP: 419 files; deterministic rebuild, clean extraction and procedural
   replay smoke check pass. Datasets, weights and external links are excluded.
 - Baseline full suite at `87b7a48`: 832 tests and four subtests pass on Windows;
