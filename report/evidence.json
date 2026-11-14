@@ -1,5 +1,5 @@
 {
-  "status": "language_review_passed_pending_team_edits",
+  "status": "final_audit_passed_pending_team_review_and_submission",
   "pages": 32,
   "external_links": 0,
   "external_urls_in_text": 0,
@@ -220,12 +220,12 @@
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
     "followups_20261112.tex": "f70259504850a4b0cf9fc249935e4076f054c05f49eb8d091169ce3c410d94f0",
-    "main.typ": "99b558c20c5141fda55ac5fc081625a6105225b6facd9971718af319c8503d2c",
+    "main.typ": "ad28b0790082075b7d5458b9c7b4255cb93c1fcb14976fb627f9f696e46b3dfb",
     "references.bib": "7a1e9659638d4993ea7c3e55b5f540e647ac2043c317efe8f7c9265bc03f3255",
     "contribution.tex": "c481cb67c89f5dc1713508089ed5a90b15a43615a9890265f4a4a87880dcf56f"
   },
-  "rendered_pdf_sha256": "efe7c0c4a730a89e8ff6753ddcc6980747f37230774638ed38bd91ad6a4776dd",
-  "visual_review": "All 32 pages rendered and inspected; inline figures preserve paragraph and section order.",
+  "rendered_pdf_sha256": "d6b6b81048ca3aed2f1d42c71897d4ad385c70b555417d5873faa0733df47678",
+  "visual_review": "All 32 report pages inspected; pages 5-8 rechecked after budget/timing clarification; the other 28 pages are pixel-identical.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 419,
@@ -1427,5 +1427,39 @@
     "all_fonts_embedded": true,
     "latex_warnings": 0,
     "visual_review": "both rendered pages inspected"
+  },
+  "final_comparison_audit_20261114": {
+    "report_pages": 32,
+    "contribution_pages": 2,
+    "table_bodies_unchanged": 22,
+    "figure_files_unchanged": 8,
+    "primary_and_secondary_table_values_checked": 75,
+    "collision_calibration_F1_rows_recomputed": 4,
+    "headline_D036_D038_percentages_recomputed": true,
+    "clarifications": [
+      "E0 completes 20,000 updates, while validation selects 20,000/14,000/13,000 for seeds 0/1/2.",
+      "D015 matches the full per-run clip budget, not every evaluated checkpoint exposure.",
+      "The 40k seed-0 training times are A40; seeds 1/2 train on L40S."
+    ],
+    "changed_rendered_pages": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "other_pixel_identical_pages": 28,
+    "packaged_report_source_rebuild_pixel_identical_pages": 32,
+    "code_archive_changed_entries": [
+      "README.md",
+      "submission/README.md",
+      "MANIFEST.json"
+    ],
+    "runtime_source_changed": false,
+    "clean_extraction_inventory": "passed",
+    "clean_extraction_smoke": "passed",
+    "readme_generate_and_replay": "passed",
+    "cli_help_commands_passed": 16,
+    "full_suite_rerun": false,
+    "test_boundary": "existing dependency environment; clean extracted project source; no new training or raw experiment replay"
   }
 }

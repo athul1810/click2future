@@ -24,6 +24,10 @@ losses, sampling equations or reported scores. Completion remains targeted for 1
   algorithms are unchanged.
 - The main comparison now precedes its diagnostics. A model map and explicit
   metric definitions clarify the results; all 21 existing data tables remain.
+- The final comparison audit records E0's selected checkpoints (20,000, 14,000
+  and 13,000 updates) separately from its completed 20,000-update runs. D015
+  matches the full per-run clip budget, not each selected checkpoint's exposure.
+  Its A40 and L40S training times are labelled separately. No score changes.
 
 The report's source hashes use LF-normalized UTF-8 for text and exact bytes for
 binary assets. The archive manifest continues to hash its exact stored bytes.

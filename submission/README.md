@@ -102,9 +102,11 @@ checkpoints into `C2F_E0_DIR` as `flow-cvae-seed0.pt`, `flow-cvae-seed1.pt` and
 `flow-cvae-seed2.pt`. The diffusion-repeat wrapper expects those names and writes
 the combined `runs.json`. Pass that JSON as `C2F_RUNS` to the final evaluator.
 
-Primary diffusion uses 5,000 batch-one updates; E0 uses 20,000 at batch two.
-D015 extends diffusion to 40,000 updates, matching clips seen rather than GPU
-time or optimizer updates. Set `C2F_SEEDS` to `0 1 2` for all three longer runs;
+Primary diffusion uses 5,000 batch-one updates; E0 completes 20,000 at batch two.
+Validation selects E0 checkpoints at updates 20,000, 14,000 and 13,000 for seeds
+0, 1 and 2. D015 extends diffusion to 40,000 updates, matching the full per-run
+clip budget rather than each selected checkpoint's data exposure, GPU time or
+optimizer updates. Set `C2F_SEEDS` to `0 1 2` for all three longer runs;
 its default is seed 0. D015 was chosen after the primary test results.
 `final_rehearsal.sbatch` is a validation evaluator; its filename does not imply
 a required presentation.

@@ -282,7 +282,9 @@ Contact extraction has an independent timing limitation. On a fresh 63-clip cont
 == Held-out RGB generation
 <sec:final>
 The primary held-out comparison fixes E0 as the flow CVAE and uses training
-seeds 0-2 for every method. E2/E3 retain 5,000 batch-one updates, final EMA
+seeds 0-2 for every method. Each E0 run completes 20,000 batch-two updates;
+validation selects checkpoints at updates 20,000, 14,000 and 13,000 for seeds
+0, 1 and 2. E2/E3 retain 5,000 batch-one updates, final EMA
 weights and 32 DDIM steps; the validation step study found no successful
 alternative. Their six validation runs track only 1-546 of 5,952 observations
 and produce no complete clip. We nevertheless evaluate all five reserved
@@ -322,9 +324,18 @@ Selected-object control fails on every split. No complete pair moves the correct
 
 Contact occurrence is predicted better than contact timing. Collision event F1 is 0.09-0.22, while encounter F1 is 0.92-0.95 on the ID, texture and repeated-physics splits, 0.75 on force OOD and 0.31 on shape OOD. E0 produces no false encounter on four splits and one on force OOD, so its encounter errors are missed contacts, and the low shape-OOD score reflects 2 of 11 contacts found. Its event F1 should be read against the calibration in @tab:collision_calibration, where valid alternative physics reaches only 0.24 against a single reference.
 
-== Matching the number of training clips
+== Longer diffusion training
 <sec:d015>
-In @tab:final, E2/E3 see 5,000 training clips, while E0 sees 40,000 (20,000 updates at batch two). After the test results, we retrained E2/E3 for 40,000 updates with training seeds 0 to 2, changing only the number of updates; the cosine schedule spans all 40,000. This matches training clips seen, not updates or GPU time: each 40,000-update diffusion run took about 33 minutes on an A40. On validation, training seed 0 improves steadily: tracked observations rise from 176 (E2) and 5 (E3) at 5,000 updates to 3,434 and 2,869 at 40,000. Pooled over the three seeds, validation SSIM rises from 0.45-0.46 to 0.93, and the 40,000-update runs complete 0 to 8 of 96 clips per run, against E0's 80 to 92.
+In @tab:final, E2/E3 train on 5,000 clips per run, while each E0 run processes
+40,000 before checkpoint selection. After the test results, we retrained E2/E3
+for 40,000 updates with seeds 0 to 2, extending the cosine schedule across the
+new limit. This matches the full per-run clip budget, not the exposure of each
+selected E0 checkpoint, optimizer updates or GPU time. The seed-0 diffusion
+runs take about 33 minutes on an A40; seeds 1 and 2 take about 19 minutes on
+an L40S. On validation, seed 0's tracked observations rise from 176 (E2) and 5
+(E3) at 5,000 updates to 3,434 and 2,869 at 40,000. Pooled over three seeds,
+validation SSIM rises from 0.45-0.46 to 0.93. The longer runs complete 0 to 8
+of 96 clips per run, against E0's 80 to 92.
 
 This longer-training experiment was chosen after the primary test results,
 so it is a secondary result. The 40,000-update checkpoint was fixed before
@@ -350,12 +361,12 @@ showing that exact numerical reproduction also depends on GPU type.
   )
 <tab:d015>
 
-Training on as many clips as E0 removes the noise. Outside force OOD, SSIM rises to 0.93-0.94, within 0.03-0.05 of E0, and LPIPS falls to 0.03-0.09. Physical behaviour still fails. E2/E3 complete 0 to 15 of 144 samples per split and track 21 to 67 percent of object observations per run, against 88 to 100 percent for E0. Most remaining tracking failures are area changes and colour mismatches. In @fig:final, both models turn the small blue ball into a teal square by two seconds.
+At 40,000 updates, the diffusion models lose the noise. Outside force OOD, SSIM rises to 0.93-0.94, within 0.03-0.05 of E0, and LPIPS falls to 0.03-0.09. Physical behaviour still fails. E2/E3 complete 0 to 15 of 144 samples per split and track 21 to 67 percent of object observations per run, against 88 to 100 percent for E0. Most remaining tracking failures are area changes and colour mismatches. In @fig:final, both models turn the small blue ball into a teal square by two seconds.
 
 Pooled over training seeds, no complete reversal pair is correct in the 0.5-second window: 0 of 59 for E2 and 0 of 65 for E3. Over the full clip the few complete pairs mostly reverse correctly, 7 of 10 and 10 of 11. On repeated physics, however, 13 of 14 complete zero-force samples drift, against 2 of 24 for E0. Selected-object control fails. The only correct targets are E3's 2 of 11 complete window pairs on force OOD, and E2/E3 have no complete full-clip pair. E2 and E3 have the same SSIM within 0.01 except on force OOD. Their LPIPS intervals separate only on force OOD, where two scene groups make the interval uninformative. Over the samples whose selected track is complete, E2/E3 selected-object ADE is 0.008-0.035 in normalized image units. These samples are not representative: none of the E2/E3 complete pair timelines contains a contact in the reference or the generated video, so collision F1 stays undefined.
 
 Longer training largely repairs diffusion's image noise, but not object
-identity. Even after matching E0's number of training clips, neither E2 nor
+identity. Even at the full 40,000-clip training budget, neither E2 nor
 E3 produces enough complete trajectories for a reliable physical comparison.
 The numeric-versus-spatial conditioning question therefore remains unresolved
 for these pixel models.
@@ -381,7 +392,10 @@ for these pixel models.
   )
 <tab:split_tracking>
 
-@tab:cost reports training and sampling times. The diffusion models have more parameters and, trained on as many clips as E0, take about 2.6 times as long on an A40. Each video needs 32 denoising steps, so in the same job they sample 42 (5k) and 47 (40k) times more slowly than E0. The final-phase TC2 runs used 4.9 GPU-hours.
+@tab:cost reports training and sampling times. At the 40,000-clip training
+budget, diffusion takes about 2.6 times as long as E0 on an A40. Each video
+needs 32 denoising steps, so in the same job they sample 42 (5k) and 47 (40k)
+times more slowly than E0. The final-phase TC2 runs used 4.9 GPU-hours.
 
 #figure(
   align(center)[#table(
@@ -393,7 +407,7 @@ for these pixel models.
     [E2/E3, 5k], [964,035], [5,000 at batch one], [246-281 s], [0.54 s],
     [E2/E3, 40k], [964,035], [40,000 at batch one], [1,965-1,970 s], [0.58-0.59 s],
   )]
-  , caption: [Wall-clock times on TC2 A40 GPUs from the job records; E0 seed 0's GPU type is not recorded. Sampling times come from the test jobs, cover 32-frame videos and include checkpoint loading and video export.]
+  , caption: [Wall-clock times from TC2 job records. Diffusion training times shown are the seed-0 A40 runs; the 40k seed-1/2 runs use L40S GPUs. E0 seed 0's GPU type is unrecorded. Updates denote completed training, not selected checkpoint steps. Sampling uses A40 test jobs and includes checkpoint loading and 32-frame video export.]
   , kind: table
   )
 <tab:cost>

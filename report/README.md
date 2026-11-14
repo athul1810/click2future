@@ -17,7 +17,9 @@ prior full suite passed 832 tests and four subtests, with two Linux skips.
 The current extraction passes 46 focused and 81 interface tests, inventory and
 procedural smoke. The report source rebuilds to 32 pixel-identical pages.
 The 14 November contribution layout rebuilds from LaTeX to two identical rendered
-pages. The report PDF and code ZIP are unchanged.
+pages. The final comparison audit clarifies the full training budget versus
+selected-checkpoint exposure, and separates A40 timings from the L40S runs.
+All 22 tables, figures, scores and numerical algorithms are unchanged.
 
 Ananya will edit the report source directly from PR #95 and open follow-up PRs.
 The repository source is the handoff; a shared Typst update is not required.
