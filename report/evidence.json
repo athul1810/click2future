@@ -1,9 +1,9 @@
 {
-  "status": "peer_review_fixes_passed_pending_recheck_and_submission",
+  "status": "final_wording_pass_checked_pending_team_review_and_submission",
   "pages": 30,
   "external_links": 0,
   "external_urls_in_text": 0,
-  "em_or_en_dashes_in_text": 0,
+  "em_or_en_dashes_in_text": 4,
   "required_main_sections": [
     "Introduction",
     "Methods",
@@ -220,12 +220,12 @@
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
     "followups_20261112.tex": "0b1fa1a864722dc6809cf7259e25b05705671ddd0559da542ae27295ae848309",
-    "main.typ": "0ffbdcb27e273f5b395409726337c1aff0c8fb356bd9930cecf20e5746cf6d2d",
+    "main.typ": "5075bf4fdb28b4d261e7c140524f82257145461dba1de6038969623835f732d8",
     "references.bib": "da55543aa2d5f34c52d9d2df29530bca3f854b3805c6d1c36f06d840a937ce2d",
     "contribution.tex": "c481cb67c89f5dc1713508089ed5a90b15a43615a9890265f4a4a87880dcf56f"
   },
-  "rendered_pdf_sha256": "f13c5bb6836023df69acb4ac22b5dc74effd59b6e7782b60d3b372b2b4941c9e",
-  "visual_review": "Report polish of 15 November: all 30 pages rendered and inspected; earlier checks of the 32-page export are recorded under report_polish_20261115.",
+  "rendered_pdf_sha256": "566636714c8056dd4cc6509227e3700d8130dfa46ed842a160d594d1066672f6",
+  "visual_review": "Final wording pass: all 30 report pages rendered and checked; earlier reviews are retained in dated entries. Conventional bibliography page-range dashes are preserved.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 419,
@@ -1521,5 +1521,32 @@
     "release_assets_require_replacement": [
       "group_07_report.pdf"
     ]
+  },
+  "final_wording_pass_20261116": {
+    "scope": "Lead abstract, introduction and conclusion with implemented work and measured gains; clarify contact-free forward/reverse pairs; update current source and submission instructions.",
+    "experimental_tables_unchanged": 22,
+    "image_figures_unchanged": 8,
+    "contribution_pdf_unchanged": true,
+    "runtime_algorithms_unchanged": true,
+    "code_archive_semantic_changes": [
+      "pyproject.toml description",
+      "matching MANIFEST.json"
+    ],
+    "python_ASTs_unchanged": 277,
+    "source_files_scanned": 419,
+    "source_lines_scanned": 55145,
+    "automated_text_scan_flags": 0,
+    "full_suite": "832 passed, 2 skipped, 6 warnings, 4 subtests passed in 384.46s (0:06:24)",
+    "test_scope": "clean extracted source; existing dependency environment; Windows CPU",
+    "lint": "passed",
+    "format": "passed",
+    "clean_extraction_smoke": "passed",
+    "source_archive_report_rebuild_pixel_identical_pages": 30,
+    "numerical_recheck": "75 primary/secondary table values, four collision F1 rows and D036/D038 percentage changes",
+    "scorer_hash_preserved": "6a0ee67b817798e0b703912dfbb41db23d909945c2aee3d55ae0513f2f9ecd19",
+    "new_model_training": false,
+    "team_review": "pending",
+    "portal_submitted": false,
+    "review_completed": "2026-11-16"
   }
 }

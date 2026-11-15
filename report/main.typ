@@ -27,23 +27,27 @@
 #block(inset: (x: 10mm, y: 4mm))[
   #align(center)[*Abstract*]
   #set text(size: 9.5pt)
-  A single image does not reveal an object's mass or contact properties. We study
-  whether video generators can represent the resulting motion uncertainty while
-  responding to a selected object and force. On a procedural tabletop dataset,
-  we compare a conditional video VAE with numeric- and spatial-conditioned pixel
+  We build Click2Future to generate and compare four futures from an image,
+  a selected object and an applied force. A replayable tabletop simulator varies
+  hidden mass and contact properties while holding the observed scene fixed.
+  We compare a conditional video VAE with numeric- and spatial-conditioned pixel
   diffusion, using three training seeds and five held-out splits. The flow VAE
-  preserves appearance but responds poorly to force magnitude and object
-  selection. Longer diffusion training removes image noise without preserving
-  object identity reliably. Pose-supervised models improve tracking and action
-  response, but still penetrate other objects or drift without force. Geometric
-  projection removes measured overlap while introducing a sub-pixel contact gap.
-  A dynamics-residual and momentum-correction hybrid reduces same-world
-  trajectory error by 16.8% on ten fresh ID scenes; most of the gain comes from
-  the explicit correction, and collision error increases. Multi-reference energy
-  scores remain worse than those of a prior-matched simulator. We also integrate
-  external pretrained models in a separate photograph interface. Across these studies, better
-  appearance or less overlap does not consistently improve action control or
-  the distribution of motion.
+  preserves appearance and follows push direction over the full clip at the
+  training force, although
+  force magnitude and object selection remain unreliable. Longer pixel-diffusion
+  training removes noise but does not preserve object identity reliably. Pose
+  supervision and contact-aware training improve tracking, action response and
+  rest behaviour. A geometric projection removes measured overlap, with
+  exact-outline timing revealing a sub-pixel contact gap. On ten fresh
+  in-distribution (ID) scenes,
+  a dynamics-residual and momentum-correction hybrid reduces same-world
+  trajectory error by 16.8%, mainly through the explicit correction; collision
+  error increases and multi-reference energy scores still favour a prior-matched
+  simulator. The interactive interface makes these comparisons inspectable
+  through paired forces and synchronized futures. A separate photograph
+  interface integrates external pretrained models. Together, the experiments
+  distinguish improvements in appearance, action response and geometry from
+  improvements in the predicted motion distribution.
 ]
 
 = Introduction
@@ -68,6 +72,12 @@ validation; its RGB decoder remains an ablation. We then study pose supervision,
 contact losses, sampled hidden physics and explicit geometric corrections.
 @tab:models defines the model labels used throughout. D014-D039 identify
 experiment records, not additional model families.
+
+The project combines a replayable dataset, trained generators and an interactive
+four-future comparison. Decoder studies test appearance preservation, while
+paired controls test action routing, training losses and explicit motion corrections.
+Multiple reference futures test how the generated samples represent variation
+from hidden physics.
 
 Variational autoencoders learn latent-variable models through an approximate
 posterior @kingma; conditional VAEs extend this to structured outputs given an
@@ -562,8 +572,9 @@ also responds to force in pixel space, despite its short-window stationarity.
 === Motion over the full clip
 <sec:horizon>
 We score the saved validation videos at 0.5 and 3.875 seconds using the same
-action rules. All four validation groups are contact-free throughout, so
-both horizons use the same cases. @tab:horizon includes the original flow
+action rules. Forward and reverse reference pairs in all four validation groups
+remain contact-free throughout, so both horizons use the same cases.
+@tab:horizon includes the original flow
 run, its two training-seed repeats and the displacement-supervised variant.
 
 Frame-by-frame tracking explains the flow decoder's short-window result. At
@@ -1447,23 +1458,29 @@ development outputs without calibrated physical ground truth.])
 
 
 = Conclusion
-The flow CVAE preserves appearance and follows force direction over the full
-clip, but underestimates motion and often moves the wrong object in the
-selection test. Pixel diffusion improves visibly with longer training, yet
-changes object shape and colour often enough to prevent a reliable comparison
-of numeric and spatial force conditioning. Single-reference appearance scores
-hide these failures, while tracking and action controls expose them.
+Click2Future provides a controlled path from an image and force to four
+generated futures, with replayable data, trained baselines and synchronized
+comparison. The flow CVAE preserves appearance and follows push direction
+over the full clip at the training force. Its slower motion and wrong-object responses show why
+appearance scores need separate force and selection tests. Longer pixel-diffusion
+training improves image quality, but object-identity errors leave the numeric
+versus spatial comparison unresolved for these models.
 
-Pose supervision and rigid rendering improve object identity and action
-response. Contact-aware training reduces unforced drift and overlap, but
-does not resolve contact timing or match reference spread. The one-pass decoder
-reduces penetration in every D018 refinement seed while worsening trajectory
-error and contact timing. Explicit projection removes the measured hull
-violations but can stop exact outlines short of contact. The D038 hybrid
-reduces same-world ADE by 16.8% on ten ID scenes, mainly through momentum
-correction; collision error and RGB contact F1 regress. Multi-reference energy
-scores still favour the prior-matched simulator. These distinctions prevent
-geometric feasibility from being mistaken for learned physical accuracy.
+The pose studies improve tracking, object identity and action response.
+Contact-aware training reduces unforced drift and overlap; the matched canvas
+loss improves wall visibility. One-pass decoding lowers sampling cost and
+reduces penetration across all three D018 refinement seeds, while worsening
+trajectory error and contact timing. Explicit projection removes measured hull
+violations, but exact-outline scoring reveals that it can stop objects short
+of contact. These controls separate visibility and geometric gains from
+accurate contact dynamics.
+
+The D038 hybrid reduces same-world ADE by 16.8% on ten fresh ID scenes.
+Component comparisons attribute most of that gain to explicit momentum
+correction, while collision error and RGB contact F1 regress. Multi-reference
+energy scores still favour the prior-matched simulator. The photograph extension
+adds force-controlled generation with separately attributed external models;
+its development examples establish interface operation, not generalization.
 
 The next experiment should vary free-push magnitude and selected object
 independently during training, then repeat the force and selection tests on

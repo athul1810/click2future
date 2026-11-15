@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "click2future"
 version = "0.0.1"
-description = "Development scaffold for action-conditioned tabletop video generation"
+description = "Action-conditioned tabletop video generation and evaluation"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [

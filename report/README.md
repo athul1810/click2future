@@ -1,40 +1,29 @@
-## current assessed sources, 14 november
+# Assessed report sources
 
-`main.typ` is the audited report from the supplied `GenAI.zip`, now 30 pages
-after the 15 November structure and wording pass (no numbers changed).
-The primary held-out results now precede the validation diagnostics. All 21
-existing data tables and eight figure references remain; a model-summary table
-is added. `references.bib` includes the SSIM and LPIPS references.
-`contribution.tex` builds the two-page statement. Its accounts focus on models,
-experiments, analysis and writing; the source-archive builder's credit is explicit.
-Its Libertinus type, margins and title now follow the report. The coordinator
-label, coloured headings and branded footer are removed; the four accounts are
-unchanged.
+`main.typ` is the technical report. It contains the primary three-seed held-out
+comparison, validation diagnostics, pose and physical-correction studies, and
+the separately attributed photograph extension. All 22 tables and eight image
+figures are included in the PDF. `references.bib` supplies the bibliography.
 
-The language pass shortens script docstrings and formats six browser files.
-All 277 Python ASTs match 87b7a48 after docstring removal; the formatter also
-checks parsed browser-source structure. No numerical algorithm changes. The
-prior full suite passed 832 tests and four subtests, with two Linux skips.
-The language-pass extraction passed 46 focused and 81 interface tests, inventory and
-procedural smoke. The report source rebuilds to 32 pixel-identical pages.
-The 14 November contribution layout rebuilds from LaTeX to two identical rendered
-pages. The final comparison audit clarifies the full training budget versus
-selected-checkpoint exposure, and separates A40 timings from the L40S runs.
-All 22 tables, figures, scores and numerical algorithms are unchanged.
-Athul's review separates the D020 geometry share (about 0.5% after activation)
-from D029's contact-dynamics share (about 0.02%). The D039 scorer is restored
-byte-for-byte to its recorded hash, and bibliography ranges and venues are
-updated. Contribution descriptions and layout are unchanged.
-The restored-scorer extraction passes 29 focused tests, inventory, smoke and
-lint/format checks, with all 277 Python ASTs unchanged after docstring removal.
+The final wording pass leads with the implemented system and measured gains,
+keeps the controls and limitations, and clarifies which reference pairs are
+contact-free in the full-clip CVAE test. It changes no experimental results.
 
-Any follow-up report edits go through PR #95 and need a rebuild after review.
-The repository source is the handoff; a shared Typst update is not required.
-Final teammate review and coordinated upload remain. Athul reports a portal
-cutoff of 16 November at 23:59 (UTC+8), with unlimited attempts and unchanged
-file restrictions. The World Models presentation is
-separate; C2F slides and a demo rehearsal are optional. `main.tex` below is an
-earlier report snapshot, not an additional submission.
+Build with Typst 0.15.1 from the repository root:
+
+```sh
+typst compile report/main.typ outputs/group_07_report.pdf
+```
+
+`contribution.tex` builds the two-page contribution statement with pdfLaTeX.
+Its reviewed descriptions and academic layout are unchanged. Supporting
+component references remain in `contributions.md`.
+
+Final document changes require PR review and a new export. The reviewed three-file
+package must then be uploaded together through NTULearn. Athul checked the portal:
+16 November 2026, 23:59 Singapore time (UTC+8), unlimited attempts and the same
+file restrictions. No portal submission is claimed. The World Models
+presentation is separate; `main.tex` below is an earlier report snapshot.
 
 # Historical exports
 

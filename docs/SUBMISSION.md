@@ -18,8 +18,8 @@ One group makes one submission through **NTULearn > course site > Assignments > 
 brief lists 16 November for upload. Athul checked NTULearn on 14 November and
 reported **16 November 2026, 23:59 (UTC+8)**, unlimited attempts and the same
 three filenames and content restrictions. [Portal-check record](https://github.com/athul1810/click2future/issues/20#issuecomment-6878101546).
-The team is waiting for the #95 fixes and recheck before uploading; no submission
-is claimed.
+PRs #95 and #96 are merged. A final report and package review is in progress;
+coordinate the upload after that review. No submission is claimed.
 
 ## Report
 
@@ -84,9 +84,9 @@ archive corruption, excluded working files, external links, and clean-folder rep
 
 The source archive includes CVAE and diffusion training/sampling, structured-motion
 follow-ups, evaluation, demo integration and the final-run job scripts. Clean
-extraction and smoke checks have passed. Final submission still needs the reviewed
-contribution statement, final report review and a coordinated upload of the
-three named files; a review draft is not a submitted deliverable.
+extraction and smoke checks have passed. The contribution descriptions have been
+reviewed. The final wording pass needs team review before the coordinated upload
+of the three named files; prepared files are not a submitted deliverable.
 
 ## Final check
 
