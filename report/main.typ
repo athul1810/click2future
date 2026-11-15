@@ -79,6 +79,11 @@ OneWorld @oneworld studies consistency of hidden physical mechanisms across
 actions. Their tasks and training resources differ from ours, so we do not rank
 these systems using our synthetic scores.
 
+@methods describes the data and models. @experiments-and-analysis reports the
+primary held-out comparison and the validation diagnostics behind it.
+@sec:exploratory examines pose models, sampled physics and explicit geometric
+corrections, and @sec:demo describes the interactive interfaces.
+
 #figure(table(
   columns: (0.6fr, 2fr, 2.2fr),
   align: left,
@@ -320,7 +325,7 @@ E0's action response on the held-out splits repeats its validation behaviour (@s
 
 Force OOD breaks this pattern. Within the window its references move clearly, while E0 moves the 24 reversed samples by a median of 0.081 (about five pixels) and the 24 forward samples by only 0.005, so no forward sample reaches the one-pixel threshold. This asymmetry is consistent with the training split: its only strong force is the wall action, 1.1 towards the left, the same direction as a reversed push, while forward pushes are trained only at 0.15 towards the right. A strong leftward push resembles a trained case, whereas a strong rightward push does not; this association is not a causal ablation. The full clip is not scored on force OOD because every group reaches contact first.
 
-Selected-object control fails on every split. No complete pair moves the correct target in the window. Over the full clip the only scorable pairs, eight in one ID group, show the validation pattern in @sec:cvae_study more strongly. When object 0 is selected it moves by a median of 0.115 while the other object stays below one pixel in all eight pairs. When object 1 is selected it moves only 0.009, while object 0 drifts by a median of 0.053, above one pixel in all eight. Training selects object 1 only when it is pushed into object 0, so E0 moves object 0 even when object 1 is selected.
+Selected-object control fails on every split. No complete pair moves the correct target in the window. Over the full clip the only scorable pairs, eight in one ID group, show the validation pattern in @sec:horizon more strongly. When object 0 is selected it moves by a median of 0.115 while the other object stays below one pixel in all eight pairs. When object 1 is selected it moves only 0.009, while object 0 drifts by a median of 0.053, above one pixel in all eight. Training selects object 1 only when it is pushed into object 0, so E0 moves object 0 even when object 1 is selected.
 
 Contact occurrence is predicted better than contact timing. Collision event F1 is 0.09-0.22, while encounter F1 is 0.92-0.95 on the ID, texture and repeated-physics splits, 0.75 on force OOD and 0.31 on shape OOD. E0 produces no false encounter on four splits and one on force OOD, so its encounter errors are missed contacts, and the low shape-OOD score reflects 2 of 11 contacts found. Its event F1 should be read against the calibration in @tab:collision_calibration, where valid alternative physics reaches only 0.24 against a single reference.
 
@@ -483,9 +488,9 @@ The RGB CVAE's validation posterior MAE is 0.02091 and prior MAE 0.02113 in norm
 <auxiliary-heads-versus-generated-rgb>
 The E4 analysis replays all 96 validation samplings while capturing the actual final timestep-zero DDIM heads. Every RGB pixel matches the saved sample. Head predictions have all-object ADE 0.1314 and FDE 0.1560 in normalized coordinates against one declared reference. At the fixed 0.5 probability threshold, timed-contact matching with one-interval tolerance gives TP=28, FP=331 and FN=36, hence event F1=0.1324. Exact-interval positive prevalence is 64/2,976 and interval F1=0.1087. Any-encounter F1=0.5714 does not establish correct timing.
 
-Only 162 of 5,952 future object observations are jointly available from the head and RGB extraction. Their mean position disagreement is 0.1481. No pair interval is jointly observed, so RGB/head collision agreement is undefined. Accurate-looking auxiliary outputs cannot substitute for decoded-video behavior.
+Only 162 of 5,952 future object observations are jointly available from the head and RGB extraction. Their mean position disagreement is 0.1481. No pair interval is jointly observed, so RGB/head collision agreement is undefined. Accurate-looking auxiliary outputs cannot substitute for decoded-video behaviour.
 
-A separate 5,000-update check on the first sorted training collision clip has head ADE 0.00493 and contact-event F1 1.0 (TP=4, FP=0, FN=0 across four samples). RGB tracks 247/248 observations, with three complete clips. One missing selected observation still fails the strict gate; conditional selected ADE 0.00396 over the other three clips is not a best-of-four score. This training-only result shows that the head can learn a known contact, not that physical behavior generalizes.
+A separate 5,000-update check on the first sorted training collision clip has head ADE 0.00493 and contact-event F1 1.0 (TP=4, FP=0, FN=0 across four samples). RGB tracks 247/248 observations, with three complete clips. One missing selected observation still fails the strict gate; conditional selected ADE 0.00396 over the other three clips is not a best-of-four score. This training-only result shows that the head can learn a known contact, not that physical behaviour generalizes.
 
 === Sampling steps
 <validation-sampling-step-study>
@@ -516,7 +521,7 @@ This flow model tracks 5,654/5,952 observations (94.99 percent), with 80/96 comp
 
 A further displacement-supervised variant is kept separate from the ordinary CVAE: future masks and positions enter a training loss only, not generator conditioning. The displacement-supervised run completes 20,000 updates, with its combined validation criterion selecting update 9,000. It tracks 5,765/5,952 observations and 80/96 complete clips, with SSIM 0.9729 and LPIPS 0.0168. Yet only one of 16 reversal pairs has the correct force signs: 15 forward samples move, while only one reversed sample moves. All 16 selected-object pairs remain stationary. Additional supervision improves these appearance scores but does not establish reliable action control. Neither exploratory variant provides an independent final test.
 
-=== KL weight and latent size
+=== KL weight, latent size and force response
 <sec:cvae_study>
 The RGB CVAE's action controls are undefined rather than failed: every forward, reversal and selected-object sample loses at least one track. The flow variants keep tracks but remain stationary in the 0.5-second window. Two explanations could leave a CVAE without usable action response. The conditioning path could discard the force, but it does not at initialization: across 20 randomly initialized networks on synthetic two-object scenes, flipping the force changes the prior's input more than switching the selected object, and about 90 percent of the force-induced change survives the first group normalization.
 
@@ -553,6 +558,14 @@ region by 0.150 mean absolute RGB error. The condition-feature intervention
 gives 0.152, compared with 0.020 through the prior mean. Thus the flow decoder
 also responds to force in pixel space, despite its short-window stationarity.
 
+
+=== Motion over the full clip
+<sec:horizon>
+We score the saved validation videos at 0.5 and 3.875 seconds using the same
+action rules. All four validation groups are contact-free throughout, so
+both horizons use the same cases. @tab:horizon includes the original flow
+run, its two training-seed repeats and the displacement-supervised variant.
+
 Frame-by-frame tracking explains the flow decoder's short-window result. At
 force 0.15, reference displacement at 0.5 seconds averages 0.013 normalized
 units; 11 of 16 forward references fall below the one-pixel threshold 0.0156.
@@ -588,13 +601,6 @@ in 13/14, 14/14 and 6/6 complete samples; seed 2 loses a later track in ten of
 those 16 samples. These repeats support the slow-motion and selection-bias
 diagnosis beyond the original training seed.
 
-=== Motion over the full clip
-<sec:horizon>
-We score the saved validation videos at 0.5 and 3.875 seconds using the same
-action rules. All four validation groups are contact-free throughout, so
-both horizons use the same cases. @tab:horizon includes the original flow
-run, its two training-seed repeats and the displacement-supervised variant.
-
 #figure(
   align(center)[#table(
     columns: 5,
@@ -617,7 +623,7 @@ The full-clip score therefore separates slow but correct motion from absent moti
 
 
 
-#figure(placement: none,
+#figure(placement: auto,
   image("figures/multiscene_validation.png", width: 100%),
   caption: [
     First sorted validation forward condition, seed zero, at six fixed times. The simulator is one declared reference. The E0 row is the RGB CVAE pilot; the separately shown Flow CVAE is the final E0 decoder. The RGB CVAE uses its conditional prior; E2/E3/E4 use EMA and 32 DDIM steps. Both flow variants preserve appearance but fail the selection controls in the 0.5-second window and over the full clip. The supervised variant also fails 15/16 force-reversal pairs in the window but passes all 16 over the full clip (@sec:horizon). Selection is fixed before visual inspection; this is not a best-sample comparison.
@@ -668,7 +674,7 @@ A positive control places two training or validation objects at known continuous
 
 In the declared target groups, 15.6 percent of overlaps up to one pixel are flagged and 1.25 percent of overlaps of at least 1.5 pixels are missed. Errors have both signs, so the median is not a correction for individual maxima. Raw raster overlap exceeds one pixel for 54 percent of touching pairs. This calibrates circles and rectangles from training and validation, without triangle coverage or model-score changes.
 
-Boundary checks remain insufficiently calibrated: 13/96 generated clips and 12/84 oracle renders exceed the one-pixel interior tolerance. Their maximum depths are 3.872 and 1.385 pixels. We retain these measurements without treating the generated count as a wall-violation accuracy result. Static-copy controls have no overlap or boundary excursions but fail nonzero-action behavior.
+Boundary checks remain insufficiently calibrated: 13/96 generated clips and 12/84 oracle renders exceed the one-pixel interior tolerance. Their maximum depths are 3.872 and 1.385 pixels. We retain these measurements without treating the generated count as a wall-violation accuracy result. Static-copy controls have no overlap or boundary excursions but fail nonzero-action behaviour.
 
 
 
@@ -700,7 +706,7 @@ In complete timelines, estimated any-contact frequency is 0.25 under forward for
 
 A supplementary zero-force control verifies that all reference frames and positions remain stationary, then checks maximum excursion of any valid object over the full clip with the unchanged one-pixel motion threshold. All 16 E5 clips have complete tracks and exceed that threshold; static-reference copies drift in 0/16. The original half-second result of 0/16 drifting clips remains unchanged. Late motion explains why short-window adherence and visible sample diversity cannot establish useful hidden-physics uncertainty.
 
-#figure(placement: none,
+#figure(placement: auto,
   image("figures/trajectory_contact.png", width: 86%),
   caption: [
     First sorted validation contact-0-to-1 condition, one simulator reference and all four E5 seeds at fixed times. Some generated futures overlap substantially. The view retains the same image and action; visual diversity does not make every sampled motion physically valid.
@@ -772,7 +778,7 @@ Saved-pose replay reproduces all 288 E6 videos, and rescoring the saved RGB
 reproduces trajectory, contact and uncertainty reports. These checks verify
 the reported measurements without adding training seeds or held-out scenes.
 
-#figure(placement: none,
+#figure(placement: auto,
   image("figures/contact_followup.png", width: 100%),
   caption: [
     E5 and paired E6 on the same first sorted validation contact-0-to-1 condition, all four seeds, at frames 0, 8, 16 and 31. Each panel includes the same single simulator reference. The case and times match @fig:contact\; no seed is selected for visual quality. Improved contact-case tracking does not imply the wall cases or all contacts are physically correct.
@@ -820,6 +826,14 @@ the native raster grid, so padded crops match the original video exactly.
 It reuses the saved checkpoints without retraining. CPU replay reproduces
 the 192 saved-pose videos and their reported clipping measurements.
 
+The remaining E6 failure is sustained object overlap despite improved rest
+and action control. Force extrapolation also needs separate testing: the E6
+checkpoint contract limits magnitude to 1.1, while force-OOD uses 1.3 and 1.5.
+Changing that limit would define a new inference experiment. E2/E3/E4 accept
+1.5 and the CVAE has no explicit limit, but their training forces are still
+0.15 for pushes, 0.25 for collisions and 1.1 for walls. Their force-OOD results
+therefore test substantial extrapolation.
+
 
 
 == Measuring collisions
@@ -858,8 +872,8 @@ the same sampled transition rule; the other 16 begin inside the touch band at
 the preceding frame. The filtered 28-label result is therefore conditional
 on that rule, not an independent detector test.
 
-On the saved coverage-study poses (@tab:coverage), first-reference F1 is
-0.3111, 0.2737 and 0.2766 for the teacher, narrow and broad arms, while valid
+On the saved poses of the E7 coverage study (@sec:exploratory, @tab:coverage),
+first-reference F1 is 0.3111, 0.2737 and 0.2766 for the teacher, narrow and broad arms, while valid
 alternative reference poses score 0.2778. Multi-reference timing instead asks
 whether a detected first contact lies within one interval of the references'
 time range. Reference leave-one-out occurrence agrees in 80/80 comparisons;
@@ -875,13 +889,6 @@ to hidden physics; eight validation contact conditions do not establish
 calibration. @sec:d018-contact-timing repeats the comparison on 20 new ID
 contact conditions.
 
-The remaining E6 failure is sustained object overlap despite improved rest
-and action control. Force extrapolation also needs separate testing: the E6
-checkpoint contract limits magnitude to 1.1, while force-OOD uses 1.3 and 1.5.
-Changing that limit would define a new inference experiment. E2/E3/E4 accept
-1.5 and the CVAE has no explicit limit, but their training forces are still
-0.15 for pushes, 0.25 for collisions and 1.1 for walls. Their force-OOD results
-therefore test substantial extrapolation.
 
 
 
@@ -893,7 +900,8 @@ D017 evaluates frozen E0, both E2/E3 budgets and all six E10 models on a
 separate generator seed, 790000, with ten scenes in each of five splits.
 Leakage checks reject shared visible seeds or frame-zero images against the
 original corpus. No checkpoint selection or training occurs on these data.
-This tests repetition on a new corpus alongside D014/D015.
+This tests repetition on a new corpus alongside the primary and longer-training
+held-out results (@sec:final, @sec:d015).
 
 #figure(
   align(center)[#table(
@@ -1146,11 +1154,10 @@ leaves a sub-pixel standoff that delays or removes exact first contact, and the
 RGB contact score cannot detect it.
 
 D030 re-renders the simulator with true hidden physics and with the four prior
-draws. The true-physics RGB contact F1 varies from 0.250 to 0.590 across the two
-corpora, exposing the estimator's limitations. Sampled-physics ADE is close
+draws. On two fresh corpora, one of them D028's, the true-physics RGB contact F1 is
+only 0.590 and 0.250, exposing the estimator's limitations. Sampled-physics ADE is close
 to the model results, consistent with a substantial hidden-physics contribution.
 These are descriptive reference controls, not mathematical method ceilings.
-Earlier local-contact and optional-loss candidates retain their negative results.
 
 D029 compares an 8,000-update, seed-19 direct decoder with the same recipe plus
 contact-transition and signed contact-depth-change losses, weighted 8 and 4.
@@ -1221,8 +1228,8 @@ D036 generates 16 candidates from one frozen E11 checkpoint on the already
 opened D018 ID corpus, then selects four using visible hull violations,
 stationarity, force opposition and trajectory diversity. The selector sees no
 reference future or true hidden physics. Its fair control is the exact
-expectation over uniform four-of-16 subsets, rather than a favorable or
-unfavorable choice of the first four seeds.
+expectation over uniform four-of-16 subsets, rather than a favourable or
+unfavourable choice of the first four seeds.
 
 
 #figure(

@@ -1,6 +1,6 @@
 {
   "status": "peer_review_fixes_passed_pending_recheck_and_submission",
-  "pages": 32,
+  "pages": 30,
   "external_links": 0,
   "external_urls_in_text": 0,
   "em_or_en_dashes_in_text": 0,
@@ -220,12 +220,12 @@
     "../docs/results/dynamics-residual-d038.json": "1b8eab06d8e80498825f944444eb00cbd27e54525c6bc9a73d9514ae5e551e5f",
     "../docs/results/collision-impulse-screen-d039.json": "00993a2307627f33f17031cda0cc112a4aae3e1c1a0922f6d8afbf8f178270bc",
     "followups_20261112.tex": "0b1fa1a864722dc6809cf7259e25b05705671ddd0559da542ae27295ae848309",
-    "main.typ": "f7dfe13ddc3e87d4990caff8de9185552bc202f46183b501ca28ec52d0d2cf59",
+    "main.typ": "0ffbdcb27e273f5b395409726337c1aff0c8fb356bd9930cecf20e5746cf6d2d",
     "references.bib": "da55543aa2d5f34c52d9d2df29530bca3f854b3805c6d1c36f06d840a937ce2d",
     "contribution.tex": "c481cb67c89f5dc1713508089ed5a90b15a43615a9890265f4a4a87880dcf56f"
   },
-  "rendered_pdf_sha256": "992ec40ee06ceeb9ed1b768c5f439368e6fbd82bdad92963fc74a46012330ec8",
-  "visual_review": "Pages 27, 28, 29 and 32 checked after peer corrections; the other 28 pages are pixel-identical to the checked 8835ec8 report.",
+  "rendered_pdf_sha256": "f13c5bb6836023df69acb4ac22b5dc74effd59b6e7782b60d3b372b2b4941c9e",
+  "visual_review": "Report polish of 15 November: all 30 pages rendered and inspected; earlier checks of the 32-page export are recorded under report_polish_20261115.",
   "source_package_verification": {
     "status": "passed",
     "file_count": 419,
@@ -1496,5 +1496,30 @@
     ],
     "restrictions": "no datasets, model files or external links",
     "submitted": false
+  },
+  "report_polish_20261115": {
+    "scope": "Structure and wording only; no number, table, figure, score or claim changes.",
+    "previous_visual_review": "Pages 27, 28, 29 and 32 checked after peer corrections; the other 28 pages are pixel-identical to the checked 8835ec8 report.",
+    "baseline_rebuild": "Typst 0.15.1 rebuild of main.typ at 1bfca39 is pixel-identical on all 32 pages to the released group_07_report.pdf",
+    "changes": [
+      "three figures float (placement auto) to remove two half-empty pages",
+      "E6 overlap and force-extrapolation paragraph moved from the pose-contact subsection to the end of the canvas-loss section",
+      "pose-contact timing names the E7 coverage study before using its arms",
+      "flow-decoder timing, force-0.4 selection and seed-repeat paragraphs moved into the full-clip motion subsection; the KL subsection is retitled and the held-out selection reference points there",
+      "undefined D014/D015 replaced by section references",
+      "D030 corpora described; an unexplained sentence about earlier candidates removed",
+      "spelling unified to behaviour and favourable",
+      "one-paragraph roadmap added to the introduction"
+    ],
+    "typst_version": "0.15.1",
+    "report_pages": 30,
+    "unresolved_references": 0,
+    "all_fonts_embedded": true,
+    "external_urls_in_text": 0,
+    "rendered_pages_inspected": "all 30",
+    "contribution_pdf_unchanged": true,
+    "release_assets_require_replacement": [
+      "group_07_report.pdf"
+    ]
   }
 }

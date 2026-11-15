@@ -1,6 +1,7 @@
 ## current assessed sources, 14 november
 
-`main.typ` is the audited 32-page report from the supplied `GenAI.zip`.
+`main.typ` is the audited report from the supplied `GenAI.zip`, now 30 pages
+after the 15 November structure and wording pass (no numbers changed).
 The primary held-out results now precede the validation diagnostics. All 21
 existing data tables and eight figure references remain; a model-summary table
 is added. `references.bib` includes the SSIM and LPIPS references.
